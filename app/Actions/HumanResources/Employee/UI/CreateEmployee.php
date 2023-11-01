@@ -86,11 +86,12 @@ class CreateEmployee extends InertiaAction
                                     'value' => ''
                                 ],
                                 'state'               => [
-                                    'type'    => 'radio',
-                                    'mode'    => 'card',
-                                    'label'   => '',
-                                    'value'   => EmployeeStateEnum::HIRED->value,
-                                    'options' => [
+                                    'label'    => __('state'),
+                                    'type'     => 'radio',
+                                    'mode'     => 'card',
+                                    'required' => true,
+                                    'value'    => EmployeeStateEnum::HIRED->value,
+                                    'options'  => [
                                         [
                                             'title'       => __('Hired'),
                                             'description' => __('Will start in future date'),
@@ -123,6 +124,7 @@ class CreateEmployee extends InertiaAction
                                 ],
                                 'positions' => [
                                     'type'        => 'jobPosition',
+                                    'required'    => true,
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a job position'),

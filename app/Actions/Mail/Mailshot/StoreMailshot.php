@@ -7,13 +7,13 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
-use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,37 +34,24 @@ class StoreMailshot
     {
         $this->parent = $parent;
 
-        $layout = [
 
-        ];
-        //   list($layout, $slides) = ParseMailshotLayout::run($layout);
-
-        //data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'date', now());
-
+        data_set(
+            $modelData,
+            'layout',
+            [
+                'src'  => null,
+                'html' => ''
+            ]
+        );
 
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);
 
-        /*
-        $snapshot   = StoreMailshotSnapshot::run(
-            $mailshot,
-            [
-                'layout' => $layout
-            ],
-            $slides
-        );
-
-        $mailshot->update(
-            [
-                'unpublished_snapshot_id' => $snapshot->id,
-                'compiled_layout'         => $snapshot->compiledLayout()
-            ]
-        );
-        $mailshot->stats()->create();
-
-
-  */
+        OrganisationHydrateMailshots::dispatch();
+        if($mailshot->type==MailshotTypeEnum::PROSPECT_MAILSHOT) {
+            ShopHydrateMailshots::dispatch($mailshot->scope);
+        }
 
 
         return $mailshot;
@@ -89,32 +76,10 @@ class StoreMailshot
     }
 
 
-    public function inCustomer(ActionRequest $request): Mailshot
-    {
-        $this->scope    = 'customer';
-        $this->customer = $request->get('customer');
-
-        $parent = customer();
-        $request->validate();
-
-        $validatedData = $request->validated();
-
-        if ($portfolioWebsiteId = Arr::get($validatedData, 'portfolio_website_id')) {
-            $parent = PortfolioWebsite::find($portfolioWebsiteId);
-        }
-
-        return $this->handle($parent, $request->validated());
-    }
 
 
-    public function inShop(Shop $shop, ActionRequest $request): Mailshot
-    {
-        $request->validate();
 
-        return $this->handle($shop, $request->validated());
-    }
-
-    public function shopProspects(Shop $shop, ActionRequest $request)
+    public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
         $request->merge(
             [

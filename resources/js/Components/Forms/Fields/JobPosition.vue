@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import { watchEffect, ref, reactive, computed } from 'vue'
+import { watchEffect, reactive } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import { faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCircle, faCrown } from '@fal'
-import { faCheckCircle } from '@fas'
+import { faExclamationCircle ,faCheckCircle } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCircle, faCrown, faCheckCircle)
-// import PureRadio from '@/Components/Pure/PureRadio.vue'
+library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCircle, faCrown, faExclamationCircle, faCheckCircle)
 
 const props = defineProps<{
     form?: any
@@ -212,13 +211,12 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div>
-    <!-- <pre>{{ props.form[props.fieldName] }}</pre> -->
+    <div class="relative">
         <div class="flex flex-col text-xs divide-y-[1px]">
             <div v-for="(jobGroup, keyJob) in optionsJob" class="grid grid-cols-3 gap-x-1.5 px-2 items-center">
                 <!-- The box -->
                 <div class="flex items-center capitalize gap-x-1.5">
-                    <FontAwesomeIcon :icon="jobGroup[0].icon" class='text-gray-400' aria-hidden='true' />
+                    <FontAwesomeIcon v-if="jobGroup[0].icon" :icon="jobGroup[0].icon" class='text-gray-400' aria-hidden='true' />
                     {{ jobGroup[0].department }}
                 </div>
 
@@ -244,5 +242,13 @@ watchEffect(() => {
                 </button>
             </div>
         </div>
+
+        <!-- State: error icon & error description -->
+        <div v-if="form.errors[fieldName] || form.recentlySuccessful " class="mt-1 flex items-center gap-x-1.5 pointer-events-none">
+            <FontAwesomeIcon icon="fas fa-exclamation-circle" v-if="form.errors[fieldName]" class="h-5 w-5 text-red-500" aria-hidden="true" />
+            <FontAwesomeIcon icon="fas fa-check-circle" v-if="form.recentlySuccessful" class="h-5 w-5 text-green-500" aria-hidden="true"/>
+            <p v-if="form.errors[fieldName]" class="text-sm text-red-600 ">{{ form.errors[fieldName] }}</p>
+        </div>
+
     </div>
 </template>

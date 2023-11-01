@@ -18,9 +18,6 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $customer_id
- * @property int $number_users
- * @property int $number_users_status_active
- * @property int $number_users_status_inactive
  * @property int $number_images
  * @property int $filesize_images
  * @property int $number_attachments
@@ -32,6 +29,9 @@ use Illuminate\Support\Carbon;
  * @property int $number_invoices_type_refund
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int $number_customer_users
+ * @property int $number_customer_users_status_active
+ * @property int $number_customer_users_status_inactive
  * @property-read \App\Models\CRM\Customer $customer
  * @method static Builder|CustomerStats newModelQuery()
  * @method static Builder|CustomerStats newQuery()
@@ -44,13 +44,13 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CustomerStats whereLastInvoicedAt($value)
  * @method static Builder|CustomerStats whereLastSubmittedOrderAt($value)
  * @method static Builder|CustomerStats whereNumberAttachments($value)
+ * @method static Builder|CustomerStats whereNumberCustomerUsers($value)
+ * @method static Builder|CustomerStats whereNumberCustomerUsersStatusActive($value)
+ * @method static Builder|CustomerStats whereNumberCustomerUsersStatusInactive($value)
  * @method static Builder|CustomerStats whereNumberImages($value)
  * @method static Builder|CustomerStats whereNumberInvoices($value)
  * @method static Builder|CustomerStats whereNumberInvoicesTypeInvoice($value)
  * @method static Builder|CustomerStats whereNumberInvoicesTypeRefund($value)
- * @method static Builder|CustomerStats whereNumberUsers($value)
- * @method static Builder|CustomerStats whereNumberUsersStatusActive($value)
- * @method static Builder|CustomerStats whereNumberUsersStatusInactive($value)
  * @method static Builder|CustomerStats whereUpdatedAt($value)
  * @mixin Eloquent
  */

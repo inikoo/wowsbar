@@ -9,6 +9,7 @@ namespace App\Actions\Market\Shop;
 
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerInvoices;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerUsers;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateDepartments;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateInvoices;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateOrders;
@@ -35,6 +36,7 @@ class HydrateShops
         ShopHydrateInvoices::run($shop);
         ShopHydrateSales::run($shop);
         ShopHydrateProducts::run($shop);
+        ShopHydrateCustomerUsers::run($shop);
     }
     public string $commandSignature = 'hydrate:shops {shops?*} ';
 
@@ -57,7 +59,7 @@ class HydrateShops
         foreach ($shops as $shop) {
 
             $this->handle($shop);
-            $command->line("Shop {$shop->name} hydrated 💦");
+            $command->line("Shop $shop->name hydrated 💦");
 
         }
 

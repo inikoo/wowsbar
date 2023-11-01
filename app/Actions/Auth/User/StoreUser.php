@@ -11,12 +11,10 @@ use App\Actions\Auth\CustomerUser\StoreCustomerUser;
 use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
-use App\Models\Web\Website;
 use Arr;
 use Exception;
 use Illuminate\Console\Command;
@@ -37,13 +35,10 @@ class StoreUser
     private bool $asAction = false;
 
 
-    public function handle(Website $website, Customer $customer, array $modelData = []): CustomerUser
+    public function handle(Customer $customer, array $modelData = []): CustomerUser
     {
-
-
-
         data_set($modelData, 'ulid', Str::ulid());
-        data_set($modelData, 'website_id', $website->id);
+        data_set($modelData, 'website_id', $customer->website_id);
         /** @var User $user */
         $user = User::create(Arr::except($modelData, ['is_root', 'roles']));
 
@@ -53,7 +48,6 @@ class StoreUser
         $customerUser->refresh();
 
         foreach (Arr::get($modelData, 'roles', []) as $roleName) {
-
             $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
             if ($role) {
                 $customerUser->assignRole($role);
@@ -73,7 +67,6 @@ class StoreUser
 
         SetUserAvatar::run($user);
         UserHydrateUniversalSearch::dispatch($user);
-        CustomerHydrateCustomerUsers::dispatch($customer);
 
         return $customerUser;
     }
@@ -110,7 +103,7 @@ class StoreUser
         $customer = customer();
 
 
-        return $this->handle($customer->website, $customer, $request->validated());
+        return $this->handle($customer, $request->validated());
     }
 
     public function htmlResponse(CustomerUser $customerUser): RedirectResponse
@@ -120,13 +113,13 @@ class StoreUser
         ]);
     }
 
-    public function action(Website $website, Customer $customer, ?array $modelData = []): CustomerUser
+    public function action(Customer $customer, ?array $modelData = []): CustomerUser
     {
         $this->asAction = true;
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($website, $customer, $validatedData);
+        return $this->handle($customer, $validatedData);
     }
 
 
@@ -168,7 +161,7 @@ class StoreUser
         );
 
         $validatedData = $this->validateAttributes();
-        $customerUser  = $this->handle($website, $customer, $validatedData);
+        $customerUser  = $this->handle($customer, $validatedData);
 
 
         $command->line("Public user $customerUser->slug created successfully");

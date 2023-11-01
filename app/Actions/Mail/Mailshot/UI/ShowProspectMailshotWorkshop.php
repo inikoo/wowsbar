@@ -10,14 +10,14 @@ namespace App\Actions\Mail\Mailshot\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
-use App\Enums\UI\Organisation\MailshotTabsEnum;
+use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowWorkshopProspectMailshot extends InertiaAction
+class ShowProspectMailshotWorkshop extends InertiaAction
 {
     use WithActionButtons;
 
@@ -40,7 +40,7 @@ class ShowWorkshopProspectMailshot extends InertiaAction
 
     public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
-        $this->initialisation($request)->withTab(MailshotTabsEnum::values());
+        $this->initialisation($request);
 
         return $this->handle($mailshot);
     }
@@ -80,11 +80,24 @@ class ShowWorkshopProspectMailshot extends InertiaAction
                     ]
 
                 ],
-                'tabs'        => [
-                    'current'    => $this->tab,
-                    'navigation' => MailshotTabsEnum::navigation()
-                ],
+                'mailshot'    => MailshotResource::make($mailshot)->getArray(),
 
+                'imagesUploadRoute' => [
+                    'name'       => 'org.models.mailshot.images.store',
+                    'parameters' => $mailshot->id
+                ],
+                'setAsReadyRoute'   => [
+                    'name'       => 'org.models.mailshot.state.ready',
+                    'parameters' => $mailshot->id
+                ],
+                'updateRoute'       => [
+                    'name'       => 'org.models.mailshot.content.update',
+                    'parameters' => $mailshot->id
+                ],
+                'loadRoute'         => [
+                    'name'       => 'org.models.mailshot.content.show',
+                    'parameters' => $mailshot->id
+                ],
 
             ]
         );

@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *
  * @property int $id
  * @property int $task_type_id
- * @property int $organisation_user_id
  * @property int|null $activity_id e.g. social post id
  * @property string|null $activity_type
  * @property string $date
@@ -41,7 +40,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Task whereOrganisationUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereTaskTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
  * @mixin \Eloquent

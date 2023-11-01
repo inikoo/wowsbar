@@ -34,7 +34,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $sent_at
  * @property string|null $cancelled_at
  * @property string|null $stopped_at
+ * @property array $layout
  * @property array $recipients
+ * @property int|null $publisher_id org user
  * @property string $scope_type
  * @property int $scope_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -49,6 +51,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipients($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
@@ -74,13 +78,15 @@ class Mailshot extends Model
 
     protected $casts = [
         'recipients' => 'array',
+        'layout'     => 'array',
         'type'       => MailshotTypeEnum::class,
         'state'      => MailshotStateEnum::class
 
     ];
 
     protected $attributes = [
-        'recipients'     => '{}',
+        'layout'     => '{}',
+        'recipients' => '{}',
     ];
 
     protected $guarded = [];

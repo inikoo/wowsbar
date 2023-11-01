@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
+use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Models\HumanResources\Employee;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -23,7 +24,8 @@ class OrganisationHydrateEmployees
             'number_employees' => Employee::count()
         ];
 
-        array_merge($stats, $this->getEnumStats('employees', 'state', EmployeeStateEnum::class, Employee::class));
+        $stats = array_merge($stats, $this->getEnumStats('employees', 'state', EmployeeStateEnum::class, Employee::class));
+        $stats = array_merge($stats, $this->getEnumStats('employees', 'type', EmployeeTypeEnum::class, Employee::class));
         organisation()->humanResourcesStats()->update($stats);
     }
 }

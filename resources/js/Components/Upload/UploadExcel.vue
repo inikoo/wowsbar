@@ -66,9 +66,9 @@ const compProgressBar = computed(() => {
             progressName: 'employees',
             isShowProgress: isShowProgress,
             progressPercentage: compProgressBar,
-            countSuccess: dataPusher.data.number_success+dataPusher.data.number_success,
-            countFails: dataPusher.data.number_success+dataPusher.data.number_fails,
-            countTotal: dataPusher.data.number_success+dataPusher.data.number_rows
+            countSuccess: dataPusher.data.number_success,
+            countFails: dataPusher.data.number_fails,
+            countTotal: dataPusher.data.number_rows
         }"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
         @resetData="dataPusher.data = { number_rows: 0, number_success: 0, number_fails: 0 }"

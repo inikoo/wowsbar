@@ -28,17 +28,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_employees_gender_other
  * @property int $number_job_positions
  * @property int $number_workplaces
- * @property int $number_workplaces_typehq
- * @property int $number_workplaces_typebranch
- * @property int $number_workplaces_typehome
- * @property int $number_workplaces_typegroup_premisses
- * @property int $number_workplaces_typeclient_premises
- * @property int $number_workplaces_typeroad
- * @property int $number_workplaces_typeother
  * @property int $number_clocking_machines
  * @property int $number_clockings
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_workplaces_type_hq
+ * @property int $number_workplaces_type_branch
+ * @property int $number_workplaces_type_home
+ * @property int $number_workplaces_type_group_premisses
+ * @property int $number_workplaces_type_client_premises
+ * @property int $number_workplaces_type_road
+ * @property int $number_workplaces_type_other
  * @property-read \App\Models\Organisation\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats newQuery()
@@ -60,13 +60,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberEmployeesTypeWorkExperience($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberJobPositions($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplaces($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypebranch($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeclientPremises($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypegroupPremisses($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypehome($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypehq($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeother($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTyperoad($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeBranch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeClientPremises($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeGroupPremisses($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeHome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeHq($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberWorkplacesTypeRoad($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereUpdatedAt($value)
  * @mixin \Eloquent

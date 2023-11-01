@@ -37,3 +37,8 @@ lang/php_*.json
 /public/customer/
 import-customers.sh
 /private
+/clover.xml
+/codecov
+/upload_coverage.sh
+_ide_helper.php
+.phpstorm.meta.php

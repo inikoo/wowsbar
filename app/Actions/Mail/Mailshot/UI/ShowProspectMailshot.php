@@ -11,10 +11,9 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
-
 use App\Enums\UI\Organisation\MailshotTabsEnum;
-use App\Http\Resources\CRM\ProspectMailshotResource;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -96,9 +95,9 @@ class ShowProspectMailshot extends InertiaAction
                 ],
                 MailshotTabsEnum::SHOWCASE->value  => $this->tab == MailshotTabsEnum::SHOWCASE->value
                     ?
-                    fn () => ProspectMailshotResource::make($mailshot)->getArray()
+                    fn () => MailshotResource::make($mailshot)->getArray()
                     : Inertia::lazy(
-                        fn () => ProspectMailshotResource::make($mailshot)->getArray()
+                        fn () => MailshotResource::make($mailshot)->getArray()
                     ),
 
                 /*

@@ -13,6 +13,7 @@ use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,8 +22,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Tags\HasTags;
 
 /**
  * App\Models\Leads\Prospect
@@ -49,8 +52,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read Customer|null $customer
+ * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
+ * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Leads\ProspectFactory factory($count = null, $state = [])
  * @method static Builder|Prospect newModelQuery()
@@ -79,16 +86,23 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Prospect whereSlug($value)
  * @method static Builder|Prospect whereState($value)
  * @method static Builder|Prospect whereUpdatedAt($value)
+ * @method static Builder|Prospect withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Prospect withAllTagsOfAnyType($tags)
+ * @method static Builder|Prospect withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Prospect withAnyTagsOfAnyType($tags)
  * @method static Builder|Prospect withTrashed()
+ * @method static Builder|Prospect withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  * @method static Builder|Prospect withoutTrashed()
  * @mixin Eloquent
  */
-class Prospect extends Model
+class Prospect extends Model implements Auditable
 {
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;
     use HasFactory;
+    use HasTags;
+    use HasHistory;
 
     protected $casts = [
         'data'     => 'array',
@@ -101,6 +115,12 @@ class Prospect extends Model
         'location' => '{}',
     ];
 
+    public function generateTags(): array
+    {
+        return [
+            'crm'
+        ];
+    }
 
     protected static function booted(): void
     {
