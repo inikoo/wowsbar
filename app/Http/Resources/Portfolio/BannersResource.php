@@ -25,7 +25,6 @@ class BannersResource extends JsonResource
         /** @var Banner $banner */
         $banner = $this;
 
-
         $image          = null;
         $imageThumbnail = null;
         if ($banner->image) {
@@ -46,6 +45,7 @@ class BannersResource extends JsonResource
             'image'              => $image ? GetPictureSources::run($image) : null,
             'websites'           => json_decode($this->websites),
             'date'               => $banner->date,
+            'views'              => 0, // TODO: Need get stats from banner stats,
             'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
 
 

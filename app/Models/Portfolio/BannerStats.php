@@ -19,14 +19,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $customer_id
  * @property int $banner_id
  * @property int $number_snapshots
+ * @property int $number_views
+ * @property int $number_clicks
+ * @property int $number_users
  * @property int $number_snapshots_state_unpublished
  * @property int $number_snapshots_state_live
  * @property int $number_snapshots_state_historic
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $number_users
- * @property int $number_clicks
- * @property int $number_views
  * @property-read \App\Models\Portfolio\Banner $banner
  * @property-read \App\Models\CRM\Customer $customer
  * @method static Builder|BannerStats newModelQuery()
