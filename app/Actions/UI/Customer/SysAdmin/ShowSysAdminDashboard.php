@@ -59,7 +59,7 @@ class ShowSysAdminDashboard
                 'stats' => [
                     [
                         'name' => __('users'),
-                        'stat' => $customer->stats->number_users_status_active,
+                        'stat' => $customer->stats->number_customer_users_status_active,
                         'href' => ['name'=>'customer.sysadmin.users.index']
                     ],
 

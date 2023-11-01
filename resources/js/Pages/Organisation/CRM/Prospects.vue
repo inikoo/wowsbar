@@ -33,6 +33,7 @@ const props = defineProps <{
         event: string
     }
     prospects?: object
+    tags: string[]
 }>()
 
 const dataModal = reactive({isModalOpen: false})
@@ -59,7 +60,7 @@ const component = computed(() => {
     </PageHeading>
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="tags.data"></component>
 
     <!-- Modal: after click 'upload' button -->
     <UploadExcel

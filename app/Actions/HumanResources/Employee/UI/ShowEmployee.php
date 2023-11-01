@@ -60,9 +60,9 @@ class ShowEmployee extends InertiaAction
             $meta[] = [
                 'href'=> [
                   'name'      => 'org.sysadmin.users.show',
-                  'parameters'=> [$employee->organisationUser->username]
+                  'parameters'=> $employee->organisationUser->slug
                 ],
-                'label'    => $employee->organisationUser->username,
+                'label'    => $employee->organisationUser->slug,
                 'leftIcon' => [
                     'icon'    => 'fal fa-terminal',
                     'tooltip' => __('User')

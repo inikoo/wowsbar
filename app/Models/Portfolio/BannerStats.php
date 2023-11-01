@@ -24,6 +24,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_snapshots_state_historic
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_users
+ * @property int $number_clicks
+ * @property int $number_views
  * @property-read \App\Models\Portfolio\Banner $banner
  * @property-read \App\Models\CRM\Customer $customer
  * @method static Builder|BannerStats newModelQuery()
@@ -33,10 +36,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|BannerStats whereCreatedAt($value)
  * @method static Builder|BannerStats whereCustomerId($value)
  * @method static Builder|BannerStats whereId($value)
+ * @method static Builder|BannerStats whereNumberClicks($value)
  * @method static Builder|BannerStats whereNumberSnapshots($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateHistoric($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateLive($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateUnpublished($value)
+ * @method static Builder|BannerStats whereNumberUsers($value)
+ * @method static Builder|BannerStats whereNumberViews($value)
  * @method static Builder|BannerStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */

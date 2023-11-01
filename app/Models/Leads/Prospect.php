@@ -52,9 +52,12 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read Customer|null $customer
- * @property-read \Spatie\Tags\Tag $tags
+ * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
+ * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Leads\ProspectFactory factory($count = null, $state = [])
  * @method static Builder|Prospect newModelQuery()
@@ -83,7 +86,12 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereSlug($value)
  * @method static Builder|Prospect whereState($value)
  * @method static Builder|Prospect whereUpdatedAt($value)
+ * @method static Builder|Prospect withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Prospect withAllTagsOfAnyType($tags)
+ * @method static Builder|Prospect withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Prospect withAnyTagsOfAnyType($tags)
  * @method static Builder|Prospect withTrashed()
+ * @method static Builder|Prospect withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  * @method static Builder|Prospect withoutTrashed()
  * @mixin Eloquent
  */

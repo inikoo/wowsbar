@@ -7,12 +7,15 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
+use App\Actions\Traits\WithEnumStats;
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\HumanResources\Workplace;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateWorkplaces
 {
     use AsAction;
+    use WithEnumStats;
 
     public function handle(): void
     {
@@ -20,6 +23,7 @@ class OrganisationHydrateWorkplaces
         $stats = [
             'number_workplaces' => Workplace::count()
         ];
+        $stats=array_merge($stats, $this->getEnumStats('workplaces', 'type', WorkplaceTypeEnum::class, Workplace::class));
 
         organisation()->humanResourcesStats()->update($stats);
     }

@@ -46,11 +46,11 @@ class IndexOrgCustomerUsers extends InertiaAction
                         'active'    =>
                             [
                                 __('Active'),
-                                $parent->stats->number_users_status_active
+                                $parent->stats->number_customer_users_status_active
                             ],
                         'suspended' => [
                             __('Suspended'),
-                            $parent->stats->number_users_status_inactive
+                            $parent->stats->number_customer_users_status_inactive
                         ]
                     ],
                     'engine'   => function ($query, $elements) {
