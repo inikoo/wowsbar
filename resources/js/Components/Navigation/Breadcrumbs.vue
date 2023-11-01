@@ -115,7 +115,7 @@ const layoutState = useLayoutStore()
                                 aria-hidden="true"/>
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700 dark:hover:text-gray-400' || ''"
+                                :class="'hover:text-gray-700' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(
@@ -152,7 +152,7 @@ const layoutState = useLayoutStore()
                                     icon="fa-regular fa-chevron-right"
                                     aria-hidden="true"/>
                                 <Link
-                                    class="hover:text-gray-700 dark:hover:text-gray-400 grid grid-flow-col items-center"
+                                    class="hover:text-gray-700 grid grid-flow-col items-center"
                                     :href="
 										route(
 											breadcrumb.modelWithIndex.index.route.name,
@@ -170,7 +170,7 @@ const layoutState = useLayoutStore()
                             </div>
                             <span class="mx-3 select-none">→</span>
                             <Link
-                                class="hover:text-gray-700 dark:hover:text-gray-400"
+                                class="hover:text-gray-700"
                                 :href="
 									route(
 										breadcrumb.modelWithIndex.model.route.name,

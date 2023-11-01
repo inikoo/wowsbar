@@ -108,7 +108,7 @@ function submit() {
 
 <template>
     <form @submit.prevent="submit">
-        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200 dark:divide-gray-500 max-w-2xl ">
+        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200 max-w-2xl ">
             <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
                 <dt class="text-sm font-medium text-gray-400 capitalize">
                     <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
@@ -125,7 +125,7 @@ function submit() {
                         <span class="ml-2 flex-shrink-0">
                             <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
                                 <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-gray-600" style="--fa-secondary-color: rgb(0, 255, 4);" aria-hidden="true" />
-                                <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300 dark:text-gray-500" aria-hidden="true" />
+                                <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300" aria-hidden="true" />
                             </button>
                         </span>
                     </div>

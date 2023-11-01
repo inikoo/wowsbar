@@ -40,7 +40,7 @@ const changeTab = (tabSlug: any) => {
 
 const tabIconClass = (current: string | boolean, type: string, align: string, extraClass: string) => {
     let iconClass = '-ml-0.5 h-5 w-5   ' + extraClass;
-    iconClass += current ? '' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 ';
+    iconClass += current ? '' : 'text-gray-400 group-hover:text-gray-500 ';
     iconClass += (type == 'icon' && align == 'right') ? 'ml-2 ' : 'mr-2 '
     return iconClass
 }
@@ -62,7 +62,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
 
         <!-- Tabs: Large view -->
         <div class="hidden sm:block">
-            <div class="border-b border-gray-200 dark:border-gray-500 flex text-gray-500">
+            <div class="border-b border-gray-200 flex text-gray-500">
 
                 <!-- Left section -->
                 <nav class="-mb-px flex grow space-x-6 ml-4" aria-label="Tabs">
@@ -103,7 +103,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
                                 </button>
                                 <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
-                                    :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
+                                    :class="[tabSlug === currentTab ? 'bg-orange-500 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
                                 />
                             </div>
                         </template>

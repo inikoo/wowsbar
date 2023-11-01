@@ -52,7 +52,7 @@ const layoutState = useLayoutStore()
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
+    <div class="fixed top-0 left-0 w-screen h-screen bg-gray-50" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layoutState.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']">
 
@@ -80,7 +80,7 @@ const layoutState = useLayoutStore()
 
         <!-- Main Content -->
         <main
-            class="relative flex flex-col pt-20 pb-5 md:pt-[68px] lg:pt-16 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
+            class="relative flex flex-col pt-20 pb-5 md:pt-[68px] lg:pt-16 bg-gray-50 text-gray-700 transition-all duration-200 ease-in-out"
             :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-56' : 'ml-0 md:ml-10']">
             <slot />
         </main>

@@ -587,7 +587,7 @@ watch(name, () => {
                     <div class="flex space-x-2">
                         <!-- Result Number -->
                         <div class="flex gap-2 items-center">
-                            <div class="grid border rounded-md border-gray-300 dark:border-gray-500 justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
+                            <div class="grid border rounded-md border-gray-300 justify-end items-center text-base font-normal text-gray-700"
                                 title="Results">
                                 <div v-if="compResourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(compResourceMeta.total) }} {{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
                                 <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
