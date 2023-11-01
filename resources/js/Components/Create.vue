@@ -85,7 +85,7 @@ const handleFormSubmit = () => {
 const buttonRefs = ref([])
 const tabActive: any = ref({})
 
-const handleIntersection = (element: Element, index: number) => (entries: any) => {
+const handleIntersection = (index: number) => (entries: any) => {
     const [entry] = entries;
     tabActive.value[`${index}`] = entry.isIntersecting;
 }
@@ -93,7 +93,7 @@ const handleIntersection = (element: Element, index: number) => (entries: any) =
 onMounted(() => {
     // To indicate active state that on viewport
     buttonRefs.value.forEach((element: any, index) => {
-        const observer = new IntersectionObserver(handleIntersection(element, index));
+        const observer = new IntersectionObserver(handleIntersection(index));
         observer.observe(element);
 
         // Clean up the observer when the component is unmounted
@@ -117,7 +117,7 @@ onMounted(() => {
             <!-- Left Tab: Navigation -->
             <aside class="py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
-                    <template v-for="(item, key) in formData['blueprint']">
+                    <!-- <template v-for="(item, key) in formData['blueprint']">
                         <div v-if="item.title || item.icon" @click="jumpToElement(`field${key}`)" :class="[
                             appName == 'customer'
                             ? tabActive[key]
@@ -136,7 +136,7 @@ onMounted(() => {
                                 :icon="item.icon" />
                             <span class="capitalize truncate">{{ item.title }}</span>
                         </div>
-                    </template>
+                    </template> -->
                 </div>
             </aside>
 
