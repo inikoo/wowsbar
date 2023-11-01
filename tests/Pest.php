@@ -45,14 +45,17 @@ function loadDB($dumpName): void
 /**
  * @throws \Throwable
  */
-function createCustomer(): void
+function createCustomer(): array
 {
-    $organisation = createShop();
-    $customer     = Customer::first();
+    [$organisation,$organisationUser,$shop] = createShop();
+    $customer                               = Customer::first();
     if (!$customer) {
         $customer = StoreCustomer::make()->action($organisation->shops->first(), Customer::factory()->definition());
     }
     config(['global.customer_id' => $customer->id]);
+    return[
+        $organisation,$organisationUser,$shop,$customer
+    ];
 }
 
 function createShop(): array

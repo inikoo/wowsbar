@@ -71,7 +71,7 @@ class GetFirstLoadProps
         $app = CustomerAppResource::make(request()->get('website'))->getArray();
 
         if ($customerUser and $customer = Customer::find(session('customer_id'))) {
-            $app['showLiveUsers'] = $customer->stats->number_users_status_active > 1;
+            $app['showLiveUsers'] = $customer->stats->number_customer_users_status_active > 1;
         }
 
 

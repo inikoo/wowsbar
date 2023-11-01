@@ -23,6 +23,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $last_failed_login_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_customer_users
+ * @property int $number_customer_users_status_active
+ * @property int $number_customer_users_status_inactive
  * @property-read \App\Models\Web\Website $website
  * @method static Builder|WebsiteStats newModelQuery()
  * @method static Builder|WebsiteStats newQuery()
@@ -31,6 +34,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|WebsiteStats whereId($value)
  * @method static Builder|WebsiteStats whereLastFailedLoginAt($value)
  * @method static Builder|WebsiteStats whereLastLoginAt($value)
+ * @method static Builder|WebsiteStats whereNumberCustomerUsers($value)
+ * @method static Builder|WebsiteStats whereNumberCustomerUsersStatusActive($value)
+ * @method static Builder|WebsiteStats whereNumberCustomerUsersStatusInactive($value)
  * @method static Builder|WebsiteStats whereNumberFailedLogins($value)
  * @method static Builder|WebsiteStats whereNumberLogins($value)
  * @method static Builder|WebsiteStats whereNumberWebpages($value)

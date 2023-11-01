@@ -7,7 +7,6 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
@@ -24,16 +23,7 @@ class UpdateUser
 
     public function handle(User $user, array $modelData): User
     {
-        $user = $this->update($user, $modelData, 'settings');
-
-        if ($user->wasChanged('status')) {
-
-            foreach ($user->customerUsers as $customerUser) {
-                CustomerHydrateCustomerUsers::run($customerUser->customer);
-            }
-        }
-
-        return $user;
+        return $this->update($user, $modelData, 'settings');
     }
 
     public function authorize(ActionRequest $request): bool

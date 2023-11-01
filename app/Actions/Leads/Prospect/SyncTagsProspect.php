@@ -7,21 +7,13 @@
 
 namespace App\Actions\Leads\Prospect;
 
-use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
-use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
 use App\Models\Leads\Prospect;
-use App\Models\Market\Shop;
-use App\Models\Portfolio\PortfolioWebsite;
-use App\Rules\IUnique;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class AttachTagsProspect
+class SyncTagsProspect
 {
     use AsAction;
     use WithAttributes;
@@ -30,7 +22,7 @@ class AttachTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $prospect->attachTag($modelData['tags']);
+        $prospect->syncTags(Arr::get($modelData, 'tags', []));
 
         return $prospect;
     }
@@ -47,7 +39,7 @@ class AttachTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['required', 'string']
+            'tags' => ['nullable', 'array']
         ];
     }
 

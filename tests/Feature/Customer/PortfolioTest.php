@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 12 Sep 2023 14:15:26 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 31 Oct 2023 15:11:51 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -18,14 +18,23 @@ beforeAll(function () {
     loadDB('test_base_database.dump');
 });
 
+
 beforeEach(
     /**
      * @throws \Throwable
      */
     function () {
-        createCustomer();
+
+        list(
+            $this->organisation,
+            $this->organisationUser,
+            $this->shop,
+            $this->customer
+        ) = createCustomer();
     }
 );
+
+
 
 test('create portfolio websites', function () {
     $customer  = customer();

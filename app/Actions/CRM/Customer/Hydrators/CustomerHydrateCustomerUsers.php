@@ -20,9 +20,9 @@ class CustomerHydrateCustomerUsers
         $numberActiveUsers = $customer->customerUsers()->where('status', true)->count();
 
         $stats = [
-            'number_users'                 => $numberUsers,
-            'number_users_status_active'   => $numberActiveUsers,
-            'number_users_status_inactive' => $numberUsers - $numberActiveUsers
+            'number_customer_users'                 => $numberUsers,
+            'number_customer_users_status_active'   => $numberActiveUsers,
+            'number_customer_users_status_inactive' => $numberUsers - $numberActiveUsers
         ];
 
         $customer->stats()->update($stats);

@@ -49,12 +49,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
+ * @property int $number_customer_users
+ * @property int $number_customer_users_status_active
+ * @property int $number_customer_users_status_inactive
  * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
  * @method static Builder|ShopCRMStats query()
  * @method static Builder|ShopCRMStats whereCreatedAt($value)
  * @method static Builder|ShopCRMStats whereId($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerUsers($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusActive($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusInactive($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsites($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesBanners($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesPpc($value)

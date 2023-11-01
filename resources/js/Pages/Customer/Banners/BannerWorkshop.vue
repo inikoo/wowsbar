@@ -141,7 +141,7 @@ const fetchInitialData = async () => {
 onBeforeMount(fetchInitialData)
 
 const deleteUser = () => {
-    const set = {...data}  // Creating a copy of the data object
+    const set = cloneDeep(data) // Creating a copy of the data object
     for (const index in set.components) {
         if (set.components[index].user == user.value.username) {
             delete set.components[index].user  // Removing the 'user' property from components
@@ -204,9 +204,6 @@ watch(data, updateData, {deep: true})
 
 const intervalAutoSave = ref(null)
 
-onBeforeUnmount(() => {
-    stopInterval()
-})
 
 const startInterval = () => {
     intervalAutoSave.value = setInterval(() => {
@@ -227,6 +224,20 @@ const compIsHashSameWithPrevious = computed(() => {
 const compIsDataFirstTimeCreated = computed(() => {
     // Check is current Hash is same as initial Hash
     return compCurrentHash.value == "fd186208ae9dab06d40e49141f34bef9"
+})
+
+const setDataBeforeleaves=()=>{
+    const newData = deleteUser()
+    Object.assign(data,newData)
+    updateData()
+
+}
+
+window.addEventListener('beforeunload', setDataBeforeleaves())
+
+onBeforeUnmount(() => {
+    setDataBeforeleaves()
+    stopInterval()
 })
 
 </script>

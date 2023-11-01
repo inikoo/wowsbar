@@ -104,6 +104,13 @@ class StoreEmployee
         return $this->handle($parent, $validatedData);
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if ($request->get('username')) {
+            $request->merge(['some' => 'additional data']);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -118,11 +125,9 @@ class StoreEmployee
             'positions.*'         => ['exists:job_positions,slug'],
             'email'               => ['present', 'nullable', 'email'],
             'positions'           => ['required', 'array'],
-            'username'            => ['sometimes', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
-            'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'username'            => ['nullable', new AlphaDashDot(), 'iunique:organisation_users'],
+            'password'            => ['exclude_if:username,null', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'reset_password'      => ['sometimes', 'boolean']
-
-
         ];
     }
 

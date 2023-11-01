@@ -19,6 +19,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $email
  * @property string $phone
  * @property string $contact_website
+ * @property \Spatie\Tags\Tag $tags
  * @property \App\Models\Market\Shop $shop
  */
 class ProspectResource extends JsonResource
@@ -32,6 +33,7 @@ class ProspectResource extends JsonResource
             'email'      => $this->email,
             'phone'      => $this->phone,
             'website'    => $this->contact_website,
+            'tags'       => $this->tags()->pluck('name'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

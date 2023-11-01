@@ -204,7 +204,6 @@ class StoreCustomer
         if ($command->option('password')) {
             $validatedData['is_root'] = true;
             StoreUser::make()->action(
-                $shop->website,
                 $customer,
                 array_merge(
                     Arr::only($validatedData, ['is_root', 'email', 'password']),

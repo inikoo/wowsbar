@@ -91,12 +91,14 @@ use Spatie\Tags\HasTags;
  * @property-read \App\Models\CRM\CustomerPortfolioStats|null $portfolioStats
  * @property-read Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
+ * @property Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop $shop
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read Collection<int, CustomerSocialAccount> $socialAccounts
  * @property-read int|null $social_accounts_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
+ * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
@@ -133,7 +135,12 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Customer whereUlid($value)
  * @method static Builder|Customer whereUpdatedAt($value)
  * @method static Builder|Customer whereWebsiteId($value)
+ * @method static Builder|Customer withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Customer withAllTagsOfAnyType($tags)
+ * @method static Builder|Customer withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
+ * @method static Builder|Customer withAnyTagsOfAnyType($tags)
  * @method static Builder|Customer withTrashed()
+ * @method static Builder|Customer withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  * @method static Builder|Customer withoutTrashed()
  * @mixin Eloquent
  */

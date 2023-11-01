@@ -44,7 +44,6 @@ class Register
 
 
         $customerUser = StoreUser::run(
-            $shop->website,
             $customer,
             array_merge(
                 $modelData,

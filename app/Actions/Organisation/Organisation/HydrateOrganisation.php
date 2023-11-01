@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\HydrateModel;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerUsers;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateDivisions;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
@@ -40,6 +41,7 @@ class HydrateOrganisation extends HydrateModel
         OrganisationHydrateCustomers::run();
         OrganisationHydrateWorkplaces::run();
         OrganisationHydrateCustomerWebsites::run();
+        OrganisationHydrateCustomerUsers::run();
 
     }
 
