@@ -77,6 +77,9 @@ Route::middleware(["org-web"])->group(function () {
             Route::prefix("labour")
                 ->name("labour.")
                 ->group(__DIR__ . "/labour.php");
+            Route::prefix("queries")
+                ->name("query.")
+                ->group(__DIR__ . "/query.php");
         });
     });
 

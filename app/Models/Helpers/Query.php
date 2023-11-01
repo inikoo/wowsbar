@@ -52,4 +52,9 @@ class Query extends Model
             ->doNotGenerateSlugsOnUpdate()
             ->slugsShouldBeNoLongerThan(64);
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
