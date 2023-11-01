@@ -73,11 +73,13 @@ const logoutAuth = () => {
                         :class="[layout.leftSidebar.show ? 'md:w-48 md:pr-4' : 'md:w-10']"
                     >
                         <Link :href="layout.app.url"
-                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3"
+                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 pl-2"
                         >
-                            <Image :src="layout.app.logo" class="aspect-square h-full"/>
-                            <p class="bg-gradient-to-r from-gray-100 to-gray-300 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
-                                {{ layout.app.name }}
+                            <Image v-if="Object.keys(layout.app.logo).length" :src="layout.app.logo" class="aspect-square h-7"/>
+                            <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
+
+                            <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
+                                {{ layout.app.name ? layout.app.name : "Wowsbar" }}
                             </p>
                         </Link>
                     </div>
