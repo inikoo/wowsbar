@@ -8,11 +8,25 @@
 namespace App\Actions\Traits;
 
 use App\Models\Helpers\Query;
+use Illuminate\Database\Eloquent\Model;
 
 trait WithQueryFilter
 {
-    public function queryFilter(Query $query)
+    public function queryFilter(Query $query): Model
     {
-        // return $query->model_type::{$query->base}->{$query->filters};
+        /** @var Model $model */
+        $model = $query->model_type::query();
+
+        if(! blank($query->base)) {
+            $model->{$query->base};
+        }
+
+        if(! blank($query->filters)) {
+            foreach ($query->filters as $filter) {
+                $model->{$filter};
+            }
+        }
+
+        return $model;
     }
 }
