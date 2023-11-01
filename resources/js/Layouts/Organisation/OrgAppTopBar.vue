@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Link, router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
-import AppTopBarNavs from "@/Layouts/Organisation/AppTopBarNavs.vue"
+import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 
@@ -32,36 +32,12 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-    (e: 'sidebarOpen'): void
+    (e: 'sidebarOpen', value: boolean): void
 }>()
 
 const layout = useLayoutStore()
 
 const showSearchDialog = ref(false)
-
-const changeColorMode = (mode: boolean | string) => {
-    // If browsers not support matchMedia
-    if (!window.matchMedia) {
-        return
-    }
-
-    let query: boolean | string = false
-
-    if (mode == "system") {
-        // If browsers prefers dark-mode then true
-        query = window.matchMedia('(prefers-color-scheme: dark)').matches
-    } else {
-        query = mode
-    }
-
-    if(query) {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    }
-}
 
 onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
@@ -76,41 +52,46 @@ const logoutAuth = () => {
 </script>
 
 <template>
-    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700" v-slot="{ open }">
         <div class="px-0">
-            <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 dark:border-gray-500 ">
-                <div class="flex flex-1">
-                    <div class="flex flex-1 lg:justify-between">
-                        <!-- Hamburger -->
-                        <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="sidebarOpen = !sidebarOpen, $emit('sidebarOpen', sidebarOpen)">
-                            <span class="sr-only">Open sidebar</span>
-                            <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
-                                    :class="{'rotate-45': sidebarOpen,' -translate-y-1.5': !sidebarOpen }"></span>
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-100 ease-in-out" :class="{'opacity-0': sidebarOpen } "></span>
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
-                                    :class="{'-rotate-45': sidebarOpen, ' translate-y-1.5': !sidebarOpen}"></span>
-                            </div>
-                        </button>
-
-                        <!-- Menu -->
-                        <div class="flex flex-1 items-center justify-between lg:justify-start">
-                            <Link :href="route(logoRoute)"
-                                class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200 dark:xl:border-gray-500"
-                            >
-                                <slot />
-                            </Link>
-                            <AppTopBarNavs />
+            <div class="flex h-11 lg:h-10 flex-shrink-0">
+                <div class="border-b border-org-500 flex">
+                    <!-- Hamburger -->
+                    <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="$emit('sidebarOpen', sidebarOpen)">
+                        <span class="sr-only">Open sidebar</span>
+                        <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+                            <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
+                                :class="{'rotate-45': sidebarOpen,' -translate-y-1.5': !sidebarOpen }"></span>
+                            <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-100 ease-in-out" :class="{'opacity-0': sidebarOpen } "></span>
+                            <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
+                                :class="{'-rotate-45': sidebarOpen, ' translate-y-1.5': !sidebarOpen}"></span>
                         </div>
+                    </button>
+
+                    <!-- App Title: Image and Title -->
+                    <div class="bg-gradient-to-r from-org-700 to-org-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-200 ease-in-out"
+                        :class="[layout.leftSidebar.show ? 'md:w-48 md:pr-4' : 'md:w-10']"
+                    >
+                        <Link :href="layout.app.url"
+                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 pl-2"
+                        >
+                            <Image v-if="Object.keys(layout.app.logo).length" :src="layout.app.logo" class="aspect-square h-7"/>
+                            <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
+
+                            <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
+                                {{ layout.app.name ? layout.app.name : "Wowsbar" }}
+                            </p>
+                        </Link>
                     </div>
+                </div>
+
+                <div class="flex items-center w-full justify-between pr-6 space-x-3 border-b border-gray-200">
+                    <!-- Section: Top menu -->
+                    <OrgTopBarNavs />
 
                     <!-- Avatar Group -->
-                    <div class="flex items-center mr-6 space-x-3">
+                    <div class="flex justify-between">
                         <div class="flex">
-                            <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
-
                             <!-- Button: Search -->
                             <button @click="showSearchDialog = !showSearchDialog" id="search"
                                     class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -118,7 +99,6 @@ const logoutAuth = () => {
                                 <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />
                                 <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
                             </button>
-
                             <!-- Button: Notifications -->
                             <button type="button"
                                     class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -126,7 +106,6 @@ const logoutAuth = () => {
                                 <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
                             </button>
                         </div>
-
                         <!-- Avatar Button -->
                         <Menu as="div" class="relative">
                             <MenuButton id="avatar-thumbnail"
@@ -135,9 +114,7 @@ const logoutAuth = () => {
                                 <Image  class="h-8 w-8 rounded-full"
                                     :src="layout.avatar_thumbnail"
                                     alt="" />
-
                             </MenuButton>
-
                             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                                         leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
@@ -148,9 +125,7 @@ const logoutAuth = () => {
                                                 {{ trans("View profile") }}
                                             </div>
                                         </MenuItem>
-
                                     </div>
-
                                     <div class="py-1">
                                         <MenuItem v-slot="{ active }">
                                             <div @click="logoutAuth()"

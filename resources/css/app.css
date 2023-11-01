@@ -17,6 +17,16 @@
     focus:[background-size:100%_100%] px-1;
 }
 
+.special-underline-organisation {
+    @apply bg-gradient-to-t from-amber-300 to-amber-200
+    focus:ring-0 focus:outline-none focus:border-none
+    bg-no-repeat [background-position:0%_100%]
+    [background-size:100%_0.2em]
+    motion-safe:transition-all motion-safe:duration-200
+    hover:[background-size:100%_100%]
+    focus:[background-size:100%_100%] px-1;
+}
+
 .qwezxc {
     /* For debug element */
     @apply border border-red-500 

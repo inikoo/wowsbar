@@ -17,20 +17,18 @@ import {faChartNetwork, faInboxOut} from '@fal/'
 
 import {capitalize} from "@/Composables/capitalize"
 import {useLayoutStore} from "@/Stores/layout"
+import { routeType } from '@/types/route'
 
 library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight, faChevronRight, faInboxOut, faChartNetwork);
 
 const props = defineProps<{
-    breadcrumbs: Array<{
+    breadcrumbs: {
         type: string
         simple: {
             icon?: string
             overlay?: string
             label?: string
-            route?: {
-                name: string
-                parameters?: Array<string>
-            }
+            route?: routeType
         }
         creatingModel: {
             label?: string
@@ -39,37 +37,25 @@ const props = defineProps<{
             index: {
                 icon?: string
                 label?: string
-                route?: {
-                    name: string
-                    parameters?: Array<string>
-                }
+                route?: routeType
             }
             model: {
                 icon?: string
                 label?: string
-                route?: {
-                    name: string
-                    parameters?: Array<string>
-                }
+                route?: routeType
             }
         }
         suffix?: string
         options?: object
-    }>
+    }[]
     navigation: {
         next?: {
             label?: string,
-            route?: {
-                name: string
-                parameters?: Array<string>
-            }
+            route?: routeType
         }
         previous?: {
             label?: string,
-            route?: {
-                name: string
-                parameters?: Array<string>
-            }
+            route?: routeType
         }
     }
 }>();
@@ -97,11 +83,11 @@ const layoutState = useLayoutStore()
 </script>
 
 <template>
-    <div v-if="compDisplayBreadcrumbs" class="transition-all duration-200 ease-in-out"
-         :class="[layoutState.leftSidebar.show ? 'pr-0 md:pr-56' : 'pr-0 md:pr-10']"
+    <div v-if="compDisplayBreadcrumbs" class="transition-all duration-200 ease-in-out border-b border-gray-200"
+        :class="[layoutState.leftSidebar.show ? 'pr-0 md:pr-56' : 'pr-0 md:pr-10']"
     >
         <nav
-            class="py-4 md:py-0 flex border-b h-6 text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
+            class="py-4 md:py-0 flex h-6 text-sm bg-gray-50 text-gray-700"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">
@@ -129,7 +115,7 @@ const layoutState = useLayoutStore()
                                 aria-hidden="true"/>
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700 dark:hover:text-gray-400' || ''"
+                                :class="'hover:text-gray-700' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(
@@ -166,7 +152,7 @@ const layoutState = useLayoutStore()
                                     icon="fa-regular fa-chevron-right"
                                     aria-hidden="true"/>
                                 <Link
-                                    class="hover:text-gray-700 dark:hover:text-gray-400 grid grid-flow-col items-center"
+                                    class="hover:text-gray-700 grid grid-flow-col items-center"
                                     :href="
 										route(
 											breadcrumb.modelWithIndex.index.route.name,
@@ -184,7 +170,7 @@ const layoutState = useLayoutStore()
                             </div>
                             <span class="mx-3 select-none">→</span>
                             <Link
-                                class="hover:text-gray-700 dark:hover:text-gray-400"
+                                class="hover:text-gray-700"
                                 :href="
 									route(
 										breadcrumb.modelWithIndex.model.route.name,

@@ -33,7 +33,7 @@ defineEmits<{
 
 <template>
     <!-- <div class="fixed top-10 right-48 bg-red-500 "><pre>{{form}}</pre></div> -->
-    <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer text-gray-300"
+    <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer text-gray-700"
         :class="[isTabActive == 'language' ? 'bg-gray-700' : ''] "
     >
         <FontAwesomeIcon v-if="form.processing" icon='fad fa-spinner-third' class='animate-spin mr-2' aria-hidden='true' />

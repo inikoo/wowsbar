@@ -61,7 +61,7 @@ const props = defineProps<{
                 <FontAwesomeIcon
                     v-if="form.processing"
                     icon="fad fa-spinner-third"
-                    class="h-5 w-5 animate-spin dark:text-gray-200"
+                    class="h-5 w-5 animate-spin"
                 />
             </div>
         </PureInputWithAddOn>

@@ -36,9 +36,9 @@ const avatarUploaded = (file) => {
                 </div>
                 <div class="ml-5 rounded-md shadow-sm">
                     <div
-                        class="group relative flex items-center justify-center rounded-md dark:bg-gray-600 border border-gray-300 dark:border-gray-500 py-2 px-3 focus-within:ring-2 focus-within:ring-gray-500 focus-within:ring-offset-2 hover:bg-gray-50">
+                        class="group relative flex items-center justify-center rounded-md border border-gray-300 py-2 px-3 focus-within:ring-2 focus-within:ring-gray-500 focus-within:ring-offset-2 hover:bg-gray-50">
                         <label for="input-avatar-small"
-                            class="pointer-events-none relative text-sm font-medium leading-4 text-gray-700 dark:text-gray-400">
+                            class="pointer-events-none relative text-sm font-medium leading-4 text-gray-700">
                             <span>{{ trans("Change") }}</span>
                         </label>
                         <input id="input-avatar-small" name="user-photo" type="file"
@@ -66,7 +66,7 @@ const avatarUploaded = (file) => {
         <div class="absolute top-2 right-0 pr-3 flex items-center pointer-events-none">
             <FontAwesomeIcon v-if="form.errors[fieldName]" icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500" aria-hidden="true" />
             <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle" class="h-5 w-5 text-green-500" aria-hidden="true" />
-            <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin dark:text-gray-200"/>
+            <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin"/>
         </div>
 
         <div v-if="props.form.errors[props.fieldName]" class="text-red-700">

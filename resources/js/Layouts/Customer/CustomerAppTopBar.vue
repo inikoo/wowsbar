@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {  router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
-import TopBarNavs from "@/Layouts/Customer/TopBarNavs.vue"
+import CustomerTopBarNavs from "@/Layouts/Customer/CustomerTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 
@@ -76,13 +76,13 @@ const logoutAuth = () => {
 </script>
 
 <template>
-    <Disclosure as="nav" class="fixed top-0 z-[21] w-full text-white dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+    <Disclosure as="nav" class="fixed top-0 z-[21] w-full text-white" v-slot="{ open }">
         <div class="flex h-11 lg:h-10 flex-shrink-0">
-            <div class="bg-gray-600 flex transition-all duration-300 ease-in-out">
+            <div class="flex transition-all duration-300 ease-in-out">
                 <!-- Hamburger -->
                 <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="$emit('update:modelValue', !modelValue)">
                     <span class="sr-only">Open sidebar</span>
-                    <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+                    <div class="block w-5 absolute left-1/2 top-1/2 transform  -translate-x-1/2 -translate-y-1/2">
                         <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-100 transform transition duration-200 ease-in-out"
                             :class="{'rotate-45': modelValue,' -translate-y-1.5': !modelValue }"></span>
                         <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-100 transform transition duration-100 ease-in-out" :class="{'opacity-0': modelValue } "></span>
@@ -92,12 +92,10 @@ const logoutAuth = () => {
                 </button>
 
                 <!-- App Title -->
-                <div class="flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-500"
+                <div class="bg-gray-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-500"
                     :class="[layout.leftSidebar.show ? 'md:w-56 md:pr-4' : 'md:w-10']"
                 >
-                    <a :href="layout.app.url"
-                        class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3"
-                    >
+                    <a :href="layout.app.url" class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3">
                         <Image :src="layout.app.logo" class="aspect-square h-full"/>
                         <p class="bg-gradient-to-r from-gray-100 to-gray-300 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
                             {{ layout.app.name }}
@@ -106,10 +104,11 @@ const logoutAuth = () => {
                 </div>
             </div>
 
-            <!-- Avatar Group -->
             <div class="bg-gray-50 flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
-                <!-- TopBar: items -->
-                <TopBarNavs />
+                <!-- Section: Top menu -->
+                <CustomerTopBarNavs />
+
+                <!-- Section: Avatar Group -->
                 <div class="flex gap-x-3">
                     <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
                     <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>

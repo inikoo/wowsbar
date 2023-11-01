@@ -39,7 +39,7 @@ const props = defineProps({
                 <ul class="divide-y divide-gray-200">
                     <li v-for="(column, key) in props.columns" v-show="column.can_be_hidden" :key="key"
                         class="py-2 flex items-center justify-between">
-                        <p class="text-sm text-gray-800 dark:text-gray-300 capitalize">
+                        <p class="text-sm text-gray-800 capitalize">
                             {{ typeof column.label == 'string' ? trans(column.label) : '' }}
                             <FontAwesomeIcon v-if="(typeof column.label != 'string')" class="text-gray-700"
                                 :icon="column.label" aria-hidden="true" />
@@ -48,8 +48,8 @@ const props = defineProps({
                         <!-- Switch Toggle -->
                         <button type="button"
                             :id="column.label"
-                            class="ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 dark:focus:ring-offset-1 dark:focus:ring-offset-gray-500 focus:ring-gray-600 dark:focus:ring-gray-500"
-                            :class="[column.hidden ? 'bg-gray-200 dark:bg-gray-500' : 'bg-gray-700']"
+                            class="ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-gray-600"
+                            :class="[column.hidden ? 'bg-gray-200' : 'bg-gray-700']"
                             :aria-pressed="!column.hidden" :aria-labelledby="`toggle-column-${column.key}`"
                             :aria-describedby="`toggle-column-${column.key}`" :dusk="`toggle-column-${column.key}`"
                             @click.prevent="onChange(column.key, column.hidden)">

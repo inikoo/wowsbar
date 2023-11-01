@@ -22,6 +22,11 @@ export default {
             },
             colors: {
                 'regal-pink': '#EDBBBA',
+                'org': {
+                    500: '#745181',
+                    600: '#452650',
+                    700: '#2F1937',
+                }
             },
             keyframes: {
                 shimmer: {
