@@ -40,8 +40,8 @@ const layout = useLayoutStore()
 
             <div :class="[
                 route(layout.currentRoute, route().v().params).includes(route(menu.route.name,menu.route.parameters))
-                ? 'bottomNavigationActiveOrganisation'
-                : 'bottomNavigationOrganisation'
+                ? 'bottomNavigationActiveOrg'
+                : 'bottomNavigationOrg'
             ]"/>
 
             <FontAwesomeIcon :icon="menu.icon"

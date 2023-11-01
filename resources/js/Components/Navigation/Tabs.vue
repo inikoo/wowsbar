@@ -8,6 +8,8 @@
 import { ref, Ref } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
+import { useLayoutStore } from '@/Stores/layout'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faInfoCircle, faTachometerAlt } from '@fas/'
 import {
@@ -31,6 +33,8 @@ const props = defineProps<{
 }>()
 
 defineEmits(['update:tab']);
+
+const layout = useLayoutStore()
 
 let currentTab: Ref<any> = ref(props.current);
 
@@ -62,10 +66,10 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
 
         <!-- Tabs: Large view -->
         <div class="hidden sm:block">
-            <div class="border-b border-gray-200 flex text-gray-500">
+            <div class="border-b border-gray-200 flex text-gray-500 mr-4">
 
                 <!-- Left section -->
-                <nav class="-mb-px flex grow space-x-6 ml-4" aria-label="Tabs">
+                <nav class="flex grow space-x-6 ml-4" aria-label="Tabs">
                     <template v-for="(tab, tabSlug) in navigation" :key="tabSlug">
                         <div v-if="tab.align !== 'right'" class="relative group">
                             <button
@@ -82,17 +86,16 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     </slot>
                                 </span>
                             </button>
-                            <div class="" :class="[tabSlug === currentTab ? 'bottomNavigationActiveCustomer' : 'bottomNavigationCustomer']"
-                            />
+                            <div class="" :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
                         </div>
                     </template>
                 </nav>
 
                 <!-- Right section -->
-                <nav class="flex flex-row-reverse mr-4" aria-label="Secondary Tabs">
+                <nav class="flex flex-row-reverse" aria-label="Secondary Tabs">
                     <slot name="content">
                         <template v-for="(tab, tabSlug, index) in navigation" :key="tabSlug">
-                                <div class="relative group">
+                            <div class="relative group">
                                 <button
                                     :id="tab.title"
                                     v-if="tab.align === 'right'"
@@ -102,9 +105,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
                                     <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
                                 </button>
-                                <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
-                                    :class="[tabSlug === currentTab ? 'bg-orange-500 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
-                                />
+                                <div :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
                             </div>
                         </template>
                     </slot>
