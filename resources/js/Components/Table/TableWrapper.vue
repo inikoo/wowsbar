@@ -9,7 +9,7 @@ defineProps<{
         <div class="">
             <div class="inline-block min-w-full"
                 :class="[result ? 'align-middle' : 'align-top']">
-                <div class="shadow border-b border-gray-200 dark:border-gray-500 relative">
+                <div class="shadow border-b border-gray-200 relative">
                     <slot />
                 </div>
             </div>

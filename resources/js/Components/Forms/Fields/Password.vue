@@ -39,9 +39,9 @@ const showPassword = ref(true);
     <div class="relative rounded-md shadow-sm">
         <div class="flex">
             <input :id='fieldName' @input="handleChange(form)" v-model="form[fieldName]" :type="showPassword ? 'password' : 'text'"  autocomplete="off"
-                :placeholder="(props.placeholder ? trans(props.placeholder) : '')" class="text-gray-700 placeholder-gray-400 dark:bg-gray-600 shadow-sm dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 w-full border-gray-300 dark:border-gray-500 rounded-l-md" />
+                :placeholder="(props.placeholder ? trans(props.placeholder) : '')" class="text-gray-700 placeholder-gray-400 shadow-sm focus:ring-gray-500 focus:border-gray-500 w-full border-gray-300 rounded-l-md" />
             <button type="button" @click="showPassword = !showPassword" :id="'show-password-' +  fieldName"
-                class="w-min px-3 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 dark:bg-gray-600 dark:border-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+                class="w-min px-3 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
                 <FontAwesomeIcon aria-hidden="true" class="h-5 w-5 text-gray-400" :icon="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash' " />
             </button>
         </div>
@@ -50,7 +50,7 @@ const showPassword = ref(true);
         <div class="absolute inset-y-0 right-11 pr-3 flex items-center pointer-events-none">
             <FontAwesomeIcon v-if="form.errors[fieldName]" icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500" aria-hidden="true" />
             <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle" class="h-5 w-5 text-green-500" aria-hidden="true" />
-            <FontAwesomeIcon v-if="form.processing && showProcessing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin dark:text-gray-200"/>
+            <FontAwesomeIcon v-if="form.processing && showProcessing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin"/>
         </div>
     </div>
     <p v-if="form.errors[fieldName]" class="mt-2 text-sm text-red-600" id="email-error">{{ form.errors[fieldName] }}</p>

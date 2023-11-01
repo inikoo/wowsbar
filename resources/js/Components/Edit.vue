@@ -9,6 +9,8 @@ import {ref, onMounted, onBeforeUnmount, Ref} from 'vue'
 import Action from '@/Components/Forms/Fields/Action.vue'
 import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { get as getLodash } from 'lodash'
+import { capitalize } from "@/Composables/capitalize"
+import { useLayoutStore } from '@/Stores/layout'
 
 // import {jumpToElement} from "@/Composables/jumpToElement"
 import {library} from "@fortawesome/fontawesome-svg-core"
@@ -79,7 +81,7 @@ const props = defineProps<{
     appName: string
 }>()
 
-
+const layout = useLayoutStore()
 const currentTab: Ref<string> = ref(props.formData.current)
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
@@ -127,7 +129,7 @@ onBeforeUnmount(() => {
 <template>
     <!-- If overflow-hidden, affect to Multiselect on Address -->
     <div class="rounded-lg shadow">
-        <div v-if="!isMobile" class="divide-y divide-gray-200 dark:divide-gray-500 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+        <div v-if="!isMobile" class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 
             <!-- Tab: Navigation -->
             <aside class="bg-gray-50/50 py-0 lg:col-span-3 lg:h-full">
@@ -135,13 +137,9 @@ onBeforeUnmount(() => {
                     <template v-for="(item, key) in formData.blueprint">
                         <div @click="currentTab = key"
                             :class="[
-                                appName == 'customer'
-                                ? key == currentTab
-                                    ? 'navigationSecondActiveCustomer'
-                                    : 'navigationSecondCustomer'
-                                : key == currentTab
-                                    ? 'navigationActiveOrganisation'
-                                    : 'navigationOrganisation',
+                                key == currentTab
+                                    ? `navigationSecondActive${capitalize(layout.appName)}`
+                                    : `navigationSecond${capitalize(layout.appName)}`,
                                 'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                             ]">
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-2 h-4 w-4"

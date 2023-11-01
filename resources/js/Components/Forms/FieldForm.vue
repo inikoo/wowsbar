@@ -7,6 +7,9 @@
 <script setup lang="ts">
 
 import { useForm } from '@inertiajs/vue3'
+import { capitalize } from "@/Composables/capitalize"
+import { useLayoutStore } from '@/Stores/layout'
+import { routeType } from '@/types/route'
 
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
@@ -48,17 +51,13 @@ const props = defineProps<{
         required?: boolean
         fullComponentArea?: boolean
         options?: {}[]
-
     }
     args: {
-        updateRoute: {
-            name: string
-            parameters: string | string[]
-        }
+        updateRoute: routeType
     }
 }>()
 
-
+const layout = useLayoutStore()
 const updateRoute = props['fieldData']['updateRoute'] ?? props.args['updateRoute'];
 
 const components = {
@@ -108,7 +107,7 @@ function submit() {
 
 <template>
     <form @submit.prevent="submit">
-        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200 dark:divide-gray-500 max-w-2xl ">
+        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200 max-w-2xl ">
             <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
                 <dt class="text-sm font-medium text-gray-400 capitalize">
                     <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
@@ -124,8 +123,11 @@ function submit() {
                         <!-- Button: Save -->
                         <span class="ml-2 flex-shrink-0">
                             <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
-                                <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-gray-600" style="--fa-secondary-color: rgb(0, 255, 4);" aria-hidden="true" />
-                                <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300 dark:text-gray-500" aria-hidden="true" />
+                                <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-org-600"
+                                    :style="{
+                                        '--fa-secondary-color': [layout.appName === 'org' ? 'rgb(69, 38, 80)' : 'rgb(0, 255, 4)']
+                                    }" aria-hidden="true" />
+                                <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300" aria-hidden="true" />
                             </button>
                         </span>
                     </div>
