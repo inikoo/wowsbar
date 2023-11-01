@@ -62,7 +62,7 @@ const handleToggleLeftbar = () => {
 </script>
 
 <template>
-    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gradient-to-t from-[#2F1937] to-[#452650] h-full text-gray-400"
+    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gradient-to-t from-org-700 to-org-600 h-full text-gray-400"
         :class="[layout.leftSidebar.show ? 'w-8/12 md:w-48' : 'w-8/12 md:w-10']"
         @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
@@ -71,36 +71,34 @@ const handleToggleLeftbar = () => {
             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
             :title="layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar'"
         >
-            <div class="flex items-center justify-center transition-all duration-200 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
+            <div class="flex items-center justify-center transition-all duration-300 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
             </div>
         </div>
 
-        <div class="isolate relative flex flex-grow flex-col pb-4 h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200">
-            <nav class="flex-1 space-y-1" aria-label="Sidebar">
-                <!-- LeftSide Links -->
-                <Link v-for="(item, itemKey) in layout.navigation"
-                    :key="itemKey"
-                    :href="route(item.route.name,item.route.parameters)"
-                    class="group flex items-center text-sm font-medium py-2"
-                    :class="[
-                        itemKey === layout.currentModule
-                            ? 'navigationActiveOrganisation px-0.5'
-                            : 'navigationOrganisation px-1',
-                        layout.leftSidebar.show ? 'px-3' : '',
-                    ]"
-                    :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
-                >
-                    <div class="flex items-center px-2">
-                        <FontAwesomeIcon
-                            aria-hidden="true"
-                            class="flex-shrink-0 h-4 w-4"
-                            :icon="item.icon"/>
-                    </div>
-                    <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
-                </Link>
-            </nav>
-        </div>
+        <nav class="isolate relative flex flex-grow flex-col pb-4 h-full overflow-y-auto custom-hide-scrollbar flex-1 space-y-1" aria-label="Sidebar">
+            <!-- LeftSide Links -->
+            <Link v-for="(item, itemKey) in layout.navigation"
+                :key="itemKey"
+                :href="route(item.route.name,item.route.parameters)"
+                class="group flex items-center text-sm font-medium py-2"
+                :class="[
+                    itemKey === layout.currentModule
+                        ? 'navigationActiveOrganisation px-0.5'
+                        : 'navigationOrganisation px-1',
+                    layout.leftSidebar.show ? 'px-3' : '',
+                ]"
+                :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+            >
+                <div class="flex items-center px-2">
+                    <FontAwesomeIcon
+                        aria-hidden="true"
+                        class="flex-shrink-0 h-4 w-4"
+                        :icon="item.icon"/>
+                </div>
+                <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+            </Link>
+        </nav>
     </div>
 </template>
 

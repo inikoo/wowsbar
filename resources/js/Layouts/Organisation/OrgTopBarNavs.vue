@@ -5,11 +5,11 @@
   -->
 
 <script setup lang="ts">
-import {get} from "lodash";
-import {capitalize} from "@/Composables/capitalize";
-import {trans} from "laravel-vue-i18n";
-import {Link} from "@inertiajs/vue3";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {get} from "lodash"
+import {capitalize} from "@/Composables/capitalize"
+import {trans} from "laravel-vue-i18n"
+import {Link} from "@inertiajs/vue3"
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
@@ -30,14 +30,12 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="flex">
-        <!-- <div class="fixed top-10 bg-blue-300"><pre>{{ layout.navigation?.[layout.currentModule]?.topMenu.subSections }}</pre></div> -->
-
+    <div class="flex h-full">
         <Link
             v-for="menu in layout.navigation?.[layout.currentModule]?.topMenu.subSections"
             :href="route(menu.route.name,menu.route.parameters)"
             :id="get(menu,'label',menu.route.name)"
-            class="group relative text-gray-700 dark:text-gray-400 group text-sm flex justify-end items-center cursor-pointer py-3 gap-x-2 px-4 md:px-4 lg:px-4"
+            class="group relative text-gray-700 group text-sm flex justify-end items-center cursor-pointer py-3 gap-x-2 px-4 md:px-4 lg:px-4"
             :title="capitalize(menu.tooltip??menu.label??'')">
 
             <div :class="[
@@ -45,7 +43,6 @@ const layout = useLayoutStore()
                 ? 'bottomNavigationActiveOrganisation'
                 : 'bottomNavigationOrganisation'
             ]"/>
-
 
             <FontAwesomeIcon :icon="menu.icon"
                 class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"

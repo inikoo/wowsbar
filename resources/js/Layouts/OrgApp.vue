@@ -11,7 +11,7 @@ import { usePage } from "@inertiajs/vue3"
 import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 import AppLeftSideBar from "@/Layouts/Organisation/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
-import AppTopBar from "@/Layouts/Organisation/AppTopBar.vue"
+import OrgAppTopBar from "@/Layouts/Organisation/OrgAppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
@@ -32,7 +32,7 @@ import {
     faGlobe,
     faLanguage, faUsers, faNetworkWired, faCalendar, faStopwatch, faBuilding, faHandshake
 } from '@fal/'
-import { faSearch, faBell} from "@far/"
+import { faSearch, faBell } from "@far/"
 
 
 library.add(
@@ -71,50 +71,42 @@ const layoutState = useLayoutStore()
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" ></div>
+    <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50"></div>
     <div class="relative transition-all duration-200 ease-in-out text-gray-700"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']">
-        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`org.dashboard.show`" urlPrefix="org.">
-            <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
-            <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-50">
-                {{ layout.organisation.name}}
-            </span>
-        </AppTopBar>
 
+        <!-- Section: TopBar -->
+        <OrgAppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen"
+            :logoRoute="`org.dashboard.show`" urlPrefix="org.">
+        </OrgAppTopBar>
+
+        <!-- Section: Breadcrumbs -->
         <Breadcrumbs class="fixed top-11 lg:top-10 z-[19] w-full transition-all duration-200 ease-in-out"
             :class="[layoutState.leftSidebar.show ? 'left-0 md:left-48' : 'left-0 md:left-10']"
-            :breadcrumbs="usePage().props.breadcrumbs??[]"
-            :navigation="usePage().props.navigation??[]"
-        />
+            :breadcrumbs="usePage().props.breadcrumbs ?? []" :navigation="usePage().props.navigation ?? []" />
 
         <!-- Sidebar: Left -->
         <div>
-            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
+            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen"
+                @click="sidebarOpen = !sidebarOpen" />
             <!-- Mobile Helper: background to close hamburger -->
-            <AppLeftSideBar class="-left-2/3 transition-all duration-100 ease-in-out z-20 block md:left-[0]" :class="{'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
+            <AppLeftSideBar class="-left-2/3 transition-all duration-200 ease-in-out z-20 block md:left-[0]"
+                :class="{ 'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
         </div>
 
         <!-- Main Content -->
-        <main class="h-full relative flex flex-col pt-20 md:pt-16 pb-8 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
-            :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-48' : 'ml-0 md:ml-10']"
-        >
+        <main
+            class="h-full relative flex flex-col pt-20 md:pt-16 pb-8 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
+            :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-48' : 'ml-0 md:ml-10']">
             <slot />
         </main>
 
         <!-- Sidebar: Right -->
         <AppRightSideBar class="fixed top-[76px] md:top-[68px] lg:top-16 w-44 transition-all duration-200 ease-in-out"
-            :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'right-0' : '-right-44']"
-        />
+            :class="[Object.values(layout.rightSidebar).some(value => value.show === true) ? 'right-0' : '-right-44']" />
 
     </div>
 
-    <notifications
-        dangerously-set-inner-html
-        :max="3"
-        :width="500"
-      />
-
-
     <Footer />
-
+    <notifications dangerously-set-inner-html :max="3" :width="500" />
 </template>
