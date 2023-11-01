@@ -10,6 +10,7 @@ namespace App\Actions\Helpers\Query\UI;
 use App\Actions\InertiaAction;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\InertiaTable\InertiaTable;
+use App\Models\Helpers\Query;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Web\Webpage;
@@ -22,26 +23,13 @@ class IndexQuery extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
-            );
+        return $request->user()->hasPermissionTo('portfolio.banners.view');
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Banner|Webpage $parent, $prefix = null): LengthAwarePaginator
+    public function handle($prefix = null): LengthAwarePaginator
     {
-        $queryBuilder = QueryBuilder::for(Snapshot::class);
-        $queryBuilder->where('state', '!=', SnapshotStateEnum::UNPUBLISHED->value);
-
-        if (class_basename($parent) == 'Banner') {
-            $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Banner');
-        }
-
-        if (class_basename($parent) == 'Webpage') {
-            $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Webpage');
-        }
+        $queryBuilder = QueryBuilder::for(Query::class);
 
         return $queryBuilder
             ->defaultSort('-published_at')
@@ -50,7 +38,12 @@ class IndexQuery extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(Banner|Webpage $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
+    public function asController(): LengthAwarePaginator
+    {
+        return $this->handle();
+    }
+
+    public function tableStructure(Query $query, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
@@ -64,7 +57,7 @@ class IndexQuery extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('Banner has not been published yet'),
+                        'title' => __('Query has not been published yet'),
                         'count' => 0
                     ]
                 );
@@ -72,16 +65,12 @@ class IndexQuery extends InertiaAction
                 $table->withExportLinks($exportLinks);
             }
 
-
-            $table->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
-                ->column(key: 'publisher', label: __('publisher'), sortable: true)
-                ->column(key: 'published_at', label: __('date published'), sortable: true)
-                ->column(key: 'published_until', label: __('published until'))
-                ->column(key: 'comment', label: __('comment'))
-                ->column(key: 'recyclable', label: ['fal', 'fa-recycle'])
-                ->defaultSort('published_at');
+            $table->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'slug', label: __('slug'), sortable: true)
+                ->column(key: 'model_type', label: __('model type'), sortable: true)
+                ->column(key: 'base', label: __('base'))
+                ->column(key: 'filters', label: __('filters'))
+                ->defaultSort('slug');
         };
     }
-
-
 }

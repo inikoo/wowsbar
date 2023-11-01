@@ -9,10 +9,8 @@ namespace App\Actions\Helpers\Query\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Http\Resources\Portfolio\SnapshotResource;
-use App\Models\Helpers\Snapshot;
-use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Http\Resources\Helpers\QueryResource;
+use App\Models\Helpers\Query;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,32 +19,23 @@ class ShowQuery extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
-            );
+        return $request->user()->hasPermissionTo('portfolio.banners.view');
     }
 
-    public function inBanner(Banner $banner, Snapshot $snapshot): Snapshot
+    public function handle(Query $query): Query
     {
-        return $this->handle($banner, $snapshot);
+        return $query;
     }
 
-    public function inWebsite(PortfolioWebsite $portfolioWebsite, Snapshot $snapshot): Snapshot
+    public function asController(Query $query): Query
     {
-        return $this->handle($portfolioWebsite, $snapshot);
+        return $this->handle($query);
     }
 
-    public function handle(PortfolioWebsite|Banner $parent, Snapshot $snapshot): Snapshot
-    {
-        return $snapshot;
-    }
-
-    public function htmlResponse(Snapshot $snapshot, ActionRequest $request): Response
+    public function htmlResponse(Query $query, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/StockImages',
+            'Query/Query',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -60,7 +49,7 @@ class ShowQuery extends InertiaAction
                         'icon'  => 'fal fa-images'
                     ],
                 ],
-                'data' => new SnapshotResource($snapshot)
+                'data' => new QueryResource($query)
             ]
         );
     }
