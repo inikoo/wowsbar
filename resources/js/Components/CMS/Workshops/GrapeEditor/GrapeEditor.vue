@@ -152,6 +152,22 @@ onMounted(() => {
     <div id="gjs">
         <slot name="defaultComponents"></slot>
     </div>
+
+    <div style="display: none;">
+  <!-- Vue app for assets -->
+  <div class="assets-wrp">
+    <div class="assets">
+      <div v-for="asset in assets" :key="asset.getSrc()" class="asset" @click="select(asset)" @dblclick="select(asset, true)">
+        <img class="asset-img" :src="asset.getSrc()" />
+        <div class="asset-over">
+          <div>Select</div>
+          <div class="asset-name">{{ asset.getFilename() }}</div>
+        </div>
+        <div class="asset-remove" @click.stop="remove(asset)">Remove</div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
   
 </template>

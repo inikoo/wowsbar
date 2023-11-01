@@ -69,17 +69,6 @@ const compIsDataFirstTimeCreated = computed(() => {
     return false
 })
 
-
-const Book = {
-    description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
-    meet: {
-        customerService: "Arya",
-        duration: "30 mnt",
-    },
-    title: "Discovery Call - Wowsbar",
-    meetInformation: "Web conferencing details provided upon confirmation.",
-};
-
 </script>
 
 <template layout="OrgApp">
