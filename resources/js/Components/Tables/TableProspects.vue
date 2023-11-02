@@ -121,7 +121,13 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
                     <template #tag="{ option, handleTagRemove, disabled }: {option: tag, handleTagRemove: Function, disabled: boolean}">
                     <!-- {{ option }} -->
                         <div class="px-0.5 py-0.5">
-                            <Tag :theme="option.id ?? maxId" :label="option.name" closeButton @click.prevent="handleTagRemove(option, $event)" />
+                            <Tag
+                                :theme="option.id ?? maxId"
+                                :label="option.name"
+                                :closeButton="true"
+                                :stringToColor="true"
+                                @onClose="(event) => handleTagRemove(option, event)"
+                            />
                         </div>
                     </template>
                 </Multiselect>

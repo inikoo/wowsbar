@@ -11,7 +11,7 @@ library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDo
 const props = defineProps<{
     form?: any
     fieldName: string
-    options: string[] | object
+    options: string[] | {}
     fieldData?: {
     }
 }>()
@@ -178,9 +178,9 @@ const selectedBox: selectedJob = reactive({})
 
 // To preserved on first load (so the box is selected)
 for (const key in optionsJob) {
-    for (const item of optionsJob[key]) {
-        if ((props.form[props.fieldName].map(option => option = option.code)).includes(item.code)) {
-            selectedBox[key] = item.code;
+    for (const item of optionsJob[key as keyof selectedJob]) {
+        if ((props.form[props.fieldName].map((option: any) => option = option.code)).includes(item.code)) {
+            selectedBox[key as keyof selectedJob] = item.code;
         }
     }
 }
@@ -209,6 +209,7 @@ watchEffect(() => {
     selectedBox.admin ? '' : delete tempObject.admin
     props.form[props.fieldName] = selectedBox.admin ? [selectedBox.admin] : Object.values(tempObject).filter(item=> item)
 })
+
 </script>
 
 <template>
