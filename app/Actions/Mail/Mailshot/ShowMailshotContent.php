@@ -50,8 +50,8 @@ class ShowMailshotContent
 
     public function asController(Mailshot $mailshot, ActionRequest $request): array
     {
-        $request->validate();
         $this->mailshot = $mailshot;
+        $request->validate();
 
         return $this->handle($mailshot);
     }
