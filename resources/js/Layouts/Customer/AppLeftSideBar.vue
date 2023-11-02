@@ -75,11 +75,11 @@ const handleToggleLeftbar = () => {
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-slate-500 hover:bg-slate-400 border-2 border-gray-600 text-white rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-5 aspect-square bg-slate-500 hover:bg-slate-400 ring-2 ring-gray-600 text-white rounded-full md:flex md:justify-center md:items-center cursor-pointer"
             :title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"
         >
             <div class="flex items-center justify-center" :class="{'rotate-180': !layout.leftSidebar.show}">
-                <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
+                <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[10px]' aria-hidden='true'/>
             </div>
         </div>
 
