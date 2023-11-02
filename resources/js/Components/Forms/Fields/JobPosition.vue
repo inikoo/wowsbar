@@ -200,6 +200,7 @@ const handleClickBox = (jobGroupName: string, jobCode: any) => {
             selectedBox[jobGroupName as keyof selectedJob] = jobCode
         }
     }
+    props.form.errors[props.fieldName] = ''
 }
 
 // To save the temporary data (selectedBox) to props.form

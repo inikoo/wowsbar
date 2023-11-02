@@ -84,8 +84,8 @@ const handleToggleLeftbar = () => {
                 class="group flex items-center text-sm font-medium py-2"
                 :class="[
                     itemKey === layout.currentModule
-                        ? 'navigationActiveOrganisation px-0.5'
-                        : 'navigationOrganisation px-1',
+                        ? 'navigationActiveOrg px-0.5'
+                        : 'navigationOrg px-1',
                     layout.leftSidebar.show ? 'px-3' : '',
                 ]"
                 :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
