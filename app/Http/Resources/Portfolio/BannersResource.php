@@ -32,7 +32,6 @@ class BannersResource extends JsonResource
             $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
         }
 
-
         return [
             'type'               => $banner->type,
             'slug'               => $banner->slug,
@@ -45,7 +44,7 @@ class BannersResource extends JsonResource
             'image'              => $image ? GetPictureSources::run($image) : null,
             'websites'           => json_decode($this->websites),
             'date'               => $banner->date,
-            'views'              => 0, // TODO: Need get stats from banner stats,
+            'views'              => $banner->number_views,
             'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
 
 

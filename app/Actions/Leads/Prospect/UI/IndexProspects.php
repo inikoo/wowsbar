@@ -7,10 +7,14 @@
 
 namespace App\Actions\Leads\Prospect\UI;
 
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
+use App\Http\Resources\CRM\ProspectMailshotsResource;
 use App\Http\Resources\CRM\ProspectResource;
+use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\TagResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
@@ -101,7 +105,7 @@ class IndexProspects extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no prospect'),
+                        'title'       => __('no prospects'),
                         'description' => null,
                         'count'       => 0
                     ]
@@ -109,8 +113,8 @@ class IndexProspects extends InertiaAction
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'phone', label: __('phone'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
+                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true);
         };
     }
 
@@ -121,6 +125,24 @@ class IndexProspects extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
+        $meta = [];
+
+        if ($this->parent->crmStats->number_prospects > 0) {
+            $meta[] = [
+                'href'     => [
+                    'name'       => 'org.crm.shop.prospects.mailshots.index',
+                    'parameters' => $request->route()->originalParameters()
+                ],
+                'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+                'label'    => __('Mailshots'),
+                'leftIcon' => [
+                    'icon'    => 'fal fa-mail-bulk',
+                    'tooltip' => __('mailshots')
+                ]
+            ];
+        }
+
+
         return Inertia::render(
             'CRM/Prospects',
             [
@@ -167,44 +189,23 @@ class IndexProspects extends InertiaAction
 
                         ] : false
                     ],
-                    'meta'    => [
-
-                        [
-                            'href'     => [
-                                'name'       => 'org.crm.shop.prospects.mailshots.index',
-                                'parameters' => $request->route()->originalParameters()
-                            ],
-                            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
-                            'label'    => __('Mailshots'),
-                            'leftIcon' => [
-                                'icon'    => 'fal fa-mail-bulk',
-                                'tooltip' => __('mailshots')
-                            ]
-                        ],
-                    ],
+                    'meta'      => $meta,
                 ],
-                'uploads' => [
+                'uploads'      => [
                     'templates' => [
                         'routes' => [
                             'name' => 'org.downloads.templates.prospects'
                         ]
                     ],
-                    'event'   => class_basename(Prospect::class),
-                    'channel' => 'uploads.org.' . request()->user()->id
+                    'event'     => class_basename(Prospect::class),
+                    'channel'   => 'uploads.org.'.request()->user()->id
                 ],
                 'uploadRoutes' => [
                     'upload' => [
                         'name'       => 'org.models.shop.prospects.upload',
                         'parameters' => $this->parent->id
                     ],
-                    // 'history' => [
-                    //     'name'       => 'org.models.prospects.upload',
-                    //     'parameters' => $this->parent->id
-                    // ],
-                    // 'download' => [
-                    //     'name'       => 'org.crm.prospects.uploads.template.download',
-                    //     'parameters' => $this->parent->id
-                    // ]
+
                 ],
 
                 'tabs' => [
@@ -217,12 +218,18 @@ class IndexProspects extends InertiaAction
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
                     fn () => ProspectResource::collection($prospects)
                     : Inertia::lazy(fn () => ProspectResource::collection($prospects)),
-
-
+                ProspectsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsTabsEnum::MAILSHOTS->value ?
+                    fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
+                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
+                ProspectsTabsEnum::HISTORY->value => $this->tab == ProspectsTabsEnum::HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
 
 
             ]
-        )->table($this->tableStructure(prefix: ProspectsTabsEnum::PROSPECTS->value));
+        )->table($this->tableStructure(prefix: ProspectsTabsEnum::PROSPECTS->value))
+            ->table(IndexProspectMailshots::make()->tableStructure(prefix: ProspectsTabsEnum::MAILSHOTS->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

@@ -50,7 +50,6 @@ const layout = useLayoutStore()
 </script>
 
 <template layout="CustomerApp">
-    <!-- <pre>{{ props }}</pre> -->
     <Head :title="capitalize(title)" />
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
         <!-- Greeting Message -->
