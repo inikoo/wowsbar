@@ -7,7 +7,6 @@
   <script setup lang="ts">
   import { ref } from "vue"
   import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditorV2.vue'
-  import { HeroPlugins, AppointmentPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, CtaPlugins, Email  } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
   import { cloneDeep } from 'lodash'
 
   const props = defineProps<{
@@ -29,7 +28,7 @@
   
   <template layout="OrgApp">
       <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true"
-          :plugins="[Email]" :updateRoute="updateRoute" :loadRoute="loadRoute"
+          :plugins="[]" :updateRoute="updateRoute" :loadRoute="loadRoute"
           :imagesUploadRoute="imagesUploadRoute">
       </GrapeEditor>
   </template>
