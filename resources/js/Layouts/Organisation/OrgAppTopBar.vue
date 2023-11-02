@@ -10,6 +10,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { useSignOutFirebase } from "@/Composables/firebaseAuth"
+import { get } from 'lodash'
 
 import {
     Menu,
@@ -75,7 +76,7 @@ const logoutAuth = () => {
                             class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 transition-all duration-200 ease-in-out"
                             :class="[layout.leftSidebar.show ? 'pl-2 py-1' : '']"
                         >
-                            <Image v-if="Object.keys(layout.app.logo).length" :src="layout.app.logo" class="aspect-square h-full"/>
+                            <Image v-if="get(layout,['app','logo','original'],false)" :src="layout.app.logo" class="aspect-square h-full"/>
                             <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
 
                             <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
