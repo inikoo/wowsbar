@@ -180,4 +180,6 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
+
+    Route::post('/custom/texts', UploadImagesToMailshot::class)->name('custom.text');
 });
