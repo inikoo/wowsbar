@@ -16,7 +16,6 @@ import Notifications from '@kyvg/vue3-notification';
 import VCalendar from 'v-calendar';
 import 'v-calendar/style.css';
 import {createPinia} from 'pinia';
-
 //import * as Sentry from '@sentry/vue';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText ||
@@ -32,7 +31,8 @@ createInertiaApp(
           ),
       setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)});
-        if (import.meta.env.VITE_SENTRY_CUST_DSN_XXX) {
+        /*
+        if (import.meta.env.VITE_SENTRY_CUST_DSNX) {
           Sentry.init({
                         app,
                         dsn                     : import.meta.env.VITE_SENTRY_CUST_DSN,
@@ -44,6 +44,8 @@ createInertiaApp(
                         replaysOnErrorSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_ON_ERRORSAMPLE_RATE,
                       });
         }
+        */
+
         app.use(plugin).
             use(createPinia()).
             use(ZiggyVue, Ziggy).

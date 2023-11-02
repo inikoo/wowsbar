@@ -25,8 +25,8 @@ createInertiaApp(
           ),
       setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)});
-
-        if(import.meta.env.VITE_SENTRY_CUST_DSN_XXX) {
+        /*
+        if(import.meta.env.VITE_SENTRY_CUST_DSN) {
           Sentry.init({
                         app,
                         dsn                     : import.meta.env.VITE_SENTRY_CUST_DSN,
@@ -37,7 +37,7 @@ createInertiaApp(
                         replaysSessionSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_SESSION_SAMPLE_RATE,
                         replaysOnErrorSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_ON_ERRORSAMPLE_RATE,
                       });
-        }
+        }*/
         app.use(plugin).
             use(createPinia()).
             use(ZiggyVue, Ziggy).
