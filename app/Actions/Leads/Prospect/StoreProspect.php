@@ -7,16 +7,21 @@
 
 namespace App\Actions\Leads\Prospect;
 
+use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
+use App\Rules\ValidAddress;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -34,6 +39,9 @@ class StoreProspect
 
     public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
     {
+        $addressData = Arr::get($modelData, 'address');
+        Arr::forget($modelData, 'address');
+
         if (class_basename($scope) == 'PortfolioWebsite') {
             data_set($modelData, 'customer_id', $scope->customer_id);
             data_set($modelData, 'portfolio_website_id', $scope->id);
@@ -45,7 +53,11 @@ class StoreProspect
         /** @var Prospect $prospect */
         $prospect = $scope->scopedProspects()->create($modelData);
 
-
+        if($addressData) {
+            StoreAddressAttachToModel::run($prospect, $addressData, ['scope' => 'contact']);
+            $prospect->location = $prospect->getLocation();
+            $prospect->save();
+        }
         if (class_basename($scope) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateProspects::dispatch();
         } elseif (class_basename($scope) == 'Shop') {
@@ -76,12 +88,36 @@ class StoreProspect
         return $this->handle($shop, $request->validated());
     }
 
-    public function prepareForValidation(ActionRequest $request): void
+    public function prepareForValidation(): void
     {
-        if ($request->get('contact_website')) {
-            $request->merge(
+        if ($this->get('contact_name', '') == '') {
+            $this->fill(['contact_name' => null]);
+        }
+
+        if ($this->get('contact_name', '') == '') {
+            $this->fill(['contact_name' => null]);
+        }
+        if ($this->get('company_name', '') == '') {
+            $this->fill(['company_name' => null]);
+        }
+
+        if ($this->get('contact_website', '') == '') {
+            $this->fill(['contact_website' => null]);
+        }
+
+        if ($this->get('phone', '') == '') {
+            $this->fill(
                 [
-                    'contact_website' => 'https://'.$request->get('contact_website'),
+                    'phone' => null
+                ]
+            );
+        }
+
+
+        if ($this->get('contact_website')) {
+            $this->fill(
+                [
+                    'contact_website' => 'https://'.$this->get('contact_website'),
                 ]
             );
         }
@@ -98,6 +134,10 @@ class StoreProspect
 
 
         return [
+            'state'           => ['sometimes', new Enum(ProspectStateEnum::class)],
+            'data'            => 'sometimes|array',
+            'created_at'      => 'sometimes|date',
+            'address'         => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'    => ['nullable', 'string', 'max:255'],
             'company_name'    => ['nullable', 'string', 'max:255'],
             'email'           => [
@@ -119,22 +159,25 @@ class StoreProspect
                     extraConditions: $extraConditions
                 ),
             ],
-            'contact_website' => ['nullable', 'url',
-                                  new IUnique(
-                                      table: 'prospects',
-                                      extraConditions: $extraConditions
-                                  ),
-                ],
+            'contact_website' => [
+                'nullable',
+                'url',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
+            ],
         ];
     }
 
     public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
     {
-        $this->scope = $scope;
-
+        $this->scope    = $scope;
         $this->asAction = true;
+        print_r($objectData);
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
+
 
         return $this->handle($scope, $validatedData);
     }
