@@ -1,6 +1,7 @@
 import type { Editor, Plugin } from 'grapesjs';
 import commands from './commands';
 import panels from './panels';
+import Rte from './Rte/Rte';
 
 export type PluginOptions = {
   /**
@@ -81,6 +82,8 @@ const CustomLayout: Plugin<PluginOptions> = (editor, opts: Partial<PluginOptions
     useCustomTheme: true,
     ...opts,
   };
+
+
 
   if (config.useCustomTheme && typeof window !== 'undefined') {
     const primaryColor = '#F9FAFB';
