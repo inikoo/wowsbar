@@ -124,8 +124,8 @@ onMounted(() => {
                                     ? 'navigationSecondActiveCustomer'
                                     : 'navigationSecondCustomer'
                             : tabActive[key]
-                                    ? 'navigationActiveOrganisation'
-                                    : 'navigationOrganisation',
+                                    ? 'navigationActiveOrg'
+                                    : 'navigationOrg',
                             'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]">
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"

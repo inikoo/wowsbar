@@ -3,11 +3,10 @@ import { onMounted, ref } from "vue";
 import "grapesjs/dist/css/grapes.min.css";
 import grapesjs, { usePlugin } from "grapesjs";
 import axios from "axios"
-import CustomLayout from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/index.ts'
-import CKEeditor from 'grapesjs-plugin-ckeditor'
+import Rte from "./CustomLayout/Rte/Rte.ts";
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
-import GalleryImages from "@/Components/Workshop/GalleryImages.vue";
+import mjml from 'grapesjs-preset-newsletter';
 
 
 const emits = defineEmits(['onSaveToServer']);
@@ -104,7 +103,6 @@ const uploadFile = async (e) => {
         }
 
     } catch (error) {
-        console.log(error)
         notify({
             title: "Failed to update banner",
             text: error,
@@ -121,7 +119,7 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins: [...props.plugins, CustomLayout, CKEeditor],
+        plugins: [ mjml ],
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         canvas: {
             styles: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'],
@@ -130,17 +128,12 @@ onMounted(() => {
         storageManager: {
             type: 'remote',
         },
-        assetManager: {
-            custom: true,
-            storeAfterUpload: false,
-            uploadFile: uploadFile
-        },
-
     });
     editorInstance.value.Storage.add('remote', {
         async load() { return Load() },
         async store(data) { return Store(data, editorInstance.value) }
     });
+    Rte(editorInstance.value)
 });
 
 
@@ -153,53 +146,93 @@ onMounted(() => {
             <slot name="defaultComponents"></slot>
         </div>
     </div>
-    <div style="display: none;">
-  <!-- Vue app for assets -->
-  <div class="assets-wrp">
-    <div class="assets">
-    sdfsdf
-    </div>
-  </div>
-</div>
 </template>
 
 <style lang="scss">
-.gjs-pn-buttons {
-    align-items: center;
-    display: flex;
-    justify-content: start;
+.gjs-rte-toolbar {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.44);
+    border-radius: 3px;
 }
 
-.gjs-pn-btn {
-    font-size: 14px;
+.gjs-rte-action {
+    font-size: 1rem;
+    border-right: none;
+    padding: 10px;
+    min-width: 35px;
 }
 
-.gjs-pn-btn.gjs-pn-active {
-    background-color: rgba(0, 0, 0, .15);
-    box-shadow: 0 0 3px rgba(0, 0, 0, .25) inset;
-    padding: 5px;
-    border-radius: 5px 5px 0px 0px;
+.gjs-rte-actionbar {
+    max-width: 600px;
+    flex-wrap: wrap;
 }
 
-.gjs-pn-views {
-    max-height: 36px;
+.rte-hilite-btn {
+    padding: 3px 6px;
+    border-radius: 3px;
+    background: rgba(210, 120, 201, 0.3);
 }
 
-.gjs-pn-panel {
-    padding: 10px 5px 0px 5px;
+/* picker */
+.rte-color-picker {
+    display: none;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.34);
+    border-radius: 5px;
+    position: absolute;
+    top: 55px;
+    width: 250px;
+    transition: all 2s ease;
+ 
 
+    &:before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: 46%;
+        border-width: 10px;
+        border-style: solid;
+    }
+
+    &.dark {
+        background: rgba(0, 0, 0, 0.80);
+        color: white;
+        &:before {
+            border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
+        }
+    }
+
+    &.light {
+        background: rgba(255, 255, 255, 0.75);
+
+        &:before {
+            border-color: transparent transparent rgba(255, 255, 255, 0.75) transparent;
+        }
+    }
+
+    &>div {
+        width: 30px;
+        display: inline-block;
+        height: 30px;
+        margin: 5px;
+        border-radius: 100%;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
-.gjs-pn-views-container {
-    box-shadow: initial;
-    border-top: 2px solid rgba(0, 0, 0, 0.2);
-    top: 40px;
-    padding-top: 0;
-    height: calc(100% - 40px);
-    background: #D9D9D9;
+.picker-wrapper {
+    padding: 20px;
 }
 
-.gjs-block {
-    width: 28%;
+.gjs-rte-action {
+    font-size: 1rem;
+    border-right: none;
+    padding: 10px;
+    min-width: fit-content;
 }
-</style>
+
+
+</style>./CustomLayout/Rte/Rte
