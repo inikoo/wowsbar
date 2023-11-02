@@ -66,7 +66,7 @@ trait WithImportModel
         //    $filePath = "storage/app/tmp/" . $filename;
         //  }
 
-        $file = ConvertUploadedFile::run("storage/app/tmp/" . $newFileName);
+        $file = ConvertUploadedFile::run($filename);
 
         $upload = $this->rumImport($file, $command);
 
