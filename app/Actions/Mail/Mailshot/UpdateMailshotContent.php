@@ -57,8 +57,8 @@ class UpdateMailshotContent
 
     public function asController(Mailshot $mailshot, ActionRequest $request): string
     {
-        $request->validate();
         $this->mailshot = $mailshot;
+        $request->validate();
 
         $this->handle($mailshot, $request->validated());
 

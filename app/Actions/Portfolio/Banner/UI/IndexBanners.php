@@ -78,16 +78,17 @@ class IndexBanners extends InertiaAction
             ->addSelect('banner_stats.number_views');
 
         if (class_basename($parent) == 'PortfolioWebsite') {
-            $queryBuilder->leftJoin('banner_portfolio_website', 'banner_id', 'banners.id')
+            $queryBuilder->leftJoin('banner_portfolio_website', 'banner_portfolio_website.banner_id', 'banners.id')
                 ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
         } else {
+
             $websites = DB::table('banner_portfolio_website')
                 ->select(
                     'banner_id',
                     DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites')
                 )
                 ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
-                ->groupBy('banner_id');
+                ->groupBy('banner_portfolio_website.banner_id');
 
             $queryBuilder->joinSub($websites, 'websites', function (JoinClause $join) {
                 $join->on('banners.id', '=', 'websites.banner_id');
