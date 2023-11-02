@@ -39,10 +39,7 @@ class StoreMailshot
         data_set(
             $modelData,
             'layout',
-            [
-                'src'  => null,
-                'html' => ''
-            ]
+            json_decode(file_get_contents(resource_path('views/mailshots/layouts/default.json')), true)
         );
 
         /** @var Mailshot $mailshot */
