@@ -17,7 +17,7 @@ class ProspectFactory extends Factory
             'contact_name'    => fake()->name,
             'company_name'    => fake()->company,
             'email'           => fake()->email,
-            'contact_website' => fake()->url,
+            'contact_website' => fake()->domainName,
         ];
     }
 }

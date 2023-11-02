@@ -161,7 +161,7 @@ class StoreProspect
             ],
             'contact_website' => [
                 'nullable',
-                'url',
+                'url:http,https',
                 new IUnique(
                     table: 'prospects',
                     extraConditions: $extraConditions
@@ -174,6 +174,7 @@ class StoreProspect
     {
         $this->scope    = $scope;
         $this->asAction = true;
+
         print_r($objectData);
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
