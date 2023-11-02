@@ -33,6 +33,7 @@ import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Image from "@/Components/Image.vue"
 import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
 import { routeType } from '@/types/route'
+import { notify } from "@kyvg/vue3-notification"
 
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock, faClone)
 
@@ -51,7 +52,7 @@ const emits = defineEmits<{
 const isDragging = ref(false);
 const fileInput = ref();
 const currentComponentBeenEdited = ref();
-const commonEditActive = ref(true);
+const commonEditActive = ref(false);
 const isOpenGalleryImages = ref(false);
 const _SlideWorkshop = ref(null);
 const uploadedFilesList = ref([]);
@@ -101,7 +102,11 @@ const selectComponentForEdition = (slide: SlideWorkshopData) => {
     }
 
     if (slide.user && slide.user !== props.user) {
-        console.log("Cannot edit: Component already in use");
+        notify({
+            title: "Error!",
+            text: `${slide.user} working for this area`,
+            type: "error"
+        })
     } else {
         const oldComponentToEdit = props.data.components.find(
             (item) => item.ulid === get(currentComponentBeenEdited.value, "ulid")
@@ -475,7 +480,11 @@ const CommonBlueprint = ref([
 
 const setCommonEdit = () => {
     if (props.data.common.user && props.data.common.user !== props.user) {
-        console.log("masih dipakek");
+        notify({
+            title: "Error!",
+            text: `${props.data.common.user} working for this area`,
+            type: "error"
+        })
     } else {
         const oldComponentToEdit = props.data.components.find(
             (item) => item.ulid === get(currentComponentBeenEdited.value, "ulid")
@@ -588,9 +597,9 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
             >
                 <FontAwesomeIcon v-if="props.data.common.user == props.user || !props.data.common.user"
                     icon="fal fa-cog" class="text-xl md:text-base text-gray-500" aria-hidden="true" />
-                <FontAwesomeIcon v-else="
+                <FontAwesomeIcon :name="props.data.common.user" v-else="
                     props.data.common.user == props.user || !props.data.common.user
-                    " :icon="['fal', 'lock']" class="" aria-hidden="true" />
+                    " :icon="['fal', 'lock']" class="text-gray-600" aria-hidden="true" />
                 <span class="text-gray-600 text-sm hidden sm:inline">{{ trans("Common properties") }}</span>
             </div>
 
@@ -659,7 +668,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         </div>
 
                         <div v-else class="flex justify-center items-center pr-2 justify-self-end">
-                            <div class="px-2 py-1" type="button" title="Edited by other user">
+                            <div class="px-2 py-1" type="button" :title="`Edited by ${slide.user}`">
                                 <FontAwesomeIcon :icon="['fal', 'lock']" class="text-xs sm:text-sm text-gray-600" />
                             </div>
                         </div>

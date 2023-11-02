@@ -10,7 +10,10 @@ namespace App\Actions\Auth\CustomerUser;
 use App\Actions\Auth\CustomerUser\Hydrators\CustomerUserHydrateUniversalSearch;
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerUsers;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
+use App\Actions\Web\Website\Hydrators\WebsiteHydrateCustomerUsers;
 use App\Http\Resources\Auth\CustomerUserResource;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\Role;
@@ -42,7 +45,12 @@ class UpdateCustomerUser
         $customerUser = $this->update($customerUser, Arr::only($modelData, ['status']));
 
         if ($customerUser->wasChanged('status')) {
-            CustomerHydrateCustomerUsers::run($customerUser->customer);
+            $customer=$customerUser->customer;
+            CustomerHydrateCustomerUsers::dispatch($customer);
+            CustomerUserHydrateUniversalSearch::dispatch($customerUser);
+            OrganisationHydrateCustomerUsers::dispatch();
+            ShopHydrateCustomerUsers::dispatch($customer->shop);
+            WebsiteHydrateCustomerUsers::dispatch($customer->website);
         }
 
         $customerUser->refresh();

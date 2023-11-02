@@ -20,11 +20,14 @@ class UpdateWorkplace
 {
     use WithActionUpdate;
 
-    public function handle(Workplace $workplace, array $modelData, array $addressData): Workplace
+    public function handle(Workplace $workplace, array $modelData): Workplace
     {
-        $workplace =  $this->update($workplace, $modelData, ['data']);
+        $addressData = Arr::get($modelData, 'address');
+        Arr::forget($modelData, 'address');
 
-        if($addressData) {
+        $workplace = $this->update($workplace, $modelData, ['data']);
+
+        if ($addressData) {
             StoreAddressAttachToModel::run($workplace, $addressData, ['scope' => 'contact']);
 
             $workplace->location = $workplace->getLocation();
@@ -35,6 +38,7 @@ class UpdateWorkplace
         }
 
         WorkplaceHydrateUniversalSearch::dispatch($workplace);
+
         return $workplace;
     }
 
@@ -47,24 +51,23 @@ class UpdateWorkplace
     public function rules(): array
     {
         return [
-            'name'       => ['sometimes','required', 'max:255'],
-            'type'       => ['sometimes','required'],
-            'address'    => ['sometimes','required']
+            'name'    => ['sometimes', 'required', 'max:255'],
+            'type'    => ['sometimes', 'required'],
+            'address' => ['sometimes', 'required']
         ];
     }
 
     public function asController(Workplace $workplace, ActionRequest $request): Workplace
     {
         $request->validate();
-        $validated=$request->validated();
+        $validated = $request->validated();
         if (array_key_exists('address', $validated)) {
             return $this->handle(
                 $workplace,
-                modelData: Arr::except($validated, 'address'),
-                addressData: Arr::only($validated, 'address')['address']
+                $validated
             );
         } else {
-            return $this->handle($workplace, modelData: $validated, addressData: []);
+            return $this->handle($workplace, modelData: $validated);
         }
     }
 

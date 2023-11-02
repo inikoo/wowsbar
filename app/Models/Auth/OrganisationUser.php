@@ -65,6 +65,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\Auth\OrganisationUserFactory factory($count = null, $state = [])
  * @method static Builder|OrganisationUser newModelQuery()
  * @method static Builder|OrganisationUser newQuery()
  * @method static Builder|OrganisationUser permission($permissions)

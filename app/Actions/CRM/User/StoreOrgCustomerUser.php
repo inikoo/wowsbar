@@ -10,7 +10,6 @@ namespace App\Actions\CRM\User;
 use App\Actions\Auth\User\StoreUser;
 use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
-use App\Models\Web\Website;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\Password;
@@ -23,13 +22,11 @@ class StoreOrgCustomerUser
     use AsAction;
     use WithAttributes;
 
-    private bool $asAction = false;
+    private bool $trusted = false;
 
-
-    public function handle(Website $website, Customer $customer, array $modelData = []): CustomerUser
+    public function handle(Customer $customer, array $modelData = []): CustomerUser
     {
         return StoreUser::make()->action(
-            website: $website,
             customer: $customer,
             modelData: $modelData
         );
@@ -37,8 +34,9 @@ class StoreOrgCustomerUser
 
     public function authorize(ActionRequest $request): bool
     {
-
-
+        if ($this->trusted) {
+            return true;
+        }
         return $request->user()->hasPermissionTo("crm.edit");
     }
 
@@ -62,7 +60,7 @@ class StoreOrgCustomerUser
     public function asController(Customer $customer, ActionRequest $request): CustomerUser
     {
         $request->validate();
-        return $this->handle($customer->website, $customer, $request->validated());
+        return $this->handle($customer, $request->validated());
     }
 
     public function htmlResponse(CustomerUser $customerUser): RedirectResponse
@@ -74,7 +72,14 @@ class StoreOrgCustomerUser
         ]);
     }
 
+    public function action(Customer $customer, array $objectData): CustomerUser
+    {
+        $this->trusted = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
 
+        return $this->handle($customer, $validatedData);
+    }
 
 
 }

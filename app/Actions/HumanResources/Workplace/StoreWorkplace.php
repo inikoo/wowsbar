@@ -10,6 +10,7 @@ namespace App\Actions\HumanResources\Workplace;
 use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWorkplaces;
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\HumanResources\Workplace;
 use App\Rules\ValidAddress;
 use Exception;
@@ -17,6 +18,7 @@ use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -29,9 +31,12 @@ class StoreWorkplace
     private bool $asAction = false;
 
 
-    public function handle(array $modelData, array $addressData): Workplace
+    public function handle(array $modelData): Workplace
     {
-        $workplace               = Workplace::create($modelData);
+
+        $addressData=Arr::get($modelData, 'address');
+        Arr::forget($modelData, 'address');
+        $workplace = Workplace::create($modelData);
         StoreAddressAttachToModel::run($workplace, $addressData, ['scope' => 'contact']);
 
         $workplace->location = $workplace->getLocation();
@@ -48,33 +53,39 @@ class StoreWorkplace
         if ($this->asAction) {
             return true;
         }
+
         return $request->user()->hasPermissionTo("hr.edit");
     }
 
     public function rules(): array
     {
         return [
-            'name'       => ['required', 'max:255'],
-            'type'       => ['required'],
-            'address'    => ['required', new ValidAddress()]
+            'name'    => ['required', 'max:255'],
+            'type'    => ['required', new Enum(WorkplaceTypeEnum::class)],
+            'address' => ['required', new ValidAddress()]
         ];
     }
 
     public function asController(ActionRequest $request): Workplace
     {
-
         $request->validate();
-        $validatedData=$request->validated();
+        $validatedData = $request->validated();
 
-        return $this->handle(
-            modelData: Arr::except($validatedData, 'address'),
-            addressData: Arr::only($validatedData, 'address')['address']
-        );
+        return $this->handle($validatedData);
     }
 
     public function htmlResponse(Workplace $workplace): RedirectResponse
     {
         return Redirect::route('org.hr.workplaces.show', $workplace->slug);
+    }
+
+    public function action(array $objectData): Workplace
+    {
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($validatedData);
     }
 
     public string $commandSignature = 'workplace:create {name} {type}';
@@ -85,10 +96,10 @@ class StoreWorkplace
 
         $this->setRawAttributes([
             'address' => [
-                'country_id'=> organisation()->country_id
+                'country_id' => organisation()->country_id
             ],
-            'name' => $command->argument('name'),
-            'type' => $command->argument('type'),
+            'name'    => $command->argument('name'),
+            'type'    => $command->argument('type'),
 
         ]);
 
@@ -100,10 +111,7 @@ class StoreWorkplace
             return 1;
         }
 
-        $workplace = $this->handle(
-            modelData: Arr::except($validatedData, 'address'),
-            addressData: Arr::only($validatedData, 'address')['address']
-        );
+        $workplace = $this->handle(modelData: $validatedData);
 
         $command->info("Workplace $workplace->slug created successfully 🎉");
 
