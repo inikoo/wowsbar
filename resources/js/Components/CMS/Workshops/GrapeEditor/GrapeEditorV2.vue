@@ -172,6 +172,10 @@ onMounted(() => {
     background: rgba(210, 120, 201, 0.3);
 }
 
+.gjs-field {
+    padding: 5px;
+}
+
 /* picker */
 .rte-color-picker {
     display: none;
