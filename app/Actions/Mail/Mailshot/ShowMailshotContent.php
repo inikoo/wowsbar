@@ -17,6 +17,10 @@ class ShowMailshotContent
     use WithActionUpdate;
 
     private bool $asAction = false;
+    /**
+     * @var array|\ArrayAccess|mixed
+     */
+    public Mailshot $mailshot;
 
     public function handle(Mailshot $mailshot): array
     {
@@ -35,7 +39,7 @@ class ShowMailshotContent
             return true;
         }
 
-        $mailshot = $request->get('mailshot');
+        $mailshot = $this->mailshot;
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             return $request->user()->hasPermissionTo("crm.prospects.edit");
         }
@@ -47,6 +51,7 @@ class ShowMailshotContent
     public function asController(Mailshot $mailshot, ActionRequest $request): array
     {
         $request->validate();
+        $this->mailshot = $mailshot;
 
         return $this->handle($mailshot);
     }
