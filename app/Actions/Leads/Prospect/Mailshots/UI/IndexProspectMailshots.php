@@ -38,6 +38,7 @@ class IndexProspectMailshots extends InertiaAction
 
     public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
+
         $this->parent = $parent;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {

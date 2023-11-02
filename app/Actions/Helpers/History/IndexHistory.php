@@ -49,6 +49,7 @@ class IndexHistory
             $queryBuilder->where('auditable_id', $model->id);
         }
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('audits.created_at')
             ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url','created_at'])

@@ -17,6 +17,8 @@ import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from "@/types/route"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
+import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 const props = defineProps <{
     pageHead: TSPageHeading
@@ -33,6 +35,8 @@ const props = defineProps <{
         event: string
     }
     prospects?: object
+    mailshots?: object
+    history?: object
     tags: string[]
 }>()
 
@@ -45,6 +49,8 @@ const component = computed(() => {
 
     const components = {
         prospects: TableProspects,
+        mailshots: TableProspectsMailshots,
+        history: TableHistories
     };
     return components[currentTab.value];
 
