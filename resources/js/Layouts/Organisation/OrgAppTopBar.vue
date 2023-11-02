@@ -75,7 +75,7 @@ const logoutAuth = () => {
                             class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 pl-2"
                         >
                             <Image v-if="Object.keys(layout.app.logo).length" :src="usePage().props.app.logo.original" class="aspect-square h-7"/>
-                            <img v-else :src="usePage().props.app.logo.original" class="aspect-square h-6" alt="">
+                            <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
 
                             <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
                                 {{ layout.app.name ? layout.app.name : "Wowsbar" }}
