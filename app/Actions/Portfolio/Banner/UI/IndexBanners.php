@@ -74,6 +74,9 @@ class IndexBanners extends InertiaAction
             'banners.date'
         );
 
+        $queryBuilder->join('banner_stats', 'banner_stats.banner_id', 'banners.id')
+            ->addSelect('banner_stats.number_views');
+
         if (class_basename($parent) == 'PortfolioWebsite') {
             $queryBuilder->leftJoin('banner_portfolio_website', 'banner_id', 'banners.id')
                 ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
@@ -91,7 +94,6 @@ class IndexBanners extends InertiaAction
             });
             $queryBuilder->addSelect('websites');
         }
-
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
