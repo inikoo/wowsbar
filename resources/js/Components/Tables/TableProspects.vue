@@ -5,15 +5,21 @@
   -->
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
-import { Link } from '@inertiajs/vue3'
+import {ref, Ref} from 'vue'
+import {Link} from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
-import { Prospect } from "@/types/prospect"
-import { trans } from "laravel-vue-i18n"
+import {Prospect} from "@/types/prospect"
+import {trans} from "laravel-vue-i18n"
 import Multiselect from '@vueform/multiselect'
 import axios from 'axios'
-import { notify } from '@kyvg/vue3-notification'
+import {notify} from '@kyvg/vue3-notification'
 import Tag from '@/Components/Tag.vue'
+import Icon from "@/Components/Icon.vue";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice} from '@fal/'
+
+library.add(faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice)
+
 
 interface tag {
     id: number
@@ -30,12 +36,12 @@ const props = defineProps<{
 
 
 function prospectRoute(prospect: Prospect) {
-    // console.log(route().current());
     switch (route().current()) {
         case 'org.crm.shop.prospects.index':
             return route(
                 'org.crm.shop.prospects.show',
-                [prospect.shop.slug, prospect.slug]);
+                [route().params['shop'],
+                    prospect.slug]);
         default:
             return route(
                 'org.crm.prospects.show',
@@ -51,9 +57,9 @@ const addNewTag = async (option: tag) => {
     // console.log(option)
     try {
         const response: any = await axios.post(route('org.models.tag.store'),
-            { name: option.name },
+            {name: option.name},
             {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {"Content-Type": "multipart/form-data"},
             }
         )
         // console.log(response.data)
@@ -74,9 +80,9 @@ const addNewTag = async (option: tag) => {
 const updateTagItemTable = async (idTag: number[], idData: number) => {
     try {
         const response = await axios.post(route('org.models.prospect.tag.attach', idData),
-            { tags: idTag },
+            {tags: idTag},
             {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {"Content-Type": "multipart/form-data"},
             }
         )
     } catch (error: any) {
@@ -93,9 +99,14 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
 <template>
     <!-- <pre>{{ tagsListTemp }}</pre> -->
     <Table :resource="data" :name="tab" class="mt-5">
+
+        <template #cell(state)="{ item: banner }">
+            <Icon :data="banner['state_icon']" class="px-1"/>
+        </template>
+
         <template #cell(name)="{ item: prospect }">
             <Link v-if="prospect.name" :href="prospectRoute(prospect)" class="special-underline">
-                <span >{{ prospect['name'] }}</span>
+                <span>{{ prospect['name'] }}</span>
             </Link>
             <span v-else class="italic opacity-50">{{ trans('Unknown') }}</span>
         </template>
@@ -104,20 +115,20 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
         <template #cell(tags)="{ item }">
             <div class="min-w-[200px]">
                 <Multiselect v-model="item.tags"
-                    mode="tags"
-                    placeholder="Select the tag"
-                    valueProp="name"
-                    trackBy="name"
-                    label="name"
-                    @change="(idTag) => (updateTagItemTable(idTag, item.slug))"
-                    :close-on-select="false"
-                    :searchable="true"
-                    :create-option="true"
-                    :on-create="addNewTag"
-                    :caret="false"
-                    :options="tagsListTemp"
-                    noResultsText="No one left. Type to add new one."
-                    appendNewTag
+                             mode="tags"
+                             placeholder="Select the tag"
+                             valueProp="name"
+                             trackBy="name"
+                             label="name"
+                             @change="(idTag) => (updateTagItemTable(idTag, item.slug))"
+                             :close-on-select="false"
+                             :searchable="true"
+                             :create-option="true"
+                             :on-create="addNewTag"
+                             :caret="false"
+                             :options="tagsListTemp"
+                             noResultsText="No one left. Type to add new one."
+                             appendNewTag
                 >
                     <template #tag="{ option, handleTagRemove, disabled }: {option: tag, handleTagRemove: Function, disabled: boolean}">
                         <div class="px-0.5 py-[3px]">

@@ -45,14 +45,14 @@ enum ProspectStateEnum: string
             ],
             'contacted'      => [
 
-                'tooltip' => __('live'),
+                'tooltip' => __('contacted'),
                 'icon'    => 'fal fa-comment-dots',
                 'class'   => 'text-green'
 
             ],
             'not-interested' => [
 
-                'tooltip' => __('Not interested'),
+                'tooltip' => __('not interested'),
                 'icon'    => 'fal fa-comment-exclamation',
                 'class'   => 'text-red'
 
@@ -66,14 +66,14 @@ enum ProspectStateEnum: string
             'invoiced'       => [
 
                 'tooltip' => __('invoiced'),
-                'icon'    => 'fal fa-invoice'
+                'icon'    => 'fal fa-file-invoice'
 
             ],
             'bounced'        => [
 
-                'tooltip' => __('bounced'),
+                'tooltip' => __('invalid'),
                 'icon'    => 'fal fa-poo',
-                'class'   => 'text-red-200'
+                'class'   => 'text-red-300'
             ],
 
 

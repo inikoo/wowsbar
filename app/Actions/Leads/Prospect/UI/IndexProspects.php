@@ -13,7 +13,7 @@ use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectMailshotsResource;
-use App\Http\Resources\CRM\ProspectResource;
+use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\TagResource;
 use App\InertiaTable\InertiaTable;
@@ -110,6 +110,7 @@ class IndexProspects extends InertiaAction
                         'count'       => 0
                     ]
                 )
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'phone', label: __('phone'), canBeHidden: false, sortable: true, searchable: true)
@@ -120,7 +121,7 @@ class IndexProspects extends InertiaAction
 
     public function jsonResponse(LengthAwarePaginator $prospects): AnonymousResourceCollection
     {
-        return ProspectResource::collection($prospects);
+        return ProspectsResource::collection($prospects);
     }
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
@@ -216,8 +217,8 @@ class IndexProspects extends InertiaAction
                 'tags' => TagResource::collection(Tag::all()),
 
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
-                    fn () => ProspectResource::collection($prospects)
-                    : Inertia::lazy(fn () => ProspectResource::collection($prospects)),
+                    fn () => ProspectsResource::collection($prospects)
+                    : Inertia::lazy(fn () => ProspectsResource::collection($prospects)),
                 ProspectsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsTabsEnum::MAILSHOTS->value ?
                     fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
                     : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
