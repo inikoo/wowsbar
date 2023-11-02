@@ -106,7 +106,6 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
                 <Multiselect v-model="item.tags"
                     mode="tags"
                     placeholder="Select the tag"
-                    noOptionsText="Type to add tags"
                     valueProp="name"
                     trackBy="name"
                     label="name"
@@ -115,13 +114,21 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
                     :searchable="true"
                     :create-option="true"
                     :on-create="addNewTag"
+                    :caret="false"
                     :options="tagsListTemp"
+                    noResultsText="No one left. Type to add new one."
                     appendNewTag
                 >
                     <template #tag="{ option, handleTagRemove, disabled }: {option: tag, handleTagRemove: Function, disabled: boolean}">
-                    <!-- {{ option }} -->
-                        <div class="px-0.5 py-0.5">
-                            <Tag :theme="option.id ?? maxId" :label="option.name" closeButton @click.prevent="handleTagRemove(option, $event)" />
+                        <div class="px-0.5 py-[3px]">
+                            <Tag
+                                :theme="option.id ?? maxId"
+                                :label="option.name"
+                                :closeButton="true"
+                                :stringToColor="true"
+                                size="sm"
+                                @onClose="(event) => handleTagRemove(option, event)"
+                            />
                         </div>
                     </template>
                 </Multiselect>

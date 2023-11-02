@@ -1,7 +1,20 @@
 import Piklor from './ColorPicker';
 import MergeTag from './mergeTags';
 import mergeTags from './mergeTags';
-export default (editor, opts = {}) => {
+import axios from 'axios'
+
+function getMergeTagData() {
+    return axios.get(route('org.models.mailshot.custom.text'))
+        .then(response => response.data)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export default async (editor, opts = {}) => {
+    const mergeTagsOption = await getMergeTagData()
+    console.log('sss',mergeTagsOption)
     const options = {
         ...{
             // default options
@@ -162,7 +175,7 @@ export default (editor, opts = {}) => {
             pk2.colorChosen(col => rte.exec('hiliteColor', col));
         },
     });
-    let pk3 = null;
+   /*  let pk3 = null;
     options.mergeTags && rte.add('mergeTags', {
         icon: `${icons.mergeTags || '<b style="pointer-events:none;">Merge Tags</b>'}
         <div id="merge-tags"
@@ -178,10 +191,10 @@ export default (editor, opts = {}) => {
                 (Array.isArray(options.mergeTags) ? options.mergeTags : null) : null, {
                 open: "span#rte-merge-tag.gjs-rte-action",
                 closeOnBlur: true
-            });}
+            })}
             pk3.colorChosen(col => rte.exec('mergeTags', `<div id=${col}>`));
         },
-    });
+    }); */
     options.format && options.format.heading1 && rte.add('heading1', {
         icon: icons.heading1 || '<div>H1</div>',
         attributes: {
@@ -371,5 +384,34 @@ export default (editor, opts = {}) => {
         },
         result: rte => rte.exec(formatBlock, '<p >')
     });
+
+    rte.add('Merge Tag', {
+        icon: `<select style='width:150px;' class="gjs-field">
+        <option value="" disabled  hidden>Select Merge Tag</option>
+        ${mergeTagsOption.map((item) => {
+            return `<option value="${item.value}" data-id="4">${item.label}</option>`
+        })}
+    </select>`,
+        // Bind the 'result' on 'change' listener
+        event: 'change',
+
+        result: (rte, action) => rte.insertHTML(`<span id="${action.btn.firstChild.value}" data-gjs-editable="false" style='color: blue;'>[${action.btn.firstChild.value}]</span>`),
+        // Callback on any input change (mousedown, keydown, etc..)
+        update: (rte, action) => {
+            const value = rte.doc.queryCommandValue(action.name);
+            if (value != 'false') { // value is a string
+                const select = action.btn.firstChild;
+                // Find the option with the corresponding value and set it as selected
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === value) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+    });
+    
+    
    
 };

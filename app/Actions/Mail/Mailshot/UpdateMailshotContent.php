@@ -18,6 +18,8 @@ class UpdateMailshotContent
     use AsAction;
     use WithAttributes;
 
+    public Mailshot $mailshot;
+
 
     public function handle(Mailshot $mailshot, array $content): Mailshot
     {
@@ -36,7 +38,7 @@ class UpdateMailshotContent
 
     public function authorize(ActionRequest $request): bool
     {
-        $mailshot = $request->get('mailshot');
+        $mailshot = $this->mailshot;
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             return $request->user()->hasPermissionTo("crm.prospects.edit");
         }
@@ -56,6 +58,7 @@ class UpdateMailshotContent
     public function asController(Mailshot $mailshot, ActionRequest $request): string
     {
         $request->validate();
+        $this->mailshot = $mailshot;
 
         $this->handle($mailshot, $request->validated());
 

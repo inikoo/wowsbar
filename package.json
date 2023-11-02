@@ -84,6 +84,7 @@
         "qs": "^6.11.1",
         "sass": "^1.63.6",
         "sass-loader": "^13.3.2",
+        "string-to-color": "^2.2.2",
         "swiper": "^10.0.4",
         "ulid": "^2.3.0",
         "v-calendar": "^3.0.3",

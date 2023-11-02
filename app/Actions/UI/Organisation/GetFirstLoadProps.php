@@ -11,6 +11,8 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\Organisation\OrganisationResource;
+use App\Http\Resources\UI\CustomerAppResource;
+use App\Http\Resources\UI\OrganisationAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Organisation\Organisation;
@@ -56,6 +58,7 @@ class GetFirstLoadProps
             $language = Language::where('code', 'en')->first();
         }
 
+        $app = OrganisationAppResource::make(organisation())->getArray();
 
         return [
             'localeData' =>
@@ -65,6 +68,7 @@ class GetFirstLoadProps
                 ],
 
             'art'               => $this->getArt(),
+            'app'               => $app,
             'layout'            => function () use ($user) {
                 return $user ? GetLayout::run($user) : null;
             },
