@@ -7,7 +7,7 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {i18nVue} from 'laravel-vue-i18n';
 import Notifications from '@kyvg/vue3-notification';
-import * as Sentry from '@sentry/vue';
+//import * as Sentry from '@sentry/vue';
 import {createPinia} from 'pinia';
 
 const appName =
