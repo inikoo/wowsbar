@@ -1,7 +1,20 @@
 import Piklor from './ColorPicker';
 import MergeTag from './mergeTags';
 import mergeTags from './mergeTags';
-export default (editor, opts = {}) => {
+import axios from 'axios'
+
+function getMergeTagData() {
+    return axios.get(route('org.models.mailshot.custom.text'))
+        .then(response => response.data)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+export default async (editor, opts = {}) => {
+    const mergeTagsOption = await getMergeTagData()
+    console.log('sss',mergeTagsOption)
     const options = {
         ...{
             // default options
@@ -372,18 +385,17 @@ export default (editor, opts = {}) => {
         result: rte => rte.exec(formatBlock, '<p >')
     });
 
-    rte.add('fontSize', {
+    rte.add('Merge Tag', {
         icon: `<select style='width:150px;' class="gjs-field">
-              <option value="" disabled  hidden>Select Merge Tag</option>
-              <option value="Arya test" data-id="1">Arya Test Tag</option>
-              <option value="Email" data-id="2">Email Tag</option>
-              <option value="First Name" data-id="3">First Name Tag</option>
-              <option value="Last Name" data-id="4">Last Name Tag</option>
-            </select>`,
+        <option value="" disabled  hidden>Select Merge Tag</option>
+        ${mergeTagsOption.map((item) => {
+            return `<option value="${item.value}" data-id="4">${item.label}</option>`
+        })}
+    </select>`,
         // Bind the 'result' on 'change' listener
         event: 'change',
-        
-        result: (rte, action) => rte.insertHTML(`<span id="${action.btn.firstChild.value}" style='color: blue;'>[${action.btn.firstChild.value}]</span>`),
+
+        result: (rte, action) => rte.insertHTML(`<span id="${action.btn.firstChild.value}" data-gjs-editable="false" style='color: blue;'>[${action.btn.firstChild.value}]</span>`),
         // Callback on any input change (mousedown, keydown, etc..)
         update: (rte, action) => {
             const value = rte.doc.queryCommandValue(action.name);
