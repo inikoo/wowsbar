@@ -9,7 +9,7 @@ import {i18nVue} from 'laravel-vue-i18n';
 import Notifications from '@kyvg/vue3-notification';
 
 import {createPinia} from 'pinia';
-import * as Sentry from '@sentry/vue';
+//import * as Sentry from '@sentry/vue';
 
 const appName =
           window.document.getElementsByTagName('title')[0]?.innerText ||
@@ -26,7 +26,7 @@ createInertiaApp(
       setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)});
 
-        if(import.meta.env.VITE_SENTRY_CUST_DSN) {
+        if(import.meta.env.VITE_SENTRY_CUST_DSN_XXX) {
           Sentry.init({
                         app,
                         dsn                     : import.meta.env.VITE_SENTRY_CUST_DSN,
