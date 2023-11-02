@@ -72,9 +72,10 @@ const logoutAuth = () => {
                         :class="[layout.leftSidebar.show ? 'md:w-48 md:pr-4' : 'md:w-10']"
                     >
                         <Link :href="layout.app.url"
-                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 pl-2"
+                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 transition-all duration-200 ease-in-out"
+                            :class="[layout.leftSidebar.show ? 'pl-2 py-1' : '']"
                         >
-                            <Image v-if="Object.keys(layout.app.logo).length" :src="usePage().props.app.logo.original" class="aspect-square h-7"/>
+                            <Image v-if="Object.keys(layout.app.logo).length" :src="layout.app.logo" class="aspect-square h-full"/>
                             <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
 
                             <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">

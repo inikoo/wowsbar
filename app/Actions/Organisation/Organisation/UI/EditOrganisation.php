@@ -45,7 +45,7 @@ class EditOrganisation
                     "value" => $organisation->name
                 ],
                 "logo" => [
-                    "type"  => "avatar",
+                    "type"  => "logo",
                     "label" => __("logo"),
                     "value" => !blank($organisation->logo_id) ? $organisation->logoImageSources(320, 320) : null,
                 ],

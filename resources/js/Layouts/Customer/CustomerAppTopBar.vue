@@ -95,12 +95,15 @@ const logoutAuth = () => {
                 <div class="bg-gray-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-500"
                     :class="[layout.leftSidebar.show ? 'md:w-56 md:pr-4' : 'md:w-10']"
                 >
-                    <a :href="layout.app.url" class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3">
+                    <Link :href="layout.app.url"
+                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 transition-all duration-200 ease-in-out"
+                            :class="[layout.leftSidebar.show ? 'pl-2 py-1' : '']"
+                        >
                         <Image :src="layout.app.logo" class="aspect-square h-full"/>
                         <p class="bg-gradient-to-r from-gray-100 to-gray-300 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
                             {{ layout.app.name }}
                         </p>
-                    </a>
+                    </Link>
                 </div>
             </div>
 

@@ -5,23 +5,29 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faExclamationCircle, faCheckCircle } from '@fas/'
 import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import Image from '@/Components/Image.vue';
+import Image from '@/Components/Image.vue'
+import { useLayoutStore } from '@/Stores/layout'
 
 library.add(faSpinnerThird, faExclamationCircle, faCheckCircle, faSpinnerThird)
 
 const props = defineProps(['form', 'fieldName', 'options'])
 
-const temporaryAvatar = ref(props.form[props.fieldName])
+const temporaryPicture = ref(props.form[props.fieldName])
 
 const avatarUploaded = (file) => {
     props.form[props.fieldName] = file
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = (e) => {
-        temporaryAvatar.value = {
+        temporaryPicture.value = {
+            original: e.target.result
+        }
+        console.log("xxxxxx", e.target.result)
+        useLayoutStore().app.logo = {
             original: e.target.result
         }
     }
+    console.log(useLayoutStore().app.logo)
 }
 
 </script>
@@ -32,7 +38,7 @@ const avatarUploaded = (file) => {
         <div class="mt-1 lg:hidden">
             <div class="flex items-center">
                 <div class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full" aria-hidden="true">
-                    <Image id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryAvatar" alt="" />
+                    <Image id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryPicture" alt="" />
                 </div>
                 <div class="ml-5 rounded-md shadow-sm">
                     <div
@@ -51,9 +57,8 @@ const avatarUploaded = (file) => {
 
         <!-- Avatar Button: Large view -->
         <div class="relative hidden overflow-hidden h-40 aspect-square rounded-full lg:inline-block ring-1 ring-gray-300">
-            <Image class="h-full rounded-full" :src="temporaryAvatar" alt="" />
-        <!-- <div class="relative hidden h-40 w-40 overflow-hidden rounded-full lg:flex lg:items-center lg:justify-center">
-            <img class="relative min-h-full min-w-max" :src="temporaryAvatar" alt="" /> -->
+            <Image class="h-full rounded-full" :src="temporaryPicture" alt="" />
+            
             <label id="input-avatar-large-mask" for="input-avatar-large"
                 class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 text-sm font-medium text-white opacity-0 hover:opacity-100">
                 <span>{{ trans("Change") }}</span>
@@ -69,6 +74,7 @@ const avatarUploaded = (file) => {
             <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin"/>
         </div>
 
+        <!-- Error: Description -->
         <div v-if="props.form.errors[props.fieldName]" class="text-red-700">
             {{ props.form.errors[props.fieldName] }}
         </div>

@@ -90,7 +90,7 @@ const layoutState = useLayoutStore()
             <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen"
                 @click="sidebarOpen = !sidebarOpen" />
             <!-- Mobile Helper: background to close hamburger -->
-            <AppLeftSideBar class="-left-2/3 transition-all duration-200 ease-in-out z-20 block md:left-[0]"
+            <AppLeftSideBar class="-left-2/3 transition-all duration-300 ease-in-out z-20 block md:left-[0]"
                 :class="{ 'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
         </div>
 

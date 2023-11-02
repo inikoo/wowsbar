@@ -15,7 +15,7 @@ export const useLayoutStore = defineStore("layout", {
             logo: {},
             url: "",
         },
-        appName: '',
+        appName: '',  // For styling navigation depend on which App
         avatar_thumbnail: {
             original: "",
             original_2x: "",

@@ -35,6 +35,16 @@ export const initialiseOrgApp = () => {
             layout.user = usePage().props.user ?? null
         }
 
+        // Set avatar thumbnail
+        if (usePage().props.auth.user.avatar_thumbnail) {
+            layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
+        }
+        
+        // Set logo app
+        if (usePage().props.app) {
+            layout.app = usePage().props.app
+        }
+
         layout.appName = 'org'
 
         layout.currentRouteParameters = route().params
@@ -46,9 +56,7 @@ export const initialiseOrgApp = () => {
 
         layout.booted = true
 
-        if (usePage().props.auth.user.avatar_thumbnail) {
-            layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
-        }
+        
     })
     return layout
 }
