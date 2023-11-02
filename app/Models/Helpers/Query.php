@@ -38,7 +38,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereReadOnly($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereUpdatedAt($value)
- * @mixin \Barryvdh\LaravelIdeHelper\Eloquent
+ * @mixin \Eloquent
  */
 class Query extends Model
 {

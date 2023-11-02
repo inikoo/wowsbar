@@ -9,13 +9,9 @@ namespace App\Actions\Helpers\Query\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Helpers\QueryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
-use App\Models\Helpers\Snapshot;
-use App\Models\Portfolio\Banner;
-use App\Models\Web\Webpage;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;

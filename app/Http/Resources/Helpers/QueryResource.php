@@ -24,12 +24,12 @@ class QueryResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'slug' => $this->slug,
-            'name' => $this->name,
+            'slug'       => $this->slug,
+            'name'       => $this->name,
             'model_type' => $this->model_type,
-            'base' => $this->base,
-            'filters' => $this->filters,
-            'read_only' => $this->read_only
+            'base'       => $this->base,
+            'filters'    => $this->filters,
+            'read_only'  => $this->read_only
         ];
     }
 }
