@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useStringToHex } from '@/Composables/useStringToHex'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes)
 
 const props = withDefaults(defineProps<{
-    // color: {
-    //     type: String,
-    //     default: 'gray'
-    // },
     size: string
     theme: number
     label?: string
     closeButton: boolean
+    stringToColor: boolean
 }>(), {
     theme: 99,
     size: 'xs'
 })
 
 const emits = defineEmits<{
-    (e: 'onClose'): void
+    (e: 'onClose', event: any): void
 }>()
 
-const listTheme = {
+const listTheme: any = {
     1: 'bg-blue-100 hover:bg-blue-200 border border-blue-200 text-blue-500',
     2: 'bg-orange-100 hover:bg-orange-200 border border-orange-200 text-orange-500',
     3: 'bg-green-100 hover:bg-green-200 border border-green-200 text-green-500',
@@ -50,13 +49,26 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border" :class="[`text-${size}`, compTheme]">
+    <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
+        :class="[
+            `text-${size}`,
+            stringToColor ? false : compTheme  // If stringToColor false then take provided style
+        ]"
+        :style="[
+            stringToColor ? [  // if stringToColor true
+                `background-color: ${useStringToHex(label) + '20'}`,
+                `border: 1px solid ${useStringToHex(label) + '90'}`,
+                `color: ${useStringToHex(label)}`
+            ] : ''
+        ]"
+    >
         <slot>
             {{ label }}
         </slot>
 
+        <!-- Button: Close (X icon) -->
         <div v-if="closeButton"
-            @click="emits('onClose')"
+            @click="(event) => emits('onClose', event)"
             class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
             <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
         </div>
