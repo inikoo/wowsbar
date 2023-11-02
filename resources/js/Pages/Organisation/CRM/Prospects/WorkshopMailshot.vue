@@ -8,20 +8,18 @@
 import { Head } from '@inertiajs/vue3';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import Publish from '@/Components/Utils/Publish.vue'
 import { capitalize } from "@/Composables/capitalize"
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup } from '@fal/'
 import { faCaretRight } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
-import { cloneDeep } from 'lodash'
+import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
-import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Modal from '@/Components/Utils/Modal.vue';
-import PureDatePicker from '@/Components/Pure/PureDatePicker.vue'
+
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCaretRight)
 
@@ -38,27 +36,52 @@ const props = defineProps<{
     setAsReadyRoute: Object,
     updateRoute: Object,
     loadRoute: Object
+    setAsScheduledRoute: object
 
 }>()
 
 const OpenModal = ref(false)
 const date = ref(new Date())
 
+const save = (schedule = false) => {
+    const reqData = {
+        ...(schedule ?
+            { route: props.setAsScheduledRoute, data: { schedule_at: date.value.toISOString() } }
+            : { route: props.setAsReadyRoute }
+        )
+    }
+    sendDataToServer(schedule, reqData)
+}
 
-const sendDataToServer = async () => {
-    console.log(date.value.toISOString())
+
+const sendDataToServer = async (schedule = false, reqData: Object) => {
     try {
         const response = await axios.post(
             route(
-                props.setAsReadyRoute.name,
-                props.setAsReadyRoute.parameters
+                reqData.route.name,
+                reqData.route.parameters
             ),
-            { schedule: date.value.toISOString() },
+            reqData?.data,
         )
         console.log('publish......')
+        notify({
+            title: "Succeed",
+            text: schedule ? "The email will be scheduled" : "Your email has been sent",
+            type: "success"
+        });
     } catch (error) {
         console.log(error)
+        notify({
+            title: "Failed",
+            text: schedule ? "Failed to schedule emaile" : "Your email failed to send",
+            type: "error"
+        });
     }
+}
+
+const onCancel = () => {
+    OpenModal.value = false
+    date.value = new Date()
 }
 
 </script>
@@ -69,46 +92,59 @@ const sendDataToServer = async () => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex">
-                <Button @click="sendDataToServer"
-                    class="relative capitalize items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
-                    Send Now
+                <Button class="button-send">
+                    Send
                 </Button>
                 <Popover>
                     <template #button>
-                        <Button 
-                            class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0" style="padding:9px;">
-                            <font-awesome-icon :icon="['fas', 'caret-right']" />
+                        <Button class="dropdwon-button">
+                            <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                            <div class="absolute inset-0 w-full flex items-center justify-center" />
                         </Button>
                     </template>
                     <template #content>
-                       <div @click="OpenModal = true">Send with schedule</div> 
+                        <div @click="OpenModal = true">Send with schedule</div>
                     </template>
-
                 </Popover>
-
-
             </div>
         </template>
     </PageHeading>
     <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
         :loadRoute="loadRoute" />
+    <Modal :isOpen="OpenModal" @onClose="OpenModal = false" width="w-fit">
 
-        <Modal :isOpen="OpenModal" @onClose="OpenModal = false" width="w-fit">
         <div>
-        <div class="m-2"><VDatePicker v-model="date" mode="dateTime" is24hr /></div>
+            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
+            <div class="my-2">
+                <VDatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
+                    :min-date="new Date()" />
+            </div>
             <div class="flex justify-between">
-            <div class="p-[4px]">Cancel</div>
-            <Button @click="sendDataToServer">Schedule</Button>
+                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
+                <Button @click="save(true)">Schedule</Button>
             </div>
         </div>
-     
-        </Modal>
+
+    </Modal>
 </template>
 
-<style>
+<style lang="scss">
 .vc-time-select-group select {
     background: transparent;
     padding: 0px 4px;
     border: none;
+}
+
+.vc-header {
+    margin-bottom: 10px;
+}
+
+.dropdwon-button {
+    padding: 9px 15px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.button-send {
+    border-radius: 10px 0px 0px 10px;
 }
 </style>
