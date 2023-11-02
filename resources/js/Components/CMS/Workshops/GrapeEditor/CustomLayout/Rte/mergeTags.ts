@@ -60,7 +60,7 @@ export default class MergeTag {
 
         self.tags.forEach(c => {
             console.log(c)
-            html += self.options.template.replace(/\{color\}/g, c);
+            html += `<div data-col="${c}" style='width:100%;'>${c}</div>`
         });
 
         self.elm.innerHTML = html;

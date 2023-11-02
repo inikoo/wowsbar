@@ -32,6 +32,7 @@ use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StoreMailshot;
@@ -180,4 +181,6 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
+
+    Route::get('/custom/texts', GetMailshotCustomText::class)->name('custom.text');
 });
