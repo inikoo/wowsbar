@@ -12,7 +12,7 @@ use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\ActionRequest;
 
-class SetMailshotAsReady
+class SetMailshotAsScheduled
 {
     use WithActionUpdate;
 
@@ -21,11 +21,11 @@ class SetMailshotAsReady
     public function handle(Mailshot $mailshot, array $modelData): Mailshot
     {
         $updateData = array_merge([
-            'state' => MailshotStateEnum::READY,
+            'state' => MailshotStateEnum::SCHEDULED
         ], $modelData);
 
         if ($mailshot->state == MailshotStateEnum::IN_PROCESS) {
-            $updateData['ready_at'] = now();
+            $updateData['ready_at'] = $modelData['schedule_at'];
         }
 
         $mailshot->update($updateData);
@@ -46,6 +46,7 @@ class SetMailshotAsReady
     {
         return [
             'publisher_id'   => ['sometimes','exists:organisation_users,id'],
+            'schedule_at'    => ['required', 'string']
         ];
     }
 

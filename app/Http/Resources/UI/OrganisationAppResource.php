@@ -8,7 +8,6 @@
 namespace App\Http\Resources\UI;
 
 use App\Http\Resources\HasSelfCall;
-use App\Models\Web\Website;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrganisationAppResource extends JsonResource

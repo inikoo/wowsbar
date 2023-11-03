@@ -10,7 +10,6 @@ namespace App\Actions\Traits;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -55,21 +54,12 @@ trait WithImportModel
             }
 
             $content = $googleDisk->get($filename);
-
             Storage::disk('local')->put("tmp/$newFileName", $content);
+            $filename = "storage/app/tmp/" . $newFileName;
         }
 
-
-
-        //  if (!$filePath) {
-        //    $filename = $this->downloadFromGoogle($command->option('google'));
-        //    $filePath = "storage/app/tmp/" . $filename;
-        //  }
-
-        $file = ConvertUploadedFile::run($filename);
-
+        $file   = ConvertUploadedFile::run($filename);
         $upload = $this->rumImport($file, $command);
-
         Storage::disk('local')->delete("tmp/" . $newFileName);
 
         $command->table(
@@ -97,61 +87,4 @@ trait WithImportModel
         return 0;
     }
 
-    public function downloadFromGoogle(string $url): Exception|string
-    {
-
-        $googleDisk = Storage::disk('google');
-        dd($googleDisk);
-
-        /*
-        try {
-            $client = new Client();
-            $client->setClientId('');
-            $client->setClientSecret('');
-            $client->refreshToken('');
-
-            $client->addScope([
-                Drive::DRIVE,
-                Drive::DRIVE_FILE,
-                Drive::DRIVE_METADATA,
-                Drive::DRIVE_METADATA_READONLY,
-                Drive::DRIVE_APPDATA,
-                Sheets::DRIVE_FILE,
-                Sheets::SPREADSHEETS,
-                Sheets::DRIVE_READONLY,
-                Sheets::DRIVE,
-                Sheets::SPREADSHEETS_READONLY,
-                Drive::DRIVE_READONLY
-            ]);
-            $client->setAccessType('offline');
-            $driveService = new Drive($client);
-
-            $filename = now()->timestamp;
-            $fileId   = explode('/', $url)[5];
-
-            $this->downloadType($driveService, $fileId, $filename);
-        } catch (Exception $e) {
-            dd($e->getMessage());
-        }
-
-        return "$filename.xlsx";
-        */
-    }
-
-    public function downloadType($driveService, $fileId, $filename): void
-    {
-        try {
-            $response = $driveService->files->export($fileId, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', array(
-                'alt' => 'media'));
-
-            Storage::disk('local')->put("tmp/$filename.xlsx", $response->getBody()->getContents());
-        } catch (Exception $e) {
-            if ($e->getCode() == 403) {
-                $response = $driveService->files->get($fileId, array(
-                    'alt' => 'media'));
-
-                Storage::disk('local')->put("tmp/$filename.xlsx", $response->getBody()->getContents());
-            }
-        }
-    }
 }

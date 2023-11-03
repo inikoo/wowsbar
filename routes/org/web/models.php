@@ -34,6 +34,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
+use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
@@ -178,7 +179,10 @@ Route::patch('/customer-user/{customerUser:id}', UpdateOrgCustomerUser::class)->
 
 Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
+
     Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
+    Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
+
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
 

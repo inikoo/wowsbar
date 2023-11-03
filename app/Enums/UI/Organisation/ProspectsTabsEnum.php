@@ -15,7 +15,11 @@ enum ProspectsTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
+    case DASHBOARD = 'dashboard';
+
     case PROSPECTS = 'prospects';
+    case LISTS     = 'lists';
+
     case SHOWCASE = 'showcase';
 
     case HISTORY   = 'history';
@@ -25,10 +29,19 @@ enum ProspectsTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
+            ProspectsTabsEnum::DASHBOARD => [
+                'title' => __('dashboard'),
+                'icon'  => 'fal fa-tachometer-alt',
+            ],
             ProspectsTabsEnum::PROSPECTS => [
                 'title' => __('prospects'),
                 'icon'  => 'fal fa-transporter',
             ],
+            ProspectsTabsEnum::LISTS => [
+                'title' => __('lists'),
+                'icon'  => 'fal fa-code-branch',
+            ],
+            
             ProspectsTabsEnum::SHOWCASE => [
                 'title' => __('Dashboard'),
                 'icon'  => 'fal fa-transporter',

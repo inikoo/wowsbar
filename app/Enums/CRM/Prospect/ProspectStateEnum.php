@@ -8,6 +8,8 @@
 namespace App\Enums\CRM\Prospect;
 
 use App\Enums\EnumHelperTrait;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 
 enum ProspectStateEnum: string
 {
@@ -77,6 +79,20 @@ enum ProspectStateEnum: string
             ],
 
 
+        ];
+    }
+
+    public static function count(Organisation|Shop $parent): array
+    {
+        $stats = $parent->crmStats;
+
+        return [
+            'no-contacted'   => $stats->number_prospects_state_no_contacted,
+            'contacted'      => $stats->number_prospects_state_contacted,
+            'not-interested' => $stats->number_prospects_state_not_interested,
+            'registered'     => $stats->number_prospects_state_registered,
+            'invoiced'       => $stats->number_prospects_state_invoiced,
+            'bounced'        => $stats->number_prospects_state_bounced
         ];
     }
 

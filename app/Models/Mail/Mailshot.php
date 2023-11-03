@@ -77,16 +77,16 @@ class Mailshot extends Model
     use HasSlug;
 
     protected $casts = [
-        'recipients' => 'array',
-        'layout'     => 'array',
-        'type'       => MailshotTypeEnum::class,
-        'state'      => MailshotStateEnum::class
+        'recipients_recipe' => 'array',
+        'layout'            => 'array',
+        'type'              => MailshotTypeEnum::class,
+        'state'             => MailshotStateEnum::class
 
     ];
 
     protected $attributes = [
-        'layout'     => '{}',
-        'recipients' => '{}',
+        'layout'            => '{}',
+        'recipients_recipe' => '{}',
     ];
 
     protected $guarded = [];
