@@ -17,18 +17,16 @@ class QuerySeeder extends Seeder
     {
         $data = [
             [
-                'slug' => Str::random(4),
                 'name' => 'Prospects with email',
                 'model_type' => class_basename(Prospect::class),
                 'base' => json_encode(['with' => 'email']),
-                'filters' => json_encode(['with' => 'phone'])
+                'filters' => json_encode(['with' => 'email'])
             ],
             [
-                'slug' => Str::random(4),
                 'name' => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
                 'base' => json_encode(['without' => 'email']),
-                'filters' => json_encode(['without' => 'phone'])
+                'filters' => json_encode(['without' => 'email'])
             ],
         ];
 
