@@ -45,6 +45,7 @@
         "@heroicons/vue": "^2.0.18",
         "@kyvg/vue3-notification": "^3.0.2",
         "@popperjs/core": "^2.11.8",
+        "@sentry/vue": "^7.77.0",
         "@tiptap/extension-character-count": "^2.0.3",
         "@tiptap/extension-color": "^2.1.9",
         "@tiptap/extension-font-family": "^2.1.9",
