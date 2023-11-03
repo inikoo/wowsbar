@@ -7,11 +7,13 @@ import Rte from "./CustomLayout/Rte/Rte.ts";
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
 import mjml from 'grapesjs-preset-newsletter';
+import { customUploadImage } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock.ts'
+
 
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
-    plugins: Array;
+    plugins?: Array;
     customBlocks?: Array;
     updateRoute?: Object;
     loadRoute?: Object;
@@ -111,7 +113,6 @@ const uploadFile = async (e) => {
     }
 }
 
-const handleAssets = ref(null)
 
 onMounted(() => {
     editorInstance.value = grapesjs.init({
@@ -119,40 +120,39 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins: [ mjml ],
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
-         // custom: true,
-            storeAfterUpload  : false,
+            // custom: true,
+            storeAfterUpload: false,
             uploadFile: async function (e) {
                 var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-             try {
-             const response = await axios.post(
-                route(
-                    props.imagesUploadRoute.name,
-                    props.imagesUploadRoute.parameters
-                ),
-                { images: files },
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
-                for(const image of response.data.data){
-                    let imageToStore = 
+                try {
+                    const response = await axios.post(
+                        route(
+                            props.imagesUploadRoute.name,
+                            props.imagesUploadRoute.parameters
+                        ),
+                        { images: files },
                         {
-                        src: image.source.original,
-                        type: 'image',
-                        id: image.id,
-                        name : image.slug
-                }
-                editorInstance.value.AssetManager.add(imageToStore);
-            }
-              
+                            headers: { "Content-Type": "multipart/form-data" },
+                        }
+                    );
+                    for (const image of response.data.data) {
+                        let imageToStore =
+                        {
+                            src: image.source.original,
+                            type: 'image',
+                            id: image.id,
+                            name: image.slug
+                        }
+                        editorInstance.value.AssetManager.add(imageToStore);
+                    }
+
                 } catch (error) {
                     console.log(error)
                 }
-                },
             },
+        },
         storageManager: {
             type: 'remote',
         },
@@ -162,6 +162,8 @@ onMounted(() => {
         async store(data) { return Store(data, editorInstance.value) }
     });
     Rte(editorInstance.value)
+    mjml(editorInstance.value,{ blocks: ['sect100', 'sect50', 'sect30', 'sect37', 'button', 'divider', 'text', 'text-sect', 'quote', 'link', 'link-block', 'grid-items', 'list-items'], })
+    customUploadImage(editorInstance.value)
 });
 
 
@@ -214,7 +216,7 @@ onMounted(() => {
     top: 55px;
     width: 250px;
     transition: all 2s ease;
- 
+
 
     &:before {
         content: "";
@@ -228,6 +230,7 @@ onMounted(() => {
     &.dark {
         background: rgba(0, 0, 0, 0.80);
         color: white;
+
         &:before {
             border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
         }
@@ -265,6 +268,4 @@ onMounted(() => {
     padding: 10px;
     min-width: fit-content;
 }
-
-
 </style>

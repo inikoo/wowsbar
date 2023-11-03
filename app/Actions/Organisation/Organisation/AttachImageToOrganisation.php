@@ -27,7 +27,7 @@ class AttachImageToOrganisation
 
 
 
-        return $organisation->addMedia($imagePath)
+        $media= $organisation->addMedia($imagePath)
             ->preservingOriginal()
             ->withProperties(
                 [
@@ -37,6 +37,10 @@ class AttachImageToOrganisation
             ->usingName($originalFilename)
             ->usingFileName($filename)
             ->toMediaCollection($collection);
+
+        $media->refresh();
+        return $media;
+
     }
 
 
