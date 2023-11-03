@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faRocketLaunch, faClock, faVideo } from "@far/";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { isNull } from "lodash";
 import { useFormatTime } from "@/Composables/useFormatTime";
-import { loadCss } from "@/Composables/loadCss";
 
 library.add(faRocketLaunch, faClock, faVideo);
 
@@ -110,7 +108,7 @@ const getDate = () => {
                 <div class="card text-center rounded-0 border-0">
                     <div
                         class="card-body"
-                     
+
                     >
                         <div v-html="data.info"></div>
                     </div>
@@ -154,5 +152,5 @@ const getDate = () => {
         </div>
     </div>
     </div>
-    
+
 </template>
