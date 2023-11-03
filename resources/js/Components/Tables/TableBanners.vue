@@ -45,7 +45,7 @@ function websiteRoute(banner: Banner, slug) {
 
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: banner }">
-            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="special-underline py-4 px-2 whitespace-nowrap">
+            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="specialUnderlineCustomer py-4 px-2 whitespace-nowrap">
                 {{ banner['name'] }}
             </Link>
         </template>
@@ -70,7 +70,7 @@ function websiteRoute(banner: Banner, slug) {
         </template>
 
         <template #cell(websites)="{ item: banner }">
-            <Link v-for="website in banner['websites']" :href="websiteRoute(banner,website.slug)"  class="special-underline py-4 px-2 mr-2" >{{website.name}}</Link>
+            <Link v-for="website in banner['websites']" :href="websiteRoute(banner,website.slug)"  class="specialUnderlineCustomer py-4 px-2 mr-2" >{{website.name}}</Link>
         </template>
 
         <template #cell(date)="{ item:banner }">

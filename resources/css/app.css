@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 
-.special-underline {
+.specialUnderlineCustomer {
     @apply bg-gradient-to-t from-lime-300 to-lime-200
     focus:ring-0 focus:outline-none focus:border-none
     bg-no-repeat [background-position:0%_100%]
@@ -17,7 +17,7 @@
     focus:[background-size:100%_100%] px-1;
 }
 
-.special-underline-organisation {
+.specialUnderlineOrg {
     @apply bg-gradient-to-t from-amber-300 to-amber-200
     focus:ring-0 focus:outline-none focus:border-none
     bg-no-repeat [background-position:0%_100%]

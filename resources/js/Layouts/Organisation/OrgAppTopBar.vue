@@ -57,7 +57,7 @@ const logoutAuth = () => {
             <div class="flex h-11 lg:h-10 flex-shrink-0">
                 <div class="border-b border-org-500 flex">
                     <!-- Hamburger -->
-                    <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="$emit('sidebarOpen', sidebarOpen)">
+                    <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="$emit('sidebarOpen', !sidebarOpen)">
                         <span class="sr-only">Open sidebar</span>
                         <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
                             <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
@@ -69,20 +69,22 @@ const logoutAuth = () => {
                     </button>
 
                     <!-- App Title: Image and Title -->
-                    <div class="bg-gradient-to-r from-org-700 to-org-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-200 ease-in-out"
+                    <div class="bg-gradient-to-r from-org-700 to-org-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out"
                         :class="[layout.leftSidebar.show ? 'md:w-48 md:pr-4' : 'md:w-10']"
                     >
-                        <Link :href="layout.app.url"
-                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3 transition-all duration-200 ease-in-out"
-                            :class="[layout.leftSidebar.show ? 'pl-2 py-1' : '']"
+                        <component :is="layout.systemName == 'org' ? 'div' : 'Link'" :href="layout.app.url ?? '/'"
+                            class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-1.5 transition-all duration-200 ease-in-out"
+                            :class="[layout.leftSidebar.show ? 'py-1 pl-4' : 'pl-2.5 w-full']"
                         >
-                            <Image v-if="get(layout,['app','logo','original'],false)" :src="layout.app.logo" class="aspect-square h-full"/>
-                            <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-6" alt="">
+                            <Image v-if="get(layout,['app', 'logo', 'original'], false)" :src="layout.app.logo" class="aspect-square h-5"/>
+                            <img v-else src="@/../art/logo/logo-white-square.png" class="aspect-square h-5 opacity-60" alt="">
 
-                            <p class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
-                                {{ layout.app.name ? layout.app.name : "Wowsbar" }}
-                            </p>
-                        </Link>
+                            <Transition>
+                                <p v-if="layout.leftSidebar.show" class="bg-gradient-to-r from-teal-200 to-lime-200 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
+                                    {{ layout.app.name ? layout.app.name : "Wowsbar" }}
+                                </p>
+                            </Transition>
+                        </component>
                     </div>
                 </div>
 

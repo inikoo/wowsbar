@@ -16,13 +16,17 @@ import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from "@/types/route"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
-import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock} from '@fal/'
-import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue";
 
-library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock)
+
+import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue"
+import TableHistories from "@/Components/Tables/TableHistories.vue"
+import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue"
+import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo } from '@fal/'
+
+library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo)
 
 
 const props = defineProps <{
@@ -43,7 +47,11 @@ const props = defineProps <{
     prospects?: object
     mailshots?: object
     history?: object
-    tags: string[]
+    tags: {
+        data: {
+            id: number
+        }[]
+    }
 }>()
 
 const dataModal = reactive({isModalOpen: false})
@@ -53,11 +61,12 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
 
-    const components = {
+    const components: any = {
         dashboard: ProspectsDashboard,
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
-        history: TableHistories
+        history: TableHistories,
+        showcase: ProspectShowcase
     };
     return components[currentTab.value];
 

@@ -8,11 +8,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes)
 
 const props = withDefaults(defineProps<{
-    size: string
-    theme: number
+    size?: string
+    theme?: number
     label?: string
-    closeButton: boolean
-    stringToColor: boolean
+    closeButton?: boolean
+    stringToColor?: boolean
 }>(), {
     theme: 99,
     size: 'xs'
@@ -49,28 +49,29 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
-        :class="[
-            `text-${size}`,
-            stringToColor ? false : compTheme  // If stringToColor false then take provided style
-        ]"
-        :style="[
-            stringToColor ? [  // if stringToColor true
-                `background-color: ${useStringToHex(label) + '20'}`,
-                `border: 1px solid ${useStringToHex(label) + '90'}`,
-                `color: ${useStringToHex(label)}`
-            ] : ''
-        ]"
-    >
-        <slot>
-            {{ label }}
-        </slot>
-
-        <!-- Button: Close (X icon) -->
-        <div v-if="closeButton"
-            @click="(event) => emits('onClose', event)"
-            class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
-            <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
+    <div class="bg-org-100/30 rounded select-none">
+        <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
+            :class="[
+                `text-${size}`,
+                stringToColor ? false : compTheme  // If stringToColor false then take provided style
+            ]"
+            :style="[
+                stringToColor ? [  // if stringToColor true
+                    `background-color: ${useStringToHex(label) + '40'}`,
+                    `border: 1px solid ${useStringToHex(label) + '90'}`,
+                    `color: ${useStringToHex(label)}`
+                ] : ''
+            ]"
+        >
+            <slot>
+                {{ label }}
+            </slot>
+            <!-- Button: Close (X icon) -->
+            <div v-if="closeButton"
+                @click="(event) => emits('onClose', event)"
+                class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
+                <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
+            </div>
         </div>
     </div>
 </template>

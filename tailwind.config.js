@@ -23,6 +23,7 @@ export default {
             colors: {
                 'regal-pink': '#EDBBBA',
                 'org': {
+                    100: '#faf9fb',
                     500: '#745181',
                     600: '#452650',
                     700: '#2F1937',

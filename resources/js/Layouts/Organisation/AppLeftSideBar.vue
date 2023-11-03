@@ -96,7 +96,11 @@ const handleToggleLeftbar = () => {
                         class="flex-shrink-0 h-4 w-4"
                         :icon="item.icon"/>
                 </div>
-                <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+                <Transition>
+                    <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">
+                        {{ trans(item.label) }}
+                    </span>
+                </Transition>
             </Link>
         </nav>
     </div>

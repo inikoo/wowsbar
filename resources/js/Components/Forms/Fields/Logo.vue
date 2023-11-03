@@ -22,12 +22,10 @@ const avatarUploaded = (file) => {
         temporaryPicture.value = {
             original: e.target.result
         }
-        console.log("xxxxxx", e.target.result)
         useLayoutStore().app.logo = {
             original: e.target.result
         }
     }
-    console.log(useLayoutStore().app.logo)
 }
 
 </script>

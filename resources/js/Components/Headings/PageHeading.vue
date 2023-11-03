@@ -66,7 +66,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 <template>
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
         <div class="">
-            <h2 class="flex items-center gap-x-2 font-bold text-gray-700 text-2xl tracking-tight ">
+            <div class="flex leading-none py-1 items-center gap-x-2 font-bold text-gray-700 text-2xl tracking-tight ">
                 <div v-if="data.container" class="text-slate-500 text-lg">
                     <Link v-if="data.container.href"
                         :href="route(
@@ -79,16 +79,16 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                         <Container :data="data.container" />
                     </div>
                 </div>
-                <div class="inline text-gray-400">
-                    <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
+                <div v-if="data.icon" class="inline text-gray-400">
+                    <FontAwesomeIcon :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
                         :icon="data.icon.icon" size="sm" class=""/>
                     <!-- <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
                         :icon="data.iconBis.icon" size="sm" class="" :class="data.iconBis.class"/> -->
                 </div>
-                <span :class="!data.noCapitalise? 'capitalize':''">{{ data.title }}</span>
+                <h2 :class="!data.noCapitalise? 'capitalize':''">{{ data.title }}</h2>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.iconRight.icon" class="h-4 mb-0.5" :class="data.iconRight.class"/>
-            </h2>
+                    :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"/>
+            </div>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                 <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                     <div v-for="item in data.meta" class="mt-2 flex items-center text-xs text-gray-500">

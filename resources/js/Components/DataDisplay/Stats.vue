@@ -6,8 +6,10 @@
 
 <script setup>
 import { trans } from 'laravel-vue-i18n'
-import { Link } from '@inertiajs/vue3';
-import {useLocaleStore} from '@/Stores/locale.js';
+import { Link } from '@inertiajs/vue3'
+import { capitalize } from '@/Composables/capitalize'
+import { useLayoutStore } from '@/Stores/layout'
+import { useLocaleStore } from '@/Stores/locale.js'
 
 defineProps(['stats']);
 const locale = useLocaleStore()
@@ -21,8 +23,10 @@ const locale = useLocaleStore()
                 class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <dt class="truncate text-sm font-medium text-gray-500 capitalize">{{ item.name }}</dt>
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-800">
-                    <Link class="special-underline-organisation" v-if="item.href"
-                        :href="route(item.href['name'],item.href['parameters'])">
+                    <Link v-if="item.href"
+                        :href="route(item.href['name'],item.href['parameters'])"
+                        :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]"    
+                    >
                         {{ locale.number(item.stat) ?? 0 }}
                     </Link>
                     <span v-else>{{ locale.number(item.stat) }}</span>

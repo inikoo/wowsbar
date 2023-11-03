@@ -9,13 +9,13 @@ import { defineStore } from "pinia";
 export const useLayoutStore = defineStore("layout", {
     state: () => ({
         app: {
+            // For App of the user 
             slug: "",
             name: "",
             showLiveUsers: false,
             logo: {},
             url: "",
         },
-        appName: '',  // For styling navigation depend on which App
         avatar_thumbnail: {
             original: "",
             original_2x: "",
@@ -55,6 +55,7 @@ export const useLayoutStore = defineStore("layout", {
                 show: false,
             },
         },
+        systemName: '',  // For styling navigation depend on which App
         user: {
             username: "",
             name: "",

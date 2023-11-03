@@ -20,12 +20,12 @@ import {
     faNewspaper, faPaperPlane,
     faRoad,
     faTransporter, faShoppingCart,
-    faWallet, faSign
+    faWallet, faSign, faUserCircle
 } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 
-library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faSign, faClock, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
+library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faSign, faClock, faUserCircle, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
 
 const props = defineProps<{
     navigation: any
@@ -66,7 +66,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
 
         <!-- Tabs: Large view -->
         <div class="hidden sm:block">
-            <div class="border-b border-gray-200 flex text-gray-500 mr-4">
+            <div class="border-b border-gray-200 flex text-gray-500 pr-4">
 
                 <!-- Left section -->
                 <nav class="flex grow space-x-6 ml-4" aria-label="Tabs">
@@ -86,7 +86,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     </slot>
                                 </span>
                             </button>
-                            <div class="" :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
+                            <div class="" :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.systemName)}` : `bottomNavigation${capitalize(layout.systemName)}`]" />
                         </div>
                     </template>
                 </nav>
@@ -105,7 +105,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
                                     <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
                                 </button>
-                                <div :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
+                                <div :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.systemName)}` : `bottomNavigation${capitalize(layout.systemName)}`]" />
                             </div>
                         </template>
                     </slot>
