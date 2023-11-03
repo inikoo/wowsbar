@@ -69,6 +69,7 @@ const sendDataToServer = async (schedule = false, reqData: Object) => {
             text: schedule ? "The email will be scheduled" : "Your email has been sent",
             type: "success"
         });
+        onCancel()
     } catch (error) {
         console.log(error)
         notify({
@@ -92,15 +93,19 @@ const onCancel = () => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex">
-                <Button class="button-send">
-                    Send
-                </Button>
+                <div>
+                    <Button @click="save(false)" class="button-send">
+                        Send Now
+                    </Button>
+                </div>
                 <Popover>
                     <template #button>
-                        <Button class="dropdwon-button">
-                            <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
-                            <div class="absolute inset-0 w-full flex items-center justify-center" />
-                        </Button>
+                        <div class="relative">
+                            <Button class="dropdwon-button">
+                                <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                                <div class="absolute inset-0 w-full flex items-center justify-center" />
+                            </Button>
+                        </div>
                     </template>
                     <template #content>
                         <div @click="OpenModal = true">Send with schedule</div>
@@ -109,8 +114,7 @@ const onCancel = () => {
             </div>
         </template>
     </PageHeading>
-    <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
-        :loadRoute="loadRoute" />
+    <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :loadRoute="loadRoute" />
     <Modal :isOpen="OpenModal" @onClose="OpenModal = false" width="w-fit">
 
         <div>
