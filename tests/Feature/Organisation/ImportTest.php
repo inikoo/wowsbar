@@ -25,7 +25,7 @@ test('import prospects', function () {
         $this->organisation,
         $this->organisationUser,
         $this->shop
-        ) = createShop();
+    ) = createShop();
 
     Artisan::call("shop:import-prospects ".$this->shop->slug." database/seeders/uploads/local/prospects.xlsx");
     expect(Upload::where('type', class_basename(Prospect::class))->sum('number_rows'))->toBe(5);
