@@ -7,8 +7,10 @@
 <script setup>
 import { trans } from 'laravel-vue-i18n'
 import { Link } from '@inertiajs/vue3';
+import {useLocaleStore} from '@/Stores/locale.js';
 
 defineProps(['stats']);
+const locale = useLocaleStore()
 
 </script>
 
@@ -17,13 +19,13 @@ defineProps(['stats']);
         <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
             <div v-for="item in stats" :key="item.name"
                 class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500 capitalize">{{ trans(item.name) }}</dt>
+                <dt class="truncate text-sm font-medium text-gray-500 capitalize">{{ item.name }}</dt>
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-800">
                     <Link class="special-underline-organisation" v-if="item.href"
                         :href="route(item.href['name'],item.href['parameters'])">
-                        {{ item.stat ?? 0 }}
+                        {{ locale.number(item.stat) ?? 0 }}
                     </Link>
-                    <span v-else>{{ trans(item.stat) }}</span>
+                    <span v-else>{{ locale.number(item.stat) }}</span>
                 </dd>
             </div>
         </dl>
