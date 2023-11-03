@@ -26,15 +26,19 @@ class UploadImagesToMailshot
     use WithAttributes;
 
 
+    /**
+     * @var \App\Models\Mail\Mailshot
+     */
+    private Mailshot $mailshot;
+
     public function handle(Mailshot $mailshot, array $imageFiles): Collection
     {
+        $organisation = organisation();
 
-        $organisation=organisation();
-
-        $medias=[];
+        $medias = [];
 
         foreach ($imageFiles as $imageFile) {
-            $medias[] =  AttachImageToOrganisation::run(
+            $medias[] = AttachImageToOrganisation::run(
                 organisation: $organisation,
                 collection: 'mail',
                 imagePath: $imageFile->getPathName(),
@@ -43,15 +47,12 @@ class UploadImagesToMailshot
             );
         }
 
-
         return collect($medias);
-
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $mailshot = $request->get('mailshot');
-        if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
+        if ($this->mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             return $request->user()->hasPermissionTo("crm.prospects.edit");
         }
 
@@ -69,14 +70,16 @@ class UploadImagesToMailshot
 
     public function asController(Mailshot $mailshot, ActionRequest $request): Collection
     {
+        $this->mailshot = $mailshot;
+
         try {
             $request->validate();
         } catch (Exception $e) {
             captureException($e);
         }
+
         return $this->handle($mailshot, $request->validated('images'));
     }
-
 
 
     public function jsonResponse($medias): AnonymousResourceCollection
