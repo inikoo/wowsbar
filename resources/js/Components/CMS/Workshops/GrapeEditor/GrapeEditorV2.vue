@@ -120,6 +120,12 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
+        plugins:[mjml],
+        pluginsOpts: {
+            [mjml]: {
+                blocks: ['sect100', 'sect50', 'sect30', 'sect37', 'button', 'divider', 'text', 'text-sect', 'quote', 'link', 'link-block', 'grid-items', 'list-items'],
+            },
+        },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
             // custom: true,
@@ -162,7 +168,6 @@ onMounted(() => {
         async store(data) { return Store(data, editorInstance.value) }
     });
     Rte(editorInstance.value)
-    mjml(editorInstance.value,{ blocks: ['sect100', 'sect50', 'sect30', 'sect37', 'button', 'divider', 'text', 'text-sect', 'quote', 'link', 'link-block', 'grid-items', 'list-items'], })
     customUploadImage(editorInstance.value)
 });
 
