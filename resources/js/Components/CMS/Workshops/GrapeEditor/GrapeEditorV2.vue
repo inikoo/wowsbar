@@ -121,10 +121,38 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: [ mjml ],
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
-        canvas: {
-           /*  styles: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'],
-            scripts: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'] */
-        },
+        assetManager: {
+         // custom: true,
+            storeAfterUpload  : false,
+            uploadFile: async function (e) {
+                var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+             try {
+             const response = await axios.post(
+                route(
+                    props.imagesUploadRoute.name,
+                    props.imagesUploadRoute.parameters
+                ),
+                { images: files },
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+                for(const image of response.data.data){
+                    let imageToStore = 
+                        {
+                        src: image.source.original,
+                        type: 'image',
+                        id: image.id,
+                        name : image.slug
+                }
+                editorInstance.value.AssetManager.add(imageToStore);
+            }
+              
+                } catch (error) {
+                    console.log(error)
+                }
+                },
+            },
         storageManager: {
             type: 'remote',
         },
