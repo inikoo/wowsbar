@@ -6,7 +6,7 @@ import axios from "axios"
 import Rte from "./CustomLayout/Rte/Rte.ts";
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
-import mjml from 'grapesjs-preset-newsletter';
+import grapesJSMJML from 'grapesjs-mjml'
 import { customUploadImage } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock.ts'
 
 
@@ -122,44 +122,18 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins:[mjml],
+        plugins:[grapesJSMJML],
         pluginsOpts: {
-            [mjml]: {
-                blocks: ['sect100', 'sect50', 'sect30', 'sect37', 'button', 'divider', 'text', 'text-sect', 'quote', 'link', 'link-block', 'grid-items', 'list-items'],
-            },
+            [grapesJSMJML] : {
+                blocks : [ 'mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-divider', 'mj-social-group',
+      'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw']
+            }
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
             // custom: true,
             storeAfterUpload: false,
-            uploadFile: async function (e) {
-                var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-                try {
-                    const response = await axios.post(
-                        route(
-                            props.imagesUploadRoute.name,
-                            props.imagesUploadRoute.parameters
-                        ),
-                        { images: files },
-                        {
-                            headers: { "Content-Type": "multipart/form-data" },
-                        }
-                    );
-                    for (const image of response.data.data) {
-                        let imageToStore =
-                        {
-                            src: image.source.original,
-                            type: 'image',
-                            id: image.id,
-                            name: image.slug
-                        }
-                        editorInstance.value.AssetManager.add(imageToStore);
-                    }
-
-                } catch (error) {
-                    console.log(error)
-                }
-            },
+            uploadFile:uploadFile
         },
         storageManager: {
             type: 'remote',
