@@ -30,6 +30,8 @@ class SetMailshotAsReady
 
         $mailshot->update($updateData);
 
+        SendMailshot::run($mailshot);
+
         return $mailshot;
     }
 
