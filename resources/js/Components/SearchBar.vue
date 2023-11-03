@@ -19,6 +19,8 @@ import {
 import { Link } from '@inertiajs/vue3'
 import { Ref } from 'vue'
 // import { router } from "@inertiajs/vue3"
+import { useLayoutStore } from '@/Stores/layout'
+
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@fad/'
@@ -45,7 +47,9 @@ const handleSearchInput = () => {
 }
 
 const loadingState = ref(false)
-const routeLink = (query) => route('customer.search.index', {
+
+
+const routeLink = (query: string) => route(`${useLayoutStore().systemName}.search.index`, {
     _query: {
         q: query,
     },
@@ -122,10 +126,10 @@ function handleKeyDown() {
                                                             {{ item.model.name }}
                                                         </div>
                                                         <div v-else-if="item.model_type == 'CustomerWebsite'" class="truncate">
-                                                            {{ item.model.name }}aaaaaa
+                                                            {{ item.model.name }}
                                                         </div>
                                                         <div v-else="">
-                                                            ddddddddddddd
+                                                            Not found
                                                         </div>
                                                     </div>
                                                     <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="relative h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
