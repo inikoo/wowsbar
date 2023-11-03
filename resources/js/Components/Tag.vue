@@ -49,7 +49,7 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="bg-org-100/30 rounded select-none">
+    <div class="rounded select-none">
         <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
             :class="[
                 `text-${size}`,

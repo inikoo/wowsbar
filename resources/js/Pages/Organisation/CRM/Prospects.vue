@@ -67,6 +67,7 @@ const component = computed(() => {
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
         history: TableHistories,
+    
         lists: TableProspectLists
     };
     return components[currentTab.value];

@@ -22,9 +22,11 @@ const props = withDefaults(defineProps<{
     'action'?: string
     'label'?: string
     'full'?: boolean
+    capitalize?: boolean
 }>(), {
     style: 'primary',
-    size: 'm'
+    size: 'm',
+    capitalize: true
 })
 
 interface Icon {
@@ -135,7 +137,7 @@ const getActionIcon = (icon: any) => {
             <slot name="icon">
                 <FontAwesomeIcon fixed-width v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
             </slot>
-            <span v-if="getActionLabel(label)" class="">{{ getActionLabel(label) }}</span>
+            <span v-if="getActionLabel(label)" :class="{'capitalize': capitalize}">{{ getActionLabel(label) }}</span>
         </slot>
     </button>
 </template>
