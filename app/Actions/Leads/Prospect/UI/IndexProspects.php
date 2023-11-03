@@ -101,6 +101,7 @@ class IndexProspects extends InertiaAction
         }
 
         foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $query->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -259,8 +260,8 @@ class IndexProspects extends InertiaAction
                     fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
                     : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
                 ProspectsTabsEnum::HISTORY->value   => $this->tab == ProspectsTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))),
 
 
             ]
