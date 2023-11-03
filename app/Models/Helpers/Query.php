@@ -44,7 +44,7 @@ use Spatie\Tags\HasSlug;
  */
 class Query extends Model
 {
-//    use HasSlug;
+    use HasSlug;
 
     protected $guarded = [];
 
