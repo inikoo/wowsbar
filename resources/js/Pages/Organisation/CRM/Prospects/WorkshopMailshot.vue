@@ -75,7 +75,7 @@ const sendDataToServer = async (schedule = false, reqData: Object) => {
         console.log(error)
         notify({
             title: "Failed",
-            text:  schedule ? "Failed to schedule emaile" : "Your email failed to send",
+            text: schedule ? "Failed to schedule emaile" : "Your email failed to send",
             type: "error"
         });
     }
@@ -94,25 +94,20 @@ const onCancel = () => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex">
-                <Button @click="save(false)"
-                    class="relative capitalize items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
-                    Send Now
+                <Button class="button-send">
+                    Send
                 </Button>
                 <Popover>
                     <template #button>
-                        <Button
-                            class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
-                            style="padding:9px;">
-                            <font-awesome-icon :icon="['fas', 'caret-right']" />
+                        <Button class="dropdwon-button">
+                            <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                            <div class="absolute inset-0 w-full flex items-center justify-center" />
                         </Button>
                     </template>
                     <template #content>
                         <div @click="OpenModal = true">Send with schedule</div>
                     </template>
-
                 </Popover>
-
-
             </div>
         </template>
     </PageHeading>
@@ -135,7 +130,7 @@ const onCancel = () => {
     </Modal>
 </template>
 
-<style>
+<style lang="scss">
 .vc-time-select-group select {
     background: transparent;
     padding: 0px 4px;
@@ -144,4 +139,14 @@ const onCancel = () => {
 
 .vc-header {
     margin-bottom: 10px;
-}</style>
+}
+
+.dropdwon-button {
+    padding: 9px 15px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.button-send {
+    border-radius: 10px 0px 0px 10px;
+}
+</style>
