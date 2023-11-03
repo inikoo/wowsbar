@@ -45,7 +45,7 @@ export const initialiseOrgApp = () => {
             layout.app = usePage().props.app
         }
 
-        layout.appName = 'org'
+        layout.systemName = 'org'
 
         layout.currentRouteParameters = route().params
         layout.currentRoute = route().current()

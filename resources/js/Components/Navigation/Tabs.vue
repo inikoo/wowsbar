@@ -86,7 +86,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     </slot>
                                 </span>
                             </button>
-                            <div class="" :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
+                            <div class="" :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.systemName)}` : `bottomNavigation${capitalize(layout.systemName)}`]" />
                         </div>
                     </template>
                 </nav>
@@ -105,7 +105,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
                                     <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
                                 </button>
-                                <div :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.appName)}` : `bottomNavigation${capitalize(layout.appName)}`]" />
+                                <div :class="[tabSlug === currentTab ? `bottomNavigationActive${capitalize(layout.app.name)}` : `bottomNavigation${capitalize(layout.app.name)}`]" />
                             </div>
                         </template>
                     </slot>

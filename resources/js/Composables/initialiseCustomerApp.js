@@ -35,7 +35,7 @@ export const initialiseCustomerApp = () => {
             layout.user = usePage().props.auth.user ?? null;
         }
 
-        layout.appName = 'customer'
+        layout.systemName = 'customer'
 
         layout.currentRouteParameters = route().params;
         layout.currentRoute = route().current();
