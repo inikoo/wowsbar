@@ -11,8 +11,8 @@ const props = withDefaults(defineProps<{
     size: string
     theme: number
     label?: string
-    closeButton: boolean
-    stringToColor: boolean
+    closeButton?: boolean
+    stringToColor?: boolean
 }>(), {
     theme: 99,
     size: 'xs'

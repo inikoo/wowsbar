@@ -51,12 +51,18 @@ function setColor(status: status) {
 
         <template #cell(avatar)="{ item: user }">
             <div class="flex justify-center">
-                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full" :alt="user.contact_name"/>
+                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full" :alt="user.username"/>
             </div>
         </template>
 
-        <template #cell(status)="{ item: user }">
+        <!-- <template #cell(status)="{ item: user }">
             <Tag :color="setColor(user['status'])">{{ user['status'] }}</Tag>
+        </template> -->
+
+        <template #cell(roles)="{ item: user }">
+            <div class="space-y-1">
+                <Tag v-for="abcde in user.roles.split(',')" stringToColor :label="abcde">{{ abcde }}</Tag>
+            </div>
         </template>
     </Table>
 </template>
