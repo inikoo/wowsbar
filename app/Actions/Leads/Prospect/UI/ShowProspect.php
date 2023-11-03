@@ -92,10 +92,10 @@ class ShowProspect extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => ProspectTabsEnum::navigation()
                 ],
-//
-//                ProspectTabsEnum::SHOWCASE->value => $this->tab == ProspectTabsEnum::SHOWCASE->value ?
-//                    fn () => GetProspectShowcase::run($prospect)
-//                    : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
+
+                ProspectTabsEnum::SHOWCASE->value => $this->tab == ProspectTabsEnum::SHOWCASE->value ?
+                    fn () => GetProspectShowcase::run($prospect)
+                    : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
 
             ]
         );
