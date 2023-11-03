@@ -19,9 +19,6 @@ enum ProspectsTabsEnum: string
 
     case PROSPECTS = 'prospects';
     case LISTS     = 'lists';
-
-    case SHOWCASE = 'showcase';
-
     case HISTORY   = 'history';
 
     case MAILSHOTS = 'mailshots';
@@ -43,11 +40,7 @@ enum ProspectsTabsEnum: string
                 'title' => __('lists'),
                 'icon'  => 'fal fa-code-branch',
             ],
-            
-            ProspectsTabsEnum::SHOWCASE => [
-                'title' => __('showcase'),
-                'icon'  => 'fal fa-info',
-            ],
+
 
             ProspectsTabsEnum::MAILSHOTS => [
                 'title' => __('mailshots'),

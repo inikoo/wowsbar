@@ -86,7 +86,11 @@ class ShowCRMDashboard
                             'org.crm.shop.dashboard' =>
                             [
                                 'name'      => 'org.crm.shop.prospects.index',
-                                'parameters'=> $routeParameters
+                                'parameters'=> array_merge($routeParameters, [
+                                    '_query'=> [
+                                        'tab'=> 'prospects'
+                                    ]
+                                ])
                             ],
                             default => [
                                 'name' => 'org.crm.prospects.index'
