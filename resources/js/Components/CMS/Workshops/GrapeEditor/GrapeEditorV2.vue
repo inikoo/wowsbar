@@ -39,6 +39,7 @@ const deleteImageStore = (data) => {
 };
 
 const Store = async (data, editor) => {
+    const inlineHtml = editorInstance.value.runCommand('gjs-get-inlined-html')
     const pagesHtml = editor.Pages.getAll().map(page => {
         const component = page.getMainComponent();
         return {
@@ -54,7 +55,7 @@ const Store = async (data, editor) => {
                 props.updateRoute.name,
                 props.updateRoute.parameters
             ),
-            { data, pagesHtml },
+            { data, pagesHtml , inlineHtml : inlineHtml },
         )
         emits('onSaveToServer', response?.data?.isDirty)
         console.log('saving......')
@@ -65,6 +66,7 @@ const Store = async (data, editor) => {
 }
 
 const Load = async (data) => {
+    console.log('ddd',editorInstance.value.runCommand('gjs-get-inlined-html'));
     try {
         const response = await axios.get(
             route(
