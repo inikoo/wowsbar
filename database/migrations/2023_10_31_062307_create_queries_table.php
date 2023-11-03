@@ -15,13 +15,15 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('queries', function (Blueprint $table) {
-            $table->increments('id');
+            $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('name')->index()->collation('und_ns');
             $table->string('model_type')->index();
-            $table->jsonb('base');
-            $table->jsonb('filters');
-            $table->boolean('read_only')->index()->default(false);
+            $table->jsonb('constrains');
+            $table->jsonb('arguments');
+            $table->boolean('is_seeded')->index()->default(false);
+            $table->unsignedInteger('number_items')->nullable();
+            $table->dateTimeTz('counted_at')->nullable();
             $table->timestampsTz();
             $this->softDeletes($table);
 

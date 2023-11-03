@@ -21,35 +21,38 @@ class QuerySeeder extends Seeder
                 'slug'       => 'prospects-email',
                 'name'       => 'Prospects with email',
                 'model_type' => class_basename(Prospect::class),
-                'base'       => [
-                    [
-                        'with' => 'email'
+                'constrains' => [
+                    'and' => [
+
+                            'with' => 'email'
+
                     ]
                 ],
-                'filters'    => []
+
 
             ],
             [
                 'slug'       => 'prospects-not-contacted',
                 'name'       => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
-                'base'       => [],
-                'filters'    => [
-                    [
-                        'with'  => 'email',
-                        'where' => [
-                            'state',
-                            '=',
-                            ProspectStateEnum::NO_CONTACTED->value
-                        ]
+                'constrains' => [
+                    'and' => [
+
+                            'with'  => 'email',
+                            'where' => [
+                                'state',
+                                '=',
+                                ProspectStateEnum::NO_CONTACTED->value
+                            ]
+
                     ]
                 ]
             ],
         ];
 
         foreach ($data as $queryData) {
-            $queryData['read_only'] = true;
-            if ($query = Query::where('slug', $queryData['slug'])->where('read_only', true)->first()) {
+            $queryData['is_seeded'] = true;
+            if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);
             } else {
                 StoreQuery::run($queryData);

@@ -39,10 +39,6 @@ class UpdateQuery
     {
         return [
             'name'       => ['sometimes', 'string'],
-            'model_type' => ['sometimes', 'string'],
-            'base'       => ['sometimes', 'string'],
-            'filters'    => ['sometimes', 'string'],
-            'read_only'  => ['sometimes', 'string']
         ];
     }
 

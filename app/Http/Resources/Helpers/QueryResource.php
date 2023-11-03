@@ -14,9 +14,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $slug
  * @property string $name
  * @property string $model_type
- * @property mixed $base
- * @property mixed $filters
- * @property boolean $read_only
+ * @property mixed $constrains
+ * @property mixed $arguments
+ * @property boolean $is_seeded
  *
  */
 class QueryResource extends JsonResource
@@ -27,9 +27,9 @@ class QueryResource extends JsonResource
             'slug'       => $this->slug,
             'name'       => $this->name,
             'model_type' => $this->model_type,
-            'base'       => $this->base,
-            'filters'    => $this->filters,
-            'read_only'  => $this->read_only
+            'constrains' => $this->constrains,
+            'arguments'  => $this->arguments,
+            'is_seeded'  => $this->is_seeded
         ];
     }
 }
