@@ -19,14 +19,14 @@ class QuerySeeder extends Seeder
             [
                 'slug' => Str::random(4),
                 'name' => 'Prospects with email',
-                'model_type' => Prospect::class,
-                'base' => json_encode(['without' => 'email']),
+                'model_type' => class_basename(Prospect::class),
+                'base' => json_encode(['with' => 'email']),
                 'filters' => json_encode(['with' => 'phone'])
             ],
             [
                 'slug' => Str::random(4),
                 'name' => 'Prospects not contacted',
-                'model_type' => Prospect::class,
+                'model_type' => class_basename(Prospect::class),
                 'base' => json_encode(['without' => 'email']),
                 'filters' => json_encode(['without' => 'phone'])
             ],
