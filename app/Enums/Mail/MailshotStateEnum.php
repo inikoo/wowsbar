@@ -45,6 +45,22 @@ enum MailshotStateEnum: string
 
 
             ],
+            'ready' => [
+
+                'tooltip' => __('Ready'),
+                'icon'    => 'fal fa-seedling',
+                'class'   => 'text-indigo-500'
+
+
+            ],
+            'scheduled' => [
+
+                'tooltip' => __('Scheduled'),
+                'icon'    => 'fal fa-seedling',
+                'class'   => 'text-indigo-500'
+
+
+            ],
             'live'        => [
 
                 'tooltip' => __('live'),
