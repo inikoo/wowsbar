@@ -45,8 +45,8 @@ class SetMailshotAsScheduled
     public function rules(): array
     {
         return [
-            'publisher_id'   => ['sometimes','exists:organisation_user:id'],
-            'scheduled_at'   => ['required', 'string'],
+            'publisher_id'   => ['sometimes','exists:organisation_users,id'],
+            'schedule_at'   => ['required', 'string']
         ];
     }
 

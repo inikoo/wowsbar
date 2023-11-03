@@ -15,9 +15,7 @@ import { faCaretRight } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
-import { get } from 'lodash'
 import Button from '@/Components/Elements/Buttons/Button.vue';
-import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Modal from '@/Components/Utils/Modal.vue';
@@ -48,7 +46,7 @@ const date = ref(new Date())
 const save = (schedule = false) => {
     const reqData = {
         ...(schedule ?
-            { route: props.setAsScheduledRoute, data: { schedule_add: date.value.toISOString() } }
+            { route: props.setAsScheduledRoute, data: { schedule_at: date.value.toISOString() } }
             : { route: props.setAsReadyRoute }
         )
     }
