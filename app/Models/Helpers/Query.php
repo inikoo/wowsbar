@@ -7,8 +7,10 @@
 
 namespace App\Models\Helpers;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Tags\HasSlug;
 
 /**
  * App\Models\Helpers\Query
@@ -42,6 +44,8 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Query extends Model
 {
+//    use HasSlug;
+
     protected $guarded = [];
 
     public function getSlugOptions(): SlugOptions
