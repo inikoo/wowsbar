@@ -9,6 +9,8 @@ namespace App\Models\Mail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * App\Models\Mail\MailshotRecipient
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $mailshot_id
  * @property string $recipient_type
  * @property int $recipient_id
+ * @property \App\Models\Mail\Mailshot $mailshot
+ * @property \App\Models\Leads\Prospect|\App\Models\CRM\Customer $recipient
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newModelQuery()
@@ -33,4 +37,16 @@ use Illuminate\Database\Eloquent\Model;
 class MailshotRecipient extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function recipient(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function mailshot(): BelongsTo
+    {
+        return $this->belongsTo(Mailshot::class);
+    }
 }

@@ -14,6 +14,7 @@ use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectMailshotsResource;
+use App\Http\Resources\CRM\ProspectQueriesResource;
 use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\TagResource;
@@ -101,6 +102,7 @@ class IndexProspects extends InertiaAction
         }
 
         foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $query->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -255,16 +257,22 @@ class IndexProspects extends InertiaAction
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
                     fn () => ProspectsResource::collection($prospects)
                     : Inertia::lazy(fn () => ProspectsResource::collection($prospects)),
+
+                ProspectsTabsEnum::LISTS->value => $this->tab == ProspectsTabsEnum::LISTS->value ?
+                    fn () => ProspectMailshotsResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))
+                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))),
+
                 ProspectsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsTabsEnum::MAILSHOTS->value ?
-                    fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
-                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
+                    fn () => ProspectQueriesResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
+                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
                 ProspectsTabsEnum::HISTORY->value   => $this->tab == ProspectsTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))),
 
 
             ]
         )->table($this->tableStructure(parent: $this->parent, prefix: ProspectsTabsEnum::PROSPECTS->value))
+            ->table(IndexProspectQueries::make()->tableStructure(prefix: ProspectsTabsEnum::LISTS->value))
             ->table(IndexProspectMailshots::make()->tableStructure(prefix: ProspectsTabsEnum::MAILSHOTS->value))
             ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value));
     }

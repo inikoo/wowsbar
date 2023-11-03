@@ -5,15 +5,15 @@
   -->
 
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3"
+import {Head} from "@inertiajs/vue3"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import TableProspects from "@/Components/Tables/TableProspects.vue"
-import { capitalize } from "@/Composables/capitalize"
+import {capitalize} from "@/Composables/capitalize"
 import {computed, reactive, ref} from "vue"
 import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import UploadExcel from '@/Components/Upload/UploadExcel.vue'
-import { PageHeading as TSPageHeading } from '@/types/PageHeading'
-import { routeType } from "@/types/route"
+import {PageHeading as TSPageHeading} from '@/types/PageHeading'
+import {routeType} from "@/types/route"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 
@@ -22,13 +22,14 @@ import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots
 import TableHistories from "@/Components/Tables/TableHistories.vue"
 import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue"
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo } from '@fal/'
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo} from '@fal/'
+import TableProspectLists from "@/Components/Tables/TableProspectLists.vue";
 
 library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo)
 
 
-const props = defineProps <{
+const props = defineProps<{
     pageHead: TSPageHeading
     title: string
     tabs: {
@@ -45,6 +46,7 @@ const props = defineProps <{
     dashboard?: object
     prospects?: object
     mailshots?: object
+    lists?: object
     history?: object
     tags: {
         data: {
@@ -65,6 +67,8 @@ const component = computed(() => {
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
         history: TableHistories,
+    
+        lists: TableProspectLists
     };
     return components[currentTab.value];
 
@@ -72,10 +76,10 @@ const component = computed(() => {
 </script>
 
 <template layout="OrgApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead">
         <template v-if="pageHead.actions[0].type === 'buttonGroup'" #button>
-            <ButtonGroup :dataButton="pageHead.actions[0].buttons" :dataModal="dataModal" />
+            <ButtonGroup :dataButton="pageHead.actions[0].buttons" :dataModal="dataModal"/>
         </template>
     </PageHeading>
 

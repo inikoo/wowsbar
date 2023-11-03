@@ -9,6 +9,7 @@ namespace App\Actions\Traits;
 
 use App\Models\Helpers\Query;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 trait WithQueryFilter
 {
@@ -18,12 +19,22 @@ trait WithQueryFilter
         $model = $query->model_type::query();
 
         if(! blank($query->base)) {
-            $model->{$query->base};
+            if($property = Arr::get($query->base, 'with')) {
+                $model->whereNotNull($property);
+            }
+
+            if($property = Arr::get($query->base, 'without')) {
+                $model->whereNotNull($property);
+            }
         }
 
         if(! blank($query->filters)) {
-            foreach ($query->filters as $filter) {
-                $model->{$filter};
+            if($property = Arr::get($query->filters, 'with')) {
+                $model->orWhereNotNull($property);
+            }
+
+            if($property = Arr::get($query->filters, 'without')) {
+                $model->orWhereNull($property);
             }
         }
 

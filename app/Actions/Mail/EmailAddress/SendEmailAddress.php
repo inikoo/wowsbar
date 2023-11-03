@@ -8,6 +8,7 @@
 namespace App\Actions\Mail\EmailAddress;
 
 use App\Actions\Mail\Ses\SendSesEmail;
+use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SendEmailAddress
@@ -16,8 +17,10 @@ class SendEmailAddress
 
     public mixed $message;
 
-    public function handle(array $content, string $to, $attach = null, $type = 'html'): mixed
+    public function handle(Mailshot $mailshot): void
     {
-        return SendSesEmail::run($content, $to, $attach, $type);
+        foreach ($mailshot->recipients as $recipient) {
+            SendSesEmail::run($recipient);
+        }
     }
 }

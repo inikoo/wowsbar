@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         }
 
         $schedule->command('banner:analytics')->daily();
+        $schedule->command('mailshots:check')->everyMinute();
     }
 
 

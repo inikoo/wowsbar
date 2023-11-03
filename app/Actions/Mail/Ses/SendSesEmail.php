@@ -8,6 +8,8 @@
 namespace App\Actions\Mail\Ses;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
+use App\Models\Mail\Mailshot;
+use App\Models\Mail\MailshotRecipient;
 use Aws\Result;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -18,44 +20,28 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(array $content, string $to, $attach = null, $type = 'html'): Result
+    public function handle(MailshotRecipient $mailshotRecipient): Result
     {
+        $mailshot = $mailshotRecipient->mailshot;
+        $layout  = $mailshot->layout;
+        $subject = $mailshot->subject;
+
         $message = [
             'Message' => [
                 'Subject' => [
-                    'Data' => $content['title']
+                    'Data' => $subject,
                 ]
             ]
         ];
 
-        if ($type == 'html') {
-            $message['Message']['Body']['Html'] = [
-                'Data' => $content['body'],
-            ];
-        } else {
-            $message['Message']['Body']['Text'] = [
-                'Data' => $content['body'],
-            ];
-        }
-
-        if (!blank($attach)) {
-            $attachments = [];
-
-            foreach ($attach as $attachment) {
-                $attachments[] = [
-                    'ContentType' => 'image/png',
-                    'Filename'    => basename($attachment),
-                    'Data'        => base64_encode(file_get_contents($attachment)),
-                ];
-            }
-
-            $message['Message']['Attachments'] = $attachments;
-        }
+        $message['Message']['Body']['Html'] = [
+            'Data' => $layout['html'][0]['html']
+        ];
 
         return $this->getSesClient()->sendEmail([
-            'Source'      => $this->generateSenderEmail(),
+            'Source' => $this->generateSenderEmail(),
             'Destination' => [
-                'ToAddresses' => [$to],
+                'ToAddresses' => [$mailshotRecipient->recipient->email]
             ],
             'Message' => $message['Message']
         ]);
@@ -65,6 +51,6 @@ class SendSesEmail
     {
         $user = request()->user();
 
-        return $user?->username ?? 'aiku' . '@' . customer()->slug . env('MAIL_MAIN_URL');
+        return ($user?->username ?? 'no-reply') . '@' . organisation()->code . env('MAIL_MAIN_URL');
     }
 }
