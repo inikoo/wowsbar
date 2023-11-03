@@ -18,8 +18,8 @@ class Kernel extends ConsoleKernel
             $schedule->command('telescope:prune')->daily();
         }
 
-        $schedule->command('banner:analytics')->daily();
-        $schedule->command('mailshots:check')->everyMinute();
+        // $schedule->command('banner:analytics')->daily();
+        // $schedule->command('mailshots:check')->everyMinute();
     }
 
 
