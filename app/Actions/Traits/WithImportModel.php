@@ -57,6 +57,8 @@ trait WithImportModel
             $content = $googleDisk->get($filename);
 
             Storage::disk('local')->put("tmp/$newFileName", $content);
+
+            $filename = "storage/app/tmp/" . $newFileName;
         }
 
 
