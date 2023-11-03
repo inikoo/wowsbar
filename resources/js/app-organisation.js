@@ -9,7 +9,7 @@ import {i18nVue} from 'laravel-vue-i18n';
 import Notifications from '@kyvg/vue3-notification';
 import VCalendar from 'v-calendar';
 import 'v-calendar/style.css';
-//import * as Sentry from '@sentry/vue';
+import * as Sentry from '@sentry/vue';
 import {createPinia} from 'pinia';
 
 const appName =
@@ -26,7 +26,7 @@ createInertiaApp(
           ),
       setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)});
-        /*
+
         if(import.meta.env.VITE_SENTRY_ORG_DSN) {
           Sentry.init({
                         app,
@@ -39,7 +39,7 @@ createInertiaApp(
                         replaysOnErrorSampleRate: import.meta.env.VITE_SENTRY_ORG_REPLAY_ON_ERRORSAMPLE_RATE,
                       });
         }
-         */
+
         app.use(plugin).
             use(createPinia()).
             use(ZiggyVue, Ziggy).
