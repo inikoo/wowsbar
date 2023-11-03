@@ -7,10 +7,9 @@
 
 namespace App\Models\Helpers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Tags\HasSlug;
 
 /**
  * App\Models\Helpers\Query
