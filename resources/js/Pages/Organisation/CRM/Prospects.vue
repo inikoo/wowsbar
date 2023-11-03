@@ -24,9 +24,9 @@ import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDash
 import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock } from '@fal/'
+import { faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo } from '@fal/'
 
-library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock)
+library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo)
 
 
 const props = defineProps <{

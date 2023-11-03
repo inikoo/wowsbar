@@ -33,18 +33,20 @@ enum ProspectsTabsEnum: string
                 'title' => __('dashboard'),
                 'icon'  => 'fal fa-tachometer-alt',
             ],
+
             ProspectsTabsEnum::PROSPECTS => [
                 'title' => __('prospects'),
                 'icon'  => 'fal fa-transporter',
             ],
+
             ProspectsTabsEnum::LISTS => [
                 'title' => __('lists'),
                 'icon'  => 'fal fa-code-branch',
             ],
             
             ProspectsTabsEnum::SHOWCASE => [
-                'title' => __('Dashboard'),
-                'icon'  => 'fal fa-transporter',
+                'title' => __('showcase'),
+                'icon'  => 'fal fa-info',
             ],
 
             ProspectsTabsEnum::MAILSHOTS => [
