@@ -16,12 +16,9 @@ enum ProspectsTabsEnum: string
     use HasTabs;
 
     case DASHBOARD = 'dashboard';
-
     case PROSPECTS = 'prospects';
     case LISTS     = 'lists';
-
     case HISTORY   = 'history';
-
     case MAILSHOTS = 'mailshots';
 
     public function blueprint(): array
