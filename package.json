@@ -7,7 +7,7 @@
         "dev.customer": "vite --config vite.customer.config.js",
         "build.customer": "vite build --config vite.customer.config.js && vite build --config vite.customer.config.js --ssr",
         "dev.organisation": "vite --config vite.organisation.config.js",
-        "build.organisation": "vite build --config vite.organisation.config.js --minify false && vite build --config vite.organisation.config.js --ssr",
+        "build.organisation": "vite build --config vite.organisation.config.js  && vite build --config vite.organisation.config.js --ssr",
         "dev.public": "vite --config vite.public.config.js",
         "build.public": "vite build --config vite.public.config.js && vite build --config vite.public.config.js --ssr",
         "dev.delivery": "vite --config vite.delivery.config.js",
