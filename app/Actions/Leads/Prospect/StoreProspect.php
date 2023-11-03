@@ -174,8 +174,6 @@ class StoreProspect
     {
         $this->scope    = $scope;
         $this->asAction = true;
-
-        print_r($objectData);
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
