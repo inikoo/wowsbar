@@ -45,6 +45,18 @@ class Query extends Model
 {
     use HasSlug;
 
+    protected $casts = [
+        'base'        => 'array',
+        'filters'     => 'array',
+
+
+    ];
+
+    protected $attributes = [
+        'base'     => '{}',
+        'filters'  => '{}',
+    ];
+
     protected $guarded = [];
 
     public function getSlugOptions(): SlugOptions

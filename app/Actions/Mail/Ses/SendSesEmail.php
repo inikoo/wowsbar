@@ -8,7 +8,6 @@
 namespace App\Actions\Mail\Ses;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
-use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotRecipient;
 use Aws\Result;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -23,8 +22,8 @@ class SendSesEmail
     public function handle(MailshotRecipient $mailshotRecipient): Result
     {
         $mailshot = $mailshotRecipient->mailshot;
-        $layout  = $mailshot->layout;
-        $subject = $mailshot->subject;
+        $layout   = $mailshot->layout;
+        $subject  = $mailshot->subject;
 
         $message = [
             'Message' => [
@@ -39,7 +38,7 @@ class SendSesEmail
         ];
 
         return $this->getSesClient()->sendEmail([
-            'Source' => $this->generateSenderEmail(),
+            'Source'      => $this->generateSenderEmail(),
             'Destination' => [
                 'ToAddresses' => [$mailshotRecipient->recipient->email]
             ],

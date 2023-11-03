@@ -259,12 +259,12 @@ class IndexProspects extends InertiaAction
                     : Inertia::lazy(fn () => ProspectsResource::collection($prospects)),
 
                 ProspectsTabsEnum::LISTS->value => $this->tab == ProspectsTabsEnum::LISTS->value ?
-                    fn () => ProspectMailshotsResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))
-                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))),
+                    fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))
+                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsTabsEnum::LISTS->value))),
 
                 ProspectsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsTabsEnum::MAILSHOTS->value ?
-                    fn () => ProspectQueriesResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
-                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
+                    fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))
+                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection(IndexProspectMailshots::run(parent: $this->parent, prefix: ProspectsTabsEnum::MAILSHOTS->value))),
                 ProspectsTabsEnum::HISTORY->value   => $this->tab == ProspectsTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTabsEnum::HISTORY->value))),
