@@ -48,7 +48,7 @@ const date = ref(new Date())
 const save = (schedule = false) => {
     const reqData = {
         ...(schedule ?
-            { route: props.setAsScheduledRoute, data: { schedule_add: date.value.toISOString() } }
+            { route: props.setAsScheduledRoute, data: { schedule_at: date.value.toISOString() } }
             : { route: props.setAsReadyRoute }
         )
     }

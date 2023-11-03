@@ -45,7 +45,7 @@ class SetMailshotAsReady
     public function rules(): array
     {
         return [
-            'publisher_id'   => ['sometimes','exists:organisation_user:id'],
+            'publisher_id'   => ['sometimes','exists:organisation_users,id'],
         ];
     }
 
