@@ -12,13 +12,18 @@ import { capitalize } from "@/Composables/capitalize"
 import {computed, reactive, ref} from "vue"
 import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import UploadExcel from '@/Components/Upload/UploadExcel.vue'
-
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from "@/types/route"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock} from '@fal/'
+import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue";
+
+library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock)
+
 
 const props = defineProps <{
     pageHead: TSPageHeading
@@ -34,6 +39,7 @@ const props = defineProps <{
         channel: string
         event: string
     }
+    dashboard?: object
     prospects?: object
     mailshots?: object
     history?: object
@@ -48,6 +54,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
+        dashboard: ProspectsDashboard,
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
         history: TableHistories

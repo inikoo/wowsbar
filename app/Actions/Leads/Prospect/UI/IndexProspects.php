@@ -190,12 +190,8 @@ class IndexProspects extends InertiaAction
                 ),
                 'title'        => __('prospects'),
                 'pageHead'     => [
-                    'title'     => __('prospects'),
-                    'iconRight' => [
-                        'icon'  => ['fal', 'fa-user-plus'],
-                        'title' => __('prospect')
-                    ],
-                    'actions'   => [
+                    'title'   => __('prospects'),
+                    'actions' => [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' =>
@@ -227,7 +223,7 @@ class IndexProspects extends InertiaAction
 
                         ] : false
                     ],
-                    'meta'      => $meta,
+                    'meta'    => $meta,
                 ],
                 'uploads'      => [
                     'templates' => [
@@ -253,6 +249,9 @@ class IndexProspects extends InertiaAction
 
                 'tags' => TagResource::collection(Tag::all()),
 
+                ProspectsTabsEnum::DASHBOARD->value => $this->tab == ProspectsTabsEnum::DASHBOARD->value ?
+                    fn () => GetProspectsDashboard::run($this->parent, $request)
+                    : Inertia::lazy(fn () => GetProspectsDashboard::run($this->parent, $request)),
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
                     fn () => ProspectsResource::collection($prospects)
                     : Inertia::lazy(fn () => ProspectsResource::collection($prospects)),

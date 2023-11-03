@@ -4,15 +4,14 @@
   -  Copyright (c) 2022, Raul A Perusquia Flores
   -->
 <script setup>
-import { trans } from 'laravel-vue-i18n'
 import { Link } from '@inertiajs/vue3'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt } from '@fal/'
-library.add(faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt)
 import { useLocaleStore } from '@/Stores/locale.js'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { capitalize } from "@/Composables/capitalize"
 import { useLayoutStore } from '@/Stores/layout';
+library.add(faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt)
 
 const props = defineProps(['nodes'])
 
