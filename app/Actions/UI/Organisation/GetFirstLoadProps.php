@@ -11,7 +11,6 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\Organisation\OrganisationResource;
-use App\Http\Resources\UI\CustomerAppResource;
 use App\Http\Resources\UI\OrganisationAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\OrganisationUser;

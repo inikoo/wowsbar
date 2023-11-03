@@ -46,7 +46,7 @@ class SetMailshotAsScheduled
     {
         return [
             'publisher_id'   => ['sometimes','exists:organisation_users,id'],
-            'schedule_at'   => ['required', 'string']
+            'schedule_at'    => ['required', 'string']
         ];
     }
 
