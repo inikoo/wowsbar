@@ -25,7 +25,7 @@ class SetMailshotAsScheduled
         ], $modelData);
 
         if ($mailshot->state == MailshotStateEnum::IN_PROCESS) {
-            $updateData['ready_at'] = $modelData['scheduled_at'];
+            $updateData['ready_at'] = $modelData['schedule_at'];
         }
 
         $mailshot->update($updateData);

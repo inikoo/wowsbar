@@ -86,7 +86,7 @@ class Mailshot extends Model
 
     protected $attributes = [
         'layout'     => '{}',
-        'recipients' => '{}',
+        'recipients_recipe' => '{}',
     ];
 
     protected $guarded = [];
