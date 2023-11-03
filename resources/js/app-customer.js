@@ -7,9 +7,8 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {i18nVue} from 'laravel-vue-i18n';
 import Notifications from '@kyvg/vue3-notification';
-
 import {createPinia} from 'pinia';
-//import * as Sentry from '@sentry/vue';
+import * as Sentry from '@sentry/vue';
 
 const appName =
           window.document.getElementsByTagName('title')[0]?.innerText ||
@@ -25,7 +24,7 @@ createInertiaApp(
           ),
       setup({el, App, props, plugin}) {
         const app = createApp({render: () => h(App, props)});
-        /*
+
         if(import.meta.env.VITE_SENTRY_CUST_DSN) {
           Sentry.init({
                         app,
@@ -37,7 +36,7 @@ createInertiaApp(
                         replaysSessionSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_SESSION_SAMPLE_RATE,
                         replaysOnErrorSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_ON_ERRORSAMPLE_RATE,
                       });
-        }*/
+        }
         app.use(plugin).
             use(createPinia()).
             use(ZiggyVue, Ziggy).
