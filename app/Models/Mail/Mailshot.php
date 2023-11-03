@@ -12,6 +12,7 @@ use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
@@ -35,7 +36,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $cancelled_at
  * @property string|null $stopped_at
  * @property array $layout
- * @property array $recipients
+ * @property-read MailshotRecipient $recipients
  * @property int|null $publisher_id org user
  * @property string $scope_type
  * @property int $scope_id
@@ -110,6 +111,11 @@ class Mailshot extends Model
     public function scope(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function recipients(): HasMany
+    {
+        return $this->hasMany(MailshotRecipient::class);
     }
 
 
