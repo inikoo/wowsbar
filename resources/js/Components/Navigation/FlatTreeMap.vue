@@ -46,7 +46,7 @@ const locale = useLocaleStore()
                     <!-- {{ importIcon(node.rightSubLink.icon) }} -->
                     <Link :href="route(node.rightSubLink.href[0])"
                         class="w-9 h-9 flex flex-0 justify-center items-center border-2 text-gray-500 rounded-md cursor-pointer hover:text-white"
-                        :class="useLayoutStore().appName == 'org' ? 'hover:bg-org-500 border-org-500' : 'hover:bg-gray-500 border-gray-500'"
+                        :class="useLayoutStore().appName === 'org' ? 'hover:bg-org-500 border-org-500' : 'hover:bg-gray-500 border-gray-500'"
                     >
                         <FontAwesomeIcon :icon="node.rightSubLink.icon" class="flex-shrink-0 " aria-hidden="true" />
                     </Link>
