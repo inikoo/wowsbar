@@ -13,6 +13,7 @@ use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasAddress;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
@@ -103,6 +104,7 @@ class Prospect extends Model implements Auditable
     use HasFactory;
     use HasTags;
     use HasHistory;
+    use HasAddress;
 
     protected $casts = [
         'data'     => 'array',

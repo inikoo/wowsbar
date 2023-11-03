@@ -7,6 +7,8 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {i18nVue} from 'laravel-vue-i18n';
 import Notifications from '@kyvg/vue3-notification';
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 //import * as Sentry from '@sentry/vue';
 import {createPinia} from 'pinia';
 
@@ -42,6 +44,7 @@ createInertiaApp(
             use(createPinia()).
             use(ZiggyVue, Ziggy).
             use(Notifications).
+            use(VCalendar, {}).
             use(i18nVue, {
               resolve: async (lang) => {
                 const languages = import.meta.glob(
