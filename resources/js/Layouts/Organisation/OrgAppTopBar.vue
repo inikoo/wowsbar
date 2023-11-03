@@ -72,7 +72,7 @@ const logoutAuth = () => {
                     <div class="bg-gradient-to-r from-org-700 to-org-600 flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out"
                         :class="[layout.leftSidebar.show ? 'md:w-48 md:pr-4' : 'md:w-10']"
                     >
-                        <Link :href="layout.app.url"
+                        <component :is="layout.systemName == 'org' ? 'div' : 'Link'" :href="layout.app.url ?? '/'"
                             class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-1.5 transition-all duration-200 ease-in-out"
                             :class="[layout.leftSidebar.show ? 'py-1 pl-4' : 'pl-2.5 w-full']"
                         >
@@ -84,7 +84,7 @@ const logoutAuth = () => {
                                     {{ layout.app.name ? layout.app.name : "Wowsbar" }}
                                 </p>
                             </Transition>
-                        </Link>
+                        </component>
                     </div>
                 </div>
 

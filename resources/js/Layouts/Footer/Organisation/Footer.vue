@@ -24,7 +24,7 @@ const logoSrc = usePage().props.art?.footer_logo ?? {}
 </script>
 
 <template>
-    <footer class="z-[19] fixed w-full bottom-0 right-0  text-gray-700 bg-[#faf9fb] border-t border-org-500/30">
+    <footer class="z-[19] fixed w-full bottom-0 right-0  text-gray-700 bg-org-100 border-t border-org-500/30">
         <!-- Helper: Outer background (close popup purpose) -->
         <div @click="isTabActive = !isTabActive"
             class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen"

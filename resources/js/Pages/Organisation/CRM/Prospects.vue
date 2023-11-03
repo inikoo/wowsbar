@@ -17,8 +17,11 @@ import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from "@/types/route"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
-import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
+
+
+import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue"
+import TableHistories from "@/Components/Tables/TableHistories.vue"
+import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
 
 const props = defineProps <{
     pageHead: TSPageHeading
@@ -37,7 +40,11 @@ const props = defineProps <{
     prospects?: object
     mailshots?: object
     history?: object
-    tags: string[]
+    tags: {
+        data: {
+            id: number
+        }[]
+    }
 }>()
 
 const dataModal = reactive({isModalOpen: false})
@@ -47,10 +54,11 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
 
-    const components = {
+    const components: any = {
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
-        history: TableHistories
+        history: TableHistories,
+        showcase: ProspectShowcase
     };
     return components[currentTab.value];
 

@@ -16,6 +16,7 @@ enum ProspectsTabsEnum: string
     use HasTabs;
 
     case PROSPECTS = 'prospects';
+    case SHOWCASE = 'showcase';
 
     case HISTORY   = 'history';
 
@@ -26,6 +27,10 @@ enum ProspectsTabsEnum: string
         return match ($this) {
             ProspectsTabsEnum::PROSPECTS => [
                 'title' => __('prospects'),
+                'icon'  => 'fal fa-transporter',
+            ],
+            ProspectsTabsEnum::SHOWCASE => [
+                'title' => __('Dashboard'),
                 'icon'  => 'fal fa-transporter',
             ],
 
