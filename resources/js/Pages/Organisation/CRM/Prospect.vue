@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {Head, useForm} from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -17,11 +17,11 @@ import {
     faPaperclip, faPaperPlane, faStickyNote,
     faTags,faCube,faCodeBranch
 } from '@fal/';
-import ModelDetails from "@/Pages/ModelDetails.vue";
+
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import CustomerShowcase from "@/Components/Showcases/Organisation/CustomerShowcase.vue";
+import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
 
 library.add(
     faStickyNote,
@@ -54,6 +54,7 @@ const component = computed(() => {
 
     const components = {
         // showcase: CustomerShowcase,
+        showcase: ProspectShowcase
         // history: ModelChangelog,
     };
     return components[currentTab.value];

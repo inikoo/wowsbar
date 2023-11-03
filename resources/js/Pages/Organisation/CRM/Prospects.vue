@@ -21,7 +21,6 @@ import {useTabChange} from "@/Composables/tab-change";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue"
 import TableHistories from "@/Components/Tables/TableHistories.vue"
 import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue"
-import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo } from '@fal/'
@@ -66,7 +65,6 @@ const component = computed(() => {
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
         history: TableHistories,
-        showcase: ProspectShowcase
     };
     return components[currentTab.value];
 
