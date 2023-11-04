@@ -30,11 +30,9 @@ createInertiaApp(
                         app,
                         dsn                     : import.meta.env.VITE_SENTRY_CUST_DSN,
                         environment             : import.meta.env.VITE_APP_ENV,
-                        integrations            : [
-                          new Sentry.Replay(),
-                        ],
-                        replaysSessionSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_SESSION_SAMPLE_RATE,
-                        replaysOnErrorSampleRate: import.meta.env.VITE_SENTRY_CUST_REPLAY_ON_ERRORSAMPLE_RATE,
+                        replaysSessionSampleRate: 0.1,
+                        replaysOnErrorSampleRate: 1.0,
+                        integrations: [new Sentry.Replay()]
                       });
         }
         app.use(plugin).
