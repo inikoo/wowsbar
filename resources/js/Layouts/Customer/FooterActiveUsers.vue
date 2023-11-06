@@ -22,7 +22,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-    (e: 'isTabActive'): void
+    (e: 'isTabActive', value: boolean | string): void
 }>()
 
 const layout = useLayoutStore()
@@ -62,7 +62,7 @@ const getStatusOnline = (dataUser: any) => {
 <template>
 
     <div class="relative h-full flex z-50 select-none justify-center items-center px-8 gap-x-1 cursor-pointer text-gray-300"
-        :class="[isTabActive == 'activeUsers' ? 'bg-gray-700' : '']"
+        :class="[isTabActive == 'activeUsers' ? 'bg-gray-700 text-gray-300' : 'text-gray-300 hover:bg-gray-600']"
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
         <div class="relative text-xs flex items-center gap-x-1">

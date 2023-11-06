@@ -2,28 +2,31 @@ import { format } from 'date-fns'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { zhCN, enUS, fr, de, id, ja, sk, es } from 'date-fns/locale'
 
-
 const localesCode: any = { zhCN, enUS, fr, de, id, ja, sk, es }
 
-export const useFormatTime = (dateIso: string, localeCode?: string, dateFormat?: string) => {
+interface OptionsTime {
+    formatTime?: string
+    localeCode?: string
+}
+
+export const useFormatTime = (dateIso: string, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
-    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : localeCode ?? 'enUS'
+    let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : OptionsTime?.localeCode ?? 'enUS'
     let tempDateIso = new Date(dateIso)
 
+    if (OptionsTime?.formatTime === 'hms') return format(tempDateIso, 'PPpp', { locale: localesCode[tempLocaleCode] })  // Nov 2, 2023, 3:03:26 PM
+    if (OptionsTime?.formatTime === 'hm') return format(tempDateIso, 'PPp', { locale: localesCode[tempLocaleCode] })  // Nov 2, 2023, 3:03 PM
 
-    if (dateFormat=='hms') return format(tempDateIso, 'PPpp', { locale: localesCode[tempLocaleCode] })
-    if (dateFormat=='hm') return format(tempDateIso, 'PPp', { locale: localesCode[tempLocaleCode] })
-
-    // October 13th, 2023
-    return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] })
+    return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] }) // October 13th, 2023
 }
 
 // Relative time range
-export const useRangeFromNow = (dateIso: string, localeCode?: any) => {
+export const useRangeFromNow = (dateIso: string, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
     
-    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
+    let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
     const date = new Date(dateIso)
+
     return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode] })
 }

@@ -13,8 +13,6 @@ import {trans} from "laravel-vue-i18n"
 import Multiselect from '@vueform/multiselect'
 import axios from 'axios'
 import {notify} from '@kyvg/vue3-notification'
-import { capitalize } from '@/Composables/capitalize'
-import { useLayoutStore } from '@/Stores/layout'
 
 import Tag from '@/Components/Tag.vue'
 import Icon from "@/Components/Icon.vue";
@@ -104,12 +102,13 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
     <Table :resource="data" :name="tab" class="mt-5">
 
         <template #cell(state)="{ item: banner }">
-            <Icon :data="banner['state_icon']" class="px-1" :title="banner.tooltip" />
+            <Icon :data="banner['state_icon']" class="px-1" />
         </template>
 
         <template #cell(name)="{ item: prospect }">
             <Link v-if="prospect.name" :href="prospectRoute(prospect)"
-                :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]"
+                class="py-1"
+                :class="[`specialUnderlineOrg`]"  
             >
                 <span>{{ prospect['name'] }}</span>
             </Link>

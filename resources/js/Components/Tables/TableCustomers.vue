@@ -31,7 +31,7 @@ function customerRoute(customer) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: customer }">
-            <Link :href="customerRoute(customer)">
+            <Link :href="customerRoute(customer)" class="py-1 specialUnderlineOrg">
                 {{ customer['slug'] }}
             </Link>
         </template>
