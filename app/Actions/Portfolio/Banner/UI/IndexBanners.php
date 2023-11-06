@@ -262,13 +262,6 @@ class IndexBanners extends InertiaAction
             $this->tableStructure(
                 parent: $this->parent,
                 canEdit: $this->canEdit,
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.banners.index'
-                        ]
-                    ]
-                ]
             )
         );
     }
