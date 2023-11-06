@@ -109,7 +109,7 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
 
         <template #cell(name)="{ item: prospect }">
             <Link v-if="prospect.name" :href="prospectRoute(prospect)"
-                :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]"  
+                :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]"
             >
                 <span>{{ prospect['name'] }}</span>
             </Link>

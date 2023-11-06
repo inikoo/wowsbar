@@ -19,6 +19,7 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
+use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
@@ -93,6 +94,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
+
+        Route::get('/export', ExportProspects::class)->name('export');
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
             Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
