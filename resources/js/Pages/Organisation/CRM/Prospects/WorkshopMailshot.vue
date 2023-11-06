@@ -136,7 +136,7 @@ console.log(props)
                                         props.setAsScheduledRoute.name,
                                         props.setAsScheduledRoute.parameters
                                 )">
-                                <Button @click="save(true)">Schedule</Button>
+                                    <Button>Schedule</Button>
                                 </Link>
                             </div>
                         </div>
@@ -144,15 +144,15 @@ console.log(props)
                 </Popover>
 
                 <Link
-                        method="post"
-                        :href="route(
-                            props.sendRoute.name,
-                            props.sendRoute.parameters
-                    )">
-                <Button @click="save(false)" class="rounded-none">
-                    Send Now
-                    <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
-                </Button>
+                    method="post"
+                    :href="route(
+                        props.sendRoute.name,
+                        props.sendRoute.parameters
+                )">
+                    <Button  class="rounded-none">
+                        Send Now
+                        <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
+                    </Button>
                 </Link>
             </div>
         </template>
