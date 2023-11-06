@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Modal from '@/Components/Utils/Modal.vue';
 import { DatePicker  } from 'v-calendar';
 import 'v-calendar/style.css';
-
+import { Link } from "@inertiajs/vue3"
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faCaretDown, faPaperPlane)
 
@@ -39,23 +39,28 @@ const props = defineProps<{
     updateRoute: Object,
     loadRoute: Object
     setAsScheduledRoute: object
+    sendRoute:Object
 
 }>()
 
 const OpenModal = ref(false)
 const date = ref(new Date())
 
-const save = (schedule = false) => {
+/* const save = (schedule = false) => {
     const reqData = {
         ...(schedule ?
             { route: props.setAsScheduledRoute, data: { schedule_at: date.value.toISOString() } }
-            : { route: props.setAsReadyRoute }
+            : { route: props.sendRoute }
         )
     }
     sendDataToServer(schedule, reqData)
 }
+ */
+/* const setReady=()=>{
 
-
+}
+ */
+/* 
 const sendDataToServer = async (schedule = false, reqData: Object) => {
     try {
         const response = await axios.post(
@@ -80,13 +85,14 @@ const sendDataToServer = async (schedule = false, reqData: Object) => {
             type: "error"
         });
     }
-}
+} */
 
 const onCancel = () => {
     OpenModal.value = false
     date.value = new Date()
 }
 
+console.log(props)
 </script>
 
 
@@ -95,9 +101,16 @@ const onCancel = () => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex rounded-md overflow-hidden">
-                <Button class="rounded-r-none" :style="`secondary`">
+                <Link
+                        method="post"
+                        :href="route(
+                            props.setAsReadyRoute.name,
+                            props.setAsReadyRoute.parameters
+                    )">
+                <Button class="rounded-r-none" :style="`secondary`" v-if="setAsReadyRoute">
                     <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
                 </Button>
+                </Link>
                 <Popover>
                     <template #button>
                         <div class="relative" title="Scheduled publish">
@@ -108,32 +121,43 @@ const onCancel = () => {
                         </div>
                     </template>
                     <template #content>
-                        <div @click="OpenModal = true">Send with schedule</div>
+                        <div>
+                            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
+                            <div class="my-2">
+                                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
+                                    :min-date="new Date()" />
+                            </div>
+                            <div class="flex justify-between">
+                                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
+                                <Link
+                                    method="post"
+                                    :data="{ schedule_at: date.toISOString() }"
+                                    :href="route(
+                                        props.setAsScheduledRoute.name,
+                                        props.setAsScheduledRoute.parameters
+                                )">
+                                <Button @click="save(true)">Schedule</Button>
+                                </Link>
+                            </div>
+                        </div>
                     </template>
                 </Popover>
+
+                <Link
+                        method="post"
+                        :href="route(
+                            props.sendRoute.name,
+                            props.sendRoute.parameters
+                    )">
                 <Button @click="save(false)" class="rounded-none">
                     Send Now
                     <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
                 </Button>
+                </Link>
             </div>
         </template>
     </PageHeading>
     <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :loadRoute="loadRoute" />
-    <Modal :isOpen="OpenModal" @onClose="OpenModal = false" width="w-fit">
-
-        <div>
-            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
-            <div class="my-2">
-                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
-                    :min-date="new Date()" />
-            </div>
-            <div class="flex justify-between">
-                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
-                <Button @click="save(true)">Schedule</Button>
-            </div>
-        </div>
-
-    </Modal>
 </template>
 
 <style lang="scss">
