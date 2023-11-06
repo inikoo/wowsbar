@@ -20,12 +20,23 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
       - name: Composer install
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: production
+          noVersionBumpBehavior: warning
+          patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review, update-deps
+      - name: Set release in .env
+        run: |
+          sed -i~ '/^RELEASE=/s/=.*/="${{ steps.semver.outputs.next }}"/' ../../../../env.wowsbar.deploy
       - name: Prepare environment
         run: |
           ln -s ../../../../env.wowsbar.deploy .env
@@ -35,14 +46,6 @@ jobs:
           dep: deploy
           skip-ssh-setup: true
           ssh-config: ${{ secrets.DEPLOY_SSH_CONFIG }}
-      - name: Get Next Version
-        id: semver
-        uses: ietf-tools/semver-action@v1
-        with:
-          token: ${{ github.token }}
-          branch: production
-          noVersionBumpBehavior: warning
-          patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review, update-deps
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
