@@ -9,17 +9,20 @@ namespace App\Http\Resources\CRM;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @property string $slug
- * @property string $name
- */
 class ProspectQueriesResource extends JsonResource
 {
     public function toArray($request): array
     {
+        /** @var \App\Models\Helpers\Query $query */
+        $query = $this;
+
         return [
-            'slug' => $this->slug,
-            'name' => $this->name
+            'slug'         => $query->slug,
+            'name'         => $query->name,
+            'number_items' => $query->number_items,
+            'constrains'   => $query->constrains,
+            'arguments'    => $query->arguments,
+            'is_seeded'    => $query->is_seeded
 
         ];
     }

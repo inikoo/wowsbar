@@ -13,16 +13,31 @@ use App\Http\Resources\CRM\ProspectResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Rules\IUnique;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProspect
 {
     use WithActionUpdate;
+    use WithProspectPrepareForValidation;
 
     private bool $asAction = false;
 
-    public function handle(Shop $scope, Prospect $prospect, array $modelData): Prospect
+    private Shop $scope;
+    private int $currentID;
+
+    public function handle(Prospect $prospect, array $modelData): Prospect
     {
+        $addressData = Arr::get($modelData, 'address');
+        Arr::forget($modelData, 'address');
+        if ($addressData) {
+            //todo
+            //UpdateAddress::run($prospect->getAddress('contact'),$addressData);
+            //$prospect->location = $prospect->getLocation();
+            //$prospect->save();
+        }
+
+
         $prospect = $this->update($prospect, $modelData, ['data']);
         ProspectHydrateUniversalSearch::dispatch($prospect);
 
@@ -38,36 +53,25 @@ class UpdateProspect
         return $request->user()->hasPermissionTo("shops.customers.edit");
     }
 
-    public function prepareForValidation(ActionRequest $request): void
+    public function rules(): array
     {
-        if ($request->get('contact_website')) {
-            $request->merge(
-                [
-                    'contact_website' => 'https://'.$request->get('contact_website'),
-                ]
-            );
-        }
-    }
 
-    public function rules(ActionRequest $request): array
-    {
-        $currentID = $request->route()->parameters()['prospect']->id;
-
-        $extraConditions = match ($request->route()->getName()) {
+        $extraConditions = match (class_basename($this->scope)) {
             'org.models.shop.prospects.update' => [
-                ['column' => 'shop_id', 'value' => $request->route()->parameters()['shop']],
-                ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                ['column' => 'shop_id', 'value' => $this->scope->id],
+                ['column' => 'id', 'operator' => '!=', 'value' => $this->currentID]
 
             ],
             default => [
-                ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                ['column' => 'id', 'operator' => '!=', 'value' => $this->currentID]
             ]
         };
 
         return [
-            'contact_name'    => ['sometimes', 'nullable', 'string', 'max:255'],
-            'company_name'    => ['sometimes', 'nullable', 'string', 'max:255'],
-            'email'           => [
+            'last_contacted_at' => 'sometimes|date',
+            'contact_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
+            'company_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
+            'email'             => [
                 'sometimes',
                 'required_without:phone',
                 'email',
@@ -78,7 +82,7 @@ class UpdateProspect
                 ),
 
             ],
-            'phone'           => [
+            'phone'             => [
                 'sometimes',
                 'required_without:email',
                 'nullable',
@@ -88,25 +92,31 @@ class UpdateProspect
                     extraConditions: $extraConditions
                 ),
             ],
-            'contact_website' => ['sometimes', 'nullable', 'iunique:prospects', 'active_url'],
+            'contact_website'   => ['sometimes', 'nullable', 'iunique:prospects', 'active_url'],
         ];
     }
 
 
+
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
+        $this->scope    =$shop;
+        $this->currentID=$prospect->id;
+        $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle($shop, $prospect, $request->validated());
+        return $this->handle($prospect, $request->validated());
     }
 
     public function action(Shop $scope, Prospect $prospect, $objectData): Prospect
     {
         $this->asAction = true;
+        $this->scope    =$scope;
+        $this->currentID=$prospect->id;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($scope, $prospect, $validatedData);
+        return $this->handle($prospect, $validatedData);
     }
 
     public function jsonResponse(Prospect $prospect): ProspectResource
