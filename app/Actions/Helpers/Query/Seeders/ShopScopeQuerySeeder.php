@@ -103,7 +103,7 @@ class ShopScopeQuerySeeder
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);
             } else {
-                StoreQuery::run($queryData);
+                $query=StoreQuery::run($queryData);
             }
             UpdateQueryCount::run($query);
         }
