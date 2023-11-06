@@ -180,7 +180,8 @@ Route::patch('/customer-user/{customerUser:id}', UpdateOrgCustomerUser::class)->
 Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
 
-    Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
+    Route::post('{mailshot:id}/send', SetMailshotAsReady::class)->name('send');
+    Route::post('{mailshot:id}/ready', SetMailshotAsReady::class)->name('state.ready');
     Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
 
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
