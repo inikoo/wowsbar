@@ -13,7 +13,7 @@ class StoreMailshotRecipients
     public function handle(Mailshot $mailshot): void
     {
         // TODO: FOR TESTING SEND EMAIL ONLY
-        foreach (Prospect::all() as $prospect) {
+        foreach (Prospect::where('email', 'dev@aw-advantage.com')->get() as $prospect) {
             $mailshot->recipients()->updateOrCreate([
                 'recipient_id'   => $prospect->id,
                 'recipient_type' => Prospect::class,

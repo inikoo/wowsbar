@@ -1,224 +1,102 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:48:13 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Fri, 06 Oct 2023 08:55:04 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Leads\Prospect\UI;
 
+use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Enums\UI\ProspectTabsEnum;
-use App\Http\Resources\CRM\ProspectResource;
+use App\Http\Resources\CRM\ProspectsResource;
+use App\Http\Resources\Helpers\QueryResource;
+use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class ShowProspectQuery extends InertiaAction
 {
-    public function handle(Prospect $prospect): Prospect
-    {
-        return $prospect;
-    }
+    public Organisation|Shop $parent;
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('crm.prospects.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('crm.prospects.edit');
-
-        return $request->user()->hasPermissionTo("crm.prospects.view");
+        return $request->user()->hasPermissionTo('crm.view');
     }
 
-    public function asController(Prospect $prospect, ActionRequest $request): Prospect
+    public function handle(Query $query): Query
     {
+        return $query;
+    }
+
+    public function asController(Shop $shop, Query $query, ActionRequest $request): Query
+    {
+        $this->parent = $shop;
         $this->initialisation($request)->withTab(ShowProspectTabsEnum::values());
 
-        return $this->handle($prospect);
+        return $this->handle($query);
     }
 
-    public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
-    {
-        $this->initialisation($request)->withTab(ShowProspectTabsEnum::values());
-
-        return $this->handle($prospect);
-    }
-
-    public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
+    public function htmlResponse(Query $query, ActionRequest $request): Response
     {
         return Inertia::render(
-            'CRM/Prospect',
+            'Prospects/ProspectQuery',
             [
-                'title'       => __('Prospect Query'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->originalParameters()
+                    $request->route()->parameters
                 ),
-                'navigation'  => [
-                    'previous' => $this->getPrevious($prospect, $request),
-                    'next'     => $this->getNext($prospect, $request),
-                ],
-                'pageHead'    => [
-                    'title'       => $prospect->name??$prospect->email??$prospect->slug,
-                    'noCapitalise'=> !$prospect->name,
-                    'icon'        => [
-                        'icon'  => ['fal', 'fa-transporter'],
-                        'title' => __('Prospect Query')
-                    ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.crm.shop.prospects.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ] : []
-                    ]
+                'title'    => __($query->name),
+                'pageHead' => [
+                    'title'     => __($query->name),
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => ShowProspectTabsEnum::navigation()
                 ],
 
-                ShowProspectTabsEnum::SHOWCASE->value => $this->tab == ShowProspectTabsEnum::SHOWCASE->value ?
-                    fn () => GetProspectShowcase::run($prospect)
-                    : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
-
+                ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
+                    fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())
+                    : Inertia::lazy(fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())),
             ]
-        );
+        )->table(IndexProspects::make()->tableStructure(parent: $this->parent, prefix: ShowProspectTabsEnum::PROSPECTS->value));
     }
 
-    public function jsonResponse(Prospect $prospect): ProspectResource
+    /** @noinspection PhpUnusedParameterInspection */
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return new ProspectResource($prospect);
-    }
-
-    public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
-    {
-        $headCrumb = function (Prospect $prospect, array $routeParameters, string $suffix = null) {
+        $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-
-                    'type'           => 'modelWithIndex',
-                    'modelWithIndex' => [
-                        'index' => [
-                            'route' => $routeParameters['index'],
-                            'label' => __('Prospects')
-                        ],
-                        'model' => [
-                            'route' => $routeParameters['model'],
-                            'label' => $prospect->slug,
-                        ],
-
+                    'type'   => 'simple',
+                    'simple' => [
+                        'route' => $routeParameters,
+                        'label' => __('images'),
+                        'icon'  => 'fal fa-bars'
                     ],
-                    'suffix'         => $suffix
-
                 ],
             ];
         };
-        return match ($routeName) {
-            'org.crm.prospects.show',
-            'org.crm.prospects.edit'
-            => array_merge(
-                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.dashboard'),
-                $headCrumb(
-                    Prospect::where('slug', $routeParameters['prospect'])->first(),
-                    [
-                        'index' => [
-                            'name'       => 'org.crm.prospects.index',
-                            'parameters' => []
-                        ],
-                        'model' => [
-                            'name'       => 'org.crm.prospects.show',
-                            'parameters' => $routeParameters
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
-            'org.crm.shop.prospects.show',
-            'org.crm.shop.prospects.edit'
-            => array_merge(
-                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
-                $headCrumb(
-                    Prospect::where('slug', $routeParameters['prospect'])->first(),
-                    [
-                        'index' => [
-                            'name'       => 'org.crm.shop.prospects.index',
-                            'parameters' => $routeParameters
-                        ],
-                        'model' => [
-                            'name'       => 'org.crm.shop.prospects.show',
-                            'parameters' => $routeParameters
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
-        };
-    }
-
-    public function getPrevious(Prospect $prospect, ActionRequest $request): ?array
-    {
-        $previous = Prospect::where('slug', '<', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
-            if ($request->route()->getName() == 'org.shops.show.prospects.show') {
-                $query->where('Prospects.shop_id', $prospect->shop_id);
-            }
-        })->orderBy('slug', 'desc')->first();
-
-        return $this->getNavigation($previous, $request->route()->getName());
-    }
-
-    public function getNext(Prospect $prospect, ActionRequest $request): ?array
-    {
-        $next = Prospect::where('slug', '>', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
-            if ($request->route()->getName() == 'org.shops.show.prospects.show') {
-                $query->where('Prospects.shop_id', $prospect->shop_id);
-            }
-        })->orderBy('slug')->first();
-
-        return $this->getNavigation($next, $request->route()->getName());
-    }
-
-    private function getNavigation(?Prospect $prospect, string $routeName): ?array
-    {
-        if (!$prospect) {
-            return null;
-        }
 
         return match ($routeName) {
-            'org.crm.prospects.show' => [
-                'label' => $prospect->name,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        'prospect' => $prospect->slug
+            'customer.portfolio.images.index' =>
+            array_merge(
+                ShowProspect::make()->getBreadcrumbs($routeName, $routeParameters),
+                $headCrumb(
+                    [
+                        'name' => 'portfolio.images.index',
+                        null
                     ]
-                ]
-            ],
-            'org.crm.shop.prospects.show' => [
-                'label' => $prospect->name,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        'shop'     => $prospect->shop->slug,
-                        'prospect' => $prospect->slug
-                    ]
-                ]
-            ]
+                ),
+            ),
+
+            default => []
         };
     }
 }
