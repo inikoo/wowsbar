@@ -4,6 +4,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faRocketLaunch, faClock, faVideo } from "@far/";
 import { isNull } from "lodash";
 import { useFormatTime } from "@/Composables/useFormatTime";
+import { Calendar } from 'v-calendar';
+import 'v-calendar/style.css';
 
 library.add(faRocketLaunch, faClock, faVideo);
 
@@ -121,7 +123,7 @@ const getDate = () => {
                             <span v-html="data.title"></span>
                         </div>
                         <div>
-                            <VCalendar
+                            <Calendar
                                 expanded
                                 :attributes="attrs"
                                 @dayclick="handleDateClick"
