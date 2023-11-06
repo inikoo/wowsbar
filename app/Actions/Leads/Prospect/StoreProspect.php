@@ -103,7 +103,7 @@ class StoreProspect
         return [
             'state'             => ['sometimes', new Enum(ProspectStateEnum::class)],
             'data'              => 'sometimes|array',
-            'last_contacted_at' => 'sometimes|datetime',
+            'last_contacted_at' => 'sometimes|date',
             'created_at'        => 'sometimes|date',
             'address'           => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'      => ['nullable', 'string', 'max:255'],
