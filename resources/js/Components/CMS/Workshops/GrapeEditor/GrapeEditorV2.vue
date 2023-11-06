@@ -7,9 +7,10 @@ import Rte from "./CustomLayout/Rte/Rte.ts";
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
-import { customUploadImage } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock.ts'
-
-
+import { Editor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
+import TextEditor from "@/Components/Forms/Fields/TextEditor.vue";
+import CkeEditor from 'grapesjs-plugin-ckeditor'
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
@@ -55,7 +56,7 @@ const Store = async (data, editor) => {
                 props.updateRoute.name,
                 props.updateRoute.parameters
             ),
-            { data, pagesHtml , inlineHtml : inlineHtml },
+            { data, pagesHtml, },
         )
         emits('onSaveToServer', response?.data?.isDirty)
         console.log('saving......')
@@ -66,7 +67,6 @@ const Store = async (data, editor) => {
 }
 
 const Load = async (data) => {
-    console.log('ddd',editorInstance.value.runCommand('gjs-get-inlined-html'));
     try {
         const response = await axios.get(
             route(
@@ -115,36 +115,34 @@ const uploadFile = async (e) => {
     }
 }
 
-
 onMounted(() => {
     editorInstance.value = grapesjs.init({
         container: "#gjs",
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins:[grapesJSMJML],
+        plugins: [grapesJSMJML,CkeEditor],
         pluginsOpts: {
-            [grapesJSMJML] : {
-                blocks : [ 'mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-divider', 'mj-social-group',
-      'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw']
-            }
+            [grapesJSMJML]: {
+                blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
+                    'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw'],
+            },
+            [CkeEditor]: {}
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
-            // custom: true,
-            storeAfterUpload: false,
-            uploadFile:uploadFile
-        },
+        // custom: true,
+        storeAfterUpload: false,
+        uploadFile: uploadFile
+    },
         storageManager: {
-            type: 'remote',
-        },
+        type: 'remote',
+    },
     });
-    editorInstance.value.Storage.add('remote', {
-        async load() { return Load() },
-        async store(data) { return Store(data, editorInstance.value) }
-    });
-    Rte(editorInstance.value)
-    customUploadImage(editorInstance.value)
+editorInstance.value.Storage.add('remote', {
+    async load() { return Load() },
+    async store(data) { return Store(data, editorInstance.value) }
+});
 });
 
 
