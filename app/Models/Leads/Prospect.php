@@ -53,6 +53,11 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property string|null $last_contacted_at
+ * @property string|null $not_interested_at
+ * @property string|null $registered_at
+ * @property string|null $invoiced_at
+ * @property string|null $last_bounced_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -82,10 +87,15 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereId($value)
  * @method static Builder|Prospect whereIdentityDocumentNumber($value)
  * @method static Builder|Prospect whereIdentityDocumentType($value)
+ * @method static Builder|Prospect whereInvoicedAt($value)
+ * @method static Builder|Prospect whereLastBouncedAt($value)
+ * @method static Builder|Prospect whereLastContactedAt($value)
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
+ * @method static Builder|Prospect whereNotInterestedAt($value)
  * @method static Builder|Prospect wherePhone($value)
  * @method static Builder|Prospect wherePortfolioWebsiteId($value)
+ * @method static Builder|Prospect whereRegisteredAt($value)
  * @method static Builder|Prospect whereScopeId($value)
  * @method static Builder|Prospect whereScopeType($value)
  * @method static Builder|Prospect whereShopId($value)

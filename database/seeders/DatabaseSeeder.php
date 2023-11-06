@@ -7,6 +7,7 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Helpers\Query\Seeders\ShopScopeQuerySeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
             TimezoneSeeder::class,
             LanguageSeeder::class,
             PaymentServiceProviderSeeder::class,
-            QuerySeeder::class
+            ShopScopeQuerySeeder::class
         ]);
     }
 }

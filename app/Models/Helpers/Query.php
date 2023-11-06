@@ -15,12 +15,14 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Helpers\Query
  *
  * @property int $id
+ * @property string $scope_type
+ * @property int $scope_id
  * @property string $slug
  * @property string $name
  * @property string $model_type
- * @property mixed $constrains
- * @property mixed $arguments
- * @property bool $seeded
+ * @property array $constrains
+ * @property array $arguments
+ * @property bool $is_seeded
  * @property int|null $number_items
  * @property string|null $counted_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -37,10 +39,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereIsSeeded($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereModelType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereNumberItems($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereSeeded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereUpdatedAt($value)
  * @mixin \Eloquent

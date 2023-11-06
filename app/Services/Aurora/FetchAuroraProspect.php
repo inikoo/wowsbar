@@ -52,11 +52,8 @@ class FetchAuroraProspect extends FetchAurora
 
         if($this->parseDate($this->auroraModelData->{'Prospect First Contacted Date'})) {
 
-            $this->parsedData['prospect']['created_at']=$this->auroraModelData->{'Prospect First Contacted Date'};
+            $this->parsedData['prospect']['last_contacted_at']=$this->auroraModelData->{'Prospect First Contacted Date'};
         }
-
-
-
 
 
     }

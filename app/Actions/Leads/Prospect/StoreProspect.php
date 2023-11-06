@@ -30,6 +30,7 @@ class StoreProspect
 {
     use AsAction;
     use WithAttributes;
+    use WithProspectPrepareForValidation;
 
     private bool $asAction = false;
     /**
@@ -53,7 +54,7 @@ class StoreProspect
         /** @var Prospect $prospect */
         $prospect = $scope->scopedProspects()->create($modelData);
 
-        if($addressData) {
+        if ($addressData) {
             StoreAddressAttachToModel::run($prospect, $addressData, ['scope' => 'contact']);
             $prospect->location = $prospect->getLocation();
             $prospect->save();
@@ -88,40 +89,6 @@ class StoreProspect
         return $this->handle($shop, $request->validated());
     }
 
-    public function prepareForValidation(): void
-    {
-        if ($this->get('contact_name', '') == '') {
-            $this->fill(['contact_name' => null]);
-        }
-
-        if ($this->get('contact_name', '') == '') {
-            $this->fill(['contact_name' => null]);
-        }
-        if ($this->get('company_name', '') == '') {
-            $this->fill(['company_name' => null]);
-        }
-
-        if ($this->get('contact_website', '') == '') {
-            $this->fill(['contact_website' => null]);
-        }
-
-        if ($this->get('phone', '') == '') {
-            $this->fill(
-                [
-                    'phone' => null
-                ]
-            );
-        }
-
-
-        if ($this->get('contact_website')) {
-            $this->fill(
-                [
-                    'contact_website' => 'https://'.$this->get('contact_website'),
-                ]
-            );
-        }
-    }
 
     public function rules(ActionRequest $request): array
     {
@@ -134,13 +101,14 @@ class StoreProspect
 
 
         return [
-            'state'           => ['sometimes', new Enum(ProspectStateEnum::class)],
-            'data'            => 'sometimes|array',
-            'created_at'      => 'sometimes|date',
-            'address'         => ['sometimes', 'nullable', new ValidAddress()],
-            'contact_name'    => ['nullable', 'string', 'max:255'],
-            'company_name'    => ['nullable', 'string', 'max:255'],
-            'email'           => [
+            'state'             => ['sometimes', new Enum(ProspectStateEnum::class)],
+            'data'              => 'sometimes|array',
+            'last_contacted_at' => 'sometimes|datetime',
+            'created_at'        => 'sometimes|date',
+            'address'           => ['sometimes', 'nullable', new ValidAddress()],
+            'contact_name'      => ['nullable', 'string', 'max:255'],
+            'company_name'      => ['nullable', 'string', 'max:255'],
+            'email'             => [
                 'required_without:phone',
                 'email',
                 'max:500',
@@ -150,7 +118,7 @@ class StoreProspect
                 ),
 
             ],
-            'phone'           => [
+            'phone'             => [
                 'required_without:email',
                 'nullable',
                 'phone:AUTO',
@@ -159,7 +127,7 @@ class StoreProspect
                     extraConditions: $extraConditions
                 ),
             ],
-            'contact_website' => [
+            'contact_website'   => [
                 'nullable',
                 'url:http,https',
                 new IUnique(
