@@ -14,7 +14,6 @@ function getMergeTagData() {
 
 export default async (editor, opts = {}) => {
     const mergeTagsOption = await getMergeTagData()
-    console.log('sss',mergeTagsOption)
     const options = {
         ...{
             // default options
@@ -195,7 +194,7 @@ export default async (editor, opts = {}) => {
             pk3.colorChosen(col => rte.exec('mergeTags', `<div id=${col}>`));
         },
     }); */
-    options.format && options.format.heading1 && rte.add('heading1', {
+  /*   options.format && options.format.heading1 && rte.add('heading1', {
         icon: icons.heading1 || '<div>H1</div>',
         attributes: {
             title: 'Heading 1'
@@ -215,15 +214,15 @@ export default async (editor, opts = {}) => {
             title: 'Heading 3'
         },
         result: rte => rte.exec(formatBlock, '<h3>')
-    });
-    options.format && options.format.heading4 && rte.add('heading4', {
+    }); */
+  /*   options.format && options.format.heading4 && rte.add('heading4', {
         icon: icons.heading4 || '<div>H4</div>',
         attributes: {
             title: 'Heading 4'
         },
         result: rte => rte.exec(formatBlock, '<h4>')
-    });
-    options.format && options.format.heading5 && rte.add('heading5', {
+    }); */
+ /*    options.format && options.format.heading5 && rte.add('heading5', {
         icon: icons.heading5 || '<div>H5</div>',
         attributes: {
             title: 'Heading 5'
@@ -236,13 +235,13 @@ export default async (editor, opts = {}) => {
             title: 'Heading 6'
         },
         result: rte => rte.exec(formatBlock, '<h6>')
-    });
+    }); */
     options.format && options.format.paragraph && rte.add('paragraph', {
         icon: icons.paragraph || '&#182;',
         attributes: {
             title: 'Paragraph'
         },
-        result: rte => rte.exec(formatBlock, '<p>')
+        result: rte => rte.exec(formatBlock, '<mj-text>')
     });
     options.format && options.format.quote && rte.add('quote', {
         icon: icons.quote || '<i class="fa fa-quote-left"></i>',
@@ -395,7 +394,7 @@ export default async (editor, opts = {}) => {
         // Bind the 'result' on 'change' listener
         event: 'change',
 
-        result: (rte, action) => rte.insertHTML(`<span id="${action.btn.firstChild.value}" data-gjs-editable="false" style='color: blue;'>[${action.btn.firstChild.value}]</span>`),
+        result: (rte, action) => rte.insertHTML(`<span><mj-text id="${action.btn.firstChild.value}" data-gjs-editable="false" style='color: blue;'>[${action.btn.firstChild.value}]</mj-text></span>`),
         // Callback on any input change (mousedown, keydown, etc..)
         update: (rte, action) => {
             const value = rte.doc.queryCommandValue(action.name);
