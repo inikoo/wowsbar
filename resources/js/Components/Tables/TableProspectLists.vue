@@ -6,11 +6,13 @@
 
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue';
+import {useLocaleStore} from "@/Stores/locale";
 
 const props = defineProps<{
     data: object,
     tab?: string
 }>()
+const locale = useLocaleStore()
 
 
 
@@ -18,7 +20,9 @@ const props = defineProps<{
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-
+        <template #cell(number_items)="{ item: prospect_list }">
+            {{locale.number(prospect_list['number_items'])}}
+        </template>
     </Table>
 </template>
 
