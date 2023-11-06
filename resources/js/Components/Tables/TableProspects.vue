@@ -104,12 +104,13 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
     <Table :resource="data" :name="tab" class="mt-5">
 
         <template #cell(state)="{ item: banner }">
-            <Icon :data="banner['state_icon']" class="px-1" :title="banner.tooltip" />
+            <Icon :data="banner['state_icon']" class="px-1" />
         </template>
 
         <template #cell(name)="{ item: prospect }">
             <Link v-if="prospect.name" :href="prospectRoute(prospect)"
-                :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]"  
+                class="py-1"
+                :class="[`specialUnderlineOrg`]"  
             >
                 <span>{{ prospect['name'] }}</span>
             </Link>

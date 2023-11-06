@@ -31,10 +31,11 @@ function employeeRoute(employee) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5"   >
         <template #cell(slug)="{ item: employee }">
-            <Link :href="employeeRoute(employee)">
+            <Link :href="employeeRoute(employee)" class="py-1 specialUnderlineOrg">
                 {{ employee['slug'] }}
             </Link>
         </template>
+
         <template  #cell(state)="{ item: employee }">
             <Icon :data="employee['state_icon']"/>
         </template>

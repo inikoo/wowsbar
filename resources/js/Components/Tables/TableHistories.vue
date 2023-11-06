@@ -19,10 +19,10 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Table :resource="data" :name="tab"  class="mt-5"  >
-
+    <Table :resource="data" :name="tab" class="mt-5">
+        <!-- Date created -->
         <template #cell(created_at)="{ item: history }">
-            {{ useFormatTime(history['created_at'], locale.language.code, true) }}
+            {{ useFormatTime(history['created_at'], { formatTime: 'hm' }) }}
         </template>
 
         <template #cell(old_values)="{ item: history }">
@@ -36,12 +36,12 @@ const props = defineProps<{
         </template>
 
         <template #cell(datetime)="{ item: history }">
-            {{ useFormatTime(history.datetime, locale.language.code, {hms: true}) }}
+            {{ useFormatTime(history.datetime, { formatTime: 'hms' }) }}
         </template>
 
+        <!-- Action -->
         <template #cell(action)="{ item: history }">
-            {{history['natural_language']}}
+            <span class="text-gray-500">{{ history['natural_language'] }}</span>
         </template>
-
     </Table>
 </template>

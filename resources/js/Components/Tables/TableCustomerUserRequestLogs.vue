@@ -32,7 +32,7 @@ const props = defineProps<{
         </template>
 
         <template #cell(datetime)="{ item: user }">
-            {{ useFormatTime(user.datetime, locale.language.code, 'hms') }}
+            {{ useFormatTime(user.datetime, { localeCode: locale.language.code, formatTime: 'hms' }) }}
         </template>
     </Table>
 </template>

@@ -30,7 +30,7 @@ function guestRoute(guest) {
 <template>
     <Table :resource="data" :name="tab"  class="mt-5">
         <template #cell(alias)="{ item: guest }">
-            <Link :href="guestRoute(guest)">
+            <Link :href="guestRoute(guest)" class="specialUnderlineOrg py-1">
                 {{ guest['alias'] }}
             </Link>
         </template>
