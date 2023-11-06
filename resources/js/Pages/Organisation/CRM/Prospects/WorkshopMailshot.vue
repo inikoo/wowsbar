@@ -101,15 +101,15 @@ console.log(props)
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex rounded-md overflow-hidden">
-                <Link
-                        method="post"
-                        :href="route(
-                            props.setAsReadyRoute.name,
-                            props.setAsReadyRoute.parameters
-                    )">
-                <Button class="rounded-r-none" :style="`secondary`" v-if="setAsReadyRoute">
-                    <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
-                </Button>
+                <Link v-if="!setAsReadyRoute"
+                    method="post"
+                    :href="route(
+                        props.setAsReadyRoute.name,
+                        props.setAsReadyRoute.parameters
+                )">
+                    <Button class="rounded-r-none" :style="`secondary`">
+                        <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
+                    </Button>
                 </Link>
                 <Popover>
                     <template #button>
