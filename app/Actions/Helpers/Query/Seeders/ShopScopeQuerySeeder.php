@@ -33,7 +33,7 @@ class ShopScopeQuerySeeder
                 'constrains' => [
 
 
-                        'with' => 'email'
+                    'with' => 'email'
 
 
                 ],
@@ -47,12 +47,12 @@ class ShopScopeQuerySeeder
                 'constrains' => [
 
 
-                        'with'  => 'email',
-                        'where' => [
-                            'state',
-                            '=',
-                            ProspectStateEnum::NO_CONTACTED->value
-                        ]
+                    'with'  => 'email',
+                    'where' => [
+                        'state',
+                        '=',
+                        ProspectStateEnum::NO_CONTACTED->value
+                    ]
 
 
                 ]
@@ -63,31 +63,33 @@ class ShopScopeQuerySeeder
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
 
-                        'with'    => 'email',
-                        'whereIn' => [
-                            'state',
-                            [
-                                ProspectStateEnum::NO_CONTACTED->value,
-                                ProspectStateEnum::CONTACTED->value
-                            ]
+                    'with'    => 'email',
+                    'whereIn' => [
+                        'state',
+                        [
+                            ProspectStateEnum::NO_CONTACTED->value,
+                            ProspectStateEnum::CONTACTED->value
+                        ]
+                    ],
+                    'group'   => [
+                        'where'       => [
+                            'last_contacted_at',
+                            '<=',
+                            '__date__'
                         ],
-                        'group'=> [
-                            'where'   => [
-                                'last_contacted_at',
-                                '<=',
-                                '__date__'
-                            ],
-                            'orWhereNull'=> [
-                                'last_contacted_at',
-                            ]
-                        ],
+                        'orWhereNull' => [
+                            'last_contacted_at',
+                        ]
+                    ],
 
                 ],
                 'arguments'  => [
                     '__date__' => [
                         'type'  => 'dateSubtraction',
-                        'unit'  => 'week',
-                        'value' => 1
+                        'value' => [
+                            'unit'     => 'week',
+                            'quantity' => 1
+                        ]
                     ]
                 ]
             ],
@@ -111,13 +113,11 @@ class ShopScopeQuerySeeder
 
     public function asCommand(Command $command): int
     {
-
         $exitCode = 0;
 
         foreach ($this->getShops($command) as $shop) {
             $this->handle($shop);
             $command->line("Queries seeded for $shop->name");
-
         }
 
         return $exitCode;
