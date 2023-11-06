@@ -10,6 +10,7 @@ namespace App\Actions\Mail\Mailshot;
 use App\Actions\Mail\EmailAddress\SendEmailAddress;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
+use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -21,9 +22,6 @@ class SendMailshot
 
     public function handle(Mailshot $mailshot, array $modelData): void
     {
-
-
-
         $updateData = array_merge([
             'state' => MailshotStateEnum::READY,
         ], $modelData);
@@ -38,7 +36,12 @@ class SendMailshot
         SendEmailAddress::run($mailshot);
     }
 
-    public function asController(Mailshot $mailshot, ActionRequest $request): Mailshot
+//    public function htmlResponse(Mailshot): RedirectResponse
+//    {
+//        return redirect()->route('org.models.mailshot.content.show');
+//    }
+
+    public function asController(Mailshot $mailshot, ActionRequest $request): void
     {
 
         if($mailshot->state==MailshotStateEnum::IN_PROCESS) {
@@ -48,7 +51,7 @@ class SendMailshot
         }
 
         $request->validate();
-        return $this->handle($mailshot, $request->validated());
+        $this->handle($mailshot, $request->validated());
     }
 
 }
