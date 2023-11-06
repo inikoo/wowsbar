@@ -12,6 +12,7 @@ use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasAddress;
 use App\Models\Traits\HasHistory;
@@ -68,6 +69,7 @@ use Spatie\Tags\HasTags;
  * @property-read Model|\Eloquent $owner
  * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
+ * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Leads\ProspectFactory factory($count = null, $state = [])
@@ -186,5 +188,10 @@ class Prospect extends Model implements Auditable
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function portfolioWebsite(): BelongsTo
+    {
+        return $this->belongsTo(PortfolioWebsite::class);
     }
 }

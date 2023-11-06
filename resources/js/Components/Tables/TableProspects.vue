@@ -13,8 +13,6 @@ import {trans} from "laravel-vue-i18n"
 import Multiselect from '@vueform/multiselect'
 import axios from 'axios'
 import {notify} from '@kyvg/vue3-notification'
-import { capitalize } from '@/Composables/capitalize'
-import { useLayoutStore } from '@/Stores/layout'
 
 import Tag from '@/Components/Tag.vue'
 import Icon from "@/Components/Icon.vue";
