@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Helpers\Query\StoreQuery;
+use App\Actions\Helpers\Query\UpdateQuery;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class QuerySeeder extends Seeder
 {
@@ -17,23 +18,45 @@ class QuerySeeder extends Seeder
     {
         $data = [
             [
-                'slug' => Str::random(4),
-                'name' => 'Prospects with email',
+                'slug'       => 'prospects-email',
+                'name'       => 'Prospects with email',
                 'model_type' => class_basename(Prospect::class),
-                'base' => json_encode(['with' => 'email']),
-                'filters' => json_encode(['with' => 'phone'])
+                'constrains' => [
+                    'and' => [
+
+                            'with' => 'email'
+
+                    ]
+                ],
+
+
             ],
             [
-                'slug' => Str::random(4),
-                'name' => 'Prospects not contacted',
+                'slug'       => 'prospects-not-contacted',
+                'name'       => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
-                'base' => json_encode(['without' => 'email']),
-                'filters' => json_encode(['without' => 'phone'])
+                'constrains' => [
+                    'and' => [
+
+                            'with'  => 'email',
+                            'where' => [
+                                'state',
+                                '=',
+                                ProspectStateEnum::NO_CONTACTED->value
+                            ]
+
+                    ]
+                ]
             ],
         ];
 
-        foreach ($data as $item) {
-            Query::create($item);
+        foreach ($data as $queryData) {
+            $queryData['is_seeded'] = true;
+            if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
+                UpdateQuery::run($query, $queryData);
+            } else {
+                StoreQuery::run($queryData);
+            }
         }
     }
 }

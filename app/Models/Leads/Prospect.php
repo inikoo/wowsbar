@@ -53,9 +53,14 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
+ * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read \App\Models\Assets\Country $country
  * @property-read Customer|null $customer
+ * @property-read string $formatted_address
+ * @property-read Model|\Eloquent $owner
  * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
  * @property-read int|null $tags_count

@@ -7,10 +7,9 @@
 
 namespace App\Models\Helpers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Tags\HasSlug;
 
 /**
  * App\Models\Helpers\Query
@@ -19,9 +18,11 @@ use Spatie\Tags\HasSlug;
  * @property string $slug
  * @property string $name
  * @property string $model_type
- * @property mixed $base
- * @property mixed $filters
- * @property bool $read_only
+ * @property mixed $constrains
+ * @property mixed $arguments
+ * @property bool $seeded
+ * @property int|null $number_items
+ * @property string|null $counted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -29,22 +30,36 @@ use Spatie\Tags\HasSlug;
  * @method static \Illuminate\Database\Eloquent\Builder|Query newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query query()
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereBase($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereArguments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereConstrains($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereCountedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereFilters($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereModelType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereReadOnly($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereNumberItems($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereSeeded($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Query extends Model
 {
-//    use HasSlug;
+    use HasSlug;
+
+    protected $casts = [
+        'constrains'  => 'array',
+        'arguments'   => 'array',
+
+
+    ];
+
+    protected $attributes = [
+        'constrains'  => '{}',
+        'arguments'   => '{}',
+    ];
 
     protected $guarded = [];
 

@@ -2,9 +2,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
-use App\Models\Mail\MailshotRecipient;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
 class GetEstimatedNumberRecipients

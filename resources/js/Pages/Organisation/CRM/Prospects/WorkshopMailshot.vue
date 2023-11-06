@@ -19,6 +19,8 @@ import Button from '@/Components/Elements/Buttons/Button.vue';
 import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Modal from '@/Components/Utils/Modal.vue';
+import { DatePicker  } from 'v-calendar';
+import 'v-calendar/style.css';
 
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCaretRight)
@@ -120,7 +122,7 @@ const onCancel = () => {
         <div>
             <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
             <div class="my-2">
-                <VDatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
+                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
                     :min-date="new Date()" />
             </div>
             <div class="flex justify-between">

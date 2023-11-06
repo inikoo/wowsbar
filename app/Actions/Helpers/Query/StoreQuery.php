@@ -36,18 +36,16 @@ class StoreQuery
     public function rules(): array
     {
         return [
-            'name'       => ['required', 'string'],
-            'model_type' => ['required', 'string'],
-            'base'       => ['required', 'string'],
-            'filters'    => ['required', 'string'],
-            'read_only'  => ['required', 'string']
+            'name'        => ['required', 'string','max"255'],
+            'model_type'  => ['required', 'string'],
+            'constrains'  => ['required', 'array'],
+            'is_seeded'   => ['required', 'boolean']
         ];
     }
 
     public function asController(ActionRequest $request): Query
     {
         $request->validate();
-
         return $this->handle($request->validated());
     }
 }

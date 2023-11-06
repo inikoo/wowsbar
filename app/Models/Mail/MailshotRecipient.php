@@ -19,10 +19,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $mailshot_id
  * @property string $recipient_type
  * @property int $recipient_id
- * @property \App\Models\Mail\Mailshot $mailshot
- * @property \App\Models\Leads\Prospect|\App\Models\CRM\Customer $recipient
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Mail\Mailshot $mailshot
+ * @property-read Model|\Eloquent $recipient
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient query()

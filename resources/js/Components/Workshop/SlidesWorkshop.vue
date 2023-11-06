@@ -386,7 +386,6 @@ const CommonBlueprint = ref([
                 label: trans("Text Align"),
                 defaultValue : "center",
                 value: ["common", "centralStage", "textAlign"],
-                defaultValue: "center",
                 options: [
                     {
                         label: "Align left",
@@ -623,18 +622,18 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars"
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
-                            
+
                             <!-- Image slide: if Image is selected in SlideBackground -->
                             <div v-if="data.type === 'square'" class="">
                                 <!-- If Banner Square -->
                                 <Image v-if="get(slide, ['backgroundType', 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
-                            
+
                                 <!-- If the slide is color -->
                                 <div v-else :style="{ background: get(slide, ['background', 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             <div v-else>
                                 <Image v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
-                            
+
                                 <!-- If the slide is color -->
                                 <div v-else :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
@@ -695,7 +694,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
 
-                
+
             </div>
             <div class="text-xs text-gray-400 py-1">
                 The recommended image size is 1800 x 450
@@ -718,10 +717,10 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
             <div>
                 <GalleryImages
-                    :addImage="uploadImageRespone" 
+                    :addImage="uploadImageRespone"
                     :closeModal="() => isOpenGalleryImages = false"
-                    :imagesUploadRoute="props.imagesUploadRoute"  
-                    :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
+                    :imagesUploadRoute="props.imagesUploadRoute"
+                    :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}"
                 />
             </div>
         </Modal>
