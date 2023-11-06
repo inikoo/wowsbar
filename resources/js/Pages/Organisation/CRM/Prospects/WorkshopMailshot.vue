@@ -22,6 +22,7 @@ import Modal from '@/Components/Utils/Modal.vue';
 import { DatePicker  } from 'v-calendar';
 import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
+import { routeType } from '@/types/route'
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faCaretDown, faPaperPlane)
 
@@ -34,12 +35,12 @@ const props = defineProps<{
     }
     changelog?: object,
     workshop?: object,
-    imagesUploadRoute: Object,
-    setAsReadyRoute: Object,
-    updateRoute: Object,
-    loadRoute: Object
-    setAsScheduledRoute: object
-    sendRoute:Object
+    imagesUploadRoute: routeType
+    setAsReadyRoute: routeType
+    updateRoute: routeType
+    loadRoute: routeType
+    setAsScheduledRoute: routeType
+    sendRoute: routeType
 
 }>()
 
@@ -92,7 +93,7 @@ const onCancel = () => {
     date.value = new Date()
 }
 
-console.log(props)
+// console.log(props)
 </script>
 
 
@@ -101,11 +102,11 @@ console.log(props)
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex rounded-md overflow-hidden">
-                <Link v-if="!setAsReadyRoute"
+                <Link v-if="setAsReadyRoute?.name"
                     method="post"
                     :href="route(
-                        props.setAsReadyRoute.name,
-                        props.setAsReadyRoute.parameters
+                        props.setAsReadyRoute?.name,
+                        props.setAsReadyRoute?.parameters
                 )">
                     <Button class="rounded-r-none" :style="`secondary`">
                         <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
@@ -169,14 +170,5 @@ console.log(props)
 
 .vc-header {
     margin-bottom: 10px;
-}
-
-.dropdwon-button {
-    padding: 9px 15px;
-    border-radius: 0px 10px 10px 0px;
-}
-
-.button-send {
-    border-radius: 10px 0px 0px 10px;
 }
 </style>
