@@ -80,7 +80,7 @@ class BuildQuery
         $value = null;
         if (Arr::get($argumentData, 'type') == 'dateSubtraction') {
             $date = Carbon::now();
-            $date->sub(Arr::get($argumentData, 'value'), Arr::get($argumentData, 'unit'));
+            $date->sub(Arr::get($argumentData, 'value.quantity'), Arr::get($argumentData, 'value.unit'));
             $value = $date->toDateTime();
         }
 
