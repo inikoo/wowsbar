@@ -96,15 +96,15 @@ const onCancel = () => {
         <template #other="{ dataPageHead: head }">
             <div class="flex">
                 <div>
-                    <Button @click="save(false)" class="button-send">
+                    <Button @click="save(false)" class="rounded-l-md rounded-r-none">
                         Send Now
                     </Button>
                 </div>
                 <Popover>
                     <template #button>
                         <div class="relative">
-                            <Button class="dropdwon-button">
-                                <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                            <Button class="rounded-r-md rounded-l-none">
+                                <font-awesome-icon :icon="['fas', 'caret-right']" class='leading-6 border-transparent border' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
