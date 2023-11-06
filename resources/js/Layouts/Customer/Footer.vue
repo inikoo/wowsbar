@@ -41,7 +41,7 @@ library.add(faHeart,faComputerClassic,faDiscord)
                 </span>
             </div>
 
-            <div class="pl-4 flex items-center gap-x-1.5 py-1">
+            <div class="pl-4 flex items-center gap-x-1.5">
                 <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
                     <span class="text-slate-400	 text-xs">
                         <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>

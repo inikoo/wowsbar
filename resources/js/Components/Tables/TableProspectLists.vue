@@ -23,6 +23,14 @@ const locale = useLocaleStore()
         <template #cell(number_items)="{ item: prospect_list }">
             {{locale.number(prospect_list['number_items'])}}
         </template>
+
+        <template #cell(description)="{ item: prospect_list }">
+            {{prospect_list.constrains}}
+        </template>
+
+        <template #cell(actions)="{ item: prospect_list }">
+            {{prospect_list.arguments}}
+        </template>
     </Table>
 </template>
 
