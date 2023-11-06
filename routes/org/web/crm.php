@@ -20,7 +20,7 @@ use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\ExportProspects;
-use App\Actions\Leads\Prospect\Mailshots\UI\CreateMailshot;
+use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
@@ -99,7 +99,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
             Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
-            Route::get('create', [CreateMailshot::class, 'inShop'])->name('create');
+            Route::get('create', [CreateProspectsMailshot::class, 'inShop'])->name('create');
 
             Route::get('{mailshot}/edit', EditProspectMailshot::class)->name('edit');
             Route::get('{mailshot}/workshop', ShowProspectMailshotWorkshop::class)->name('workshop');
