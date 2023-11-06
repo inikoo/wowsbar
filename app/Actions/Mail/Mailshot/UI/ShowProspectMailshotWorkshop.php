@@ -10,6 +10,7 @@ namespace App\Actions\Mail\Mailshot\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
+use App\Enums\Mail\MailshotStateEnum;
 use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -82,27 +83,29 @@ class ShowProspectMailshotWorkshop extends InertiaAction
                 ],
                 'mailshot'    => MailshotResource::make($mailshot)->getArray(),
 
-                'imagesUploadRoute' => [
+                'imagesUploadRoute'   => [
                     'name'       => 'org.models.mailshot.images.store',
                     'parameters' => $mailshot->id
                 ],
-                'setAsReadyRoute'   => [
-                    'name'       => 'org.models.mailshot.state.ready',
-                    'parameters' => $mailshot->id
-                ],
-                'sendRoute'   => [
+                'setAsReadyRoute'     => $mailshot->state == MailshotStateEnum::READY
+                    ? null
+                    : [
+                        'name'       => 'org.models.mailshot.state.ready',
+                        'parameters' => $mailshot->id
+                    ],
+                'sendRoute'           => [
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id
                 ],
-                'setAsScheduledRoute'   => [
+                'setAsScheduledRoute' => [
                     'name'       => 'org.models.mailshot.state.scheduled',
                     'parameters' => $mailshot->id
                 ],
-                'updateRoute'       => [
+                'updateRoute'         => [
                     'name'       => 'org.models.mailshot.content.update',
                     'parameters' => $mailshot->id
                 ],
-                'loadRoute'         => [
+                'loadRoute'           => [
                     'name'       => 'org.models.mailshot.content.show',
                     'parameters' => $mailshot->id
                 ],

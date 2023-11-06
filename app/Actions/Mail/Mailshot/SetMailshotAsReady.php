@@ -41,7 +41,7 @@ class SetMailshotAsReady
             return true;
         }
 
-        return $request->user()->hasPermissionTo("websites.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array
@@ -62,8 +62,8 @@ class SetMailshotAsReady
 
     public function asController(Mailshot $mailshot, ActionRequest $request): Mailshot
     {
-        $request->validate();
 
+        $request->validate();
         return $this->handle($mailshot, $request->validated());
     }
 
@@ -78,8 +78,10 @@ class SetMailshotAsReady
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): RedirectResponse
     {
+
+
         return Redirect::route('org.crm.shop.prospects.mailshots.show', [
-            $request->route()->originalParameters()['shop'],
+            $mailshot->scope->slug,
             $mailshot->slug
         ]);
     }
