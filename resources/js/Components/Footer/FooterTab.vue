@@ -26,8 +26,12 @@ const layout = useLayoutStore()
             </div>
         </div>
 
-        <!-- The body -->
-        <div class="w-full bg-gray-700 shadow-lg flex-row items-start text-gray-100 text-[11px] leading-none" >
+        <!-- The options list -->
+        <div class="w-full shadow-lg flex-row items-start text-[11px] leading-none"
+            :class="[
+                layout.systemName === 'org' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 text-gray-100'
+            ]"
+        >
             <div class="flex flex-col justify-center text-center pt-0.5 pb-3 gap-y-1">
                 <slot />
             </div>

@@ -57,7 +57,7 @@ const compTheme = computed(() => {
             ]"
             :style="[
                 stringToColor ? [  // if stringToColor true
-                    `background-color: ${useStringToHex(label) + '40'}`,
+                    `background-color: ${useStringToHex(label) + '30'}`,
                     `border: 1px solid ${useStringToHex(label) + '90'}`,
                     `color: ${useStringToHex(label)}`
                 ] : ''
@@ -66,6 +66,7 @@ const compTheme = computed(() => {
             <slot>
                 {{ label }}
             </slot>
+
             <!-- Button: Close (X icon) -->
             <div v-if="closeButton"
                 @click="(event) => emits('onClose', event)"

@@ -44,9 +44,9 @@ function setColor(status: status) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(username)="{ item: user }">
-                <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user['username'].replace(' ','-')">
-                    <template v-if="user['username']">{{ user['username'] }}</template>
-                </Link>
+            <Link :href="userRoute(user)" class="w-full h-full py-1 specialUnderlineOrg" :id="user['username'].replace(' ','-')">
+                <template v-if="user['username']">{{ user['username'] }}</template>
+            </Link>
         </template>
 
         <template #cell(avatar)="{ item: user }">

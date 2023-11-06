@@ -14,13 +14,14 @@ const props = defineProps<{
         icon: object,
         class?: string
     },
+    title?: string
 }>()
 </script>
 
 <template>
 
     <FontAwesomeIcon
-        :title="capitalize(data.tooltip ?? '')"
+        :title="title ? title : capitalize(data.tooltip ?? '')"
         aria-hidden="true"
         :icon="data.icon"
         :class="data.class"

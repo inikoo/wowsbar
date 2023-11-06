@@ -10,8 +10,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import { ref } from "vue"
-import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup } from '@fal/'
-import { faCaretRight } from '@fas/'
+import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch } from '@fal/'
+import { faCaretDown, faPaperPlane } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
@@ -23,7 +23,7 @@ import { DatePicker  } from 'v-calendar';
 import 'v-calendar/style.css';
 
 
-library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCaretRight)
+library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faCaretDown, faPaperPlane)
 
 const props = defineProps<{
     title: string,
@@ -94,17 +94,15 @@ const onCancel = () => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex">
-                <div>
-                    <Button @click="save(false)" class="button-send">
-                        Send Now
-                    </Button>
-                </div>
+            <div class="flex rounded-md overflow-hidden">
+                <Button class="rounded-r-none" :style="`secondary`">
+                    <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
+                </Button>
                 <Popover>
                     <template #button>
-                        <div class="relative">
-                            <Button class="dropdwon-button">
-                                <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                        <div class="relative" title="Scheduled publish">
+                            <Button class="rounded-none">
+                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='leading-6 border-transparent border' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
@@ -113,6 +111,10 @@ const onCancel = () => {
                         <div @click="OpenModal = true">Send with schedule</div>
                     </template>
                 </Popover>
+                <Button @click="save(false)" class="rounded-none">
+                    Send Now
+                    <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
+                </Button>
             </div>
         </template>
     </PageHeading>

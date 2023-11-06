@@ -59,12 +59,12 @@ function customerRoute(website: Website) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: website }">
-            <Link :href="websiteRoute(website)" :id=" website['slug']" class="py-2 px-1">
+            <Link :href="websiteRoute(website)" :id=" website['slug']" class="specialUnderlineOrg py-1 px-1">
                 {{ website['slug'] }}
             </Link>
         </template>
         <template #cell(customer_name)="{ item: website }">
-            <Link :href="customerRoute(website)" :id=" website['customer_slug']" class="py-2 px-1">
+            <Link :href="customerRoute(website)" :id=" website['customer_slug']" class="specialUnderlineOrg py-1 px-1">
                 {{ website['customer_name'] }}
             </Link>
         </template>

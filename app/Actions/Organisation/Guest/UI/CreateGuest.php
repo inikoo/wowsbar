@@ -89,15 +89,13 @@ class CreateGuest extends InertiaAction
                         [
                             'title'  => __('Job Position'),
                             'fields' => [
-                                'fields' => [
-                                    'positions' => [
-                                        'type'        => 'jobPosition',
-                                        'label'       => __('position'),
-                                        'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
-                                        'placeholder' => __('Select a job position'),
-                                    ],
-                                ]
-
+                                'positions' => [
+                                    'type'        => 'jobPosition',
+                                    'label'       => __('position'),
+                                    'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
+                                    'placeholder' => __('Select a job position'),
+                                    'value'       => []
+                                ],
                             ]
                         ],
                     ],

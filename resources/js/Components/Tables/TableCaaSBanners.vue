@@ -66,7 +66,7 @@ function bannerRoute(banner: Banner) {
 
         <template #cell(date)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(banner['date'], locale.language.code, 'hm') }}
+                {{ useFormatTime(banner['date'], { localeCode: locale.language.code, formatTime: 'hm' }) }}
                 <a v-if="banner['state']=='live'" :href="banner['delivery_url']">
                     <Icon class="ml-1" :data="banner['date_icon']"/>
                 </a>
