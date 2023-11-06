@@ -123,13 +123,21 @@ class StoreMailshot
 
     public function action(Shop|Customer $parent, array $objectData): Mailshot
     {
+
+
+        if(Arr::get($objectData, 'type')==MailshotTypeEnum::PROSPECT_MAILSHOT) {
+            $this->queryRules = [
+                'model_type' => 'Prospect',
+                'scope_type' => class_basename($parent),
+                'scope_id'   => $parent->id
+            ];
+        }
+
+
+
         $this->asAction = true;
         $this->setRawAttributes($objectData);
-
-
         $validatedData = $this->validateAttributes();
-
-
         return $this->handle($parent, $validatedData);
     }
 
