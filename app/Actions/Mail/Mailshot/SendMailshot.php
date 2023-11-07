@@ -26,9 +26,10 @@ class SendMailshot
             'state' => MailshotStateEnum::READY,
         ], $modelData);
 
-        if ($mailshot->state == MailshotStateEnum::IN_PROCESS) {
-            $updateData['sent_at'] = now();
+        if(!$mailshot->sent_at) {
+            data_set($modelData, 'sent_at', now());
         }
+        data_set($modelData, 'state', MailshotStateEnum::SENDING);
 
         $mailshot->update($updateData);
 
@@ -36,10 +37,10 @@ class SendMailshot
         SendEmailAddress::run($mailshot);
     }
 
-//    public function htmlResponse(Mailshot): RedirectResponse
-//    {
-//        return redirect()->route('org.models.mailshot.content.show');
-//    }
+    //    public function htmlResponse(Mailshot): RedirectResponse
+    //    {
+    //        return redirect()->route('org.models.mailshot.content.show');
+    //    }
 
     public function asController(Mailshot $mailshot, ActionRequest $request): void
     {

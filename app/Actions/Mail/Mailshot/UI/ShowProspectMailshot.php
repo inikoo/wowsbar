@@ -85,11 +85,12 @@ class ShowProspectMailshot extends InertiaAction
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $action[] = [
-                'type'  => 'button',
-                'style' => 'primary',
-                'label' => __('Send'),
-                'icon'  => ["fal", "fa-paper-plane"],
-                'route' => [
+                'type'       => 'button',
+                'style'      => 'primary',
+                'label'      => __('Send Now'),
+                'icon'       => ["fal", "fa-paper-plane"],
+                'method'     => 'post',
+                'route'      => [
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id,
                     'method'     => 'post'

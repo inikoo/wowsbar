@@ -7,7 +7,6 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
