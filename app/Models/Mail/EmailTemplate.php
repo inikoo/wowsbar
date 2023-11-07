@@ -7,6 +7,7 @@
 
 namespace App\Models\Mail;
 
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,4 +38,13 @@ use Illuminate\Database\Eloquent\Model;
 class EmailTemplate extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+
+    protected $casts = [
+        'compiled_layout' => 'array',
+        'data'            => 'array',
+        'state'           => EmailTemplateStateEnum::class
+    ];
 }

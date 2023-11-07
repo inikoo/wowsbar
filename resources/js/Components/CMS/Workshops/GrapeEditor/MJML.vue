@@ -1,16 +1,14 @@
 <script setup lang="ts">
+/* import CKEDITOR from 'ckeditor/ckeditor' */
 import { onMounted, ref } from "vue";
 import "grapesjs/dist/css/grapes.min.css";
 import grapesjs, { usePlugin } from "grapesjs";
 import axios from "axios"
-import Rte from "./CustomLayout/Rte/Rte.ts";
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
-import { Editor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import TextEditor from "@/Components/Forms/Fields/TextEditor.vue";
 import CkeEditor from 'grapesjs-plugin-ckeditor'
+/* import type CKE from 'ckeditor4'; */
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
@@ -25,7 +23,6 @@ const props = withDefaults(defineProps<{
 });
 
 const editorInstance = ref(null);
-
 const deleteImageStore = (data) => {
     const allImages = data.assets;
     const usageImages = editorInstance.value.DomComponents.getWrapper().find('img');
@@ -40,7 +37,6 @@ const deleteImageStore = (data) => {
 };
 
 const Store = async (data, editor) => {
-    const inlineHtml = editorInstance.value.runCommand('gjs-get-inlined-html')
     const pagesHtml = editor.Pages.getAll().map(page => {
         const component = page.getMainComponent();
         return {
@@ -115,34 +111,63 @@ const uploadFile = async (e) => {
     }
 }
 
+/* console.log(CKE) */
+
 onMounted(() => {
     editorInstance.value = grapesjs.init({
         container: "#gjs",
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins: [grapesJSMJML,CkeEditor],
+        plugins: [grapesJSMJML, CkeEditor],
         pluginsOpts: {
             [grapesJSMJML]: {
                 blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
                     'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw'],
             },
-            [CkeEditor]: {}
+            [CkeEditor]: {
+                options: {
+                    language: 'en',
+                    startupFocus: true,
+                    extraAllowedContent: '*(*);*{*}', 
+                    allowedContent: true,
+                    uiColor: '#222f3e',
+                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks`,
+                    toolbarGroups : [
+                            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+                            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+                            { name: 'forms', groups: [ 'forms' ] },
+                            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+                            { name: 'links', groups: [ 'links' ] },
+                            { name: 'insert', groups: [ 'insert' ] },
+                            { name: 'styles', groups: [ 'styles' ] },
+                            { name: 'colors', groups: [ 'colors' ] },
+                            { name: 'tools', groups: [ 'tools' ] },
+                            { name: 'others', groups: [ 'others' ] },
+                            { name: 'about', groups: [ 'about' ] }
+                        ],
+                        removeButtons : 'Cut,Copy,Paste,PasteText,PasteFromWord,Source,Save,Templates,NewPage,ExportPdf,Preview,Print,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,CreateDiv,Image,Table,Smiley,SpecialChar,PageBreak,Iframe,Styles,About,Maximize,ShowBlocks'
+                },
+                position: 'left',
+            }
+
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
-        // custom: true,
-        storeAfterUpload: false,
-        uploadFile: uploadFile
-    },
+            // custom: true,
+            storeAfterUpload: false,
+            uploadFile: uploadFile
+        },
         storageManager: {
-        type: 'remote',
-    },
+            type: 'remote'
+        },
     });
-editorInstance.value.Storage.add('remote', {
-    async load() { return Load() },
-    async store(data) { return Store(data, editorInstance.value) }
-});
+    editorInstance.value.Storage.add('remote', {
+        async load() { return Load() },
+        async store(data) { return Store(data, editorInstance.value) }
+    });
 });
 
 
