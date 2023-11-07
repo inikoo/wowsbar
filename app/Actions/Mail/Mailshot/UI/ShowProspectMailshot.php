@@ -61,7 +61,8 @@ class ShowProspectMailshot extends InertiaAction
             $iconActions[] = [
                 'tooltip' => __('Workshop'),
                 'icon'    => 'fal fa-drafting-compass',
-                'href'    => [
+                'style' => 'secondary',
+                'route'    => [
                     'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
                     'parameters' => $request->route()->originalParameters()
                 ]
@@ -73,7 +74,7 @@ class ShowProspectMailshot extends InertiaAction
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::IN_PROCESS) {
             $action[] = [
                 'type'  => 'button',
-                'style' => 'primary',
+                'style' => 'secondary',
                 'label' => __('Workshop'),
                 'icon'  => ["fal", "fa-drafting-compass"],
                 'route' => [
@@ -116,12 +117,13 @@ class ShowProspectMailshot extends InertiaAction
                         'icon'    => 'fal fa-mail-bulk'
                     ],
                     'iconRight'   => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'iconActions' => [
-                        'type' => 'buttonGroup',
-                        $iconActions
+                    'actions'     => [
+                        [
+                            'type'          => 'buttonGroup',
+                            'buttonGroup'   => $iconActions
+                        ],
+                        ...$action
                     ]
-                    ,
-                    'actions'     => $action,
                 ],
                 'tabs'                             => [
                     'current'    => $this->tab,

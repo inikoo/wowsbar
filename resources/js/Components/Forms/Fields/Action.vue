@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { Action } from '@/types/Action'
 
 interface Route {
     name: string
@@ -8,21 +9,7 @@ interface Route {
 }
 
 const props = defineProps<{
-    action: {
-        icon?: string | string[]
-        label?: string
-        method?: string
-        route: Route
-        style: string
-        type: string
-        buttons?: {
-            route: Route
-            style: string
-            label?: string
-            icon?: string | string[]
-            method?: string
-        }[]
-    },
+    actions: Action
     dataToSubmit?: any
 }>()
 
@@ -31,16 +18,17 @@ const props = defineProps<{
 </script>
 
 <template>
+    <!-- <pre>{{ actions }}</pre> -->
     <!--suppress HtmlUnknownTag -->
     <!-- Button Group () -->
-    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
-        <slot v-for="(button, index) in action.buttons" :name="'button' + index">
+    <div v-if="actions.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
+        <slot v-for="(button, index) in actions.buttonGroup" :name="'button' + index">
             <Link
-                :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`" class=""
-                :method="button.method ?? 'get'"
+                :href="`${button.route?.name ? route(button.route?.name, button.route?.parameters) : '#'}`" class=""
+                :method="button.route?.method ?? 'get'"
             >
-                <Button :style="button.style" :label="button.label" :icon="button.icon"
-                        class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
+                <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight"
+                    class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
                 </Button>
             </Link>
         </slot>
@@ -48,13 +36,14 @@ const props = defineProps<{
 
     <!-- Button -->
     <Link v-else
-        :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`"
-        :method="action.method ?? 'get'"
-        :data="action.method !== 'get' ? dataToSubmit : null"
+        :href="`${actions.route ? route(actions.route?.name, actions.route?.parameters) : '#'}`"
+        :method="actions.route?.method ?? 'get'"
+        :data="actions.route?.method !== 'get' ? dataToSubmit : null"
     >
-        <Button :style="action.style" :label="action.label" :icon="action.icon" />
+    <!-- {{ actions }} -->
+        <Button :style="actions.style" :label="actions.label" :icon="actions.icon" :iconRight="actions.iconRight" />
     </Link>
 
-    <slot v-if="action.type === 'modal'" name="modal" :data="{...props }"/>
+    <!-- <slot v-if="button.type === 'modal'" name="modal" :data="{...props }"/> -->
 
 </template>

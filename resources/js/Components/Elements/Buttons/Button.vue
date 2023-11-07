@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
     'size'?: string
     'icon'?: string | string[]
     'leftIcon'?: Object
-    'rightIcon'?: Object
+    'iconRight'?: Object
     'action'?: string
     'label'?: string
     'full'?: boolean
@@ -138,9 +138,12 @@ const getActionIcon = (icon: any) => {
         :disabled="style == 'disabled'">
         <slot>
             <slot name="icon">
-                <FontAwesomeIcon fixed-width v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
+                <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" fixed-width class="" aria-hidden="true"/>
             </slot>
             <span v-if="getActionLabel(label)" :class="{'capitalize': capitalize}">{{ getActionLabel(label) }}</span>
+            <slot name="iconRight">
+                <FontAwesomeIcon v-if="iconRight" :icon="getActionIcon(iconRight)" fixed-width class="" aria-hidden="true"/>
+            </slot>
         </slot>
     </button>
 </template>

@@ -37,7 +37,6 @@ const isOpen = ref(false)
 <template layout="CustomerApp">
     <!-- <pre>{{ props }}</pre> -->
     <Head :title="capitalize(title)" />
-    <pre>{{ pageHead }}</pre>
     <PageHeading :data="pageHead"></PageHeading>
 
     <FirstBannerWidget v-if="firstBanner" :data="firstBanner" />

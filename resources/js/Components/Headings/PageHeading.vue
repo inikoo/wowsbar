@@ -39,8 +39,7 @@ const props = defineProps<{
         }
         actionActualMethod?: string
         meta?: any
-        iconActions?: any
-        actions?: ActionTS
+        actions?: ActionTS[]
         iconRight?: {
             title: string
             icon: string
@@ -115,11 +114,11 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
         <!-- Button -->
         <slot name="button" :dataPageHead="{...props }">
             <div class="flex items-center gap-2">
-                <div v-for="iconAction in data.iconActions">
-                    <!-- <Action :action="iconAction"/> -->
-                </div>
+                <!-- <div v-for="iconAction in data.iconActions">
+                    <Action :action="iconAction"/>
+                </div> -->
                 <div v-for="action in data.actions">
-                    <!-- <Action :action="action" :dataToSubmit="dataToSubmit"/> -->
+                    <Action :actions="action" :dataToSubmit="dataToSubmit"/>
                 </div>
                 <slot name="other" :dataPageHead="{...props }"/>
             </div>

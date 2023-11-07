@@ -7,14 +7,15 @@ export interface Action {
     iconRight?: string | string[]
     style?: string
     route?: routeType
+    tooltip?: string
     
-    action: {
+    buttonGroup?: {
         // If type = buttonGroup
         icon?: string | string[]
         label?: string
         iconRight?: string | string[]
         style?: string
         route?: routeType
-
-    }
+        tooltip?: string
+    }[]
 }
