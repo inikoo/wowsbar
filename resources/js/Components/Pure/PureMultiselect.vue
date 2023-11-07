@@ -9,7 +9,8 @@ const props = defineProps<{
     searchable?: boolean
     options: {
         label: string
-    }
+    }[] | string[]
+    caret?: boolean
 }>()
 
 const emits = defineEmits<{
@@ -24,7 +25,7 @@ const emits = defineEmits<{
         <Multiselect
             :value="modelValue"
             @input="(keyOption: any) => emits('update:modelValue', keyOption)"
-            class=""
+            :classes="{placeholder: 'text-sm text-left w-full pl-4 font-light text-gray-400'}"
             :options="props.options"
             :placeholder="placeholder ?? 'Select your option'"
             :canClear="!required"
@@ -33,6 +34,7 @@ const emits = defineEmits<{
             :canDeselect="!required"
             :hideSelected="false"
             :searchable="!!searchable"
+            :caret="caret ?? true"
         >
             <!-- <template #singlelabel :option="{ option }">{{option}}</template> -->
         </Multiselect>
