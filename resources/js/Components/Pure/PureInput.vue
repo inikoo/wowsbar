@@ -7,8 +7,8 @@ import {faEye, faEyeSlash} from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCopy, faEye, faEyeSlash)
 
-const props = defineProps<{
-    modelValue: string
+const props = withDefaults(defineProps<{
+    modelValue: string | number
     placeholder?: string
     readonly?: boolean
     inputName?: string
@@ -19,15 +19,22 @@ const props = defineProps<{
     autofocus?: boolean
     required?: boolean
     autocomplete?: string
-}>()
+    minValue?: string | number
+    maxValue?: string | number
+    caret?: boolean
+    pattern?: string 
+}>(), {
+    caret: true,
+    type: 'text'
+})
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
-const showPassword = ref(props.type ?? 'text')
+const showPassword = ref(props.type)  // default is type = "text"
 const handleEyeIcon = () => {
-    showPassword.value = showPassword.value == 'text' ? 'password' : 'text'
+    showPassword.value = showPassword.value == 'text' ? 'password' : props.type
 }
 
 </script>
@@ -41,18 +48,24 @@ const handleEyeIcon = () => {
                 :id="inputName"
                 :name="inputName"
                 :readonly="readonly"
-                :type="showPassword"
+                :type="type == 'password' ? showPassword : type"
                 :placeholder="placeholder"
                 :maxlength="maxLength"
                 :autofocus="autofocus"
+                :min="minValue"
+                :max="maxValue"
                 :required="required"
+                :pattern="pattern ?? type == 'number' ? '[0-9]*' : undefined"
                 :autocomplete="autocomplete"
-                class="bg-transparent py-2.5 px-3 block w-full
+                class="remove-arrows-input bg-transparent py-2.5 px-3 block w-full
                     text-gray-600 sm:text-sm placeholder:text-gray-400
                     border-transparent
                     focus:ring-0 focus:ring-gray-500 focus:outline-0 focus:border-transparent
                     read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:focus:border-transparent read-only:focus:border-gray-300 read-only:text-gray-500
                 "
+                :class="[
+                    caret ? '' : '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                ]"
             />
             <div v-if="copyButton"
                 class="flex justify-center items-center px-2 absolute inset-y-0 right-0 gap-x-1 cursor-pointer opacity-20 hover:opacity-75 active:opacity-100"

@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import { ref } from "vue"
-import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch } from '@fal/'
+import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal/'
 import { faCaretDown, faPaperPlane } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
@@ -24,7 +24,7 @@ import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
 
-library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faCaretDown, faPaperPlane)
+library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane)
 
 const props = defineProps<{
     title: string,
