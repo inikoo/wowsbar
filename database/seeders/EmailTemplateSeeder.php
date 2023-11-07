@@ -15,6 +15,12 @@ class EmailTemplateSeeder extends Seeder
     {
         // TODO: The layout goes here
 
-        EmailTemplate::create();
+        EmailTemplate::create([
+            'title' => 'Hello',
+            'scope_type' => 'Organisation',
+            'scope_id' => 1,
+            'data' => '{}',
+            'compiled' => '{}',
+        ]);
     }
 }

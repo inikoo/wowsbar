@@ -25,9 +25,13 @@ use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\IndexProspectsQueryProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
+use App\Actions\Organisation\UI\CRM\EmailTemplate\IndexEmailTemplates;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
@@ -120,6 +124,12 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
     Route::prefix('mailroom')->as('mailroom.')->group(function () {
         Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailroom'])->uses([ShowMailroomDashboard::class, 'inShop'])->name('dashboard');
+
+        Route::prefix('templates')->as('templates.')->group(function () {
+            Route::get('{emailTemplate}', [ShowEmailTemplate::class, 'inShop'])->name('show');
+            Route::get('{emailTemplate}/workshop', ShowEmailTemplateWorkshop::class)->name('workshop');
+            Route::get('{emailTemplate}/content', ShowEmailTemplateContent::class)->name('content');
+        });
     });
 
 
