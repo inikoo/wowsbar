@@ -1,0 +1,860 @@
+{
+    "src": {
+        "pages": [
+            {
+                "id": "mS1Q4aJPRwyopWSm",
+                "type": "main",
+                "frames": [
+                    {
+                        "id": "P8urMXWfNP37U71F",
+                        "component": {
+                            "type": "wrapper",
+                            "stylable": [
+                                "background",
+                                "background-color",
+                                "background-image",
+                                "background-repeat",
+                                "background-attachment",
+                                "background-position",
+                                "background-size"
+                            ],
+                            "components": [
+                                {
+                                    "type": "mjml",
+                                    "tagName": "mjml",
+                                    "components": [
+                                        {
+                                            "type": "mj-body",
+                                            "style": {
+                                                "width": "600px",
+                                                "font-size": "13px",
+                                                "background-color": "#ccd3e0"
+                                            },
+                                            "tagName": "mj-body",
+                                            "attributes": {
+                                                "style": "background-color:#ccd3e0;font-size:13px;width:600px;",
+                                                "width": "600px",
+                                                "font-size": "13px",
+                                                "background-color": "#ccd3e0"
+                                            },
+                                            "components": [
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "20px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "20px",
+                                                        "background-color": "#fff"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "background-color:#fff;padding-bottom:20px;padding-top:20px;padding-left:0px;padding-right:0px;text-align:center;",
+                                                        "text-align": "center",
+                                                        "padding-top": "20px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "20px",
+                                                        "background-color": "#fff"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "width:100%;vertical-align:top;",
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-image",
+                                                                    "style": {
+                                                                        "src": "http://localhost:8080/zfdoBQ7XoQIZaV5KrczDq9VbNWw56fSKHMOrQalgELk/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvNjkvNWE2YjkzY2MucG5n",
+                                                                        "align": "center",
+                                                                        "width": "213px",
+                                                                        "border": "none",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "0px",
+                                                                        "padding-right": "0px",
+                                                                        "padding-bottom": "10px"
+                                                                    },
+                                                                    "tagName": "mj-image",
+                                                                    "attributes": {
+                                                                        "src": "http://localhost:8080/zfdoBQ7XoQIZaV5KrczDq9VbNWw56fSKHMOrQalgELk/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvNjkvNWE2YjkzY2MucG5n",
+                                                                        "align": "center",
+                                                                        "style": "src:http://localhost:8080/zfdoBQ7XoQIZaV5KrczDq9VbNWw56fSKHMOrQalgELk/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvNjkvNWE2YjkzY2MucG5n;align:center;border:none;width:213px;padding-left:0px;padding-right:0px;padding-bottom:10px;padding-top:10px;",
+                                                                        "width": "213px",
+                                                                        "border": "none",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "0px",
+                                                                        "padding-right": "0px",
+                                                                        "padding-bottom": "10px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "0px",
+                                                        "background-color": "#fecc66"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "background-color:#fecc66;padding-bottom:0px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;",
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "0px",
+                                                        "background-color": "#fecc66"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "width:100%;vertical-align:top;",
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#ABCDEA",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "28px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "18px"
+                                                                    },
+                                                                    "content": "<h1><span style=\"color:#000000;\">HELLO</span></h1>\n\n<p data-gjs-type=\"text\" draggable=\"true\" id=\"i8zkp\" style=\"font-size:16px;color:white;\">[[FirstName]]</p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#ABCDEA",
+                                                                        "style": "align:center;font-size:13px;color:#ABCDEA;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:18px;padding-top:28px;line-height:22px;",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "28px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "18px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "5px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "padding-bottom:5px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;background-color:#ffffff;",
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "5px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "width:100%;vertical-align:top;",
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-divider",
+                                                                    "style": {
+                                                                        "width": "100%",
+                                                                        "padding-top": "0",
+                                                                        "border-color": "#ffffff",
+                                                                        "border-style": "solid",
+                                                                        "border-width": "2px",
+                                                                        "padding-left": "20px",
+                                                                        "padding-right": "20px",
+                                                                        "padding-bottom": "0px"
+                                                                    },
+                                                                    "tagName": "mj-divider",
+                                                                    "attributes": {
+                                                                        "style": "border-color:#ffffff;border-width:2px;border-style:solid;padding-left:20px;padding-right:20px;padding-bottom:0px;padding-top:0;width:100%;",
+                                                                        "width": "100%",
+                                                                        "padding-top": "0",
+                                                                        "border-color": "#ffffff",
+                                                                        "border-style": "solid",
+                                                                        "border-width": "2px",
+                                                                        "padding-left": "20px",
+                                                                        "padding-right": "20px",
+                                                                        "padding-bottom": "0px"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "28px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "28px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\"><span data-gjs-type=\"text\" draggable=\"true\" id=\"in6wl\" style=\"font-size:20px;font-weight:bold;border-color:#000000;background-color:#ffffff;\">Thank you very much for your purchase.</span><br data-gjs-type=\"default\" draggable=\"true\" id=\"iu7bj\" />\n<span data-gjs-type=\"text\" draggable=\"true\" id=\"iu25j\" style=\"font-size:15px;\">Please find the receipt below.</span></span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:28px;padding-top:28px;line-height:22px;",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "28px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "28px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "15px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "background-color:#ffffff;padding-bottom:15px;padding-left:0px;padding-right:0px;padding-top:10px;text-align:center;",
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "15px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"ikx0u\">Order Number</strong></span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\">[[OrderNumber]]</span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"ipby7\">Order Date</strong></span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\">[[OrderDate]]</span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"i4p47\">Total Price</strong></span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Ubuntu, Helvetica, Arial, sans-serif",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "0px"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\">[[TotalPrice]]</span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;",
+                                                                        "font-size": "13px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "10px",
+                                                        "background-color": "#30b466"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;background-color:#30b466;",
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "10px",
+                                                        "background-color": "#30b466"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-button",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#ffffff",
+                                                                        "font-size": "13px",
+                                                                        "font-weight": "400",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "border-radius": "3px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px",
+                                                                        "vertical-align": "middle",
+                                                                        "background-color": "#414141"
+                                                                    },
+                                                                    "tagName": "mj-button",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#ffffff",
+                                                                        "style": "background-color:#414141;border-radius:3px;font-size:13px;font-weight:400;color:#ffffff;vertical-align:middle;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;align:center;",
+                                                                        "font-size": "13px",
+                                                                        "font-weight": "400",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "border-radius": "3px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px",
+                                                                        "vertical-align": "middle",
+                                                                        "background-color": "#414141"
+                                                                    },
+                                                                    "components": [
+                                                                        {
+                                                                            "type": "textnode",
+                                                                            "content": "Button"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-button",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#ffffff",
+                                                                        "font-size": "13px",
+                                                                        "font-weight": "400",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "border-radius": "3px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px",
+                                                                        "vertical-align": "middle",
+                                                                        "background-color": "#414141"
+                                                                    },
+                                                                    "tagName": "mj-button",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#ffffff",
+                                                                        "style": "background-color:#414141;border-radius:3px;font-size:13px;font-weight:400;color:#ffffff;vertical-align:middle;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;align:center;",
+                                                                        "font-size": "13px",
+                                                                        "font-weight": "400",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "border-radius": "3px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px",
+                                                                        "vertical-align": "middle",
+                                                                        "background-color": "#414141"
+                                                                    },
+                                                                    "components": [
+                                                                        {
+                                                                            "type": "textnode",
+                                                                            "content": "Button"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "border": "0px solid black",
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "5px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "attributes": {
+                                                        "style": "background-color:#ffffff;padding-bottom:5px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;border:0px solid black;",
+                                                        "border": "0px solid black",
+                                                        "text-align": "center",
+                                                        "padding-top": "0",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "5px",
+                                                        "background-color": "#ffffff"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "attributes": {
+                                                                "style": "width:100%;vertical-align:top;",
+                                                                "width": "100%",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-divider",
+                                                                    "style": {
+                                                                        "width": "100%",
+                                                                        "padding-top": "0",
+                                                                        "border-color": "#ffffff",
+                                                                        "border-style": "solid",
+                                                                        "border-width": "2px",
+                                                                        "padding-left": "20px",
+                                                                        "padding-right": "20px",
+                                                                        "padding-bottom": "0px"
+                                                                    },
+                                                                    "tagName": "mj-divider",
+                                                                    "attributes": {
+                                                                        "style": "border-color:#ffffff;border-width:2px;border-style:solid;padding-left:20px;padding-right:20px;padding-bottom:0px;padding-top:0;width:100%;",
+                                                                        "width": "100%",
+                                                                        "padding-top": "0",
+                                                                        "border-color": "#ffffff",
+                                                                        "border-style": "solid",
+                                                                        "border-width": "2px",
+                                                                        "padding-left": "20px",
+                                                                        "padding-right": "20px",
+                                                                        "padding-bottom": "0px"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "20px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    },
+                                                                    "content": "<p><span style=\"color:#000000;\">Best,<br data-gjs-type=\"default\" draggable=\"true\" id=\"i8qmm\" />\n<span data-gjs-type=\"text\" draggable=\"true\" id=\"irxr4\" style=\"font-size:15px;\">The [[CompanyName]] Team</span></span></p>",
+                                                                    "tagName": "mj-text",
+                                                                    "attributes": {
+                                                                        "align": "center",
+                                                                        "color": "#FFF",
+                                                                        "style": "align:center;color:#FFF;font-size:15px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:20px;line-height:22px;",
+                                                                        "font-size": "15px",
+                                                                        "font-family": "Helvetica",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "20px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "20px"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "assets": [],
+        "styles": [
+            {
+                "style": {
+                    "padding-top": "0px",
+                    "padding-left": "0px",
+                    "padding-right": "0px",
+                    "padding-bottom": "0px"
+                },
+                "selectors": [],
+                "selectorsAdd": "#outlook a"
+            },
+            {
+                "style": {
+                    "margin-top": "0px",
+                    "margin-left": "0px",
+                    "padding-top": "0px",
+                    "margin-right": "0px",
+                    "padding-left": "0px",
+                    "margin-bottom": "0px",
+                    "padding-right": "0px",
+                    "padding-bottom": "0px",
+                    "text-size-adjust": "100%"
+                },
+                "selectors": [],
+                "selectorsAdd": "body"
+            },
+            {
+                "style": {
+                    "border-collapse": "collapse"
+                },
+                "selectors": [],
+                "selectorsAdd": "table, td"
+            },
+            {
+                "style": {
+                    "height": "auto",
+                    "line-height": "100%",
+                    "outline-color": "initial",
+                    "outline-style": "none",
+                    "outline-width": "initial",
+                    "border-top-color": "initial",
+                    "border-top-style": "initial",
+                    "border-top-width": "0px",
+                    "border-left-color": "initial",
+                    "border-left-style": "initial",
+                    "border-left-width": "0px",
+                    "border-image-slice": "initial",
+                    "border-image-width": "initial",
+                    "border-right-color": "initial",
+                    "border-right-style": "initial",
+                    "border-right-width": "0px",
+                    "border-bottom-color": "initial",
+                    "border-bottom-style": "initial",
+                    "border-bottom-width": "0px",
+                    "border-image-outset": "initial",
+                    "border-image-repeat": "initial",
+                    "border-image-source": "initial",
+                    "text-decoration-line": "none",
+                    "text-decoration-color": "initial",
+                    "text-decoration-style": "initial",
+                    "text-decoration-thickness": "initial"
+                },
+                "selectors": [],
+                "selectorsAdd": "img"
+            },
+            {
+                "style": {
+                    "display": "block",
+                    "margin-top": "13px",
+                    "margin-left": "0px",
+                    "margin-right": "0px",
+                    "margin-bottom": "13px"
+                },
+                "selectors": [],
+                "selectorsAdd": "p"
+            },
+            {
+                "style": {
+                    "width": "100% !important",
+                    "max-width": "100%"
+                },
+                "mediaText": "only screen and (min-width: 480px)",
+                "selectors": [
+                    "mj-column-per-100"
+                ],
+                "atRuleType": "media"
+            },
+            {
+                "style": {
+                    "width": "100% !important",
+                    "max-width": "100%"
+                },
+                "selectors": [],
+                "selectorsAdd": ".moz-text-html .mj-column-per-100"
+            },
+            {
+                "style": {
+                    "width": "33.3333% !important",
+                    "max-width": "33.3333%"
+                },
+                "mediaText": "only screen and (min-width: 480px)",
+                "selectors": [
+                    "mj-column-per-33-333333333333336"
+                ],
+                "atRuleType": "media"
+            },
+            {
+                "style": {
+                    "width": "33.3333% !important",
+                    "max-width": "33.3333%"
+                },
+                "selectors": [],
+                "selectorsAdd": ".moz-text-html .mj-column-per-33-333333333333336"
+            },
+            {
+                "style": {
+                    "width": "50% !important",
+                    "max-width": "50%"
+                },
+                "mediaText": "only screen and (min-width: 480px)",
+                "selectors": [
+                    "mj-column-per-50"
+                ],
+                "atRuleType": "media"
+            },
+            {
+                "style": {
+                    "width": "50% !important",
+                    "max-width": "50%"
+                },
+                "selectors": [],
+                "selectorsAdd": ".moz-text-html .mj-column-per-50"
+            }
+        ]
+    },
+    "html": [
+        {
+            "js": null,
+            "css": "* { box-sizing: border-box; } body {margin: 0;}#i1pm{background-color:#ccd3e0;font-size:13px;width:600px;}#ixo9{background-color:#fff;padding-bottom:20px;padding-top:20px;padding-left:0px;padding-right:0px;text-align:center;}#iui6{width:100%;vertical-align:top;}#ibpi{src:http://localhost:8080/zfdoBQ7XoQIZaV5KrczDq9VbNWw56fSKHMOrQalgELk/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvNjkvNWE2YjkzY2MucG5n;align:center;border:none;width:213px;padding-left:0px;padding-right:0px;padding-bottom:10px;padding-top:10px;}#i8ul{background-color:#fecc66;padding-bottom:0px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;}#iycd{width:100%;vertical-align:top;}#izkp{align:center;font-size:13px;color:#ABCDEA;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:18px;padding-top:28px;line-height:22px;}#iksxg{padding-bottom:5px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;background-color:#ffffff;}#itp6z{width:100%;vertical-align:top;}#iexfs{border-color:#ffffff;border-width:2px;border-style:solid;padding-left:20px;padding-right:20px;padding-bottom:0px;padding-top:0;width:100%;}#iiflj{align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:28px;padding-top:28px;line-height:22px;}#ii0jl{background-color:#ffffff;padding-bottom:15px;padding-left:0px;padding-right:0px;padding-top:10px;text-align:center;}#iii7w{vertical-align:top;}#ith0s{align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;}#i46kh{align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;}#ikl0q{vertical-align:top;}#i2niu{align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;}#ix6fh{align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;}#imf73{vertical-align:top;}#ida2a{align:center;color:#FFF;font-size:15px;font-family:Ubuntu, Helvetica, Arial, sans-serif;padding-left:25px;padding-right:25px;padding-bottom:0px;padding-top:10px;line-height:22px;}#ik5wu{align:center;color:#FFF;font-size:13px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:10px;line-height:22px;}#i6k2g{padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;background-color:#30b466;}#isunc{vertical-align:top;}#iu92l{background-color:#414141;border-radius:3px;font-size:13px;font-weight:400;color:#ffffff;vertical-align:middle;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;align:center;}#i4y4y{vertical-align:top;}#ie7dz{background-color:#414141;border-radius:3px;font-size:13px;font-weight:400;color:#ffffff;vertical-align:middle;padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;align:center;}#i9u4l{background-color:#ffffff;padding-bottom:5px;padding-top:0;padding-left:0px;padding-right:0px;text-align:center;border:0px solid black;}#intoj{width:100%;vertical-align:top;}#i6oz7{border-color:#ffffff;border-width:2px;border-style:solid;padding-left:20px;padding-right:20px;padding-bottom:0px;padding-top:0;width:100%;}#irk76{align:center;color:#FFF;font-size:15px;font-family:Helvetica;padding-left:25px;padding-right:25px;padding-bottom:20px;padding-top:20px;line-height:22px;}#outlook a{padding-top:0px;padding-left:0px;padding-right:0px;padding-bottom:0px;}body{margin-top:0px;margin-left:0px;padding-top:0px;margin-right:0px;padding-left:0px;margin-bottom:0px;padding-right:0px;padding-bottom:0px;text-size-adjust:100%;}table, td{border-collapse:collapse;}img{height:auto;line-height:100%;outline-color:initial;outline-style:none;outline-width:initial;border-top-color:initial;border-top-style:initial;border-top-width:0px;border-left-color:initial;border-left-style:initial;border-left-width:0px;border-image-slice:initial;border-image-width:initial;border-right-color:initial;border-right-style:initial;border-right-width:0px;border-bottom-color:initial;border-bottom-style:initial;border-bottom-width:0px;border-image-outset:initial;border-image-repeat:initial;border-image-source:initial;text-decoration-line:none;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;}p{display:block;margin-top:13px;margin-left:0px;margin-right:0px;margin-bottom:13px;}.moz-text-html .mj-column-per-100{width:100% !important;max-width:100%;}.moz-text-html .mj-column-per-33-333333333333336{max-width:33.3333%;width:33.3333% !important;}.moz-text-html .mj-column-per-50{max-width:50%;width:50% !important;}",
+            "html": "<mjml><mj-body background-color=\"#ccd3e0\" font-size=\"13px\"><mj-section background-color=\"#fff\" padding-bottom=\"20px\" padding-top=\"20px\"><mj-column width=\"100%\"><mj-image src=\"http://localhost:8080/zfdoBQ7XoQIZaV5KrczDq9VbNWw56fSKHMOrQalgELk/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvNjkvNWE2YjkzY2MucG5n\" border=\"none\" width=\"213px\" padding-left=\"0px\" padding-right=\"0px\"></mj-image></mj-column></mj-section><mj-section background-color=\"#fecc66\" padding-bottom=\"0px\" padding-top=\"0\"><mj-column width=\"100%\"><mj-text align=\"center\" color=\"#ABCDEA\" font-family=\"Ubuntu, Helvetica, Arial, sans-serif\" padding-bottom=\"18px\" padding-top=\"28px\"><h1><span style=\"color:#000000;\">HELLO</span></h1>\n\n<p data-gjs-type=\"text\" draggable=\"true\" id=\"i8zkp\" style=\"font-size:16px;color:white;\">[[FirstName]]</p>\n</mj-text></mj-column></mj-section><mj-section padding-bottom=\"5px\" padding-top=\"0\" background-color=\"#ffffff\"><mj-column width=\"100%\"><mj-divider border-color=\"#ffffff\" border-width=\"2px\" padding-left=\"20px\" padding-right=\"20px\" padding-bottom=\"0px\" padding-top=\"0\"></mj-divider><mj-text align=\"center\" color=\"#FFF\" font-family=\"Helvetica\" padding-bottom=\"28px\" padding-top=\"28px\"><p><span style=\"color:#000000;\"><span data-gjs-type=\"text\" draggable=\"true\" id=\"in6wl\" style=\"font-size:20px;font-weight:bold;border-color:#000000;background-color:#ffffff;\">Thank you very much for your purchase.</span><br data-gjs-type=\"default\" draggable=\"true\" id=\"iu7bj\" />\n<span data-gjs-type=\"text\" draggable=\"true\" id=\"iu25j\" style=\"font-size:15px;\">Please find the receipt below.</span></span></p>\n</mj-text></mj-column></mj-section><mj-section background-color=\"#ffffff\" padding-bottom=\"15px\"><mj-column><mj-text align=\"center\" color=\"#FFF\" font-size=\"15px\" font-family=\"Ubuntu, Helvetica, Arial, sans-serif\" padding-bottom=\"0px\"><p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"ikx0u\">Order Number</strong></span></p>\n</mj-text><mj-text align=\"center\" color=\"#FFF\" font-family=\"Helvetica\" padding-bottom=\"20px\"><p><span style=\"color:#000000;\">[[OrderNumber]]</span></p>\n</mj-text></mj-column><mj-column><mj-text align=\"center\" color=\"#FFF\" font-size=\"15px\" font-family=\"Ubuntu, Helvetica, Arial, sans-serif\" padding-bottom=\"0px\"><p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"ipby7\">Order Date</strong></span></p>\n</mj-text><mj-text align=\"center\" color=\"#FFF\" font-family=\"Helvetica\" padding-bottom=\"20px\"><p><span style=\"color:#000000;\">[[OrderDate]]</span></p>\n</mj-text></mj-column><mj-column><mj-text align=\"center\" color=\"#FFF\" font-size=\"15px\" font-family=\"Ubuntu, Helvetica, Arial, sans-serif\" padding-bottom=\"0px\"><p><span style=\"color:#000000;\"><strong data-gjs-type=\"text\" draggable=\"true\" id=\"i4p47\">Total Price</strong></span></p>\n</mj-text><mj-text align=\"center\" color=\"#FFF\" font-family=\"Helvetica\" padding-bottom=\"20px\"><p><span style=\"color:#000000;\">[[TotalPrice]]</span></p>\n</mj-text></mj-column></mj-section><mj-section background-color=\"#30b466\"><mj-column><mj-button>Button</mj-button></mj-column><mj-column><mj-button>Button</mj-button></mj-column></mj-section><mj-section background-color=\"#ffffff\" padding-bottom=\"5px\" padding-top=\"0\" border=\"0px solid black\"><mj-column width=\"100%\"><mj-divider border-color=\"#ffffff\" border-width=\"2px\" padding-left=\"20px\" padding-right=\"20px\" padding-bottom=\"0px\" padding-top=\"0\"></mj-divider><mj-text align=\"center\" color=\"#FFF\" font-size=\"15px\" font-family=\"Helvetica\" padding-bottom=\"20px\" padding-top=\"20px\"><p><span style=\"color:#000000;\">Best,<br data-gjs-type=\"default\" draggable=\"true\" id=\"i8qmm\" />\n<span data-gjs-type=\"text\" draggable=\"true\" id=\"irxr4\" style=\"font-size:15px;\">The [[CompanyName]] Team</span></span></p>\n</mj-text></mj-column></mj-section></mj-body></mjml>"
+        }
+    ]
+}

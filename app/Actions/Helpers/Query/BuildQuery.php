@@ -22,7 +22,7 @@ class BuildQuery
     public function handle(Query $query): QueryBuilder
     {
         $queryBuilder = QueryBuilder::for(Prospect::class);
-        if($query->scope_type=='Shop') {
+        if ($query->scope_type == 'Shop') {
             $queryBuilder->where('shop_id', $query->scope_id);
         }
 
@@ -33,7 +33,16 @@ class BuildQuery
                     ->where(
                         function (Builder $subQueryBuilder) use ($subConstrainData, $query) {
                             foreach ($subConstrainData as $constrainType => $constrainData) {
-
+                                $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData, $query);
+                            }
+                        }
+                    );
+            } elseif ($constrainType == 'orGroup') {
+                $subConstrainData = $constrainData;
+                $queryBuilder
+                    ->where(
+                        function (Builder $subQueryBuilder) use ($subConstrainData, $query) {
+                            foreach ($subConstrainData as $constrainType => $constrainData) {
                                 $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData, $query);
                             }
                         }
@@ -50,8 +59,6 @@ class BuildQuery
     protected function addConstrain($queryBuilder, $constrainType, $constrainData, $query)
     {
 
-
-
         if ($constrainType == 'with') {
             $queryBuilder->whereNotNull($constrainData);
         } elseif ($constrainType == 'without') {
@@ -64,8 +71,26 @@ class BuildQuery
             $queryBuilder->where($constrainData[0], $constrainData[1], $value);
         } elseif ($constrainType == 'whereIn') {
             $queryBuilder->whereIn($constrainData[0], $constrainData[1]);
-        } elseif('orWhereNull') {
+        } elseif ($constrainType == 'orWhereNull') {
             $queryBuilder->orWhereNull($constrainData);
+        } elseif ($constrainType == 'Group') {
+            $queryBuilder
+                ->where(
+                    function (Builder $subQueryBuilder) use ($constrainData, $query) {
+                        foreach ($constrainData as $subConstrainType => $subConstrainData) {
+                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainType, $subConstrainData, $query);
+                        }
+                    }
+                );
+        } elseif ($constrainType == 'orGroup') {
+            $queryBuilder
+                ->orWhere(
+                    function (Builder $subQueryBuilder) use ($constrainData, $query) {
+                        foreach ($constrainData as $subConstrainType => $subConstrainData) {
+                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainType, $subConstrainData, $query);
+                        }
+                    }
+                );
         }
 
         return $queryBuilder;

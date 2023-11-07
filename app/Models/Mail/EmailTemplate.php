@@ -7,7 +7,6 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -22,11 +21,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $title
  * @property string $parent_type
  * @property int $parent_id
- * @property mixed $data
+ * @property array $data
  * @property mixed $compiled
  * @property \App\Models\Organisation\Organisation|\App\Models\Market\Shop $scope
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property mixed $state
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate query()

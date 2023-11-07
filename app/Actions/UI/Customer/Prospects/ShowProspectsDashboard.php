@@ -88,6 +88,7 @@ class ShowProspectsDashboard extends InertiaAction
     private function getDashboard(Customer $customer): array
     {
         return [
+
             'flatTreeMaps' => [
                 [
                     [

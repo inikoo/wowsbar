@@ -15,7 +15,7 @@ enum ShowProspectTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE = 'showcase';
+    case SHOWCASE  = 'showcase';
     case PROSPECTS = 'prospects';
 
     public function blueprint(): array

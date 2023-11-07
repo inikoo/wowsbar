@@ -12,7 +12,6 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\HasSelfCall;
 use App\Http\Resources\Portfolio\SnapshotResource;
-use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

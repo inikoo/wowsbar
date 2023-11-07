@@ -9,7 +9,6 @@ namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Traits\WithExportData;
 use App\Exports\CRM\ProspectsExport;
-use App\Exports\HumanResources\EmployeesExport;
 use App\Models\Market\Shop;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
