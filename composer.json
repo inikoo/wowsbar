@@ -13,6 +13,7 @@
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
+        "ext-zip": "*",
         "aws/aws-sdk-php": "^3.278",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
@@ -45,12 +46,12 @@
         "spatie/laravel-query-builder": "^5.2",
         "spatie/laravel-sluggable": "^3.5",
         "spatie/laravel-tags": "^4.5",
+        "spatie/mjml-php": "^1.0",
         "stevebauman/location": "^7.0",
         "tightenco/ziggy": "^1.0",
         "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5",
-        "xendit/xendit-php": "^2.19",
-      "ext-zip": "*"
+        "xendit/xendit-php": "^2.19"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

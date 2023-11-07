@@ -11,6 +11,7 @@ use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Models\Mail\MailshotRecipient;
 use Aws\Result;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Spatie\Mjml\Mjml;
 
 class SendSesEmail
 {
@@ -25,6 +26,8 @@ class SendSesEmail
         $layout   = $mailshot->layout;
         $subject  = $mailshot->subject;
 
+        $html = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+
         $message = [
             'Message' => [
                 'Subject' => [
@@ -34,7 +37,7 @@ class SendSesEmail
         ];
 
         $message['Message']['Body']['Html'] = [
-            'Data' => $layout['html'][0]['html']
+            'Data' => $html
         ];
 
         return $this->getSesClient()->sendEmail([
