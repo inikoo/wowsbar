@@ -9,7 +9,7 @@ interface Route {
 }
 
 const props = defineProps<{
-    actions: Action
+    action: Action
     dataToSubmit?: any
 }>()
 
@@ -21,10 +21,10 @@ const props = defineProps<{
     <!-- <pre>{{ actions }}</pre> -->
     <!--suppress HtmlUnknownTag -->
     <!-- Button Group () -->
-    <div v-if="actions.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
-        <slot v-for="(button, index) in actions.buttonGroup" :name="'button' + index">
+    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
+        <slot v-for="(button, index) in action.buttonGroup" :name="'button' + index">
             <Link
-                :href="`${button.route?.name ? route(button.route?.name, button.route?.parameters) : '#'}`" class=""
+                :href="`${button.route?.name ? route(button.route?.name, button.route?.parameters) : route(button.href?.name, button.href?.parameters)}`" class=""
                 :method="button.route?.method ?? 'get'"
             >
                 <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight"
@@ -36,12 +36,12 @@ const props = defineProps<{
 
     <!-- Button -->
     <Link v-else
-        :href="`${actions.route ? route(actions.route?.name, actions.route?.parameters) : '#'}`"
-        :method="actions.route?.method ?? 'get'"
-        :data="actions.route?.method !== 'get' ? dataToSubmit : null"
+        :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`"
+        :method="action.route?.method ?? 'get'"
+        :data="action.route?.method !== 'get' ? dataToSubmit : null"
     >
     <!-- {{ actions }} -->
-        <Button :style="actions.style" :label="actions.label" :icon="actions.icon" :iconRight="actions.iconRight" />
+        <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" />
     </Link>
 
     <!-- <slot v-if="button.type === 'modal'" name="modal" :data="{...props }"/> -->

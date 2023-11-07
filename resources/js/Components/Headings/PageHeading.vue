@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faMailBulk,faSign,faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
+import { faMailBulk,faSign,faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling, faTrashAlt as falTrashAlt, faPencil as falPencil} from '@fal/'
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from '@far/'
 import { faPlus } from '@fas/'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -17,7 +17,6 @@ import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 import Action from "@/Components/Forms/Fields/Action.vue";
 import Icon from "@/Components/Icon.vue";
-import IconAction from "@/Components/Elements/Buttons/IconAction.vue"
 import { Action as ActionTS } from "@/types/Action"
 
 interface Icon {
@@ -26,7 +25,7 @@ interface Icon {
 
 library.add(faMailBulk,faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
-    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign
+    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign, falTrashAlt, falPencil
 )
 
 const props = defineProps<{
@@ -108,17 +107,11 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
             </div>
         </div>
 
-        <!-- <pre>{{ data.iconActions }}</pre>
-        <pre>{{ data.actions }}</pre> -->
-
-        <!-- Button -->
+        <!-- Button & ButtonGroup -->
         <slot name="button" :dataPageHead="{...props }">
             <div class="flex items-center gap-2">
-                <!-- <div v-for="iconAction in data.iconActions">
-                    <Action :action="iconAction"/>
-                </div> -->
                 <div v-for="action in data.actions">
-                    <Action :actions="action" :dataToSubmit="dataToSubmit"/>
+                    <Action :action="action" :dataToSubmit="dataToSubmit"/>
                 </div>
                 <slot name="other" :dataPageHead="{...props }"/>
             </div>
