@@ -15,10 +15,10 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 
-import {faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck} from '@fal/'
+import {faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
-library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck)
+library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup)
 
 const props = defineProps<{
     title: string,
