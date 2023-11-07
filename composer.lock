@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f3a585de2cd4dcb4136d0f878f3d915",
+    "content-hash": "927db343594801756a0152829502eca5",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -59,6 +59,62 @@
                 "source": "https://github.com/awslabs/aws-crt-php/tree/v1.2.3"
             },
             "time": "2023-10-16T20:10:06+00:00"
+        },
+        {
+            "name": "aws/aws-php-sns-message-validator",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-php-sns-message-validator.git",
+                "reference": "c9fce7635417bcc75383ec5f6fa3790a4d9729b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-php-sns-message-validator/zipball/c9fce7635417bcc75383ec5f6fa3790a4d9729b8",
+                "reference": "c9fce7635417bcc75383ec5f6fa3790a4d9729b8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aws\\Sns\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "Amazon SNS message validation for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp",
+            "keywords": [
+                "SNS",
+                "amazon",
+                "aws",
+                "cloud",
+                "message",
+                "sdk",
+                "webhooks"
+            ],
+            "support": {
+                "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
+                "issues": "https://github.com/aws/aws-sns-message-validator/issues",
+                "source": "https://github.com/aws/aws-php-sns-message-validator/tree/master"
+            },
+            "time": "2015-09-03T20:53:53+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -154,6 +210,83 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.284.1"
             },
             "time": "2023-11-06T19:08:09+00:00"
+        },
+        {
+            "name": "aws/aws-sdk-php-laravel",
+            "version": "3.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php-laravel.git",
+                "reference": "fdecc2c8c15b3bf3843401b257229c7f883d6bab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php-laravel/zipball/fdecc2c8c15b3bf3843401b257229c7f883d6bab",
+                "reference": "fdecc2c8c15b3bf3843401b257229c7f883d6bab",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "~3.0",
+                "illuminate/support": "^5.1 || ^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^9.0",
+                "vlucas/phpdotenv": "^1.0 || ^2.0 || ^3.0 || ^4.0 || ^5.0",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "laravel/framework": "To test the Laravel bindings",
+                "laravel/lumen-framework": "To test the Lumen bindings"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aws\\Laravel\\AwsServiceProvider"
+                    ],
+                    "aliases": {
+                        "AWS": "Aws\\Laravel\\AwsFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aws\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "A simple Laravel 5/6/7/8/9 service provider for including the AWS SDK for PHP.",
+            "homepage": "http://aws.amazon.com/sdkforphp2",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "laravel",
+                "laravel 10",
+                "laravel 5",
+                "laravel 6",
+                "laravel 7",
+                "laravel 8",
+                "laravel 9",
+                "s3",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/aws/aws-sdk-php-laravel/issues",
+                "source": "https://github.com/aws/aws-sdk-php-laravel/tree/3.8.1"
+            },
+            "time": "2023-03-24T20:26:35+00:00"
         },
         {
             "name": "beste/clock",
