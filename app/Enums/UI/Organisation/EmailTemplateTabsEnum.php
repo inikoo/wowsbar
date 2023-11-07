@@ -27,7 +27,7 @@ enum EmailTemplateTabsEnum: string
     {
         return match ($this) {
             EmailTemplateTabsEnum::SHOWCASE => [
-                'title' => __('banner'),
+                'title' => __('email template'),
                 'icon'  => 'fas fa-info-circle',
             ],
             EmailTemplateTabsEnum::SNAPSHOTS => [

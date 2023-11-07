@@ -8,8 +8,13 @@
 namespace App\Actions\Organisation\UI\CRM;
 
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
+use App\Actions\Organisation\UI\CRM\EmailTemplate\IndexEmailTemplates;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\MailroomTabsEnum;
+use App\Enums\UI\Organisation\ProspectsTabsEnum;
+use App\Http\Resources\CRM\ProspectQueriesResource;
+use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
@@ -73,8 +78,12 @@ class ShowMailroomDashboard extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => MailroomTabsEnum::navigation()
                 ],
+
+                MailroomTabsEnum::EMAIL_TEMPLATE->value => $this->tab == MailroomTabsEnum::EMAIL_TEMPLATE->value ?
+                    fn () => EmailTemplateResource::collection(IndexEmailTemplates::run())
+                    : Inertia::lazy(fn () => EmailTemplateResource::collection(IndexEmailTemplates::run())),
             ]
-        );
+        )->table(IndexEmailTemplates::make()->tableStructure(prefix: MailroomTabsEnum::EMAIL_TEMPLATE->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters=[]): array

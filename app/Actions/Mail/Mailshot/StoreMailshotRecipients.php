@@ -12,6 +12,18 @@ class StoreMailshotRecipients
 
     public function handle(Mailshot $mailshot): void
     {
+
+
+        $query       =Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
+        $queryBuilder=BuildQuery::run($query);
+
+
+        foreach($queryBuilder->get() as $item) {
+            dd($item);
+        }
+
+        dd($query);
+
         // TODO: FOR TESTING SEND EMAIL ONLY
         foreach (Prospect::where('email', 'dev@aw-advantage.com')->get() as $prospect) {
             $mailshot->recipients()->updateOrCreate([

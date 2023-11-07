@@ -7,6 +7,9 @@
 
 namespace App\Services\Aurora;
 
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -47,13 +50,50 @@ class FetchAuroraProspect extends FetchAurora
                 'address'=> $this->parseAddress(prefix: 'Prospect Contact', auAddressData: $this->auroraModelData)
             ];
 
+        if($this->parseDate($this->auroraModelData->{'Prospect Created Date'})) {
 
-
-
-        if($this->parseDate($this->auroraModelData->{'Prospect First Contacted Date'})) {
-
-            $this->parsedData['prospect']['last_contacted_at']=$this->auroraModelData->{'Prospect First Contacted Date'};
+            $this->parsedData['prospect']['created_at']=$this->auroraModelData->{'Prospect Created Date'};
         }
+
+
+        $this->parsedData['prospect']['contact_state']  =ProspectContactStateEnum::CONTACTED;
+        $this->parsedData['prospect']['dont_contact_me']=false;
+
+        if($this->parseDate($this->auroraModelData->{'Prospect Last Contacted Date'})) {
+            $this->parsedData['prospect']['last_contacted_at']=$this->parseDate($this->auroraModelData->{'Prospect Last Contacted Date'});
+        }
+
+
+        //enum('NoContacted','Contacted','NotInterested','Registered','Invoiced','Bounced')
+        switch ($this->auroraModelData->{'Prospect Status'}) {
+            case 'NoContacted':
+                $this->parsedData['prospect']['contact_state']=ProspectContactStateEnum::NO_CONTACTED;
+                unset($this->parsedData['prospect']['last_contacted_at']);
+                break;
+            case 'Contacted':
+            case 'Registered':
+            case 'Invoiced':
+                $this->parsedData['prospect']['outcome_status']=ProspectOutcomeStatusEnum::WAITING;
+
+                $this->parsedData['prospect']['bounce_status']=ProspectBounceStatusEnum::OK;
+
+                break;
+            case 'NotInterested':
+                $this->parsedData['prospect']['outcome_status'] =ProspectOutcomeStatusEnum::HARD_FAIL;
+                $this->parsedData['prospect']['dont_contact_me']=true;
+                $this->parsedData['prospect']['bounce_status']  =ProspectBounceStatusEnum::OK;
+
+                break;
+            case 'Bounced':
+                $this->parsedData['prospect']['outcome_status']=ProspectOutcomeStatusEnum::SOFT_FAIL;
+                $this->parsedData['prospect']['bounce_status'] =ProspectBounceStatusEnum::HARD_BOUNCE;
+
+                break;
+
+        }
+
+
+
 
 
     }

@@ -18,8 +18,10 @@ class GetProspectsDashboard
     public function handle(Shop $parent, ActionRequest $request): array
     {
         $routeParameters = $request->route()->originalParameters();
-
         return [
+
+            'crmStats'=> $parent->crmStats,
+
             'stats' => [
 
                 [

@@ -50,6 +50,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_customer_users
  * @property int $number_customer_users_status_active
  * @property int $number_customer_users_status_inactive
+ * @property int $number_prospects_bounce_status_hard_bounce
+ * @property int $number_prospects_bounce_status_soft_bounce
+ * @property int $number_prospects_bounce_status_ok
+ * @property int $number_prospects_outcome_status_hard_fail
+ * @property int $number_prospects_outcome_status_soft_fail
+ * @property int $number_prospects_outcome_status_waiting
+ * @property int $number_prospects_outcome_status_soft_success
+ * @property int $number_prospects_outcome_status_hard_success
+ * @property int $number_prospects_contacted
+ * @property int $number_prospects_not_contacted
+ * @property int $number_prospects_dont_contact_me
  * @property-read \App\Models\Organisation\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newQuery()
@@ -80,9 +91,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberOrdersStateSettled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberOrdersStateSubmitted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspects($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsBounceStatusHardBounce($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsBounceStatusOk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsBounceStatusSoftBounce($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsDontContactMe($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsNotContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsOutcomeStatusHardFail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsOutcomeStatusHardSuccess($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsOutcomeStatusSoftFail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsOutcomeStatusSoftSuccess($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsOutcomeStatusWaiting($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateInvoiced($value)

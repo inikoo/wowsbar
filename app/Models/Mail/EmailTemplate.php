@@ -7,21 +7,26 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Mail\EmailTemplate
  *
  * @property int $id
+ * @property string $slug
  * @property string $title
  * @property string $parent_type
  * @property int $parent_id
- * @property mixed $data
+ * @property array $data
  * @property mixed $compiled
+ * @property \App\Models\Organisation\Organisation|\App\Models\Market\Shop $scope
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property mixed $state
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate query()
@@ -38,13 +43,31 @@ use Illuminate\Database\Eloquent\Model;
 class EmailTemplate extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $guarded = [];
 
 
     protected $casts = [
-        'compiled_layout' => 'array',
-        'data'            => 'array',
-        'state'           => EmailTemplateStateEnum::class
+        'compiled' => 'array',
+        'data'     => 'array'
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }
