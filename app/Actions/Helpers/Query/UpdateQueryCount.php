@@ -23,7 +23,7 @@ class UpdateQueryCount
 
         $queryBuilder=BuildQuery::run($query);
 
-        //print_r($queryBuilder->toSql());
+        //print($queryBuilder->toSql()."\n");
 
         $numberItems=$queryBuilder->count();
 

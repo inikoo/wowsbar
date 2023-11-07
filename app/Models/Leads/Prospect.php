@@ -9,6 +9,9 @@ namespace App\Models\Leads;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -124,9 +127,13 @@ class Prospect extends Model implements Auditable
     use HasAddress;
 
     protected $casts = [
-        'data'     => 'array',
-        'location' => 'array',
-        'state'    => ProspectStateEnum::class
+        'data'           => 'array',
+        'location'       => 'array',
+        'state'          => ProspectStateEnum::class,
+        'contact_state'  => ProspectContactStateEnum::class,
+        'outcome_status' => ProspectOutcomeStatusEnum::class,
+        'bounce_status'  => ProspectBounceStatusEnum::class,
+        'not_interested' => 'boolean'
     ];
 
     protected $attributes = [

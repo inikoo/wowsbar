@@ -12,6 +12,9 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -21,6 +24,7 @@ use App\Rules\ValidAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -101,6 +105,10 @@ class StoreProspect
 
 
         return [
+            'contact_state'     => ['sometimes', Rule::enum(ProspectContactStateEnum::class)],
+            'outcome_status'    => ['sometimes', 'nullable', Rule::enum(ProspectOutcomeStatusEnum::class)],
+            'bounce_status'     => ['sometimes', 'nullable', Rule::enum(ProspectBounceStatusEnum::class)],
+            'dont_contact_me'   => ['sometimes', 'boolean'],
             'state'             => ['sometimes', new Enum(ProspectStateEnum::class)],
             'data'              => 'sometimes|array',
             'last_contacted_at' => 'sometimes|date',
