@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\UI\CRM\EmailTemplate;
+namespace App\Actions\Mail\EmailTemplate\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
@@ -15,7 +15,6 @@ use App\Enums\UI\Organisation\EmailTemplateTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
-use App\Models\CRM\Customer;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
@@ -48,11 +47,11 @@ class ShowEmailTemplate extends InertiaAction
             );
     }
 
-    public function asController(Shop|Organisation $parent, EmailTemplate $emailTemplate, ActionRequest $request): EmailTemplate
+    public function inShop(Shop $shop, EmailTemplate $emailTemplate, ActionRequest $request): EmailTemplate
     {
         $this->initialisation($request)->withTab(EmailTemplateTabsEnum::values());
 
-        return $this->handle($parent, $emailTemplate);
+        return $this->handle($shop, $emailTemplate);
     }
 
     public function htmlResponse(EmailTemplate $emailTemplate, ActionRequest $request): Response
@@ -68,7 +67,7 @@ class ShowEmailTemplate extends InertiaAction
 
 
         return Inertia::render(
-            'EmailTemplates/EmailTemplate',
+            'CRM/Prospects/EmailTemplate',
             [
                 'breadcrumbs'                   => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -78,18 +77,18 @@ class ShowEmailTemplate extends InertiaAction
                     'previous' => $this->getPrevious($emailTemplate, $request),
                     'next'     => $this->getNext($emailTemplate, $request),
                 ],
-                'title'                         => $emailTemplate->name,
+                'title'                         => $emailTemplate->title,
                 'pageHead'                      => [
-                    'title'       => $emailTemplate->name,
+                    'title'       => $emailTemplate->title,
                     'icon'        => [
-                        'tooltip' => __('banner'),
+                        'tooltip' => __('email template'),
                         'icon'    => 'fal fa-sign'
                     ],
                     'container'   => $container,
-                    'iconRight'   => $emailTemplate->state->stateIcon()[$emailTemplate->state->value],
+                    // 'iconRight'   => $emailTemplate->state->stateIcon()[$emailTemplate->state->value],
                     'iconActions' => [
-                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
-                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+//                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+//                        $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
                     'actions'     => [
 
@@ -129,7 +128,7 @@ class ShowEmailTemplate extends InertiaAction
                         fn () => EmailTemplateResource::make($emailTemplate)->getArray()
                     ),
 
-                EmailTemplateTabsEnum::SNAPSHOTS->value => $this->tab == EmailTemplateTabsEnum::SNAPSHOTS->value
+      /*          EmailTemplateTabsEnum::SNAPSHOTS->value => $this->tab == EmailTemplateTabsEnum::SNAPSHOTS->value
                     ?
                     fn () => SnapshotResource::collection(
                         IndexSnapshots::run(
@@ -142,7 +141,7 @@ class ShowEmailTemplate extends InertiaAction
                             parent: $emailTemplate,
                             prefix: EmailTemplateTabsEnum::SNAPSHOTS->value
                         )
-                    )),
+                    )),*/
 
                 EmailTemplateTabsEnum::CHANGELOG->value => $this->tab == EmailTemplateTabsEnum::CHANGELOG->value
                     ?
@@ -164,12 +163,13 @@ class ShowEmailTemplate extends InertiaAction
             IndexHistory::make()->tableStructure(
                 prefix: EmailTemplateTabsEnum::CHANGELOG->value
             )
-        )->table(
+        );
+          /*  ->table(
             IndexSnapshots::make()->tableStructure(
                 parent: $emailTemplate,
                 prefix: EmailTemplateTabsEnum::SNAPSHOTS->value
             )
-        );
+        );*/
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array

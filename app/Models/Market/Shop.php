@@ -9,6 +9,7 @@ namespace App\Models\Market;
 
 use App\Enums\Market\Shop\ShopStateEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
@@ -23,6 +24,7 @@ use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
@@ -323,5 +325,10 @@ class Shop extends Model implements Auditable
     public function mailshots(): MorphMany
     {
         return $this->morphMany(Mailshot::class, 'scope');
+    }
+
+    public function emailTemplates(): MorphMany
+    {
+        return $this->morphMany(EmailTemplate::class, 'scope');
     }
 }
