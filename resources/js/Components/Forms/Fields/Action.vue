@@ -26,25 +26,17 @@ const props = defineProps<{
     dataToSubmit?: any
 }>()
 
+// console.log(props.action)
 
 </script>
 
 <template>
-    <!-- Button -->
-    <Link v-if="action.type === 'button'"
-        :href="`${route(action.route.name, action.route.parameters)}`"
-        :method="action.method ?? 'get'"
-        :data="action.method !== 'get' ? dataToSubmit : null"
-    >
-        <Button :style="action.style" :label="action.label" :icon="action.icon" />
-    </Link>
-
     <!--suppress HtmlUnknownTag -->
     <!-- Button Group () -->
     <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
         <slot v-for="(button, index) in action.buttons" :name="'button' + index">
             <Link
-                :href="`${route(button.route.name, button.route.parameters)}`" class=""
+                :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`" class=""
                 :method="button.method ?? 'get'"
             >
                 <Button :style="button.style" :label="button.label" :icon="button.icon"
@@ -53,6 +45,15 @@ const props = defineProps<{
             </Link>
         </slot>
     </div>
+
+    <!-- Button -->
+    <Link v-else
+        :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`"
+        :method="action.method ?? 'get'"
+        :data="action.method !== 'get' ? dataToSubmit : null"
+    >
+        <Button :style="action.style" :label="action.label" :icon="action.icon" />
+    </Link>
 
     <slot v-if="action.type === 'modal'" name="modal" :data="{...props }"/>
 

@@ -116,7 +116,11 @@ class ShowProspectMailshot extends InertiaAction
                         'icon'    => 'fal fa-mail-bulk'
                     ],
                     'iconRight'   => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'iconActions' => $iconActions,
+                    'iconActions' => [
+                        'type' => 'buttonGroup',
+                        $iconActions
+                    ]
+                    ,
                     'actions'     => $action,
                 ],
                 'tabs'                             => [
