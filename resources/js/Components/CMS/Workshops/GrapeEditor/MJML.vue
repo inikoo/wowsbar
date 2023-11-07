@@ -8,7 +8,8 @@ import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.c
 import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
 import CkeEditor from 'grapesjs-plugin-ckeditor'
-/* import type CKE from 'ckeditor4'; */
+import { ComboboxLabel } from "@headlessui/vue";
+/* import ClassicEditor from 'ckeditor4'; */
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
@@ -111,13 +112,13 @@ const uploadFile = async (e) => {
     }
 }
 
-/* console.log(CKE) */
+/* console.log(ClassicEditor) */
 
 onMounted(() => {
     editorInstance.value = grapesjs.init({
         container: "#gjs",
-        showOffsets: true,
-        fromElement: true,
+        showOffsets: false,
+        fromElement: false,
         noticeOnUnload: false,
         plugins: [grapesJSMJML, CkeEditor],
         pluginsOpts: {
@@ -128,10 +129,10 @@ onMounted(() => {
             [CkeEditor]: {
                 options: {
                     language: 'en',
-                    startupFocus: true,
+                    startupFocus: false,
                     extraAllowedContent: '*(*);*{*}', 
-                    allowedContent: true,
-                    uiColor: '#222f3e',
+                    allowedContent: false,
+                    uiColor: '#2C2E35',
                     extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks`,
                     toolbarGroups : [
                             { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
@@ -168,6 +169,10 @@ onMounted(() => {
         async load() { return Load() },
         async store(data) { return Store(data, editorInstance.value) }
     });
+    editorInstance.value.on('load', () => {
+        const blockBtn =  editorInstance.value.Panels.getButton('views', 'open-blocks');
+        blockBtn.set('active', 1);
+    })
 });
 
 
