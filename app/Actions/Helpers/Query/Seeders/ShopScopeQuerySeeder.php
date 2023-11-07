@@ -11,7 +11,8 @@ use App\Actions\Helpers\Query\StoreQuery;
 use App\Actions\Helpers\Query\UpdateQuery;
 use App\Actions\Helpers\Query\UpdateQueryCount;
 use App\Actions\Traits\WithShopsArgument;
-use App\Enums\CRM\Prospect\ProspectStateEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -31,11 +32,7 @@ class ShopScopeQuerySeeder
                 'name'       => 'Prospects with email',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-
-
                     'with' => 'email'
-
-
                 ],
 
 
@@ -49,9 +46,9 @@ class ShopScopeQuerySeeder
 
                     'with'  => 'email',
                     'where' => [
-                        'state',
+                        'contact_state',
                         '=',
-                        ProspectStateEnum::NO_CONTACTED->value
+                        ProspectContactStateEnum::NO_CONTACTED->value
                     ]
 
 
@@ -59,28 +56,36 @@ class ShopScopeQuerySeeder
             ],
             [
                 'slug'       => 'prospects-last-contacted',
-                'name'       => 'Prospects last contacted',
+                'name'       => 'Prospects last contacted (within interval)',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
 
-                    'with'    => 'email',
-                    'whereIn' => [
-                        'state',
-                        [
-                            ProspectStateEnum::NO_CONTACTED->value,
-                            ProspectStateEnum::CONTACTED->value
-                        ]
-                    ],
-                    'group'   => [
-                        'where'       => [
-                            'last_contacted_at',
-                            '<=',
-                            '__date__'
+                    'with' => 'email',
+
+                    'group' => [
+                        'where' => [
+                            'contact_state',
+                            '=',
+                            ProspectContactStateEnum::NO_CONTACTED->value
                         ],
-                        'orWhereNull' => [
-                            'last_contacted_at',
+
+                        'orGroup' => [
+                            'whereIn' => [
+                                'outcome_status',
+                                [
+                                    ProspectOutcomeStatusEnum::SOFT_FAIL->value,
+                                    ProspectOutcomeStatusEnum::WAITING->value
+                                ]
+                            ],
+                            'where'   => [
+                                'last_contacted_at',
+                                '<=',
+                                '__date__'
+                            ],
                         ]
+
                     ],
+
 
                 ],
                 'arguments'  => [
@@ -103,7 +108,7 @@ class ShopScopeQuerySeeder
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);
             } else {
-                $query=StoreQuery::run($queryData);
+                $query = StoreQuery::run($queryData);
             }
             UpdateQueryCount::run($query);
         }

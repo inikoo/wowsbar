@@ -16,6 +16,7 @@ use App\Actions\Market\Shop\Hydrators\ShopHydrateOrders;
 use App\Actions\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
 use App\Actions\Market\Shop\Hydrators\ShopHydratePayments;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateSales;
 use App\Actions\Traits\WithShopsArgument;
 use App\Models\Market\Shop;
@@ -39,6 +40,7 @@ class HydrateShops
         ShopHydrateSales::run($shop);
         ShopHydrateProducts::run($shop);
         ShopHydrateCustomerUsers::run($shop);
+        ShopHydrateProspects::run($shop);
     }
     public string $commandSignature = 'hydrate:shops {shops?*} ';
 

@@ -8,12 +8,18 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Http\Resources\CRM\ProspectResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Rules\IUnique;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProspect
@@ -39,6 +45,14 @@ class UpdateProspect
 
 
         $prospect = $this->update($prospect, $modelData, ['data']);
+
+        if ($prospect->wasChanged(['state', 'dont_contact_me', 'contact_state', 'bounce_status', 'outcome_status'])) {
+            if ($prospect->scope_type == 'Shop') {
+                OrganisationHydrateProspects::dispatch();
+                ShopHydrateProspects::dispatch($prospect->scope);
+            }
+
+        }
         ProspectHydrateUniversalSearch::dispatch($prospect);
 
         return $prospect;
@@ -55,7 +69,6 @@ class UpdateProspect
 
     public function rules(): array
     {
-
         $extraConditions = match (class_basename($this->scope)) {
             'org.models.shop.prospects.update' => [
                 ['column' => 'shop_id', 'value' => $this->scope->id],
@@ -68,6 +81,10 @@ class UpdateProspect
         };
 
         return [
+            'contact_state'     => ['sometimes', Rule::enum(ProspectContactStateEnum::class)],
+            'outcome_status'    => ['sometimes', 'nullable', Rule::enum(ProspectOutcomeStatusEnum::class)],
+            'bounce_status'     => ['sometimes', 'nullable', Rule::enum(ProspectBounceStatusEnum::class)],
+            'dont_contact_me'   => ['sometimes', 'boolean'],
             'last_contacted_at' => 'sometimes|date',
             'contact_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
             'company_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
@@ -97,11 +114,10 @@ class UpdateProspect
     }
 
 
-
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
-        $this->scope    =$shop;
-        $this->currentID=$prospect->id;
+        $this->scope     = $shop;
+        $this->currentID = $prospect->id;
         $this->fillFromRequest($request);
         $request->validate();
 
@@ -110,9 +126,9 @@ class UpdateProspect
 
     public function action(Shop $scope, Prospect $prospect, $objectData): Prospect
     {
-        $this->asAction = true;
-        $this->scope    =$scope;
-        $this->currentID=$prospect->id;
+        $this->asAction  = true;
+        $this->scope     = $scope;
+        $this->currentID = $prospect->id;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 

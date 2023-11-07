@@ -12,8 +12,6 @@ use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
