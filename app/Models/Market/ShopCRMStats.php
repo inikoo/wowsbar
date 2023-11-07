@@ -52,6 +52,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_customer_users
  * @property int $number_customer_users_status_active
  * @property int $number_customer_users_status_inactive
+ * @property int $number_prospects_bounce_status_hard_bounce
+ * @property int $number_prospects_bounce_status_soft_bounce
+ * @property int $number_prospects_bounce_status_ok
+ * @property int $number_prospects_outcome_status_hard_fail
+ * @property int $number_prospects_outcome_status_soft_fail
+ * @property int $number_prospects_outcome_status_waiting
+ * @property int $number_prospects_outcome_status_soft_success
+ * @property int $number_prospects_outcome_status_hard_success
+ * @property int $number_prospects_contacted
+ * @property int $number_prospects_not_contacted
+ * @property int $number_prospects_dont_contact_me
  * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
@@ -82,9 +93,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSettled($value)
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSubmitted($value)
  * @method static Builder|ShopCRMStats whereNumberProspects($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsBounceStatusHardBounce($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsBounceStatusOk($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsBounceStatusSoftBounce($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsContacted($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsDontContactMe($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderMale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderOther($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsNotContacted($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsOutcomeStatusHardFail($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsOutcomeStatusHardSuccess($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsOutcomeStatusSoftFail($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsOutcomeStatusSoftSuccess($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsOutcomeStatusWaiting($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateContacted($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateInvoiced($value)

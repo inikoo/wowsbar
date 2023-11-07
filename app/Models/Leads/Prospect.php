@@ -62,6 +62,10 @@ use Spatie\Tags\HasTags;
  * @property string|null $registered_at
  * @property string|null $invoiced_at
  * @property string|null $last_bounced_at
+ * @property ProspectContactStateEnum $contact_state
+ * @property ProspectOutcomeStatusEnum|null $outcome_status
+ * @property ProspectBounceStatusEnum|null $bounce_status
+ * @property bool $dont_contact_me
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -70,9 +74,9 @@ use Spatie\Tags\HasTags;
  * @property-read Customer|null $customer
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
+ * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
- * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Leads\ProspectFactory factory($count = null, $state = [])
@@ -80,14 +84,17 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()
  * @method static Builder|Prospect query()
+ * @method static Builder|Prospect whereBounceStatus($value)
  * @method static Builder|Prospect whereCompanyName($value)
  * @method static Builder|Prospect whereContactName($value)
+ * @method static Builder|Prospect whereContactState($value)
  * @method static Builder|Prospect whereContactWebsite($value)
  * @method static Builder|Prospect whereCreatedAt($value)
  * @method static Builder|Prospect whereCustomerId($value)
  * @method static Builder|Prospect whereData($value)
  * @method static Builder|Prospect whereDeleteComment($value)
  * @method static Builder|Prospect whereDeletedAt($value)
+ * @method static Builder|Prospect whereDontContactMe($value)
  * @method static Builder|Prospect whereEmail($value)
  * @method static Builder|Prospect whereId($value)
  * @method static Builder|Prospect whereIdentityDocumentNumber($value)
@@ -98,6 +105,7 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
  * @method static Builder|Prospect whereNotInterestedAt($value)
+ * @method static Builder|Prospect whereOutcomeStatus($value)
  * @method static Builder|Prospect wherePhone($value)
  * @method static Builder|Prospect wherePortfolioWebsiteId($value)
  * @method static Builder|Prospect whereRegisteredAt($value)

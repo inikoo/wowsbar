@@ -17,10 +17,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $parent_type
  * @property int $parent_id
- * @property mixed $data
+ * @property array $data
  * @property mixed $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property mixed $state
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate query()
