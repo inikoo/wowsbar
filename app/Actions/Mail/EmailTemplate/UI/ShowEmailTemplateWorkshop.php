@@ -66,7 +66,7 @@ class ShowEmailTemplateWorkshop extends InertiaAction
                         'tooltip' => __('mailshot'),
                         'icon'    => 'fal fa-mail-bulk'
                     ],
-                    'iconRight' => $emailTemplate->state->stateIcon()[$emailTemplate->state->value],
+                    // 'iconRight' => $emailTemplate->state->stateIcon()[$emailTemplate->state->value],
                     'actions'   => [
                         [
                             'type'  => 'button',
