@@ -14,17 +14,17 @@ enum EmailDeliveryStateEnum: string
     use EnumHelperTrait;
 
     case READY     = 'ready';
-    case SENT      = 'sent';
+
+    case ERROR      = 'error';
+    case SENT       = 'sent';
 
 
 
     public static function labels(): array
     {
         return [
-            'in-process' => __('In process'),
-            'ready'      => __('Ready'),
-            'scheduled'  => __('Scheduled'),
-            'sending'    => __('Sending'),
+            'ready'      => __('Ready to send'),
+            'error'      => __('Error, count not send'),
             'sent'       => __('Sent'),
             'cancelled'  => __('Cancelled'),
             'stopped'    => __('Stopped'),

@@ -22,9 +22,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $channel
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property string|null $delete_comment
- * @property-read \App\Models\Mail\EmailDelivery|null $emailDelivery
+ * @property-read \App\Models\Mail\EmailDelivery $emailDelivery
  * @property-read \App\Models\Mail\Mailshot $mailshot
  * @property-read Model|\Eloquent $recipient
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newModelQuery()
@@ -32,8 +30,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient query()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereChannel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereDeleteComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereEmailDeliveryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereMailshotId($value)

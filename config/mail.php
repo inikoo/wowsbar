@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 08 Nov 2023 14:18:36 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 return [
 
@@ -122,6 +127,11 @@ return [
         ],
     ],
 
-    'sender_email_address'=> env('SENDER_EMAIL_ADDRESS')
+    'devel'=> [
+        'sender_email_address'   => env('SENDER_EMAIL_ADDRESS'),
+        'max_mailshot_recipients'=> env('MAX_MAILSHOT_RECIPIENTS', 2000),
+        'send_ses_emails'        => env('SEND_SES_EMAILS', false),
+
+]
 
 ];

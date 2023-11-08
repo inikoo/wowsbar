@@ -25,34 +25,48 @@ class ProcessSendMailshot
 
         $queryBuilder = BuildQuery::run($query);
 
+
         $channel = 1;
+        $counter = 1;
+        $limit   = app()->isProduction() ? null : config('mail.devel.max_mailshot_recipients');
+
         $queryBuilder->chunk(
-            10,
-            function ($recipients) use ($mailshot, &$channel) {
-                print "$channel\n";
+            1000,
+            function ($recipients) use ($mailshot, &$counter, &$channel, $limit) {
+
+
+                $chunkCount = 0;
+
                 foreach ($recipients as $recipient) {
-                    if ($this->canSend($recipient)) {
+                    if (!$this->canSend($recipient)) {
+                        continue;
+                    }
+
+                    if (!is_null($limit) and $counter > $limit) {
+                        break;
+                    }
 
 
-                        if(app()->environment('production')) {
-                            $emailAddress= $recipient->email;
+                    $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
+
+                    if (!$recipientExists) {
+                        if (app()->environment('production')) {
+                            $emailAddress = $recipient->email;
                         } else {
-
-                            $prefixes=['success'=>50, 'bounce'=>30, 'complaint'=>6,'suppressionlist'=>2,'ooto'=>2];
-
-
-                            $prefix=ArrayWIthProbabilities::make()->getRandomElement($prefixes);
-
-
-                            $emailAddress="$prefix+$recipient->slug@simulator.amazonses.com";
+                            $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 6, 'suppressionlist' => 2, 'ooto' => 2];
+                            $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
+                            $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";
                         }
 
-                        $email        = Email::firstOrCreate(['address' => $emailAddress]);
-                        $emailDelivery=EmailDelivery::create(
+                        $email = Email::firstOrCreate(['address' => $emailAddress]);
+
+                        $emailDelivery = EmailDelivery::create(
                             [
-                                'email_id'=> $email->id
+                                'email_id' => $email->id,
+                                'date'     => now()
                             ]
                         );
+
 
                         $mailshot->recipients()->updateOrCreate(
                             [
@@ -61,12 +75,29 @@ class ProcessSendMailshot
                             [
                                 'recipient_id'   => $recipient->id,
                                 'recipient_type' => class_basename($recipient),
-                                'channel'        => $channel
+                                'channel'        => $channel,
                             ]
                         );
+                        $chunkCount++;
+                        // print "$channel $chunkCount $counter $emailDelivery->id {$emailDelivery->email->address}\n";
                     }
+                    $counter++;
                 }
-                SendEmailChunk::run($mailshot, $channel);
+
+
+                if ($chunkCount) {
+
+                    // $channelLabel=Str::slug(SpellNumber::value($channel)->toLetters());
+
+                    $mailshot->update(
+                        [
+                            "channels->{$channel}->ready"=> now(),
+                            "channels->{$channel}->count"=> $chunkCount
+
+                        ]
+                    );
+                    MailshotSendEmailChunk::dispatch($mailshot, $channel);
+                }
 
                 $channel++;
             }
@@ -83,10 +114,9 @@ class ProcessSendMailshot
 
     protected function canSendCustomer(Customer $customer): bool
     {
-
-
         return false;
     }
+
     protected function canSendProspect(Prospect $prospect): bool
     {
         if ($prospect->dont_contact_me) {

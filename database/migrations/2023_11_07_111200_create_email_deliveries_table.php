@@ -17,8 +17,11 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedInteger('email_id')->index();
             $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('provider_message_id')->nullable()->index();
             $table->string('state')->index()->default(EmailDeliveryStateEnum::READY);
+            $table->dateTimeTz('date')->index();
             $table->dateTimeTz('sent_at')->nullable();
+            $table->jsonb('data');
             $table->timestampsTz();
         });
     }

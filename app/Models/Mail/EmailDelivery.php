@@ -16,17 +16,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $email_id
+ * @property string|null $provider_message_id
  * @property EmailDeliveryStateEnum $state
+ * @property string $date
  * @property string|null $sent_at
+ * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Mail\Email|null $email
+ * @property-read \App\Models\Mail\Email $email
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery query()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereProviderMessageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereSentAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailDelivery whereUpdatedAt($value)
@@ -35,7 +41,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EmailDelivery extends Model
 {
     protected $casts = [
+        'data'        => 'array',
         'state'       => EmailDeliveryStateEnum::class,
+    ];
+
+    protected $attributes = [
+        'data'     => '{}',
     ];
 
     protected $guarded = [];
