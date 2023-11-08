@@ -8,7 +8,10 @@
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
 use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Events\SendEmailDetailToPusherEvent;
 use App\Models\Mail\Mailshot;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -16,6 +19,8 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 class MailshotHydrateSentEmails implements ShouldBeUnique
 {
     use AsAction;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public int $jobUniqueFor = 3600;
 
@@ -34,6 +39,8 @@ class MailshotHydrateSentEmails implements ShouldBeUnique
                 'number_email_deliveries_state_sent'=> $count
             ]
         );
+
+        SendEmailDetailToPusherEvent::dispatch($mailshot->mailshotStats);
     }
 
 
@@ -41,5 +48,4 @@ class MailshotHydrateSentEmails implements ShouldBeUnique
     {
         return $parameters->id;
     }
-
 }
