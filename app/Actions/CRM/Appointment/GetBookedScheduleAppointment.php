@@ -28,7 +28,7 @@ class GetBookedScheduleAppointment
      */
     public function handle(array $modelData): array
     {
-        $dt = Carbon::createFromDate($modelData['year'], $modelData['month']);
+        $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
         $bookedSchedules = [];
 
         for ($i = 1; $i <= $dt->daysInMonth; $i++) {

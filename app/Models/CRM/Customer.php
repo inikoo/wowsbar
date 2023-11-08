@@ -160,7 +160,6 @@ class Customer extends Model implements HasMedia, Auditable
         'state'       => CustomerStateEnum::class,
         'status'      => CustomerStatusEnum::class,
         'trade_state' => CustomerTradeStateEnum::class
-
     ];
 
     protected $attributes = [

@@ -9,12 +9,10 @@ namespace App\Actions\Mail\EmailTemplate;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Helpers\Deployment\StoreDeployment;
-use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
-use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\Banner\UpdateBannerImage;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Traits\WithActionUpdate;

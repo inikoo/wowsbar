@@ -7,11 +7,7 @@
 
 namespace App\Http\Resources\Mail;
 
-use App\Actions\Helpers\Images\GetPictureSources;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\HasSelfCall;
-use App\Http\Resources\Portfolio\SnapshotResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

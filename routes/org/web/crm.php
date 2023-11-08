@@ -6,7 +6,6 @@
  */
 
 
-use App\Actions\CRM\Appointment\GetBookedScheduleAppointment;
 use App\Actions\CRM\Appointment\UI\CreateAppointment;
 use App\Actions\CRM\Appointment\UI\EditAppointment;
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
@@ -27,12 +26,10 @@ use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\IndexProspectsQueryProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
-use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
-use App\Actions\Organisation\UI\CRM\EmailTemplate\IndexEmailTemplates;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
