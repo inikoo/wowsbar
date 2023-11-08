@@ -171,7 +171,8 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
         label: 'Custom Tag',
         command: 'customTag',
         toolbar: 'insert',
-        icon: "sourcedialog,sourcedialog-rtl" // Hide t
+        className: 'custom-tag-button',
+        icon : false
       });
 
       CKEDITOR.dialog.add('customTagDialog', function (editor) {
