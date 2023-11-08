@@ -128,7 +128,7 @@ class ShowEmailTemplate extends InertiaAction
                         fn () => EmailTemplateResource::make($emailTemplate)->getArray()
                     ),
 
-      /*          EmailTemplateTabsEnum::SNAPSHOTS->value => $this->tab == EmailTemplateTabsEnum::SNAPSHOTS->value
+                EmailTemplateTabsEnum::SNAPSHOTS->value => $this->tab == EmailTemplateTabsEnum::SNAPSHOTS->value
                     ?
                     fn () => SnapshotResource::collection(
                         IndexSnapshots::run(
@@ -141,7 +141,7 @@ class ShowEmailTemplate extends InertiaAction
                             parent: $emailTemplate,
                             prefix: EmailTemplateTabsEnum::SNAPSHOTS->value
                         )
-                    )),*/
+                    )),
 
                 EmailTemplateTabsEnum::CHANGELOG->value => $this->tab == EmailTemplateTabsEnum::CHANGELOG->value
                     ?
@@ -163,13 +163,12 @@ class ShowEmailTemplate extends InertiaAction
             IndexHistory::make()->tableStructure(
                 prefix: EmailTemplateTabsEnum::CHANGELOG->value
             )
-        );
-          /*  ->table(
+        )->table(
             IndexSnapshots::make()->tableStructure(
                 parent: $emailTemplate,
                 prefix: EmailTemplateTabsEnum::SNAPSHOTS->value
             )
-        );*/
+        );
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
