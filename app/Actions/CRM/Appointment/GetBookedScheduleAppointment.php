@@ -30,16 +30,24 @@ class GetBookedScheduleAppointment
     {
         $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
         $bookedSchedules = [];
+        $availableSchedules = [];
+        $availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
         for ($i = 1; $i <= $dt->daysInMonth; $i++) {
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $bookedSchedules[$date] = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
+            $appointment = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
+            if(count($appointment) > 0) {
+                $bookedSchedules[$date] = $appointment;
+            } else {
+                $availableSchedules[$date] = $availableTimes;
+            }
         }
 
         return [
-            'bookedSchedules' => $bookedSchedules
+            'bookedSchedules' => $bookedSchedules,
+            'availableSchedules' => $availableSchedules
         ];
     }
 

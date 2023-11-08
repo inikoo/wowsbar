@@ -279,8 +279,15 @@ onMounted(() => {
 }
 
 
-.cke_button__customTag .cke_button_label {
-    display: inline;
+.custom-tag-button {
+.cke_button_icon{
+ display: none;
 }
+.cke_button_label {
+display: inline;
+}
+
+}
+
 
 </style>
