@@ -13,6 +13,7 @@ use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
@@ -43,6 +44,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property array|null $channels
+ * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -125,5 +127,9 @@ class Mailshot extends Model
         return $this->hasMany(MailshotRecipient::class);
     }
 
+    public function mailshotStats(): HasOne
+    {
+        return $this->hasOne(MailshotStats::class);
+    }
 
 }

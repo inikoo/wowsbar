@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
 use App\Actions\Mail\Ses\SendSesEmail;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -48,6 +49,8 @@ class MailshotSendEmailChunk
                 emailDelivery: $recipient->emailDelivery,
                 sender: $sender
             );
+
+            MailshotHydrateSentEmails::run($mailshot);
         }
 
 

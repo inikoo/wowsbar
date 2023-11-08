@@ -7,6 +7,7 @@
 
 namespace App\Actions\Maintenance;
 
+use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Division;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -38,6 +39,12 @@ class AddStats
         foreach (Shop::all() as $shop) {
             if (!$shop->mailStats) {
                 $shop->mailStats()->create();
+            }
+        }
+
+        foreach (Mailshot::all() as $mailshot) {
+            if (!$mailshot->mailshotStats) {
+                $mailshot->mailshotStats()->create();
             }
         }
 
