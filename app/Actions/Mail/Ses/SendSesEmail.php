@@ -8,10 +8,9 @@
 namespace App\Actions\Mail\Ses;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
-use App\Models\Mail\MailshotRecipient;
-use Aws\Result;
+use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Models\Mail\EmailDelivery;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Spatie\Mjml\Mjml;
 
 class SendSesEmail
 {
@@ -20,13 +19,8 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(MailshotRecipient $mailshotRecipient): Result
+    public function handle(string $subject, string $emailHtmlBody, EmailDelivery $emailDelivery, string $sender)
     {
-        $mailshot = $mailshotRecipient->mailshot;
-        $layout   = $mailshot->layout;
-        $subject  = $mailshot->subject;
-
-        $html = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
         $message = [
             'Message' => [
@@ -37,22 +31,33 @@ class SendSesEmail
         ];
 
         $message['Message']['Body']['Html'] = [
-            'Data' => $html
+            'Data' => $emailHtmlBody
         ];
 
-        return $this->getSesClient()->sendEmail([
-            'Source'      => $this->generateSenderEmail(),
+
+        $emailData=[
+            'Source'      => $sender,
             'Destination' => [
-                'ToAddresses' => [$mailshotRecipient->recipient->email]
+                'ToAddresses' => [$emailDelivery->email->address]
             ],
             'Message' => $message['Message']
-        ]);
+        ];
+
+        print_r($emailData);
+
+        $result= $this->getSesClient()->sendEmail($emailData);
+
+        dd($result);
+        exit;
+
+        $emailDelivery->update(
+            [
+                'state'  => EmailDeliveryStateEnum::SENT,
+                'sent_at'=> now()
+            ]
+        );
+
     }
 
-    public function generateSenderEmail(): string
-    {
-        $user = request()->user();
 
-        return ($user?->username ?? 'no-reply') . '@' . organisation()->code . env('MAIL_MAIN_URL');
-    }
 }
