@@ -19,14 +19,14 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedSmallInteger('mailshot_id')->index();
             $table->foreign('mailshot_id')->references('id')->on('mailshots')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedInteger('email_delivery_id')->index();
-            $table->foreign('email_delivery_id')->references('id')->on('email_deliveries')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('dispatched_email_id')->index();
+            $table->foreign('dispatched_email_id')->references('id')->on('dispatched_emails')->onUpdate('cascade')->onDelete('cascade');
             $table->string('recipient_type');
             $table->unsignedInteger('recipient_id');
             $table->unsignedSmallInteger('channel')->index();
             $table->timestampsTz();
             $table->index(['recipient_type','recipient_id','mailshot_id']);
-            $table->unique(['mailshot_id','email_delivery_id']);
+            $table->unique(['mailshot_id','dispatched_email_id']);
         });
     }
 

@@ -8,7 +8,7 @@ use App\Models\CRM\Customer;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Email;
-use App\Models\Mail\EmailDelivery;
+use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
 use Exception;
 use Illuminate\Console\Command;
@@ -60,7 +60,7 @@ class ProcessSendMailshot
 
                         $email = Email::firstOrCreate(['address' => $emailAddress]);
 
-                        $emailDelivery = EmailDelivery::create(
+                        $dispatchedEmail = DispatchedEmail::create(
                             [
                                 'email_id' => $email->id,
                                 'date'     => now()
@@ -70,7 +70,7 @@ class ProcessSendMailshot
 
                         $mailshot->recipients()->updateOrCreate(
                             [
-                                'email_delivery_id' => $emailDelivery->id
+                                'dispatched_email_id' => $dispatchedEmail->id
                             ],
                             [
                                 'recipient_id'   => $recipient->id,
@@ -79,7 +79,7 @@ class ProcessSendMailshot
                             ]
                         );
                         $chunkCount++;
-                        // print "$channel $chunkCount $counter $emailDelivery->id {$emailDelivery->email->address}\n";
+                        // print "$channel $chunkCount $counter $dispatchedEmail->id {$dispatchedEmail->email->address}\n";
                     }
                     $counter++;
                 }

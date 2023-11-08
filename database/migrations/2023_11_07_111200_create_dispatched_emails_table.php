@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Enums\Mail\DispatchedEmailStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('email_deliveries', function (Blueprint $table) {
+        Schema::create('dispatched_emails', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('email_id')->index();
             $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
             $table->string('provider_message_id')->nullable()->index();
-            $table->string('state')->index()->default(EmailDeliveryStateEnum::READY);
+            $table->string('state')->index()->default(DispatchedEmailStateEnum::READY);
             $table->dateTimeTz('date')->index();
             $table->dateTimeTz('sent_at')->nullable();
             $table->jsonb('data');
@@ -29,6 +29,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('email_deliveries');
+        Schema::dropIfExists('dispatched_emails');
     }
 };

@@ -46,7 +46,7 @@ class MailshotSendEmailChunk
             SendSesEmail::run(
                 subject: $mailshot->subject,
                 emailHtmlBody:$emailHtmlBody,
-                emailDelivery: $recipient->emailDelivery,
+                dispatchedEmail: $recipient->dispatchedEmail,
                 sender: $sender
             );
 
