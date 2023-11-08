@@ -7,6 +7,7 @@
 
 namespace App\Models\Mail;
 
+use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -88,5 +89,10 @@ class EmailTemplate extends Model
     public function liveSnapshot(): BelongsTo
     {
         return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
     }
 }

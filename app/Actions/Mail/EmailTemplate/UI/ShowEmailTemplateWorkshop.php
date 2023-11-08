@@ -80,29 +80,24 @@ class ShowEmailTemplateWorkshop extends InertiaAction
                     ]
 
                 ],
-                'mailshot'    => EmailTemplateResource::make($emailTemplate)->getArray(),
+                'emailTemplate'    => EmailTemplateResource::make($emailTemplate)->getArray(),
 
                 'imagesUploadRoute'   => [
-                    'name'       => 'org.models.mailshot.images.store',
-                    'parameters' => $emailTemplate->id
-                ],
-                'sendRoute'           => [
-                    'name'       => 'org.models.mailshot.send',
-                    'parameters' => $emailTemplate->id
-                ],
-                'setAsScheduledRoute' => [
-                    'name'       => 'org.models.mailshot.state.scheduled',
+                    'name'       => 'org.models.email-templates.images.store',
                     'parameters' => $emailTemplate->id
                 ],
                 'updateRoute'         => [
-                    'name'       => 'org.models.mailshot.content.update',
+                    'name'       => 'org.models.email-templates.content.update',
+                    'parameters' => $emailTemplate->id
+                ],
+                'publishRoute'           => [
+                    'name'       => 'org.models.email-templates.content.publish',
                     'parameters' => $emailTemplate->id
                 ],
                 'loadRoute'           => [
-                    'name'       => 'org.models.mailshot.content.show',
+                    'name'       => 'org.models.email-templates.content.show',
                     'parameters' => $emailTemplate->id
-                ],
-
+                ]
             ]
         );
     }
