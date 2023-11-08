@@ -48,8 +48,8 @@ class StoreEmailTemplate
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'data' => ['required', 'string'],
+            'title'    => ['required', 'string', 'max:255'],
+            'data'     => ['required', 'string'],
             'compiled' => ['required', 'string']
         ];
     }
