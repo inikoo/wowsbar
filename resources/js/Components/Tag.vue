@@ -49,8 +49,7 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="rounded select-none">
-        <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
+        <div class="flex items-center gap-x-1 rounded select-none px-1.5 py-1 w-fit font-medium border"
             :class="[
                 `text-${size}`,
                 stringToColor ? false : compTheme  // If stringToColor false then take provided style
@@ -74,5 +73,4 @@ const compTheme = computed(() => {
                 <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
             </div>
         </div>
-    </div>
 </template>
