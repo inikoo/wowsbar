@@ -28,10 +28,10 @@ class GetBookedScheduleAppointment
      */
     public function handle(array $modelData): array
     {
-        $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
-        $bookedSchedules = [];
+        $dt                 = Carbon::createFromDate($modelData['year'], $modelData['month']);
+        $bookedSchedules    = [];
         $availableSchedules = [];
-        $availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+        $availableTimes     = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
         for ($i = 1; $i <= $dt->daysInMonth; $i++) {
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
@@ -46,7 +46,7 @@ class GetBookedScheduleAppointment
         }
 
         return [
-            'bookedSchedules' => $bookedSchedules,
+            'bookedSchedules'    => $bookedSchedules,
             'availableSchedules' => $availableSchedules
         ];
     }
