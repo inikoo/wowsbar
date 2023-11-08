@@ -36,11 +36,9 @@ const props = defineProps<{
     changelog?: object,
     workshop?: object,
     imagesUploadRoute: routeType
-    setAsReadyRoute: routeType
     updateRoute: routeType
+    publishRoute: routeType
     loadRoute: routeType
-    setAsScheduledRoute: routeType
-    sendRoute: routeType
 
 }>()
 
@@ -102,56 +100,14 @@ const onCancel = () => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex rounded-md overflow-hidden">
-                <Link v-if="setAsReadyRoute?.name"
-                    method="post"
-                    :href="route(
-                        props.setAsReadyRoute?.name,
-                        props.setAsReadyRoute?.parameters
-                )">
-                    <Button class="rounded-r-none" :style="`secondary`">
-                        <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
-                    </Button>
-                </Link>
-                <Popover>
-                    <template #button>
-                        <div class="relative" title="Scheduled publish">
-                            <Button class="rounded-none">
-                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='leading-6 border-transparent border' aria-hidden='true' />
-                                <div class="absolute inset-0 w-full flex items-center justify-center" />
-                            </Button>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div>
-                            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
-                            <div class="my-2">
-                                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
-                                    :min-date="new Date()" />
-                            </div>
-                            <div class="flex justify-between">
-                                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
-                                <Link
-                                    method="post"
-                                    :data="{ schedule_at: date.toISOString() }"
-                                    :href="route(
-                                        props.setAsScheduledRoute.name,
-                                        props.setAsScheduledRoute.parameters
-                                )">
-                                    <Button>Schedule</Button>
-                                </Link>
-                            </div>
-                        </div>
-                    </template>
-                </Popover>
-
                 <Link
                     method="post"
                     :href="route(
-                        props.sendRoute.name,
-                        props.sendRoute.parameters
+                        props.publishRoute.name,
+                        props.publishRoute.parameters
                 )">
                     <Button  class="rounded-none">
-                        Send Now
+                        Publish
                         <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
                     </Button>
                 </Link>

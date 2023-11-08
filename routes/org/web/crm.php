@@ -128,7 +128,6 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('templates')->as('templates.')->group(function () {
             Route::get('{emailTemplate}', [ShowEmailTemplate::class, 'inShop'])->name('show');
             Route::get('{emailTemplate}/workshop', ShowEmailTemplateWorkshop::class)->name('workshop');
-            Route::get('{emailTemplate}/content', ShowEmailTemplateContent::class)->name('content');
         });
     });
 

@@ -7,18 +7,11 @@
 
 namespace App\Actions\Mail\EmailTemplate;
 
-use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
-use App\Enums\Mail\MailshotTypeEnum;
-use App\Models\CRM\Customer;
-use App\Models\Helpers\Query;
-use App\Models\Mail\Mailshot;
+use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Market\Shop;
-use Illuminate\Database\Query\Builder;
+use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -30,36 +23,17 @@ class StoreEmailTemplate
 
     private bool $asAction = false;
 
-    private Customer|Shop $parent;
+    private Organisation|Shop $parent;
     private string $scope;
     private array $queryRules;
 
-
-    public function handle(Customer|Shop $parent, array $modelData): Mailshot
+    public function handle(Organisation|Shop $parent, array $modelData): EmailTemplate
     {
-        $this->parent = $parent;
+        $emailTemplate = $parent->emailTemplates()->create($modelData);
 
+        StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
 
-        data_set($modelData, 'recipients_recipe', Arr::only($modelData, ['query_id', 'query_arguments']));
-        Arr::forget($modelData, ['query_id', 'query_arguments']);
-
-        data_set($modelData, 'date', now());
-        data_set(
-            $modelData,
-            'layout',
-            json_decode(file_get_contents(resource_path('views/mailshots/layouts/default.json')), true)
-        );
-
-        /** @var Mailshot $mailshot */
-        $mailshot = $parent->mailshots()->create($modelData);
-
-        OrganisationHydrateMailshots::dispatch();
-        if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
-            ShopHydrateMailshots::dispatch($mailshot->scope);
-        }
-
-
-        return $mailshot;
+        return $emailTemplate;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -71,98 +45,34 @@ class StoreEmailTemplate
         return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
-    public function prepareForValidation(): void
-    {
-        if (!$this->get('query_id')) {
-            //todo this is only for testing
-            $this->fill(['query_id' => Query::first()->id]);
-        }
-
-
-    }
-
     public function rules(): array
     {
         return [
-            'subject'         => ['required', 'string', 'max:255'],
-            'type'            => ['required', new Enum(MailshotTypeEnum::class)],
-            'query_arguments' => ['sometimes', 'array'],
-            'query_id'        => [
-                'required',
-                Rule::exists('queries', 'id')->where(function (Builder $query) {
-                    return $query->where('model_type', $this->queryRules['model_type'])
-                        ->where('scope_type', $this->queryRules['scope_type'])
-                        ->where('scope_id', $this->queryRules['scope_id']);
-                }),
-            ]
+            'title' => ['required', 'string', 'max:255'],
+            'data' => ['required', 'string'],
+            'compiled' => ['required', 'string']
         ];
     }
 
-    public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
-    {
-        $this->queryRules = [
-            'model_type' => 'Prospect',
-            'scope_type' => 'Shop',
-            'scope_id'   => $shop->id
-        ];
-
-        $this->fillFromRequest($request);
-
-        $this->fill(
-            [
-                'type' => MailshotTypeEnum::PROSPECT_MAILSHOT->value
-            ]
-        );
-
-
-        $validatedData = $this->validateAttributes();
-
-        return $this->handle($shop, $validatedData);
-    }
-
-
-    public function action(Shop|Customer $parent, array $objectData): Mailshot
-    {
-
-
-        if(Arr::get($objectData, 'type')==MailshotTypeEnum::PROSPECT_MAILSHOT) {
-            $this->queryRules = [
-                'model_type' => 'Prospect',
-                'scope_type' => class_basename($parent),
-                'scope_id'   => $parent->id
-            ];
-        }
-
-
-
-        $this->asAction = true;
-        $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
-        return $this->handle($parent, $validatedData);
-    }
-
-
-    public function jsonResponse(Mailshot $mailshot): string
+    public function jsonResponse(EmailTemplate $emailTemplate): string
     {
         return route(
-            'customer.mailshots.mailshots.workshop',
+            'org.crm.shop.mailroom.templates.workshop',
             [
-                $mailshot->slug
+                $emailTemplate->scope->slug,
+                $emailTemplate->slug
             ]
         );
     }
 
-    public function htmlResponse(Mailshot $mailshot): RedirectResponse
+    public function htmlResponse(EmailTemplate $emailTemplate): RedirectResponse
     {
-        return match ($mailshot->type) {
-            MailshotTypeEnum::PROSPECT_MAILSHOT => redirect()->route(
-                'org.crm.shop.prospects.mailshots.workshop',
-                [
-                    $mailshot->scope->slug,
-                    $mailshot->slug
-                ]
-            ),
-            default => null
-        };
+        return redirect()->route(
+            'org.crm.shop.mailroom.templates.workshop',
+            [
+                $emailTemplate->scope->slug,
+                $emailTemplate->slug
+            ]
+        );
     }
 }
