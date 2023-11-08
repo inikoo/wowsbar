@@ -7,7 +7,8 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
-import JobPositionBadges from "@/Components/Elements/Badges/JobPositionBadges.vue";
+// import JobPositionBadges from "@/Components/Elements/Badges/JobPositionBadges.vue";
+import Tag from '@/Components/Tag.vue'
 
 const props = defineProps<{
     data: object,
@@ -35,7 +36,13 @@ function guestRoute(guest) {
             </Link>
         </template>
         <template #cell(positions)="{ item: guest }">
-            <job-position-badges :job_positions="guest['positions']"/>
+            <div class="flex gap-x-1.5">
+                <Link v-for="(position, key) in guest.positions" :key="key"
+                    :href="route('org.hr.job-positions.show', position.slug)"
+                    :title="position.name" class="inline-flex">
+                    <Tag :label="position.name" stringToColor />
+                </Link>
+            </div>
         </template>
     </Table>
 </template>
