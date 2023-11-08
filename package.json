@@ -59,6 +59,7 @@
         "@tiptap/pm": "^2.0.3",
         "@tiptap/starter-kit": "^2.0.3",
         "@tiptap/vue-3": "^2.0.3",
+        "@types/ckeditor": "^4.9.10",
         "@vueform/multiselect": "^2.6.2",
         "@vuepic/vue-datepicker": "^5.1.1",
         "@vueuse/core": "^10.5.0",

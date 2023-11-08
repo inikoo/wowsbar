@@ -9,6 +9,7 @@ import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
 import CkeEditor from 'grapesjs-plugin-ckeditor'
 import { ComboboxLabel } from "@headlessui/vue";
+import RTE from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/Rte/Rte.ts'
 /* import ClassicEditor from 'ckeditor4'; */
 
 const emits = defineEmits(['onSaveToServer']);
@@ -120,40 +121,39 @@ onMounted(() => {
         showOffsets: false,
         fromElement: false,
         noticeOnUnload: false,
-        plugins: [grapesJSMJML, CkeEditor],
+        plugins: [grapesJSMJML, RTE],
         pluginsOpts: {
             [grapesJSMJML]: {
                 blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
                     'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw'],
             },
-            [CkeEditor]: {
+            [RTE]: {
                 options: {
                     language: 'en',
                     startupFocus: false,
                     extraAllowedContent: '*(*);*{*}', 
                     allowedContent: false,
-                    uiColor: '#2C2E35',
+                    /* uiColor: '#2C2E35', */
                     extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks`,
                     toolbarGroups : [
                             { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
                             { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
                             { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
                             { name: 'forms', groups: [ 'forms' ] },
-                            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ]},
                             { name: 'links', groups: [ 'links' ] },
                             { name: 'insert', groups: [ 'insert' ] },
                             { name: 'styles', groups: [ 'styles' ] },
                             { name: 'colors', groups: [ 'colors' ] },
                             { name: 'tools', groups: [ 'tools' ] },
                             { name: 'others', groups: [ 'others' ] },
-                            { name: 'about', groups: [ 'about' ] }
+                            { name: 'about', groups: [ 'about' ] },
+                            { name: 'basicstyles', groups: [ 'customTag' ] },
                         ],
                         removeButtons : 'Cut,Copy,Paste,PasteText,PasteFromWord,Source,Save,Templates,NewPage,ExportPdf,Preview,Print,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,CreateDiv,Image,Table,Smiley,SpecialChar,PageBreak,Iframe,Styles,About,Maximize,ShowBlocks'
                 },
                 position: 'left',
             }
-
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
@@ -277,4 +277,10 @@ onMounted(() => {
     padding: 10px;
     min-width: fit-content;
 }
+
+
+.cke_button__customTag .cke_button_label {
+    display: inline;
+}
+
 </style>
