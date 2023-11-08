@@ -7,8 +7,6 @@
 
 namespace App\Actions\Mail\Notifications;
 
-use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
-use App\Models\Mail\DispatchedEmail;
 use Aws\Sns\Message;
 use Aws\Sns\MessageValidator;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -19,8 +17,11 @@ class GetSnsNotification
 
     public function asController(): void
     {
+
         $message   = Message::fromRawPostData();
         $validator = new MessageValidator();
+
+
 
         if ($validator->isValid($message)) {
             if ($message['Type'] == 'SubscriptionConfirmation') {
@@ -30,6 +31,7 @@ class GetSnsNotification
 
                 $messageId = $messageData['mail']['messageId'];
                 $timestamp = $messageData['mail']['timestamp'];
+
 
                 $dispatchedEmail = DispatchedEmail::where('ses_id', $messageId)->first();
                 UpdateDispatchedEmail::run($dispatchedEmail, [

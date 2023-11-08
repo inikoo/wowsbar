@@ -11,6 +11,7 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\DetectWebsite;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleCustomerInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
@@ -64,6 +65,11 @@ class Kernel extends HttpKernel
 
     protected $middlewareGroups = [
 
+        'webhooks' => [
+            ForceJsonResponse::class,
+            EnsureFrontendRequestsAreStateful::class,
+            SubstituteBindings::class,
+        ],
         'delivery' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
