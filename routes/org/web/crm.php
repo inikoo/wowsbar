@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\CRM\Appointment\GetBookedScheduleAppointment;
 use App\Actions\CRM\Appointment\UI\CreateAppointment;
 use App\Actions\CRM\Appointment\UI\EditAppointment;
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
@@ -135,6 +136,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('appointments')->as('appointments.')->group(function () {
         Route::get('/', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([IndexAppointments::class, 'inShop'])->name('index');
         Route::get('/create', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([CreateAppointment::class, 'inShop'])->name('create');
+
         Route::get('/{appointment}', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(ShowAppointment::class)->name('show');
         Route::get('/{appointment}/edit', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(EditAppointment::class)->name('edit');
     });
