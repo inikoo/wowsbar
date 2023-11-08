@@ -194,8 +194,8 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
 });
 
 Route::prefix('email-templates')->as('email-templates.')->group(function () {
-    Route::post('{emailTemplate}/publish', UpdateMailshotContent::class)->name('content.publish');
-    Route::post('{emailTemplate}/content', UpdateEmailTemplateContent::class)->name('content.update');
-    Route::post('{emailTemplate}/images', UploadImagesToMailshot::class)->name('images.store');
-    Route::get('{emailTemplate}/content', ShowEmailTemplateContent::class)->name('content.show');
+    Route::post('{emailTemplate:id}/publish', UpdateMailshotContent::class)->name('content.publish');
+    Route::post('{emailTemplate:id}/content', UpdateEmailTemplateContent::class)->name('content.update');
+    Route::post('{emailTemplate:id}/images', UploadImagesToMailshot::class)->name('images.store');
+    Route::get('{emailTemplate:id}/content', ShowEmailTemplateContent::class)->name('content.show');
 });
