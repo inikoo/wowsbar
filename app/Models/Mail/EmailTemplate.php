@@ -7,8 +7,11 @@
 
 namespace App\Models\Mail;
 
+use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -24,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property mixed $compiled
  * @property \App\Models\Organisation\Organisation|\App\Models\Market\Shop $scope
+ * @property Snapshot $snapshot
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property mixed $state
@@ -69,5 +73,20 @@ class EmailTemplate extends Model
     public function scope(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function snapshots(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
+    }
+
+    public function unpublishedSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
+    }
+
+    public function liveSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
     }
 }
