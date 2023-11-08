@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Deployment;
 
 use App\Models\Helpers\Deployment;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Portfolio\Banner;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
@@ -17,7 +18,7 @@ class StoreDeployment
 {
     use AsAction;
 
-    public function handle(Banner|Website|Webpage $model, array $modelData): Deployment
+    public function handle(Banner|Website|Webpage|EmailTemplate $model, array $modelData): Deployment
     {
 
         /** @var Deployment $deployment */

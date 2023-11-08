@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 30 Oct 2023 13:02:45 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 07 Nov 2023 23:12:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -9,28 +9,30 @@ namespace App\Enums\Mail;
 
 use App\Enums\EnumHelperTrait;
 
-enum MailshotStateEnum: string
+enum EmailDeliveryStateEnum: string
 {
     use EnumHelperTrait;
 
-    case IN_PROCESS = 'in-process';
-    case READY      = 'ready';
-    case SCHEDULED  = 'scheduled';
-    case SENDING    = 'sending';
-    case SENT       = 'sent';
-    case CANCELLED  = 'cancelled';
-    case STOPPED    = 'stopped';
+    case READY       = 'ready';
+    case ERROR       = 'error';
+    case SENT        = 'sent';
+    case HARD_BOUNCE = 'hard_bounce';
+    case SOFT_BOUNCE = 'soft_bounce';
+    case OPENED      = 'opened';
+
+    case CLICKED      = 'clicked';
+    case SPAM         = 'spam';
+    case UNSUBSCRIBED = 'unsubscribed';
+
 
     public static function labels(): array
     {
         return [
-            'in-process' => __('In process'),
-            'ready'      => __('Ready'),
-            'scheduled'  => __('Scheduled'),
-            'sending'    => __('Sending'),
-            'sent'       => __('Sent'),
-            'cancelled'  => __('Cancelled'),
-            'stopped'    => __('Stopped'),
+            'ready'     => __('Ready to send'),
+            'error'     => __('Error, count not send'),
+            'sent'      => __('Sent'),
+            'cancelled' => __('Cancelled'),
+            'stopped'   => __('Stopped'),
         ];
     }
 
@@ -45,7 +47,7 @@ enum MailshotStateEnum: string
 
 
             ],
-            'ready' => [
+            'ready'      => [
 
                 'tooltip' => __('Ready'),
                 'icon'    => 'fal fa-spell-check',
@@ -53,7 +55,7 @@ enum MailshotStateEnum: string
 
 
             ],
-            'scheduled' => [
+            'scheduled'  => [
 
                 'tooltip' => __('Scheduled'),
                 'icon'    => 'fal fa-seedling',
@@ -61,14 +63,14 @@ enum MailshotStateEnum: string
 
 
             ],
-            'sending'        => [
+            'live'       => [
 
-                'tooltip' => __('sending'),
-                'icon'    => 'fal fa-paper-plane',
-                'class'   => 'animate-pulse'
+                'tooltip' => __('live'),
+                'icon'    => 'fal fa-broadcast-tower',
+                'class'   => 'text-green-600 animate-pulse'
 
             ],
-            'switch_off'     => [
+            'switch_off' => [
 
                 'tooltip' => __('switch off'),
                 'icon'    => 'fal fa-eye-slash'

@@ -8,12 +8,9 @@
 namespace App\Actions\Organisation\UI\CRM;
 
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
 use App\Actions\Organisation\UI\CRM\EmailTemplate\IndexEmailTemplates;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\MailroomTabsEnum;
-use App\Enums\UI\Organisation\ProspectsTabsEnum;
-use App\Http\Resources\CRM\ProspectQueriesResource;
 use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;

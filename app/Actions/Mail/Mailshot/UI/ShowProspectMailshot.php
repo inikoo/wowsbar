@@ -93,7 +93,7 @@ class ShowProspectMailshot extends InertiaAction
                 'route'      => [
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id,
-                    'method'     => 'post'
+
                 ]
             ];
         }

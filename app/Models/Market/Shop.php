@@ -9,7 +9,6 @@ namespace App\Models\Market;
 
 use App\Enums\Market\Shop\ShopStateEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
-use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
@@ -88,6 +87,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $customers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
  * @property-read int|null $departments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, EmailTemplate> $emailTemplates
+ * @property-read int|null $email_templates_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
  * @property-read \App\Models\Market\ShopMailStats|null $mailStats

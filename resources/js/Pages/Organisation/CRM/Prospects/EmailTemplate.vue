@@ -17,6 +17,7 @@ import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowca
 
 import {faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faPaperPlane} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableSnapshots from "@/Components/Tables/TableSnapshots.vue";
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faPaperPlane)
 
@@ -29,6 +30,7 @@ const props = defineProps<{
     }
     changelog?: object,
     showcase?: object,
+    snapshots?: object,
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -39,6 +41,7 @@ const component = computed(() => {
     const components = {
         showcase: MailshotShowcase,
         details: ModelDetails,
+        snapshots: TableSnapshots,
         changelog: TableHistories,
     };
     return components[currentTab.value];

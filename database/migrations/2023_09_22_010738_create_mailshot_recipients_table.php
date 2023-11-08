@@ -5,9 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    /**
-     * Run the migrations.
-     */
+    //WARNING: This is not the actual migration
     public function up(): void
     {
         Schema::create('mailshot_recipients', function (Blueprint $table) {
@@ -22,9 +20,7 @@ return new class () extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('mailshot_recipients');

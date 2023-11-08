@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "927db343594801756a0152829502eca5",
+    "content-hash": "c95dcdcb374cae9f0a5ff4235861a121",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8668,6 +8668,105 @@
                 }
             ],
             "time": "2022-10-12T17:22:51+00:00"
+        },
+        {
+            "name": "rmunate/spell-number",
+            "version": "v4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rmunate/SpellNumber.git",
+                "reference": "9c980a2002c7c7c8a5fc45a3b30212ae8ee371d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rmunate/SpellNumber/zipball/9c980a2002c7c7c8a5fc45a3b30212ae8ee371d7",
+                "reference": "9c980a2002c7c7c8a5fc45a3b30212ae8ee371d7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "illuminate/support": "^8.0|^9.0|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Rmunate\\Utilities\\Providers\\SpellNumberProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rmunate\\Utilities\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raul Mauricio Uñate Castro",
+                    "email": "raulmauriciounate@gmail.com",
+                    "homepage": "https://github.com/rmunate",
+                    "role": "owner"
+                },
+                {
+                    "name": "Olsza",
+                    "homepage": "https://github.com/olsza",
+                    "role": "developer"
+                },
+                {
+                    "name": "Er. Ashok Devatwal",
+                    "email": "ashokdev78@gmail.com",
+                    "homepage": "https://github.com/ashokdevatwal",
+                    "role": "developer"
+                },
+                {
+                    "name": "Siros Fakhri",
+                    "homepage": "https://github.com/sirosfakhri",
+                    "role": "developer"
+                },
+                {
+                    "name": "Jens Twesmann",
+                    "homepage": "https://github.com/jetwes",
+                    "role": "developer"
+                },
+                {
+                    "name": "Gabriel Rausch",
+                    "homepage": "https://github.com/gdsrmygdsrjr",
+                    "role": "developer"
+                },
+                {
+                    "name": "Alejandro Diaz",
+                    "homepage": "https://github.com/alejandrodiazpinilla",
+                    "role": "developer"
+                }
+            ],
+            "description": "Easily convert numbers to letters, this library supports the native PHP INTL extension with which we can easily convert numbers to letters. This library provides us with the possibility of converting only to numbers or to currency formats depending on the language to be used, this package has support in the languages en: English, es: Spanish, pt: Portuguese, fr: French, it: Italian, ro: Romanian, fa: Farsi, hi: Hindi, pl: Polish.",
+            "homepage": "https://github.com/rmunate/SpellNumber",
+            "keywords": [
+                "code-maestro",
+                "numbers",
+                "rmunate",
+                "spell",
+                "spell-number",
+                "spell-numbers",
+                "toletters",
+                "towords"
+            ],
+            "support": {
+                "issues": "https://github.com/rmunate/SpellNumber/issues",
+                "source": "https://github.com/rmunate/SpellNumber/tree/v4.1.1"
+            },
+            "time": "2023-11-07T16:25:33+00:00"
         },
         {
             "name": "roave/better-reflection",

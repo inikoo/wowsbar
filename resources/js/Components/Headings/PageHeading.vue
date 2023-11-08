@@ -65,7 +65,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
 <template>
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
-        <div class="">
+        <div>
             <div class="flex leading-none py-1 items-center gap-x-2 font-bold text-gray-700 text-2xl tracking-tight ">
                 <div v-if="data.container" class="text-slate-500 text-lg">
                     <Link v-if="data.container.href"

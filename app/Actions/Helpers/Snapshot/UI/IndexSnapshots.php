@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Portfolio\Banner;
 use App\Models\Web\Webpage;
 use Closure;
@@ -30,7 +31,7 @@ class IndexSnapshots extends InertiaAction
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Banner|Webpage $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Banner|Webpage|EmailTemplate $parent, $prefix = null): LengthAwarePaginator
     {
         $queryBuilder = QueryBuilder::for(Snapshot::class);
         $queryBuilder->where('state', '!=', SnapshotStateEnum::UNPUBLISHED->value);
@@ -43,6 +44,10 @@ class IndexSnapshots extends InertiaAction
             $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Webpage');
         }
 
+        if (class_basename($parent) == 'EmailTemplate') {
+            $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'EmailTemplate');
+        }
+
         return $queryBuilder
             ->defaultSort('-published_at')
             ->allowedSorts(['published_at', 'published_until'])
@@ -50,7 +55,7 @@ class IndexSnapshots extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(Banner|Webpage $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
+    public function tableStructure(Banner|Webpage|EmailTemplate $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {

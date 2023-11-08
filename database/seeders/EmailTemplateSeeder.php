@@ -15,11 +15,11 @@ class EmailTemplateSeeder extends Seeder
         // TODO: The layout goes here
 
         EmailTemplate::create([
-            'title' => 'Hello',
+            'title'      => 'Hello',
             'scope_type' => 'Organisation',
-            'scope_id' => 1,
-            'data' => '{}',
-            'compiled' => '{}',
+            'scope_id'   => 1,
+            'data'       => '{}',
+            'compiled'   => '{}',
         ]);
     }
 }
