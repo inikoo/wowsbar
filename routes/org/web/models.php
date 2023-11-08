@@ -32,6 +32,8 @@ use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
+use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\SendMailshot;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
@@ -189,4 +191,11 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
 
     Route::get('/custom/texts', GetMailshotCustomText::class)->name('custom.text');
+});
+
+Route::prefix('email-templates')->as('email-templates.')->group(function () {
+    Route::post('{emailTemplate}/publish', UpdateMailshotContent::class)->name('content.publish');
+    Route::post('{emailTemplate}/content', UpdateEmailTemplateContent::class)->name('content.update');
+    Route::post('{emailTemplate}/images', UploadImagesToMailshot::class)->name('images.store');
+    Route::get('{emailTemplate}/content', ShowEmailTemplateContent::class)->name('content.show');
 });
