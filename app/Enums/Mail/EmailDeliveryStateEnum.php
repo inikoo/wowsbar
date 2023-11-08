@@ -13,21 +13,26 @@ enum EmailDeliveryStateEnum: string
 {
     use EnumHelperTrait;
 
-    case READY     = 'ready';
+    case READY       = 'ready';
+    case ERROR       = 'error';
+    case SENT        = 'sent';
+    case HARD_BOUNCE = 'hard_bounce';
+    case SOFT_BOUNCE = 'soft_bounce';
+    case OPENED      = 'opened';
 
-    case ERROR      = 'error';
-    case SENT       = 'sent';
-
+    case CLICKED      = 'clicked';
+    case SPAM         = 'spam';
+    case UNSUBSCRIBED = 'unsubscribed';
 
 
     public static function labels(): array
     {
         return [
-            'ready'      => __('Ready to send'),
-            'error'      => __('Error, count not send'),
-            'sent'       => __('Sent'),
-            'cancelled'  => __('Cancelled'),
-            'stopped'    => __('Stopped'),
+            'ready'     => __('Ready to send'),
+            'error'     => __('Error, count not send'),
+            'sent'      => __('Sent'),
+            'cancelled' => __('Cancelled'),
+            'stopped'   => __('Stopped'),
         ];
     }
 
@@ -42,7 +47,7 @@ enum EmailDeliveryStateEnum: string
 
 
             ],
-            'ready' => [
+            'ready'      => [
 
                 'tooltip' => __('Ready'),
                 'icon'    => 'fal fa-spell-check',
@@ -50,7 +55,7 @@ enum EmailDeliveryStateEnum: string
 
 
             ],
-            'scheduled' => [
+            'scheduled'  => [
 
                 'tooltip' => __('Scheduled'),
                 'icon'    => 'fal fa-seedling',
@@ -58,14 +63,14 @@ enum EmailDeliveryStateEnum: string
 
 
             ],
-            'live'        => [
+            'live'       => [
 
                 'tooltip' => __('live'),
                 'icon'    => 'fal fa-broadcast-tower',
                 'class'   => 'text-green-600 animate-pulse'
 
             ],
-            'switch_off'     => [
+            'switch_off' => [
 
                 'tooltip' => __('switch off'),
                 'icon'    => 'fal fa-eye-slash'
