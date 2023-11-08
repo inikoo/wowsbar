@@ -1,7 +1,6 @@
-import Piklor from './ColorPicker';
-import MergeTag from './mergeTags';
-import mergeTags from './mergeTags';
-import axios from 'axios'
+import { noop } from 'lodash';
+import type { Plugin, CustomRTE } from 'grapesjs';
+import type CKE from 'ckeditor4';
 
 function getMergeTagData() {
     return axios.get(route('org.models.mailshot.custom.text'))
@@ -12,405 +11,243 @@ function getMergeTagData() {
         });
 }
 
-export default async (editor, opts = {}) => {
-    const mergeTagsOption = await getMergeTagData()
-    const options = {
-        ...{
-            // default options
-            base: {
-                bold: true,
-                italic: true,
-                underline: true,
-                strikethrough: true,
-                link: true,
-            },
-            //fonts: {
-            //  fontName: ['font1',...,'fontn'],
-            //  fontSize: true,
-            //  //An array of strings representing colors
-            //  fontColor: [],
-            //  //An array of strings representing colors
-            //  hilite: [],
-            //}
-            fonts: {
-                fontColor: true,
-                hilite: true,
-            },
-            format: {
-                heading1: true,
-                heading2: true,
-                heading3: true,
-                //heading4: false,
-                //heading5: false,
-                //heading6: false,
-                paragraph: true,
-                //quote: false,
-                clearFormatting: true,
-            },
-            subscriptSuperscript: false,
-            indentOutdent: false,
-            list: false,
-            align: true,
-            //actions: {
-            //  copy: true,
-            //  cut: true,
-            //  paste: true,
-            //  delete: true,
-            //},
-            actions: true,
-            undoredo: true,
-            extra: true,
-            icons: {},
-            darkColorPicker: true,
-            mergeTags: true
-        },
-        ...opts
-    };
 
-    const { icons } = options;
-    const formatBlock = 'formatBlock';
-    const rte = editor.RichTextEditor;
-
-    if (options.maxWidth) rte.getToolbarEl().firstChild.style.maxWidth = options.maxWidth;
-
-    const fontNames = options.fonts.fontName ?
-        (Array.isArray(options.fonts.fontName) ? options.fonts.fontName : false) : false;
-
-    options.fonts.fontName = fontNames;
-    let fontOptionsEl = '';
-    fontNames && fontNames.forEach(font => {
-        fontOptionsEl += '<option>' + font.toString() + '</option>'
-    });
-
-    const fontNamesEl = `<select style="height:1.8rem;color:inherit;" class="gjs-field gjs-field-select">
-      ${fontOptionsEl}
-    </select>`;
-
-    //remove defaults if not required
-    if (!options.base || typeof options.base === 'object') {
-        !options.base.bold && rte.remove('bold');
-        !options.base.italic && rte.remove('italic');
-        !options.base.underline && rte.remove('underline');
-        !options.base.strikethrough && rte.remove('strikethrough');
-        !options.base.link && rte.remove('link');
-    }
-    options.fonts && options.fonts.fontName && rte.add('fontName', {
-        icon: fontNamesEl,
-        // Bind the 'result' on 'change' listener
-        event: 'change',
-        attributes: {
-            style: "padding: 0 4px 2px;",
-            title: 'Font Name'
-        },
-        result: (rte, action) => rte.exec('fontName', action.btn.firstChild.value),
-        // Callback on any input change (mousedown, keydown, etc..)
-        update: (rte, action) => {
-            const value = rte.doc.queryCommandValue(action.name);
-            if (value != 'false') { // value is a string
-                action.btn.firstChild.value = value;
-            }
-        }
-    });
-    options.fonts && options.fonts.fontSize && rte.add('fontSize', {
-        icon: `<select style="height:1.8rem;color:inherit;" class="gjs-field gjs-field-select">
-          <option value="1">xx-small</option>
-          <option value="2">x-small</option>
-          <option value="3">small</option>
-          <option value="4">medium</option>
-          <option value="5">large</option>
-          <option value="6">x-large</option>
-          <option value="7">xx-large</option>
-        </select>`,
-        // Bind the 'result' on 'change' listener
-        event: 'change',
-        attributes: {
-            style: "padding: 0 4px 2px;",
-            title: 'Font Size'
-        },
-        result: (rte, action) => rte.exec('fontSize', action.btn.firstChild.value),
-        // Callback on any input change (mousedown, keydown, etc..)
-        update: (rte, action) => {
-            const value = rte.doc.queryCommandValue(action.name);
-            if (value != 'false') { // value is a string
-                action.btn.firstChild.value = value;
-            }
-        }
-    });
-    let pk1 = null;
-    options.fonts && options.fonts.fontColor && rte.add('fontColor', {
-        icon: `${icons.fontColor || '<b style="pointer-events:none;border-bottom:2px solid">A</b>'}
-      <div id="foreColor-picker"
-          class="${options.darkColorPicker ? 'rte-color-picker dark' : 'rte-color-picker light'}">
-      </div>`,
-        attributes: {
-            id: 'rte-font-color',
-            title: 'Font Color'
-        },
-        result: rte => {
-            if (!pk1) pk1 = new Piklor("#foreColor-picker", options.fonts.fontColor ?
-                (Array.isArray(options.fonts.fontColor) ? options.fonts.fontColor : null) : null, {
-                open: "span#rte-font-color.gjs-rte-action",
-                closeOnBlur: true
-            });
-            pk1.colorChosen(col => rte.exec('foreColor', col));
-        },
-    });
-    let pk2 = null;
-    options.fonts && options.fonts.hilite && rte.add('hiliteColor', {
-        icon: `${icons.hiliteColor || '<b style="pointer-events:none;" class="rte-hilite-btn">A</b>'}
-      <div id="hilite-picker"
-        class="${options.darkColorPicker ? 'rte-color-picker dark' : 'rte-color-picker light'}">
-      </div>`,
-        attributes: {
-            id: 'rte-font-hilite',
-            title: 'Font Highlight'
-        },
-        result: rte => {
-            if (!pk2) pk2 = new Piklor("#hilite-picker", options.fonts.hilite ?
-                (Array.isArray(options.fonts.hilite) ? options.fonts.hilite : null) : null, {
-                open: "span#rte-font-hilite.gjs-rte-action",
-                closeOnBlur: true
-            });
-            pk2.colorChosen(col => rte.exec('hiliteColor', col));
-        },
-    });
-   /*  let pk3 = null;
-    options.mergeTags && rte.add('mergeTags', {
-        icon: `${icons.mergeTags || '<b style="pointer-events:none;">Merge Tags</b>'}
-        <div id="merge-tags"
-          class="${options.darkColorPicker ? 'rte-color-picker dark' : 'rte-color-picker light'}">
-        </div>`,
-        attributes: {
-            id: 'rte-merge-tag',
-            title: 'merge Tgas'
-        },
-        result: rte => {
-            if (!pk3){
-                pk3 = new MergeTag("#merge-tags", options.mergeTags ?
-                (Array.isArray(options.mergeTags) ? options.mergeTags : null) : null, {
-                open: "span#rte-merge-tag.gjs-rte-action",
-                closeOnBlur: true
-            })}
-            pk3.colorChosen(col => rte.exec('mergeTags', `<div id=${col}>`));
-        },
-    }); */
-  /*   options.format && options.format.heading1 && rte.add('heading1', {
-        icon: icons.heading1 || '<div>H1</div>',
-        attributes: {
-            title: 'Heading 1'
-        },
-        result: rte => rte.exec(formatBlock, '<h1>')
-    });
-    options.format && options.format.heading2 && rte.add('heading2', {
-        icon: icons.heading2 || '<div>H2</div>',
-        attributes: {
-            title: 'Heading 2'
-        },
-        result: rte => rte.exec(formatBlock, '<h2>')
-    });
-    options.format && options.format.heading3 && rte.add('heading3', {
-        icon: icons.heading3 || '<div>H3</div>',
-        attributes: {
-            title: 'Heading 3'
-        },
-        result: rte => rte.exec(formatBlock, '<h3>')
-    }); */
-  /*   options.format && options.format.heading4 && rte.add('heading4', {
-        icon: icons.heading4 || '<div>H4</div>',
-        attributes: {
-            title: 'Heading 4'
-        },
-        result: rte => rte.exec(formatBlock, '<h4>')
-    }); */
- /*    options.format && options.format.heading5 && rte.add('heading5', {
-        icon: icons.heading5 || '<div>H5</div>',
-        attributes: {
-            title: 'Heading 5'
-        },
-        result: rte => rte.exec(formatBlock, '<h5>')
-    });
-    options.format && options.format.heading6 && rte.add('heading6', {
-        icon: icons.heading6 || '<div>H6</div>',
-        attributes: {
-            title: 'Heading 6'
-        },
-        result: rte => rte.exec(formatBlock, '<h6>')
-    }); */
-    options.format && options.format.paragraph && rte.add('paragraph', {
-        icon: icons.paragraph || '&#182;',
-        attributes: {
-            title: 'Paragraph'
-        },
-        result: rte => rte.exec(formatBlock, '<mj-text>')
-    });
-    options.format && options.format.quote && rte.add('quote', {
-        icon: icons.quote || '<i class="fa fa-quote-left"></i>',
-        attributes: {
-            title: 'Quote'
-        },
-        result: rte => rte.exec(formatBlock, '<blockquote>')
-    });
-    options.format && options.format.clearFormatting && rte.add('clearFormatting', {
-        icon: icons.clear || '<i class="fa fa-eraser"></i>',
-        attributes: {
-            title: 'Clear Formatting'
-        },
-        result: rte => rte.exec('removeFormat')
-    });
-    options.indentOutdent && rte.add('indent', {
-        icon: icons.indent || '<i class="fa fa-indent"></i>',
-        attributes: {
-            title: 'Indent'
-        },
-        result: rte => rte.exec('indent')
-    });
-    options.indentOutdent && rte.add('outdent', {
-        icon: icons.outdent || '<i class="fa fa-outdent"></i>',
-        attributes: {
-            title: 'Outdent'
-        },
-        result: rte => rte.exec('outdent')
-    });
-    options.subscriptSuperscript && rte.add('subscript', {
-        icon: icons.subscript || '<div>X<sub>2</sub></div>',
-        attributes: {
-            title: 'Subscript'
-        },
-        result: rte => rte.exec('subscript')
-    });
-    options.subscriptSuperscript && rte.add('superscript', {
-        icon: icons.superscript || '<div>X<sup>2</sup></div>',
-        attributes: {
-            title: 'Superscript'
-        },
-        result: rte => rte.exec('superscript')
-    });
-    options.list && rte.add('olist', {
-        icon: icons.olist || '<i class="fa fa-list-ol"></i>',
-        attributes: {
-            title: 'Ordered List'
-        },
-        result: rte => rte.exec('insertOrderedList')
-    });
-    options.list && rte.add('ulist', {
-        icon: icons.ulist || '<i class="fa fa-list-ul"></i>',
-        attributes: {
-            title: 'Unordered List'
-        },
-        result: rte => rte.exec('insertUnorderedList')
-    });
-    options.align && rte.add('justifyLeft', {
-        icon: icons.justifyLeft || '<i class="fa fa-align-left"></i>',
-        attributes: {
-            title: 'Align Left'
-        },
-        result: rte => rte.exec('justifyLeft')
-    });
-    options.align && rte.add('justifyCenter', {
-        icon: icons.justifyRight || '<i class="fa fa-align-center"></i>',
-        attributes: {
-            title: 'Align Center'
-        },
-        result: rte => rte.exec('justifyCenter')
-    });
-    options.align && rte.add('justifyFull', {
-        icon: icons.justifyFull || '<i class="fa fa-align-justify"></i>',
-        attributes: {
-            title: 'Align Justify'
-        },
-        result: rte => rte.exec('justifyFull')
-    });
-    options.align && rte.add('justifyRight', {
-        icon: icons.justifyRight || '<i class="fa fa-align-right"></i>',
-        attributes: {
-            title: 'Align Right'
-        },
-        result: rte => rte.exec('justifyRight')
-    });
-    options.actions && options.actions.copy && rte.add('copy', {
-        icon: icons.copy || '<i class="fa fa-files-o"></i>',
-        attributes: {
-            title: 'Copy'
-        },
-        result: rte => rte.exec('copy')
-    });
-    options.actions && options.actions.cut && rte.add('cut', {
-        icon: icons.cut || '<i class="fa fa-scissors"></i>',
-        attributes: {
-            title: 'Cut'
-        },
-        result: rte => rte.exec('cut')
-    });
-    options.actions && options.actions.paste && rte.add('paste', {
-        icon: icons.paste || '<i class="fa fa-clipboard"></i>',
-        attributes: {
-            title: 'Paste'
-        },
-        result: rte => rte.exec('paste')
-    });
-    options.actions && options.actions.delete && rte.add('delete', {
-        icon: icons.delete || '<i class="fa fa-trash-o"></i>',
-        attributes: {
-            title: 'Delete'
-        },
-        result: rte => rte.exec('delete')
-    });
-    options.extra && rte.add('code', {
-        icon: icons.code || '<i class="fa fa-code"></i>',
-        attributes: {
-            title: 'Code'
-        },
-        result: rte => rte.exec(formatBlock, '<pre>')
-    });
-    options.extra && rte.add('line', {
-        icon: icons.line || '<b>&#8213;</b>',
-        attributes: {
-            title: 'Horizontal Line'
-        },
-        result: rte => rte.exec('insertHorizontalRule')
-    });
-    options.undoredo && rte.add('undo', {
-        icon: icons.undo || '<i class="fa fa-reply"></i>',
-        attributes: {
-            title: 'Undo'
-        },
-        result: rte => rte.exec('undo')
-    });
-    options.undoredo && rte.add('redo', {
-        icon: icons.redo || '<i class="fa fa-share"></i>',
-        attributes: {
-            title: 'Redo'
-        },
-        result: rte => rte.exec(formatBlock, '<p >')
-    });
-
-    rte.add('Merge Tag', {
-        icon: `<select style='width:150px;' class="gjs-field">
-        <option value="" disabled  hidden>Select Merge Tag</option>
-        ${mergeTagsOption.map((item) => {
-            return `<option value="${item.value}" data-id="4">${item.label}</option>`
-        })}
-    </select>`,
-        // Bind the 'result' on 'change' listener
-        event: 'change',
-
-        result: (rte, action) => rte.insertHTML(`<span><mj-text id="${action.btn.firstChild.value}" data-gjs-editable="false" style='color: blue;'>[${action.btn.firstChild.value}]</mj-text></span>`),
-        // Callback on any input change (mousedown, keydown, etc..)
-        update: (rte, action) => {
-            const value = rte.doc.queryCommandValue(action.name);
-            if (value != 'false') { // value is a string
-                const select = action.btn.firstChild;
-                // Find the option with the corresponding value and set it as selected
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === value) {
-                        select.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-        }
-    });
-    
-    
-   
+export type PluginOptions = {
+  options?: CKE.config;
+  ckeditor?: CKE.CKEditorStatic | string;
+  position?: 'left' | 'center' | 'right';
+  customRte?: Partial<CustomRTE>;
+  onToolbar?: (toolbar: HTMLElement) => void;
+  RTE?: noop;
 };
+
+const isString = (value: any): value is string => typeof value === 'string';
+
+const loadFromCDN = (url: string) => {
+  const scr = document.createElement('script');
+  scr.src = url;
+  document.head.appendChild(scr);
+  return scr;
+}
+
+const forEach = <T extends HTMLElement = HTMLElement>(items: Iterable<T>, clb: (item: T) => void) => {
+  [].forEach.call(items, clb);
+}
+
+const stopPropagation = (ev: Event) => ev.stopPropagation();
+
+const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
+  const opts: Required<PluginOptions> = {
+    options: {},
+    customRte: {},
+    position: 'left',
+    ckeditor: 'https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js',
+    onToolbar: () => {},
+    ...options,
+  };
+
+  const mergeTagsOption = await getMergeTagData()
+  let ck: CKE.CKEditorStatic | undefined;
+  const { ckeditor } = opts;
+  const hasWindow = typeof window !== 'undefined';
+  let dynamicLoad = false;
+
+  // Check and load CKEDITOR constructor
+  if (ckeditor) {
+    if (isString(ckeditor)) {
+      if (hasWindow) {
+        dynamicLoad = true;
+        const scriptEl = loadFromCDN(ckeditor);
+        scriptEl.onload = () => {
+          ck = window.CKEDITOR;
+        }
+      }
+    } else if (ckeditor.inline!) {
+      ck = ckeditor;
+    }
+  } else if (hasWindow) {
+    ck = window.CKEDITOR;
+  }
+
+  const updateEditorToolbars = () => setTimeout(() => editor.refresh(), 0);
+  const logCkError = () => {
+    editor.log('CKEDITOR instance not found', { level: 'error' })
+  };
+
+  if (!ck && !dynamicLoad) {
+    return logCkError();
+  }
+
+  const focus = (el: HTMLElement, rte?: CKE.editor) => {
+    if (rte?.focusManager?.hasFocus) return;
+    el.contentEditable = 'true';
+    rte?.focus();
+    updateEditorToolbars();
+  };
+
+
+  editor.setCustomRte({
+    getContent(el, rte: CKE.editor) {
+      return rte.getData();
+    },
+
+    enable(el, rte?: CKE.editor) {
+      // If already exists I'll just focus on it
+      if(rte && rte.status != 'destroyed') {
+        focus(el, rte);
+        return rte;
+      }
+
+      if (!ck) {
+        logCkError();
+        return;
+      }
+
+      // Seems like 'sharedspace' plugin doesn't work exactly as expected
+      // so will help hiding other toolbars already created
+      const rteToolbar = editor.RichTextEditor.getToolbarEl();
+      forEach(rteToolbar.children as Iterable<HTMLElement>, (child) => {
+        child.style.display = 'none';
+      });
+
+      // Check for the mandatory options
+      const ckOptions = { ...opts.options };
+      const plgName = 'sharedspace';
+
+      if (ckOptions.extraPlugins) {
+        if (typeof ckOptions.extraPlugins === 'string') {
+          ckOptions.extraPlugins += `,${plgName}`;
+        } else if (Array.isArray(ckOptions.extraPlugins)) {
+          (ckOptions.extraPlugins as string[]).push(plgName);
+        }
+      } else {
+        ckOptions.extraPlugins = plgName;
+      }
+
+      if(!ckOptions.sharedSpaces) {
+        ckOptions.sharedSpaces = { top: rteToolbar };
+      }
+
+      // Init CKEDITOR
+      rte = ck!.inline(el, ckOptions);
+
+      console.log(rte)
+
+      // Make click event propogate
+      rte.on('contentDom', () => {
+        const editable = rte!.editable();
+        editable.attachListener(editable, 'click', () => el.click());
+      });
+
+      // The toolbar is not immediatly loaded so will be wrong positioned.
+      // With this trick we trigger an event which updates the toolbar position
+      rte.on('instanceReady', () => {
+        const toolbar = rteToolbar.querySelector<HTMLElement>(`#cke_${rte!.name}`);
+        if (toolbar) {
+          toolbar.style.display = 'block';
+          opts.onToolbar(toolbar);
+        }
+        // Update toolbar position
+        editor.refresh();
+        // Update the position again as the toolbar dimension might have a new changed
+        updateEditorToolbars();
+      });
+
+      // Prevent blur when some of CKEditor's element is clicked
+      rte.on('dialogShow', () => {
+        const els = document.querySelectorAll<HTMLElement>('.cke_dialog_background_cover, .cke_dialog_container');
+        forEach(els, (child) => {
+          child.removeEventListener('mousedown', stopPropagation);
+          child.addEventListener('mousedown', stopPropagation);
+        });
+      });
+
+      // On ENTER CKEditor doesn't trigger `input` event
+      rte.on('key', (ev: any) => {
+        ev.data.keyCode === 13 && updateEditorToolbars();
+      });
+
+      rte.ui.addButton('customTag', {
+        label: 'Custom Tag',
+        command: 'customTag',
+        toolbar: 'insert',
+        className: 'custom-tag-button',
+        icon : false
+      });
+
+      CKEDITOR.dialog.add('customTagDialog', function (editor) {
+        return {
+            title: 'Custom Tag Options',
+            minWidth: 200,
+            minHeight: 100,
+            buttons: [],
+            contents: [{
+                id: 'tab1',
+                label: 'Tab 1',
+                title: 'Tab 1',
+                expand: true,
+                padding: 0,
+                elements: [{
+                    type: 'html',
+                    html: '<ul id="customTagList"></ul>',
+                    onLoad: function () {
+                        var listContainer = document.getElementById('customTagList');
+                        mergeTagsOption.forEach(function (item) {
+                            var listItem = document.createElement('li');
+                            var button = document.createElement('button');
+                            button.textContent = item.label;
+                            button.addEventListener('click', function () {
+                                editor.insertHtml(`<p id="${item.value}">[${item.label}]</p>`);
+                                editor.getDialog().hide();
+                            });
+                            listItem.appendChild(button);
+                            listContainer.appendChild(listItem);
+                        });
+                    }
+                }]
+            }]
+        };
+    });
+    
+
+      rte.addCommand('customTag', {
+        exec: function (editor) {
+          editor.openDialog('customTagDialog');
+        }
+      });
+    
+    rte.execCommand('toolbarCollapse');
+    rte.execCommand('toolbarExpand');
+
+      focus(el, rte);
+
+      return rte;
+    },
+
+    disable(el, rte?: CKE.editor) {
+      el.contentEditable = 'false';
+      rte?.focusManager?.blur(true);
+    },
+
+    ...opts.customRte,
+  });
+
+  // Update RTE toolbar position
+  editor.on('rteToolbarPosUpdate', (pos: any) => {
+    const { elRect } = pos;
+
+    switch (opts.position) {
+      case 'center':
+        pos.left = (elRect.width / 2) - (pos.targetWidth / 2);
+        break;
+      case 'right':
+        pos.left = ''
+        pos.right = 0;
+        break;
+    }
+  });
+};
+
+export default plugin;
+
+
