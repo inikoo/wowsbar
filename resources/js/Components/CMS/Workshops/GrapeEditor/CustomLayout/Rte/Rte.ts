@@ -168,7 +168,7 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
       });
 
       rte.ui.addButton('customTag', {
-        label: 'Custom Tag',
+        label: 'Merge Tag',
         command: 'customTag',
         toolbar: 'insert',
         className: 'custom-tag-button',
@@ -176,6 +176,8 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
       });
 
       CKEDITOR.dialog.add('customTagDialog', function (editor) {
+        var dialog = null; // Variabel untuk menyimpan referensi dialog
+    
         return {
             title: 'Custom Tag Options',
             minWidth: 200,
@@ -198,16 +200,39 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
                             button.textContent = item.label;
                             button.addEventListener('click', function () {
                                 editor.insertHtml(`<p id="${item.value}">[${item.label}]</p>`);
-                                editor.getDialog().hide();
+                                if (dialog) {
+                                    dialog.hide(); // Menutup dialog saat item diklik
+                                }
                             });
+    
+                            // CSS styles
+                            listItem.style.textAlign = 'center'; // Membuat teks berada di tengah
+                            listItem.style.marginBottom = '10px'; // Membuat jarak antar item
+                            button.style.backgroundColor = 'transparent'; // Menghapus latar belakang tombol
+                            button.style.border = 'none'; // Menghapus border tombol
+                            button.style.cursor = 'pointer'; // Mengubah kursor saat di atas tombol
+                            button.style.transition = 'color 0.3s ease'; // Efek transisi
+    
+                            // Efek hover
+                            button.addEventListener('mouseover', function () {
+                                button.style.color = 'blue'; // Warna biru saat hover
+                            });
+                            button.addEventListener('mouseout', function () {
+                                button.style.color = 'black'; // Kembali ke warna hitam saat tidak hover
+                            });
+    
                             listItem.appendChild(button);
                             listContainer.appendChild(listItem);
                         });
                     }
                 }]
-            }]
+            }],
+            onShow: function () {
+                dialog = this; // Menyimpan referensi dialog saat dialog ditampilkan
+            }
         };
     });
+    
     
 
       rte.addCommand('customTag', {
