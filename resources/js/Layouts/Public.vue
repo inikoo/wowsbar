@@ -30,7 +30,7 @@ onMounted(() => {
     const loginButton = document.querySelectorAll(
         '*[data-wowsbar-element="login"]'
     );
-    console.log(user)
+    // console.log(user)
     if (user) {
         loginButton.forEach((button) => {
             button.innerHTML = 'Dashboard'
