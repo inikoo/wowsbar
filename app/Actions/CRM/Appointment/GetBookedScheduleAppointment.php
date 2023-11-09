@@ -11,6 +11,7 @@ use App\Models\CRM\Appointment;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -39,10 +40,12 @@ class GetBookedScheduleAppointment
 
             $appointment = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
             if(count($appointment) > 0) {
-                $bookedSchedules[$date] = $appointment;
-            } else {
-                $availableSchedules[$date] = $availableTimes;
+                $bookedSchedules[$date] = $appointment->map(function ($item) {
+                    return Carbon::parse($item)->format('H:i');
+                })->toArray();
             }
+
+            $availableSchedules[$date] = array_diff($availableTimes, Arr::get($bookedSchedules, $date, []));
         }
 
         return [
