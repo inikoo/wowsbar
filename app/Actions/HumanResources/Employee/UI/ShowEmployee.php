@@ -96,7 +96,7 @@ class ShowEmployee extends InertiaAction
                     ],
                     'iconRight'   => $employee->state->stateIcon()[$employee->state->value],
                     'meta'        => $meta,
-                    'iconActions' => [
+                    'actions' => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

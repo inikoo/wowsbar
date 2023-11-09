@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faRocketLaunch, faClock, faVideo } from "@far/";
-import { isNull } from "lodash";
-import { useFormatTime } from "@/Composables/useFormatTime";
-import { DatePicker } from 'v-calendar';
-import 'v-calendar/style.css';
+import { ref, onMounted, Ref, watch } from 'vue'
+import { DatePicker } from 'v-calendar'
+import 'v-calendar/style.css'
 import axios from 'axios'
-import Button from '@/Components/Elements/Buttons/Button.vue';
-import { notify } from '@kyvg/vue3-notification';
-
-library.add(faRocketLaunch, faClock, faVideo);
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import { notify } from '@kyvg/vue3-notification'
 
 const props = defineProps<{
     data: {
@@ -19,14 +13,11 @@ const props = defineProps<{
     }
 }>()
 
-const unavailableDates: any = ref([])
-const availableSchedules = ref({})
-const selectedDated: any = ref()
+const availableSchedulesOnMonth: Ref<{[key: string]: string[]}> = ref({})  // {2023-6: 2023-11-25 ['09:00, '10:00', ...]}
+const selectedDate: any = ref()  // on select date in DatePicker
+const isLoading = ref(false)  // Loading on fetch
 
-// console.log("ini", props.data);
-// console.log("porpsd", props);
-
-
+// Attribute for DatePicker
 const attrs = ref([
     {
         key: "today",
@@ -38,108 +29,29 @@ const attrs = ref([
     }
 ])
 
-const hours = [
-    {
-        value: 7,
-        label: '7 am'
-    },
-    {
-        value: 8,
-        label: '8 am'
-    },
-    {
-        value: 9,
-        label: '9 am'
-    },
-    {
-        value: 10,
-        label: '10 am'
-    },
-    {
-        value: 11,
-        label: '11 am'
-    },
-    {
-        value: 12,
-        label: '12 pm'
-    },
-    {
-        value: 13,
-        label: '1 pm'
-    },
-    {
-        value: 14,
-        label: '2 pm'
-    },
-    {
-        value: 15,
-        label: '3 pm'
-    },
-    {
-        value: 16,
-        label: '4 pm'
-    },
-    {
-        value: 17,
-        label: '5 pm'
-    }
-]
-
-
-const onSelectHour = (hour: number) => {
-    selectedDated.value = new Date(selectedDated.value)
-    selectedDated.value.setHours(hour)
+// On click button available hour
+const onSelectHour = (time: string) => {
+    const timeSplit = time.split(':')
+    selectedDate.value = new Date(selectedDate.value)
+    selectedDate.value.setHours(timeSplit[0])
+    selectedDate.value.setMinutes(timeSplit[1])
 }
 
-onMounted(async () => {
-    try {
-        const response = await axios.get(
-            route('public.appointment.schedule'),
-            {
-                params: {
-                    year: '2023',
-                    month: '11'
-                }
-            }
-        )
-        console.log('xxx', response.data)
-        // unavailableDates.value = Object.keys(response.data.bookedSchedules).map((item) => {
-        //     return new Date(item)
-        // })
 
-        unavailableDates.value = response.data.bookedSchedules
-        availableSchedules.value = response.data.availableSchedules
-        // console.log('response', unavailableDates.value)
-    }
-    catch (error: any) {
-        console.log('error', error)
-    }
-
-})
-
-const isHourAvailable = (hour: number) => {
-    if (selectedDated.value.length == false) return true  // If not selected date yet
-
-
-    const formatUnavailable = unavailableDates.value[getDateOnly(selectedDated.value)] ? unavailableDates.value[getDateOnly(selectedDated.value)].map(item => new Date(item)) : []
-
-    return !formatUnavailable.map(item => item.getHours() == hour)[0]
-
-}
-
-const getDateOnly = (dateString: string) => {
-    const date = new Date(dateString);
+// To convert date to yyyy-mm-dd
+const getDateOnly = (dateString: string | Date): string => {
+    const date = new Date(dateString)
 
     // Extract the year, month, and day components
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // Month is zero-based, so add 1
-    const day = date.getDate();
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1 // Month is zero-based, so add 1
+    const day = date.getDate()
 
-    // Create the desired date string 'YYYY-MM-DD'
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    return formattedDate
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+    return formattedDate  // 2023-11-23
 }
 
+// When submit Appointment
 const onClickMakeAppointment = async () => {
     console.log('Appointment created')
     try {
@@ -157,25 +69,61 @@ const onClickMakeAppointment = async () => {
             title: "Appointment successfuly created.",
             // text: error,
             type: "success"
-        });
+        })
     }
     catch (error: any) {
         notify({
             // title: "Appointment successfuly created.",
             text: error,
             type: "error"
-        });
+        })
     }
 }
+
+// Fetch available schedule for whole month
+const fetchAvailableOnMonth = async (year: number, month: number) => {
+    if(!year || !month) return 
+    isLoading.value = true
+    try {
+        const response = await axios.get(
+            route('public.appointment.schedule'),
+            {
+                params: {
+                    year: year,
+                    month: month
+                }
+            }
+        )
+
+        availableSchedulesOnMonth.value = {
+            [`${year}-${month}`]: response.data.availableSchedules,
+            ...availableSchedulesOnMonth.value
+        }
+    }
+    catch (error: any) {
+        console.log('error', error)
+    }
+    isLoading.value = false
+}
+
+onMounted(() => {
+    const today = new Date()
+    fetchAvailableOnMonth(today.getFullYear(), today.getMonth() + 1)
+})
+
+watch(selectedDate, () => {
+    if(!availableSchedulesOnMonth.value[`${selectedDate.value?.getFullYear()}-${selectedDate.value?.getMonth() + 1}`]){
+        fetchAvailableOnMonth(selectedDate.value?.getFullYear(), selectedDate.value?.getMonth() + 1)
+    }
+})
 
 </script>
 
 
 <template>
-    <!-- <pre>{{ unavailableDates[getDateOnly(selectedDated)] }}</pre> -->
-    <!-- {{ selectedDated }} -->
-    <div style="margin: 20px;">
-        <div class="container border-2" style="max-width: 800px;">
+
+    <div style="margin: 20px">
+        <div class="container border-2" style="max-width: 800px">
             <div class="row divide-x divide-gray-300">
                 <!-- Section: Left (Blog) -->
                 <div class="col-md-6 p-0">
@@ -193,37 +141,50 @@ const onClickMakeAppointment = async () => {
                             <span v-html="data.title"></span>
                         </div>
                         <div>
-                            <DatePicker v-model="selectedDated" expanded :attributes="attrs" />
+                            <DatePicker
+                                v-model="selectedDate"
+                                expanded
+                                :attributes="attrs"  
+                            />
                         </div>
 
+                        <!-- Section: Button Hour, Button Submit -->
                         <div class="px-2.5 my-4 space-y-4">
-                            <div v-if="selectedDated" class="grid grid-cols-3 justify-center gap-3">
-                                <div v-if="availableSchedules[getDateOnly(selectedDated)]" v-for="hour in availableSchedules[getDateOnly(selectedDated)]" class="w-full">
-                                    <Button
-                                        :key="selectedDated + hour"
-                                        @click="onSelectHour(hour.split(':')[0])" full
-                                        :style="isHourAvailable(hour.split(':')[0])
-                                            ? new Date(selectedDated).getHours() == hour.split(':')[0]
-                                                ? 'rainbow'  // If hour selected
-                                                : 'secondary'  // If available but not selected
-                                            : 'disabled'  // If unavailable
-                                            "
-                                    >
-                                        {{ hour }}
-                                    </Button>
-                                </div>
-                                <div v-else class="col-span-3">No schedules available</div>
-                                <div v-if="hours.some(hour => hour.value == new Date(selectedDated).getHours())" class="col-span-3">
-                                    <Button @click="onClickMakeAppointment()" label="Make appointment" full />
-                                </div>
+                            <div v-if="selectedDate" class="grid grid-cols-3 justify-center gap-x-2 gap-y-3">
+                                <template v-if="isLoading">
+                                    <div v-for="_ in 6" class="w-full h-8 rounded skeleton" />
+                                </template>
+
+                                <template v-else>
+                                    <template v-if="availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`]?.[getDateOnly(selectedDate)]">
+                                        <div v-for="time in availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`][getDateOnly(selectedDate)]" class="w-full">
+                                            <Button full
+                                                :key="selectedDate + time"
+                                                @click="onSelectHour(time)"
+                                                :style="
+                                                    time.split(':')[0] == selectedDate.getHours() &&
+                                                    time.split(':')[1] == selectedDate.getMinutes()
+                                                        ? 'rainbow'
+                                                        : 'tertiary'
+                                                "
+                                            >
+                                                {{ time }}
+                                            </Button>
+                                        </div>
+                                        <div class="col-span-3">
+                                            <Button @click="onClickMakeAppointment()" label="Make appointment" full />
+                                        </div>
+                                    </template>
+                                    <div v-else class="col-span-3">No schedules available</div>
+                                </template>
                             </div>
 
                             <!-- If not selected date yet -->
                             <div v-else class="text-gray-500 italic">
                                 ---- Select date to make an appointment ----
                             </div>
-                            <!-- {{ selectedDated }} -->
                         </div>
+                        <!-- {{ selectedDate }} -->
                     </div>
                 </div>
             </div>

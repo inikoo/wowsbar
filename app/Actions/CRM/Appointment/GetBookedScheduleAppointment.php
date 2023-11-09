@@ -7,10 +7,13 @@
 
 namespace App\Actions\CRM\Appointment;
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\CRM\Appointment;
+use App\Models\HumanResources\Employee;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -28,25 +31,34 @@ class GetBookedScheduleAppointment
      */
     public function handle(array $modelData): array
     {
-        $dt                 = Carbon::createFromDate($modelData['year'], $modelData['month']);
-        $bookedSchedules    = [];
+        $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
+        $bookedSchedules = [];
         $availableSchedules = [];
-        $availableTimes     = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+        $availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
         for ($i = 1; $i <= $dt->daysInMonth; $i++) {
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $appointment = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
-            if(count($appointment) > 0) {
-                $bookedSchedules[$date] = $appointment;
-            } else {
-                $availableSchedules[$date] = $availableTimes;
+            $employees = Employee::whereJobPosition('dev-w')->pluck('id');
+            $organisationUser = OrganisationUser::whereIn('parent_id', $employees)
+                ->where('parent_type', class_basename(Employee::class))->pluck('id');
+
+            $appointment = Appointment::whereDate('schedule_at', $date)
+                ->whereNotIn('organisation_user_id', $organisationUser)
+                ->pluck('schedule_at');
+            if($employees->count() == 0) {
+                $bookedSchedules[$date] = $availableTimes;
+            } else if(count($appointment) > 0) {
+                $bookedSchedules[$date] = $appointment->map(function ($item) {
+                    return Carbon::parse($item)->format('H:i');
+                })->toArray();
             }
+
+            $availableSchedules[$date] = array_diff($availableTimes, Arr::get($bookedSchedules, $date, []));
         }
 
         return [
-            'bookedSchedules'    => $bookedSchedules,
             'availableSchedules' => $availableSchedules
         ];
     }

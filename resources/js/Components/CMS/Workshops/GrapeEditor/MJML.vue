@@ -131,26 +131,16 @@ onMounted(() => {
                 options: {
                     language: 'en',
                     startupFocus: false,
-                    extraAllowedContent: '*(*);*{*}', 
+                    extraAllowedContent: '*(*);*{*}',
                     allowedContent: false,
-                    /* uiColor: '#2C2E35', */
-                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks`,
-                    toolbarGroups : [
-                            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-                            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-                            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-                            { name: 'forms', groups: [ 'forms' ] },
-                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ]},
-                            { name: 'links', groups: [ 'links' ] },
-                            { name: 'insert', groups: [ 'insert' ] },
-                            { name: 'styles', groups: [ 'styles' ] },
-                            { name: 'colors', groups: [ 'colors' ] },
-                            { name: 'tools', groups: [ 'tools' ] },
-                            { name: 'others', groups: [ 'others' ] },
-                            { name: 'about', groups: [ 'about' ] },
-                            { name: 'basicstyles', groups: [ 'customTag' ] },
-                        ],
-                        removeButtons : 'Cut,Copy,Paste,PasteText,PasteFromWord,Source,Save,Templates,NewPage,ExportPdf,Preview,Print,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,CreateDiv,Image,Table,Smiley,SpecialChar,PageBreak,Iframe,Styles,About,Maximize,ShowBlocks'
+                    /*   /* uiColor: '#2C2E35', */
+                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji,autocomplete,textmatch,textwatcher`,
+                    toolbar: [
+                        ['Undo', 'Redo', 'Font', 'FontSize', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'subscript', 'RemoveFormat', '-', 'JustifyBlock', 'JustifyCenter', "JustifyLeft", 'JustifyRight', '-', 'Indent', 'Outdent'],
+                        ['/','EmojiPanel', 'SpecialChar', '-', "BulletedList", 'NumberedList', '-', 'BGColor', 'TextColor', '-', 'Link', 'Unlink', '-', 'customTag']
+
+
+                    ]
                 },
                 position: 'left',
             }
@@ -170,7 +160,7 @@ onMounted(() => {
         async store(data) { return Store(data, editorInstance.value) }
     });
     editorInstance.value.on('load', () => {
-        const blockBtn =  editorInstance.value.Panels.getButton('views', 'open-blocks');
+        const blockBtn = editorInstance.value.Panels.getButton('views', 'open-blocks');
         blockBtn.set('active', 1);
     })
 });
@@ -280,14 +270,13 @@ onMounted(() => {
 
 
 .custom-tag-button {
-.cke_button_icon{
- display: none;
-}
-.cke_button_label {
-display: inline;
-}
+    .cke_button_icon {
+        display: none;
+    }
+
+    .cke_button_label {
+        display: inline;
+    }
 
 }
-
-
 </style>

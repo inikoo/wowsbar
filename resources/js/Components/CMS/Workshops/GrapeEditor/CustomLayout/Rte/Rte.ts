@@ -199,7 +199,7 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
                             var button = document.createElement('button');
                             button.textContent = item.label;
                             button.addEventListener('click', function () {
-                                editor.insertHtml(`<p id="${item.value}">[${item.label}]</p>`);
+                                editor.insertHtml(`<span data-gjs-editable="false"  id="${item.value}">[${item.label}]</span>`);
                                 if (dialog) {
                                     dialog.hide(); // Menutup dialog saat item diklik
                                 }
