@@ -59,9 +59,9 @@ class ShowProspectMailshot extends InertiaAction
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $iconActions[] = [
-                'tooltip' => __('Workshop'),
-                'icon'    => 'fal fa-drafting-compass',
-                'style' => 'secondary',
+                'tooltip'  => __('Workshop'),
+                'icon'     => 'fal fa-drafting-compass',
+                'style'    => 'secondary',
                 'route'    => [
                     'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
                     'parameters' => $request->route()->originalParameters()

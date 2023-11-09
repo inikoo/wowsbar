@@ -59,7 +59,7 @@ class ShowJobPosition extends InertiaAction
                 ],
                 'pageHead'    => [
                     'title'       => $jobPosition->name,
-                    'actions' => [
+                    'actions'     => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

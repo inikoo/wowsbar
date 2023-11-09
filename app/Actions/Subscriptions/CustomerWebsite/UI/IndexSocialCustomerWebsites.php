@@ -48,7 +48,7 @@ class IndexSocialCustomerWebsites extends InertiaAction
     {
         $divisionId = Cache::get('social');
 
-        if(! $divisionId) {
+        if(!$divisionId) {
             $divisionId = Division::firstWhere('slug', 'social')->id;
             Cache::put('social', $divisionId);
         }

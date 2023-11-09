@@ -48,7 +48,7 @@ class IndexCaasCustomerWebsites extends InertiaAction
     {
         $divisionId = Cache::get('banners');
 
-        if(! $divisionId) {
+        if(!$divisionId) {
             $divisionId = Division::firstWhere('slug', 'banners')->id;
             Cache::put('banners', $divisionId);
         }

@@ -17,7 +17,7 @@ trait WithDivision
         $cacheKey   ='division_id_'.$divisionName;
         $divisionId = Cache::get($cacheKey);
 
-        if(! $divisionId) {
+        if(!$divisionId) {
             $divisionId = Division::firstWhere('slug', $divisionName)->id;
             Cache::put($cacheKey, $divisionId);
         }
