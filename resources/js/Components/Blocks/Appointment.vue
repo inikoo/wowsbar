@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, Ref, watch } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { faSpinnerThird } from "@fad/"
-import { isNull } from "lodash"
-import { useFormatTime } from "@/Composables/useFormatTime"
 import { DatePicker } from 'v-calendar'
 import 'v-calendar/style.css'
 import axios from 'axios'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from '@kyvg/vue3-notification'
-
-library.add(faSpinnerThird)
 
 const props = defineProps<{
     data: {
@@ -89,6 +82,7 @@ const onClickMakeAppointment = async () => {
 
 // Fetch available schedule for whole month
 const fetchAvailableOnMonth = async (year: number, month: number) => {
+    if(!year || !month) return 
     isLoading.value = true
     try {
         const response = await axios.get(
