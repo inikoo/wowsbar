@@ -31,16 +31,16 @@ class GetBookedScheduleAppointment
      */
     public function handle(array $modelData): array
     {
-        $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
-        $bookedSchedules = [];
+        $dt                 = Carbon::createFromDate($modelData['year'], $modelData['month']);
+        $bookedSchedules    = [];
         $availableSchedules = [];
-        $availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+        $availableTimes     = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
         for ($i = 1; $i <= $dt->daysInMonth; $i++) {
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $employees = Employee::whereHas('jobPositions', function($query) {
+            $employees = Employee::whereHas('jobPositions', function ($query) {
                 return $query->where('code', 'cus-c');
             })->pluck('id');
 
@@ -53,7 +53,7 @@ class GetBookedScheduleAppointment
 
             if($employees->count() == 0) {
                 $bookedSchedules[$date] = $availableTimes;
-            } else if(count($appointment) > 0) {
+            } elseif(count($appointment) > 0) {
                 $bookedSchedules[$date] = $appointment->map(function ($item) {
                     return Carbon::parse($item)->format('H:i');
                 })->toArray();

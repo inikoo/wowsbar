@@ -8,6 +8,7 @@
 namespace App\Actions\Mail\SesNotification;
 
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
 use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
 use App\Enums\Mail\DispatchedEmailEventTypeEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
@@ -22,72 +23,133 @@ class ProcessSesNotification
 {
     use AsAction;
 
-    public function handle(SesNotification $sesNotification): void
+    public function handle(SesNotification $sesNotification): ?array
     {
-
-        // if(Arr::get($sesNotification->data, 'notificationType')){
-        //     $sesNotification->delete();
-        // }
-
-
         $dispatchedEmail = DispatchedEmail::where('provider_message_id', $sesNotification->message_id)->first();
 
         switch (Arr::get($sesNotification->data, 'eventType')) {
-            case 'Reject':
-
-                if ($dispatchedEmail->state == DispatchedEmailStateEnum::READY) {
-                    $dispatchedEmail->update(
-                        [
-                            'state' => DispatchedEmailStateEnum::REJECT
-                        ]
-                    );
-                }
-                $sesNotification->delete();
-
-                return;
-            case 'Delivery':
-                $type = DispatchedEmailEventTypeEnum::DELIVERY;
-                $date = Arr::get($sesNotification->data, 'delivery.timestamp');
-                $data = Arr::only($sesNotification->data['delivery'], ['remoteMtaIp', 'smtpResponse']);
-                break;
-            case 'Complaint':
-                $type = DispatchedEmailEventTypeEnum::DELIVERY;
-                $date = Arr::get($sesNotification->data, 'complaint.timestamp');
-                $data = Arr::only($sesNotification->data['complaint'], ['userAgent', 'complaintSubType', 'complaintFeedbackType']);
-                break;
             case 'Bounce':
                 $type = DispatchedEmailEventTypeEnum::BOUNCE;
                 $date = Arr::get($sesNotification->data, 'bounce.timestamp');
                 $data = Arr::only($sesNotification->data['bounce'], ['bounceType', 'bounceSubType', 'reportingMTA']);
 
-                if($dispatchedEmail->mailshotRecipient->recipient_type=='Prospect') {
+                $isHardBounce = Arr::get($sesNotification->data, 'bounce.bounceType') == 'Permanent';
+
+                if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
                     UpdateProspect::run(
                         $dispatchedEmail->mailshotRecipient->recipient,
                         [
-                            'bounce_status'=>
-                                Arr::get($sesNotification->data, 'bounce.bounceType') == 'Permanent' ?
-                                    ProspectBounceStatusEnum::HARD_BOUNCE : ProspectBounceStatusEnum::SOFT_BOUNCE
+                            'bounce_status' =>
+                                $isHardBounce ? ProspectBounceStatusEnum::HARD_BOUNCE : ProspectBounceStatusEnum::SOFT_BOUNCE
                         ]
                     );
                 }
 
 
-                if (Arr::get($sesNotification->data, 'bounce.bounceType') == 'Permanent') {
-
+                if ($isHardBounce) {
                     $dispatchedEmail->email()->update(
                         [
                             'is_hard_bounced'  => true,
                             'hard_bounce_type' => Arr::get($sesNotification->data, 'bounce.bounceSubType')
                         ]
                     );
-
                 }
 
-                break;
-            default:
-                dd($sesNotification->data);
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state' => $isHardBounce ? DispatchedEmailStateEnum::HARD_BOUNCE : DispatchedEmailStateEnum::SOFT_BOUNCE,
+                        'date'  => $date,
+                    ]
+                );
 
-                return;
+                break;
+            case 'Complaint':
+                $type = DispatchedEmailEventTypeEnum::COMPLAIN;
+                $date = Arr::get($sesNotification->data, 'complaint.timestamp');
+                $data = Arr::only($sesNotification->data['complaint'], ['userAgent', 'complaintSubType', 'complaintFeedbackType']);
+
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state' => DispatchedEmailStateEnum::SPAM,
+                        'date'  => $date,
+                    ]
+                );
+                break;
+            case 'Delivery':
+                $type = DispatchedEmailEventTypeEnum::DELIVERY;
+                $date = Arr::get($sesNotification->data, 'delivery.timestamp');
+                $data = Arr::only($sesNotification->data['delivery'], ['remoteMtaIp', 'smtpResponse']);
+
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state'        => DispatchedEmailStateEnum::DELIVERED,
+                        'date'         => $date,
+                        'delivered_at' => $date,
+                        'is_delivered' => true
+                    ]
+                );
+                break;
+            case 'Reject':
+
+                if ($dispatchedEmail->state == DispatchedEmailStateEnum::READY) {
+                    UpdateDispatchedEmail::run(
+                        $dispatchedEmail,
+                        [
+                            'state' => DispatchedEmailStateEnum::REJECTED,
+                        ]
+                    );
+                }
+                $sesNotification->delete();
+
+                return null;
+
+
+            case 'Open':
+                $type = DispatchedEmailEventTypeEnum::OPEN;
+                $date = Arr::get($sesNotification->data, 'open.timestamp');
+                $data = Arr::only($sesNotification->data['open'], ['ipAddress', 'userAgent']);
+
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state'   => DispatchedEmailStateEnum::OPENED,
+                        'date'    => $date,
+                        'is_open' => true
+                    ]
+                );
+
+                break;
+            case 'Click':
+                $type = DispatchedEmailEventTypeEnum::CLICK;
+                $date = Arr::get($sesNotification->data, 'click.timestamp');
+                $data = Arr::only($sesNotification->data['click'], ['ipAddress', 'userAgent', 'link', 'linkTags']);
+
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state'      => DispatchedEmailStateEnum::CLICKED,
+                        'date'       => $date,
+                        'is_clicked' => true
+                    ]
+                );
+
+                break;
+
+            case 'DeliveryDelay':
+                $type = DispatchedEmailEventTypeEnum::DELIVERY_DELAY;
+                $date = Arr::get($sesNotification->data, 'deliveryDelay.timestamp');
+                $data = Arr::only(
+                    $sesNotification->data['deliveryDelay'],
+                    ['delayType', 'expirationTime', 'reportingMTA']
+                );
+
+                break;
+
+            default:
+                return $sesNotification->data;
         }
 
         $sesNotification->delete();
@@ -104,6 +166,8 @@ class ProcessSesNotification
 
             $dispatchedEmail->events()->create($eventData);
         }
+
+        return null;
     }
 
 
@@ -128,8 +192,10 @@ class ProcessSesNotification
         $command->line('Number ses notifications to process '.SesNotification::count());
 
         foreach (SesNotification::all() as $sesNotification) {
-            //$command->line($sesNotification->message_id);
-            $this->handle($sesNotification);
+            $pending = $this->handle($sesNotification);
+            if ($pending) {
+                print_r($pending);
+            }
         }
 
         return 0;

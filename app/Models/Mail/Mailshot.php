@@ -132,4 +132,16 @@ class Mailshot extends Model
         return $this->hasOne(MailshotStats::class);
     }
 
+    public function sender()
+    {
+        if(app()->environment('production')) {
+            $sender=$this->scope->sender_email_address;
+        } else {
+            $sender=config('mail.devel.sender_email_address');
+        }
+        return $sender;
+    }
+
+
+
 }

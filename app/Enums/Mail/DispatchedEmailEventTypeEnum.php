@@ -13,9 +13,13 @@ enum DispatchedEmailEventTypeEnum: string
 {
     use EnumHelperTrait;
 
-    case DELIVERY               = 'delivery';
-    case BOUNCE                 = 'bounce';
+    case DELIVERY = 'delivery';
+    case BOUNCE   = 'bounce';
 
+    case COMPLAIN       = 'complain';
+    case OPEN           = 'open';
+    case CLICK          = 'click';
+    case DELIVERY_DELAY = 'delivery-delay';
 
 
 }

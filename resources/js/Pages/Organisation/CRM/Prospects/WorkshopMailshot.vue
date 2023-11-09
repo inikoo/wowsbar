@@ -92,7 +92,7 @@ const onCancel = () => {
                                 <Input v-model="testEmail" />
                             </div>
                             <div class="flex justify-end">
-                                <Link method="post" :data="{ email: testEmail }" :href="route(
+                                <Link method="post" :data="{ emails: testEmail }" :href="route(
                                     props.sendTestRoute.name,
                                     props.sendTestRoute.parameters
                                 )">

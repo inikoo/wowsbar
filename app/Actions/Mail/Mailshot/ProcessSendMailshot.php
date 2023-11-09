@@ -3,11 +3,12 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
+use App\Actions\Mail\MailshotRecipient\StoreMailshotRecipient;
 use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Helpers\ArrayWIthProbabilities;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Email;
-use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
 use Exception;
 use Illuminate\Console\Command;
@@ -18,6 +19,7 @@ class ProcessSendMailshot
 {
     use AsAction;
     use WithCheckCanSendEmail;
+
 
     public function handle(Mailshot $mailshot): void
     {
@@ -31,10 +33,8 @@ class ProcessSendMailshot
         $limit   = app()->isProduction() ? null : config('mail.devel.max_mailshot_recipients');
 
         $queryBuilder->chunk(
-            1000,
+            250,
             function ($recipients) use ($mailshot, &$counter, &$channel, $limit) {
-
-
                 $chunkCount = 0;
 
                 foreach ($recipients as $recipient) {
@@ -53,31 +53,25 @@ class ProcessSendMailshot
                         if (app()->environment('production')) {
                             $emailAddress = $recipient->email;
                         } else {
-                            $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 6, 'suppressionlist' => 2, 'ooto' => 2];
+                            $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 20];
                             $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
                             $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";
                         }
 
                         $email = Email::firstOrCreate(['address' => $emailAddress]);
 
-                        $dispatchedEmail = DispatchedEmail::create(
+                        $dispatchedEmail = StoreDispatchedEmail::run($email);
+
+                        StoreMailshotRecipient::run(
+                            $mailshot,
+                            $dispatchedEmail,
+                            $recipient,
                             [
-                                'email_id' => $email->id,
-                                'date'     => now()
+                                'channel' => $channel,
                             ]
                         );
 
 
-                        $mailshot->recipients()->updateOrCreate(
-                            [
-                                'dispatched_email_id' => $dispatchedEmail->id
-                            ],
-                            [
-                                'recipient_id'   => $recipient->id,
-                                'recipient_type' => class_basename($recipient),
-                                'channel'        => $channel,
-                            ]
-                        );
                         $chunkCount++;
                         // print "$channel $chunkCount $counter $dispatchedEmail->id {$dispatchedEmail->email->address}\n";
                     }
@@ -85,14 +79,14 @@ class ProcessSendMailshot
                 }
 
 
-                if ($chunkCount) {
 
+                if ($chunkCount) {
                     // $channelLabel=Str::slug(SpellNumber::value($channel)->toLetters());
 
                     $mailshot->update(
                         [
-                            "channels->{$channel}->ready"=> now(),
-                            "channels->{$channel}->count"=> $chunkCount
+                            "channels->{$channel}->ready" => now(),
+                            "channels->{$channel}->count" => $chunkCount
 
                         ]
                     );

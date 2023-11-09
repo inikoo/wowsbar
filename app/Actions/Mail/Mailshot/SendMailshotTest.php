@@ -7,13 +7,13 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Ses\SendSesEmail;
-use App\Enums\Mail\MailshotStateEnum;
-use App\Models\Mail\DispatchedEmail;
+use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
-use App\Models\Market\Shop;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -24,64 +24,49 @@ class SendMailshotTest
     use AsCommand;
     use AsAction;
 
-    public function handle(Mailshot $mailshot, array $modelData): Mailshot
+    public function handle(Mailshot $mailshot, array $modelData): Collection
     {
         $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
-        foreach (explode(',', $modelData['email']) as $email) {
+
+        $dispatchedEmails = [];
+        foreach (Arr::get($modelData, 'emails', []) as $email) {
             $email           = Email::firstOrCreate(['address' => $email]);
-            $dispatchedEmail = DispatchedEmail::create(
-                [
-                    'email_id' => $email->id,
-                    'date'     => now()
-                ]
-            );
+            $dispatchedEmail =StoreDispatchedEmail::run($email);
 
-            $dispatchedEmail->refresh();
-
-            SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, config('mail.devel.sender_email_address'));
+            $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, $mailshot->sender());
         }
 
-        return $mailshot;
+        return collect($dispatchedEmails);
     }
 
-    public function htmlResponse(Mailshot $mailshot): RedirectResponse
+    public function jsonResponse($dispatchedEmails): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
+        return DispatchedEmailResource::collection($dispatchedEmails);
 
-        /** @var Shop $scope */
-        $scope = $mailshot->scope;
+    }
 
-        return redirect()->route(
-            'org.crm.shop.prospects.mailshots.show',
-            array_merge(
-                [
-                    $scope->slug,
-                    $mailshot->slug
-                ],
-                [
-                    '_query' => [
-                        'tab' => 'showcase'
-                    ]
-                ]
-            )
-        );
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if ($request->exists('emails')) {
+            $request->merge([
+                'emails' =>
+                    array_map('trim', explode(",", $request->get('emails')))
+            ]);
+        }
     }
 
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email']
+            'emails'   => ['required', 'array'],
+            'emails.*' => 'required|email:rfc,dns'
         ];
     }
 
-    public function asController(Mailshot $mailshot, ActionRequest $request): Mailshot
+    public function asController(Mailshot $mailshot, ActionRequest $request): Collection
     {
-        if ($mailshot->state == MailshotStateEnum::IN_PROCESS) {
-            $mailshot = SetMailshotAsReady::make()->action($mailshot, [
-                'publisher_id' => $request->user()->id,
-            ]);
-        }
         $request->validate();
 
         return $this->handle($mailshot, $request->validated());

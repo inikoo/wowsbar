@@ -28,7 +28,7 @@ class SendSesEmail
             return $dispatchedEmail;
         }
 
-        if(!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
+        if (!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
             $dispatchedEmail->update(
                 [
                     'state'               => DispatchedEmailStateEnum::SENT,
@@ -40,7 +40,6 @@ class SendSesEmail
 
             return $dispatchedEmail;
         }
-
 
 
         $message = [
@@ -67,32 +66,49 @@ class SendSesEmail
         ];
 
 
-        try {
+        $numberAttempts = 12;
+        $attempt        = 0;
 
-            $result = $this->getSesClient()->sendEmail($emailData);
+        do {
+            try {
+                $result = $this->getSesClient()->sendEmail($emailData);
+
+                $dispatchedEmail->update(
+                    [
+                        'state'               => DispatchedEmailStateEnum::SENT,
+                        'sent_at'             => now(),
+                        'date'                => now(),
+                        'provider_message_id' => Arr::get($result, 'MessageId')
+                    ]
+                );
+            } catch (AwsException $e) {
+                if ($e->getAwsErrorCode() == 'Throttling' and $attempt < $numberAttempts - 1) {
+                    $attempt++;
+                    usleep(rand(200, 300) + pow(2, $attempt));
+                    continue;
+                } else {
+                    $dispatchedEmail->update(
+                        [
+                            'state'       => DispatchedEmailStateEnum::ERROR,
+                            'date'        => now(),
+                            'data->error' =>
+                                [
+                                    'code'    => $e->getAwsErrorCode(),
+                                    'msg'     => $e->getAwsErrorMessage(),
+                                    'attempt' => $attempt
+
+                                ],
+                        ]
+                    );
+                    break;
+                }
+            }
+
+            break;
+        } while ($attempt < $numberAttempts);
 
 
 
-            $dispatchedEmail->update(
-                [
-                    'state'               => DispatchedEmailStateEnum::SENT,
-                    'sent_at'             => now(),
-                    'date'                => now(),
-                    'provider_message_id' => Arr::get($result, 'MessageId')
-                ]
-            );
-
-        } catch (AwsException $e) {
-
-
-            $dispatchedEmail->update(
-                [
-                    'state'       => DispatchedEmailStateEnum::ERROR,
-                    'date'        => now(),
-                    'data->error' => $e->getAwsErrorMessage()
-                ]
-            );
-        }
 
         return $dispatchedEmail;
     }

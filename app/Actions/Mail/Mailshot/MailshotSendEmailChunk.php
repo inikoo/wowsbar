@@ -18,6 +18,7 @@ class MailshotSendEmailChunk
     use AsAction;
 
 
+    public string $jobQueue = 'default_long';
 
     public function handle(Mailshot $mailshot, int $channel): void
     {
@@ -26,12 +27,6 @@ class MailshotSendEmailChunk
         $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
-        if(app()->environment('production')) {
-            $sender=$mailshot->scope->sender_email_address;
-        } else {
-            $sender=config('mail.devel.sender_email_address');
-
-        }
 
         $mailshot->update(
             [
@@ -47,7 +42,7 @@ class MailshotSendEmailChunk
                 subject: $mailshot->subject,
                 emailHtmlBody:$emailHtmlBody,
                 dispatchedEmail: $recipient->dispatchedEmail,
-                sender: $sender
+                sender: $mailshot->sender()
             );
 
             MailshotHydrateSentEmails::run($mailshot);

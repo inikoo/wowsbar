@@ -34,7 +34,7 @@ class StoreCustomerAppointment
     public function handle(array $modelData): Model
     {
         Login::run([
-            'email' => $modelData['email'],
+            'email'    => $modelData['email'],
             'password' => $modelData['password']
         ]);
 
@@ -64,12 +64,12 @@ class StoreCustomerAppointment
     public function rules(): array
     {
         return [
-            'customer_id' => ['sometimes'],
-            'name' => ['sometimes', 'string'],
-            'schedule_at' => ['sometimes'],
-            'description' => ['nullable', 'string', 'max:255'],
-            'type' => ['sometimes', Rule::in(AppointmentTypeEnum::values())],
-            'event' => ['sometimes', Rule::in(AppointmentEventEnum::values())],
+            'customer_id'   => ['sometimes'],
+            'name'          => ['sometimes', 'string'],
+            'schedule_at'   => ['sometimes'],
+            'description'   => ['nullable', 'string', 'max:255'],
+            'type'          => ['sometimes', Rule::in(AppointmentTypeEnum::values())],
+            'event'         => ['sometimes', Rule::in(AppointmentEventEnum::values())],
             'event_address' => ['sometimes', 'string']
         ];
     }

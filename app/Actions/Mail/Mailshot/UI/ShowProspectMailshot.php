@@ -90,10 +90,10 @@ class ShowProspectMailshot extends InertiaAction
                 'style'      => 'primary',
                 'label'      => __('Send Now'),
                 'icon'       => ["fal", "fa-paper-plane"],
-                'method'     => 'post',
                 'route'      => [
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id,
+                    'method'     => 'post',
 
                 ]
             ];
