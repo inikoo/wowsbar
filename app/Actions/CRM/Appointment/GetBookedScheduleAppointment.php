@@ -7,7 +7,9 @@
 
 namespace App\Actions\CRM\Appointment;
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\CRM\Appointment;
+use App\Models\HumanResources\Employee;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
@@ -38,7 +40,13 @@ class GetBookedScheduleAppointment
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $appointment = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
+            $employees = Employee::whereJobPosition('cus-c')->pluck('id');
+            $organisationUser = OrganisationUser::whereIn('parent_id', $employees)
+                ->where('parent_type', class_basename(Employee::class))->pluck('id');
+
+            $appointment = Appointment::whereDate('schedule_at', $date)
+                ->whereNotIn('organisation_user_id', $organisationUser)
+                ->pluck('schedule_at');
             if(count($appointment) > 0) {
                 $bookedSchedules[$date] = $appointment->map(function ($item) {
                     return Carbon::parse($item)->format('H:i');
@@ -49,7 +57,6 @@ class GetBookedScheduleAppointment
         }
 
         return [
-            'bookedSchedules' => $bookedSchedules,
             'availableSchedules' => $availableSchedules
         ];
     }
