@@ -13,8 +13,10 @@ enum DispatchedEmailStateEnum: string
 {
     use EnumHelperTrait;
 
-    case READY       = 'ready';
-    case ERROR       = 'error';
+    case READY         = 'ready';
+    case ERROR         = 'error';
+    case REJECT        = 'reject';
+
     case SENT        = 'sent';
     case HARD_BOUNCE = 'hard_bounce';
     case SOFT_BOUNCE = 'soft_bounce';

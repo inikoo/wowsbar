@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $mailshot_id
+ * @property int $number_estimated_dispatched_emails
+ * @property string|null $estimated_dispatched_emails_calculated_at
  * @property int $number_dispatched_emails
  * @property int $number_dispatched_emails_state_ready
  * @property int $number_dispatched_emails_state_error
@@ -30,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats query()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereEstimatedDispatchedEmailsCalculatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmails($value)
@@ -42,6 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateSoftBounce($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateSpam($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateUnsubscribed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberEstimatedDispatchedEmails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */

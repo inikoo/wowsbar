@@ -26,7 +26,9 @@ class MailshotHydrateEstimatedEmails
     use WithCheckCanSendEmail;
 
 
-
+    /**
+     * @var \App\Models\Mail\Mailshot
+     */
     private Mailshot $mailshot;
 
     public function __construct(Mailshot $mailshot)

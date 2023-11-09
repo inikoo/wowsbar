@@ -22,13 +22,11 @@ class GetSnsNotification
         $message   = Message::fromRawPostData();
         $validator = new MessageValidator();
 
-
         if ($validator->isValid($message)) {
             if ($message['Type'] == 'SubscriptionConfirmation') {
                 file_get_contents($message['SubscribeURL']);
             } elseif ($message['Type'] === 'Notification') {
                 $messageData = json_decode($message['Message'], true);
-
 
                 $type=Arr::get($messageData, 'notificationType');
                 if($type=='notificationType') {
@@ -36,10 +34,11 @@ class GetSnsNotification
                 }
 
                 if($messageId=Arr::get($messageData, 'mail.messageId')) {
+
                     $sesNotification=SesNotification::create(
                         [
                             'message_id'=> $messageId,
-                            'data'      => $message
+                            'data'      => $messageData
                         ]
                     );
                 }

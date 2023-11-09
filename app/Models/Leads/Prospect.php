@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -208,5 +209,10 @@ class Prospect extends Model implements Auditable
     public function portfolioWebsite(): BelongsTo
     {
         return $this->belongsTo(PortfolioWebsite::class);
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

@@ -15,6 +15,8 @@ return new class () extends Migration {
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id');
             $table->string('address', 254)->unique();
+            $table->boolean('is_hard_bounced')->default(false);
+            $table->string('hard_bounce_type')->nullable();
             //https://stackoverflow.com/questions/1199190/what-is-the-optimal-length-for-an-email-address-in-a-database
             $table->timestampsTz();
         });

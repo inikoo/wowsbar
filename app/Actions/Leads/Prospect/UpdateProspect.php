@@ -46,7 +46,7 @@ class UpdateProspect
 
         $prospect = $this->update($prospect, $modelData, ['data']);
 
-        if ($prospect->wasChanged(['state', 'dont_contact_me', 'contact_state', 'bounce_status', 'outcome_status'])) {
+        if (true or $prospect->wasChanged(['state', 'dont_contact_me', 'contact_state', 'bounce_status', 'outcome_status'])) {
             if ($prospect->scope_type == 'Shop') {
                 OrganisationHydrateProspects::dispatch();
                 ShopHydrateProspects::dispatch($prospect->scope);

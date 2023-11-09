@@ -11,6 +11,7 @@ use App\Enums\Mail\DispatchedEmailStateEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Mail\DispatchedEmail
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \App\Models\Mail\Email $email
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\DispatchedEmailEvent> $events
  * @property-read int|null $events_count
+ * @property-read \App\Models\Mail\MailshotRecipient|null $mailshotRecipient
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail query()
@@ -58,6 +60,12 @@ class DispatchedEmail extends Model
     {
         return $this->belongsTo(Email::class);
     }
+
+    public function mailshotRecipient(): HasOne
+    {
+        return $this->hasOne(MailshotRecipient::class);
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(DispatchedEmailEvent::class);
