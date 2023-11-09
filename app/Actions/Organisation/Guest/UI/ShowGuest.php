@@ -59,7 +59,7 @@ class ShowGuest extends InertiaAction
                 ],
                 'pageHead'                     => [
                     'title'       => $guest->contact_name,
-                    'iconActions' => [
+                    'actions' => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

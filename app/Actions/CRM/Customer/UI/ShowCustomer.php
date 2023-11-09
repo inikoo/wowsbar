@@ -100,7 +100,7 @@ class ShowCustomer extends InertiaAction
                             ]
                         ],
                     ],
-                    'iconActions' => [
+                    'actions' => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

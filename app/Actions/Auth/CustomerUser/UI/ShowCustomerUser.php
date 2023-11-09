@@ -69,7 +69,7 @@ class ShowCustomerUser extends InertiaAction
                     ],
                     'title'        => $customerUser->user->email,
                     'noCapitalise' => true,
-                    'iconActions'  => [
+                    'actions'  => [
                         //  $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

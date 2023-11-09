@@ -78,12 +78,12 @@ class ShowPortfolioWebsite extends InertiaAction
                     'next'     => $this->getNext($portfolioWebsite, $request),
                 ],
                 'pageHead'       => [
-                    'title'       => $portfolioWebsite->name,
+                    'title'       => '$portfolioWebsite->name',
                     'icon'        => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'iconActions' => [
+                    'actions' => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
