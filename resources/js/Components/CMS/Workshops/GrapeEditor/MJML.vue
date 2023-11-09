@@ -134,7 +134,7 @@ onMounted(() => {
                     extraAllowedContent: '*(*);*{*}',
                     allowedContent: false,
                     /*   /* uiColor: '#2C2E35', */
-                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji`,
+                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji,autocomplete,textmatch,textwatcher`,
                     toolbar: [
                         ['Undo', 'Redo', 'Font', 'FontSize', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'subscript', 'RemoveFormat', '-', 'JustifyBlock', 'JustifyCenter', "JustifyLeft", 'JustifyRight', '-', 'Indent', 'Outdent'],
                         ['/','EmojiPanel', 'SpecialChar', '-', "BulletedList", 'NumberedList', '-', 'BGColor', 'TextColor', '-', 'Link', 'Unlink', '-', 'customTag']
