@@ -40,9 +40,9 @@ class GetBookedScheduleAppointment
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $employees = Employee::with(['jobPositions' => function($query) {
+            $employees = Employee::whereHas('jobPositions', function($query) {
                 return $query->where('code', 'cus-c');
-            }])->pluck('id');
+            })->pluck('id');
 
             $organisationUser = OrganisationUser::whereIn('parent_id', $employees)
                 ->where('parent_type', class_basename(Employee::class))->pluck('id');
