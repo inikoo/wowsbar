@@ -23,6 +23,12 @@ class RouteServiceProvider extends ServiceProvider
 
 
         $this->routes(function () {
+
+            Route::prefix('webhooks')
+                ->domain(config('app.domain'))
+                ->middleware('webhooks')
+                ->group(base_path('routes/webhooks/webhooks.php'));
+
             Route::domain(config('app.delivery_domain'))
                 ->name('delivery.')
                 ->group(base_path('routes/delivery/app.php'));
