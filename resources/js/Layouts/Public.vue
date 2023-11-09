@@ -43,6 +43,7 @@ onMounted(() => {
     <div v-html="header[0]?.html" ></div>
     <slot />
     <div v-html="footer[0]?.html"></div>
+    <notifications dangerously-set-inner-html :max="3" :width="500" />
 </template>
 
 
