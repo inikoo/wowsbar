@@ -66,6 +66,13 @@ class SendMailshotTest
         );
     }
 
+    public function rules(): array
+    {
+        return [
+            'email' => ['required', 'email']
+        ];
+    }
+
     public function asController(Mailshot $mailshot, ActionRequest $request): Mailshot
     {
         if ($mailshot->state == MailshotStateEnum::IN_PROCESS) {
