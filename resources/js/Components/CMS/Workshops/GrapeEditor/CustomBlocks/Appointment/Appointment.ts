@@ -126,7 +126,7 @@ export const Appointment = () => {
         <div class="bg-white rounded text-left" data-gjs-droppable="false"  data-gjs-removable="false"> <!-- Menghapus kelas py-5 dan px-4 -->
         <section data-id="title" class="wowsbar-appointment-block" data-gjs-droppable="false"  data-gjs-removable="false">
           <div class="title-text">
-          <span class="small text-uppercase text-muted">Select data & time</span>
+          <span class="small text-uppercase text-muted">Select date & time</span>
       </section>
       <div>
       <img src="https://dummyimage.com/371x349?text=Calendar" data-gjs-removable="false" class="inline"  data-gjs-editable="false" data-gjs-droppable="false"/>
