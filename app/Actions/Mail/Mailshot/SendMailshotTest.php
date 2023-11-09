@@ -9,8 +9,8 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\Ses\SendSesEmail;
 use App\Enums\Mail\MailshotStateEnum;
+use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Email;
-use App\Models\Mail\EmailDelivery;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Illuminate\Http\RedirectResponse;
@@ -31,14 +31,16 @@ class SendMailshotTest
 
         foreach (explode(',', $modelData['email']) as $email) {
             $email = Email::firstOrCreate(['address' => $email]);
-            $emailDelivery = EmailDelivery::create(
+            $dispatchedEmail = DispatchedEmail::create(
                 [
                     'email_id' => $email->id,
                     'date' => now()
                 ]
             );
 
-            SendSesEmail::run($mailshot->subject, $emailHtmlBody, $emailDelivery, config('mail.devel.sender_email_address'));
+            $dispatchedEmail->refresh();
+
+            SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, config('mail.devel.sender_email_address'));
         }
 
         return $mailshot;
@@ -80,7 +82,6 @@ class SendMailshotTest
                 'publisher_id' => $request->user()->id,
             ]);
         }
-
         $request->validate();
 
         return $this->handle($mailshot, $request->validated());
