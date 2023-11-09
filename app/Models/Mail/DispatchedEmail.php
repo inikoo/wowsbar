@@ -10,6 +10,7 @@ namespace App\Models\Mail;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Mail\DispatchedEmail
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mail\Email $email
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\DispatchedEmailEvent> $events
+ * @property-read int|null $events_count
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail query()
@@ -55,4 +58,10 @@ class DispatchedEmail extends Model
     {
         return $this->belongsTo(Email::class);
     }
+    public function events(): HasMany
+    {
+        return $this->hasMany(DispatchedEmailEvent::class);
+
+    }
+
 }

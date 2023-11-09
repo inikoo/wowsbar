@@ -59,15 +59,18 @@ class SendSesEmail
         $emailData = [
             'Source'      => $sender,
             'Destination' => [
-                'ToAddresses' => [$dispatchedEmail->email->address]
+                'ToAddresses' => [
+                    $dispatchedEmail->email->address
+                ]
             ],
             'Message'     => $message['Message']
         ];
 
 
         try {
+
             $result = $this->getSesClient()->sendEmail($emailData);
-            //   dd($result);
+
 
 
             $dispatchedEmail->update(
@@ -78,7 +81,10 @@ class SendSesEmail
                     'provider_message_id' => Arr::get($result, 'MessageId')
                 ]
             );
+
         } catch (AwsException $e) {
+
+
             $dispatchedEmail->update(
                 [
                     'state'       => DispatchedEmailStateEnum::ERROR,

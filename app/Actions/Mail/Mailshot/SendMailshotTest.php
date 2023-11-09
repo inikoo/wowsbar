@@ -26,15 +26,15 @@ class SendMailshotTest
 
     public function handle(Mailshot $mailshot, array $modelData): Mailshot
     {
-        $layout = $mailshot->layout;
+        $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
         foreach (explode(',', $modelData['email']) as $email) {
-            $email = Email::firstOrCreate(['address' => $email]);
+            $email           = Email::firstOrCreate(['address' => $email]);
             $dispatchedEmail = DispatchedEmail::create(
                 [
                     'email_id' => $email->id,
-                    'date' => now()
+                    'date'     => now()
                 ]
             );
 

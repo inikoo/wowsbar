@@ -130,7 +130,7 @@ class ProcessSendMailshot
         return true;
     }
 
-    public string $commandSignature = 'mailshot:store-recipients {mailshot}';
+    public string $commandSignature = 'mailshot:send {mailshot}';
 
 
     public function asCommand(Command $command): int

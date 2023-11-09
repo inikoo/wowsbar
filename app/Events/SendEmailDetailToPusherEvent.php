@@ -11,7 +11,9 @@ use Illuminate\Queue\SerializesModels;
 
 class SendEmailDetailToPusherEvent implements ShouldBroadcastNow
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public MailshotStats $mailshotStats;
 

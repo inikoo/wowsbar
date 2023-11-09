@@ -8,14 +8,14 @@
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Organisation;
 
-if (! function_exists('organisation')) {
+if (!function_exists('organisation')) {
     function organisation(): Organisation
     {
         return Organisation::firstOrFail();
     }
 }
 
-if (! function_exists('customer')) {
+if (!function_exists('customer')) {
     function customer(): Customer
     {
         return Customer::where('id', config('global.customer_id'))->firstOrFail();

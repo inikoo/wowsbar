@@ -1,26 +1,26 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 30 Jun 2023 10:29:12 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Fri, 30 Jun 2023 10:29:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Mail\Notifications;
 
+use App\Models\Mail\SesNotification;
 use Aws\Sns\Message;
 use Aws\Sns\MessageValidator;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetSnsNotification
 {
     use AsAction;
 
-    public function asController(): void
+    public function asController(): string
     {
-
         $message   = Message::fromRawPostData();
         $validator = new MessageValidator();
-
 
 
         if ($validator->isValid($message)) {
@@ -29,16 +29,30 @@ class GetSnsNotification
             } elseif ($message['Type'] === 'Notification') {
                 $messageData = json_decode($message['Message'], true);
 
-                $messageId = $messageData['mail']['messageId'];
-                $timestamp = $messageData['mail']['timestamp'];
+
+                $type=Arr::get($messageData, 'notificationType');
+                if($type=='notificationType') {
+                    return 'ok';
+                }
+
+                if($messageId=Arr::get($messageData, 'mail.messageId')) {
+                    $sesNotification=SesNotification::create(
+                        [
+                            'message_id'=> $messageId,
+                            'data'      => $message
+                        ]
+                    );
+                }
 
 
-                $dispatchedEmail = DispatchedEmail::where('ses_id', $messageId)->first();
-                UpdateDispatchedEmail::run($dispatchedEmail, [
-                    'first_read_at' => $timestamp,
-                    'last_read_at'  => $timestamp
-                ]);
+
+
+
             }
         }
+        return 'ok';
     }
+
+
+
 }
