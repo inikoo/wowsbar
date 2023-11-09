@@ -23,6 +23,7 @@ use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
@@ -86,6 +87,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $customers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
  * @property-read int|null $departments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, EmailTemplate> $emailTemplates
+ * @property-read int|null $email_templates_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
  * @property-read \App\Models\Market\ShopMailStats|null $mailStats
@@ -323,5 +326,10 @@ class Shop extends Model implements Auditable
     public function mailshots(): MorphMany
     {
         return $this->morphMany(Mailshot::class, 'scope');
+    }
+
+    public function emailTemplates(): MorphMany
+    {
+        return $this->morphMany(EmailTemplate::class, 'scope');
     }
 }

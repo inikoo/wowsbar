@@ -13,6 +13,7 @@ import {trans} from "laravel-vue-i18n"
 import Multiselect from '@vueform/multiselect'
 import axios from 'axios'
 import {notify} from '@kyvg/vue3-notification'
+import CopyButton from '@/Components/Utils/CopyButton.vue'
 
 import Tag from '@/Components/Tag.vue'
 import Icon from "@/Components/Icon.vue";
@@ -106,13 +107,23 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
         </template>
 
         <template #cell(name)="{ item: prospect }">
-            <Link v-if="prospect.name" :href="prospectRoute(prospect)"
-                class="py-1"
-                :class="[`specialUnderlineOrg`]"  
-            >
-                <span>{{ prospect['name'] }}</span>
-            </Link>
-            <span v-else class="italic opacity-50">{{ trans('Unknown') }}</span>
+            <div class="flex items-center">
+                <Link v-if="prospect.name" :href="prospectRoute(prospect)"
+                    class="py-1"
+                    :class="[`specialUnderlineOrg`]"
+                >
+                    <span>{{ prospect['name'] }}</span>
+                </Link>
+                <span v-else class="italic opacity-50">{{ trans('Unknown') }}</span>
+                <CopyButton :text="prospect.name" />
+            </div>
+        </template>
+
+        <template #cell(email)="{ item: prospect }">
+            <div class="flex items-center gap-x-0.5">
+                <span class="text-gray-500">{{ prospect.email }}</span>
+                <CopyButton :text="prospect.email" />
+            </div>
         </template>
 
         <!-- Multiselect -->

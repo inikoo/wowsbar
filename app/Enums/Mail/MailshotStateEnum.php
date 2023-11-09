@@ -61,11 +61,11 @@ enum MailshotStateEnum: string
 
 
             ],
-            'live'        => [
+            'sending'        => [
 
-                'tooltip' => __('live'),
-                'icon'    => 'fal fa-broadcast-tower',
-                'class'   => 'text-green-600 animate-pulse'
+                'tooltip' => __('sending'),
+                'icon'    => 'fal fa-paper-plane',
+                'class'   => 'animate-pulse'
 
             ],
             'switch_off'     => [

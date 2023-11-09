@@ -13,6 +13,7 @@ import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {faTachometer, faMailBulk} from '@fal/'
 import {library} from "@fortawesome/fontawesome-svg-core";
+import TableEmailTemplates from "@/Components/Tables/TableEmailTemplates.vue";
 
 library.add(faTachometer, faMailBulk);
 
@@ -23,7 +24,8 @@ const props = defineProps<{
     tabs: {
         current: string;
         navigation: object;
-    }
+    },
+    email_template?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -32,7 +34,8 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        showcase: null
+        showcase: null,
+        email_template: TableEmailTemplates
     };
     return components[currentTab.value];
 

@@ -8,10 +8,12 @@
 namespace App\Actions\Mail\Ses;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
-use App\Models\Mail\MailshotRecipient;
-use Aws\Result;
+use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Models\Mail\EmailDelivery;
+use Aws\Exception\AwsException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Spatie\Mjml\Mjml;
 
 class SendSesEmail
 {
@@ -20,13 +22,26 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(MailshotRecipient $mailshotRecipient): Result
+    public function handle(string $subject, string $emailHtmlBody, EmailDelivery $emailDelivery, string $sender): EmailDelivery
     {
-        $mailshot = $mailshotRecipient->mailshot;
-        $layout   = $mailshot->layout;
-        $subject  = $mailshot->subject;
+        if ($emailDelivery->state != EmailDeliveryStateEnum::READY) {
+            return $emailDelivery;
+        }
 
-        $html = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        if(!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
+            $emailDelivery->update(
+                [
+                    'state'               => EmailDeliveryStateEnum::SENT,
+                    'sent_at'             => now(),
+                    'date'                => now(),
+                    'provider_message_id' => 'devel-'.Str::uuid()
+                ]
+            );
+
+            return $emailDelivery;
+        }
+
+
 
         $message = [
             'Message' => [
@@ -37,22 +52,44 @@ class SendSesEmail
         ];
 
         $message['Message']['Body']['Html'] = [
-            'Data' => $html
+            'Data' => $emailHtmlBody
         ];
 
-        return $this->getSesClient()->sendEmail([
-            'Source'      => $this->generateSenderEmail(),
+
+        $emailData = [
+            'Source'      => $sender,
             'Destination' => [
-                'ToAddresses' => [$mailshotRecipient->recipient->email]
+                'ToAddresses' => [$emailDelivery->email->address]
             ],
-            'Message' => $message['Message']
-        ]);
+            'Message'     => $message['Message']
+        ];
+
+
+        try {
+            $result = $this->getSesClient()->sendEmail($emailData);
+            //   dd($result);
+
+
+            $emailDelivery->update(
+                [
+                    'state'               => EmailDeliveryStateEnum::SENT,
+                    'sent_at'             => now(),
+                    'date'                => now(),
+                    'provider_message_id' => Arr::get($result, 'MessageId')
+                ]
+            );
+        } catch (AwsException $e) {
+            $emailDelivery->update(
+                [
+                    'state'       => EmailDeliveryStateEnum::ERROR,
+                    'date'        => now(),
+                    'data->error' => $e->getAwsErrorMessage()
+                ]
+            );
+        }
+
+        return $emailDelivery;
     }
 
-    public function generateSenderEmail(): string
-    {
-        $user = request()->user();
 
-        return ($user?->username ?? 'no-reply') . '@' . organisation()->code . env('MAIL_MAIN_URL');
-    }
 }

@@ -7,20 +7,18 @@
 
 namespace App\Actions\CRM\Appointment;
 
-use App\Enums\CRM\Appointment\AppointmentEventEnum;
-use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Models\CRM\Appointment;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
 
-class GetScheduleAppointment
+class GetBookedScheduleAppointment
 {
     use AsAction;
     use WithAttributes;
@@ -29,9 +27,31 @@ class GetScheduleAppointment
     /**
      * @throws Throwable
      */
-    public function handle(string $date): Collection
+    public function handle(array $modelData): array
     {
-        return Appointment::whereDate('schedule_at', $date)->get();
+        $dt              = Carbon::createFromDate($modelData['year'], $modelData['month']);
+        $bookedSchedules = [];
+        $availableSchedules = [];
+        $availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+
+        for ($i = 1; $i <= $dt->daysInMonth; $i++) {
+            $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
+            $date = $date->format('Y-m-d');
+
+            $appointment = Appointment::whereDate('schedule_at', $date)->pluck('schedule_at');
+            if(count($appointment) > 0) {
+                $bookedSchedules[$date] = $appointment->map(function ($item) {
+                    return Carbon::parse($item)->format('H:i');
+                })->toArray();
+            }
+
+            $availableSchedules[$date] = array_diff($availableTimes, Arr::get($bookedSchedules, $date, []));
+        }
+
+        return [
+            'bookedSchedules' => $bookedSchedules,
+            'availableSchedules' => $availableSchedules
+        ];
     }
 
     public function authorize(ActionRequest $request): bool
@@ -42,20 +62,19 @@ class GetScheduleAppointment
     public function rules(): array
     {
         return [
-            'schedule_at'              => ['required', 'string'],
-            'description'              => ['nullable', 'string', 'max:255'],
-            'type'                     => ['required', Rule::in(AppointmentTypeEnum::values())],
-            'event'                    => ['required', Rule::in(AppointmentEventEnum::values())],
-            'event_address'            => ['required', 'string']
+            'year'  => ['required', 'string'],
+            'month' => ['required', 'string']
         ];
     }
 
     /**
      * @throws Throwable
      */
-    public function asController(ActionRequest $request): Collection
+    public function asController(ActionRequest $request): array
     {
-        return $this->handle($request->input('date'));
+        $request->validate();
+
+        return $this->handle($request->validated());
     }
 
     public string $commandSignature = 'shop:new-customer {shop} {email} {--N|contact_name=} {--C|company=} {--P|password=}';

@@ -52,6 +52,7 @@ class StoreMailshot
 
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);
+        $mailshot->mailshotStats()->create();
 
         OrganisationHydrateMailshots::dispatch();
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
@@ -77,8 +78,6 @@ class StoreMailshot
             //todo this is only for testing
             $this->fill(['query_id' => Query::first()->id]);
         }
-
-
     }
 
     public function rules(): array
@@ -123,9 +122,7 @@ class StoreMailshot
 
     public function action(Shop|Customer $parent, array $objectData): Mailshot
     {
-
-
-        if(Arr::get($objectData, 'type')==MailshotTypeEnum::PROSPECT_MAILSHOT) {
+        if (Arr::get($objectData, 'type') == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             $this->queryRules = [
                 'model_type' => 'Prospect',
                 'scope_type' => class_basename($parent),
@@ -134,10 +131,10 @@ class StoreMailshot
         }
 
 
-
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
+
         return $this->handle($parent, $validatedData);
     }
 

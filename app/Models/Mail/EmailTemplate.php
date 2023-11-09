@@ -7,21 +7,34 @@
 
 namespace App\Models\Mail;
 
+use App\Models\Helpers\Deployment;
+use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Mail\EmailTemplate
  *
  * @property int $id
  * @property string $title
- * @property string $parent_type
- * @property int $parent_id
+ * @property string $scope_type
+ * @property int $scope_id
  * @property array $data
- * @property mixed $compiled
+ * @property array $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property mixed $state
+ * @property string $slug
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
+ * @property-read int|null $deployments_count
+ * @property-read Snapshot|null $liveSnapshot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
+ * @property-read int|null $snapshots_count
+ * @property-read Snapshot|null $unpublishedSnapshot
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate query()
@@ -29,8 +42,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereScopeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereScopeType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
  * @mixin \Eloquent
@@ -38,13 +52,51 @@ use Illuminate\Database\Eloquent\Model;
 class EmailTemplate extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $guarded = [];
 
 
     protected $casts = [
-        'compiled_layout' => 'array',
-        'data'            => 'array',
-        'state'           => EmailTemplateStateEnum::class
+        'compiled' => 'array',
+        'data'     => 'array'
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function snapshots(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
+    }
+
+    public function unpublishedSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
+    }
+
+    public function liveSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
+    }
 }

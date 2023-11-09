@@ -30,7 +30,7 @@ onMounted(() => {
     const loginButton = document.querySelectorAll(
         '*[data-wowsbar-element="login"]'
     );
-    console.log(user)
+    // console.log(user)
     if (user) {
         loginButton.forEach((button) => {
             button.innerHTML = 'Dashboard'
@@ -43,6 +43,7 @@ onMounted(() => {
     <div v-html="header[0]?.html" ></div>
     <slot />
     <div v-html="footer[0]?.html"></div>
+    <notifications dangerously-set-inner-html :max="3" :width="500" />
 </template>
 
 

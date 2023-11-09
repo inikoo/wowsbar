@@ -25,6 +25,8 @@ use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\IndexProspectsQueryProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
@@ -120,12 +122,18 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
     Route::prefix('mailroom')->as('mailroom.')->group(function () {
         Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailroom'])->uses([ShowMailroomDashboard::class, 'inShop'])->name('dashboard');
+
+        Route::prefix('templates')->as('templates.')->group(function () {
+            Route::get('{emailTemplate}', [ShowEmailTemplate::class, 'inShop'])->name('show');
+            Route::get('{emailTemplate}/workshop', ShowEmailTemplateWorkshop::class)->name('workshop');
+        });
     });
 
 
     Route::prefix('appointments')->as('appointments.')->group(function () {
         Route::get('/', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([IndexAppointments::class, 'inShop'])->name('index');
         Route::get('/create', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([CreateAppointment::class, 'inShop'])->name('create');
+
         Route::get('/{appointment}', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(ShowAppointment::class)->name('show');
         Route::get('/{appointment}/edit', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(EditAppointment::class)->name('edit');
     });

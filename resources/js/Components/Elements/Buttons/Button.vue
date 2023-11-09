@@ -42,13 +42,15 @@ let sizeClass = ''
 if (props.style == 'primary' || props.style == 'create' || props.style == 'save') styleClass = 'bg-gray-800 bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:bg-none'
 else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 border border-gray-400/80 text-gray-600 hover:bg-none'
 else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-200/70'
+else if (props.style == 'rainbow') styleClass = 'bg-gradient-to-r from-blue-500 to-purple-600 border border-gray-300 text-gray-100 hover:bg-purple-600'
+
 else if (props.style == 'delete' || props.style == 'negative' || props.style == 'cancel') styleClass = 'border border-red-400 text-red-500 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'positive') styleClass = 'border border-emerald-400 text-emerald-500 hover:text-emerald-800 hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2'
 
 else if (props.style == 'white') styleClass = 'bg-white text-gray-600'
 else if (props.style == 'red') styleClass = 'bg-red-500 hover:bg-red-600 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 // else if (props.style == 'negative' || props.style == 'cancel') styleClass = 'border border-red-400 text-red-600 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
-else if (props.style == 'disabled') styleClass = 'cursor-not-allowed border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70'
+else if (props.style == 'disabled') styleClass = 'cursor-not-allowed border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 disabled:cursor-not-allowed disabled:opacity-70'
 else styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70'
 
 // Styling depends on the 'size' props
@@ -128,7 +130,7 @@ const getActionIcon = (icon: any) => {
 
 <template>
     <button type="button"
-        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2s"
         :class="[
             // icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
             full ? 'w-full justify-center' : 'min-w-max',

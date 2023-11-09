@@ -8,7 +8,9 @@ import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.c
 import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
 import CkeEditor from 'grapesjs-plugin-ckeditor'
-/* import type CKE from 'ckeditor4'; */
+import { ComboboxLabel } from "@headlessui/vue";
+import RTE from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/Rte/Rte.ts'
+/* import ClassicEditor from 'ckeditor4'; */
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
@@ -111,48 +113,37 @@ const uploadFile = async (e) => {
     }
 }
 
-/* console.log(CKE) */
+/* console.log(ClassicEditor) */
 
 onMounted(() => {
     editorInstance.value = grapesjs.init({
         container: "#gjs",
-        showOffsets: true,
-        fromElement: true,
+        showOffsets: false,
+        fromElement: false,
         noticeOnUnload: false,
-        plugins: [grapesJSMJML, CkeEditor],
+        plugins: [grapesJSMJML, RTE],
         pluginsOpts: {
             [grapesJSMJML]: {
                 blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
                     'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw'],
             },
-            [CkeEditor]: {
+            [RTE]: {
                 options: {
                     language: 'en',
-                    startupFocus: true,
-                    extraAllowedContent: '*(*);*{*}', 
-                    allowedContent: true,
-                    uiColor: '#222f3e',
-                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks`,
-                    toolbarGroups : [
-                            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-                            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-                            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-                            { name: 'forms', groups: [ 'forms' ] },
-                            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-                            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
-                            { name: 'links', groups: [ 'links' ] },
-                            { name: 'insert', groups: [ 'insert' ] },
-                            { name: 'styles', groups: [ 'styles' ] },
-                            { name: 'colors', groups: [ 'colors' ] },
-                            { name: 'tools', groups: [ 'tools' ] },
-                            { name: 'others', groups: [ 'others' ] },
-                            { name: 'about', groups: [ 'about' ] }
-                        ],
-                        removeButtons : 'Cut,Copy,Paste,PasteText,PasteFromWord,Source,Save,Templates,NewPage,ExportPdf,Preview,Print,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,CreateDiv,Image,Table,Smiley,SpecialChar,PageBreak,Iframe,Styles,About,Maximize,ShowBlocks'
+                    startupFocus: false,
+                    extraAllowedContent: '*(*);*{*}',
+                    allowedContent: false,
+                    /*   /* uiColor: '#2C2E35', */
+                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji`,
+                    toolbar: [
+                        ['Undo', 'Redo', 'Font', 'FontSize', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'subscript', 'RemoveFormat', '-', 'JustifyBlock', 'JustifyCenter', "JustifyLeft", 'JustifyRight', '-', 'Indent', 'Outdent'],
+                        ['/','EmojiPanel', 'SpecialChar', '-', "BulletedList", 'NumberedList', '-', 'BGColor', 'TextColor', '-', 'Link', 'Unlink', '-', 'customTag']
+
+
+                    ]
                 },
                 position: 'left',
             }
-
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },
         assetManager: {
@@ -168,6 +159,10 @@ onMounted(() => {
         async load() { return Load() },
         async store(data) { return Store(data, editorInstance.value) }
     });
+    editorInstance.value.on('load', () => {
+        const blockBtn = editorInstance.value.Panels.getButton('views', 'open-blocks');
+        blockBtn.set('active', 1);
+    })
 });
 
 
@@ -271,5 +266,17 @@ onMounted(() => {
     border-right: none;
     padding: 10px;
     min-width: fit-content;
+}
+
+
+.custom-tag-button {
+    .cke_button_icon {
+        display: none;
+    }
+
+    .cke_button_label {
+        display: inline;
+    }
+
 }
 </style>
