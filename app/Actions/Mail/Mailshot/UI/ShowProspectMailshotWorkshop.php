@@ -97,6 +97,10 @@ class ShowProspectMailshotWorkshop extends InertiaAction
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id
                 ],
+                'sendTestRoute'           => [
+                    'name'       => 'org.models.mailshot.send.test',
+                    'parameters' => $mailshot->id
+                ],
                 'setAsScheduledRoute' => [
                     'name'       => 'org.models.mailshot.state.scheduled',
                     'parameters' => $mailshot->id
