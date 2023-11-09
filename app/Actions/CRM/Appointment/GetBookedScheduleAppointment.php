@@ -40,14 +40,16 @@ class GetBookedScheduleAppointment
             $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
             $date = $date->format('Y-m-d');
 
-            $employees = Employee::whereJobPosition('cus-c')->pluck('id');
+            $employees = Employee::whereJobPosition('dev-w')->pluck('id');
             $organisationUser = OrganisationUser::whereIn('parent_id', $employees)
                 ->where('parent_type', class_basename(Employee::class))->pluck('id');
 
             $appointment = Appointment::whereDate('schedule_at', $date)
                 ->whereNotIn('organisation_user_id', $organisationUser)
                 ->pluck('schedule_at');
-            if(count($appointment) > 0) {
+            if($employees->count() == 0) {
+                $bookedSchedules[$date] = $availableTimes;
+            } else if(count($appointment) > 0) {
                 $bookedSchedules[$date] = $appointment->map(function ($item) {
                     return Carbon::parse($item)->format('H:i');
                 })->toArray();
