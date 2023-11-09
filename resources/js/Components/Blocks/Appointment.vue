@@ -5,6 +5,8 @@ import 'v-calendar/style.css'
 import axios from 'axios'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from '@kyvg/vue3-notification'
+import { usePage } from '@inertiajs/vue3'
+import Login from '@/Pages/Public/Auth/Login.vue'
 
 const props = defineProps<{
     data: {
@@ -16,6 +18,7 @@ const props = defineProps<{
 const availableSchedulesOnMonth: Ref<{[key: string]: string[]}> = ref({})  // {2023-6: 2023-11-25 ['09:00, '10:00', ...]}
 const selectedDate: any = ref()  // on select date in DatePicker
 const isLoading = ref(false)  // Loading on fetch
+const isComponentLogin = ref(false)  // to change component from select Appointment to Login
 
 // Attribute for DatePicker
 const attrs = ref([
@@ -51,35 +54,6 @@ const getDateOnly = (dateString: string | Date): string => {
     return formattedDate  // 2023-11-23
 }
 
-// When submit Appointment
-const onClickMakeAppointment = async () => {
-    console.log('Appointment created')
-    try {
-        const response = await axios.get(
-            route('public.appointment.schedule'),
-            {
-                params: {
-                    year: '2023',
-                    month: '11'
-                }
-            }
-        )
-
-        notify({
-            title: "Appointment successfuly created.",
-            // text: error,
-            type: "success"
-        })
-    }
-    catch (error: any) {
-        notify({
-            // title: "Appointment successfuly created.",
-            text: error,
-            type: "error"
-        })
-    }
-}
-
 // Fetch available schedule for whole month
 const fetchAvailableOnMonth = async (year: number, month: number) => {
     if(!year || !month) return 
@@ -106,6 +80,22 @@ const fetchAvailableOnMonth = async (year: number, month: number) => {
     isLoading.value = false
 }
 
+// When submit Appointment
+const onClickMakeAppointment = async () => {
+    if(!!usePage().props.auth.user) {
+        console.log('Appointment created')
+
+        notify({
+            title: "Appointment successfuly created.",
+            // text: error,
+            type: "success"
+        })
+
+    } else {
+        isComponentLogin.value = true
+    }
+}
+
 onMounted(() => {
     const today = new Date()
     fetchAvailableOnMonth(today.getFullYear(), today.getMonth() + 1)
@@ -121,7 +111,6 @@ watch(selectedDate, () => {
 
 
 <template>
-
     <div style="margin: 20px">
         <div class="container border-2" style="max-width: 800px">
             <div class="row divide-x divide-gray-300">
@@ -136,56 +125,59 @@ watch(selectedDate, () => {
                 
                 <!-- Section: Right (calendar) -->
                 <div class="col-md-6 p-0 text-center">
-                    <div class="card-body">
-                        <div class="bg-white rounded text-left">
-                            <span v-html="data.title"></span>
-                        </div>
-                        <div>
-                            <DatePicker
-                                v-model="selectedDate"
-                                expanded
-                                :attributes="attrs"  
-                            />
-                        </div>
+                    <transition name="slide-to-left" mode="out-in">
+                        <div v-if="!isComponentLogin" class="card-body">
+                            <div class="bg-white rounded text-left">
+                                <span v-html="data.title"></span>
+                            </div>
+                            <div>
+                                <DatePicker
+                                    v-model="selectedDate"
+                                    expanded
+                                    :attributes="attrs"
+                                />
+                            </div>
 
-                        <!-- Section: Button Hour, Button Submit -->
-                        <div class="px-2.5 my-4 space-y-4">
-                            <div v-if="selectedDate" class="grid grid-cols-3 justify-center gap-x-2 gap-y-3">
-                                <template v-if="isLoading">
-                                    <div v-for="_ in 6" class="w-full h-8 rounded skeleton" />
-                                </template>
-
-                                <template v-else>
-                                    <template v-if="availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`]?.[getDateOnly(selectedDate)]">
-                                        <div v-for="time in availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`][getDateOnly(selectedDate)]" class="w-full">
-                                            <Button full
-                                                :key="selectedDate + time"
-                                                @click="onSelectHour(time)"
-                                                :style="
-                                                    time.split(':')[0] == selectedDate.getHours() &&
-                                                    time.split(':')[1] == selectedDate.getMinutes()
-                                                        ? 'rainbow'
-                                                        : 'tertiary'
-                                                "
-                                            >
-                                                {{ time }}
-                                            </Button>
-                                        </div>
-                                        <div class="col-span-3">
-                                            <Button @click="onClickMakeAppointment()" label="Make appointment" full />
-                                        </div>
+                            <!-- Section: Button Hour, Button Submit -->
+                            <div class="px-2.5 my-4 space-y-4">
+                                <div v-if="selectedDate" class="grid grid-cols-3 justify-center gap-x-2 gap-y-3">
+                                    <template v-if="isLoading">
+                                        <div v-for="_ in 6" class="w-full h-8 rounded skeleton" />
                                     </template>
-                                    <div v-else class="col-span-3">No schedules available</div>
-                                </template>
+                                    <template v-else>
+                                        <template v-if="availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`]?.[getDateOnly(selectedDate)]">
+                                            <div v-for="time in availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`][getDateOnly(selectedDate)]" class="w-full">
+                                                <Button full
+                                                    :key="selectedDate + time"
+                                                    @click="onSelectHour(time)"
+                                                    :style="
+                                                        time.split(':')[0] == selectedDate.getHours() &&
+                                                        time.split(':')[1] == selectedDate.getMinutes()
+                                                            ? 'rainbow'
+                                                            : 'tertiary'
+                                                    "
+                                                >
+                                                    {{ time }}
+                                                </Button>
+                                            </div>
+                                            <div class="col-span-3">
+                                                <Button @click="onClickMakeAppointment()" label="Make appointment" full />
+                                            </div>
+                                        </template>
+                                        <div v-else class="col-span-3">No schedules available</div>
+                                    </template>
+                                </div>
+                                <!-- If not selected date yet -->
+                                <div v-else class="text-gray-500 italic">
+                                    ---- Select date to make an appointment ----
+                                </div>
                             </div>
-
-                            <!-- If not selected date yet -->
-                            <div v-else class="text-gray-500 italic">
-                                ---- Select date to make an appointment ----
-                            </div>
+                            <!-- {{ selectedDate }} -->
                         </div>
-                        <!-- {{ selectedDate }} -->
-                    </div>
+                        <div v-else class="text-left">
+                            <Login @onSuccessLogin="() => isComponentLogin = false" />
+                        </div>
+                    </transition>
                 </div>
             </div>
         </div>
