@@ -36,6 +36,7 @@ use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\SendMailshot;
+use App\Actions\Mail\Mailshot\SendMailshotTest;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
@@ -184,6 +185,9 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
 
     Route::post('{mailshot:id}/send', SendMailshot::class)->name('send');
+
+    Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
+
     Route::post('{mailshot:id}/ready', SetMailshotAsReady::class)->name('state.ready');
     Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
 

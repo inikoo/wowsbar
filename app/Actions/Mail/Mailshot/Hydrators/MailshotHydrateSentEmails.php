@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
-use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Events\SendEmailDetailToPusherEvent;
 use App\Models\Mail\Mailshot;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -28,15 +28,15 @@ class MailshotHydrateSentEmails implements ShouldBeUnique
     {
 
         $count = DB::table('mailshot_recipients')
-            ->leftJoin('email_deliveries', 'email_delivery_id', 'email_deliveries.id')
+            ->leftJoin('dispatched_emails', 'dispatched_email_id', 'dispatched_emails.id')
             ->where('mailshot_id', $mailshot->id)
-            ->where('email_deliveries.state', EmailDeliveryStateEnum::SENT->value)->count();
+            ->where('dispatched_emails.state', DispatchedEmailStateEnum::SENT->value)->count();
 
 
 
         $mailshot->mailshotStats()->update(
             [
-                'number_email_deliveries_state_sent'=> $count
+                'number_dispatched_emails_state_sent'=> $count
             ]
         );
 

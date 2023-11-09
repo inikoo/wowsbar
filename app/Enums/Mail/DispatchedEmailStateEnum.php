@@ -9,7 +9,7 @@ namespace App\Enums\Mail;
 
 use App\Enums\EnumHelperTrait;
 
-enum EmailDeliveryStateEnum: string
+enum DispatchedEmailStateEnum: string
 {
     use EnumHelperTrait;
 

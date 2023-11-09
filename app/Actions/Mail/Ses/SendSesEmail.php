@@ -8,8 +8,8 @@
 namespace App\Actions\Mail\Ses;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
-use App\Enums\Mail\EmailDeliveryStateEnum;
-use App\Models\Mail\EmailDelivery;
+use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Models\Mail\DispatchedEmail;
 use Aws\Exception\AwsException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -22,23 +22,23 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(string $subject, string $emailHtmlBody, EmailDelivery $emailDelivery, string $sender): EmailDelivery
+    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender): DispatchedEmail
     {
-        if ($emailDelivery->state != EmailDeliveryStateEnum::READY) {
-            return $emailDelivery;
+        if ($dispatchedEmail->state != DispatchedEmailStateEnum::READY) {
+            return $dispatchedEmail;
         }
 
         if(!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
-            $emailDelivery->update(
+            $dispatchedEmail->update(
                 [
-                    'state'               => EmailDeliveryStateEnum::SENT,
+                    'state'               => DispatchedEmailStateEnum::SENT,
                     'sent_at'             => now(),
                     'date'                => now(),
                     'provider_message_id' => 'devel-'.Str::uuid()
                 ]
             );
 
-            return $emailDelivery;
+            return $dispatchedEmail;
         }
 
 
@@ -59,7 +59,7 @@ class SendSesEmail
         $emailData = [
             'Source'      => $sender,
             'Destination' => [
-                'ToAddresses' => [$emailDelivery->email->address]
+                'ToAddresses' => [$dispatchedEmail->email->address]
             ],
             'Message'     => $message['Message']
         ];
@@ -70,25 +70,25 @@ class SendSesEmail
             //   dd($result);
 
 
-            $emailDelivery->update(
+            $dispatchedEmail->update(
                 [
-                    'state'               => EmailDeliveryStateEnum::SENT,
+                    'state'               => DispatchedEmailStateEnum::SENT,
                     'sent_at'             => now(),
                     'date'                => now(),
                     'provider_message_id' => Arr::get($result, 'MessageId')
                 ]
             );
         } catch (AwsException $e) {
-            $emailDelivery->update(
+            $dispatchedEmail->update(
                 [
-                    'state'       => EmailDeliveryStateEnum::ERROR,
+                    'state'       => DispatchedEmailStateEnum::ERROR,
                     'date'        => now(),
                     'data->error' => $e->getAwsErrorMessage()
                 ]
             );
         }
 
-        return $emailDelivery;
+        return $dispatchedEmail;
     }
 
 

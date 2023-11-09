@@ -7,7 +7,7 @@
 
 namespace App\Stubs\Migrations;
 
-use App\Enums\Mail\EmailDeliveryStateEnum;
+use App\Enums\Mail\DispatchedEmailStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 
 trait HasDispatchedEmailsStats
@@ -15,9 +15,9 @@ trait HasDispatchedEmailsStats
     public function dispatchedEmailsStats(Blueprint $table): Blueprint
     {
 
-        $table->unsignedInteger('number_email_deliveries')->default(0);
-        foreach (EmailDeliveryStateEnum::cases() as $case) {
-            $table->unsignedInteger("number_email_deliveries_state_{$case->snake()}")->default(0);
+        $table->unsignedInteger('number_dispatched_emails')->default(0);
+        foreach (DispatchedEmailStateEnum::cases() as $case) {
+            $table->unsignedInteger("number_dispatched_emails_state_{$case->snake()}")->default(0);
         }
 
         return $table;
@@ -25,9 +25,9 @@ trait HasDispatchedEmailsStats
 
     public function undoDispatchedEmailsStats(Blueprint $table): Blueprint
     {
-        $table->dropColumn('number_email_deliveries');
-        foreach (EmailDeliveryStateEnum::cases() as $case) {
-            $table->dropColumn("number_email_deliveries_state_{$case->snake()}");
+        $table->dropColumn('number_dispatched_emails');
+        foreach (DispatchedEmailStateEnum::cases() as $case) {
+            $table->dropColumn("number_dispatched_emails_state_{$case->snake()}");
         }
 
 
