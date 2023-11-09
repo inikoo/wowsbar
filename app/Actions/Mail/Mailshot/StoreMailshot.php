@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
@@ -39,7 +40,6 @@ class StoreMailshot
     {
         $this->parent = $parent;
 
-
         data_set($modelData, 'recipients_recipe', Arr::only($modelData, ['query_id', 'query_arguments']));
         Arr::forget($modelData, ['query_id', 'query_arguments']);
 
@@ -53,12 +53,20 @@ class StoreMailshot
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);
         $mailshot->mailshotStats()->create();
+        $mailshot->refresh();
 
         OrganisationHydrateMailshots::dispatch();
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             ShopHydrateMailshots::dispatch($mailshot->scope);
         }
 
+        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
+        $mailshot->mailshotStats()->update(
+            [
+                'number_estimated_dispatched_emails'=> $query->number_items,
+            ]
+        );
+        MailshotHydrateEstimatedEmails::dispatch($mailshot);
 
         return $mailshot;
     }

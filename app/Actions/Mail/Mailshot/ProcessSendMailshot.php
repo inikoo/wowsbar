@@ -3,10 +3,9 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Helpers\ArrayWIthProbabilities;
-use App\Models\CRM\Customer;
 use App\Models\Helpers\Query;
-use App\Models\Leads\Prospect;
 use App\Models\Mail\Email;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
@@ -18,6 +17,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class ProcessSendMailshot
 {
     use AsAction;
+    use WithCheckCanSendEmail;
 
     public function handle(Mailshot $mailshot): void
     {
@@ -104,31 +104,6 @@ class ProcessSendMailshot
         );
     }
 
-    protected function canSend(Prospect|Customer $recipient): bool
-    {
-        return match (class_basename($recipient)) {
-            'Prospect' => $this->canSendProspect($recipient),
-            'Customer' => $this->canSendCustomer($recipient)
-        };
-    }
-
-    protected function canSendCustomer(Customer $customer): bool
-    {
-        return false;
-    }
-
-    protected function canSendProspect(Prospect $prospect): bool
-    {
-        if ($prospect->dont_contact_me) {
-            return false;
-        }
-
-        if (!filter_var($prospect->email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-
-        return true;
-    }
 
     public string $commandSignature = 'mailshot:send {mailshot}';
 
