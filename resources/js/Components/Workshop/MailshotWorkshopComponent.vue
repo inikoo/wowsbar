@@ -11,11 +11,6 @@
 
   const props = defineProps<{
       title: string
-      pageHead: any
-      tabs: {
-          current: string
-          navigation: object
-      }
       updateRoute: object,
       loadRoute: object
       imagesUploadRoute: Object
@@ -26,7 +21,7 @@
   
   </script>
   
-  <template layout="OrgApp">
+  <template>
       <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true"
           :plugins="[]" :updateRoute="updateRoute" :loadRoute="loadRoute"
           :imagesUploadRoute="imagesUploadRoute">

@@ -5,10 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
+import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue'
 import { ref } from "vue"
 import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal/'
 import { faFlask } from '@fad/'
@@ -31,10 +32,11 @@ library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faChec
 const props = defineProps<{
     title: string,
     pageHead: object,
-    tabs: {
-        current: string;
-        navigation: object;
-    }
+    // tabs: {
+    //     current: string;
+    //     navigation: object;
+    // }
+    mailshot: {}
     changelog?: object,
     workshop?: object,
     imagesUploadRoute: routeType
@@ -207,6 +209,9 @@ const onSuccess = (response) => {
             </div>
         </template>
     </PageHeading>
+
+    <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" />
+
     <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
         :loadRoute="loadRoute" />
 </template>
