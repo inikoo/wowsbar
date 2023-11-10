@@ -24,6 +24,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspectMailshot extends InertiaAction
 {
     use WithActionButtons;
+    use WithProspectMailshotNavigation;
 
 
     public function handle(Mailshot $mailshot): Mailshot
@@ -232,42 +233,5 @@ class ShowProspectMailshot extends InertiaAction
         };
     }
 
-    public function getPrevious(Mailshot $mailshot, ActionRequest $request): ?array
-    {
-        $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug')->first();
-
-
-        return $this->getNavigation($previous, $request->route()->getName());
-    }
-
-    public function getNext(Mailshot $mailshot, ActionRequest $request): ?array
-    {
-        $next = Mailshot::where('slug', '>', $mailshot->slug)->orderBy('slug')->first();
-
-
-        return $this->getNavigation($next, $request->route()->getName());
-    }
-
-    private function getNavigation(?Mailshot $mailshot, string $routeName): ?array
-    {
-        if (!$mailshot) {
-            return null;
-        }
-
-
-        return match ($routeName) {
-            'org.crm.shop.prospects.mailshots.show',
-            'org.crm.shop.prospects.mailshots.edit' => [
-                'label' => $mailshot->slug,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        $mailshot->scope->slug,
-                        $mailshot->slug
-                    ]
-                ]
-            ],
-        };
-    }
 
 }
