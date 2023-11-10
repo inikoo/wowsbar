@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 08 Nov 2023 16:16:50 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 10 Nov 2023 14:41:00 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class MailshotHydrateSentEmails implements ShouldBeUnique
+class MailshotHydrateReadyEmails implements ShouldBeUnique
 {
     use AsAction;
     use InteractsWithSockets;
@@ -28,13 +28,18 @@ class MailshotHydrateSentEmails implements ShouldBeUnique
     {
 
         $count = DB::table('dispatched_emails')
+            ->where('mailshot_id', $mailshot->id)->count();
+
+        $countReady = DB::table('dispatched_emails')
             ->where('mailshot_id', $mailshot->id)
-            ->where('dispatched_emails.state', DispatchedEmailStateEnum::SENT->value)->count();
+            ->where('dispatched_emails.state', DispatchedEmailStateEnum::READY->value)->count();
+
 
 
         $mailshot->mailshotStats()->update(
             [
-                'number_dispatched_emails_state_sent'=> $count
+                'number_dispatched_emails'            => $count,
+                'number_dispatched_emails_state_ready'=> $countReady
             ]
         );
 

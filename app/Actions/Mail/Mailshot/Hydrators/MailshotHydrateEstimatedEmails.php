@@ -9,7 +9,7 @@ namespace App\Actions\Mail\Mailshot\Hydrators;
 
 use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\Traits\WithCheckCanSendEmail;
-use App\Events\SendEmailDetailToPusherEvent;
+use App\Events\MailshotPusherEvent;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -75,7 +75,7 @@ class MailshotHydrateEstimatedEmails
             ]
         );
 
-        SendEmailDetailToPusherEvent::dispatch($mailshot->mailshotStats);
+        MailshotPusherEvent::dispatch($mailshot);
     }
 
 

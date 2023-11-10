@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $address
+ * @property bool $is_hard_bounced
+ * @property string|null $hard_bounce_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Email newModelQuery()
@@ -21,7 +23,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Email query()
  * @method static \Illuminate\Database\Eloquent\Builder|Email whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Email whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Email whereHardBounceType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Email whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Email whereIsHardBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Email whereUpdatedAt($value)
  * @mixin \Eloquent
  */

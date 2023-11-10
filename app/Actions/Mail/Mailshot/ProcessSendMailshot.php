@@ -4,6 +4,7 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateReadyEmails;
 use App\Actions\Mail\MailshotRecipient\StoreMailshotRecipient;
 use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Helpers\ArrayWIthProbabilities;
@@ -60,7 +61,7 @@ class ProcessSendMailshot
 
                         $email = Email::firstOrCreate(['address' => $emailAddress]);
 
-                        $dispatchedEmail = StoreDispatchedEmail::run($email);
+                        $dispatchedEmail = StoreDispatchedEmail::run($email, $mailshot);
 
                         StoreMailshotRecipient::run(
                             $mailshot,
@@ -71,11 +72,13 @@ class ProcessSendMailshot
                             ]
                         );
 
-
+                        MailshotHydrateReadyEmails::dispatch($mailshot);
                         $chunkCount++;
-                        // print "$channel $chunkCount $counter $dispatchedEmail->id {$dispatchedEmail->email->address}\n";
                     }
                     $counter++;
+
+
+
                 }
 
 
@@ -95,6 +98,14 @@ class ProcessSendMailshot
 
                 $channel++;
             }
+        );
+
+
+        UpdateMailshot::run(
+            $mailshot,
+            [
+                'recipients_stored_at'=> now()
+            ]
         );
     }
 

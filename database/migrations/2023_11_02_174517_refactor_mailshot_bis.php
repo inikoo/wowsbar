@@ -14,6 +14,7 @@ return new class () extends Migration {
     {
         Schema::table('mailshots', function (Blueprint $table) {
             $table->renameColumn('recipients', 'recipients_recipe');
+            $table->dateTimeTz('recipients_stored_at')->nullable();
 
         });
     }

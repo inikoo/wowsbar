@@ -19,7 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_dispatched_emails
  * @property int $number_dispatched_emails_state_ready
  * @property int $number_dispatched_emails_state_error
+ * @property int $number_dispatched_emails_state_rejected
  * @property int $number_dispatched_emails_state_sent
+ * @property int $number_dispatched_emails_state_delivered
  * @property int $number_dispatched_emails_state_hard_bounce
  * @property int $number_dispatched_emails_state_soft_bounce
  * @property int $number_dispatched_emails_state_opened
@@ -37,10 +39,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateClicked($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateDelivered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateError($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateHardBounce($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateOpened($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateReady($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateRejected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateSent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateSoftBounce($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotStats whereNumberDispatchedEmailsStateSpam($value)

@@ -34,6 +34,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
+use App\Actions\Mail\Mailshot\DeleteMailshot;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\SendMailshot;
 use App\Actions\Mail\Mailshot\SendMailshotTest;
@@ -185,6 +186,7 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
 
     Route::post('{mailshot:id}/send', SendMailshot::class)->name('send');
+    Route::delete('{mailshot:id}/delete', DeleteMailshot::class)->name('delete');
 
     Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
 

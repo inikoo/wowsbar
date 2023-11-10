@@ -29,12 +29,25 @@ class SendMailshotTest
         $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
+        if (preg_match_all("/{{(.*?)}}/", $emailHtmlBody, $matches)) {
+            foreach ($matches[1] as $i => $placeholder) {
+                $placeholder = Str::kebab(Str::trim($placeholder));
+
+                //  if($placeholder=='unsubscribe')
+
+                //$emailHtmlBody = str_replace($matches[0][$i], sprintf('%s', $placeholder), $emailHtmlBody);
+            }
+        }
+
+        //   dd($emailHtmlBody);
 
         $dispatchedEmails = [];
         foreach (Arr::get($modelData, 'emails', []) as $email) {
             $email           = Email::firstOrCreate(['address' => $email]);
-            $dispatchedEmail =StoreDispatchedEmail::run($email);
-
+            $dispatchedEmail = StoreDispatchedEmail::run($email, $mailshot, [
+                'is_test' => true
+            ]);
+            $dispatchedEmail->refresh();
             $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, $mailshot->sender());
         }
 
@@ -44,7 +57,6 @@ class SendMailshotTest
     public function jsonResponse($dispatchedEmails): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         return DispatchedEmailResource::collection($dispatchedEmails);
-
     }
 
     public function prepareForValidation(ActionRequest $request): void

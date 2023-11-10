@@ -21,12 +21,21 @@ class MailshotResource extends JsonResource
         $mailshot = $this;
 
         return [
-            'slug'        => $mailshot->slug,
-            'subject'     => $mailshot->subject,
-            'state'       => $mailshot->state,
-            'state_label' => $mailshot->state->labels()[$mailshot->state->value],
-            'state_icon'  => $mailshot->state->stateIcon()[$mailshot->state->value],
-            'layout'      => $mailshot->layout,
+            'slug'                => $mailshot->slug,
+            'subject'             => $mailshot->subject,
+            'state'               => $mailshot->state,
+            'state_label'         => $mailshot->state->labels()[$mailshot->state->value],
+            'state_icon'          => $mailshot->state->stateIcon()[$mailshot->state->value],
+            'stats'               => MailshotStatResource::make($mailshot->mailshotStats)->getArray(),
+            'recipient_stored_at' => $mailshot->recipients_stored_at,
+            'schedule_at'         => $mailshot->schedule_at,
+            'ready_at'            => $mailshot->ready_at,
+            'sent_at'             => $mailshot->sent_at,
+            'cancelled_at'        => $mailshot->cancelled_at,
+            'stopped_at'          => $mailshot->stopped_at,
+            'date'                => $mailshot->date,
+            'created_at'          => $mailshot->created_at,
+            'updated_at'          => $mailshot->updated_at,
         ];
     }
 }
