@@ -35,11 +35,6 @@
                                             },
                                             "components": [
                                                 {
-                                                    "type": "comment",
-                                                    "content": "Your MJML body here",
-                                                    "tagName": "NULL"
-                                                },
-                                                {
                                                     "type": "mj-section",
                                                     "style": {
                                                         "text-align": "center",
@@ -94,7 +89,90 @@
                                                                     "components": [
                                                                         {
                                                                             "type": "textnode",
-                                                                            "content": "My Company"
+                                                                            "content": "Content 1"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "mj-section",
+                                                    "style": {
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "10px"
+                                                    },
+                                                    "tagName": "mj-section",
+                                                    "droppable": false,
+                                                    "removable": false,
+                                                    "attributes": {
+                                                        "style": "padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;",
+                                                        "text-align": "center",
+                                                        "padding-top": "10px",
+                                                        "padding-left": "0px",
+                                                        "padding-right": "0px",
+                                                        "padding-bottom": "10px"
+                                                    },
+                                                    "components": [
+                                                        {
+                                                            "type": "mj-column",
+                                                            "style": {
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "tagName": "mj-column",
+                                                            "droppable": false,
+                                                            "removable": false,
+                                                            "attributes": {
+                                                                "style": "vertical-align:top;",
+                                                                "vertical-align": "top"
+                                                            },
+                                                            "components": [
+                                                                {
+                                                                    "type": "mj-text",
+                                                                    "style": {
+                                                                        "align": "left",
+                                                                        "font-size": "13px",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px"
+                                                                    },
+                                                                    "tagName": "mj-text",
+                                                                    "editable": false,
+                                                                    "removable": false,
+                                                                    "attributes": {
+                                                                        "align": "left",
+                                                                        "style": "padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;font-size:13px;line-height:22px;align:left;",
+                                                                        "font-size": "13px",
+                                                                        "line-height": "22px",
+                                                                        "padding-top": "10px",
+                                                                        "padding-left": "25px",
+                                                                        "padding-right": "25px",
+                                                                        "padding-bottom": "10px"
+                                                                    },
+                                                                    "components": [
+                                                                        {
+                                                                            "type": "text",
+                                                                            "style": {
+                                                                                "text-align": "center"
+                                                                            },
+                                                                            "tagName": "p",
+                                                                            "editable": false,
+                                                                            "removable": false,
+                                                                            "attributes": {
+                                                                                "style": "text-align:center;"
+                                                                            },
+                                                                            "components": [
+                                                                                {
+                                                                                    "type": "textnode",
+                                                                                    "content": "{{ unsubcribe }}"
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     ]
                                                                 }
@@ -207,14 +285,90 @@
                 },
                 "selectors": [],
                 "selectorsAdd": ".moz-text-html .mj-column-per-100"
+            },
+            {
+                "style": {
+                    "display": "block !important",
+                    "max-height": "none !important",
+                    "visibility": "visible !important"
+                },
+                "selectors": [],
+                "selectorsAdd": "noinput.mj-menu-checkbox"
+            },
+            {
+                "style": {
+                    "display": "none !important"
+                },
+                "mediaText": "only screen and (max-width: 479px)",
+                "selectors": [],
+                "atRuleType": "media",
+                "selectorsAdd": ".mj-menu-checkbox[type=\"checkbox\"] ~ .mj-inline-links"
+            },
+            {
+                "style": {
+                    "display": "block !important",
+                    "font-size": "inherit !important",
+                    "max-width": "none !important",
+                    "max-height": "none !important"
+                },
+                "mediaText": "only screen and (max-width: 479px)",
+                "selectors": [],
+                "atRuleType": "media",
+                "selectorsAdd": ".mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-inline-links, .mj-menu-checkbox[type=\"checkbox\"] ~ .mj-menu-trigger"
+            },
+            {
+                "style": {
+                    "display": "block !important"
+                },
+                "mediaText": "only screen and (max-width: 479px)",
+                "selectors": [],
+                "atRuleType": "media",
+                "selectorsAdd": ".mj-menu-checkbox[type=\"checkbox\"] ~ .mj-inline-links > a"
+            },
+            {
+                "style": {
+                    "display": "block !important"
+                },
+                "mediaText": "only screen and (max-width: 479px)",
+                "selectors": [],
+                "atRuleType": "media",
+                "selectorsAdd": ".mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-menu-trigger .mj-menu-icon-close"
+            },
+            {
+                "style": {
+                    "display": "none !important"
+                },
+                "mediaText": "only screen and (max-width: 479px)",
+                "selectors": [],
+                "atRuleType": "media",
+                "selectorsAdd": ".mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-menu-trigger .mj-menu-icon-open"
+            },
+            {
+                "style": {
+                    "width": "33.3333% !important",
+                    "max-width": "33.3333%"
+                },
+                "mediaText": "only screen and (min-width: 480px)",
+                "selectors": [
+                    "mj-column-per-33-333333333333336"
+                ],
+                "atRuleType": "media"
+            },
+            {
+                "style": {
+                    "width": "33.3333% !important",
+                    "max-width": "33.3333%"
+                },
+                "selectors": [],
+                "selectorsAdd": ".moz-text-html .mj-column-per-33-333333333333336"
             }
         ]
     },
     "html": [
         {
             "js": null,
-            "css": "* { box-sizing: border-box; } body {margin: 0;}#iaum{width:600px;}#i2sa{padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;}#ib8n{vertical-align:top;}#ivwd{padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;font-size:13px;line-height:22px;align:left;}#outlook a{padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;}body{margin-top:0px;margin-right:0px;margin-bottom:0px;margin-left:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;text-size-adjust:100%;}table, td{border-collapse:collapse;}img{border-top-width:0px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-top-style:initial;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-top-color:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image-source:initial;border-image-slice:initial;border-image-width:initial;border-image-outset:initial;border-image-repeat:initial;height:auto;line-height:100%;outline-color:initial;outline-style:none;outline-width:initial;text-decoration-line:none;text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial;}p{display:block;margin-top:13px;margin-right:0px;margin-bottom:13px;margin-left:0px;}.moz-text-html .mj-column-per-100{max-width:100%;width:100% !important;}",
-            "html": "<mjml><mj-body><mj-section><mj-column><mj-text>My Company</mj-text></mj-column></mj-section></mj-body></mjml>"
+            "css": "* { box-sizing: border-box; } body {margin: 0;}#ifdk{width:600px;}#iow6{padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;}#inlg{vertical-align:top;}#i25l{padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;font-size:13px;line-height:22px;align:left;}#ibh5{padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;text-align:center;}#i8cn{vertical-align:top;}#ii3o{padding-top:10px;padding-bottom:10px;padding-right:25px;padding-left:25px;font-size:13px;line-height:22px;align:left;}#iyui1{text-align:center;}#outlook a{padding-top:0px;padding-left:0px;padding-right:0px;padding-bottom:0px;}body{margin-top:0px;margin-left:0px;padding-top:0px;margin-right:0px;padding-left:0px;margin-bottom:0px;padding-right:0px;padding-bottom:0px;text-size-adjust:100%;}table, td{border-collapse:collapse;}img{height:auto;line-height:100%;outline-color:initial;outline-style:none;outline-width:initial;border-top-color:initial;border-top-style:initial;border-top-width:0px;border-left-color:initial;border-left-style:initial;border-left-width:0px;border-image-slice:initial;border-image-width:initial;border-right-color:initial;border-right-style:initial;border-right-width:0px;border-bottom-color:initial;border-bottom-style:initial;border-bottom-width:0px;border-image-outset:initial;border-image-repeat:initial;border-image-source:initial;text-decoration-line:none;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;}p{display:block;margin-top:13px;margin-left:0px;margin-right:0px;margin-bottom:13px;}.moz-text-html .mj-column-per-100{width:100% !important;max-width:100%;}noinput.mj-menu-checkbox{display:block !important;max-height:none !important;visibility:visible !important;}.moz-text-html .mj-column-per-33-333333333333336{width:33.3333% !important;max-width:33.3333%;}@media only screen and (max-width: 479px){.mj-menu-checkbox[type=\"checkbox\"] ~ .mj-inline-links{display:none !important;}.mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-inline-links, .mj-menu-checkbox[type=\"checkbox\"] ~ .mj-menu-trigger{display:block !important;font-size:inherit !important;max-width:none !important;max-height:none !important;}.mj-menu-checkbox[type=\"checkbox\"] ~ .mj-inline-links > a{display:block !important;}.mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-menu-trigger .mj-menu-icon-close{display:block !important;}.mj-menu-checkbox[type=\"checkbox\"]:checked ~ .mj-menu-trigger .mj-menu-icon-open{display:none !important;}}",
+            "html": "<mjml><mj-body><mj-section><mj-column><mj-text>Content 1\n        </mj-text></mj-column></mj-section><mj-section><mj-column><mj-text><p style=\"text-align:center;\">{{ unsubcribe }}\n          </p></mj-text></mj-column></mj-section></mj-body></mjml>"
         }
     ]
 }
