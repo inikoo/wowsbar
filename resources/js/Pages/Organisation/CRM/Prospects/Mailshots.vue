@@ -9,13 +9,13 @@ import { Head } from '@inertiajs/vue3';
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { computed, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
-import { faRoad, faTerminal, faUserCircle } from '@fal/'
+import { faRoad, faTerminal, faUserCircle,faSpellCheck } from '@fal/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
 
-library.add(faRoad, faTerminal, faUserCircle)
+library.add(faRoad, faTerminal, faUserCircle, faSpellCheck)
 const props = defineProps<{
     pageHead: object
     tabs: {

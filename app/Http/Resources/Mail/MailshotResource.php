@@ -26,7 +26,7 @@ class MailshotResource extends JsonResource
             'state'       => $mailshot->state,
             'state_label' => $mailshot->state->labels()[$mailshot->state->value],
             'state_icon'  => $mailshot->state->stateIcon()[$mailshot->state->value],
-            'layout'      => $mailshot->layout,
+            'stats'       => MailshotStatResource::make($mailshot->mailshotStats)->getArray(),
         ];
     }
 }

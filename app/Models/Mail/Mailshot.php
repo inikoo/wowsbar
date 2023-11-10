@@ -43,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $scope_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property string|null $recipients_stored_at
  * @property array|null $channels
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
@@ -62,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsRecipe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsStoredAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeType($value)

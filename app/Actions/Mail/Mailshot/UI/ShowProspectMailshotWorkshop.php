@@ -83,6 +83,7 @@ class ShowProspectMailshotWorkshop extends InertiaAction
                 ],
                 'mailshot'    => MailshotResource::make($mailshot)->getArray(),
 
+
                 'imagesUploadRoute'   => [
                     'name'       => 'org.models.mailshot.images.store',
                     'parameters' => $mailshot->id

@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 27 Oct 2023 15:59:16 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 10 Nov 2023 15:24:47 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\CRM;
+namespace App\Http\Resources\Mail;
 
 use App\Models\Mail\Mailshot;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +16,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $number_dispatched_emails
  * @property mixed $number_estimated_dispatched_emails
  */
-class ProspectMailshotsResource extends JsonResource
+class MailshotsResource extends JsonResource
 {
     public function toArray($request): array
     {

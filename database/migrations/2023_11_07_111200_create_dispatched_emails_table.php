@@ -17,6 +17,8 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedInteger('email_id')->index();
             $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('mailshot_id')->nullable()->index();
+            $table->foreign('mailshot_id')->references('id')->on('mailshots')->onUpdate('cascade')->onDelete('cascade');
             $table->string('provider_message_id')->nullable()->index();
             $table->string('state')->index()->default(DispatchedEmailStateEnum::READY);
             $table->boolean('is_sent')->default(false);
@@ -27,6 +29,7 @@ return new class () extends Migration {
             $table->dateTimeTz('sent_at')->nullable();
             $table->dateTimeTz('delivered_at')->nullable();
             $table->dateTimeTz('date')->index();
+            $table->boolean('is_test')->default(false);
             $table->jsonb('data');
             $table->ulid();
             $table->timestampsTz();
