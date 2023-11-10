@@ -24,8 +24,7 @@ import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
 import Input from '@/Components/Pure/PureInput.vue';
-import { isNull } from 'lodash';
-import Publish from '@/Components/Utils/Publish.vue';
+import { isNull,get } from 'lodash';
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane, faFlask, faAsterisk)
 
@@ -49,7 +48,27 @@ const props = defineProps<{
 
 const OpenModal = ref(false)
 const date = ref(new Date())
-const testEmail = ref('')
+
+
+const getLocalStorage = () =>{
+    let storage = localStorage.getItem("mailshotWorkshop")
+    if(storage) return JSON.parse(storage)
+    return null
+}
+
+const localStorageData = ref(getLocalStorage())
+
+const getEmailTest=()=>{
+    const emailTest = localStorageData.value
+    let value = ''
+    if(emailTest) {
+      const item = emailTest.mailshotWorkshop?.testEmail.find((item)=>item.key == 'project')
+      value = get(item,'email','')
+    }
+    return value
+}
+
+const testEmail = ref(getEmailTest())
 
 const onCancel = () => {
     OpenModal.value = false
@@ -66,13 +85,9 @@ const sendEmailtest = async () => {
            { emails: testEmail.value }
         )
         console.log('send test email......')
-        console.log(response)
-        notify({
-            title: "Succeed",
-            text:  "The test email has been sent, please check your email",
-            type: "success"
-        });
+        onSuccess(response)
     } catch (error) {
+        console.log(error)
         notify({
             title: "Failed",
             text: "failed to send email",
@@ -80,6 +95,33 @@ const sendEmailtest = async () => {
         });
     }
 }
+
+const onSuccess = (response) => {
+    let newLocalStorage = localStorageData.value
+    if (newLocalStorage) {
+        const index = newLocalStorage.mailshotWorkshop.testEmail.findIndex((item) => item.key == 'project')
+        if (index != -1) newLocalStorage.mailshotWorkshop.testEmail[index] = { email: response.data.data[0].email, key: 'project' }
+    } else {
+        newLocalStorage = {
+            mailshotWorkshop: {
+                testEmail: [
+                    { email: response.data.data[0].email, key: 'project' }
+                ]
+            }
+        };
+    }
+
+    let localStorageString = JSON.stringify(newLocalStorage);
+    localStorage.setItem('mailshotWorkshop', localStorageString);
+
+    notify({
+        title: "Succeed",
+        text: "The test email has been sent, please check your email",
+        type: "success"
+    });
+};
+
+
 
 </script>
 
