@@ -53,6 +53,7 @@ class IndexProspectMailshots extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Mailshot::class)
+            ->leftJoin('mailshot_stats', 'mailshot_stats.mailshot_id', 'mailshots.id')
             ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
 
         if (class_basename($parent) == 'Shop') {
@@ -97,7 +98,11 @@ class IndexProspectMailshots extends InertiaAction
 
             $table
                 ->withGlobalSearch()
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
+
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
+
                 ->defaultSort('slug');
         };
     }
