@@ -146,7 +146,7 @@ const onSuccess = (response) => {
                             <Input v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
                         </div>
                         <span class="flex-shrink-0">
-                            <Button @click="sendEmailtest()" class="py-[14px] rounded-l-none">
+                            <Button @click="sendEmailtest()" class="py-[14px] rounded-l-none" :style="testEmail.length ? 'primary' : 'disabled'" :key="testEmail">
                                 <FontAwesomeIcon icon='fas fa-paper-plane' aria-hidden="true" />
                             </Button>
                         </span>
