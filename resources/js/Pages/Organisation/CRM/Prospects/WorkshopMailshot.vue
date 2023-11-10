@@ -19,12 +19,13 @@ import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import Modal from '@/Components/Utils/Modal.vue';
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
 import Input from '@/Components/Pure/PureInput.vue';
+import { isNull } from 'lodash';
+import Publish from '@/Components/Utils/Publish.vue';
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane, faFlask, faAsterisk)
 
@@ -48,14 +49,37 @@ const props = defineProps<{
 
 const OpenModal = ref(false)
 const date = ref(new Date())
-const testEmail = ref('')
+const testEmail = ref(null)
 
 const onCancel = () => {
     OpenModal.value = false
     date.value = new Date()
 }
 
-// console.log(props)
+const sendEmailtest = async () => {
+    try {
+        const response = await axios.post(
+            route(
+                props.sendTestRoute.name,
+                props.sendTestRoute.parameters
+            ),
+           { emails: testEmail.value }
+        )
+        console.log('send test email......')
+        notify({
+            title: "Succeed",
+            text:  "The test email has been sent, please check your email",
+            type: "success"
+        });
+    } catch (error) {
+        notify({
+            title: "Failed",
+            text: "failed to send email",
+            type: "error"
+        });
+    }
+}
+
 </script>
 
 
@@ -63,48 +87,39 @@ const onCancel = () => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
+        <div class="relative">
+            <Popover :width="'w-full'" position="right-[-170px]">
+                <template #button>
+                    <div class="relative" title="testing email">
+                        <Button class="rounded" :style="`secondary`">
+                            Send Test  <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
+                        </Button>
+                    </div>
+                </template>
+                <template #content>
+                    <dd class="w-64">
+                        <div class="my-2 flex items-start text-sm text-gray-900 sm:mt-0">
+                            <div class="relative flex-grow">
+                                <Input v-model="testEmail" placeholder="Email" type="email" />
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <Button size="xs" icon='fas fa-paper-plane' @click="sendEmailtest()"  label="Send Email Test"/> 
+                        </div>
+                    </dd>
+                    </template>
+                </Popover>
+            </div>
+         
             <div class="flex rounded-md overflow-hidden">
                 <Link v-if="setAsReadyRoute?.name" method="post" :href="route(
                     props.setAsReadyRoute?.name,
                     props.setAsReadyRoute?.parameters
                 )">
-                <Button class="rounded-r-none" :style="`secondary`">
+                <Button class="rounded-r-none py-[9px]">
                     <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
                 </Button>
                 </Link>
-
-                <Popover>
-                    <template #button>
-                        <div class="relative" title="testing email">
-                            <Button class="rounded-r-none" :style="`secondary`">
-                                <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
-                            </Button>
-                        </div>
-                    </template>
-                    <template #content>
-                        <div>
-                            <div class="inline-flex items-start leading-none">
-                                <FontAwesomeIcon :icon="'fas fa-asterisk'"
-                                    class="font-light text-[12px] text-red-400 mr-1" />
-                                <span class="capitalize">Email</span>
-                            </div>
-                            <div class="py-2.5">
-                                <Input v-model="testEmail" />
-                            </div>
-                            <div class="flex justify-end">
-                                <Link method="post" :data="{ emails: testEmail }" :href="route(
-                                    props.sendTestRoute.name,
-                                    props.sendTestRoute.parameters
-                                )">
-                                <Button size="xs" icon="far fa-rocket-launch" label="Send Email" :style="'primary'">
-                                </Button>
-                                </Link>
-                            </div>
-                        </div>
-                    </template>
-                </Popover>
-
-
                 <Popover>
                     <template #button>
                         <div class="relative" title="Scheduled publish">
