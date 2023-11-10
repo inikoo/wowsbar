@@ -46,7 +46,7 @@ const clearValue=()=>{
 </script>
 
 <template>
-    <div class="bg-white w-full flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 shadow rounded-md overflow-hidden">
+    <div class="bg-white w-full flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 rounded-md overflow-hidden">
         <div class="relative w-full">
             <input
                 :value="modelValue"

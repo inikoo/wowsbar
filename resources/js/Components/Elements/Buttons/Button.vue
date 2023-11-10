@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
     'size'?: string
     'icon'?: string | string[]
     'leftIcon'?: Object
-    'iconRight'?: Object
+    'iconRight'?: string | string[]
     'action'?: string
     'label'?: string
     'full'?: boolean

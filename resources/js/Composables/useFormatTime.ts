@@ -9,7 +9,7 @@ interface OptionsTime {
     localeCode?: string
 }
 
-export const useFormatTime = (dateIso: string, OptionsTime?: OptionsTime) => {
+export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
     let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : OptionsTime?.localeCode ?? 'enUS'
@@ -22,7 +22,7 @@ export const useFormatTime = (dateIso: string, OptionsTime?: OptionsTime) => {
 }
 
 // Relative time range
-export const useRangeFromNow = (dateIso: string, OptionsTime?: OptionsTime) => {
+export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
     
     let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
