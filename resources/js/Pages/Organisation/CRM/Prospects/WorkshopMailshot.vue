@@ -49,7 +49,7 @@ const props = defineProps<{
 
 const OpenModal = ref(false)
 const date = ref(new Date())
-const testEmail = ref(null)
+const testEmail = ref('')
 
 const onCancel = () => {
     OpenModal.value = false
@@ -66,6 +66,7 @@ const sendEmailtest = async () => {
            { emails: testEmail.value }
         )
         console.log('send test email......')
+        console.log(response)
         notify({
             title: "Succeed",
             text:  "The test email has been sent, please check your email",
@@ -98,14 +99,16 @@ const sendEmailtest = async () => {
                 </template>
                 <template #content>
                     <dd class="w-64">
-                        <div class="my-2 flex items-start text-sm text-gray-900 sm:mt-0">
-                            <div class="relative flex-grow">
-                                <Input v-model="testEmail" placeholder="Email" type="email" />
-                            </div>
+                    <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
+                        <div class="relative flex-grow">
+                            <Input v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
                         </div>
-                        <div class="flex justify-end">
-                            <Button size="xs" icon='fas fa-paper-plane' @click="sendEmailtest()"  label="Send Email Test"/> 
-                        </div>
+                        <span class="flex-shrink-0">
+                            <Button @click="sendEmailtest()" class="py-[14px] rounded-l-none">
+                                <FontAwesomeIcon icon='fas fa-paper-plane' aria-hidden="true" />
+                            </Button>
+                        </span>
+                    </div>
                     </dd>
                     </template>
                 </Popover>

@@ -4,8 +4,9 @@ import { useCopyText } from '@/Composables/useCopyText'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCopy } from '@fal/'
 import {faEye, faEyeSlash} from '@far/'
+import {faTimesCircle,} from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faCopy, faEye, faEyeSlash)
+library.add(faCopy, faEye, faEyeSlash,faTimesCircle)
 
 const props = withDefaults(defineProps<{
     modelValue: string | number
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<{
     maxValue?: string | number
     caret?: boolean
     pattern?: string 
+    clear?:boolean
 }>(), {
     caret: true,
     type: 'text'
@@ -35,6 +37,10 @@ const emits = defineEmits<{
 const showPassword = ref(props.type)  // default is type = "text"
 const handleEyeIcon = () => {
     showPassword.value = showPassword.value == 'text' ? 'password' : props.type
+}
+
+const clearValue=()=>{
+    emits('update:modelValue', '')
 }
 
 </script>
@@ -72,6 +78,14 @@ const handleEyeIcon = () => {
                 @click="useCopyText(modelValue)"
             >
                 <FontAwesomeIcon icon="fal fa-copy"
+                    class="text-lg leading-none"
+                    aria-hidden="true" />
+            </div>
+            <div v-if="clear && modelValue.length"
+                class="flex justify-center items-center px-2 absolute inset-y-0 right-0 gap-x-1 cursor-pointer opacity-20 hover:opacity-75 active:opacity-100"
+                @click="clearValue()"
+            >
+               <font-awesome-icon :icon="['fas', 'times-circle']"
                     class="text-lg leading-none"
                     aria-hidden="true" />
             </div>
