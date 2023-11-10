@@ -34,7 +34,7 @@ class SendMailshotTest
         foreach (Arr::get($modelData, 'emails', []) as $email) {
             $email           = Email::firstOrCreate(['address' => $email]);
             $dispatchedEmail =StoreDispatchedEmail::run($email);
-
+            $dispatchedEmail->refresh();
             $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, $mailshot->sender());
         }
 
@@ -43,6 +43,7 @@ class SendMailshotTest
 
     public function jsonResponse($dispatchedEmails): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
+
         return DispatchedEmailResource::collection($dispatchedEmails);
 
     }
