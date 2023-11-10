@@ -22,10 +22,10 @@ class StoreDispatchedEmail
         /** @var DispatchedEmail $dispatchedEmail */
         $dispatchedEmail = DispatchedEmail::create(
             array_merge([
-                'email_id' => $email->id,
-                'ulid'     => Str::ulid(),
-                'date'     => now(),
-                'mailshot' => $mailshot?->id
+                'email_id'    => $email->id,
+                'ulid'        => Str::ulid(),
+                'date'        => now(),
+                'mailshot_id' => $mailshot?->id
             ], $modelData)
         );
 

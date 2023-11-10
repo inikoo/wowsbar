@@ -38,7 +38,7 @@ class MailshotHydrateReadyEmails implements ShouldBeUnique
 
         $mailshot->mailshotStats()->update(
             [
-                'number_dispatched_emails_state'      => $count,
+                'number_dispatched_emails'            => $count,
                 'number_dispatched_emails_state_ready'=> $countReady
             ]
         );
