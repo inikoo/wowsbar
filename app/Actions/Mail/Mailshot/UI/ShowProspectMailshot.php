@@ -11,6 +11,7 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
+use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\UI\Organisation\MailshotTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Mail\MailshotResource;
@@ -23,6 +24,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspectMailshot extends InertiaAction
 {
     use WithActionButtons;
+    use WithProspectMailshotNavigation;
 
 
     public function handle(Mailshot $mailshot): Mailshot
@@ -51,6 +53,53 @@ class ShowProspectMailshot extends InertiaAction
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
+        $iconActions = [
+            $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+            $this->canEdit ? $this->getEditActionIcon($request) : null,
+        ];
+
+        if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
+            $iconActions[] = [
+                'tooltip'  => __('Workshop'),
+                'icon'     => 'fal fa-drafting-compass',
+                'style'    => 'secondary',
+                'route'    => [
+                    'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
+                    'parameters' => $request->route()->originalParameters()
+                ]
+            ];
+        }
+
+        $action = [];
+
+        if ($this->canEdit && $mailshot->state == MailshotStateEnum::IN_PROCESS) {
+            $action[] = [
+                'type'  => 'button',
+                'style' => 'secondary',
+                'label' => __('Workshop'),
+                'icon'  => ["fal", "fa-drafting-compass"],
+                'route' => [
+                    'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
+                    'parameters' => array_values($request->route()->originalParameters())
+                ]
+            ];
+        }
+
+        if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
+            $action[] = [
+                'type'       => 'button',
+                'style'      => 'primary',
+                'label'      => __('Send Now'),
+                'icon'       => ["fal", "fa-paper-plane"],
+                'route'      => [
+                    'name'       => 'org.models.mailshot.send',
+                    'parameters' => $mailshot->id,
+                    'method'     => 'post',
+
+                ]
+            ];
+        }
+
         return Inertia::render(
             'CRM/Prospects/Mailshot',
             [
@@ -70,24 +119,13 @@ class ShowProspectMailshot extends InertiaAction
                         'icon'    => 'fal fa-mail-bulk'
                     ],
                     'iconRight'   => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'iconActions' => [
-                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
-                        $this->canEdit ? $this->getEditActionIcon($request) : null,
-                    ],
                     'actions'     => [
-
-
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'primary',
-                            'label' => __('Workshop'),
-                            'icon'  => ["fal", "fa-drafting-compass"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-                    ],
+                        [
+                            'type'          => 'buttonGroup',
+                            'buttonGroup'   => $iconActions
+                        ],
+                        ...$action
+                    ]
                 ],
                 'tabs'                             => [
                     'current'    => $this->tab,
@@ -195,42 +233,5 @@ class ShowProspectMailshot extends InertiaAction
         };
     }
 
-    public function getPrevious(Mailshot $mailshot, ActionRequest $request): ?array
-    {
-        $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug')->first();
-
-
-        return $this->getNavigation($previous, $request->route()->getName());
-    }
-
-    public function getNext(Mailshot $mailshot, ActionRequest $request): ?array
-    {
-        $next = Mailshot::where('slug', '>', $mailshot->slug)->orderBy('slug')->first();
-
-
-        return $this->getNavigation($next, $request->route()->getName());
-    }
-
-    private function getNavigation(?Mailshot $mailshot, string $routeName): ?array
-    {
-        if (!$mailshot) {
-            return null;
-        }
-
-
-        return match ($routeName) {
-            'org.crm.shop.prospects.mailshots.show',
-            'org.crm.shop.prospects.mailshots.edit' => [
-                'label' => $mailshot->slug,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        $mailshot->scope->slug,
-                        $mailshot->slug
-                    ]
-                ]
-            ],
-        };
-    }
 
 }

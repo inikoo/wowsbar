@@ -32,7 +32,12 @@ use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
+use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
+use App\Actions\Mail\Mailshot\DeleteMailshot;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
+use App\Actions\Mail\Mailshot\SendMailshot;
+use App\Actions\Mail\Mailshot\SendMailshotTest;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
@@ -180,11 +185,23 @@ Route::patch('/customer-user/{customerUser:id}', UpdateOrgCustomerUser::class)->
 Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
 
-    Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
+    Route::post('{mailshot:id}/send', SendMailshot::class)->name('send');
+    Route::delete('{mailshot:id}/delete', DeleteMailshot::class)->name('delete');
+
+    Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
+
+    Route::post('{mailshot:id}/ready', SetMailshotAsReady::class)->name('state.ready');
     Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
 
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
 
     Route::get('/custom/texts', GetMailshotCustomText::class)->name('custom.text');
+});
+
+Route::prefix('email-templates')->as('email-templates.')->group(function () {
+    Route::post('{emailTemplate:id}/publish', UpdateMailshotContent::class)->name('content.publish');
+    Route::post('{emailTemplate:id}/content', UpdateEmailTemplateContent::class)->name('content.update');
+    Route::post('{emailTemplate:id}/images', UploadImagesToMailshot::class)->name('images.store');
+    Route::get('{emailTemplate:id}/content', ShowEmailTemplateContent::class)->name('content.show');
 });

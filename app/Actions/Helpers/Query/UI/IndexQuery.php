@@ -66,10 +66,8 @@ class IndexQuery extends InertiaAction
             }
 
             $table->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'slug', label: __('slug'), sortable: true)
-                ->column(key: 'model_type', label: __('model type'), sortable: true)
-                ->column(key: 'base', label: __('base'))
-                ->column(key: 'filters', label: __('filters'))
+                ->column(key: 'description', label: __('description'), sortable: true)
+                ->column(key: 'number_items', label: __('prospects'))
                 ->defaultSort('slug');
         };
     }

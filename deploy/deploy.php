@@ -17,12 +17,18 @@ task('deploy:build', function () {
     run("cd {{release_path}} && {{bin/npm}} run build");
 });
 
+desc('Set release');
+task('deploy:set-release', function () {
+    run("cd {{release_path}} && sed -i~ '/^RELEASE=/s/=.*/=\"{{release_semver}}\"/' .env   ");
+});
+
 set('shared_dirs', ['storage','private']);
 
 desc('Deploys your project');
 task('deploy', [
     'deploy:prepare',
     'deploy:vendors',
+    'deploy:set-release',
     'artisan:storage:link',
     'artisan:config:cache',
     'artisan:route:cache',

@@ -8,11 +8,8 @@
 namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\Banner\UI\ShowBanner;
-use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\Mail\Mailshot;
+use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
@@ -21,75 +18,47 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditProspectMailshot extends InertiaAction
 {
-    public function handle(Banner $banner): Banner
+    use WithProspectMailshotNavigation;
+
+    public function handle(Mailshot $mailshot): Mailshot
     {
-        return $banner;
+        return $mailshot;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
-    public function asController(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
+    public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
         $this->initialisation($request);
 
-        return $this->handle($banner);
+        return $this->handle($mailshot);
     }
 
     /**
      * @throws Exception
      */
-    public function htmlResponse(Banner $banner, ActionRequest $request): Response
+    public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
         $sections['properties'] = [
-            'label'  => __('Banner properties'),
+            'label'  => __('Mailshot properties'),
             'icon'   => 'fal fa-sliders-h',
             'fields' => [
                 'name'                 => [
                     'type'     => 'input',
-                    'label'    => __('name'),
-                    'value'    => $banner->name,
+                    'label'    => __('subject'),
+                    'value'    => $mailshot->subject,
                     'required' => true,
                 ],
-                'portfolio_website_id' => [
-                    'type'     => 'select',
-                    'label'    => __('website'),
-                    'value'    => $banner->portfolio_website_id,
-                    'options'  => GetPortfolioWebsitesOptions::run(),
-                    'required' => true,
-                ],
+
             ]
         ];
 
 
-        if ($banner->state == BannerStateEnum::LIVE) {
-            $sections['shutdown'] = [
-                'label'  => __('Shutdown'),
-                'icon'   => 'fal fa-power-off',
-                'title'  => '',
-                'fields' => [
-                    'shutdown_action' => [
-                        'type'   => 'action',
-                        'action' => [
-                            'type'  => 'button',
-                            'style' => 'secondary',
-                            'icon'  => ['fal', 'fa-power-off'],
-                            'label' => __('Shutdown banner'),
-                            'route' => [
-                                'name'       => 'customer.models.banner.shutdown',
-                                'parameters' => [
-                                    'banner' => $banner->id
-                                ]
-                            ]
-                        ],
-                    ]
-                ]
-            ];
-        }
 
         $sections['delete'] = [
             'label'  => __('Delete'),
@@ -100,13 +69,14 @@ class EditProspectMailshot extends InertiaAction
                     'action' => [
                         'type'  => 'button',
                         'style' => 'delete',
-                        'label' => __('delete banner'),
+                        'label' => __('delete mailshot'),
                         'method'=> 'delete',
                         'route' => [
-                            'name'       => 'customer.models.banner.delete',
+                            'name'       => 'org.models.mailshot.delete',
                             'parameters' => [
-                                'banner' => $banner->id
-                            ]
+                                'mailshot' => $mailshot->id
+                            ],
+                            'method'=> 'delete'
                         ]
                     ],
                 ]
@@ -121,22 +91,22 @@ class EditProspectMailshot extends InertiaAction
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __("Edit banner"),
+                'title'       => __("Edit mailshot"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
                 'navigation'  => [
-                    'previous' => $this->getPrevious($banner, $request),
-                    'next'     => $this->getNext($banner, $request),
+                    'previous' => $this->getPrevious($mailshot, $request),
+                    'next'     => $this->getNext($mailshot, $request),
                 ],
                 'pageHead'    => [
-                    'title'     => $banner->name,
+                    'title'     => $mailshot->subject,
                     'icon'      => [
-                        'tooltip' => __('banner'),
+                        'tooltip' => __('mailshot'),
                         'icon'    => 'fal fa-sign'
                     ],
-                    'iconRight' => $banner->state->stateIcon()[$banner->state->value],
+                    'iconRight' => $mailshot->state->stateIcon()[$mailshot->state->value],
                     'actions'   => [
                         [
                             'type'  => 'button',
@@ -154,8 +124,8 @@ class EditProspectMailshot extends InertiaAction
                     'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'customer.models.banner.update',
-                            'parameters' => $banner->id
+                            'name'       => 'org.models.mailshot.update',
+                            'parameters' => $mailshot->id
                         ],
                     ]
                 ],
@@ -167,44 +137,13 @@ class EditProspectMailshot extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowBanner::make()->getBreadcrumbs(
+        return ShowProspectMailshot::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
             suffix: '('.__('editing').')'
         );
     }
 
-    public function getPrevious(Banner $banner, ActionRequest $request): ?array
-    {
-        $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug', 'desc')->first();
 
-        return $this->getNavigation($previous, $request);
-    }
 
-    public function getNext(Banner $banner, ActionRequest $request): ?array
-    {
-        $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
-
-        return $this->getNavigation($next, $request);
-    }
-
-    private function getNavigation(?Banner $banner, ActionRequest $request): ?array
-    {
-        if (!$banner) {
-            return null;
-        }
-
-        $routeName = $request->route()->getName();
-
-        return match ($routeName) {
-            'customer.banners.banners.edit' => [
-                'label' => $banner->name,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => $request->route()->originalParameters()
-                ]
-            ],
-            default => null
-        };
-    }
 }

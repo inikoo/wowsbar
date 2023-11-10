@@ -21,7 +21,7 @@ class LoggedOrganisationUserResource extends JsonResource
         $user=$this;
         return [
             'username'           => $user->username,
-            'avatar_thumbnail'   => ! blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
+            'avatar_thumbnail'   => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
         ];
     }
 }

@@ -1,158 +1,185 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faRocketLaunch, faClock, faVideo } from "@far/";
-import { isNull } from "lodash";
-import { useFormatTime } from "@/Composables/useFormatTime";
-import { Calendar } from 'v-calendar';
-import 'v-calendar/style.css';
-
-library.add(faRocketLaunch, faClock, faVideo);
+import { ref, onMounted, Ref, watch } from 'vue'
+import { DatePicker } from 'v-calendar'
+import 'v-calendar/style.css'
+import axios from 'axios'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import { notify } from '@kyvg/vue3-notification'
+import { usePage } from '@inertiajs/vue3'
+import Login from '@/Pages/Public/Auth/Login.vue'
 
 const props = defineProps<{
-    data: Object;
-}>();
-console.log("ini", props.data);
-console.log("porpsd", props);
+    data: {
+        info: string
+        title: string
+    }
+}>()
 
-const Book = {
-    description:
-        "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
-    meet: {
-        customerService: "Arya",
-        duration: "30 mnt",
-    },
-    title: "Discovery Call - Wowsbar",
-    meetInformation: "Web conferencing details provided upon confirmation.",
-};
+const availableSchedulesOnMonth: Ref<{[key: string]: string[]}> = ref({})  // {2023-6: 2023-11-25 ['09:00, '10:00', ...]}
+const selectedDate: any = ref()  // on select date in DatePicker
+const isLoading = ref(false)  // Loading on fetch
+const isComponentLogin = ref(false)  // to change component from select Appointment to Login
+
+// Attribute for DatePicker
 const attrs = ref([
     {
         key: "today",
         highlight: {
-            color: "purple",
+            color: "gray",
             fillMode: "outline",
         },
         dates: new Date(),
-    },
-    {
-        key: "tgl2",
-        highlight: {
-            color: "purple",
-            fillMode: "outline",
-        },
-        dates: new Date(2023, 8, 2),
-    },
-    {
-        key: "tgl7",
-        highlight: {
-            color: "purple",
-            fillMode: "outline",
-        },
-        dates: new Date(2023, 8, 4),
-    },
-    {
-        key: "tgl6",
-        highlight: {
-            color: "purple",
-            fillMode: "outline",
-        },
-        dates: new Date(2023, 8, 8),
-    },
-    {
-        key: "tgl4",
-        highlight: {
-            color: "purple",
-            fillMode: "outline",
-        },
-        dates: new Date(2023, 8, 20),
-    },
-]);
+    }
+])
 
-const hours = [
-    "07.00 Am",
-    "08.00 Am",
-    "09.00 Am",
-    "10.00 Am",
-    "11.00 Am",
-    "12.00 Am",
-    "13.00 Am",
-];
+// On click button available hour
+const onSelectHour = (time: string) => {
+    const timeSplit = time.split(':')
+    selectedDate.value = new Date(selectedDate.value)
+    selectedDate.value.setHours(timeSplit[0])
+    selectedDate.value.setMinutes(timeSplit[1])
+}
 
-const selectedDate = ref(0);
 
-const handleDateClick = (date) => {
-    if (date.attributes.length > 0) {
-        if (!isNull(selectedDate.value)) {
-            attrs.value[selectedDate.value].highlight.fillMode = "outline";
-        }
-        const index = attrs.value.findIndex(
-            (item) => date.attributes[0].key == item.key
-        );
-        if (index >= 0) {
-            attrs.value[index].highlight.fillMode = "solid";
-            selectedDate.value = index;
+// To convert date to yyyy-mm-dd
+const getDateOnly = (dateString: string | Date): string => {
+    const date = new Date(dateString)
+
+    // Extract the year, month, and day components
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1 // Month is zero-based, so add 1
+    const day = date.getDate()
+
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+    return formattedDate  // 2023-11-23
+}
+
+// Fetch available schedule for whole month
+const fetchAvailableOnMonth = async (year: number, month: number) => {
+    if(!year || !month) return 
+    isLoading.value = true
+    try {
+        const response = await axios.get(
+            route('public.appointment.schedule'),
+            {
+                params: {
+                    year: year,
+                    month: month
+                }
+            }
+        )
+
+        availableSchedulesOnMonth.value = {
+            [`${year}-${month}`]: response.data.availableSchedules,
+            ...availableSchedulesOnMonth.value
         }
     }
-};
-
-const getDate = () => {
-    if (!isNull(selectedDate.value)) {
-        return useFormatTime(attrs.value[selectedDate.value].dates);
+    catch (error: any) {
+        console.log('error', error)
     }
-    return ""; // Handle when no date is selected
-};
+    isLoading.value = false
+}
+
+// When submit Appointment
+const onClickMakeAppointment = async () => {
+    if(!!usePage().props.auth.user) {
+        console.log('Appointment created')
+
+        notify({
+            title: "Appointment successfuly created.",
+            // text: error,
+            type: "success"
+        })
+
+    } else {
+        isComponentLogin.value = true
+    }
+}
+
+onMounted(() => {
+    const today = new Date()
+    fetchAvailableOnMonth(today.getFullYear(), today.getMonth() + 1)
+})
+
+watch(selectedDate, () => {
+    if(!availableSchedulesOnMonth.value[`${selectedDate.value?.getFullYear()}-${selectedDate.value?.getMonth() + 1}`]){
+        fetchAvailableOnMonth(selectedDate.value?.getFullYear(), selectedDate.value?.getMonth() + 1)
+    }
+})
+
 </script>
-<template>
-    <div style="margin: 20px;" >
-        <div class="container border-2" style="max-width: 800px;">
-        <div class="row">
-            <div class="col-md-6 p-0">
-                <div class="card text-center rounded-0 border-0">
-                    <div
-                        class="card-body"
 
-                    >
-                        <div v-html="data.info"></div>
+
+<template>
+    <div style="margin: 20px">
+        <div class="container border-2" style="max-width: 800px">
+            <div class="row divide-x divide-gray-300">
+                <!-- Section: Left (Blog) -->
+                <div class="col-md-6 p-0">
+                    <div class="text-center rounded-0 border-0">
+                        <div class="card-body">
+                            <div v-html="data.info"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 p-0">
-                <div class="card text-center rounded-0 border-0">
-                    <div class="card-body" style="border-left: 1px solid #d1d5db; height:100%">
-                        <div class="bg-white rounded text-left">
-                            <span v-html="data.title"></span>
-                        </div>
-                        <div>
-                            <Calendar
-                                expanded
-                                :attributes="attrs"
-                                @dayclick="handleDateClick"
-                            />
-                        </div>
-                        <div>
-                            <div v-if="!isNull(selectedDate)">
-                                <div class="px-2.5">{{ getDate() }}</div>
-                                <div class="px-2.5 my-4">
-                                    <div
-                                        class="flex flex-wrap justify-start gap-3"
-                                    >
-                                        <button
-                                            v-for="hour in hours"
-                                            :key="hour"
-                                            @click="selectHour(hour)"
-                                            class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                        >
-                                            {{ hour }}
-                                        </button>
-                                    </div>
+                
+                <!-- Section: Right (calendar) -->
+                <div class="col-md-6 p-0 text-center">
+                    <transition name="slide-to-left" mode="out-in">
+                        <div v-if="!isComponentLogin" class="card-body">
+                            <div class="bg-white rounded text-left">
+                                <span v-html="data.title"></span>
+                            </div>
+                            <div>
+                                <DatePicker
+                                    v-model="selectedDate"
+                                    expanded
+                                    :attributes="attrs"
+                                />
+                            </div>
+
+                            <!-- Section: Button Hour, Button Submit -->
+                            <div class="px-2.5 my-4 space-y-4">
+                                <div v-if="selectedDate" class="grid grid-cols-3 justify-center gap-x-2 gap-y-3">
+                                    <template v-if="isLoading">
+                                        <div v-for="_ in 6" class="w-full h-8 rounded skeleton" />
+                                    </template>
+                                    <template v-else>
+                                        <template v-if="availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`]?.[getDateOnly(selectedDate)]">
+                                            <div v-for="time in availableSchedulesOnMonth[`${selectedDate?.getFullYear()}-${selectedDate?.getMonth()+1}`][getDateOnly(selectedDate)]" class="w-full">
+                                                <Button full
+                                                    :key="selectedDate + time"
+                                                    @click="onSelectHour(time)"
+                                                    :style="
+                                                        time.split(':')[0] == selectedDate.getHours() &&
+                                                        time.split(':')[1] == selectedDate.getMinutes()
+                                                            ? 'rainbow'
+                                                            : 'tertiary'
+                                                    "
+                                                >
+                                                    {{ time }}
+                                                </Button>
+                                            </div>
+                                            <div class="col-span-3">
+                                                <Button @click="onClickMakeAppointment()" label="Make appointment" full />
+                                            </div>
+                                        </template>
+                                        <div v-else class="col-span-3">No schedules available</div>
+                                    </template>
+                                </div>
+                                <!-- If not selected date yet -->
+                                <div v-else class="text-gray-500 italic">
+                                    ---- Select date to make an appointment ----
                                 </div>
                             </div>
+                            <!-- {{ selectedDate }} -->
                         </div>
-                    </div>
+                        <div v-else class="text-left">
+                            <Login @onSuccessLogin="() => isComponentLogin = false" />
+                        </div>
+                    </transition>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-
 </template>

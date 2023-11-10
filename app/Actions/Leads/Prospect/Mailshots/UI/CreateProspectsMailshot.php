@@ -8,6 +8,7 @@
 namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +16,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateMailshot extends InertiaAction
+class CreateProspectsMailshot extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -48,6 +49,19 @@ class CreateMailshot extends InertiaAction
                     'placeholder' => __('Email subject'),
                     'required'    => true,
                     'value'       => '',
+                ],
+            ]
+        ];
+
+        $fields[] = [
+            'title'  => '',
+            'fields' => [
+                'subject' => [
+                    'type'        => 'prospectsQueries',
+                    'label'       => __('prospects'),
+                    'placeholder' => __('Email subject'),
+                    'required'    => true,
+                    'options'     => IndexProspectQueries::run(),
                 ],
             ]
         ];

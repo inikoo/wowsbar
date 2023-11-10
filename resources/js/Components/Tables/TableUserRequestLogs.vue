@@ -23,7 +23,9 @@ const props = defineProps<{
 <template>
     <Table :resource="data" class="mt-5">
         <template #cell(username)="{ item: user }">
-            <template v-if="user.username">{{ user.username }}</template>
+            <template v-if="user.username">
+                <span class="text-gray-500">{{ user.username }}</span>
+            </template>
         </template>
         
         <template #cell(user_agent)="{ item: user }">
@@ -35,7 +37,7 @@ const props = defineProps<{
         </template>
 
         <template #cell(datetime)="{ item: user }">
-            {{ useFormatTime(user.datetime, locale.language.code, 'hms') }}
+            <span class="text-gray-500">{{ useFormatTime(user.datetime, { localeCode: locale.language.code, formatTime: 'hms' }) }}</span>
         </template>
     </Table>
 </template>

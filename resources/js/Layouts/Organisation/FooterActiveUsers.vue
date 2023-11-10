@@ -55,7 +55,11 @@ function getAwayStatus(lastActive)
 <template>
 
     <div class="relative h-full flex z-50 select-none justify-center items-center px-8 gap-x-1 cursor-pointer text-gray-800"
-        :class="[isTabActive == 'activeUsers' ? 'bg-gray-700' : '']"
+        :class="[
+            isTabActive == 'activeUsers'
+                ? layout.systemName === 'org' ? 'bg-gray-200 text-gray-700' : 'text-gray-300'
+                : 'hover:bg-gray-200'
+        ]"
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
         <div class="relative text-xs flex items-center gap-x-1">
@@ -64,7 +68,9 @@ function getAwayStatus(lastActive)
         </div>
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-if="activeUserDataLength" v-for="(dataUser, index) in activeUserData" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                <div v-if="activeUserDataLength" v-for="(dataUser, index) in activeUserData" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
+                    
+                >
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
                     <span class="font-semibold text-gray-700">{{ dataUser.id }}</span> -
                     <!-- <FontAwesomeIcon

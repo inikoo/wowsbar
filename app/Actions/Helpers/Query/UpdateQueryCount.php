@@ -8,7 +8,6 @@
 namespace App\Actions\Helpers\Query;
 
 use App\Models\Helpers\Query;
-use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -24,6 +23,8 @@ class UpdateQueryCount
 
         $queryBuilder=BuildQuery::run($query);
 
+        //print($queryBuilder->toSql()."\n");
+
         $numberItems=$queryBuilder->count();
 
         $query->update(
@@ -38,23 +39,31 @@ class UpdateQueryCount
 
     }
 
-    public string $commandSignature = 'query:count {slug}';
+    public string $commandSignature = 'query:count {queries?*}';
 
     public function asCommand(Command $command): int
     {
         $this->asAction = true;
 
-        try {
-            $query = Query::where('slug', $command->argument('slug'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
-
-            return 1;
+        if(!$command->argument('queries')) {
+            $queries=Query::all();
+        } else {
+            $queries =  Query::query()
+                ->when($command->argument('queries'), function ($query) use ($command) {
+                    $query->whereIn('slug', $command->argument('queries'));
+                })
+                ->cursor();
         }
 
-        $this->handle($query);
+        $exitCode = 0;
+        foreach ($queries as $query) {
+            $this->handle($query);
+            $command->line("Query $query->name count: $query->number_items");
+        }
 
-        return 0;
+
+
+        return $exitCode;
     }
 
 }

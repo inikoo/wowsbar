@@ -13,6 +13,7 @@ use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
@@ -42,6 +43,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $scope_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property string|null $recipients_stored_at
+ * @property array|null $channels
+ * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -49,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCancelledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereChannels($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
@@ -58,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsRecipe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsStoredAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeType($value)
@@ -82,6 +88,7 @@ class Mailshot extends Model
     protected $casts = [
         'recipients_recipe' => 'array',
         'layout'            => 'array',
+        'channels'          => 'array',
         'type'              => MailshotTypeEnum::class,
         'state'             => MailshotStateEnum::class
 
@@ -90,6 +97,7 @@ class Mailshot extends Model
     protected $attributes = [
         'layout'            => '{}',
         'recipients_recipe' => '{}',
+        'channels'          => '{}'
     ];
 
     protected $guarded = [];
@@ -110,6 +118,7 @@ class Mailshot extends Model
             ->slugsShouldBeNoLongerThan(16);
     }
 
+
     public function scope(): MorphTo
     {
         return $this->morphTo();
@@ -119,6 +128,22 @@ class Mailshot extends Model
     {
         return $this->hasMany(MailshotRecipient::class);
     }
+
+    public function mailshotStats(): HasOne
+    {
+        return $this->hasOne(MailshotStats::class);
+    }
+
+    public function sender()
+    {
+        if(app()->environment('production')) {
+            $sender=$this->scope->sender_email_address;
+        } else {
+            $sender=config('mail.devel.sender_email_address');
+        }
+        return $sender;
+    }
+
 
 
 }

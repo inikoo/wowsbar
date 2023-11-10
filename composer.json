@@ -13,7 +13,10 @@
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
+        "ext-zip": "*",
+        "aws/aws-php-sns-message-validator": "^1.1",
         "aws/aws-sdk-php": "^3.278",
+        "aws/aws-sdk-php-laravel": "^3.8",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
         "elasticsearch/elasticsearch": "^8.8",
@@ -35,6 +38,7 @@
         "owen-it/laravel-auditing": "^13.5",
         "propaganistas/laravel-phone": "^5.0",
         "pusher/pusher-php-server": "^7.2",
+        "rmunate/spell-number": "^4.1",
         "sentry/sentry-laravel": "^3.7",
         "spatie/crawler": "^8.0",
         "spatie/laravel-analytics": "^5.0",
@@ -45,12 +49,12 @@
         "spatie/laravel-query-builder": "^5.2",
         "spatie/laravel-sluggable": "^3.5",
         "spatie/laravel-tags": "^4.5",
+        "spatie/mjml-php": "^1.0",
         "stevebauman/location": "^7.0",
         "tightenco/ziggy": "^1.0",
         "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5",
-        "xendit/xendit-php": "^2.19",
-      "ext-zip": "*"
+        "xendit/xendit-php": "^2.19"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

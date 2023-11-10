@@ -16,7 +16,9 @@ use App\Actions\Market\Shop\Hydrators\ShopHydrateOrders;
 use App\Actions\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
 use App\Actions\Market\Shop\Hydrators\ShopHydratePayments;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateSales;
+use App\Actions\Traits\WithShopsArgument;
 use App\Models\Market\Shop;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -24,6 +26,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class HydrateShops
 {
     use asAction;
+    use WithShopsArgument;
 
     public function handle(Shop $shop): void
     {
@@ -37,27 +40,16 @@ class HydrateShops
         ShopHydrateSales::run($shop);
         ShopHydrateProducts::run($shop);
         ShopHydrateCustomerUsers::run($shop);
+        ShopHydrateProspects::run($shop);
     }
     public string $commandSignature = 'hydrate:shops {shops?*} ';
 
     public function asCommand(Command $command): int
     {
 
-        if(!$command->argument('shops')) {
-            $shops=Shop::all();
-        } else {
-            $shops =  Shop::query()
-                ->when($command->argument('shops'), function ($query) use ($command) {
-                    $query->whereIn('slug', $command->argument('shops'));
-                })
-                ->cursor();
-        }
-
-
         $exitCode = 0;
 
-        foreach ($shops as $shop) {
-
+        foreach ($this->getShops($command) as $shop) {
             $this->handle($shop);
             $command->line("Shop $shop->name hydrated 💦");
 

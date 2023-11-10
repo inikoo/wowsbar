@@ -83,10 +83,12 @@ const timeline = [
                     <div class="flex justify-between gap-x-4">
                         <div class="flex-auto">
                             <dd class="text-lg font-semibold leading-6">{{ data.info.name }}</dd>
-                            <dd class="text-xs text-gray-400 whitespace-nowrap italic">Created at {{
-                                useFormatTime(data.info.created_at, 'enUS', 'hms') }}</dd>
-                            <dd class="text-xs text-gray-400 whitespace-nowrap italic">Updated at {{
-                                useFormatTime(data.info.updated_at, 'enUS', 'hms') }}</dd>
+                            <dd class="text-xs text-gray-400 whitespace-nowrap italic">
+                                Created at {{ useFormatTime(data.info.created_at, { localeCode: 'enUS', formatTime: 'hms' }) }}
+                            </dd>
+                            <dd class="text-xs text-gray-400 whitespace-nowrap italic">
+                                Updated at {{ useFormatTime(data.info.updated_at, { localeCode: 'enUS', formatTime: 'hms' }) }}
+                            </dd>
                         </div>
                         <div class="flex flex-wrap justify-end items-end gap-x-0.5 gap-y-1 min-w-1/2 w-fit">
                             <!-- <Tag stringToColor label="Paid" />

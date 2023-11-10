@@ -13,6 +13,7 @@ import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faLanguage, faSpinnerThird)
 import { useLocaleStore } from "@/Stores/locale"
+import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { trans, loadLanguageAsync } from 'laravel-vue-i18n'
 import { useForm } from '@inertiajs/vue3'
@@ -20,21 +21,27 @@ const form = useForm({
     language_id: null,
 })
 const locale = useLocaleStore()
+const layout = useLayoutStore()
 
 defineProps<{
     isTabActive: string | boolean
 }>()
 
 defineEmits<{
-    (e: 'isTabActive'): void
+    (e: 'isTabActive', value: boolean | string): void
 }>()
 
 </script>
 
 <template>
     <!-- <div class="fixed top-10 right-48 bg-red-500 "><pre>{{form}}</pre></div> -->
-    <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer text-gray-700"
-        :class="[isTabActive == 'language' ? 'bg-gray-700' : ''] "
+    <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer"
+        :class="[
+            isTabActive == 'language'
+                ? layout.systemName === 'org' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 text-gray-300'
+                : layout.systemName === 'org' ? 'hover:bg-gray-300' : 'text-gray-300 hover:bg-gray-600',
+            ,
+        ]"
     >
         <FontAwesomeIcon v-if="form.processing" icon='fad fa-spinner-third' class='animate-spin mr-2' aria-hidden='true' />
         <FontAwesomeIcon v-else icon="fal fa-language" class="text-xs mr-1 h-5 " />
@@ -54,7 +61,7 @@ defineEmits<{
                 <form v-if="Object.keys(locale.languageOptions).length > 0"
                     @submit.prevent="form.patch(route('models.profile.update'))"
                     v-for="(option, index) in locale.languageOptions"
-                    :class="[ option.id == locale.language.id ? 'bg-gray-600 hover:bg-gray-500' : 'hover:bg-gray-600 ', 'grid ']"
+                    :class="[ option.id == locale.language.id ? 'bg-gray-400' : 'hover:bg-gray-300 hover:text-gray-700 ', 'grid ']"
                 >
                     <button @click="form.language_id = option.id, locale.language = option, loadLanguageAsync(locale.language.code)" type="submit" class="py-1.5">
                         {{ option.name }}

@@ -49,15 +49,14 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="rounded select-none">
-        <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border"
+        <div class="flex items-center gap-x-1 rounded select-none px-1.5 py-1 w-fit font-medium border"
             :class="[
                 `text-${size}`,
                 stringToColor ? false : compTheme  // If stringToColor false then take provided style
             ]"
             :style="[
                 stringToColor ? [  // if stringToColor true
-                    `background-color: ${useStringToHex(label) + '40'}`,
+                    `background-color: ${useStringToHex(label) + '30'}`,
                     `border: 1px solid ${useStringToHex(label) + '90'}`,
                     `color: ${useStringToHex(label)}`
                 ] : ''
@@ -66,6 +65,7 @@ const compTheme = computed(() => {
             <slot>
                 {{ label }}
             </slot>
+
             <!-- Button: Close (X icon) -->
             <div v-if="closeButton"
                 @click="(event) => emits('onClose', event)"
@@ -73,5 +73,4 @@ const compTheme = computed(() => {
                 <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
             </div>
         </div>
-    </div>
 </template>

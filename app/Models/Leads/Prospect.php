@@ -9,9 +9,13 @@ namespace App\Models\Leads;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasAddress;
 use App\Models\Traits\HasHistory;
@@ -21,6 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -53,6 +58,15 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property string|null $last_contacted_at
+ * @property string|null $not_interested_at
+ * @property string|null $registered_at
+ * @property string|null $invoiced_at
+ * @property string|null $last_bounced_at
+ * @property ProspectContactStateEnum $contact_state
+ * @property ProspectOutcomeStatusEnum|null $outcome_status
+ * @property ProspectBounceStatusEnum|null $bounce_status
+ * @property bool $dont_contact_me
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -61,6 +75,7 @@ use Spatie\Tags\HasTags;
  * @property-read Customer|null $customer
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
+ * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
  * @property-read Shop|null $shop
  * @property-read int|null $tags_count
@@ -70,22 +85,31 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()
  * @method static Builder|Prospect query()
+ * @method static Builder|Prospect whereBounceStatus($value)
  * @method static Builder|Prospect whereCompanyName($value)
  * @method static Builder|Prospect whereContactName($value)
+ * @method static Builder|Prospect whereContactState($value)
  * @method static Builder|Prospect whereContactWebsite($value)
  * @method static Builder|Prospect whereCreatedAt($value)
  * @method static Builder|Prospect whereCustomerId($value)
  * @method static Builder|Prospect whereData($value)
  * @method static Builder|Prospect whereDeleteComment($value)
  * @method static Builder|Prospect whereDeletedAt($value)
+ * @method static Builder|Prospect whereDontContactMe($value)
  * @method static Builder|Prospect whereEmail($value)
  * @method static Builder|Prospect whereId($value)
  * @method static Builder|Prospect whereIdentityDocumentNumber($value)
  * @method static Builder|Prospect whereIdentityDocumentType($value)
+ * @method static Builder|Prospect whereInvoicedAt($value)
+ * @method static Builder|Prospect whereLastBouncedAt($value)
+ * @method static Builder|Prospect whereLastContactedAt($value)
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
+ * @method static Builder|Prospect whereNotInterestedAt($value)
+ * @method static Builder|Prospect whereOutcomeStatus($value)
  * @method static Builder|Prospect wherePhone($value)
  * @method static Builder|Prospect wherePortfolioWebsiteId($value)
+ * @method static Builder|Prospect whereRegisteredAt($value)
  * @method static Builder|Prospect whereScopeId($value)
  * @method static Builder|Prospect whereScopeType($value)
  * @method static Builder|Prospect whereShopId($value)
@@ -112,9 +136,13 @@ class Prospect extends Model implements Auditable
     use HasAddress;
 
     protected $casts = [
-        'data'     => 'array',
-        'location' => 'array',
-        'state'    => ProspectStateEnum::class
+        'data'           => 'array',
+        'location'       => 'array',
+        'state'          => ProspectStateEnum::class,
+        'contact_state'  => ProspectContactStateEnum::class,
+        'outcome_status' => ProspectOutcomeStatusEnum::class,
+        'bounce_status'  => ProspectBounceStatusEnum::class,
+        'not_interested' => 'boolean'
     ];
 
     protected $attributes = [
@@ -176,5 +204,15 @@ class Prospect extends Model implements Auditable
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function portfolioWebsite(): BelongsTo
+    {
+        return $this->belongsTo(PortfolioWebsite::class);
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

@@ -10,6 +10,8 @@ namespace App\Actions\Mail\Mailshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 
 class SetMailshotAsReady
@@ -30,8 +32,6 @@ class SetMailshotAsReady
 
         $mailshot->update($updateData);
 
-        SendMailshot::run($mailshot);
-
         return $mailshot;
     }
 
@@ -41,13 +41,13 @@ class SetMailshotAsReady
             return true;
         }
 
-        return $request->user()->hasPermissionTo("websites.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array
     {
         return [
-            'publisher_id'   => ['sometimes','exists:organisation_users,id'],
+            'publisher_id' => ['sometimes', 'exists:organisation_users,id'],
         ];
     }
 
@@ -55,17 +55,16 @@ class SetMailshotAsReady
     {
         $request->merge(
             [
-                'publisher_id'   => $request->user()->id,
+                'publisher_id' => $request->user()->id,
             ]
         );
     }
 
-    public function asController(Mailshot $mailshot, ActionRequest $request): string
+    public function asController(Mailshot $mailshot, ActionRequest $request): Mailshot
     {
-        $request->validate();
-        $this->handle($mailshot, $request->validated());
 
-        return "🫡";
+        $request->validate();
+        return $this->handle($mailshot, $request->validated());
     }
 
     public function action(Mailshot $mailshot, $modelData): Mailshot
@@ -75,5 +74,15 @@ class SetMailshotAsReady
         $validatedData = $this->validateAttributes();
 
         return $this->handle($mailshot, $validatedData);
+    }
+
+    public function htmlResponse(Mailshot $mailshot, ActionRequest $request): RedirectResponse
+    {
+
+
+        return Redirect::route('org.crm.shop.prospects.mailshots.show', [
+            $mailshot->scope->slug,
+            $mailshot->slug
+        ]);
     }
 }

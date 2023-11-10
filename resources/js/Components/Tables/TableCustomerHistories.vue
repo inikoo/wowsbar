@@ -25,7 +25,7 @@ const props = defineProps<{
             {{history['customer_user_slug']??trans('Command line') }}
         </template>
         <template #cell(created_at)="{ item: history }">
-            {{ useFormatTime(history['created_at'], locale.language.code, true) }}
+            {{ useFormatTime(history['created_at'], { localeCode: locale.language.code, formatTime: 'hms' }) }}
         </template>
         <template #cell(action)="{ item: history }">
             {{history['natural_language']}}

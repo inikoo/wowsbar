@@ -48,7 +48,7 @@ class IndexSeoPortfolioWebsites extends InertiaAction
     {
         $divisionId = Cache::get('seo');
 
-        if(! $divisionId) {
+        if(!$divisionId) {
             $divisionId = Division::firstWhere('slug', 'seo')->id;
             Cache::put('seo', $divisionId);
         }

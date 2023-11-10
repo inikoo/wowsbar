@@ -36,6 +36,7 @@ trait WithActionButtons
         return [
             'tooltip' => __('Edit'),
             'icon'    => 'fal fa-pencil',
+            'style'   => 'tertiary',
             'href'    => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(

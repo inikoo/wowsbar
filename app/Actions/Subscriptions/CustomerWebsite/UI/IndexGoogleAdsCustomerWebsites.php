@@ -48,7 +48,7 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
     {
         $divisionId = Cache::get('ppc');
 
-        if(! $divisionId) {
+        if(!$divisionId) {
             $divisionId = Division::firstWhere('slug', 'ppc')->id;
             Cache::put('ppc', $divisionId);
         }

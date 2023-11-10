@@ -12,6 +12,9 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
+use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -21,6 +24,7 @@ use App\Rules\ValidAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -30,6 +34,7 @@ class StoreProspect
 {
     use AsAction;
     use WithAttributes;
+    use WithProspectPrepareForValidation;
 
     private bool $asAction = false;
     /**
@@ -53,7 +58,7 @@ class StoreProspect
         /** @var Prospect $prospect */
         $prospect = $scope->scopedProspects()->create($modelData);
 
-        if($addressData) {
+        if ($addressData) {
             StoreAddressAttachToModel::run($prospect, $addressData, ['scope' => 'contact']);
             $prospect->location = $prospect->getLocation();
             $prospect->save();
@@ -88,40 +93,6 @@ class StoreProspect
         return $this->handle($shop, $request->validated());
     }
 
-    public function prepareForValidation(): void
-    {
-        if ($this->get('contact_name', '') == '') {
-            $this->fill(['contact_name' => null]);
-        }
-
-        if ($this->get('contact_name', '') == '') {
-            $this->fill(['contact_name' => null]);
-        }
-        if ($this->get('company_name', '') == '') {
-            $this->fill(['company_name' => null]);
-        }
-
-        if ($this->get('contact_website', '') == '') {
-            $this->fill(['contact_website' => null]);
-        }
-
-        if ($this->get('phone', '') == '') {
-            $this->fill(
-                [
-                    'phone' => null
-                ]
-            );
-        }
-
-
-        if ($this->get('contact_website')) {
-            $this->fill(
-                [
-                    'contact_website' => 'https://'.$this->get('contact_website'),
-                ]
-            );
-        }
-    }
 
     public function rules(ActionRequest $request): array
     {
@@ -134,13 +105,18 @@ class StoreProspect
 
 
         return [
-            'state'           => ['sometimes', new Enum(ProspectStateEnum::class)],
-            'data'            => 'sometimes|array',
-            'created_at'      => 'sometimes|date',
-            'address'         => ['sometimes', 'nullable', new ValidAddress()],
-            'contact_name'    => ['nullable', 'string', 'max:255'],
-            'company_name'    => ['nullable', 'string', 'max:255'],
-            'email'           => [
+            'contact_state'     => ['sometimes', Rule::enum(ProspectContactStateEnum::class)],
+            'outcome_status'    => ['sometimes', 'nullable', Rule::enum(ProspectOutcomeStatusEnum::class)],
+            'bounce_status'     => ['sometimes', 'nullable', Rule::enum(ProspectBounceStatusEnum::class)],
+            'dont_contact_me'   => ['sometimes', 'boolean'],
+            'state'             => ['sometimes', new Enum(ProspectStateEnum::class)],
+            'data'              => 'sometimes|array',
+            'last_contacted_at' => 'sometimes|date',
+            'created_at'        => 'sometimes|date',
+            'address'           => ['sometimes', 'nullable', new ValidAddress()],
+            'contact_name'      => ['nullable', 'string', 'max:255'],
+            'company_name'      => ['nullable', 'string', 'max:255'],
+            'email'             => [
                 'required_without:phone',
                 'email',
                 'max:500',
@@ -150,7 +126,7 @@ class StoreProspect
                 ),
 
             ],
-            'phone'           => [
+            'phone'             => [
                 'required_without:email',
                 'nullable',
                 'phone:AUTO',
@@ -159,7 +135,7 @@ class StoreProspect
                     extraConditions: $extraConditions
                 ),
             ],
-            'contact_website' => [
+            'contact_website'   => [
                 'nullable',
                 'url:http,https',
                 new IUnique(

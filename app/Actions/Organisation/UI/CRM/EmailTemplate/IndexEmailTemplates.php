@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\UI\CRM\EmailTemplate;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Mail\EmailTemplate;
@@ -38,9 +39,10 @@ class IndexEmailTemplates extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(EmailTemplate::class);
 
+        $queryBuilder->with('scope');
+
         return $queryBuilder
             ->defaultSort('title')
-            ->select(['id', 'title'])
             ->allowedSorts(['title', 'id'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -75,7 +77,6 @@ class IndexEmailTemplates extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'id', label: __('id'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'title', label: __('title'), canBeHidden: false, sortable: true, searchable: true)
 
                 ->defaultSort('title');
@@ -94,13 +95,13 @@ class IndexEmailTemplates extends InertiaAction
     }
 
 
-    public function jsonResponse(LengthAwarePaginator $guests): AnonymousResourceCollection
+    public function jsonResponse(LengthAwarePaginator $emailTemplates): AnonymousResourceCollection
     {
-        return GuestResource::collection($guests);
+        return EmailTemplateResource::collection($emailTemplates);
     }
 
 
-    public function htmlResponse(LengthAwarePaginator $guests, ActionRequest $request): Response
+    public function htmlResponse(LengthAwarePaginator $emailTemplates, ActionRequest $request): Response
     {
         return Inertia::render(
             'SysAdmin/EmailTemplates',
@@ -134,7 +135,7 @@ class IndexEmailTemplates extends InertiaAction
                         ] : false
                     ]
                 ],
-                'data'        => GuestResource::collection($guests),
+                'data'        => GuestResource::collection($emailTemplates),
             ]
         )->table($this->tableStructure());
     }

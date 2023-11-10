@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
-use App\Http\Resources\CRM\ProspectMailshotsResource;
+use App\Http\Resources\Mail\MailshotsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -53,6 +53,7 @@ class IndexProspectMailshots extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Mailshot::class)
+            ->leftJoin('mailshot_stats', 'mailshot_stats.mailshot_id', 'mailshots.id')
             ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
 
         if (class_basename($parent) == 'Shop') {
@@ -97,7 +98,12 @@ class IndexProspectMailshots extends InertiaAction
 
             $table
                 ->withGlobalSearch()
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
+
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
+                ->column(key: 'actions', label: ' ')
+
                 ->defaultSort('slug');
         };
     }
@@ -146,8 +152,8 @@ class IndexProspectMailshots extends InertiaAction
                 ],
 
                 ProspectsMailshotsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsMailshotsTabsEnum::MAILSHOTS->value ?
-                    fn () => ProspectMailshotsResource::collection($mailshots)
-                    : Inertia::lazy(fn () => ProspectMailshotsResource::collection($mailshots)),
+                    fn () => MailshotsResource::collection($mailshots)
+                    : Inertia::lazy(fn () => MailshotsResource::collection($mailshots)),
 
 
             ]

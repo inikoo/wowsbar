@@ -75,7 +75,7 @@ function websiteRoute(banner: Banner, slug) {
 
         <template #cell(date)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(banner['date'], locale.language.code, 'hm') }}
+                {{ useFormatTime(banner['date'], { localeCode: locale.language.code, formatTime: 'hm' }) }}
                 <Icon class="ml-1" :data="banner['date_icon']"/>
             </div>
         </template>

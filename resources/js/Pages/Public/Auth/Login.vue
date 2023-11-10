@@ -16,12 +16,17 @@ import InputLabel from '@/Components/InputLabel.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import TextInput from '@/Components/TextInput.vue'
 import Password from '@/Components/Forms/Fields/Password.vue'
+import { notify } from '@kyvg/vue3-notification'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft } from '@fal/'
 import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowLeft, faSpinnerThird)
+
+const emits = defineEmits<{
+    (e: 'onSuccessLogin'): void
+}>()
 
 const isLoading = ref(false)
 
@@ -44,12 +49,22 @@ const submitResetPassword = () => {
 const submit = () => {
     isLoading.value = true
     form.post(route('public.login'), {
-        onFinish: () => form.reset('password'),
-        onError: errors => {
-            isLoading.value = false
+        onFinish: () => {
+            form.reset('password')
+        },
+        onSuccess: () => {
+            emits('onSuccessLogin')
+        },
+        onError: (errors: any) => {
+            notify({
+                title: "Login failed.",
+                text: errors.message,
+                type: "error"
+            })
         },
 
     })
+    isLoading.value = false
 }
 
 const condition: Ref<string | boolean> = ref(false)

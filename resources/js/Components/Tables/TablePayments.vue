@@ -64,7 +64,7 @@ function paymentsRoute(payment: Payment) {
             </Link>
         </template>
         <template #cell(date)="{ item: payment }">
-            {{ useFormatTime(payment.date, locale.language.code, 'hms') }}
+            {{ useFormatTime(payment.date, { localeCode: locale.language.code, formatTime: 'hms' }) }}
         </template>
     </Table>
 </template>

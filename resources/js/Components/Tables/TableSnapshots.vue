@@ -45,12 +45,12 @@ const props = defineProps<{
 
         <!-- Date Published -->
         <template #cell(published_at)="{ item: user }">
-            <div class="text-gray-500">{{ useFormatTime(user['published_at'], locale.language.code, true) }}</div>
+            <div class="text-gray-500">{{ useFormatTime(user['published_at'], { localeCode: locale.language.code, formatTime: 'hm' }) }}</div>
         </template>
 
         <!-- Published Until -->
         <template #cell(published_until)="{ item: user }">
-            <div class="text-gray-500">{{ useFormatTime(user.published_until, locale.language.code, true) }}</div>
+            <div class="text-gray-500">{{ useFormatTime(user.published_until, { localeCode: locale.language.code, formatTime: 'hm' }) }}</div>
         </template>
     </Table>
 </template>

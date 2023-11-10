@@ -80,7 +80,7 @@ const addComponent = async (element: any) => {
         </template>
 
         <template #cell(created_at)="{ item: image }">
-            {{ useFormatTime(image['created_at'], locale.language.code) }}
+            {{ useFormatTime(image['created_at'], { localeCode: locale.language.code }) }}
         </template>
 
         <!-- Column: select item -->

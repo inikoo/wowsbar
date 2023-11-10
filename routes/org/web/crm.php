@@ -19,9 +19,14 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
-use App\Actions\Leads\Prospect\Mailshots\UI\CreateMailshot;
+use App\Actions\Leads\Prospect\ExportProspects;
+use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
+use App\Actions\Leads\Prospect\UI\IndexProspectsQueryProspects;
+use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
+use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
@@ -94,9 +99,16 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
 
+        Route::get('/export', ExportProspects::class)->name('export');
+
+        Route::prefix('lists')->as('lists.')->group(function () {
+            Route::get('/', IndexProspectsQueryProspects::class)->name('index');
+            Route::get('{query}', ShowProspectQuery::class)->name('show');
+        });
+
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
             Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
-            Route::get('create', [CreateMailshot::class, 'inShop'])->name('create');
+            Route::get('create', [CreateProspectsMailshot::class, 'inShop'])->name('create');
 
             Route::get('{mailshot}/edit', EditProspectMailshot::class)->name('edit');
             Route::get('{mailshot}/workshop', ShowProspectMailshotWorkshop::class)->name('workshop');
@@ -110,12 +122,18 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
     Route::prefix('mailroom')->as('mailroom.')->group(function () {
         Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailroom'])->uses([ShowMailroomDashboard::class, 'inShop'])->name('dashboard');
+
+        Route::prefix('templates')->as('templates.')->group(function () {
+            Route::get('{emailTemplate}', [ShowEmailTemplate::class, 'inShop'])->name('show');
+            Route::get('{emailTemplate}/workshop', ShowEmailTemplateWorkshop::class)->name('workshop');
+        });
     });
 
 
     Route::prefix('appointments')->as('appointments.')->group(function () {
         Route::get('/', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([IndexAppointments::class, 'inShop'])->name('index');
         Route::get('/create', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([CreateAppointment::class, 'inShop'])->name('create');
+
         Route::get('/{appointment}', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(ShowAppointment::class)->name('show');
         Route::get('/{appointment}/edit', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(EditAppointment::class)->name('edit');
     });

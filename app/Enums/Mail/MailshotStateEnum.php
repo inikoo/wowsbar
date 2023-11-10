@@ -48,8 +48,8 @@ enum MailshotStateEnum: string
             'ready' => [
 
                 'tooltip' => __('Ready'),
-                'icon'    => 'fal fa-seedling',
-                'class'   => 'text-indigo-500'
+                'icon'    => 'fal fa-spell-check',
+                'class'   => 'text-green-500'
 
 
             ],
@@ -61,11 +61,11 @@ enum MailshotStateEnum: string
 
 
             ],
-            'live'        => [
+            'sending'        => [
 
-                'tooltip' => __('live'),
-                'icon'    => 'fal fa-broadcast-tower',
-                'class'   => 'text-green-600 animate-pulse'
+                'tooltip' => __('sending'),
+                'icon'    => 'fal fa-paper-plane',
+                'class'   => 'animate-pulse'
 
             ],
             'switch_off'     => [

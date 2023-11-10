@@ -10,20 +10,23 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import { ref } from "vue"
-import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup } from '@fal/'
-import { faCaretRight } from '@fas/'
+import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal/'
+import { faFlask } from '@fad/'
+import { faCaretDown, faPaperPlane, faAsterisk } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import Modal from '@/Components/Utils/Modal.vue';
-import { DatePicker  } from 'v-calendar';
+import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+import { Link } from "@inertiajs/vue3"
+import { routeType } from '@/types/route'
+import Input from '@/Components/Pure/PureInput.vue';
+import { isNull,get } from 'lodash';
 
-
-library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCaretRight)
+library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane, faFlask, faAsterisk)
 
 const props = defineProps<{
     title: string,
@@ -34,58 +37,91 @@ const props = defineProps<{
     }
     changelog?: object,
     workshop?: object,
-    imagesUploadRoute: Object,
-    setAsReadyRoute: Object,
-    updateRoute: Object,
-    loadRoute: Object
-    setAsScheduledRoute: object
-
+    imagesUploadRoute: routeType
+    setAsReadyRoute: routeType
+    updateRoute: routeType
+    loadRoute: routeType
+    setAsScheduledRoute: routeType
+    sendRoute: routeType
+    sendTestRoute: routeType
 }>()
 
 const OpenModal = ref(false)
 const date = ref(new Date())
 
-const save = (schedule = false) => {
-    const reqData = {
-        ...(schedule ?
-            { route: props.setAsScheduledRoute, data: { schedule_at: date.value.toISOString() } }
-            : { route: props.setAsReadyRoute }
-        )
-    }
-    sendDataToServer(schedule, reqData)
+
+const getLocalStorage = () =>{
+    let storage = localStorage.getItem("mailshotWorkshop")
+    if(storage) return JSON.parse(storage)
+    return null
 }
 
+const localStorageData = ref(getLocalStorage())
 
-const sendDataToServer = async (schedule = false, reqData: Object) => {
-    try {
-        const response = await axios.post(
-            route(
-                reqData.route.name,
-                reqData.route.parameters
-            ),
-            reqData?.data,
-        )
-        console.log('publish......')
-        notify({
-            title: "Succeed",
-            text: schedule ? "The email will be scheduled" : "Your email has been sent",
-            type: "success"
-        });
-        onCancel()
-    } catch (error) {
-        console.log(error)
-        notify({
-            title: "Failed",
-            text: schedule ? "Failed to schedule emaile" : "Your email failed to send",
-            type: "error"
-        });
+const getEmailTest=()=>{
+    const emailTest = localStorageData.value
+    let value = ''
+    if(emailTest) {
+      const item = emailTest.mailshotWorkshop?.testEmail.find((item)=>item.key == 'project')
+      value = get(item,'email','')
     }
+    return value
 }
+
+const testEmail = ref(getEmailTest())
 
 const onCancel = () => {
     OpenModal.value = false
     date.value = new Date()
 }
+
+const sendEmailtest = async () => {
+    try {
+        const response = await axios.post(
+            route(
+                props.sendTestRoute.name,
+                props.sendTestRoute.parameters
+            ),
+           { emails: testEmail.value }
+        )
+        console.log('send test email......')
+        onSuccess(response)
+    } catch (error) {
+        console.log(error)
+        notify({
+            title: "Failed",
+            text: "failed to send email",
+            type: "error"
+        });
+    }
+}
+
+const onSuccess = (response) => {
+    let newLocalStorage = localStorageData.value
+    if (newLocalStorage) {
+        const index = newLocalStorage.mailshotWorkshop.testEmail.findIndex((item) => item.key == 'project')
+        if (index != -1) newLocalStorage.mailshotWorkshop.testEmail[index] = { email: response.data.data[0].email, key: 'project' }
+    } else {
+        newLocalStorage = {
+            mailshotWorkshop: {
+                testEmail: [
+                    { email: response.data.data[0].email, key: 'project' }
+                ]
+            }
+        };
+    }
+
+    let localStorageString = JSON.stringify(newLocalStorage);
+    localStorage.setItem('mailshotWorkshop', localStorageString);
+
+    notify({
+        title: "Succeed",
+        text: "The test email has been sent, please check your email",
+        type: "success"
+    });
+};
+
+
 
 </script>
 
@@ -94,44 +130,85 @@ const onCancel = () => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex">
-                <div>
-                    <Button @click="save(false)" class="button-send">
-                        Send Now
-                    </Button>
-                </div>
+        <div class="relative">
+            <Popover :width="'w-full'" position="right-[-170px]">
+                <template #button>
+                    <div class="relative" title="testing email">
+                        <Button class="rounded" :style="`secondary`">
+                            Send Test  <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
+                        </Button>
+                    </div>
+                </template>
+                <template #content>
+                    <dd class="w-64">
+                    <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
+                        <div class="relative flex-grow">
+                            <Input v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
+                        </div>
+                        <span class="flex-shrink-0">
+                            <Button @click="sendEmailtest()" class="py-[14px] rounded-l-none" :style="testEmail.length ? 'primary' : 'disabled'" :key="testEmail">
+                                <FontAwesomeIcon icon='fas fa-paper-plane' aria-hidden="true" />
+                            </Button>
+                        </span>
+                    </div>
+                    </dd>
+                    </template>
+                </Popover>
+            </div>
+         
+            <div class="flex rounded-md overflow-hidden">
+                <Link v-if="setAsReadyRoute?.name" method="post" :href="route(
+                    props.setAsReadyRoute?.name,
+                    props.setAsReadyRoute?.parameters
+                )">
+                <Button class="rounded-r-none py-[9px]">
+                    <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
+                </Button>
+                </Link>
                 <Popover>
                     <template #button>
-                        <div class="relative">
-                            <Button class="dropdwon-button">
-                                <font-awesome-icon :icon="['fas', 'caret-right']" class='' aria-hidden='true' />
+                        <div class="relative" title="Scheduled publish">
+                            <Button class="rounded-none">
+                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='leading-6 border-transparent border'
+                                    aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
                     </template>
                     <template #content>
-                        <div @click="OpenModal = true">Send with schedule</div>
+                        <div>
+                            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
+                            <div class="my-2">
+                                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime"
+                                    is24hr :min-date="new Date()" />
+                            </div>
+                            <div class="flex justify-between">
+                                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
+                                <Link method="post" :data="{ schedule_at: date.toISOString() }" :href="route(
+                                    props.setAsScheduledRoute.name,
+                                    props.setAsScheduledRoute.parameters
+                                )">
+                                <Button>Schedule</Button>
+                                </Link>
+                            </div>
+                        </div>
                     </template>
                 </Popover>
+
+                <Link method="post" :href="route(
+                    props.sendRoute.name,
+                    props.sendRoute.parameters
+                )">
+                <Button class="rounded-none">
+                    Send Now
+                    <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
+                </Button>
+                </Link>
             </div>
         </template>
     </PageHeading>
-    <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :loadRoute="loadRoute" />
-    <Modal :isOpen="OpenModal" @onClose="OpenModal = false" width="w-fit">
-
-        <div>
-            <div class="text-xl font-semibold border-b pb-2 text-org-500">Select date and time</div>
-            <div class="my-2">
-                <DatePicker expanded color='purple' transparent borderless v-model="date" mode="dateTime" is24hr
-                    :min-date="new Date()" />
-            </div>
-            <div class="flex justify-between">
-                <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
-                <Button @click="save(true)">Schedule</Button>
-            </div>
-        </div>
-
-    </Modal>
+    <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
+        :loadRoute="loadRoute" />
 </template>
 
 <style lang="scss">
@@ -143,14 +220,5 @@ const onCancel = () => {
 
 .vc-header {
     margin-bottom: 10px;
-}
-
-.dropdwon-button {
-    padding: 9px 15px;
-    border-radius: 0px 10px 10px 0px;
-}
-
-.button-send {
-    border-radius: 10px 0px 0px 10px;
 }
 </style>
