@@ -6,9 +6,11 @@
  */
 
 use App\Actions\Accounting\PaymentGateway\Xendit\Webhook\HandleWebhookNotification;
+use App\Actions\Mail\Mailshot\UnsubscribeMailshot;
 use App\Actions\Mail\Notifications\GetSnsNotification;
 
 Route::group([], function () {
     Route::any('sns', GetSnsNotification::class)->name('sns');
     Route::post('xendit/callback', HandleWebhookNotification::class)->name('xendit.notification');
+    Route::post('unsubscribe/{dispatchedEmail:ulid}', UnsubscribeMailshot::class)->name('mailshot.unsubscribe');
 });
