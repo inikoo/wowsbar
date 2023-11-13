@@ -1,7 +1,8 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { DatePicker } from 'v-calendar'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
 
 const props = defineProps<{
     title?: string
@@ -12,6 +13,13 @@ const props = defineProps<{
         }[]
     }
     isLoading?: boolean
+    meetEvent: {
+        value: string | null
+        options: {
+            name: string
+            label: string
+        }[]
+    }
 }>()
 
 const emits = defineEmits<{
@@ -50,7 +58,7 @@ const attrs = ref([
     <div class="bg-white rounded text-left">
         <span v-html="title"></span>
     </div>
-    <div class="w-64">
+    <div class="w-64 md:w-96 mx-auto">
         <DatePicker :value="modelValue" @update:modelValue="(newVal: Date) => emits('update:modelValue', newVal)" expanded :attributes="attrs" />
     </div>
 
@@ -73,7 +81,29 @@ const attrs = ref([
                             {{ time }}
                         </Button>
                     </div>
-                    <div class="col-span-3">
+                    
+                    <!-- Section: Meet Event -->
+                    <div class="col-span-3 place-self-center">
+                        <RadioGroup v-model="meetEvent.value" class="mt-2">
+                            <RadioGroupLabel class="sr-only">Choose the radio</RadioGroupLabel>
+                            <div class="flex gap-x-1.5 gap-y-1 flex-wrap">
+                                <RadioGroupOption as="template" v-for="(option, index) in meetEvent.options" :key="index"
+                                    :value="option" v-slot="{ active, checked }">
+                                    <div
+                                        :class="[
+                                            'cursor-pointer focus:outline-none flex items-center justify-center rounded-md py-3 px-3 text-sm font-medium capitalize',
+                                            active ? 'ring-2 ring-gray-600' : '',
+                                            checked ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' : 'border-1 border-dashed border-gray-300 bg-white text-gray-700 hover:bg-gray-500',
+                                        ]">
+                                        <RadioGroupLabel as="span">{{ option.label }}</RadioGroupLabel>
+                                    </div>
+                                </RadioGroupOption>
+                            </div>
+                        </RadioGroup>
+                    </div>
+
+                    <!-- Button: Submit -->
+                    <div v-if="meetEvent.value && (availableSchedulesOnMonth[`${modelValue?.getFullYear()}-${modelValue?.getMonth() + 1}` as keyof any]?.[getDateOnly(modelValue)]).includes(`${(modelValue.getHours()).toString().padStart(2, '0')}:00`)" class="col-span-3">
                         <Button @click="emits('onFinish')" iconRight="fas fa-arrow-alt-right" label="Summary" full />
                     </div>
                 </template>
@@ -85,4 +115,5 @@ const attrs = ref([
             ---- Select date to make an appointment ----
         </div>
     </div>
+    
 </template>
