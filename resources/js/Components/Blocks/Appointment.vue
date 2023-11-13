@@ -20,7 +20,7 @@ const props = defineProps<{
     }
 }>()
 
-const availableSchedulesOnMonth: Ref<{ [key: string]: string[] }> = ref({})  // {2023-6: 2023-11-25 ['09:00, '10:00', ...]}
+const availableSchedulesOnMonth = ref<{ [key: string]: {[key: string]: string[]}[] }>({})  // {2023-6: {2023-11-25 ['09:00, '10:00', ...]} }
 const selectedDate: any = ref(new Date())  // on select date in DatePicker
 const isLoading = ref(false)  // Loading on fetch
 const isModalSteps = ref(false)
@@ -38,7 +38,19 @@ const passwordField = reactive({
     description: ''
 })
 
-
+const meetEvent = reactive({
+    value: null,
+    options: [
+        {
+            name: 'callback',
+            label: 'Callback'
+        },
+        {
+            name: 'in-person',
+            label: 'In person'
+        }
+    ]
+})
 
 // On click button available hour
 const onSelectHour = (time: string) => {
@@ -47,8 +59,6 @@ const onSelectHour = (time: string) => {
     selectedDate.value.setHours(timeSplit[0])
     selectedDate.value.setMinutes(timeSplit[1])
 }
-
-
 
 
 // Fetch available schedule for whole month
@@ -94,7 +104,7 @@ watch(selectedDate, () => {
 
 <template>
     <div class="py-2">
-        <div class="max-w-sm mx-auto border-2 grid md:grid-cols-2 divide-y md:divide-x divide-gray-300 rounded-md">
+        <div class="max-w-sm md:max-w-3xl mx-auto border-2 grid md:grid-cols-2 divide-y md:divide-x divide-gray-300 rounded-md">
             <!-- Section: Blog -->
             <div class="p-0">
                 <div class="text-center rounded-0 border-0">
@@ -113,17 +123,27 @@ watch(selectedDate, () => {
 
     <Modal :isOpen="isModalSteps" @onClose="isModalSteps = false">
         <div class="h-96 overflow-y-auto">
-            <div @click="currentStep >= 0 ? currentStep-- : false">aaa</div>
-            <div @click="currentStep++" class="hover:bg-red-500 mb-4">ddd</div>
 
-            <Steps :currentStep="currentStep" />
+            <Steps
+                :currentStep="currentStep"
+                @previousStep="currentStep--"    
+                @nextStep="currentStep++"    
+            />
 
             <transition name="slide-to-left" mode="out-in">
                 <!-- First Step: Login -->
-                <div v-if="currentStep === 0" class="flex gap-x-2 pb-2">
-                    <LoginSmall v-model:email="emailField.value" v-model:password="passwordField.value"
-                        v-model:passwordRepeat="passwordField.valueRepeat" @loginSuccess="currentStep++"
-                        :emailField="emailField" :passwordField="passwordField" />
+                <div v-if="currentStep === 0" class="flex gap-x-2 pb-2 justify-center">
+                    <LoginSmall
+                        v-model:email="emailField.value"
+                        v-model:password="passwordField.value"
+                        v-model:passwordRepeat="passwordField.valueRepeat"
+                        :emailField="emailField"
+                        :passwordField="passwordField"
+                        @loginSuccess="currentStep++"
+                        loginRoute="public.appointment.login"
+                        checkEmailRoute="public.appointment.check.email"
+                        registerRoute="public.appointment.register"
+                    />
                 </div>
 
                 <!-- Second Step: Select date -->
@@ -133,6 +153,7 @@ watch(selectedDate, () => {
                         :title="data.title"
                         :isLoading="isLoading"
                         :availableSchedulesOnMonth="availableSchedulesOnMonth"
+                        :meetEvent="meetEvent"
                         @onFinish="currentStep++"
                         @onSelectHour="(newValue) => onSelectHour(newValue)"
                     />
@@ -140,7 +161,7 @@ watch(selectedDate, () => {
 
                 <!-- Third Step: Summary review -->
                 <div v-else class="max-w-2xl mx-auto py-4">
-                    <AppointmentSummary :selectedDate="selectedDate" @onFinish="isModalSteps = false"/>
+                    <AppointmentSummary :selectedDate="selectedDate" @onFinish="isModalSteps = false" :meetEvent="meetEvent.value"/>
                 </div>
             </transition>
         </div>

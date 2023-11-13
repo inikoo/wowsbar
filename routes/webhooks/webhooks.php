@@ -6,6 +6,7 @@
  */
 
 use App\Actions\Accounting\PaymentGateway\Xendit\Webhook\HandleWebhookNotification;
+use App\Actions\Mail\Mailshot\UI\UnsubscribeMailshot;
 use App\Actions\Mail\Notifications\GetSnsNotification;
 
 Route::group([], function () {

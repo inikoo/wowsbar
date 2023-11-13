@@ -9,6 +9,7 @@
 use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
+use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\Media\ImageGenerator;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -66,6 +67,7 @@ Route::prefix('/banner')->name('banner.')->group(function () {
 
     });
 });
+
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::post('/user', StoreUser::class)->name('user.store');

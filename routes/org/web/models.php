@@ -13,6 +13,7 @@ use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
 use App\Actions\Catalogue\ProductCategory\UpdateProductCategory;
 use App\Actions\CRM\Appointment\AssignAppointmentUser;
+use App\Actions\CRM\Appointment\LoginCustomerAppointment;
 use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Appointment\UpdateAppointment;
 use App\Actions\CRM\Customer\DeleteCustomer;

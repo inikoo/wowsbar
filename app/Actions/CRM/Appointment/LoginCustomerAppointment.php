@@ -7,50 +7,42 @@
 
 namespace App\Actions\CRM\Appointment;
 
+use App\Actions\Auth\User\Login;
+use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
 
-class CheckCustomerAppointment
+class LoginCustomerAppointment
 {
     use AsAction;
     use WithAttributes;
     use AsCommand;
 
-    private bool $asAction = false;
-
-    public function handle(array $modelData): array
+    public function handle(ActionRequest $request): void
     {
-        return $modelData;
-    }
-
-    public function jsonResponse(array $modelData): array
-    {
-        return $modelData;
-    }
-
-    public function authorize(ActionRequest $request): bool
-    {
-        return true;
+        $request->validate();
+        Login::run($request);
     }
 
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'exists:customers,email']
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'string'],
         ];
     }
 
     /**
      * @throws Throwable
      */
-    public function asController(ActionRequest $request): array
+    public function asController(ActionRequest $request): void
     {
-        $this->fillFromRequest($request);
-        $request->validate();
-
-        return $this->handle($request->validated());
+        $this->handle($request);
     }
 }

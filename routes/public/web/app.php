@@ -7,18 +7,31 @@
 
 use App\Actions\CRM\Appointment\CheckCustomerAppointment;
 use App\Actions\CRM\Appointment\GetBookedScheduleAppointment;
+use App\Actions\CRM\Appointment\LoginCustomerAppointment;
+use App\Actions\CRM\Appointment\RegisterCustomerAppointment;
+use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\UI\Public\Appointment\ShowPublicAppointment;
 use App\Actions\UI\Public\ShowHome;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowHome::class)->name('home');
-Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
-Route::get('appointment/schedule', GetBookedScheduleAppointment::class)->name('appointment.schedule');
 
-Route::post('appointment/check/email', CheckCustomerAppointment::class)->name('appointment.check.email');
+Route::prefix('appointment')->as('appointment.')->group(function () {
+    Route::get('/', ShowPublicAppointment::class)->name('show');
+    Route::get('/schedule', GetBookedScheduleAppointment::class)->name('schedule');
+    Route::post('/check/email', CheckCustomerAppointment::class)->name('check.email');
+    Route::post('/login', LoginCustomerAppointment::class)->name('login');
+    Route::post('/register', RegisterCustomerAppointment::class)->name('register');
+});
+
+Route::post('/appointment', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');
 
 Route::prefix("disclosure")
     ->name("disclosure.")
     ->group(__DIR__."/disclosure.php");
+
+Route::prefix("webhooks")
+    ->name("webhooks.")
+    ->group(__DIR__."/webhooks.php");
 
 require __DIR__."/auth.php";

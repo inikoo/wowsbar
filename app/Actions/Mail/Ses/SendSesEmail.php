@@ -66,7 +66,8 @@ class SendSesEmail
                     $dispatchedEmail->email->address
                 ]
             ],
-            'Message'     => $message['Message']
+            'Message'     => $message['Message'],
+            'List-Unsubscribe' => '<'. route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid) .'>',
         ];
 
 
