@@ -40,6 +40,7 @@ class StoreAppointment
             data_set($modelData, 'customer_id', $modelData['customer_id']);
         } elseif(class_basename($parent) == 'Customer') {
             data_set($modelData, 'shop_id', $parent->shop_id);
+            data_set($modelData, 'name', $parent->name);
         }
 
         return $parent->appointment()->create($modelData);
@@ -64,7 +65,7 @@ class StoreAppointment
     {
         return [
             'customer_id'              => ['sometimes'],
-            'name'                     => ['required', 'string'],
+            'name'                     => ['sometimes', 'string'],
             'schedule_at'              => ['required'],
             'description'              => ['nullable', 'string', 'max:255'],
             'type'                     => ['required', Rule::in(AppointmentTypeEnum::values())],
