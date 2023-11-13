@@ -26,6 +26,11 @@ class CheckCustomerAppointment
         return $modelData;
     }
 
+    public function jsonResponse(array $modelData): array
+    {
+        return $modelData;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
         return true;
