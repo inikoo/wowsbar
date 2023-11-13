@@ -83,4 +83,4 @@ Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('galle
 
 Route::post('/billing', StoreBilling::class)->name('billing.store');
 
-Route::post('/', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');
+Route::post('/appointment', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');
