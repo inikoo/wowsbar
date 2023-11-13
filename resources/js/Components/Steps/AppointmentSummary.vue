@@ -4,12 +4,13 @@ import { usePage } from '@inertiajs/vue3'
 import { notify } from '@kyvg/vue3-notification'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import CopyButton from '@/Components/Utils/CopyButton.vue'
+import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faClock, faCalendarAlt, faMapMarkerAlt, faLink } from '@fal/'
+import { faClock, faCalendarAlt, faMapMarkerAlt, faLink, faUser } from '@fal/'
 import { faArrowAltRight, faPaperPlane } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faClock, faCalendarAlt, faMapMarkerAlt, faLink, faArrowAltRight, faPaperPlane)
+library.add(faClock, faCalendarAlt, faMapMarkerAlt, faLink, faUser, faArrowAltRight, faPaperPlane)
 
 const props = defineProps<{
     selectedDate: Date
@@ -25,18 +26,28 @@ const emits = defineEmits<{
 
 // When submit Appointment
 const onClickMakeAppointment = async () => {
-    if (!!usePage().props.auth.user) {
-        console.log('Appointment created')
+    try {
+        const response = axios.post(route('customer.models.appointment.store'), {
+            schedule_at: props.selectedDate,
+            type: 'lead',
+            event: props.meetEvent?.name,
+            event_address: 'Zoom',
+        })
 
         notify({
             title: "Appointment successfuly created.",
             // text: error,
             type: "success"
         })
-
-    } else {
+        emits('onFinish')
+    } catch (error) {
+        notify({
+            title: "Error while ",
+            // text: error,
+            type: "error"
+        })
+        console.error(error)
     }
-    emits('onFinish')
 }
 
 </script>
@@ -46,12 +57,6 @@ const onClickMakeAppointment = async () => {
 
     <!-- Section: Appointment Card -->
     <div class="bg-white border border-gray-300 rounded-lg overflow-hidden p-4 grid md:grid-cols-2 mb-4 gap-y-4 md:gap-y-0">
-        <div class="order-2 col-span-2">
-            <div class="tracking-wide text-sm text-gray-700">
-                {{ usePage().props.auth.user?.username }}
-            </div>
-            <!-- <div class="text-3xl font-semibold text-gray-700">Financial Plan</div> -->
-        </div>
 
         <div class="col-span-2 grid grid-cols-2">
             <div class="text-4xl font-semibold">
@@ -76,6 +81,13 @@ const onClickMakeAppointment = async () => {
                     aria-hidden='true' />
                 <div class="text-sm md:text-base leading-none">Zoom</div>
             </div> -->
+
+            <!-- Date: Name -->
+            <div class="inline-flex items-center gap-x-1">
+                <FontAwesomeIcon fixed-width icon='fal fa-user' class='h-4 md:h-5 aspect-square text-gray-400 '
+                    aria-hidden='true' />
+                <div class="text-sm md:text-base leading-none">{{ usePage().props.auth.user?.name }}</div>
+            </div>
 
             <!-- Date: Calendar -->
             <div class="inline-flex items-center gap-x-1">

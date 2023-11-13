@@ -56,22 +56,39 @@ const form = useForm({
 
 // On click check email registered or not
 const onCheckEmail = async () => {
-    form.post(route(props.checkEmailRoute), {
-        onSuccess: () => {
-            notify({
-                title: "Email is exist.",
-                // text: error,
-                type: "success"
-            })
+    try {
+        const response = await axios.post(
+            route(props.checkEmailRoute),
+            {
+                email: props.emailField.value
+            }
+        )
+        props.emailField.status = 'success'
+        props.emailField.description = 'Email is registered.'
+        console.log(response.data)
+    }
+    catch (error: any) {
+        props.emailField.status = 'error'
+        props.emailField.description = 'Email is not registered yet.'
+        console.log('error', error)
+    }
+
+    // form.post(route(props.checkEmailRoute), {
+    //     onSuccess: () => {
+    //         notify({
+    //             title: "Email is exist.",
+    //             // text: error,
+    //             type: "success"
+    //         })
             
-            props.emailField.status = 'success'
-            props.emailField.description = 'Email is registered.'
-        },
-        onError: (error: any) => {
-            props.emailField.status = 'error'
-            props.emailField.description = 'Email is not registered yet.'
-        }
-    });
+    //         props.emailField.status = 'success'
+    //         props.emailField.description = 'Email is registered.'
+    //     },
+    //     onError: (error: any) => {
+    //         props.emailField.status = 'error'
+    //         props.emailField.description = 'Email is not registered yet.'
+    //     }
+    // });
 }
 
 // On submit login
@@ -130,6 +147,7 @@ const validateEmail = (email: string) => {
 onMounted(() => {
     usePage().props.auth.user ? emits('loginSuccess') : false
 })
+
 </script>
 
 <template layout="Public">
@@ -141,7 +159,7 @@ onMounted(() => {
             <h3 class="text-sm font-semibold leading-3 text-gray-500">Enter your email</h3>
             <div class="flex gap-x-2 space-y-1 pl-0.5">
                 <PureInput
-                    v-model="form.email"
+                    v-model="props.emailField.value"
                     placeholder="Input your email"
                     type="email"
                     @input="(emailField.status = false, emailField.description = '')"    
@@ -150,14 +168,14 @@ onMounted(() => {
                     <Button
                         v-if="(typeof emailField.status != 'string')"
                         @click="onCheckEmail"
-                        :key="form.email"
+                        :key="emailField.value"
                         label="Check"
                         :style="validateEmail(form.email) ? `secondary` : 'disabled'"
                     />
                 </div>
             </div>
             <div class="">
-                <p v-if="!validateEmail(form.email)" class="text-xs italic text-red-500 mb-0">*Not a valid email.</p>
+                <p v-if="!validateEmail(props.emailField.value)" class="text-xs italic text-red-500 mb-0">*Not a valid email.</p>
                 <!-- <p v-if="validateEmail(email)" class="text-xs italic text-gray-500">{{ emailField.description }}</p> -->
                 <div v-if="emailField.status == 'error'" class="mt-1 text-xxs font-thin leading-none text-gray-500 italic mb-1">Looks like you don't have the account yet. Let's register!</div>
                 <div v-else class="mt-1 text-xxs font-thin leading-none text-gray-500 italic mb-1">Your account is exist.</div>
