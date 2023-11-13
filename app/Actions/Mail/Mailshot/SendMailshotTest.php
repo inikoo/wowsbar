@@ -32,7 +32,7 @@ class SendMailshotTest
 
         if (preg_match_all("/{{(.*?)}}/", $emailHtmlBody, $matches)) {
             foreach ($matches[1] as $i => $placeholder) {
-                $placeholder = Str::kebab(Str::of($placeholder)->trim());
+//                $placeholder = Str::kebab(Str::of($placeholder)->trim());
 
                 //  if($placeholder=='unsubscribe')
 

@@ -47,7 +47,7 @@ class   UnsubscribeMailshot
             'message' => match ($dispatchedEmail->state) {
                 DispatchedEmailStateEnum::UNSUBSCRIBED => [
                     'title' => __('You have already unsubscribed from this mailshot'),
-                    'description' => __("We're sorry to see you go. If you unsubscribe by mistakes, you can resubscribe 'here'.")
+                    'description' => __("We're sorry to see you go. ")
                 ],
                 default => [
                     'title' => __('You have been unsubscribed from this mailshot'),
