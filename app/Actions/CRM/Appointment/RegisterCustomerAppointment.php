@@ -8,25 +8,34 @@
 namespace App\Actions\CRM\Appointment;
 
 use App\Actions\Auth\User\Login;
+use App\Actions\CRM\Customer\Register;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
 
-class LoginCustomerAppointment
+class RegisterCustomerAppointment
 {
     use AsAction;
     use WithAttributes;
     use AsCommand;
 
-    public function handle(ActionRequest $request): Authenticatable
+    private bool $asAction = false;
+
+    public Customer|Shop $parent;
+
+    public function handle(array $modelData): Authenticatable
     {
-        Login::run($request);
+        Register::run([
+            'email'    => $modelData['email'],
+            'password' => $modelData['password']
+        ]);
 
         return Auth::guard('customer')->user();
     }
@@ -36,6 +45,9 @@ class LoginCustomerAppointment
      */
     public function asController(ActionRequest $request): Authenticatable
     {
-        return $this->handle($request);
+        $this->fillFromRequest($request);
+        $request->validate();
+
+        return $this->handle($request->validated());
     }
 }
