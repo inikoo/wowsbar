@@ -27,4 +27,8 @@ Route::prefix("disclosure")
     ->name("disclosure.")
     ->group(__DIR__."/disclosure.php");
 
+Route::prefix("webhooks")
+    ->name("webhooks.")
+    ->group(__DIR__."/webhooks.php");
+
 require __DIR__."/auth.php";
