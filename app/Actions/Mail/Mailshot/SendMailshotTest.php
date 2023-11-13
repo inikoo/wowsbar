@@ -14,6 +14,7 @@ use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -31,7 +32,7 @@ class SendMailshotTest
 
         if (preg_match_all("/{{(.*?)}}/", $emailHtmlBody, $matches)) {
             foreach ($matches[1] as $i => $placeholder) {
-                $placeholder = Str::kebab(Str::trim($placeholder));
+                $placeholder = Str::kebab(Str::of($placeholder)->trim());
 
                 //  if($placeholder=='unsubscribe')
 
