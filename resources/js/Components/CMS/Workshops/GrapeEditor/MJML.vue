@@ -10,6 +10,7 @@ import grapesJSMJML from 'grapesjs-mjml'
 import CkeEditor from 'grapesjs-plugin-ckeditor'
 import { ComboboxLabel } from "@headlessui/vue";
 import RTE from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/Rte/Rte.ts'
+import Tag from '@/Components/Tag.vue'
 /* import ClassicEditor from 'ckeditor4'; */
 
 const emits = defineEmits(['onSaveToServer']);
@@ -133,16 +134,21 @@ onMounted(() => {
                     startupFocus: false,
                     extraAllowedContent: '*(*);*{*}',
                     allowedContent: false,
-                    /*   /* uiColor: '#2C2E35', */
-                    extraPlugins: `justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji,autocomplete,textmatch,textwatcher`,
+                 /*    skin : 'kama', */
+                    extraPlugins: `mentions,justify,colorbutton,panelbutton,font,sourcedialog,showblocks,emoji,autocomplete,textmatch,textwatcher`,
                     toolbar: [
-                        ['Undo', 'Redo', 'Font', 'FontSize', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'subscript', 'RemoveFormat', '-', 'JustifyBlock', 'JustifyCenter', "JustifyLeft", 'JustifyRight', '-', 'Indent', 'Outdent'],
-                        ['/','EmojiPanel', 'SpecialChar', '-', "BulletedList", 'NumberedList', '-', 'BGColor', 'TextColor', '-', 'Link', 'Unlink', '-', 'customTag']
-
-
+                        ['Undo', 'Redo'],
+                        ['Font', 'FontSize'],
+                        ['Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'subscript', 'RemoveFormat'],
+                        ['JustifyBlock', 'JustifyCenter', "JustifyLeft", 'JustifyRight'],
+                        ['Indent', 'Outdent'],
+                        ["BulletedList", 'NumberedList'],
+                        [ 'EmojiPanel', 'SpecialChar'],
+                        ['BGColor', 'TextColor'],
+                        ['Link', 'Unlink'],
+                        ['customTag']
                     ]
                 },
-                position: 'left',
             }
         },
         colorPicker: { appendTo: 'parent', offset: { top: 26, left: -166, } },

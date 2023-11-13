@@ -36,17 +36,49 @@ const forEach = <T extends HTMLElement = HTMLElement>(items: Iterable<T>, clb: (
 
 const stopPropagation = (ev: Event) => ev.stopPropagation();
 
+;
+
+async function  dataFeed(opts, callback) {
+  const mergeTagsOption = await getMergeTagData()
+  let SetData = []
+  var matchProperty = 'label',
+      data = mergeTagsOption.filter(function(item) {
+        return item[matchProperty].includes(opts.query)
+      });
+
+  for(const set of data){
+    set.id = set.value
+    set.name = set.label
+    SetData.push(set)
+  }
+  callback(data);
+}
+
 const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
+  const mergeTagsOption = await getMergeTagData()
   const opts: Required<PluginOptions> = {
-    options: {},
+    options: {
+      mentions: [
+        {
+            feed: dataFeed,
+            itemTemplate:
+            '<li data-id="{id}">' +
+            '<span class="label">{label}</span>' +
+            '</li>',
+            outputTemplate: `<a>[{label}]</a>`,
+            marker: '@',
+            minChars: 0
+        },
+    ],
+    ...options.options,
+    },
     customRte: {},
     position: 'left',
     ckeditor: 'https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js',
     onToolbar: () => {},
-    ...options,
+   
   };
 
-  const mergeTagsOption = await getMergeTagData()
   let ck: CKE.CKEditorStatic | undefined;
   const { ckeditor } = opts;
   const hasWindow = typeof window !== 'undefined';
@@ -128,10 +160,10 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
         ckOptions.sharedSpaces = { top: rteToolbar };
       }
 
-      // Init CKEDITOR
       rte = ck!.inline(el, ckOptions);
 
       console.log(rte)
+
 
       // Make click event propogate
       rte.on('contentDom', () => {
