@@ -9,6 +9,7 @@
 use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
+use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\Media\ImageGenerator;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -81,3 +82,5 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
 
 Route::post('/billing', StoreBilling::class)->name('billing.store');
+
+Route::post('/', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');
