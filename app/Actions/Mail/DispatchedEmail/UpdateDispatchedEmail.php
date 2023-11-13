@@ -23,7 +23,6 @@ class UpdateDispatchedEmail
 
         $dispatchedEmail = $this->update($dispatchedEmail, $modelData, ['data']);
 
-
         if ($dispatchedEmail->mailshot_id) {
             if ($dispatchedEmail->wasChanged(['is_sent'])) {
                 MailshotHydrateSentEmails::dispatch($dispatchedEmail->mailshot);

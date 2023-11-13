@@ -12,19 +12,26 @@ use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class MailshotHydrateDispatchedEmails implements ShouldBeUnique
+class MailshotHydrateDispatchedEmails
 {
     use AsAction;
-    use InteractsWithSockets;
-    use SerializesModels;
     use WithEnumStats;
 
-    public int $jobUniqueFor = 3600;
+    private Mailshot $mailshot;
+
+    public function __construct(Mailshot $mailshot)
+    {
+        $this->mailshot = $mailshot;
+    }
+
+    public function getJobMiddleware(): array
+    {
+        return [(new WithoutOverlapping($this->mailshot->id))->dontRelease()];
+    }
+
 
     public function handle(Mailshot $mailshot): void
     {
@@ -38,13 +45,10 @@ class MailshotHydrateDispatchedEmails implements ShouldBeUnique
             }
         );
         $mailshot->mailshotStats()->update($stats);
-
-        MailshotPusherEvent::dispatch($mailshot);
+        if (config('mail.broadcast_dispatch_emails_stats')) {
+            MailshotPusherEvent::dispatch($mailshot);
+        }
     }
 
 
-    public function getJobUniqueId(Mailshot $parameters): string
-    {
-        return $parameters->id;
-    }
 }

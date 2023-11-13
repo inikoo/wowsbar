@@ -35,6 +35,7 @@ class SendSesEmail
                 $dispatchedEmail,
                 [
                     'state'               => DispatchedEmailStateEnum::SENT,
+                    'is_sent'             => true,
                     'sent_at'             => now(),
                     'date'                => now(),
                     'provider_message_id' => 'devel-'.Str::uuid()
@@ -66,7 +67,7 @@ class SendSesEmail
                     $dispatchedEmail->email->address
                 ]
             ],
-            'Message'     => $message['Message'],
+            'Message'          => $message['Message'],
             'List-Unsubscribe' => '<'. route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid) .'>',
         ];
 

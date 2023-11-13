@@ -12,23 +12,17 @@ use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Events\MailshotPusherEvent;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
-use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class MailshotHydrateEstimatedEmails
 {
     use AsAction;
-    use InteractsWithSockets;
-    use SerializesModels;
     use WithCheckCanSendEmail;
 
 
-    /**
-     * @var \App\Models\Mail\Mailshot
-     */
+
     private Mailshot $mailshot;
 
     public function __construct(Mailshot $mailshot)
@@ -39,7 +33,6 @@ class MailshotHydrateEstimatedEmails
 
     public function getJobMiddleware(): array
     {
-
         return [(new WithoutOverlapping($this->mailshot->id))->dontRelease()];
     }
 
@@ -75,7 +68,9 @@ class MailshotHydrateEstimatedEmails
             ]
         );
 
-        MailshotPusherEvent::dispatch($mailshot);
+        if(config('mail.broadcast_dispatch_emails_stats')) {
+            MailshotPusherEvent::dispatch($mailshot);
+        }
     }
 
 

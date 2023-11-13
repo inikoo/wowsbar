@@ -7,9 +7,7 @@
 
 namespace App\Actions\Mail\MailshotSendChannel;
 
-use App\Actions\Mail\Mailshot\UpdateMailshotSentState;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\MailshotSendChannelStateEnum;
 use App\Models\Mail\MailshotSendChannel;
 
 class UpdateMailshotSendChannel
@@ -21,12 +19,8 @@ class UpdateMailshotSendChannel
     {
 
         $mailshotSendChannel = $this->update($mailshotSendChannel, $modelData, ['data']);
-        $mailshotSendChannel->refresh();
 
 
-        if($mailshotSendChannel->state==MailshotSendChannelStateEnum::SENT) {
-            // UpdateMailshotSentState::run();
-        }
 
 
         return $mailshotSendChannel;

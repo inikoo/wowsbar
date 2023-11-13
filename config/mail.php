@@ -127,11 +127,12 @@ return [
         ],
     ],
 
-    'devel'=> [
-        'sender_email_address'   => env('SENDER_EMAIL_ADDRESS'),
-        'max_mailshot_recipients'=> env('MAX_MAILSHOT_RECIPIENTS', 2000),
-        'send_ses_emails'        => env('SEND_SES_EMAILS', false),
+    'devel' => [
+        'sender_email_address'    => env('SENDER_EMAIL_ADDRESS'),
+        'max_mailshot_recipients' => env('MAX_MAILSHOT_RECIPIENTS', 2000),
+        'send_ses_emails'         => env('SEND_SES_EMAILS', false),
+    ],
 
-]
+    'broadcast_dispatch_emails_stats'=> env('BROADCAST_DISPATCH_EMAILS_STATS', true)
 
 ];

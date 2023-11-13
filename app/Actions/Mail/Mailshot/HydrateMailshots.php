@@ -8,6 +8,10 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\HydrateModel;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateErrorEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Collection;
@@ -16,7 +20,12 @@ class HydrateMailshots extends HydrateModel
 {
     public function handle(Mailshot $mailshot): void
     {
+        MailshotHydrateDispatchedEmails::run($mailshot);
+        MailshotHydrateEmails::run($mailshot);
+        MailshotHydrateErrorEmails::run($mailshot);
+        MailshotHydrateEstimatedEmails::run($mailshot);
         MailshotHydrateSentEmails::run($mailshot);
+
     }
 
     public string $commandSignature = 'hydrate:mailshots {slugs?*}';

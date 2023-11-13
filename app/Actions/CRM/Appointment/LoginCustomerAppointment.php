@@ -8,10 +8,6 @@
 namespace App\Actions\CRM\Appointment;
 
 use App\Actions\Auth\User\Login;
-use App\Models\CRM\Customer;
-use App\Models\Market\Shop;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;

@@ -14,7 +14,7 @@ use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class   UnsubscribeMailshot
+class UnsubscribeMailshot
 {
     use WithActionUpdate;
 
@@ -44,13 +44,13 @@ class   UnsubscribeMailshot
                 ],
             ],
             'mailshot' => $dispatchedEmail,
-            'message' => match ($dispatchedEmail->state) {
+            'message'  => match ($dispatchedEmail->state) {
                 DispatchedEmailStateEnum::UNSUBSCRIBED => [
-                    'title' => __('You have already unsubscribed from this mailshot'),
+                    'title'       => __('You have already unsubscribed from this mailshot'),
                     'description' => __("We're sorry to see you go. ")
                 ],
                 default => [
-                    'title' => __('You have been unsubscribed from this mailshot'),
+                    'title'       => __('You have been unsubscribed from this mailshot'),
                     'description' => "If you unsubscribe by mistakes, you can resubscribe 'here'."
                 ]
             }

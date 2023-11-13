@@ -7,10 +7,11 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Enums\Mail\MailshotSendChannelStateEnum;
+use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Console\Command;
 
@@ -25,7 +26,7 @@ class UpdateMailshotSentState
                 'msg'=> 'emails still processing'
             ];
         }
-        $count = count($mailshot->channels);
+        $count = $mailshot->channels()->count();
         if ($count == 0) {
             return [
                 'error'=> true,
@@ -33,33 +34,27 @@ class UpdateMailshotSentState
             ];
         }
 
-        print_r($mailshot->channels);
-
-        $sent   = true;
-        $sentAt = null;
-
-
-        foreach ($mailshot->channels as $chanel) {
-
-
-
-            if (Arr::exists($chanel, 'sent')) {
-                $chanelSentAt = Arr::get($chanel, 'sent');
-                if (is_null($sentAt)) {
-                    $sentAt = new Carbon($chanelSentAt);
-                } else {
-                    $chanelSentAtDate = new Carbon($chanelSentAt);
-                    if ($sentAt->lt($chanelSentAtDate)) {
-                        $sentAt = $chanelSentAtDate;
-                    }
-                }
-            } else {
-                $sent = false;
-                break;
-            }
+        $countInProcess = $mailshot->channels()->whereNot('mailshot_send_channels.state', MailshotSendChannelStateEnum::SENT)->count();
+        if ($countInProcess > 0) {
+            return [
+                'error'=> true,
+                'msg'  => 'Channels still processing '.$countInProcess
+            ];
         }
 
-        return [];
+        $sentAtDate = $mailshot->channels()->max('sent_at');
+
+
+        UpdateMailshot::run(
+            $mailshot,
+            [
+            'state'  => MailshotStateEnum::SENT,
+            'sent_at'=> $sentAtDate
+        ]
+        );
+        return [
+            'msg'=> 'mailshot sent'
+        ];
     }
 
     public string $commandSignature = 'mailshot:sent-state {mailshot}';

@@ -9,19 +9,26 @@ namespace App\Actions\Mail\Mailshot\Hydrators;
 
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\Mailshot;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class MailshotHydrateErrorEmails implements ShouldBeUnique
+class MailshotHydrateErrorEmails
 {
     use AsAction;
-    use InteractsWithSockets;
-    use SerializesModels;
 
-    public int $jobUniqueFor = 3600;
+
+    private Mailshot $mailshot;
+
+    public function __construct(Mailshot $mailshot)
+    {
+        $this->mailshot = $mailshot;
+    }
+
+    public function getJobMiddleware(): array
+    {
+        return [(new WithoutOverlapping($this->mailshot->id))->dontRelease()];
+    }
 
     public function handle(Mailshot $mailshot): void
     {
@@ -37,12 +44,11 @@ class MailshotHydrateErrorEmails implements ShouldBeUnique
             ]
         );
 
-        MailshotPusherEvent::dispatch($mailshot);
+        if(config('mail.broadcast_dispatch_emails_stats')) {
+            MailshotPusherEvent::dispatch($mailshot);
+        }
     }
 
 
-    public function getJobUniqueId(Mailshot $parameters): string
-    {
-        return $parameters->id;
-    }
+
 }

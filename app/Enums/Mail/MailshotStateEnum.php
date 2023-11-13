@@ -68,11 +68,11 @@ enum MailshotStateEnum: string
                 'class'   => 'animate-pulse'
 
             ],
-            'switch_off'     => [
+            'sent'     => [
 
-                'tooltip' => __('switch off'),
-                'icon'    => 'fal fa-eye-slash'
-
+                'tooltip' => __('sent'),
+                'icon'    => 'fal fa-paper-plane',
+                'class'   => 'text-green-600'
             ],
 
         ];

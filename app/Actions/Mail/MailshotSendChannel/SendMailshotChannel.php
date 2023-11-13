@@ -7,6 +7,9 @@
 
 namespace App\Actions\Mail\MailshotSendChannel;
 
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
+use App\Actions\Mail\Mailshot\UpdateMailshotSentState;
 use App\Actions\Mail\Ses\SendSesEmail;
 use App\Enums\Mail\MailshotSendChannelStateEnum;
 use App\Models\Mail\Mailshot;
@@ -55,6 +58,11 @@ class SendMailshotChannel
                 'state'   => MailshotSendChannelStateEnum::SENT
             ]
         );
+        $mailshot->refresh();
+        MailshotHydrateSentEmails::run($mailshot);
+        MailshotHydrateDispatchedEmails::run($mailshot);
+        UpdateMailshotSentState::run($mailshot);
+
     }
 
     public string $commandSignature = 'mailshot:send-channel {mailshot} {?channel}';
