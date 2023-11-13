@@ -9,6 +9,7 @@ use App\Actions\CRM\Appointment\CheckCustomerAppointment;
 use App\Actions\CRM\Appointment\GetBookedScheduleAppointment;
 use App\Actions\CRM\Appointment\LoginCustomerAppointment;
 use App\Actions\CRM\Appointment\RegisterCustomerAppointment;
+use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\UI\Public\Appointment\ShowPublicAppointment;
 use App\Actions\UI\Public\ShowHome;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ Route::prefix('appointment')->as('appointment.')->group(function () {
     Route::post('/login', LoginCustomerAppointment::class)->name('login');
     Route::post('/register', RegisterCustomerAppointment::class)->name('register');
 });
+
+Route::post('/appointment', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');
 
 Route::prefix("disclosure")
     ->name("disclosure.")

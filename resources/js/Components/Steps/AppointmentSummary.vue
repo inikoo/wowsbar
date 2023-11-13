@@ -27,7 +27,7 @@ const emits = defineEmits<{
 // When submit Appointment
 const onClickMakeAppointment = async () => {
     try {
-        const response = axios.post(route('customer.models.appointment.store'), {
+        const response = axios.post(route('public.appointment.store'), {
             schedule_at: props.selectedDate,
             type: 'lead',
             event: props.meetEvent?.name,

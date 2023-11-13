@@ -67,6 +67,7 @@ Route::prefix('/banner')->name('banner.')->group(function () {
 
     });
 });
+
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::post('/user', StoreUser::class)->name('user.store');
@@ -82,5 +83,3 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
 
 Route::post('/billing', StoreBilling::class)->name('billing.store');
-
-Route::post('/appointment', [StoreAppointment::class, 'inCustomer'])->name('appointment.store');

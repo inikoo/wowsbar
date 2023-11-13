@@ -24,18 +24,25 @@ class LoginCustomerAppointment
     use WithAttributes;
     use AsCommand;
 
-    public function handle(ActionRequest $request): Authenticatable
+    public function handle(ActionRequest $request): void
     {
+        $request->validate();
         Login::run($request);
+    }
 
-        return Auth::guard('customer')->user();
+    public function rules(): array
+    {
+        return [
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ];
     }
 
     /**
      * @throws Throwable
      */
-    public function asController(ActionRequest $request): Authenticatable
+    public function asController(ActionRequest $request): void
     {
-        return $this->handle($request);
+        $this->handle($request);
     }
 }
