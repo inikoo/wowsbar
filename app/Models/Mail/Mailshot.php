@@ -44,7 +44,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
- * @property array|null $channels
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
+ * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
@@ -53,7 +54,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCancelledAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereChannels($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
@@ -88,7 +88,6 @@ class Mailshot extends Model
     protected $casts = [
         'recipients_recipe' => 'array',
         'layout'            => 'array',
-        'channels'          => 'array',
         'type'              => MailshotTypeEnum::class,
         'state'             => MailshotStateEnum::class
 
@@ -97,7 +96,6 @@ class Mailshot extends Model
     protected $attributes = [
         'layout'            => '{}',
         'recipients_recipe' => '{}',
-        'channels'          => '{}'
     ];
 
     protected $guarded = [];
@@ -144,6 +142,10 @@ class Mailshot extends Model
         return $sender;
     }
 
+    public function channels(): HasMany
+    {
+        return $this->hasMany(MailshotSendChannel::class);
+    }
 
 
 }

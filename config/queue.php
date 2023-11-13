@@ -78,6 +78,14 @@ return [
             'block_for'    => null,
             'after_commit' => false,
         ],
+        'redis-ses' => [
+            'driver'       => 'redis',
+            'connection'   => 'default',
+            'queue'        => 'ses',
+            'retry_after'  => 7250,
+            'block_for'    => null,
+            'after_commit' => false,
+        ],
 
     ],
 

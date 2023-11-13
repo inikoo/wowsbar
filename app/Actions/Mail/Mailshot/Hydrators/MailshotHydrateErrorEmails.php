@@ -1,13 +1,12 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 10 Nov 2023 14:41:00 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 13 Nov 2023 12:50:25 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
-use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\Mailshot;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class MailshotHydrateReadyEmails implements ShouldBeUnique
+class MailshotHydrateErrorEmails implements ShouldBeUnique
 {
     use AsAction;
     use InteractsWithSockets;
@@ -28,18 +27,13 @@ class MailshotHydrateReadyEmails implements ShouldBeUnique
     {
 
         $count = DB::table('dispatched_emails')
-            ->where('mailshot_id', $mailshot->id)->count();
-
-        $countReady = DB::table('dispatched_emails')
             ->where('mailshot_id', $mailshot->id)
-            ->where('dispatched_emails.state', DispatchedEmailStateEnum::READY->value)->count();
-
+            ->where('is_error', true)->count();
 
 
         $mailshot->mailshotStats()->update(
             [
-                'number_dispatched_emails'            => $count,
-                'number_dispatched_emails_state_ready'=> $countReady
+                'number_sent_emails'=> $count
             ]
         );
 

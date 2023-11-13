@@ -205,6 +205,19 @@ return [
             'tries'               => 1,
             'timeout'             => 3600,
             'nice'                => 0,
+        ],
+        'supervisor-ses' => [
+            'connection'          => 'redis-ses',
+            'queue'               => 'ses',
+            'balance'             => 'auto',
+            'autoScalingStrategy' => 'time',
+            'maxProcesses'        => 1,
+            'maxTime'             => 0,
+            'maxJobs'             => 0,
+            'memory'              => 128,
+            'tries'               => 1,
+            'timeout'             => 7200,
+            'nice'                => 0,
         ]
     ],
 
@@ -220,13 +233,21 @@ return [
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],
+            'supervisor-ses' => [
+                'maxProcesses'    => 4,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
         ],
 
         'local' => [
             'supervisor-1' => [
-                'maxProcesses' => 3,
+                'maxProcesses' => 5,
             ],
             'supervisor-long-running' => [
+                'maxProcesses' => 5,
+            ],
+            'supervisor-ses' => [
                 'maxProcesses' => 3,
             ],
         ],

@@ -58,8 +58,11 @@ class ProcessSesNotification
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state' => $isHardBounce ? DispatchedEmailStateEnum::HARD_BOUNCE : DispatchedEmailStateEnum::SOFT_BOUNCE,
-                        'date'  => $date,
+                        'state'          => $isHardBounce ? DispatchedEmailStateEnum::HARD_BOUNCE : DispatchedEmailStateEnum::SOFT_BOUNCE,
+                        'date'           => $date,
+                        'is_hard_bounced'=> $isHardBounce,
+                        'is_soft_bounced'=> !$isHardBounce
+
                     ]
                 );
 
@@ -72,8 +75,9 @@ class ProcessSesNotification
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state' => DispatchedEmailStateEnum::SPAM,
-                        'date'  => $date,
+                        'state'  => DispatchedEmailStateEnum::SPAM,
+                        'is_spam'=> true,
+                        'date'   => $date,
                     ]
                 );
                 break;
@@ -98,7 +102,8 @@ class ProcessSesNotification
                     UpdateDispatchedEmail::run(
                         $dispatchedEmail,
                         [
-                            'state' => DispatchedEmailStateEnum::REJECTED,
+                            'state'      => DispatchedEmailStateEnum::REJECTED,
+                            'is_rejected'=> true,
                         ]
                     );
                 }

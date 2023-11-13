@@ -21,11 +21,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int|null $mailshot_id
  * @property string|null $provider_message_id
  * @property DispatchedEmailStateEnum $state
+ * @property bool $is_error
+ * @property bool $is_rejected
  * @property bool $is_sent
  * @property bool $is_delivered
- * @property bool $is_open
- * @property bool $is_clicked
- * @property bool $is_throttled
+ * @property bool $is_hard_bounced
+ * @property bool $is_soft_bounced
  * @property string|null $sent_at
  * @property string|null $delivered_at
  * @property string $date
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \App\Models\Mail\Email $email
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\DispatchedEmailEvent> $events
  * @property-read int|null $events_count
+ * @property-read \App\Models\Mail\Mailshot|null $mailshot
  * @property-read \App\Models\Mail\MailshotRecipient|null $mailshotRecipient
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newQuery()
@@ -47,12 +49,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereDeliveredAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsClicked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsDelivered($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsOpen($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsError($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsHardBounced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsRejected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSoftBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsTest($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsThrottled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereProviderMessageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereSentAt($value)
@@ -88,6 +91,11 @@ class DispatchedEmail extends Model
     {
         return $this->hasMany(DispatchedEmailEvent::class);
 
+    }
+
+    public function mailshot(): BelongsTo
+    {
+        return $this->belongsTo(Mailshot::class);
     }
 
 }

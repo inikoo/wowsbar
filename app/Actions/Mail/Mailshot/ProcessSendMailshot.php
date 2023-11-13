@@ -4,8 +4,10 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateReadyEmails;
 use App\Actions\Mail\MailshotRecipient\StoreMailshotRecipient;
+use App\Actions\Mail\MailshotSendChannel\SendMailshotChannel;
+use App\Actions\Mail\MailshotSendChannel\StoreMailshotSendChannel;
+use App\Actions\Mail\MailshotSendChannel\UpdateMailshotSendChannel;
 use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Helpers\ArrayWIthProbabilities;
 use App\Models\Helpers\Query;
@@ -21,6 +23,7 @@ class ProcessSendMailshot
     use AsAction;
     use WithCheckCanSendEmail;
 
+    public string $jobQueue = 'default_long';
 
     public function handle(Mailshot $mailshot): void
     {
@@ -36,7 +39,9 @@ class ProcessSendMailshot
         $queryBuilder->chunk(
             250,
             function ($recipients) use ($mailshot, &$counter, &$channel, $limit) {
-                $chunkCount = 0;
+                $mailshotSendChannel = StoreMailshotSendChannel::run($mailshot);
+
+                $numberEmailsInChannel = 0;
 
                 foreach ($recipients as $recipient) {
                     if (!$this->canSend($recipient)) {
@@ -44,6 +49,7 @@ class ProcessSendMailshot
                     }
 
                     if (!is_null($limit) and $counter > $limit) {
+                        SendMailshotChannel::dispatch($mailshotSendChannel);
                         break;
                     }
 
@@ -68,35 +74,26 @@ class ProcessSendMailshot
                             $dispatchedEmail,
                             $recipient,
                             [
-                                'channel' => $channel,
+                                'channel' => $mailshotSendChannel->id,
                             ]
                         );
 
-                        MailshotHydrateReadyEmails::dispatch($mailshot);
-                        $chunkCount++;
+
+                        $numberEmailsInChannel++;
                     }
                     $counter++;
-
-
-
                 }
 
 
+                UpdateMailshotSendChannel::run(
+                    $mailshotSendChannel,
+                    [
+                        'number_emails' => $numberEmailsInChannel
+                    ]
+                );
 
-                if ($chunkCount) {
-                    // $channelLabel=Str::slug(SpellNumber::value($channel)->toLetters());
 
-                    $mailshot->update(
-                        [
-                            "channels->{$channel}->ready" => now(),
-                            "channels->{$channel}->count" => $chunkCount
-
-                        ]
-                    );
-                    MailshotSendEmailChunk::dispatch($mailshot, $channel);
-                }
-
-                $channel++;
+                SendMailshotChannel::dispatch($mailshotSendChannel);
             }
         );
 
@@ -104,7 +101,7 @@ class ProcessSendMailshot
         UpdateMailshot::run(
             $mailshot,
             [
-                'recipients_stored_at'=> now()
+                'recipients_stored_at' => now()
             ]
         );
     }

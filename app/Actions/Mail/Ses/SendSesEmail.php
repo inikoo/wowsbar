@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Ses;
 
+use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
@@ -29,7 +30,9 @@ class SendSesEmail
         }
 
         if (!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
-            $dispatchedEmail->update(
+
+            UpdateDispatchedEmail::run(
+                $dispatchedEmail,
                 [
                     'state'               => DispatchedEmailStateEnum::SENT,
                     'sent_at'             => now(),
@@ -37,6 +40,7 @@ class SendSesEmail
                     'provider_message_id' => 'devel-'.Str::uuid()
                 ]
             );
+
 
             return $dispatchedEmail;
         }
@@ -73,23 +77,32 @@ class SendSesEmail
             try {
                 $result = $this->getSesClient()->sendEmail($emailData);
 
-                $dispatchedEmail->update(
+
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
                     [
                         'state'               => DispatchedEmailStateEnum::SENT,
+                        'is_sent'             => true,
                         'sent_at'             => now(),
                         'date'                => now(),
                         'provider_message_id' => Arr::get($result, 'MessageId')
                     ]
                 );
+
+
+
             } catch (AwsException $e) {
                 if ($e->getAwsErrorCode() == 'Throttling' and $attempt < $numberAttempts - 1) {
                     $attempt++;
                     usleep(rand(200, 300) + pow(2, $attempt));
                     continue;
                 } else {
-                    $dispatchedEmail->update(
+
+                    UpdateDispatchedEmail::run(
+                        $dispatchedEmail,
                         [
                             'state'       => DispatchedEmailStateEnum::ERROR,
+                            'is_error'    => true,
                             'date'        => now(),
                             'data->error' =>
                                 [
@@ -100,14 +113,13 @@ class SendSesEmail
                                 ],
                         ]
                     );
+
                     break;
                 }
             }
 
             break;
         } while ($attempt < $numberAttempts);
-
-
 
 
         return $dispatchedEmail;

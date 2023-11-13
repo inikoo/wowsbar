@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\MailshotRecipient;
 
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
 use App\Models\CRM\Customer;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\DispatchedEmail;
@@ -38,6 +39,7 @@ class StoreMailshotRecipient
                 $modelData
             )
         );
+        MailshotHydrateEmails::dispatch($mailshot);
 
         return $mailshotRecipient;
     }

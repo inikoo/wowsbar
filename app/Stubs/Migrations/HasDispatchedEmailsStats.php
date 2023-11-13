@@ -15,10 +15,23 @@ trait HasDispatchedEmailsStats
     public function dispatchedEmailsStats(Blueprint $table): Blueprint
     {
 
+        $table->unsignedInteger("number_emails")->default(0);
+        $table->unsignedInteger("number_error_emails")->default(0);
+        $table->unsignedInteger("number_rejected__emails")->default(0);
+        $table->unsignedInteger("number_sent_emails")->default(0);
+        $table->unsignedInteger("number_delivered_emails")->default(0);
+        $table->unsignedInteger("number_hard_bounced_emails")->default(0);
+        $table->unsignedInteger("number_soft_bounced_emails")->default(0);
+        $table->unsignedInteger("number_opened_emails")->default(0);
+        $table->unsignedInteger("number_clicked_emails")->default(0);
+        $table->unsignedInteger("number_spam_emails")->default(0);
+        $table->unsignedInteger("number_unsubscribed_emails")->default(0);
+
         $table->unsignedInteger('number_dispatched_emails')->default(0);
         foreach (DispatchedEmailStateEnum::cases() as $case) {
             $table->unsignedInteger("number_dispatched_emails_state_{$case->snake()}")->default(0);
         }
+
 
         return $table;
     }

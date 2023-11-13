@@ -21,11 +21,12 @@ return new class () extends Migration {
             $table->foreign('mailshot_id')->references('id')->on('mailshots')->onUpdate('cascade')->onDelete('cascade');
             $table->string('provider_message_id')->nullable()->index();
             $table->string('state')->index()->default(DispatchedEmailStateEnum::READY);
+            $table->boolean('is_error')->default(false);
+            $table->boolean('is_rejected')->default(false);
             $table->boolean('is_sent')->default(false);
             $table->boolean('is_delivered')->default(false);
-            $table->boolean('is_open')->default(false);
-            $table->boolean('is_clicked')->default(false);
-            $table->boolean('is_throttled')->default(false);
+            $table->boolean('is_hard_bounced')->default(false);
+            $table->boolean('is_soft_bounced')->default(false);
             $table->dateTimeTz('sent_at')->nullable();
             $table->dateTimeTz('delivered_at')->nullable();
             $table->dateTimeTz('date')->index();
