@@ -7,13 +7,10 @@
 
 namespace App\Actions\CRM\Appointment;
 
-use App\Actions\Auth\User\Login;
 use App\Actions\CRM\Customer\Register;
-use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -26,16 +23,9 @@ class RegisterCustomerAppointment
     use WithAttributes;
     use AsCommand;
 
-    private bool $asAction = false;
-
-    public Customer|Shop $parent;
-
-    public function handle(array $modelData): Authenticatable
+    public function handle(Shop $shop, array $modelData): Authenticatable
     {
-        Register::run([
-            'email'    => $modelData['email'],
-            'password' => $modelData['password']
-        ]);
+        Register::run($shop, $modelData);
 
         return Auth::guard('customer')->user();
     }
@@ -48,6 +38,6 @@ class RegisterCustomerAppointment
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle($request->validated());
+        return $this->handle($request->get('website')->shop, $request->validated());
     }
 }
