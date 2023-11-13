@@ -10,6 +10,7 @@ use App\Actions\Auth\User\Logout;
 use App\Actions\Auth\User\UI\ShowLogin;
 use App\Actions\Auth\User\UI\ShowResetUserPassword;
 use App\Actions\Auth\User\UpdateUserPassword;
+use App\Actions\CRM\Appointment\LoginCustomerAppointment;
 use App\Actions\CRM\Customer\Register;
 use App\Actions\UI\Public\Auth\ShowRegister;
 use Illuminate\Support\Facades\Route;

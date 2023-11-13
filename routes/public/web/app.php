@@ -7,15 +7,19 @@
 
 use App\Actions\CRM\Appointment\CheckCustomerAppointment;
 use App\Actions\CRM\Appointment\GetBookedScheduleAppointment;
+use App\Actions\CRM\Appointment\LoginCustomerAppointment;
 use App\Actions\UI\Public\Appointment\ShowPublicAppointment;
 use App\Actions\UI\Public\ShowHome;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowHome::class)->name('home');
-Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
-Route::get('appointment/schedule', GetBookedScheduleAppointment::class)->name('appointment.schedule');
 
-Route::post('appointment/check/email', CheckCustomerAppointment::class)->name('appointment.check.email');
+Route::prefix('appointment')->as('appointment.')->group(function () {
+    Route::get('/', ShowPublicAppointment::class)->name('show');
+    Route::get('/schedule', GetBookedScheduleAppointment::class)->name('schedule');
+    Route::post('/check/email', CheckCustomerAppointment::class)->name('check.email');
+    Route::post('/login', LoginCustomerAppointment::class)->name('login');
+});
 
 Route::prefix("disclosure")
     ->name("disclosure.")
