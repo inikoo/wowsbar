@@ -22,6 +22,7 @@ use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\ActionRequest;
 
 class PublishBanner
@@ -96,6 +97,10 @@ class PublishBanner
         }
 
         UpdateBannerImage::dispatch($banner);
+
+
+        Cache::put('banner_compiled_layout_'.$banner->ulid, $banner->compiled_layout, 86400);
+
 
         return $banner;
     }
