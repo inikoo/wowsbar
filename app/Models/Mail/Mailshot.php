@@ -113,7 +113,7 @@ class Mailshot extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return Abbreviate::run(string: $this->subject).' '.Abbreviate::run($this->type->value);
+                return Abbreviate::run(string: $this->subject, maximumLength: 16).' '.Abbreviate::run($this->type->value, 4);
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
@@ -138,11 +138,12 @@ class Mailshot extends Model
 
     public function sender()
     {
-        if(app()->environment('production')) {
-            $sender=$this->scope->sender_email_address;
+        if (app()->environment('production')) {
+            $sender = $this->scope->sender_email_address;
         } else {
-            $sender=config('mail.devel.sender_email_address');
+            $sender = config('mail.devel.sender_email_address');
         }
+
         return $sender;
     }
 
