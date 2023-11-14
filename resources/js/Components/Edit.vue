@@ -82,7 +82,7 @@ const props = defineProps<{
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData.current)
+const currentTab: Ref<string> = ref(props.formData.current ?? Object.keys(props.formData.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
@@ -194,7 +194,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- For button Authorize Google -->
-                <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[currentTab].button" :id="formData.title">
+                <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint?.[currentTab]?.button" :id="formData.title">
                     <component :is="formData.blueprint[currentTab].button.disable ? 'div' : 'a'"
                         :href="formData.blueprint[currentTab].button.route" target="_blank" rel="noopener noreferrer"
                         class="px-3 py-1.5 rounded"
