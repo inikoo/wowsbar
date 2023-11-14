@@ -8,8 +8,10 @@
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Mailshot;
+use App\Models\Mail\Outbox;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\{get};
@@ -87,8 +89,10 @@ test('create prospect mailshot', function () {
     $shop         = $this->shop;
     $organisation = $this->organisation;
     $dataModel    = [
-        'subject' => 'hello',
-        'type'    => MailshotTypeEnum::PROSPECT_MAILSHOT
+        'subject'   => 'hello',
+        'type'      => MailshotTypeEnum::PROSPECT_MAILSHOT,
+        'outbox_id' => Outbox::where('shop_id', $shop->id)->where('type', OutboxTypeEnum::SHOP_PROSPECT)->pluck('id')->first()
+
     ];
     $mailshot     = StoreMailshot::make()->action($shop, $dataModel);
     expect($mailshot)->toBeInstanceOf(Mailshot::class)
@@ -103,7 +107,6 @@ test('create prospect mailshot', function () {
 });
 
 test('can show list of prospects', function () {
-
     $shop     = $this->shop;
     $response = get(route('org.crm.shop.prospects.index', [$shop->slug]));
     $response->assertInertia(function (AssertableInertia $page) {
