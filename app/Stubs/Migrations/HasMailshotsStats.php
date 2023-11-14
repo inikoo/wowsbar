@@ -13,7 +13,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 trait HasMailshotsStats
 {
-    public function mailshotStats(Blueprint $table): Blueprint
+    public function mailshotsStats(Blueprint $table): Blueprint
     {
         $table->unsignedInteger('number_mailshots')->default(0);
 

@@ -46,7 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $recipients_stored_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
- * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
+ * @property-read \App\Models\Mail\MailshotStats|null $mailshotsStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
