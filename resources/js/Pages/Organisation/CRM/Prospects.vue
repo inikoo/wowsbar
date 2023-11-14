@@ -23,10 +23,10 @@ import TableHistories from "@/Components/Tables/TableHistories.vue"
 import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue"
 
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo} from '@fal/'
+import {faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags} from '@fal/'
 import TableProspectLists from "@/Components/Tables/TableProspectLists.vue";
 
-library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo)
+library.add(faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags)
 
 
 const props = defineProps<{
