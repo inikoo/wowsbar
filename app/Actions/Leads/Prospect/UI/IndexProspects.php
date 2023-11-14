@@ -182,6 +182,31 @@ class IndexProspects extends InertiaAction
             ];
         }
 
+        $meta[] = [
+            'href'     => [
+                'name'       => 'org.crm.shop.prospects.lists.index',
+                'parameters' => $request->route()->originalParameters()
+            ],
+            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'label'    => __('Lists'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-code-branch',
+                'tooltip' => __('lists')
+            ]
+        ];
+
+        $meta[] = [
+            'href'     => [
+                'name'       => 'org.crm.shop.prospects.tags.index',
+                'parameters' => $request->route()->originalParameters()
+            ],
+            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'label'    => __('Tags'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-tags',
+                'tooltip' => __('tags')
+            ]
+        ];
 
         return Inertia::render(
             'CRM/Prospects',

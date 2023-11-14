@@ -23,10 +23,10 @@ use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\Queries\CreateProspectQuery;
-use App\Actions\Leads\Prospect\Queries\IndexProspectsQueries;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\EditProspect;
+use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
@@ -103,9 +103,15 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/export', ExportProspects::class)->name('export');
 
         Route::prefix('lists')->as('lists.')->group(function () {
-            Route::get('/', IndexProspectsQueries::class)->name('index');
+            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
             Route::get('/create', CreateProspectQuery::class)->name('create');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
+        });
+
+        Route::prefix('tags')->as('tags.')->group(function () {
+            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index'); //todo IndexProspectTags
+            Route::get('/create', CreateProspectQuery::class)->name('create'); //todo CreateProspectTag
+            Route::get('{tag}', ShowProspectQuery::class)->name('show'); //todo ShowProspectTag
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {

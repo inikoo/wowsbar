@@ -115,3 +115,13 @@ test('can show list of prospects', function () {
             ->has('title');
     });
 });
+
+test('can show list of prospects lists', function () {
+    $shop     = $this->shop;
+    $response = get(route('org.crm.shop.prospects.lists.index', [$shop->slug]));
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page
+            ->component('CRM/Prospects/Queries')
+            ->has('title');
+    });
+});
