@@ -27,32 +27,40 @@ class SendMailshotTest
 
     public function handle(Mailshot $mailshot, array $modelData): Collection
     {
-        $ulid = Str::ulid();
+
         $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
-        if (preg_match_all("/{{(.*?)}}/", $emailHtmlBody, $matches)) {
-            foreach ($matches[1] as $i => $placeholder) {
-                $placeholder = Str::kebab(Str::of($placeholder)->trim());
-                if($placeholder=='unsubscribe') {
-                    $placeholder = sprintf('<a href="%s">%s</a>', route('public.webhooks.mailshot.unsubscribe', $ulid), $placeholder);
-                }
 
-                $emailHtmlBody = str_replace($matches[0][$i], sprintf('%s', $placeholder), $emailHtmlBody);
-            }
-        }
 
-           dd($emailHtmlBody);
+
 
         $dispatchedEmails = [];
         foreach (Arr::get($modelData, 'emails', []) as $email) {
             $email           = Email::firstOrCreate(['address' => $email]);
             $dispatchedEmail = StoreDispatchedEmail::run($email, $mailshot, [
                 'is_test' => true,
-                'ulid' => $ulid
             ]);
             $dispatchedEmail->refresh();
-            $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $emailHtmlBody, $dispatchedEmail, $mailshot->sender());
+
+            $html=$emailHtmlBody;
+            if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
+                foreach ($matches[1] as $i => $placeholder) {
+
+                    $placeholder = Str::kebab(trim($placeholder));
+                    if($placeholder=='unsubscribe') {
+                        $placeholder = sprintf(
+                            "<a href=\"%s\">%s</a>",
+                            route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+                            __('Unsubscribe')
+                        );
+                    }
+
+                    $html = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
+                }
+            }
+
+            $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $html, $dispatchedEmail, $mailshot->sender());
         }
 
         return collect($dispatchedEmails);

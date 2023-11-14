@@ -29,7 +29,7 @@ class SendSesEmail
             return $dispatchedEmail;
         }
 
-        if (!app()->isProduction() and !config('mail.devel.send_ses_emails')) {
+        if (!app()->isProduction() and  (!config('mail.devel.send_ses_emails')  and  !$dispatchedEmail->is_test)) {
 
             UpdateDispatchedEmail::run(
                 $dispatchedEmail,
