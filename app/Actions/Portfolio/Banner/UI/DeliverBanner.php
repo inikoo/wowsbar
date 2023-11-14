@@ -19,8 +19,8 @@ class DeliverBanner
 
     public function handle(string $ulid): array
     {
-        $seconds=3600;
-        return Cache::remember('deliver_banner_compiled_layout_'.$ulid, $seconds, function () use ($ulid) {
+        $seconds=86400;
+        return Cache::remember('banner_compiled_layout_'.$ulid, $seconds, function () use ($ulid) {
             $banner = Banner::where('ulid', $ulid)->firstOrFail();
             return $banner->compiled_layout;
         });
