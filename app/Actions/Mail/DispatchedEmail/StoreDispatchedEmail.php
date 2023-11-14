@@ -10,6 +10,7 @@ namespace App\Actions\Mail\DispatchedEmail;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -23,7 +24,7 @@ class StoreDispatchedEmail
         $dispatchedEmail = DispatchedEmail::create(
             array_merge([
                 'email_id'    => $email->id,
-                'ulid'        => Str::ulid(),
+                'ulid'        => Arr::get($modelData, 'ulid', Str::ulid()),
                 'date'        => now(),
                 'mailshot_id' => $mailshot?->id
             ], $modelData)
