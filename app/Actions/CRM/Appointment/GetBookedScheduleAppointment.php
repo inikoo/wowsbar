@@ -34,10 +34,15 @@ class GetBookedScheduleAppointment
         $dt                 = Carbon::createFromDate($modelData['year'], $modelData['month']);
         $bookedSchedules    = [];
         $availableSchedules = [];
-        $availableTimes     = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+        $availableTimes     = ['02:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
-        for ($i = 1; $i <= $dt->daysInMonth; $i++) {
-            $date = Carbon::createFromDate($modelData['year'], $modelData['month'], $i);
+        $endOfMonth = $dt->copy()->endOfMonth();
+        $currentDay = now();
+
+        $daysInMonth = $currentDay->diffInDays($endOfMonth);
+
+        for ($i = 0; $i <= $daysInMonth; $i++) {
+            $date = now()->addDays($i);
             $date = $date->format('Y-m-d');
 
             $employees = Employee::whereHas('jobPositions', function ($query) {

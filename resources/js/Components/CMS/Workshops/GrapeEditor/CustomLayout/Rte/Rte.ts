@@ -1,6 +1,9 @@
 import { noop } from 'lodash';
 import type { Plugin, CustomRTE } from 'grapesjs';
 import type CKE from 'ckeditor4';
+import TagVue from '@/Components/Tag.vue';
+import { h } from 'vue'; // Import Vue
+import Vue from 'vue'; // Import Vue
 
 function getMergeTagData() {
     return axios.get(route('org.models.mailshot.custom.text'))
@@ -36,17 +39,48 @@ const forEach = <T extends HTMLElement = HTMLElement>(items: Iterable<T>, clb: (
 
 const stopPropagation = (ev: Event) => ev.stopPropagation();
 
+;
+
+async function  dataFeed(opts, callback) {
+  const mergeTagsOption = await getMergeTagData()
+  let SetData = []
+  var matchProperty = 'label',
+      data = mergeTagsOption.filter(function(item) {
+        return item[matchProperty].includes(opts.query)
+      });
+
+  for(const set of data){
+    set.id = set.value
+    set.name = set.label
+    SetData.push(set)
+  }
+  callback(data);
+}
+
 const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
+  const mergeTagsOption = await getMergeTagData()
   const opts: Required<PluginOptions> = {
-    options: {},
+    options: {
+      mentions: [
+        {
+            feed: dataFeed,
+            itemTemplate:
+            '<li data-id="{id}">' +
+            '<span class="label">{label}</span>' +
+            '</li>',
+            outputTemplate: `<a>[{label}]</a>`,
+            marker: '@',
+            minChars: 0
+        },
+    ],
+    ...options.options,
+    },
     customRte: {},
     position: 'left',
     ckeditor: 'https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js',
     onToolbar: () => {},
-    ...options,
   };
 
-  const mergeTagsOption = await getMergeTagData()
   let ck: CKE.CKEditorStatic | undefined;
   const { ckeditor } = opts;
   const hasWindow = typeof window !== 'undefined';
@@ -128,10 +162,99 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
         ckOptions.sharedSpaces = { top: rteToolbar };
       }
 
-      // Init CKEDITOR
+      ck.dialog?.addUIElement('tag', {
+        build: (a, b, g) => {
+          
+        },
+      });
+
+
+      ck.on('dialogDefinition', function (ev) {
+        // Take the dialog name and its definition from the event data.
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+    
+        // Check if the definition is from the dialog window you are interested in (the "Link" dialog window).
+        if (dialogName == 'link') {
+            // Get a reference to the "Link Info" tab.
+            var infoTab = dialogDefinition.getContents('info');
+    
+            // Set the default value for the URL field.
+            var urlField = infoTab.get('url');
+            urlField['default'] = 'www.example.com';
+    
+            // Add a new tab called "Tag".
+            dialogDefinition.addContents({
+                id: 'tag',
+                label: 'Tag',
+                elements: [
+                    {
+                        type: 'text',
+                        id: 'tag',
+                        label: 'Tag Text',
+                        'default': '',
+                        setup: function (widget) {
+                            // Set the initial value of the tag text when editing an existing link.
+                            console.log('widget', widget);
+                        },
+                        commit: function (widget) {
+                          // Get the current value of the tag input.
+                          var tagValue = this.getValue();
+                      
+                          // Ensure that widget.data object exists
+                          widget.data = widget.data || {};
+                      
+                          // Ensure that widget.data.link object exists
+                          widget.data.link = widget.data.link || {};
+                      
+                          // Update the 'data-tag' attribute in the link object.
+                          widget.data.link['data-tag'] = tagValue;
+                      
+                          // Get the current href value and update it with the 'data-tag' attribute.
+                          var currentHref = widget.data.link.href || '';
+                          var updatedHref = 'http://www.example.com';  // Replace with your desired href value
+                          console.log(currentHref,widget)
+                          if (currentHref) {
+                              updatedHref += '?data-tag=' + encodeURIComponent(tagValue);
+                          }
+                      
+                          // Set the updated href value.
+                          widget.data.link.href = updatedHref;
+                      
+                          console.log('Updated href with data-tag attribute:', updatedHref);
+                      }
+                      
+                    }
+                ]
+            });
+        }
+    });
+    
+    
+    
+
+   /*  ck.on('addUIElement', function (ev) {
+      // Take the dialog name and its definition from the event data.
+      console.log('Event triggered - addUIElement:', ev);
+    
+      // Create a new Vue instance
+      const vueInstance = h(TagVue);
+    
+      // Mount the Vue instance to an element
+      const container = document.createElement('div'); // Create a container element
+      document.body.appendChild(container); // Append the container to the body
+      vueInstance.mount(container); // Mount the Vue instance to the container
+    });; */
+    
+    console.log(ck)
+
+ 
+    
+
       rte = ck!.inline(el, ckOptions);
 
       console.log(rte)
+
 
       // Make click event propogate
       rte.on('contentDom', () => {

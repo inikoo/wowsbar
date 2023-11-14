@@ -8,7 +8,9 @@
 namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\Mail\DispatchedEmail;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
@@ -23,6 +25,8 @@ class UnsubscribeMailshot
         if (Arr::get($dispatchedEmail->data, 'is_test', false)) {
             return $dispatchedEmail;
         }
+
+        $dispatchedEmail->mailshotRecipient->recipient->update(['state' => ProspectStateEnum::NOT_INTERESTED]);
 
         return $this->update($dispatchedEmail, ['state' => DispatchedEmailStateEnum::UNSUBSCRIBED]);
     }
@@ -44,16 +48,14 @@ class UnsubscribeMailshot
                 ],
             ],
             'mailshot' => $dispatchedEmail,
-            'message'  => match ($dispatchedEmail->state) {
-                DispatchedEmailStateEnum::UNSUBSCRIBED => [
-                    'title'       => __('You have already unsubscribed from this mailshot'),
-                    'description' => __("We're sorry to see you go. ")
-                ],
-                default => [
-                    'title'       => __('You have been unsubscribed from this mailshot'),
-                    'description' => "If you unsubscribe by mistakes, you can resubscribe 'here'."
-                ]
-            }
+            'message'  => [
+                'title'       => __('Unsubscribe successfully.'),
+                'description' => __("You have already unsubscribed from this mailshot, We're sorry to see you go."),
+                'caution' => match (Arr::get($dispatchedEmail->data, 'is_test', false)) {
+                    true => __("This is a test mailshot, no action was taken and you can ignore this message."),
+                    default => null
+                }
+            ]
         ]);
     }
 }

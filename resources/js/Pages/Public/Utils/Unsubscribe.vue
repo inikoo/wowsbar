@@ -6,7 +6,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faFrown)
 
 const props = defineProps<{
-    message: string
+    message: {
+        title: string
+        description: string
+        caution: string
+    }
 }>()
 </script>
 
@@ -19,10 +23,13 @@ const props = defineProps<{
                     <FontAwesomeIcon icon='fal fa-frown' class='h-10' aria-hidden='true' />
                 </div>
                 <h2 class="mx-auto max-w-2xl text-center text-3xl font-semibold tracking-tight sm:text-4xl">
-                    Unsubscribe successfully.
+                    {{ message.title }}
                 </h2>
                 <p class="mx-auto mt-2 max-w-2xl text-center text-lg leading-8 text-gray-500">
-                    {{ message }}
+                    {{ message.description }}
+                </p>
+                <p class="mx-auto mt-2 max-w-2xl text-center text-md leading-8 text-red-500 font-bold">
+                    {{ message.caution }}
                 </p>
             </div>
         </div>

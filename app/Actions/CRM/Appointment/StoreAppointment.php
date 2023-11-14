@@ -32,6 +32,9 @@ class StoreAppointment
 
     public Customer|Shop $parent;
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Customer|Shop $parent, array $modelData): Model
     {
         $this->parent = $parent;
@@ -43,7 +46,16 @@ class StoreAppointment
             data_set($modelData, 'name', $parent->name);
         }
 
-        return $parent->appointment()->create($modelData);
+        /** @var \App\Models\CRM\Appointment $appointment */
+        $appointment = $parent->appointment()->create($modelData);
+
+        match($appointment->event) {
+             AppointmentEventEnum::CALLBACK => CreateMeetingUsingZoom::run($appointment),
+                AppointmentEventEnum::IN_PERSON => $appointment->update(['event_address' => 'https://maps.app.goo.gl/Gr6RQbgkx2gkXuae7']),
+            default => throw new Exception(__('Invalid appointment event'))
+        };
+
+        return $appointment;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -98,7 +110,9 @@ class StoreAppointment
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle(customer(), $request->validated());
+        $customer = $request->user('customer')->customerUsers()->first()->customer;
+
+        return $this->handle($customer, $request->validated());
     }
 
     public string $commandSignature = 'appointment:book {shop} {hour} {minute}';
