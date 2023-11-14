@@ -24,7 +24,7 @@ import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
-import Input from '@/Components/Pure/PureInput.vue';
+import PureInput from '@/Components/Pure/PureInput.vue';
 import { isNull,get } from 'lodash';
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane, faFlask, faAsterisk)
@@ -143,13 +143,12 @@ const onSuccess = (response) => {
                 </template>
                 <template #content>
                     <dd class="w-64">
-                    <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
-                        <div class="relative flex-grow">
-                            <Input v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <PureInput v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
                         </div>
-                        <span class="flex-shrink-0">
-                            <Button @click="sendEmailtest()" class="py-[14px] rounded-l-none" :style="testEmail.length ? 'primary' : 'disabled'" :key="testEmail">
-                                <FontAwesomeIcon icon='fas fa-paper-plane' aria-hidden="true" />
+                        <span class="">
+                            <Button @click="sendEmailtest()" icon="fas fa-paper-plane" class="py-4 md:py-3.5 rounded-l-none" :style="testEmail.length ? 'primary' : 'disabled'" :key="testEmail">
                             </Button>
                         </span>
                     </div>
@@ -171,7 +170,7 @@ const onSuccess = (response) => {
                     <template #button>
                         <div class="relative" title="Scheduled publish">
                             <Button class="rounded-none">
-                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='leading-6 border-transparent border'
+                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4'
                                     aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
