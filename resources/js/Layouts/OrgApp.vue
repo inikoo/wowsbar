@@ -108,5 +108,5 @@ const layoutState = useLayoutStore()
     </div>
 
     <Footer />
-    <notifications dangerously-set-inner-html :max="3" :width="500" />
+    <notifications dangerously-set-inner-html :max="3" :width="400" classes="custom-style-notification"/>
 </template>

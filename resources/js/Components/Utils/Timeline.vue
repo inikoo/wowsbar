@@ -34,7 +34,7 @@ const isTodayHours = (date: string | Date) => {
                     class="w-full px-7 absolute flex align-center items-center align-middle content-center -translate-x-1/2 top-1/2 -translate-y-1/2">
                     <div class="w-full rounded items-center align-middle align-center flex-1">
                         <div class="w-full py-1 rounded" :class="[
-                            isTodayHours(stepTime) ? 'bg-gray-300 shimmer' : 'bg-gray-600'
+                            isTodayHours(stepTime) ? 'bg-gray-300' : 'bg-gray-600'
                         ]" />
                     </div>
                 </div>
@@ -62,14 +62,15 @@ const isTodayHours = (date: string | Date) => {
             </div>
         </div>
 
-        <div v-if="isTodayHours(Object.keys(options).slice(-1))" class="w-full">
-            <!-- If last option is equal today, not print this section  -->
+        <!-- isTodayHours(Object.keys(options).slice(-1)) -->
+        <div v-if="false" class="w-full">
+            <!-- If last option is in range 1 hour ago, not print this section  -->
             <div class="relative mb-2">
                 <!-- Step: Tail -->
                 <div
                     class="w-full px-7 absolute flex align-center items-center align-middle content-center -translate-x-1/2 top-1/2 -translate-y-1/2">
                     <div class="w-full rounded items-center align-middle align-center flex-1">
-                        <div class="w-full py-1 rounded bg-red-200 shimmer" />
+                        <div class="w-full py-1 rounded bg-gray-200 shimmer" />
                     </div>
                 </div>
                 <!-- Step: Head -->
