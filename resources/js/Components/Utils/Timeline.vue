@@ -53,10 +53,10 @@ const isTodayHours = (date: string | Date) => {
 
             <!-- Step: Description -->
             <div class="">
-                <div class="text-xs text-center md:text-lg font-semibold">
+                <div class="text-xs text-center md:text-base font-semibold text-gray-600">
                     {{ useFormatTime(stepTime, { formatTime: 'hms' }) }}
                 </div>
-                <div class="w-fit mx-auto capitalize">
+                <div class="w-fit mx-auto capitalize text-sm font-thin text-gray-500">
                     {{ stepValue.join(', ') }}
                 </div>
             </div>
