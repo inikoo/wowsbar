@@ -19,19 +19,7 @@ class DeliverBanner
 
     public function handle(string $ulid): array
     {
-        /*
-        $client = BuildElasticsearchClient::run();
-        $params = [
-            'index' => config('elasticsearch.index_prefix').'content_blocks',
-            'id'    => 'banner_'.$ulid
-        ];
-        $response = $client->get($params)->asString();
-        $bannerSource=Arr::get(json_decode($response, true), '_source');
-                return $bannerSource;
-*/
-
         $seconds=3600;
-
         return Cache::remember('deliver_banner_compiled_layout_'.$ulid, $seconds, function () use ($ulid) {
             $banner = Banner::where('ulid', $ulid)->firstOrFail();
             return $banner->compiled_layout;

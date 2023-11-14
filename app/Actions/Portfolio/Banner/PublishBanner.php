@@ -11,7 +11,6 @@ use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
-use App\Actions\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
@@ -87,7 +86,6 @@ class PublishBanner
         }
 
         $banner->update($updateData);
-        StoreBannerElasticsearch::run($banner);
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
