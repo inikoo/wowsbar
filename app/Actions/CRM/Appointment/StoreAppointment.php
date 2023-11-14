@@ -98,7 +98,9 @@ class StoreAppointment
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle(customer(), $request->validated());
+        $customer = $request->user('customer')->customerUsers()->first()->customer;
+
+        return $this->handle($customer, $request->validated());
     }
 
     public string $commandSignature = 'appointment:book {shop} {hour} {minute}';
