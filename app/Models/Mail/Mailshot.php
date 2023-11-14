@@ -44,9 +44,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
+ * @property int|null $outbox_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
- * @property-read \App\Models\Mail\MailshotStats|null $mailshotsStats
+ * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -60,6 +61,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereOutboxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsRecipe($value)

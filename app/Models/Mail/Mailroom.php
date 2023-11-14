@@ -25,11 +25,16 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection<int, \App\Models\Mail\Outbox> $outboxes
+ * @property-read int|null $outboxes_count
  * @property-read \App\Models\Mail\MailroomStats|null $stats
- * @method static \Database\Factories\Mail\MailroomFactory factory($count = null, $state = [])
  * @method static Builder|Mailroom newModelQuery()
  * @method static Builder|Mailroom newQuery()
  * @method static Builder|Mailroom query()
+ * @method static Builder|Mailroom whereCode($value)
+ * @method static Builder|Mailroom whereCreatedAt($value)
+ * @method static Builder|Mailroom whereData($value)
+ * @method static Builder|Mailroom whereId($value)
+ * @method static Builder|Mailroom whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class Mailroom extends Model
