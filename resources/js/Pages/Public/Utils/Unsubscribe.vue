@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+import { Head } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFrown } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -9,7 +10,8 @@ const props = defineProps<{
 }>()
 </script>
 
-<template>
+<template layout="Public">
+    <Head title="Unsubscribe Emails"/>
     <div class="py-16 sm:py-20">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 text-gray-600 ">
             <div class="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-violet-50 to-gray-50 relative isolate overflow-hidden px-6 py-24 shadow-xl border-2 border-violet-100 sm:rounded-2xl sm:px-24 xl:py-32">
