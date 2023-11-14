@@ -34,6 +34,7 @@ jobs:
           branch: production
           noVersionBumpBehavior: warning
           patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review, update-deps
+          patchAll: true
       - name: Set release in .env
         run: |
           sed -i~ '/^RELEASE=/s/=.*/="${{ steps.semver.outputs.next }}"/' ../../../../env.wowsbar.deploy
