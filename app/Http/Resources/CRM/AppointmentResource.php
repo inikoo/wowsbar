@@ -7,6 +7,8 @@
 
 namespace App\Http\Resources\CRM;
 
+use App\Actions\CRM\Appointment\CreateMeetingUsingZoom;
+use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentStateEnum;
 use App\Models\CRM\Appointment;
 use Illuminate\Http\Request;
@@ -34,7 +36,16 @@ class AppointmentResource extends JsonResource
             'customer_name'    => $appointment->customer->name,
             'customer_slug'    => $appointment->customer->slug,
             'event'            => $appointment->event,
-            'event_address'    => $appointment->event_address,
+            'event_address'    =>  match($appointment->event) {
+                AppointmentEventEnum::CALLBACK => [
+                    'label' => __('Zoom'),
+                    'address' => $appointment->event_address,
+                ],
+                AppointmentEventEnum::IN_PERSON => [
+                    'label' => __('Office'),
+                    'address' => $appointment->event_address,
+                ],
+            },
             'type'             => $appointment->type,
             'schedule_at'      => $appointment->schedule_at,
             'publisher'        => $organisationUserName,

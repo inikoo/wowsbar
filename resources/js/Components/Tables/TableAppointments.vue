@@ -61,5 +61,10 @@ function appointmentRoute(appointment) {
         <template #cell(state)="{ item: appointment }">
             <Icon :data="appointment['state']" />
         </template>
+        <template #cell(event_address)="{ item: appointment }">
+            <a target="_blank" :href="appointment['event_address']['address']">
+                {{ appointment['event_address']['label'] }}
+            </a>
+        </template>
     </Table>
 </template>

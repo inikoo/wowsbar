@@ -34,7 +34,7 @@ class GetBookedScheduleAppointment
         $dt                 = Carbon::createFromDate($modelData['year'], $modelData['month']);
         $bookedSchedules    = [];
         $availableSchedules = [];
-        $availableTimes     = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+        $availableTimes     = ['02:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
 
         $endOfMonth = $dt->copy()->endOfMonth();
         $currentDay = now();
