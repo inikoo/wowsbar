@@ -7,6 +7,7 @@
 
 namespace App\Actions\Leads\Prospect;
 
+use App\Actions\Helpers\Query\HydrateModelTypeQueries;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
@@ -54,7 +55,7 @@ class UpdateProspect
 
         }
         ProspectHydrateUniversalSearch::dispatch($prospect);
-
+        HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(5));
         return $prospect;
     }
 
