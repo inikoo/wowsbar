@@ -20,12 +20,12 @@ import {
     faNewspaper, faPaperPlane,
     faRoad,
     faTransporter, faShoppingCart,
-    faWallet, faSign, faUserCircle
+    faWallet, faSign, faUserCircle, faText
 } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 
-library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faSign, faClock, faUserCircle, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
+library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faSign, faClock, faUserCircle, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText, faText)
 
 const props = defineProps<{
     navigation: any

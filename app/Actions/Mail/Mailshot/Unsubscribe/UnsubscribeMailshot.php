@@ -5,12 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Mail\Mailshot\UI;
+namespace App\Actions\Mail\Mailshot\Unsubscribe;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\Mail\DispatchedEmail;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
