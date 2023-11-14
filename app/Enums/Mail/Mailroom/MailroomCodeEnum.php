@@ -13,16 +13,24 @@ enum MailroomCodeEnum: string
 {
     use EnumHelperTrait;
 
-    case MARKETING             = 'marketing';
-    case LEADS                 = 'leads';
+    case MARKETING = 'marketing';
+    case LEADS     = 'leads';
+
+    case CUSTOMER_LEADS = 'customer-leads';
+
     case CUSTOMER_NOTIFICATION = 'customer-notification';
     case USER_NOTIFICATION     = 'user-notification';
+
+    case TESTS = 'tests';
+
 
     public function label(): string
     {
         return match ($this) {
             MailroomCodeEnum::MARKETING             => 'Marketing',
             MailroomCodeEnum::LEADS                 => 'Leads',
+            MailroomCodeEnum::CUSTOMER_LEADS        => 'Customer leads',
+            MailroomCodeEnum::TESTS                 => 'tests',
             MailroomCodeEnum::CUSTOMER_NOTIFICATION => 'Customer notifications',
             MailroomCodeEnum::USER_NOTIFICATION     => 'User notifications',
         };

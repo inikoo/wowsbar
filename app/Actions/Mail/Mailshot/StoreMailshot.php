@@ -8,12 +8,15 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
+use App\Actions\Mail\Outbox\Hydrators\OutboxHydrateMailshots;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
+use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -63,10 +66,11 @@ class StoreMailshot
         $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
         $mailshot->mailshotStats()->update(
             [
-                'number_estimated_dispatched_emails'=> $query->number_items,
+                'number_estimated_dispatched_emails' => $query->number_items,
             ]
         );
         MailshotHydrateEstimatedEmails::dispatch($mailshot);
+        OutboxHydrateMailshots::dispatch($mailshot->outbox);
 
         return $mailshot;
     }
@@ -91,6 +95,7 @@ class StoreMailshot
     public function rules(): array
     {
         return [
+            'outbox_id'       => ['required', 'exists:outboxes,id'],
             'subject'         => ['required', 'string', 'max:255'],
             'type'            => ['required', new Enum(MailshotTypeEnum::class)],
             'query_arguments' => ['sometimes', 'array'],
@@ -117,7 +122,8 @@ class StoreMailshot
 
         $this->fill(
             [
-                'type' => MailshotTypeEnum::PROSPECT_MAILSHOT->value
+                'type'      => MailshotTypeEnum::PROSPECT_MAILSHOT->value,
+                'outbox_id' => Outbox::where('shop_id', $shop->id)->where('type', OutboxTypeEnum::SHOP_PROSPECT)->pluck('id')->first()
             ]
         );
 

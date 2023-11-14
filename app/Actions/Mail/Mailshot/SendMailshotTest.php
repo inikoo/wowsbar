@@ -9,9 +9,11 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Ses\SendSesEmail;
+use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
+use App\Models\Mail\Outbox;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -27,31 +29,28 @@ class SendMailshotTest
 
     public function handle(Mailshot $mailshot, array $modelData): Collection
     {
-
         $layout        = $mailshot->layout;
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
-
-
-
 
 
         $dispatchedEmails = [];
         foreach (Arr::get($modelData, 'emails', []) as $email) {
             $email           = Email::firstOrCreate(['address' => $email]);
             $dispatchedEmail = StoreDispatchedEmail::run($email, $mailshot, [
-                'is_test' => true,
+                'is_test'   => true,
+                'outbox_id' => Outbox::where('type', OutboxTypeEnum::TEST)->pluck('id')->first()
+
             ]);
             $dispatchedEmail->refresh();
 
-            $html=$emailHtmlBody;
+            $html = $emailHtmlBody;
             if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
                 foreach ($matches[1] as $i => $placeholder) {
-
                     $placeholder = Str::kebab(trim($placeholder));
-                    if($placeholder=='unsubscribe') {
+                    if ($placeholder == 'unsubscribe') {
                         $placeholder = sprintf(
                             "<a href=\"%s\">%s</a>",
-                            $mailshot->scope->website->domain . '/webhooks/unsubscribe/' . $dispatchedEmail->ulid,
+                            $mailshot->scope->website->domain.'/webhooks/unsubscribe/'.$dispatchedEmail->ulid,
                             __('Unsubscribe')
                         );
                     }

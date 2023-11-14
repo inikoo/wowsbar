@@ -26,6 +26,8 @@ enum OutboxTypeEnum: string
     case PASSWORD_REMINDER  = 'password_reminder';
     case REGISTRATION       = 'registration';
 
+    case TEST = 'test';
+
 
     public function label(): string
     {
@@ -40,15 +42,15 @@ enum OutboxTypeEnum: string
             OutboxTypeEnum::ORDER_CONFIRMATION => 'Order confirmation',
             OutboxTypeEnum::PASSWORD_REMINDER  => 'Password reminder',
             OutboxTypeEnum::REGISTRATION       => 'Registration',
+            OutboxTypeEnum::TEST               => 'Test',
         };
     }
 
-    // Here will mark what outboxes are not scoped inside a shop, so can be skipped in StoreShop and use on StoreOrganisation instead
     public function scope(): string
     {
         return match ($this) {
-
-            default => 'shop'
+            OutboxTypeEnum::TEST => 'organisation',
+            default              => 'shop'
         };
     }
 
@@ -59,6 +61,7 @@ enum OutboxTypeEnum: string
             OutboxTypeEnum::NEWSLETTER,
             OutboxTypeEnum::SHOP_PROSPECT,
             OutboxTypeEnum::CUSTOMER_PROSPECT,
+            OutboxTypeEnum::TEST,
             => OutboxStateEnum::ACTIVE,
             default => OutboxStateEnum::IN_PROCESS
         };
@@ -68,7 +71,6 @@ enum OutboxTypeEnum: string
     public function mailroomCode(): MailroomCodeEnum
     {
         return match ($this) {
-
             OutboxTypeEnum::REGISTRATION,
             OutboxTypeEnum::PASSWORD_REMINDER,
             OutboxTypeEnum::ORDER_CONFIRMATION
@@ -81,8 +83,11 @@ enum OutboxTypeEnum: string
             OutboxTypeEnum::NEWSLETTER,
             => MailroomCodeEnum::MARKETING,
             OutboxTypeEnum::SHOP_PROSPECT,
-            OutboxTypeEnum::CUSTOMER_PROSPECT,
             => MailroomCodeEnum::LEADS,
+            OutboxTypeEnum::CUSTOMER_PROSPECT,
+            => MailroomCodeEnum::CUSTOMER_LEADS,
+            OutboxTypeEnum::TEST,
+            => MailroomCodeEnum::TESTS,
         };
     }
 }

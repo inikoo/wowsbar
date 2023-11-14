@@ -12,6 +12,7 @@ use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -48,6 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
+ * @property-read \App\Models\Mail\Outbox|null $outbox
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -147,6 +149,11 @@ class Mailshot extends Model
     public function channels(): HasMany
     {
         return $this->hasMany(MailshotSendChannel::class);
+    }
+
+    public function outbox(): BelongsTo
+    {
+        return $this->belongsTo(Outbox::class);
     }
 
 

@@ -91,13 +91,17 @@ class Outbox extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                if ($this->type=='reorder-reminder') {
-                    $abbreviation='ror';
+                if ($this->type == 'reorder-reminder') {
+                    $abbreviation = 'ror';
                 } else {
-                    $abbreviation= Abbreviate::run($this->type);
+                    $abbreviation = Abbreviate::run($this->type);
                 }
 
-                return $abbreviation.' '.$this->shop->slug;
+                if ($this->shop_id) {
+                    $abbreviation = $abbreviation.' '.$this->shop->slug;
+                }
+
+                return $abbreviation;
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')

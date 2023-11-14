@@ -29,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @property int $number_outbox_type_order_confirmation
  * @property int $number_outbox_type_password_reminder
  * @property int $number_outbox_type_registration
+ * @property int $number_outbox_type_test
  * @property int $number_outbox_state_in_process
  * @property int $number_outbox_state_active
  * @property int $number_outbox_state_suspended
@@ -191,6 +192,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|MailroomStats whereNumberOutboxTypePasswordReminder($value)
  * @method static Builder|MailroomStats whereNumberOutboxTypeRegistration($value)
  * @method static Builder|MailroomStats whereNumberOutboxTypeShopProspect($value)
+ * @method static Builder|MailroomStats whereNumberOutboxTypeTest($value)
  * @method static Builder|MailroomStats whereNumberOutboxes($value)
  * @method static Builder|MailroomStats whereNumberRejectedEmails($value)
  * @method static Builder|MailroomStats whereNumberSentEmails($value)
