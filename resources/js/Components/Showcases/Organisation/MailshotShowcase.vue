@@ -58,7 +58,7 @@ const props = defineProps<{
                     {{ locale.number(data.stats.number_estimated_dispatched_emails) }}
                 </div>
             </div>
-                
+
             <!-- Card: Dispatched Emails Clicked -->
             <div class="bg-indigo-50/50 border border-indigo-400 shadow rounded-md py-3 px-4">
                 <div class="text-sm text-gray-500">
@@ -70,26 +70,30 @@ const props = defineProps<{
             </div>
 
             <!-- Card: Dispatched Emails -->
-            <div class="bg-lime-50/50 border border-lime-400 shadow rounded-md py-3 px-4">
+            <div class="relative bg-lime-50/50 border overflow-hidden border-lime-400 shadow rounded-md py-3 px-4">
                 <div class="text-sm text-gray-500">
                     Dispatched Emails
                 </div>
                 <div class="text-2xl font-bold">
                     {{ locale.number(data.stats.number_dispatched_emails) }}
                 </div>
+                <iframe class="absolute bottom-1 right-1 h-20 w-20"
+                    src="https://lottie.host/?file=ca589abb-0f69-4e3f-886a-317a019ccc09/AP5WLGVcDj.json"></iframe>
             </div>
 
             <!-- Card: Dispatched Emails Errors -->
             <div class="bg-red-50/50 border border-red-400 shadow rounded-md py-3 px-4">
-                <div class="text-sm text-gray-500">
-                    Dispatched Emails Errors
-                </div>
-                <div class="text-2xl font-bold">
-                    {{ locale.number(data.stats.number_dispatched_emails_state_error) }}
-                </div>
+            <div class="text-sm text-gray-500">
+                Dispatched Emails Errors
             </div>
-
+            <div class="text-2xl font-bold">
+                {{ locale.number(data.stats.number_dispatched_emails_state_error) }}
+            </div>
         </div>
+
     </div>
+</div>
+
+<!-- <pre>{{ data }}</pre> -->
 </template>
 

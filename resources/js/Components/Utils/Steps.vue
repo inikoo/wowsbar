@@ -1,4 +1,10 @@
 <script setup lang='ts'>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCheck } from '@far/'
+import { faCircle } from '@fas/'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faCheck, faCircle)
+
 const props = defineProps<{
     currentStep: number
 }>()
@@ -29,61 +35,40 @@ const steps = [
 </script>
 
 <template>
-    <div class="w-full pt-4 pb-16">
-        <div class="w-11/12 lg:w-2/6 mx-auto">
-            <div class="bg-gray-200 h-1 flex items-center justify-between">
-
-                <!-- Step -->
-                <div v-for="(step, stepIndex) in steps"
-                    @click="stepIndex < currentStep ? emits('previousStep') : ''"
-                    class="relative h-1 flex items-center justify-start"
-                    :class="[
-                        stepIndex == (steps.length - 1) ? '' : 'w-full',
-                        stepIndex < currentStep || currentStep == (steps.length - 1)? 'bg-lime-400' : 'bg-gray-100'
-                    ]"
-                >
-                    <div class="h-6 w-6 rounded-full flex items-center justify-center"
-                        :class="[
-                            //step.id == (steps.length - 1) ? 'translate-x-1/2' : '',
-                            { 'translate-x-1/2': stepIndex == (steps.length - 1) },
-                            { '-translate-x-1/2': stepIndex == 0 },
-                            { 'bg-gray-200': stepIndex > currentStep },
-                            { 'bg-gray-500 ring-2 ring-offset-2 ring-gray-500': stepIndex == currentStep },
-                            { 'bg-lime-500': stepIndex < currentStep },
-                        ]"
-                        :title="step.label"
-                    >
-                        <!-- Icon: Check -->
-                        <svg v-if="stepIndex < currentStep" xmlns="http://www.w3.org/2000/svg"
-                            class="icon icon-tabler icon-tabler-check" width="18" height="18" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="#FFFFFF" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M5 12l5 5l10 -10" />
-                        </svg>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="absolute top-6"
-                        :class="[
-                            stepIndex == 0
-                                ? ' -left-4'
-                                : stepIndex + 1 == steps.length
-                                    ? '-right-3'
-                                    : 'left-3 -translate-x-1/2',
-                            stepIndex == currentStep
-                                ? 'font-bold text-gray-600'
-                                : stepIndex < currentStep
-                                    ? 'text-lime-700'
-                                    : 'text-gray-400'
-                        ]"
-                    >
-                        <p tabindex="0" class="whitespace-nowrap focus:outline-none text-xs">
-                            {{ step.label ?? 'Untitled'}}
-                        </p>
+    <div class="w-full py-6 flex">
+        <!-- Step -->
+        <div v-for="(step, stepIndex) in steps"
+            class="w-full">
+            <div class="relative mb-2">
+                <!-- Step: Tail -->
+                <div v-if="stepIndex != 0"
+                    class="w-full px-7 absolute flex align-center items-center align-middle content-center -translate-x-1/2 top-1/2 -translate-y-1/2">
+                    <div class="w-full rounded items-center align-middle align-center flex-1">
+                        <div class="w-full py-1 rounded" :class="[
+                            stepIndex <= currentStep ? 'bg-lime-300' : 'bg-gray-200',
+                            stepIndex == currentStep ? 'shimmer' : ''
+                        ]" />
                     </div>
                 </div>
 
+                <!-- Step: Head -->
+                <div @click="stepIndex < currentStep ? emits('previousStep') : ''"
+                    class="h-10 aspect-square mx-auto rounded-full text-lg flex items-center"
+                    :class="[
+                        stepIndex == currentStep
+                            ? 'ring-1 ring-lime-500 text-lime-500'  // If current
+                            : stepIndex <= currentStep ? 'bg-lime-500 text-white' : 'ring-1 ring-gray-300 text-gray-300'  // before or after current
+                    ]"
+                >
+                    <span class="text-center w-full">
+                        <FontAwesomeIcon v-if="stepIndex < currentStep" icon='far fa-check' class='' aria-hidden='true' />
+                        <FontAwesomeIcon v-if="stepIndex >= currentStep" icon='fas fa-circle' class='' aria-hidden='true' />
+                    </span>
+                </div>
             </div>
+
+            <!-- Step: Description -->
+            <div class="text-xs text-center md:text-base" :class="stepIndex > currentStep ? 'opacity-50' : ''">{{ step.label ?? 'Untitled' }}</div>
         </div>
     </div>
 </template>

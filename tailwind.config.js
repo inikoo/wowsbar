@@ -46,6 +46,7 @@ export default {
             },
             animation: {
                 skeleton: 'shimmer 1.3s ease-in-out infinite',
+                shimmer: 'shimmer 2.5s ease-in-out infinite',
             }
         },
     },
