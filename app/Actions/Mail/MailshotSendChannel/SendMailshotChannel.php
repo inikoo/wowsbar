@@ -16,6 +16,7 @@ use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\Mjml\Mjml;
 
@@ -32,6 +33,8 @@ class SendMailshotChannel
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
 
+
+
         UpdateMailshotSendChannel::run(
             $mailshotSendChannel,
             [
@@ -42,6 +45,27 @@ class SendMailshotChannel
 
 
         foreach ($mailshot->recipients()->where('channel', $mailshotSendChannel->id)->get() as $recipient) {
+
+
+
+            $html=$emailHtmlBody;
+            if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
+                foreach ($matches[1] as $i => $placeholder) {
+
+                    $placeholder = Str::kebab(trim($placeholder));
+                    if($placeholder=='unsubscribe') {
+                        $placeholder = sprintf(
+                            "<a href=\"%s\">%s</a>",
+                            route('public.webhooks.mailshot.unsubscribe', $recipient->dispatchedEmail->ulid),
+                            __('Unsubscribe')
+                        );
+                    }
+
+                    $html = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
+                }
+            }
+
+
             SendSesEmail::run(
                 subject: $mailshot->subject,
                 emailHtmlBody: $emailHtmlBody,
