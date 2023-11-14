@@ -32,7 +32,7 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: production
-          noVersionBumpBehavior: warning
+          noVersionBumpBehavior: current
           patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review, update-deps
           patchAll: true
       - name: Set release in .env
