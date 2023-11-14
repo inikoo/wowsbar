@@ -24,7 +24,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexDispatchedEmail extends InertiaAction
 {
-
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->hasPermissionTo('crm.dispatched emails.edit');
