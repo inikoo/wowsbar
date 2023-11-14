@@ -7,6 +7,9 @@ library.add(faCheck, faCircle)
 
 const props = defineProps<{
     currentStep: number
+    options: {
+        [key: string]: string
+    }[]
 }>()
 
 const emits = defineEmits<{
@@ -14,30 +17,12 @@ const emits = defineEmits<{
     (e: 'previousStep'): void
 }>()
 
-const steps = [
-    {
-        id: 0,
-        label: 'Step 1: Login',
-        // icon: 'fal fa-check'
-    },
-    {
-        id: 1,
-        label: 'Step 2: Select date',
-        // icon: 'fal fa-check'
-    },
-    {
-        id: 2,
-        label: 'Final: Summary',
-        // icon: 'fal fa-check'
-    },
-]
-
 </script>
 
 <template>
     <div class="w-full py-6 flex">
         <!-- Step -->
-        <div v-for="(step, stepIndex) in steps"
+        <div v-for="(step, stepIndex) in options"
             class="w-full">
             <div class="relative mb-2">
                 <!-- Step: Tail -->
@@ -68,7 +53,7 @@ const steps = [
             </div>
 
             <!-- Step: Description -->
-            <div class="text-xs text-center md:text-base" :class="stepIndex > currentStep ? 'opacity-50' : ''">{{ step.label ?? 'Untitled' }}</div>
+            <div class="text-xs text-center md:text-base" :class="stepIndex > currentStep ? 'opacity-50' : ''">{{ step.label ?? '' }}</div>
         </div>
     </div>
 </template>

@@ -99,6 +99,21 @@ watch(selectedDate, () => {
     }
 })
 
+const stepsOptions = [
+    {
+        label: 'Step 1: Login',
+        // icon: 'fal fa-check'
+    },
+    {
+        label: 'Step 2: Select date',
+        // icon: 'fal fa-check'
+    },
+    {
+        label: 'Final: Summary',
+        // icon: 'fal fa-check'
+    },
+]
+
 </script>
 
 
@@ -125,6 +140,7 @@ watch(selectedDate, () => {
         <div class="h-96 overflow-y-auto">
 
             <Steps
+                :options="stepsOptions"
                 :currentStep="currentStep"
                 @previousStep="currentStep--"    
                 @nextStep="currentStep++"    
