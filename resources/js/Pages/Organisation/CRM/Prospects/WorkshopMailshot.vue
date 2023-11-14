@@ -70,7 +70,11 @@ const getEmailTest=()=>{
     return value
 }
 
-const testEmail = ref(getEmailTest())
+const testEmail = ref({
+    emails : getEmailTest(),
+    status : null,
+    errorMessage : null
+})
 
 const onCancel = () => {
     OpenModal.value = false
@@ -84,22 +88,33 @@ const sendEmailtest = async () => {
                 props.sendTestRoute.name,
                 props.sendTestRoute.parameters
             ),
-           { emails: testEmail.value }
+           { emails: testEmail.value.emails }
         )
         console.log('send test email......')
         onSuccess(response)
     } catch (error) {
-        console.log(error)
-        notify({
+        onError(error)
+    }
+}
+
+const onError=(error)=>{
+    notify({
             title: "Failed",
-            text: "failed to send email",
+            text: error.response.data.message,
             type: "error"
         });
+
+    testEmail.value = {
+    emails: testEmail.value.emails,
+    status: 'error',
+    errorMessage: error.response.data.message
     }
 }
 
 const onSuccess = (response) => {
-    let newLocalStorage = localStorageData.value
+    console.log(response)
+    if(response.data.data[0].state !== "error"){
+        let newLocalStorage = localStorageData.value
     if (newLocalStorage) {
         const index = newLocalStorage.mailshotWorkshop.testEmail.findIndex((item) => item.key == 'project')
         if (index != -1) newLocalStorage.mailshotWorkshop.testEmail[index] = { email: response.data.data[0].email, key: 'project' }
@@ -116,11 +131,31 @@ const onSuccess = (response) => {
     let localStorageString = JSON.stringify(newLocalStorage);
     localStorage.setItem('mailshotWorkshop', localStorageString);
 
+    testEmail.value = {
+    emails: testEmail.value.emails,
+    status: null,
+    errorMessage: null
+    }
+
     notify({
         title: "Succeed",
         text: "The test email has been sent, please check your email",
         type: "success"
     });
+    }else{
+        notify({
+            title: "Failed",
+            text: response.data.data[0].state_label,
+            type: "error"
+        });
+
+    testEmail.value = {
+    emails: testEmail.value.emails,
+    status: null,
+    errorMessage: null
+    }
+    }
+  
 };
 
 
@@ -145,13 +180,14 @@ const onSuccess = (response) => {
                     <dd class="w-64">
                     <div class="flex items-center">
                         <div class="relative">
-                            <PureInput v-model="testEmail" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
+                            <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
                         </div>
                         <span class="">
-                            <Button @click="sendEmailtest()" icon="fas fa-paper-plane" class="py-4 md:py-3.5 rounded-l-none" :style="testEmail.length ? 'primary' : 'disabled'" :key="testEmail">
+                            <Button @click="sendEmailtest()" icon="fas fa-paper-plane" class="py-4 md:py-3.5 rounded-l-none" :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails">
                             </Button>
                         </span>
                     </div>
+                    <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{  testEmail.errorMessage }}</p>
                     </dd>
                     </template>
                 </Popover>

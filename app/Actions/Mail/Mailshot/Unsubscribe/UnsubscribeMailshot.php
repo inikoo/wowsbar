@@ -21,7 +21,7 @@ class UnsubscribeMailshot
 
     public function handle(DispatchedEmail $dispatchedEmail): DispatchedEmail
     {
-        if (Arr::get($dispatchedEmail->data, 'is_test', false)) {
+        if ($dispatchedEmail->is_test) {
             return $dispatchedEmail;
         }
 
@@ -50,7 +50,7 @@ class UnsubscribeMailshot
             'message'  => [
                 'title'       => __('Unsubscribe successfully.'),
                 'description' => __("You have already unsubscribed from this mailshot, We're sorry to see you go."),
-                'caution' => match (Arr::get($dispatchedEmail->data, 'is_test', false)) {
+                'caution' => match ($dispatchedEmail->is_test) {
                     true => __("This is a test mailshot, no action was taken and you can ignore this message."),
                     default => null
                 }

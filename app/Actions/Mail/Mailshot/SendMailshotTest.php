@@ -51,7 +51,7 @@ class SendMailshotTest
                     if($placeholder=='unsubscribe') {
                         $placeholder = sprintf(
                             "<a href=\"%s\">%s</a>",
-                            route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+                            $mailshot->scope->website->domain . '/webhooks/unsubscribe/' . $dispatchedEmail->ulid,
                             __('Unsubscribe')
                         );
                     }

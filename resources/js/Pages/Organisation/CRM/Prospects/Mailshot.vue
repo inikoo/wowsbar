@@ -29,6 +29,7 @@ const props = defineProps<{
     }
     changelog?: object,
     showcase?: object,
+    recipients?: object,
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -40,6 +41,7 @@ const component = computed(() => {
         showcase: MailshotShowcase,
         details: ModelDetails,
         changelog: TableHistories,
+        recipients: TableHistories,
     };
     return components[currentTab.value];
 

@@ -246,13 +246,8 @@ const plugin: Plugin<PluginOptions> = async(editor, options = {}) => {
       vueInstance.mount(container); // Mount the Vue instance to the container
     });; */
     
-    console.log(ck)
-
- 
-    
-
+      console.log(ck)
       rte = ck!.inline(el, ckOptions);
-
       console.log(rte)
 
 
