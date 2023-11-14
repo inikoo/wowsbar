@@ -272,7 +272,23 @@ class IndexProspects extends InertiaAction
 
             ]
         )->table($this->tableStructure(parent: $this->parent, prefix: ProspectsTabsEnum::PROSPECTS->value))
-            ->table(IndexProspectQueries::make()->tableStructure(prefix: ProspectsTabsEnum::LISTS->value))
+            ->table(
+                IndexProspectQueries::make()->tableStructure(
+                    modelOperations: [
+                        'createLink' => [
+                            [
+                                'route' => [
+                                    'name'       => 'org.crm.shop.prospects.lists.create',
+                                    'parameters' => array_values($this->originalParameters)
+                                ],
+                                'label' => __('New list'),
+                                'style' => 'primary'
+                            ],
+                        ]
+                    ],
+                    prefix: ProspectsTabsEnum::LISTS->value
+                )
+            )
             ->table(IndexProspectMailshots::make()->tableStructure(prefix: ProspectsTabsEnum::MAILSHOTS->value))
             ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value));
     }

@@ -1,15 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 08:23:57 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 15 Nov 2023 00:44:34 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect\UI;
+namespace App\Actions\Leads\Prospect\Queries;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
+use App\Actions\Leads\Prospect\UI\GetProspectsDashboard;
+use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
@@ -32,7 +34,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Tags\Tag;
 
-class IndexProspectsQueryProspects extends InertiaAction
+class IndexProspectsQueries extends InertiaAction
 {
     private Shop|Organisation $parent;
 
