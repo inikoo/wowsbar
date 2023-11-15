@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPhone, faEnvelope, faGlobe, faUser } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
-import Timeline1 from '@/Components/Utils/Timeline1.vue'
+import Timeline from '@/Components/Utils/Timeline.vue'
 library.add(faPhone, faEnvelope, faGlobe, faUser)
 
 const props = defineProps<{
@@ -33,7 +33,7 @@ for (const key in timelineFilterNull) {
 </script>
 
 <template>
-    <Timeline1 :timeline="titlesObject"/>
+    <Timeline :options="titlesObject"/>
     <!-- <pre>{{ timelineFilterNull }}</pre> -->
     <div class="px-4 py-4 space-y-8">
         <div class="min-w-96 text-gray-600 w-fit">
@@ -43,12 +43,12 @@ for (const key in timelineFilterNull) {
                     <div class="flex justify-between gap-x-4">
                         <div class="flex-auto">
                             <dd class="text-lg font-semibold leading-6">{{ data.info.name }}</dd>
-                            <dd class="text-xs text-gray-400 whitespace-nowrap italic">
+                            <!-- <dd class="text-xs text-gray-400 whitespace-nowrap italic">
                                 Created at {{ useFormatTime(data.info.created_at, { localeCode: 'enUS', formatTime: 'hms' }) }}
                             </dd>
                             <dd class="text-xs text-gray-400 whitespace-nowrap italic">
                                 Updated at {{ useFormatTime(data.info.updated_at, { localeCode: 'enUS', formatTime: 'hms' }) }}
-                            </dd>
+                            </dd> -->
                         </div>
                         <div class="flex flex-wrap justify-end items-end gap-x-0.5 gap-y-1 min-w-1/2 w-fit">
                             <!-- <Tag stringToColor label="Paid" />
@@ -57,7 +57,7 @@ for (const key in timelineFilterNull) {
                     </div>
 
                     <!-- Information -->
-                    <div class="w-full flex flex-col gap-y-2 mt-4 pt-4 border-t border-gray-900/10">
+                    <div class="w-full flex flex-col gap-y-2 mt-4 pt-4 border-t border-gray-900/10 text-gray-500">
                         <!-- <div v-if="data.info.name" class="flex w-full gap-x-4">
                             <dt class="flex-none">
                                 <FontAwesomeIcon fixed-width icon="fal fa-user" class="h-4 text-gray-400" aria-hidden="true" />
