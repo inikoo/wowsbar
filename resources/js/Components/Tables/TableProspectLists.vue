@@ -9,8 +9,6 @@ import Table from '@/Components/Table/Table.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useLocaleStore } from "@/Stores/locale"
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { reactive } from 'vue'
-import { usePage } from '@inertiajs/vue3'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk } from '@fal/'
@@ -52,7 +50,8 @@ const locale = useLocaleStore()
                         <Popover :popover-placement="'bottom-start'" v-slot="{ open }">
                             <PopoverButton tabindex="-1">
                                 <div class="font-bold specialUnderlineOrg py-1 focus:outline-none focus:ring-0">
-                                    {{ prospect_list.arguments.__date__?.value?.quantity ? prospect_list.arguments.__date__?.value?.quantity : 0  }} {{ prospect_list.arguments.__date__?.value?.unit }})</div>
+                                    {{ prospect_list.arguments.__date__?.value?.quantity ? prospect_list.arguments.__date__?.value?.quantity : 0  }} {{ prospect_list.arguments.__date__?.value?.unit }}{{ prospect_list.arguments.__date__?.value?.quantity > 1 ? 's' : '' }})
+                                </div>
                             </PopoverButton>
 
                             <!-- Popover -->
