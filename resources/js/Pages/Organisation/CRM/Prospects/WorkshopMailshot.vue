@@ -25,7 +25,7 @@ import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
 import PureInput from '@/Components/Pure/PureInput.vue';
-import { isNull,get } from 'lodash';
+import { isNull, get } from 'lodash';
 
 library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck, faCaretDown, faPaperPlane, faFlask, faAsterisk)
 
@@ -52,28 +52,28 @@ const OpenModal = ref(false)
 const date = ref(new Date())
 
 
-const getLocalStorage = () =>{
+const getLocalStorage = () => {
     let storage = localStorage.getItem("mailshotWorkshop")
-    if(storage) return JSON.parse(storage)
+    if (storage) return JSON.parse(storage)
     return null
 }
 
 const localStorageData = ref(getLocalStorage())
 
-const getEmailTest=()=>{
+const getEmailTest = () => {
     const emailTest = localStorageData.value
     let value = ''
-    if(emailTest) {
-      const item = emailTest.mailshotWorkshop?.testEmail.find((item)=>item.key == 'project')
-      value = get(item,'email','')
+    if (emailTest) {
+        const item = emailTest.mailshotWorkshop?.testEmail.find((item) => item.key == 'project')
+        value = get(item, 'email', '')
     }
     return value
 }
 
 const testEmail = ref({
-    emails : getEmailTest(),
-    status : null,
-    errorMessage : null
+    emails: getEmailTest(),
+    status: null,
+    errorMessage: null
 })
 
 const onCancel = () => {
@@ -81,85 +81,74 @@ const onCancel = () => {
     date.value = new Date()
 }
 
-const sendEmailtest = async () => {
+const sendEmailtest = async (closedPopover) => {
     try {
         const response = await axios.post(
             route(
                 props.sendTestRoute.name,
                 props.sendTestRoute.parameters
             ),
-           { emails: testEmail.value.emails }
+            { emails: testEmail.value.emails }
         )
         console.log('send test email......')
-        onSuccess(response)
+        onSuccess(response,closedPopover)
     } catch (error) {
         onError(error)
     }
 }
 
-const onError=(error)=>{
+const onError = (error) => {
     notify({
-            title: "Failed",
-            text: error.response.data.message,
-            type: "error"
-        });
+        title: "Failed",
+        text: error.response.data.message,
+        type: "error"
+    });
 
     testEmail.value = {
-    emails: testEmail.value.emails,
-    status: 'error',
-    errorMessage: error.response.data.message
+        emails: testEmail.value.emails,
+        status: 'error',
+        errorMessage: error.response.data.message
     }
 }
 
-const onSuccess = (response) => {
+const onSuccess = (response,closedPopover) => {
     console.log(response)
-    if(response.data.data[0].state !== "error"){
+    if (response.data.data[0].state !== "error") {
         let newLocalStorage = localStorageData.value
-    if (newLocalStorage) {
-        const index = newLocalStorage.mailshotWorkshop.testEmail.findIndex((item) => item.key == 'project')
-        if (index != -1) newLocalStorage.mailshotWorkshop.testEmail[index] = { email: response.data.data[0].email, key: 'project' }
+        if (newLocalStorage) {
+            const index = newLocalStorage.mailshotWorkshop.testEmail.findIndex((item) => item.key == 'project')
+            if (index != -1) newLocalStorage.mailshotWorkshop.testEmail[index] = { email: response.data.data[0].email, key: 'project' }
+        } else {
+            newLocalStorage = {
+                mailshotWorkshop: {
+                    testEmail: [
+                        { email: response.data.data[0].email, key: 'project' }
+                    ]
+                }
+            };
+        }
+
+        let localStorageString = JSON.stringify(newLocalStorage);
+        localStorage.setItem('mailshotWorkshop', localStorageString);
+        notify({
+            title: "Succeed",
+            text: "The test email has been sent, please check your email",
+            type: "success"
+        });
     } else {
-        newLocalStorage = {
-            mailshotWorkshop: {
-                testEmail: [
-                    { email: response.data.data[0].email, key: 'project' }
-                ]
-            }
-        };
-    }
-
-    let localStorageString = JSON.stringify(newLocalStorage);
-    localStorage.setItem('mailshotWorkshop', localStorageString);
-
-    testEmail.value = {
-    emails: testEmail.value.emails,
-    status: null,
-    errorMessage: null
-    }
-
-    notify({
-        title: "Succeed",
-        text: "The test email has been sent, please check your email",
-        type: "success"
-    });
-    }else{
         notify({
             title: "Failed",
             text: response.data.data[0].state_label,
             type: "error"
         });
-
+    }
     testEmail.value = {
-    emails: testEmail.value.emails,
-    status: null,
-    errorMessage: null
+        emails: testEmail.value.emails,
+        status: null,
+        errorMessage: null
     }
-    }
-  
+    if(closedPopover)closedPopover()
 };
-
-
-
 </script>
 
 
@@ -167,32 +156,36 @@ const onSuccess = (response) => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-        <div class="relative">
-            <Popover :width="'w-full'" position="right-[-170px]">
-                <template #button>
-                    <div class="relative" title="testing email">
-                        <Button class="rounded" :style="`secondary`">
-                            Send Test  <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
-                        </Button>
-                    </div>
-                </template>
-                <template #content>
-                    <dd class="w-64">
-                    <div class="flex items-center">
-                        <div class="relative">
-                            <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true" class="rounded-r-none"/>
-                        </div>
-                        <span class="">
-                            <Button @click="sendEmailtest()" icon="fas fa-paper-plane" class="py-4 md:py-3.5 rounded-l-none" :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails">
+            <div class="relative">
+                <Popover :width="'w-full'" position="right-[-170px]" ref="_popover">
+                    <template #button>
+                        <div class="relative" title="testing email">
+                            <Button class="rounded" :style="`secondary`">
+                                Send Test <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
                             </Button>
-                        </span>
-                    </div>
-                    <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{  testEmail.errorMessage }}</p>
-                    </dd>
+                        </div>
+                    </template>
+                    <template #content="{ close: closed }">
+                        <dd class="w-64">
+                            <div class="flex items-center">
+                                <div class="relative w-80">
+                                    <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
+                                        class="rounded-r-none" />
+                                </div>
+                                <span class="">
+                                    <!-- Assuming sendEmailtest() is a method to send an email -->
+                                    <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane"
+                                        class="py-4 md:py-3.5 rounded-l-none"
+                                        :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
+                                </span>
+                            </div>
+                            <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{
+                                testEmail.errorMessage }}</p>
+                        </dd>
                     </template>
                 </Popover>
             </div>
-         
+
             <div class="flex rounded-md overflow-hidden">
                 <Link v-if="setAsReadyRoute?.name" method="post" :href="route(
                     props.setAsReadyRoute?.name,
@@ -206,8 +199,7 @@ const onSuccess = (response) => {
                     <template #button>
                         <div class="relative" title="Scheduled publish">
                             <Button class="rounded-none">
-                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4'
-                                    aria-hidden='true' />
+                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
