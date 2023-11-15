@@ -42,6 +42,11 @@ use Spatie\Tags\Tag as BaseTag;
  */
 class Tag extends BaseTag
 {
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function crmStats(): HasOne
     {
         return $this->hasOne(TagCrmStats::class);

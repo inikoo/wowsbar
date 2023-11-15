@@ -24,7 +24,6 @@ class StoreQuery
     {
         /** @var \App\Models\Helpers\Query $query */
         $query= Query::create($modelData);
-
         if($query->scope_type=='Shop') {
             ShopHydrateQueries::dispatch($query->scope);
         }
