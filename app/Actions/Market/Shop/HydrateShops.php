@@ -7,6 +7,7 @@
 
 namespace App\Actions\Market\Shop;
 
+use App\Actions\Market\Shop\Hydrators\ShopHydrateQueries;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerInvoices;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerUsers;
@@ -41,6 +42,7 @@ class HydrateShops
         ShopHydrateProducts::run($shop);
         ShopHydrateCustomerUsers::run($shop);
         ShopHydrateProspects::run($shop);
+        ShopHydrateQueries::run($shop);
     }
     public string $commandSignature = 'hydrate:shops {shops?*} ';
 

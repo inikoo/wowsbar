@@ -7,6 +7,7 @@
 
 namespace App\Actions\Helpers\Query;
 
+use App\Actions\Market\Shop\Hydrators\ShopHydrateQueries;
 use App\Models\Helpers\Query;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -21,7 +22,14 @@ class StoreQuery
 
     public function handle(array $modelData): Query
     {
-        return Query::create($modelData);
+        /** @var \App\Models\Helpers\Query $query */
+        $query= Query::create($modelData);
+
+        if($query->scope_type=='Shop') {
+            ShopHydrateQueries::dispatch($query->scope);
+        }
+
+        return $query;
     }
 
     public function authorize(ActionRequest $request): bool

@@ -14,7 +14,6 @@ use App\Enums\UI\Organisation\ProspectsTagsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\TagResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Closure;

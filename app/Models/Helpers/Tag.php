@@ -20,6 +20,7 @@ use Spatie\Tags\Tag as BaseTag;
  * @property int|null $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_subjects
  * @property-read \App\Models\Helpers\TagCrmStats|null $crmStats
  * @method static Builder|Tag containing(string $name, $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
@@ -31,6 +32,7 @@ use Spatie\Tags\Tag as BaseTag;
  * @method static Builder|Tag whereLocale(string $column, string $locale)
  * @method static Builder|Tag whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag whereNumberSubjects($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereOrderColumn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereType($value)
