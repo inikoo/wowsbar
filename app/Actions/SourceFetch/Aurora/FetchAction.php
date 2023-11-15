@@ -7,6 +7,7 @@
 
 namespace App\Actions\SourceFetch\Aurora;
 
+use App\Actions\Helpers\Query\HydrateModelTypeQueries;
 use App\Services\AuroraService;
 use App\Services\SourceService;
 use Exception;
@@ -99,16 +100,7 @@ class FetchAction
 
         $source->initialisation($command->argument('au_database'));
 
-        if (in_array($command->getName(), [
-                'fetch:stocks',
-                'fetch:products',
-                'fetch:orders',
-                'fetch:invoices',
-                'fetch:customers',
-                'fetch:web-users',
-                'fetch:delivery-notes',
-                'fetch:purchase-orders'
-            ]) and $command->option('reset')) {
+        if ($command->getName() == 'fetch:customers' and $command->option('reset')) {
             $this->reset();
         }
 
@@ -133,6 +125,11 @@ class FetchAction
             $this->fetchAll($source, $command);
             $this->progressBar?->finish();
         }
+
+        if($command->getName()=='fetch:prospects') {
+            HydrateModelTypeQueries::run('Prospect');
+        }
+
 
         return 0;
     }

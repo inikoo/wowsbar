@@ -182,6 +182,31 @@ class IndexProspects extends InertiaAction
             ];
         }
 
+        $meta[] = [
+            'href'     => [
+                'name'       => 'org.crm.shop.prospects.lists.index',
+                'parameters' => $request->route()->originalParameters()
+            ],
+            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'label'    => __('Lists'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-code-branch',
+                'tooltip' => __('lists')
+            ]
+        ];
+
+        $meta[] = [
+            'href'     => [
+                'name'       => 'org.crm.shop.prospects.tags.index',
+                'parameters' => $request->route()->originalParameters()
+            ],
+            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'label'    => __('Tags'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-tags',
+                'tooltip' => __('tags')
+            ]
+        ];
 
         return Inertia::render(
             'CRM/Prospects',
@@ -272,7 +297,23 @@ class IndexProspects extends InertiaAction
 
             ]
         )->table($this->tableStructure(parent: $this->parent, prefix: ProspectsTabsEnum::PROSPECTS->value))
-            ->table(IndexProspectQueries::make()->tableStructure(prefix: ProspectsTabsEnum::LISTS->value))
+            ->table(
+                IndexProspectQueries::make()->tableStructure(
+                    modelOperations: [
+                        'createLink' => [
+                            [
+                                'route' => [
+                                    'name'       => 'org.crm.shop.prospects.lists.create',
+                                    'parameters' => array_values($this->originalParameters)
+                                ],
+                                'label' => __('New list'),
+                                'style' => 'primary'
+                            ],
+                        ]
+                    ],
+                    prefix: ProspectsTabsEnum::LISTS->value
+                )
+            )
             ->table(IndexProspectMailshots::make()->tableStructure(prefix: ProspectsTabsEnum::MAILSHOTS->value))
             ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value));
     }

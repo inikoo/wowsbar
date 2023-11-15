@@ -1,17 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 03 Nov 2023 18:40:15 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Wed, 15 Nov 2023 01:36:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Helpers\Query;
+namespace App\Actions\Helpers\Query\Hydrators;
 
+use App\Actions\Helpers\Query\BuildQuery;
 use App\Models\Helpers\Query;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class UpdateQueryCount
+class QueryHydrateCount
 {
     use AsAction;
 
@@ -20,23 +21,28 @@ class UpdateQueryCount
 
     public function handle(Query $query)
     {
-
-        $queryBuilder=BuildQuery::run($query);
+        $queryBuilder = BuildQuery::run($query);
 
         //print($queryBuilder->toSql()."\n");
 
-        $numberItems=$queryBuilder->count();
+        $numberItems = $queryBuilder->count();
 
         $query->update(
             [
-                'number_items'=> $numberItems,
-                'counted_at'  => now()
+                'number_items' => $numberItems,
+                'counted_at'   => now()
 
             ]
         );
 
         return $numberItems;
+    }
 
+    public function byModelType(string $modelType): void
+    {
+        foreach (Query::where('model_type', $modelType)->get() as $query) {
+            $this->handle($query);
+        }
     }
 
     public string $commandSignature = 'query:count {queries?*}';
@@ -45,10 +51,10 @@ class UpdateQueryCount
     {
         $this->asAction = true;
 
-        if(!$command->argument('queries')) {
-            $queries=Query::all();
+        if (!$command->argument('queries')) {
+            $queries = Query::all();
         } else {
-            $queries =  Query::query()
+            $queries = Query::query()
                 ->when($command->argument('queries'), function ($query) use ($command) {
                     $query->whereIn('slug', $command->argument('queries'));
                 })
@@ -60,7 +66,6 @@ class UpdateQueryCount
             $this->handle($query);
             $command->line("Query $query->name count: $query->number_items");
         }
-
 
 
         return $exitCode;

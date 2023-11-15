@@ -8,6 +8,7 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Helpers\Address\StoreAddressAttachToModel;
+use App\Actions\Helpers\Query\HydrateModelTypeQueries;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
@@ -71,6 +72,7 @@ class StoreProspect
             ShopHydrateProspects::dispatch($scope);
         }
 
+        HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(2));
 
         return $prospect;
     }
@@ -145,6 +147,8 @@ class StoreProspect
             ],
         ];
     }
+
+
 
     public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
     {

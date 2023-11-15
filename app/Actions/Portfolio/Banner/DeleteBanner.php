@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
-use App\Actions\Portfolio\Banner\Elasticsearch\DeleteBannerElasticsearch;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
@@ -33,8 +32,6 @@ class DeleteBanner
         foreach($banner->portfolioWebsites as $portfolioWebsite) {
             PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
-
-        DeleteBannerElasticsearch::dispatch($banner);
 
         return $banner;
     }

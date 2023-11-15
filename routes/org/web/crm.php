@@ -22,25 +22,26 @@ use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
+use App\Actions\Leads\Prospect\Queries\CreateProspectQuery;
+use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
-use App\Actions\Leads\Prospect\UI\IndexProspectsQueryProspects;
+use App\Actions\Leads\Prospect\UI\EditProspect;
+use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
+use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\Subscriptions\CustomerWebsite\UI\ShowCustomerWebsite;
-use App\Actions\Leads\Prospect\RemoveProspect;
-use App\Actions\Leads\Prospect\UI\EditProspect;
-use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Leads\Prospect\UI\ShowProspect;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
-use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
 
 Route::get('/', function () {
     return redirect('/crm/dashboard');
@@ -102,8 +103,15 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/export', ExportProspects::class)->name('export');
 
         Route::prefix('lists')->as('lists.')->group(function () {
-            Route::get('/', IndexProspectsQueryProspects::class)->name('index');
+            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
+            Route::get('/create', CreateProspectQuery::class)->name('create');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
+        });
+
+        Route::prefix('tags')->as('tags.')->group(function () {
+            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index'); //todo IndexProspectTags
+            Route::get('/create', CreateProspectQuery::class)->name('create'); //todo CreateProspectTag
+            Route::get('{tag}', ShowProspectQuery::class)->name('show'); //todo ShowProspectTag
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {

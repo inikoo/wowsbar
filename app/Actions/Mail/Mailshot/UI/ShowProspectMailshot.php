@@ -10,10 +10,12 @@ namespace App\Actions\Mail\Mailshot\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Mail\DispatchedEmail\UI\IndexDispatchedEmail;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\UI\Organisation\MailshotTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -60,10 +62,10 @@ class ShowProspectMailshot extends InertiaAction
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $iconActions[] = [
-                'tooltip'  => __('Workshop'),
-                'icon'     => 'fal fa-drafting-compass',
-                'style'    => 'secondary',
-                'route'    => [
+                'tooltip' => __('Workshop'),
+                'icon'    => 'fal fa-drafting-compass',
+                'style'   => 'secondary',
+                'route'   => [
                     'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
                     'parameters' => $request->route()->originalParameters()
                 ]
@@ -87,11 +89,11 @@ class ShowProspectMailshot extends InertiaAction
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $action[] = [
-                'type'       => 'button',
-                'style'      => 'primary',
-                'label'      => __('Send Now'),
-                'icon'       => ["fal", "fa-paper-plane"],
-                'route'      => [
+                'type'  => 'button',
+                'style' => 'primary',
+                'label' => __('Send Now'),
+                'icon'  => ["fal", "fa-paper-plane"],
+                'route' => [
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id,
                     'method'     => 'post',
@@ -103,58 +105,66 @@ class ShowProspectMailshot extends InertiaAction
         return Inertia::render(
             'CRM/Prospects/Mailshot',
             [
-                'breadcrumbs'                      => $this->getBreadcrumbs(
+                'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'                       => [
+                'navigation' => [
                     'previous' => $this->getPrevious($mailshot, $request),
                     'next'     => $this->getNext($mailshot, $request),
                 ],
-                'title'                            => $mailshot->subject,
-                'pageHead'                         => [
-                    'title'       => $mailshot->subject,
-                    'icon'        => [
+                'title'    => $mailshot->subject,
+                'pageHead' => [
+                    'title' => $mailshot->subject,
+                    'icon'  => [
                         'tooltip' => __('mailshot'),
                         'icon'    => 'fal fa-mail-bulk'
                     ],
-                    'iconRight'   => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'actions'     => [
+                    'iconRight' => $mailshot->state->stateIcon()[$mailshot->state->value],
+                    'actions'   => [
                         [
-                            'type'          => 'buttonGroup',
-                            'buttonGroup'   => $iconActions
+                            'type'        => 'buttonGroup',
+                            'buttonGroup' => $iconActions
                         ],
                         ...$action
                     ]
                 ],
-                'tabs'                             => [
+                'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => MailshotTabsEnum::navigation()
                 ],
-                MailshotTabsEnum::SHOWCASE->value  => $this->tab == MailshotTabsEnum::SHOWCASE->value
+                MailshotTabsEnum::SHOWCASE->value => $this->tab == MailshotTabsEnum::SHOWCASE->value
                     ?
                     fn () => MailshotResource::make($mailshot)->getArray()
                     : Inertia::lazy(
                         fn () => MailshotResource::make($mailshot)->getArray()
                     ),
 
-                /*
                 MailshotTabsEnum::RECIPIENTS->value => $this->tab == MailshotTabsEnum::RECIPIENTS->value
-
                     ?
-                    fn () => SnapshotResource::collection(
-                        IndexSnapshots::run(
-                            parent: $mailshot,
-                            prefix: MailshotTabsEnum::RECIPIENTS->value
-                        )
-                    )
-                    : Inertia::lazy(fn () => SnapshotResource::collection(
-                        IndexSnapshots::run(
-                            parent: $mailshot,
-                            prefix: MailshotTabsEnum::RECIPIENTS->value
-                        )
-                    )),
-*/
+                    match ($mailshot->state) {
+                        MailshotStateEnum::SENDING,
+                        MailshotStateEnum::READY,
+                        MailshotStateEnum::SENT => fn () => DispatchedEmailResource::collection(
+                            IndexDispatchedEmail::run(
+                                $mailshot,
+                                prefix: MailshotTabsEnum::RECIPIENTS->value
+                            )
+                        ),
+                        default => fn () => null
+                    }
+                    : Inertia::lazy(fn () => match ($mailshot->state) {
+                        MailshotStateEnum::SENDING,
+                        MailshotStateEnum::READY,
+                        MailshotStateEnum::SENT => fn () => DispatchedEmailResource::collection(
+                            IndexDispatchedEmail::run(
+                                $mailshot,
+                                prefix: MailshotTabsEnum::RECIPIENTS->value
+                            )
+                        ),
+                        default => fn () => null
+                    }),
+
                 MailshotTabsEnum::CHANGELOG->value => $this->tab == MailshotTabsEnum::CHANGELOG->value
                     ?
                     fn () => HistoryResource::collection(
@@ -175,7 +185,7 @@ class ShowProspectMailshot extends InertiaAction
             IndexHistory::make()->tableStructure(
                 prefix: MailshotTabsEnum::CHANGELOG->value
             )
-        );
+        )->table(IndexDispatchedEmail::make()->tableStructure(prefix: MailshotTabsEnum::RECIPIENTS->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
@@ -195,11 +205,11 @@ class ShowProspectMailshot extends InertiaAction
                         ],
 
                     ],
-                    'simple'         => [
+                    'simple' => [
                         'route' => $routeParameters['model'],
                         'label' => $mailshot->subject
                     ],
-                    'suffix'         => $suffix
+                    'suffix' => $suffix
                 ],
             ];
         };

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\Organisation;
 
+use App\Actions\Mail\Outbox\SeedOrganisationOutboxes;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -52,6 +53,7 @@ class StoreOrganisation
             originalFilename: 'logo.png'
         );
 
+        SeedOrganisationOutboxes::run();
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
         Artisan::call("db:seed --force --class=JobPositionSeeder");

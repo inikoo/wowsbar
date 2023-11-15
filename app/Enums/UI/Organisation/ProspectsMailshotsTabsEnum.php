@@ -17,7 +17,7 @@ enum ProspectsMailshotsTabsEnum: string
 
     case MAILSHOTS = 'mailshots';
 
-    case HISTORY   = 'history';
+    case HISTORY     = 'history';
     case UNSUBSCRIBE = 'unsubscribe';
 
 
