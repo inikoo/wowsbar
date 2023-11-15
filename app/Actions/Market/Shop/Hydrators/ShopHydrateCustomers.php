@@ -39,8 +39,5 @@ class ShopHydrateCustomers
         $shop->crmStats()->update($stats);
     }
 
-    public function getJobUniqueId(Shop $parameters): string
-    {
-        return $parameters->id;
-    }
+
 }

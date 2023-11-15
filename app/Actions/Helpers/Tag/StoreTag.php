@@ -7,6 +7,7 @@
 
 namespace App\Actions\Helpers\Tag;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCrmTags;
 use App\Http\Resources\Tag\TagResource;
 use App\Models\Helpers\Tag;
 use Lorisleiva\Actions\ActionRequest;
@@ -26,6 +27,7 @@ class StoreTag
         $tag=  Tag::findOrCreate($modelData['name'], $modelData['type']);
         if($tag->type=='crm') {
             $tag->crmStats()->create();
+            OrganisationHydrateCrmTags::dispatch();
         }
 
         return $tag;

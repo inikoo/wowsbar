@@ -187,7 +187,7 @@ class IndexProspects extends InertiaAction
                 'name'       => 'org.crm.shop.prospects.lists.index',
                 'parameters' => $request->route()->originalParameters()
             ],
-            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'number'   => $this->parent->crmStats->number_prospect_queries,
             'label'    => __('Lists'),
             'leftIcon' => [
                 'icon'    => 'fal fa-code-branch',
@@ -200,7 +200,7 @@ class IndexProspects extends InertiaAction
                 'name'       => 'org.crm.shop.prospects.tags.index',
                 'parameters' => $request->route()->originalParameters()
             ],
-            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+            'number'   => organisation()->crmStats->number_tags,
             'label'    => __('Tags'),
             'leftIcon' => [
                 'icon'    => 'fal fa-tags',

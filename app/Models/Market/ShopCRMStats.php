@@ -63,14 +63,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_contacted
  * @property int $number_prospects_not_contacted
  * @property int $number_prospects_dont_contact_me
- * @property int $number_tags
  * @property int $number_prospect_queries
+ * @property int $number_customer_queries
  * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
  * @method static Builder|ShopCRMStats query()
  * @method static Builder|ShopCRMStats whereCreatedAt($value)
  * @method static Builder|ShopCRMStats whereId($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerQueries($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsers($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusActive($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusInactive($value)
@@ -116,7 +117,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNotInterested($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateRegistered($value)
- * @method static Builder|ShopCRMStats whereNumberTags($value)
  * @method static Builder|ShopCRMStats whereShopId($value)
  * @method static Builder|ShopCRMStats whereUpdatedAt($value)
  * @mixin Eloquent
