@@ -29,8 +29,8 @@ class ProspectsResource extends JsonResource
         $prospect = $this;
 
 
-
         return [
+            'id'         => $prospect->id,
             'slug'       => $prospect->slug,
             'name'       => $prospect->name,
             'email'      => $this->email,
