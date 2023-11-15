@@ -148,16 +148,6 @@ class StoreProspect
         ];
     }
 
-    public function prepareForValidation(ActionRequest $request): void
-    {
-        if($request->exists('contact_website')) {
-            $request->replace([
-                'url' => 'https://' . $request->input('contact_website')
-            ]);
-        }
-
-    }
-
     public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
     {
         $this->scope    = $scope;
