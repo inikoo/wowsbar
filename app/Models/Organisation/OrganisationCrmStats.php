@@ -61,6 +61,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_contacted
  * @property int $number_prospects_not_contacted
  * @property int $number_prospects_dont_contact_me
+ * @property int $number_tags
  * @property-read \App\Models\Organisation\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newQuery()
@@ -111,6 +112,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNoContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNotInterested($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateRegistered($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereUpdatedAt($value)
  * @mixin \Eloquent

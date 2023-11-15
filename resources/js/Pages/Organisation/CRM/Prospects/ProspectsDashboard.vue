@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/vue3'
 import { routeType } from '@/types/route'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
-
+import { useLocaleStore } from '@/Stores/locale.js'
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
 
@@ -144,7 +144,7 @@ const options = {
                 <dt class="text-base font-medium text-gray-400">{{doughnut.title}}</dt>
                 <dd class="flex items-baseline justify-between">
                     <div class="flex gap-x-2 leading-none items-baseline text-2xl font-semibold text-org-500">
-                        {{ doughnut.total }}
+                        {{ useLocaleStore().number(doughnut.total) }}
                         <span class="text-sm font-medium leading-none text-gray-500">in total</span>
                     </div>
                     <div class="w-20">

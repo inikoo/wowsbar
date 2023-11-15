@@ -17,6 +17,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
 import { useLayoutStore } from "@/Stores/layout"
 import { useAuthFirebase } from "@/Composables/firebaseAuth"
+import Notification from '@/Components/Utils/Notification.vue'
 
 import {
     faHome,
@@ -108,5 +109,15 @@ const layoutState = useLayoutStore()
     </div>
 
     <Footer />
-    <notifications dangerously-set-inner-html :max="3" :width="400" classes="custom-style-notification"/>
+    <notifications
+        dangerously-set-inner-html
+        :max="3"
+        width="500"
+        classes="custom-style-notification"
+        :pauseOnHover="true"    
+    >
+        <template #body="props">
+            <Notification :notification="props" />  
+        </template>
+    </notifications>
 </template>

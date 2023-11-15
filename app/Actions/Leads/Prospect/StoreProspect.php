@@ -90,9 +90,7 @@ class StoreProspect
     {
         $this->scope = $shop;
         $this->fillFromRequest($request);
-        $request->validate();
-
-        return $this->handle($shop, $request->validated());
+        return $this->handle($shop, $this->validateAttributes());
     }
 
 
@@ -148,23 +146,12 @@ class StoreProspect
         ];
     }
 
-    public function prepareForValidation(ActionRequest $request): void
-    {
-        if($request->exists('contact_website')) {
-            $request->replace([
-                'url' => 'https://' . $request->input('contact_website')
-            ]);
-        }
-
-    }
-
     public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
     {
         $this->scope    = $scope;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
-
 
         return $this->handle($scope, $validatedData);
     }

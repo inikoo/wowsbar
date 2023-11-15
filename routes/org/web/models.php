@@ -34,6 +34,7 @@ use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
+use App\Actions\Leads\Prospect\Tags\DeleteTagsProspect;
 use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
@@ -92,6 +93,7 @@ Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.rem
 Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
 Route::post('/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
+Route::post('/prospect/{tag}', DeleteTagsProspect::class)->name('prospect.tag.delete');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 
