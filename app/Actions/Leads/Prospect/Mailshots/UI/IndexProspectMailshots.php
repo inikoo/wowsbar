@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Traits\WithProspectsMeta;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;
@@ -26,19 +27,17 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspectMailshots extends InertiaAction
 {
+    use WithProspectsMeta;
+
     private Shop|Organisation $parent;
 
     protected function getElementGroups(): array
     {
-        return
-            [
-
-            ];
+        return [];
     }
 
     public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
-
         $this->parent = $parent;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -99,11 +98,9 @@ class IndexProspectMailshots extends InertiaAction
             $table
                 ->withGlobalSearch()
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
-
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
                 ->column(key: 'actions', label: ' ')
-
                 ->defaultSort('slug');
         };
     }
@@ -120,6 +117,8 @@ class IndexProspectMailshots extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $mailshots, ActionRequest $request): Response
     {
+        $meta = $this->getMeta($request);
+
         return Inertia::render(
             'CRM/Prospects/Mailshots',
             [
@@ -130,6 +129,7 @@ class IndexProspectMailshots extends InertiaAction
                 'title'       => __('prospects mailshots'),
                 'pageHead'    => [
                     'title'   => __('prospects mailshots'),
+                    'meta'    => $meta,
                     'actions' =>
                         [
                             [

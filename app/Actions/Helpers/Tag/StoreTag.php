@@ -21,13 +21,23 @@ class StoreTag
 
     private bool $asAction = false;
 
+
     public function handle(array $modelData): Tag
     {
         /** @var Tag $tag */
         $tag=  Tag::findOrCreate($modelData['name'], $modelData['type']);
+        $tag->update(
+            [
+                'label'=> $tag->name
+            ]
+        );
+        $tag->generateTagSlug();
+        $tag->saveQuietly();
         if($tag->type=='crm') {
-            $tag->crmStats()->create();
-            OrganisationHydrateCrmTags::dispatch();
+            if(!$tag->crmStats) {
+                $tag->crmStats()->create();
+                OrganisationHydrateCrmTags::dispatch();
+            }
         }
 
         return $tag;

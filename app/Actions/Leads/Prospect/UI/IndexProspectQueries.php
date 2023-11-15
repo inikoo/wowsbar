@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\WithProspectsMeta;
 use App\Enums\UI\Organisation\ProspectsQueriesTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
 use App\Http\Resources\History\HistoryResource;
@@ -17,6 +18,7 @@ use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -28,6 +30,10 @@ use Spatie\Tags\Tag;
 
 class IndexProspectQueries extends InertiaAction
 {
+    use WithProspectsMeta;
+
+    private Shop|Organisation $parent;
+
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
@@ -42,6 +48,7 @@ class IndexProspectQueries extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+        $this->parent = organisation();
 
         return $this->handle();
     }
@@ -49,6 +56,7 @@ class IndexProspectQueries extends InertiaAction
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+        $this->parent = $shop;
 
         return $this->handle($shop);
     }
@@ -107,18 +115,19 @@ class IndexProspectQueries extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
+        $meta = $this->getMeta($request);
 
         return Inertia::render(
             'CRM/Prospects/Queries',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(
+                'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters(),
                 ),
-                'title'        => __('prospect lists'),
-                'pageHead'     => [
+                'title'       => __('prospect lists'),
+                'pageHead'    => [
                     'title'   => __('prospect lists'),
-
+                    'meta'    => $meta,
 
                 ],
 
@@ -134,7 +143,7 @@ class IndexProspectQueries extends InertiaAction
                     fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))
                     : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))),
 
-                ProspectsQueriesTabsEnum::HISTORY->value   => $this->tab == ProspectsQueriesTabsEnum::HISTORY->value ?
+                ProspectsQueriesTabsEnum::HISTORY->value => $this->tab == ProspectsQueriesTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))),
 
@@ -172,7 +181,6 @@ class IndexProspectQueries extends InertiaAction
             default => []
         };
     }
-
 
 
 }

@@ -23,7 +23,7 @@ enum ShowProspectTabsEnum: string
         return match ($this) {
             ShowProspectTabsEnum::SHOWCASE => [
                 'title' => __('showcase'),
-                'icon'  => 'fal fa-info',
+                'icon'  => 'fas fa-info-circle',
             ],
 
             ShowProspectTabsEnum::PROSPECTS => [

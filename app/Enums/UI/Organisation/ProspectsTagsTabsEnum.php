@@ -25,7 +25,7 @@ enum ProspectsTagsTabsEnum: string
         return match ($this) {
             ProspectsTagsTabsEnum::TAGS => [
                 'title' => __('tags'),
-                'icon'  => 'fal fa-code-branch',
+                'icon'  => 'fal fa-tags',
             ],
             ProspectsTagsTabsEnum::HISTORY => [
                 'title' => __('history'),

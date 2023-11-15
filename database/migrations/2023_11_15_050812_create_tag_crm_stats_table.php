@@ -17,7 +17,7 @@ return new class () extends Migration {
     {
         Schema::create('tag_crm_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tag_id')->index();
+            $table->unsignedSmallInteger('tag_id')->unique();
             $table->foreign('tag_id')->references('id')->on('tags');
 
             $table->unsignedInteger('number_customers')->default(0);

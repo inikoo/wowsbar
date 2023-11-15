@@ -11,6 +11,7 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Traits\WithProspectsMeta;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
@@ -34,6 +35,8 @@ use Spatie\Tags\Tag;
 
 class IndexProspects extends InertiaAction
 {
+    use WithProspectsMeta;
+
     private Shop|Organisation $parent;
 
     public function authorize(ActionRequest $request): bool
@@ -163,50 +166,10 @@ class IndexProspects extends InertiaAction
         return ProspectsResource::collection($prospects);
     }
 
+
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
-        $meta = [];
-
-        if ($this->parent->crmStats->number_prospects > 0) {
-            $meta[] = [
-                'href'     => [
-                    'name'       => 'org.crm.shop.prospects.mailshots.index',
-                    'parameters' => $request->route()->originalParameters()
-                ],
-                'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
-                'label'    => __('Mailshots'),
-                'leftIcon' => [
-                    'icon'    => 'fal fa-mail-bulk',
-                    'tooltip' => __('mailshots')
-                ]
-            ];
-        }
-
-        $meta[] = [
-            'href'     => [
-                'name'       => 'org.crm.shop.prospects.lists.index',
-                'parameters' => $request->route()->originalParameters()
-            ],
-            'number'   => $this->parent->crmStats->number_prospect_queries,
-            'label'    => __('Lists'),
-            'leftIcon' => [
-                'icon'    => 'fal fa-code-branch',
-                'tooltip' => __('lists')
-            ]
-        ];
-
-        $meta[] = [
-            'href'     => [
-                'name'       => 'org.crm.shop.prospects.tags.index',
-                'parameters' => $request->route()->originalParameters()
-            ],
-            'number'   => organisation()->crmStats->number_tags,
-            'label'    => __('Tags'),
-            'leftIcon' => [
-                'icon'    => 'fal fa-tags',
-                'tooltip' => __('tags')
-            ]
-        ];
+        $meta = $this->getMeta($request);
 
         return Inertia::render(
             'CRM/Prospects',
@@ -327,7 +290,7 @@ class IndexProspects extends InertiaAction
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('prospects'),
-                        'icon'  => 'fal fa-bars'
+                        'icon'  => 'fal fa-transporter'
                     ],
                 ],
             ];
