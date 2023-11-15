@@ -8,10 +8,10 @@
 namespace App\Actions\Helpers\Tag;
 
 use App\Http\Resources\Tag\TagResource;
+use App\Models\Helpers\Tag;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Spatie\Tags\Tag;
 
 class StoreTag
 {
@@ -22,8 +22,11 @@ class StoreTag
 
     public function handle(array $modelData): Tag
     {
-
+        /** @var Tag $tag */
         $tag=  Tag::findOrCreate($modelData['name'], $modelData['type']);
+        if($tag->type=='crm') {
+            $tag->crmStats()->create();
+        }
 
         return $tag;
     }
