@@ -74,6 +74,18 @@ enum MailshotStateEnum: string
                 'icon'    => 'fal fa-paper-plane',
                 'class'   => 'text-green-600'
             ],
+            'cancelled'     => [
+
+                'tooltip' => __('cancelled'),
+                'icon'    => 'fal fa-paper-plane',
+                'class'   => 'text-red-600'
+            ],
+            'stopped'     => [
+
+                'tooltip' => __('stopped'),
+                'icon'    => 'fal fa-paper-plane',
+                'class'   => 'text-red-600'
+            ],
 
         ];
     }

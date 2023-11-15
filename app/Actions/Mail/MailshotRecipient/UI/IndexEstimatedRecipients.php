@@ -5,33 +5,37 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Mail\DispatchedEmail\UI;
+namespace App\Actions\Mail\MailshotRecipient\UI;
 
+use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\Mail\DispatchedEmailResource;
+use App\Http\Resources\Mail\MailshotRecipientsResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Helpers\Query;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexDispatchedEmail extends InertiaAction
+class IndexEstimatedRecipients extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('crm.dispatched emails.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('crm.edit');
 
         return
             (
-                $request->user()->hasPermissionTo('crm.dispatched emails.view')
+                $request->user()->hasPermissionTo('crm.view')
             );
     }
 
@@ -48,9 +52,8 @@ class IndexDispatchedEmail extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(DispatchedEmail::class);
-
-        $queryBuilder->where('mailshot_id', $mailshot->id);
+        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
+        $queryBuilder = BuildQuery::run($query);
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])
@@ -60,7 +63,7 @@ class IndexDispatchedEmail extends InertiaAction
 
     public function jsonResponse(Mailshot $mailshot): AnonymousResourceCollection
     {
-        return DispatchedEmailResource::collection($this->handle($mailshot));
+        return MailshotRecipientsResource::collection($this->handle($mailshot));
     }
 
     public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
@@ -77,7 +80,7 @@ class IndexDispatchedEmail extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No dispatched emails found'),
+                        'title' => __('No estimated recipients found'),
                         'count' => 0
                     ]
                 );
@@ -108,9 +111,9 @@ class IndexDispatchedEmail extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('dispatched emails'),
+                'title'       => __('estimated recipients'),
                 'pageHead'    => [
-                    'title'     => __('dispatched emails'),
+                    'title'     => __('estimated recipients'),
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-handshake'],
                         'title' => __('appointment')
@@ -143,7 +146,7 @@ class IndexDispatchedEmail extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('dispatched emails'),
+                        'label' => __('estimated recipients'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
@@ -151,22 +154,22 @@ class IndexDispatchedEmail extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.crm.dispatched emails.index' =>
+            'org.crm.estimated recipients.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs('org.crm.dashboard', $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'org.crm.dispatched emails.index',
+                        'name' => 'org.crm.estimated recipients.index',
                         null
                     ]
                 ),
             ),
-            'org.crm.shop.dispatched emails.index' =>
+            'org.crm.shop.estimated recipients.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
                 $headCrumb(
                     [
-                        'name'       => 'org.crm.shop.dispatched emails.index',
+                        'name'       => 'org.crm.shop.estimated recipients.index',
                         'parameters' => $routeParameters
                     ]
                 )

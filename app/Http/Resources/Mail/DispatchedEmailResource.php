@@ -21,10 +21,14 @@ class DispatchedEmailResource extends JsonResource
         $dispatchedEmail = $this;
 
         return [
+            'contact_name'=> $dispatchedEmail->mailshotRecipient->recipient->contact_name,
+            'subject'     => $dispatchedEmail->mailshot->subject,
             'email'       => $dispatchedEmail->email->address,
             'state'       => $dispatchedEmail->state,
             'state_label' => $dispatchedEmail->state->labels()[$dispatchedEmail->state->value],
             'state_icon'  => $dispatchedEmail->state->stateIcon()[$dispatchedEmail->state->value],
+            'sent_at'     => $dispatchedEmail->sent_at,
+            'delivered_at'=> $dispatchedEmail->delivered_at
         ];
     }
 }
