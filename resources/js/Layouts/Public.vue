@@ -2,6 +2,8 @@
 import { usePage } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import { loadCss } from "@/Composables/loadCss";
+import Notification from '@/Components/Utils/Notification.vue'
+
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
 const user = usePage().props.auth.user;
@@ -43,7 +45,18 @@ onMounted(() => {
     <div v-html="header[0]?.html" ></div>
     <slot />
     <div v-html="footer[0]?.html"></div>
-    <notifications dangerously-set-inner-html :max="3" :width="400" classes="custom-style-notification"/>
+
+    <notifications
+        dangerously-set-inner-html
+        :max="3"
+        width="500"
+        classes="custom-style-notification"
+        :pauseOnHover="true"    
+    >
+        <template #body="props">
+            <Notification :notification="props" />  
+        </template>
+    </notifications>
 </template>
 
 

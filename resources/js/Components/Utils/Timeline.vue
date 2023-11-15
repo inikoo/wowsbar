@@ -42,7 +42,7 @@ const isTodayHours = (date: string | Date) => {
         >
             <template v-for="(stepValue, stepTime, stepIndex) in options">
                 <SwiperSlide>
-                    <div class="relative mb-2">
+                    <div class="relative mb-2 py-1.5">
                         <!-- Step: Tail -->
                         <div v-if="stepIndex != 0"
                             class="w-full px-7 absolute flex align-center items-center align-middle content-center -translate-x-1/2 top-1/2 -translate-y-1/2">
