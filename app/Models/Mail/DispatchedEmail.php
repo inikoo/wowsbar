@@ -17,8 +17,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * App\Models\Mail\DispatchedEmail
  *
  * @property int $id
- * @property int $email_id
+ * @property int|null $outbox_id
  * @property int|null $mailshot_id
+ * @property int $email_id
  * @property string|null $provider_message_id
  * @property DispatchedEmailStateEnum $state
  * @property bool $is_error
@@ -40,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read int|null $events_count
  * @property-read \App\Models\Mail\Mailshot|null $mailshot
  * @property-read \App\Models\Mail\MailshotRecipient|null $mailshotRecipient
+ * @property-read \App\Models\Mail\Outbox|null $outbox
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail query()
@@ -57,6 +59,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSoftBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsTest($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereMailshotId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereOutboxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereProviderMessageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereSentAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereState($value)
@@ -96,6 +99,11 @@ class DispatchedEmail extends Model
     public function mailshot(): BelongsTo
     {
         return $this->belongsTo(Mailshot::class);
+    }
+
+    public function outbox(): BelongsTo
+    {
+        return $this->belongsTo(Outbox::class);
     }
 
 }

@@ -7,9 +7,9 @@
 
 namespace App\Actions\Helpers\Query\Seeders;
 
+use App\Actions\Helpers\Query\Hydrators\QueryHydrateCount;
 use App\Actions\Helpers\Query\StoreQuery;
 use App\Actions\Helpers\Query\UpdateQuery;
-use App\Actions\Helpers\Query\UpdateQueryCount;
 use App\Actions\Traits\WithShopsArgument;
 use App\Enums\CRM\Prospect\ProspectContactStateEnum;
 use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
@@ -110,7 +110,7 @@ class ShopScopeQuerySeeder
             } else {
                 $query = StoreQuery::run($queryData);
             }
-            UpdateQueryCount::run($query);
+            QueryHydrateCount::run($query);
         }
     }
 

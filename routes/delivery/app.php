@@ -12,6 +12,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([
     "delivery",
 ])->group(function () {
-
     Route::get('/banners/{ulid}', DeliverBanner::class)->name('banner');
 });

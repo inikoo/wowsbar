@@ -186,7 +186,7 @@ class Prospect extends Model implements Auditable
             ->generateSlugsFrom(function () {
                 $name = $this->company_name == '' ? $this->contact_name : $this->company_name;
                 if ($name != '') {
-                    return Abbreviate::run($name);
+                    return Abbreviate::run($name, 8);
                 }
 
                 return ReadableRandomStringGenerator::run();

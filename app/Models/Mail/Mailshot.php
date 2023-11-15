@@ -12,6 +12,7 @@ use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -44,9 +45,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
+ * @property int|null $outbox_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
+ * @property-read \App\Models\Mail\Outbox|null $outbox
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -60,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereOutboxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsRecipe($value)
@@ -109,7 +113,7 @@ class Mailshot extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return Abbreviate::run(string: $this->subject).' '.Abbreviate::run($this->type->value);
+                return Abbreviate::run(string: $this->subject, maximumLength: 16).' '.Abbreviate::run($this->type->value, 4);
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
@@ -134,17 +138,23 @@ class Mailshot extends Model
 
     public function sender()
     {
-        if(app()->environment('production')) {
-            $sender=$this->scope->sender_email_address;
+        if (app()->environment('production')) {
+            $sender = $this->scope->sender_email_address;
         } else {
-            $sender=config('mail.devel.sender_email_address');
+            $sender = config('mail.devel.sender_email_address');
         }
+
         return $sender;
     }
 
     public function channels(): HasMany
     {
         return $this->hasMany(MailshotSendChannel::class);
+    }
+
+    public function outbox(): BelongsTo
+    {
+        return $this->belongsTo(Outbox::class);
     }
 
 

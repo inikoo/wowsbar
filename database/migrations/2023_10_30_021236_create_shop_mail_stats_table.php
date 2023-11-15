@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('shop_id')->index();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table = $this->mailshotStats($table);
+            $table = $this->mailshotsStats($table);
             $table->timestampsTz();
         });
     }

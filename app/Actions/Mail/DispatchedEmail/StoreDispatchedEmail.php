@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\DispatchedEmail;
 
+use App\Actions\Mail\Outbox\Hydrators\OutboxHydrateEmails;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
@@ -29,6 +30,8 @@ class StoreDispatchedEmail
                 'mailshot_id' => $mailshot?->id
             ], $modelData)
         );
+
+        OutboxHydrateEmails::dispatch($dispatchedEmail->outbox);
 
         return $dispatchedEmail;
     }

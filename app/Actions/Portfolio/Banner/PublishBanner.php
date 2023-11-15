@@ -11,7 +11,6 @@ use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
-use App\Actions\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
@@ -22,6 +21,7 @@ use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\ActionRequest;
 
 class PublishBanner
@@ -87,7 +87,6 @@ class PublishBanner
         }
 
         $banner->update($updateData);
-        StoreBannerElasticsearch::run($banner);
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
@@ -96,6 +95,10 @@ class PublishBanner
         }
 
         UpdateBannerImage::dispatch($banner);
+
+
+        Cache::put('banner_compiled_layout_'.$banner->ulid, $banner->compiled_layout, 86400);
+
 
         return $banner;
     }

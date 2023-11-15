@@ -11,7 +11,6 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,8 +49,8 @@ class UnsubscribeMailshot
             'message'  => [
                 'title'       => __('Unsubscribe successfully.'),
                 'description' => __("You have already unsubscribed from this mailshot, We're sorry to see you go."),
-                'caution' => match ($dispatchedEmail->is_test) {
-                    true => __("This is a test mailshot, no action was taken and you can ignore this message."),
+                'caution'     => match ($dispatchedEmail->is_test) {
+                    true    => __("This is a test mailshot, no action was taken and you can ignore this message."),
                     default => null
                 }
             ]

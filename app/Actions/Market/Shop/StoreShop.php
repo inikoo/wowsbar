@@ -9,6 +9,7 @@ namespace App\Actions\Market\Shop;
 
 use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Helpers\Query\Seeders\ShopScopeQuerySeeder;
+use App\Actions\Mail\Outbox\SeedShopOutboxes;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
@@ -85,7 +86,7 @@ class StoreShop
 
         OrganisationHydrateShops::run();
         ShopHydrateUniversalSearch::dispatch($shop);
-
+        SeedShopOutboxes::run($shop);
 
         return $shop;
     }

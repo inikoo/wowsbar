@@ -50,9 +50,9 @@ class StoreAppointment
         $appointment = $parent->appointment()->create($modelData);
 
         match($appointment->event) {
-             AppointmentEventEnum::CALLBACK => CreateMeetingUsingZoom::run($appointment),
-                AppointmentEventEnum::IN_PERSON => $appointment->update(['event_address' => 'https://maps.app.goo.gl/Gr6RQbgkx2gkXuae7']),
-            default => throw new Exception(__('Invalid appointment event'))
+            AppointmentEventEnum::CALLBACK  => CreateMeetingUsingZoom::run($appointment),
+            AppointmentEventEnum::IN_PERSON => $appointment->update(['event_address' => 'https://maps.app.goo.gl/Gr6RQbgkx2gkXuae7']),
+            default                         => throw new Exception(__('Invalid appointment event'))
         };
 
         return $appointment;

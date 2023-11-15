@@ -15,10 +15,12 @@ return new class () extends Migration {
     {
         Schema::create('dispatched_emails', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('email_id')->index();
-            $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('outbox_id')->nullable();
+            $table->foreign('outbox_id')->references('id')->on('outboxes');
             $table->unsignedSmallInteger('mailshot_id')->nullable()->index();
             $table->foreign('mailshot_id')->references('id')->on('mailshots')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('email_id')->index();
+            $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
             $table->string('provider_message_id')->nullable()->index();
             $table->string('state')->index()->default(DispatchedEmailStateEnum::READY);
             $table->boolean('is_error')->default(false);

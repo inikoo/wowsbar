@@ -17,8 +17,10 @@ enum ProspectsTabsEnum: string
 
     case DASHBOARD = 'dashboard';
     case PROSPECTS = 'prospects';
-    case LISTS     = 'lists';
+
     case HISTORY   = 'history';
+    case TAGS      = 'tags';
+    case LISTS     = 'lists';
     case MAILSHOTS = 'mailshots';
 
     public function blueprint(): array
@@ -37,6 +39,15 @@ enum ProspectsTabsEnum: string
             ProspectsTabsEnum::LISTS => [
                 'title' => __('lists'),
                 'icon'  => 'fal fa-code-branch',
+                'type'  => 'icon',
+                'align' => 'right'
+            ],
+
+            ProspectsTabsEnum::TAGS => [
+                'title' => __('tags'),
+                'icon'  => 'fal fa-tags',
+                'type'  => 'icon',
+                'align' => 'right'
             ],
 
             ProspectsTabsEnum::MAILSHOTS => [

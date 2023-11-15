@@ -7,16 +7,52 @@
 
 namespace App\Actions\Leads\Prospect\UI;
 
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Enums\UI\Organisation\ProspectsQueriesTabsEnum;
+use App\Http\Resources\CRM\ProspectQueriesResource;
+use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Tag\TagResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
+use App\Models\Leads\Prospect;
+use App\Models\Market\Shop;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Inertia\Inertia;
+use Inertia\Response;
+use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\Tags\Tag;
 
 class IndexProspectQueries extends InertiaAction
 {
+    public function authorize(ActionRequest $request): bool
+    {
+        $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
+
+        return
+            (
+                $request->user()->tokenCan('root') or
+                $request->user()->hasPermissionTo('crm.prospects.view')
+            );
+    }
+
+    public function asController(ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+
+        return $this->handle();
+    }
+
+    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+
+        return $this->handle($shop);
+    }
+
     public function handle($prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -67,6 +103,76 @@ class IndexProspectQueries extends InertiaAction
                 ->column(key: 'actions', label: __('actions'));
         };
     }
+
+
+    public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
+    {
+
+        return Inertia::render(
+            'CRM/Prospects/Queries',
+            [
+                'breadcrumbs'  => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters(),
+                ),
+                'title'        => __('prospect lists'),
+                'pageHead'     => [
+                    'title'   => __('prospect lists'),
+
+
+                ],
+
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => ProspectsQueriesTabsEnum::navigation(),
+                ],
+
+                'tags' => TagResource::collection(Tag::all()),
+
+
+                ProspectsQueriesTabsEnum::LISTS->value => $this->tab == ProspectsQueriesTabsEnum::LISTS->value ?
+                    fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))
+                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexProspectQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))),
+
+                ProspectsQueriesTabsEnum::HISTORY->value   => $this->tab == ProspectsQueriesTabsEnum::HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))),
+
+
+            ]
+        )->table($this->tableStructure(prefix: ProspectsQueriesTabsEnum::LISTS->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsQueriesTabsEnum::HISTORY->value));
+    }
+
+    public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
+    {
+        return match ($routeName) {
+            'org.crm.shop.prospects.lists.index' =>
+            array_merge(
+                (new IndexProspects())->getBreadcrumbs(
+                    'org.crm.shop.prospects.index',
+                    $routeParameters
+                ),
+                [
+                    [
+                        'type'   => 'simple',
+                        'simple' => [
+                            'route' => [
+                                'name'       => 'org.crm.shop.prospects.lists.index',
+                                'parameters' => $routeParameters
+                            ],
+                            'label' => __('lists'),
+                            'icon'  => 'fal fa-bars',
+                        ],
+                        'suffix' => $suffix
+
+                    ]
+                ]
+            ),
+            default => []
+        };
+    }
+
 
 
 }
