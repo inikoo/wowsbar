@@ -156,6 +156,31 @@ test('can show hr dashboard', function () {
     });
 });
 
+test('can show list of workplaces', function () {
+    $response = get(route('org.hr.workplaces.index'));
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page
+            ->component('HumanResources/Workplaces')
+            ->has('title')
+            ->has('breadcrumbs', 3)
+            ->has('data.data', 1);
+    });
+});
+
+test('can show workplace', function () {
+    $workplace = Workplace::first();
+    $response  = get(route('org.hr.workplaces.show', [$workplace->slug]));
+
+    $response->assertInertia(function (AssertableInertia $page) use ($workplace) {
+        $page
+            ->component('HumanResources/Workplace')
+            ->has('breadcrumbs', 3)
+            ->where('pageHead.meta.0.href.name', 'org.hr.workplaces.show.clocking-machines.index')
+            ->where('pageHead.meta.0.href.parameters', $workplace->slug)
+            ->has('tabs.navigation', 5);
+    });
+});
+
 test('can show list of employees', function () {
     $response = get(route('org.hr.employees.index'));
     $response->assertInertia(function (AssertableInertia $page) {
