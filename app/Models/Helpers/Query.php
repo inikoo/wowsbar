@@ -8,6 +8,7 @@
 namespace App\Models\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -79,5 +80,10 @@ class Query extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

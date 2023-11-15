@@ -3,11 +3,6 @@ import { Link } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { Action } from '@/types/Action'
 
-interface Route {
-    name: string
-    parameters: any
-}
-
 const props = defineProps<{
     action: Action
     dataToSubmit?: any
@@ -19,7 +14,6 @@ const props = defineProps<{
 
 <template>
     <!-- <pre>{{ actions }}</pre> -->
-    <!--suppress HtmlUnknownTag -->
     <!-- Button Group () -->
     <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
         <slot v-for="(button, index) in action.buttonGroup" :name="'button' + index">
