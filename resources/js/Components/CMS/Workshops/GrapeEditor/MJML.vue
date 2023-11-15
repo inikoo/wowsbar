@@ -275,7 +275,7 @@ onMounted(() => {
 }
 
 
-//RTE Part
+
 .custom-tag-button {
     .cke_button_icon {
         display: none;
@@ -286,50 +286,7 @@ onMounted(() => {
     }
 }
 
-div.cke_dialog_ui_input_select {
-    display: table;
-    width: 100%;
-    line-height: unset;
-}
 
-select.cke_dialog_ui_input_select {
-    line-height: 23px;
-}
-
-.cke_dialog_body label {
-    display: inline;
-    cursor: default;
-    letter-spacing: .3px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
- .cke_reset_all *, .cke_reset_all a {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: unset;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    vertical-align: baseline;
-    box-sizing: content-box;
-    position: static;
-    transition: none;
-    border-collapse: collapse;
-    font: normal normal normal 12px Arial,Helvetica,Tahoma,Verdana,Sans-Serif;
-    color: #000;
-    text-align: left;
-    white-space: nowrap;
-    cursor: auto;
-    float: none;
-}
-
-a .cke_dialog_ui_button_ok {
-    color: #fff;
-    background: #583E61;
-    border: 1px solid #583E61;
-}
 
 
 </style>
