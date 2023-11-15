@@ -10,7 +10,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useLocaleStore } from "@/Stores/locale"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { reactive } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import {Link, usePage} from '@inertiajs/vue3'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk } from '@fal/'
@@ -26,10 +26,30 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
+function tagRoute(tag: object)
+{
+    switch (route().current()) {
+        case 'org.crm.shop.prospects.tags.index':
+            return route(
+                'org.crm.shop.prospects.tags.show',
+                [route().params.shop, tag.slug]);
+        default:
+            return route(
+                'org.crm.tags.show',
+                [tag.slug]);
+    }
+}
+
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5"></Table>
+    <Table :resource="data" :name="tab" class="mt-5">
+        <template #cell(name)="{ item: tag }">
+            <Link :href="tagRoute(tag)">
+                {{ tag["name"]}}
+            </Link>
+        </template>
+    </Table>
 </template>
 
 

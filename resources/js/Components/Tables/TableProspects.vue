@@ -40,6 +40,7 @@ const props = defineProps<{
 function prospectRoute(prospect: Prospect) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.index':
+        case 'org.crm.shop.prospects.tags.show':
             return route(
                 'org.crm.shop.prospects.show',
                 [route().params['shop'],
@@ -50,7 +51,7 @@ function prospectRoute(prospect: Prospect) {
                 [prospect.slug]);
     }
 }
-
+console.log(props.tagsList)
 const tagsListTemp: Ref<tag[]> = ref(props.tagsList)
 const maxId = ref(Math.max(...tagsListTemp.value.map(item => item.id)))
 
