@@ -90,9 +90,7 @@ class StoreProspect
     {
         $this->scope = $shop;
         $this->fillFromRequest($request);
-        $request->validate();
-
-        return $this->handle($shop, $request->validated());
+        return $this->handle($shop, $this->validateAttributes());
     }
 
 
@@ -154,7 +152,6 @@ class StoreProspect
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
-
 
         return $this->handle($scope, $validatedData);
     }
