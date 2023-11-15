@@ -24,6 +24,7 @@ use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\Queries\CreateProspectQuery;
 use App\Actions\Leads\Prospect\RemoveProspect;
+use App\Actions\Leads\Prospect\Tags\UI\IndexProspectTags;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\EditProspect;
 use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
@@ -109,7 +110,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         });
 
         Route::prefix('tags')->as('tags.')->group(function () {
-            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index'); //todo IndexProspectTags
+            Route::get('/', [IndexProspectTags::class, 'inShop'])->name('index');
             Route::get('/create', CreateProspectQuery::class)->name('create'); //todo CreateProspectTag
             Route::get('{tag}', ShowProspectQuery::class)->name('show'); //todo ShowProspectTag
         });

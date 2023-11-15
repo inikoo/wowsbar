@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $slug
  * @property string $name
  * @property mixed $type
+ * @property \Illuminate\Support\Carbon $created_at
  */
 class TagResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class TagResource extends JsonResource
             'slug'    => $this->slug,
             'name'    => $this->name,
             'type'    => $this->type,
+            'created_at' => $this->created_at,
         ];
     }
 }

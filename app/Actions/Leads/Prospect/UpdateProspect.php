@@ -114,6 +114,15 @@ class UpdateProspect
         ];
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if($request->exists('contact_website')) {
+            $request->replace([
+                'url' => 'https://' . $request->input('contact_website')
+            ]);
+        }
+
+    }
 
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
