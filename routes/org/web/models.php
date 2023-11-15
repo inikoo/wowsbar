@@ -89,9 +89,9 @@ Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store')
 Route::post('/employees/imports/upload', ImportEmployees::class)->name('employees.upload');
 Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.remove');
 
-Route::post('/prospect/{prospect}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
+Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
-Route::post('/tags', StoreTag::class)->name('tag.store');
+Route::post('/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 

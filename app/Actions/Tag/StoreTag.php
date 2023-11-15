@@ -22,7 +22,7 @@ class StoreTag
 
     public function handle(array $modelData): Tag
     {
-        return Tag::create(['name' => $modelData['name']]);
+        return Tag::create($modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -37,7 +37,8 @@ class StoreTag
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'type' => ['required', 'string']
         ];
     }
 
@@ -46,10 +47,16 @@ class StoreTag
         return new TagResource($tag);
     }
 
-    public function asController(ActionRequest $request): Tag
+
+    public function inProspect(ActionRequest $request): Tag
     {
+
+        $this->fillFromRequest($request);
+        $this->set('type', 'crm');
         $request->validate();
 
         return $this->handle($request->validated());
     }
+
+
 }
