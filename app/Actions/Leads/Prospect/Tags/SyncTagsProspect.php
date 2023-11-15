@@ -5,24 +5,29 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tag;
+namespace App\Actions\Leads\Prospect\Tags;
 
-use App\Http\Resources\Tag\TagResource;
+use App\Models\Leads\Prospect;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Spatie\Tags\Tag;
 
-class StoreTag
+class SyncTagsProspect
 {
     use AsAction;
     use WithAttributes;
 
     private bool $asAction = false;
 
-    public function handle(array $modelData): Tag
+    public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        return Tag::create($modelData);
+        $prospect->syncTagsWithType(
+            Arr::get($modelData, 'tags', []),
+            Arr::get($modelData, 'type')
+        );
+
+        return $prospect;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -34,29 +39,19 @@ class StoreTag
         return $request->user()->hasPermissionTo("shops.prospects.edit");
     }
 
-    public function rules(): array
+    public function rules(ActionRequest $request): array
     {
         return [
-            'name' => ['required', 'string'],
-            'type' => ['required', 'string']
+            'tags' => ['nullable', 'array'],
+            'type' => ['nullable', 'string']
         ];
     }
 
-    public function jsonResponse(Tag $tag): TagResource
+    public function asController(Prospect $prospect, ActionRequest $request): Prospect
     {
-        return new TagResource($tag);
-    }
-
-
-    public function inProspect(ActionRequest $request): Tag
-    {
-
         $this->fillFromRequest($request);
-        $this->set('type', 'crm');
-        $request->validate();
+        $this->fill(['type' => 'crm']);
 
-        return $this->handle($request->validated());
+        return $this->handle($prospect, $this->validateAttributes());
     }
-
-
 }
