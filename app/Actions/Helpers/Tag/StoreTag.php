@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 08:23:57 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 15 Nov 2023 12:42:09 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tag;
+namespace App\Actions\Helpers\Tag;
 
 use App\Http\Resources\Tag\TagResource;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,7 +22,10 @@ class StoreTag
 
     public function handle(array $modelData): Tag
     {
-        return Tag::create($modelData);
+
+        $tag=  Tag::findOrCreate($modelData['name'], $modelData['type']);
+
+        return $tag;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -52,10 +55,9 @@ class StoreTag
     {
 
         $this->fillFromRequest($request);
-        $this->set('type', 'crm');
-        $request->validate();
+        $this->fill(['type' => 'crm']);
 
-        return $this->handle($request->validated());
+        return $this->handle($this->validateAttributes());
     }
 
 
