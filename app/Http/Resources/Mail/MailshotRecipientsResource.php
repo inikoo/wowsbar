@@ -8,7 +8,6 @@
 namespace App\Http\Resources\Mail;
 
 use App\Http\Resources\HasSelfCall;
-use App\Models\Mail\DispatchedEmail;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MailshotRecipientsResource extends JsonResource

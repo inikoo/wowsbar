@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect;
+namespace App\Actions\Leads\Prospect\Tags;
 
 use App\Models\Leads\Prospect;
 use Illuminate\Support\Arr;

@@ -76,7 +76,7 @@ use Spatie\Tags\HasTags;
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
  * @property-read PortfolioWebsite|null $portfolioWebsite
- * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Tag> $tags
  * @property-read Shop|null $shop
  * @property-read int|null $tags_count
  * @property-read UniversalSearch|null $universalSearch

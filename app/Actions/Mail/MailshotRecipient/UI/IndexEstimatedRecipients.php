@@ -11,11 +11,9 @@ use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
-use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Http\Resources\Mail\MailshotRecipientsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
-use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -25,7 +23,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexEstimatedRecipients extends InertiaAction
 {
@@ -52,7 +49,7 @@ class IndexEstimatedRecipients extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
+        $query        = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
         $queryBuilder = BuildQuery::run($query);
 
         return $queryBuilder
