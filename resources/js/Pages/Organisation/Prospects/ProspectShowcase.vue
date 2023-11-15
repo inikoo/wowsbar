@@ -9,18 +9,32 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPhone, faEnvelope, faGlobe, faUser } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
+import Timeline1 from '@/Components/Utils/Timeline1.vue'
 library.add(faPhone, faEnvelope, faGlobe, faUser)
 
 const props = defineProps<{
     data: any
 }>()
 
+const timelineSort = props.data.timeline.sort((a, b) => {
+    return a.value - b.value;
+})
+
+const timelineFilterNull = Object.groupBy(timelineSort.filter(obj => obj.value), (item) => {
+    return item.value
+})
+
+const titlesObject = {};
+for (const key in timelineFilterNull) {
+  titlesObject[key] = timelineFilterNull[key].map(item => item.title);
+}
 
 
 </script>
 
 <template>
-    <!-- <pre>{{ data }}</pre> -->
+    <Timeline1 :timeline="titlesObject"/>
+    <!-- <pre>{{ timelineFilterNull }}</pre> -->
     <div class="px-4 py-4 space-y-8">
         <div class="min-w-96 text-gray-600 w-fit">
             <h2 class="sr-only">Summary</h2>
