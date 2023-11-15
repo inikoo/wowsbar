@@ -16,6 +16,7 @@ use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -59,7 +60,7 @@ class IndexDispatchedEmail extends InertiaAction
             ->withQueryString();
     }
 
-    public function jsonResponse(Mailshot $mailshot): DispatchedEmailResource
+    public function jsonResponse(Mailshot $mailshot): AnonymousResourceCollection
     {
         return DispatchedEmailResource::collection($this->handle($mailshot));
     }
@@ -87,7 +88,7 @@ class IndexDispatchedEmail extends InertiaAction
             }
 
             $table->column(key: 'subject', label: 'subject')
-                ->column(key: 'customer_name', label: __('customer name'))
+                ->column(key: 'email', label: __('email'))
                 ->column(key: 'sent_at', label: __('sent at'), sortable: true)
                 ->column(key: 'delivered_at', label: __('delivered at'), sortable: true)
                 ->defaultSort('sent_at');
