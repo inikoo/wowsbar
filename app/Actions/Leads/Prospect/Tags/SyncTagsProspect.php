@@ -22,7 +22,10 @@ class SyncTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $prospect->syncTags(Arr::get($modelData, 'tags', []));
+        $prospect->syncTagsWithType(
+            Arr::get($modelData, 'tags', []),
+            Arr::get($modelData, 'type')
+        );
 
         return $prospect;
     }
@@ -39,14 +42,16 @@ class SyncTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['nullable', 'array']
+            'tags' => ['nullable', 'array'],
+            'type' => ['nullable', 'string']
         ];
     }
 
     public function asController(Prospect $prospect, ActionRequest $request): Prospect
     {
-        $request->validate();
+        $this->fillFromRequest($request);
+        $this->fill(['type' => 'crm']);
 
-        return $this->handle($prospect, $request->validated());
+        return $this->handle($prospect, $this->validateAttributes());
     }
 }

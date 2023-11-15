@@ -58,7 +58,7 @@ const maxId = ref(Math.max(...tagsListTemp.value.map(item => item.id)))
 const addNewTag = async (option: tag) => {
     // console.log(option)
     try {
-        const response: any = await axios.post(route('org.models.tag.store'),
+        const response: any = await axios.post(route('org.models.prospect.tag.store'),
             {name: option.name},
             {
                 headers: {"Content-Type": "multipart/form-data"},
@@ -130,20 +130,20 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
         <template #cell(tags)="{ item }">
             <div class="min-w-[200px]">
                 <Multiselect v-model="item.tags"
-                             mode="tags"
-                             placeholder="Select the tag"
-                             valueProp="name"
-                             trackBy="name"
-                             label="name"
-                             @change="(idTag) => (updateTagItemTable(idTag, item.slug))"
-                             :close-on-select="false"
-                             :searchable="true"
-                             :create-option="true"
-                             :on-create="addNewTag"
-                             :caret="false"
-                             :options="tagsListTemp"
-                             noResultsText="No one left. Type to add new one."
-                             appendNewTag
+                    mode="tags"
+                    placeholder="Select the tag"
+                    valueProp="name"
+                    trackBy="name"
+                    label="name"
+                    @change="(idTag) => (updateTagItemTable(idTag, item.id))"
+                    :close-on-select="false"
+                    :searchable="true"
+                    :create-option="true"
+                    :on-create="addNewTag"
+                    :caret="false"
+                    :options="tagsListTemp"
+                    noResultsText="No one left. Type to add new one."
+                    appendNewTag
                 >
                     <template #tag="{ option, handleTagRemove, disabled }: {option: tag, handleTagRemove: Function, disabled: boolean}">
                         <div class="px-0.5 py-[3px]">

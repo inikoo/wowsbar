@@ -56,7 +56,7 @@
 
 /* For Notification */
 .custom-style-notification {
-    @apply mt-2 bg-white px-4 py-2 rounded-md my-1 mr-3;
+    @apply mt-2 bg-white px-4 py-2 rounded-md mr-3;
 
     .notification-title {
         @apply font-bold

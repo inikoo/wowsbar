@@ -23,13 +23,16 @@ use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
+use App\Actions\Helpers\Tag\StoreTag;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
-use App\Actions\HumanResources\Employee\ImportEmployees;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
+use App\Actions\HumanResources\Employee\ImportEmployees;
 use App\Actions\HumanResources\Workplace\DeleteWorkplace;
 use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\HumanResources\Workplace\UpdateWorkplace;
+use App\Actions\Leads\Prospect\SyncTagsProspect;
+use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\StoreProspect;
@@ -57,6 +60,9 @@ use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
 use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\StoreCustomerWebsite;
+use App\Actions\Catalogue\Product\StoreProduct;
+use App\Actions\Catalogue\Product\UpdateProduct;
+use App\Actions\Catalogue\Product\ImportProducts;
 use App\Actions\Subscriptions\CustomerWebsite\UpdateCustomerWebsite;
 use App\Actions\Tag\StoreTag;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
@@ -89,9 +95,9 @@ Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store')
 Route::post('/employees/imports/upload', ImportEmployees::class)->name('employees.upload');
 Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.remove');
 
-Route::post('/prospect/{prospect}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
+Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
-Route::post('/tags', StoreTag::class)->name('tag.store');
+Route::post('/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 

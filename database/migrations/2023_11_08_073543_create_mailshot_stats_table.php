@@ -16,14 +16,11 @@ return new class () extends Migration {
     {
         Schema::create('mailshot_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-
             $table->unsignedSmallInteger('mailshot_id')->index();
             $table->foreign('mailshot_id')->references('id')->on('mailshots');
             $table->unsignedSmallInteger('number_estimated_dispatched_emails')->default(0);
             $table->dateTimeTz('estimated_dispatched_emails_calculated_at')->nullable();
-
             $table=$this->dispatchedEmailsStats($table);
-
             $table->timestampsTz();
         });
     }

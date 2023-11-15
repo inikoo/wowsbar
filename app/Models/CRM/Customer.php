@@ -91,7 +91,7 @@ use Spatie\Tags\HasTags;
  * @property-read \App\Models\CRM\CustomerPortfolioStats|null $portfolioStats
  * @property-read Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
- * @property Collection<int, \Spatie\Tags\Tag> $tags
+ * @property Collection<int, \App\Models\Helpers\Tag> $tags
  * @property-read Shop $shop
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
