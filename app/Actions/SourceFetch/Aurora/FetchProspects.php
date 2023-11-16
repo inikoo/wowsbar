@@ -7,6 +7,7 @@
 
 namespace App\Actions\SourceFetch\Aurora;
 
+use App\Actions\Helpers\Fetch\UpdateFetch;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Models\Leads\Prospect;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class FetchProspects extends FetchAction
 {
-    public string $commandSignature = 'fetch:prospects {au_database} {--S|shop= : Aurora Store Key} {--s|source_id=} {--N|only_new : Fetch only new}';
+    public string $commandSignature = 'fetch:prospects {au_database} {--S|shop= : Aurora Store Key} {--s|source_id=} {--N|only_new : Fetch only new} {--r|reset}';
 
 
     public function handle(SourceService $source, int $sourceId): ?Prospect
@@ -28,16 +29,25 @@ class FetchProspects extends FetchAction
         if ($prospectData = $source->fetchProspect($sourceId)) {
             if ($prospect = Prospect::withTrashed()->whereJsonContains('data->source->source_id', Arr::get($prospectData, 'prospect.data.source.source_id'))->first()) {
                 $prospect = UpdateProspect::make()->action($shop, $prospect, $prospectData['prospect']);
-
+                if ($prospect->wasChanged()) {
+                    $this->number_updates++;
+                    UpdateFetch::run($this->fetch, ['number_updates' => $this->number_updates]);
+                } else {
+                    $this->number_no_changes++;
+                    UpdateFetch::run($this->fetch, ['number_no_changes' => $this->number_no_changes]);
+                }
             } else {
                 // print_r($prospectData['prospect']);
                 $prospect = StoreProspect::make()->action($shop, $prospectData['prospect']);
+                $this->number_stores++;
+                UpdateFetch::run($this->fetch, ['number_stores' => $this->number_stores]);
             }
 
-
-            DB::connection('aurora')->table('Prospect Dimension')
-                ->where('Prospect Key', $prospect->source_id)
-                ->update(['wowsbar_id' => $prospect->id]);
+            if (!app()->environment('testing')) {
+                DB::connection('aurora')->table('Prospect Dimension')
+                    ->where('Prospect Key', Arr::get($prospect->data, 'source.source_id'))
+                    ->update(['wowsbar_id' => $prospect->id]);
+            }
 
             return $prospect;
         }
@@ -75,5 +85,12 @@ class FetchProspects extends FetchAction
         }
 
         return $query->count();
+    }
+
+    public function reset(): void
+    {
+        if (!app()->environment('testing')) {
+            DB::connection('aurora')->table('Customer Dimension')->update(['wowsbar_id' => null]);
+        }
     }
 }
