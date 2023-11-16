@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Models\Helpers\Tag;
+use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
@@ -26,11 +27,18 @@ class EditProspectTag extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("portfolio.edit");
+        return $request->user()->hasPermissionTo("crm.edit");
 
     }
 
     public function asController(Tag $tag, ActionRequest $request): Tag
+    {
+        $this->initialisation($request);
+
+        return $this->handle($tag);
+    }
+
+    public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
         $this->initialisation($request);
 
@@ -52,6 +60,26 @@ class EditProspectTag extends InertiaAction
                     'required' => true,
                     'value' => $tag->name
                 ],
+            ]
+        ];
+
+        $sections['delete'] = [
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
+            'fields' => [
+                'name' => [
+                    'type'   => 'action',
+                    'action' => [
+                        'type'   => 'button',
+                        'style'  => 'delete',
+                        'label'  => __('delete customer'),
+                        'method' => 'delete',
+                        'route'  => [
+                            'name'       => 'org.models.prospect.tag.delete',
+                            'parameters' => array_values($request->route()->originalParameters())
+                        ]
+                    ],
+                ]
             ]
         ];
 
@@ -103,8 +131,8 @@ class EditProspectTag extends InertiaAction
                     'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'org.models.tag.update',
-                            'parameters' => $tag->slug
+                            'name'       => 'org.models.prospect.tag.update',
+                            'parameters' => array_values($request->route()->originalParameters())
                         ],
                     ]
                 ],
@@ -134,14 +162,14 @@ class EditProspectTag extends InertiaAction
 
     public function getPrevious(Tag $tag, ActionRequest $request): ?array
     {
-        $previous = Tag::where('slug', '<', $tag->slug)->orderBy('slug', 'desc')->first();
+        $previous = Tag::where('id', '<', $tag->id)->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(Tag $tag, ActionRequest $request): ?array
     {
-        $next = Tag::where('slug', '>', $tag->slug)->orderBy('slug')->first();
+        $next = Tag::where('id', '>', $tag->id)->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
@@ -153,13 +181,11 @@ class EditProspectTag extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.portfolio.social-accounts.edit' => [
+            'org.crm.shop.prospects.tags.edit' => [
                 'label' => $tag->name,
                 'route' => [
                     'name'       => $routeName,
-                    'parameters' => [
-                        'portfolioSocialAccount' => $tag->slug
-                    ]
+                    'parameters' => $this->originalParameters
                 ]
             ]
         };

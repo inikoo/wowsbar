@@ -8,6 +8,8 @@
 namespace App\Actions\Leads\Prospect\Tags;
 
 use App\Models\Helpers\Tag;
+use App\Models\Market\Shop;
+use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -18,10 +20,23 @@ class DeleteTagsProspect
     use WithAttributes;
 
     private bool $asAction = false;
+    /**
+     * @var \App\Models\Market\Shop
+     */
+    private Shop $parent;
 
     public function handle(Tag $tag): void
     {
+        $tag->crmStats()->delete();
         $tag->delete();
+    }
+
+    public function htmlResponse(): RedirectResponse
+    {
+        return redirect()->route(
+            'org.crm.shop.prospects.tags.index',
+            $this->parent->slug
+        );
     }
 
     public function authorize(ActionRequest $request): bool
@@ -41,8 +56,9 @@ class DeleteTagsProspect
         ];
     }
 
-    public function asController(Tag $tag): void
+    public function asController(Shop $shop, Tag $tag): void
     {
+        $this->parent = $shop;
         $this->handle($tag);
     }
 }
