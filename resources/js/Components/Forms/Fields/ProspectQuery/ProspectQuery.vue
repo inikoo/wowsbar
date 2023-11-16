@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faExclamationCircle, faCheckCircle } from '@fas/'
+import { faChevronCircleLeft } from '@fas/'
+import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { ref, onMounted } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
@@ -13,7 +14,7 @@ import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 
-library.add(faExclamationCircle, faCheckCircle)
+library.add(faChevronCircleLeft,faInfoCircle)
 
 const props = defineProps<{
     form?: any
@@ -40,10 +41,10 @@ const getTagsOptions = async () => {
         tagsOptions.value = Object.values(response.data)
     } catch (error) {
         notify({
-        title: "Failed",
-        text: "failed to get data, Tags, please reload you page",
-        type: "error"
-    });
+            title: "Failed",
+            text: "failed to get data, Tags, please reload you page",
+            type: "error"
+        });
     }
 }
 
@@ -58,7 +59,7 @@ onMounted(() => {
         <div class="mb-4">
             <div class="flex flex-wrap items-center">
                 <div v-for="(query, index) in descriptor.QueryLists" :key="query" class="flex items-center mr-4 mb-2 ">
-                    <div class="p-2 border border-solid border-blue-500 rounded-lg">
+                    <div class="py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
                         <input type="checkbox" :id="'query_' + query" :value="query" v-model="form[fieldName].query"
                             class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                         <label :for="'query_' + query" class="ml-2">{{ query }}</label>
@@ -72,8 +73,17 @@ onMounted(() => {
             <Disclosure v-slot="{ open }" :defaultOpen="true">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>Tag</span>
-                    <ChevronUpIcon :class="open ? 'rotate-180 transform' : ''" class="h-5 w-5 text-purple-500" />
+                    <span>Tags</span>
+                    <div class="flex gap-2">
+                        <VTooltip>
+                            <font-awesome-icon :icon="['far', 'info-circle']" />
+
+                            <template #popper>
+                                filter deliveries based on seo tags
+                            </template>
+                        </VTooltip>
+                   <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
+                    </div>
                 </DisclosureButton>
                 <DisclosurePanel class="px-4  pb-2 text-sm text-gray-500">
                     <div class="mb-4">
@@ -113,7 +123,16 @@ onMounted(() => {
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                     <span>Last Contact</span>
-                    <ChevronUpIcon :class="open ? 'rotate-180 transform' : ''" class="h-5 w-5 text-purple-500" />
+                    <div class="flex gap-2">
+                        <VTooltip>
+                            <font-awesome-icon :icon="['far', 'info-circle']" />
+
+                            <template #popper>
+                                filter deliveries based on the last contact with the customer
+                            </template>
+                        </VTooltip>
+                   <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
+                    </div>
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
@@ -125,11 +144,11 @@ onMounted(() => {
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
-                                    v-model="form[fieldName].last_contact.data.count"  />
+                                    v-model="form[fieldName].last_contact.data.count" />
                             </div>
                             <div class="w-full">
-                                <Multiselect :options="['day', 'week', 'month']"  placeholder="Pick a range"
-                                    v-model="form[fieldName].last_contact.data.range"  :can-clear="false"/>
+                                <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
+                                    v-model="form[fieldName].last_contact.data.range" :can-clear="false" />
                             </div>
                         </div>
                     </div>
