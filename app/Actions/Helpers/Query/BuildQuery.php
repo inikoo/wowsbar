@@ -60,9 +60,8 @@ class BuildQuery
     {
         if ($constrainType == 'with') {
             if(is_array($constrainData)) {
-                $queryBuilder->whereNotNull($constrainData[0]);
-                foreach (Arr::except($constrainData, [0]) as $constrain) {
-                    $queryBuilder->orWhereNotNull($constrain);
+                foreach ($constrainData as $constrain) {
+                    $queryBuilder->whereNotNull($constrain);
                 }
             } else {
                 $queryBuilder->whereNotNull($constrainData);
