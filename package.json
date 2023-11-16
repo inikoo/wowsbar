@@ -99,6 +99,7 @@
         "vue-chartjs": "^5.2.0",
         "vue-collapsed": "^1.1.3",
         "vue-color-kit": "^1.0.6",
+        "vue-countup-v3": "^1.4.0",
         "vue-cropperjs": "^5.0.0",
         "vue-json-viewer": "^3.0.4",
         "vue-picture-cropper": "^0.6.1",

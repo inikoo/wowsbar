@@ -22,7 +22,7 @@ use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
-use App\Actions\Leads\Prospect\Queries\CreateProspectQuery;
+use App\Actions\Leads\Prospect\Queries\UI\CreateProspectQuery;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\Tags\UI\CreateProspectTag;
 use App\Actions\Leads\Prospect\Tags\UI\EditProspectTag;
@@ -108,7 +108,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
         Route::prefix('lists')->as('lists.')->group(function () {
             Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
-            Route::get('/create', CreateProspectQuery::class)->name('create');
+            Route::get('/create', [CreateProspectQuery::class, 'inShop'])->name('create');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
         });
 

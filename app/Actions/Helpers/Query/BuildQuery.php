@@ -58,9 +58,14 @@ class BuildQuery
 
     protected function addConstrain($queryBuilder, $constrainType, $constrainData, $query)
     {
-
         if ($constrainType == 'with') {
-            $queryBuilder->whereNotNull($constrainData);
+            if(is_array($constrainData)) {
+                foreach ($constrainData as $constrain) {
+                    $queryBuilder->whereNotNull($constrain);
+                }
+            } else {
+                $queryBuilder->whereNotNull($constrainData);
+            }
         } elseif ($constrainType == 'without') {
             $queryBuilder->whereNull($constrainData);
         } elseif ($constrainType == 'where') {
@@ -91,6 +96,10 @@ class BuildQuery
                         }
                     }
                 );
+        } else if($constrainType == 'all') {
+            $queryBuilder->withAllTags($constrainData, 'crm');
+        } else if($constrainType == 'any') {
+            $queryBuilder->withAnyTags($constrainData, 'crm');
         }
 
         return $queryBuilder;

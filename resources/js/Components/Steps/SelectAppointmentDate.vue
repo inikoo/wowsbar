@@ -59,7 +59,7 @@ const attrs = ref([
         <span v-html="title"></span>
     </div>
     <div class="w-64 md:w-96 mx-auto">
-        <DatePicker :value="modelValue" @update:modelValue="(newVal: Date) => emits('update:modelValue', newVal)" expanded :attributes="attrs" />
+        <DatePicker :value="modelValue" @update:modelValue="(newVal: Date) => emits('update:modelValue', newVal)" expanded :attributes="attrs" :min-date='new Date()'/>
     </div>
 
     <!-- Section: Button Hour, Button Submit -->
