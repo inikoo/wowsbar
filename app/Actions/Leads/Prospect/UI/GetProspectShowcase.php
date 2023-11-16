@@ -22,7 +22,7 @@ class GetProspectShowcase
             'timeline'=> $prospect->audits->map(function ($value) {
                 return [
                     $value->created_at->toISOString() => [
-                        'title' => ['Prospect ' . $value->event],
+                        ['Prospect ' . $value->event],
                     ]
                 ];
             })
