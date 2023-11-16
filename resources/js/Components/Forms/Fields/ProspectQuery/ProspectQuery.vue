@@ -58,11 +58,11 @@ console.log(props.form)
     <div>
         <div class="mb-4">
             <div class="flex flex-wrap items-center">
-                <div v-for="(query, index) in descriptor.QueryLists" :key="query" class="flex items-center mr-4 mb-2 ">
+                <div v-for="(query, index) in descriptor.QueryLists" :key="query.value" class="flex items-center mr-4 mb-2 ">
                     <div class="py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
-                        <input type="checkbox" :id="'query_' + query" :value="query" v-model="form[fieldName].query"
+                        <input type="checkbox" :id="'query_' + query.value" :value="query.value" v-model="form[fieldName].query"
                             class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                        <label :for="'query_' + query" class="ml-2">{{ query }}</label>
+                        <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
                     </div>
 
                 </div>
@@ -90,13 +90,12 @@ console.log(props.form)
                         <div>
                             <fieldset class="mt-4">
                                 <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                    <div v-for="filter in descriptor.FilterTags" :key="filter" class="flex items-center">
-                                        <input :id="filter" name="notification-method" type="radio" :value="filter"
+                                    <div v-for="filter in descriptor.FilterTags" :key="filter.value" class="flex items-center">
+                                        <input :id="filter.value" name="notification-method" type="radio" :value="filter.value"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                             v-model="form[fieldName].tag.state" />
-                                        <label :for="filter"
-                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter
-                                            }}</label>
+                                        <label :for="filter.value"
+                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label }}</label>
                                     </div>
                                 </div>
                             </fieldset>
