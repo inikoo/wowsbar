@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect\Queries;
+namespace App\Actions\Leads\Prospect\Queries\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
@@ -74,10 +74,7 @@ class CreateProspectQuery extends InertiaAction
                         [
                             'name'       => 'org.models.shop.prospect-query.store',
                             'parameters' => [$parent->id]
-
-
                         ]
-
                 ]
             ]
         );
