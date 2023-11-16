@@ -128,7 +128,17 @@ class IndexProspectQueries extends InertiaAction
                 'pageHead'    => [
                     'title'   => __('prospect lists'),
                     'meta'    => $meta,
-
+                    'actions' => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('prospect list'),
+                            'route' => [
+                                'name'       => 'org.crm.shop.prospects.lists.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : []
+                    ]
                 ],
 
                 'tabs' => [

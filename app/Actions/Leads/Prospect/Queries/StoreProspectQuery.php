@@ -44,19 +44,15 @@ class StoreProspectQuery
                 'name' => $modelData['name'],
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with' => $query['query'][0],
+                    'with' => $query['query'],
                     'group' => [
                         'where' => [
                             'contact_state',
                             '=',
                             ProspectContactStateEnum::NO_CONTACTED->value
                         ],
-                        'orGroup' => [
-                            'whereIn' => [
-                                'tags', $query['tag']['tags']
-                            ],
-                        ]
                     ],
+                    $query['tag']['state'] => $query['tag']['tags']
                 ],
                 'arguments' => $query['last_contact']['state'] ? [
                     '__date__' => [
@@ -76,7 +72,7 @@ class StoreProspectQuery
                 '<=',
                 '__date__'
             ];
-            $data['constrains']['group']['orGroup']['where'] = $lastContacted;
+            $data[0]['constrains']['group']['orGroup']['where'] = $lastContacted;
         }
 
         foreach ($data as $queryData) {
@@ -120,11 +116,10 @@ class StoreProspectQuery
         ];
     }
 
-    public function htmlResponse(Prospect $prospect): RedirectResponse
+    public function htmlResponse(Query $query): RedirectResponse
     {
-        return Redirect::route('org.crm.shop.prospects.show', [
-            $prospect->shop->slug,
-            $prospect->slug
+        return Redirect::route('org.crm.shop.prospects.lists.index', [
+            $query->scope->slug
         ]);
     }
 }

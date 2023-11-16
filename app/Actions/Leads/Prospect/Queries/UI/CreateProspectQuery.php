@@ -38,7 +38,7 @@ class CreateProspectQuery extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'org.crm.shop.prospects.index',
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_merge(
                                     $request->route()->originalParameters(),
                                     [
