@@ -21,8 +21,8 @@ class GetProspectShowcase
             'info'    => ProspectResource::make($prospect)->getArray(),
             'timeline'=> $prospect->audits->map(function ($value) {
                 return [
-                    $value->created_at->toISOString() => [
-                        'title' => 'Prospect ' . $value->event,
+                    $value->updated_at->toISOString() => [
+                        'Prospect ' . $value->event,
                     ]
                 ];
             })

@@ -92,7 +92,7 @@ Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.rem
 
 Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
-Route::post('/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
+Route::post('/shop/{shop:id}/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
 Route::post('/prospect/{tag}', DeleteTagsProspect::class)->name('prospect.tag.delete');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');

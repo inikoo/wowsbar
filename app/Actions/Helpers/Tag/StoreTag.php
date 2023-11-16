@@ -10,6 +10,10 @@ namespace App\Actions\Helpers\Tag;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCrmTags;
 use App\Http\Resources\Tag\TagResource;
 use App\Models\Helpers\Tag;
+use App\Models\Leads\Prospect;
+use App\Models\Market\Shop;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -20,6 +24,7 @@ class StoreTag
     use WithAttributes;
 
     private bool $asAction = false;
+    private Shop $parent;
 
 
     public function handle(array $modelData): Tag
@@ -60,15 +65,23 @@ class StoreTag
         ];
     }
 
+    public function htmlResponse(): RedirectResponse
+    {
+        return redirect()->route(
+            'org.crm.shop.prospects.tags.index',
+            $this->parent->slug
+        );
+    }
+
     public function jsonResponse(Tag $tag): TagResource
     {
         return new TagResource($tag);
     }
 
 
-    public function inProspect(ActionRequest $request): Tag
+    public function inProspect(Shop $shop, ActionRequest $request): Tag
     {
-
+        $this->parent = $shop;
         $this->fillFromRequest($request);
         $this->fill(['type' => 'crm']);
 
