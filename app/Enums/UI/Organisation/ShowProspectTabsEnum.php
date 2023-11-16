@@ -17,6 +17,7 @@ enum ShowProspectTabsEnum: string
 
     case SHOWCASE  = 'showcase';
     case PROSPECTS = 'prospects';
+    case HISTORY = 'history';
 
     public function blueprint(): array
     {
@@ -29,6 +30,13 @@ enum ShowProspectTabsEnum: string
             ShowProspectTabsEnum::PROSPECTS => [
                 'title' => __('prospects'),
                 'icon'  => 'fal fa-transporter',
+            ],
+
+            ShowProspectTabsEnum::HISTORY => [
+                'title' => __('history'),
+                'icon'  => 'fal fa-clock',
+                'type'  => 'icon',
+                'align' => 'right',
             ],
         };
     }
