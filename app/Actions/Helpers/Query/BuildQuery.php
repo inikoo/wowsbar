@@ -58,9 +58,15 @@ class BuildQuery
 
     protected function addConstrain($queryBuilder, $constrainType, $constrainData, $query)
     {
-
         if ($constrainType == 'with') {
-            $queryBuilder->whereNotNull($constrainData);
+            if(is_array($constrainData)) {
+                $queryBuilder->whereNotNull($constrainData[0]);
+                foreach (Arr::except($constrainData, [0]) as $constrain) {
+                    $queryBuilder->orWhereNotNull($constrain);
+                }
+            } else {
+                $queryBuilder->whereNotNull($constrainData);
+            }
         } elseif ($constrainType == 'without') {
             $queryBuilder->whereNull($constrainData);
         } elseif ($constrainType == 'where') {
