@@ -81,6 +81,18 @@ test('can show list of guests', function () {
     });
 });
 
+test('can show guest', function () {
+    $guest    = Guest::first();
+    $response = get(route('org.sysadmin.guests.show', [$guest->slug]));
+
+    $response->assertInertia(function (AssertableInertia $page) use ($guest) {
+        $page
+            ->component('SysAdmin/Guest')
+            ->has('breadcrumbs', 3)
+            ->has('tabs.navigation', 3);
+    });
+});
+
 
 test('can show list of organisation users', function () {
     $response = get(route('org.sysadmin.users.index'));

@@ -123,8 +123,8 @@ class IndexProspectTags extends InertiaAction
                 ),
                 'title'       => __('prospect tags'),
                 'pageHead'    => [
-                    'title' => __('tags'),
-                    'meta'  => $meta,
+                    'title'     => __('tags'),
+                    'meta'      => $meta,
                     'actions'   => [
                         [
                             'type'  => 'button',

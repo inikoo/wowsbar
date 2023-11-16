@@ -50,7 +50,7 @@ class FetchAuroraProspect extends FetchAurora
                 'address'=> $this->parseAddress(prefix: 'Prospect Contact', auAddressData: $this->auroraModelData)
             ];
 
-        if($this->parseDate($this->auroraModelData->{'Prospect Created Date'})) {
+        if($this->parseDatetime($this->auroraModelData->{'Prospect Created Date'})) {
 
             $this->parsedData['prospect']['created_at']=$this->auroraModelData->{'Prospect Created Date'};
         }
@@ -59,8 +59,8 @@ class FetchAuroraProspect extends FetchAurora
         $this->parsedData['prospect']['contact_state']  =ProspectContactStateEnum::CONTACTED;
         $this->parsedData['prospect']['dont_contact_me']=false;
 
-        if($this->parseDate($this->auroraModelData->{'Prospect Last Contacted Date'})) {
-            $this->parsedData['prospect']['last_contacted_at']=$this->parseDate($this->auroraModelData->{'Prospect Last Contacted Date'});
+        if($this->parseDatetime($this->auroraModelData->{'Prospect Last Contacted Date'})) {
+            $this->parsedData['prospect']['last_contacted_at']=$this->parseDatetime($this->auroraModelData->{'Prospect Last Contacted Date'});
         }
 
 

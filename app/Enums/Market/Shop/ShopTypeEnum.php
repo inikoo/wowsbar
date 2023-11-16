@@ -13,8 +13,6 @@ enum ShopTypeEnum: string
 {
     use EnumHelperTrait;
 
-    use EnumHelperTrait;
-
     case DIGITAL_MARKETING    = 'digital-marketing';
     case CONTENT_AS_A_SERVICE = 'content-as-a-service';
 

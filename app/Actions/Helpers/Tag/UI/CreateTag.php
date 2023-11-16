@@ -24,20 +24,20 @@ class CreateTag extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title' => __('new tag'),
+                'title'    => __('new tag'),
                 'pageHead' => [
                     'title' => __('new tag'),
-                    'icon' => [
-                        'icon' => ['fal', 'fa-transporter'],
+                    'icon'  => [
+                        'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('tag')
                     ],
                     'actions' => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name' => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
@@ -47,11 +47,11 @@ class CreateTag extends InertiaAction
                     'blueprint' =>
                         [
                             [
-                                'title' => __('tag properties'),
+                                'title'  => __('tag properties'),
                                 'fields' => [
                                     'name' => [
-                                        'type' => 'input',
-                                        'label' => __('name'),
+                                        'type'     => 'input',
+                                        'label'    => __('name'),
                                         'required' => true
                                     ],
                                 ]
@@ -87,7 +87,7 @@ class CreateTag extends InertiaAction
             ),
             [
                 [
-                    'type' => 'creatingModel',
+                    'type'          => 'creatingModel',
                     'creatingModel' => [
                         'label' => __('creating tag'),
                     ]

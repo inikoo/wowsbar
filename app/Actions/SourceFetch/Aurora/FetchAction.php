@@ -7,7 +7,11 @@
 
 namespace App\Actions\SourceFetch\Aurora;
 
+use App\Actions\Helpers\Fetch\StoreFetch;
+use App\Actions\Helpers\Fetch\UpdateFetch;
 use App\Actions\Helpers\Query\HydrateModelTypeQueries;
+use App\Enums\Helpers\Fetch\FetchTypeEnum;
+use App\Models\Helpers\Fetch;
 use App\Services\AuroraService;
 use App\Services\SourceService;
 use Exception;
@@ -30,12 +34,22 @@ class FetchAction
     protected bool $onlyNew = false;
 
     protected int $hydrateDelay = 0;
+    protected int $number_stores;
+    protected int $number_updates;
+    protected int $number_no_changes;
+    protected int $number_errors;
+
+    protected Fetch $fetch;
 
     public function __construct()
     {
-        $this->progressBar = null;
-        $this->auShop      = null;
-        $this->with        = [];
+        $this->progressBar       = null;
+        $this->auShop            = null;
+        $this->with              = [];
+        $this->number_stores     = 0;
+        $this->number_updates    = 0;
+        $this->number_no_changes = 0;
+        $this->number_errors     = 0;
     }
 
     public function handle(SourceService $source, int $sourceId): ?Model
@@ -100,39 +114,63 @@ class FetchAction
 
         $source->initialisation($command->argument('au_database'));
 
-        if ($command->getName() == 'fetch:customers' and $command->option('reset')) {
+        if ($command->option('reset')) {
             $this->reset();
         }
+
+        $this->fetch = StoreFetch::run(
+            [
+                'type' => $this->getFetchType($command),
+                'data' => [
+                    'command'   => $command->getName(),
+                    'arguments' => $command->arguments(),
+                    'options'   => $command->options(),
+                ]
+            ]
+        );
+
 
         $command->info('');
 
         if ($command->option('source_id')) {
+            UpdateFetch::run($this->fetch, ['number_items' => 1]);
             $this->handle($source, $command->option('source_id'));
         } else {
+            $numberItems = $this->count() ?? 0;
+            UpdateFetch::run($this->fetch, ['number_items' => $numberItems]);
             if (!$command->option('quiet') and !$command->getOutput()->isDebug()) {
                 $info = '✊ '.$command->getName();
                 if ($this->auShop) {
                     $info .= ' shop:'.$this->auShop;
                 }
                 $command->line($info);
-                $this->progressBar = $command->getOutput()->createProgressBar($this->count() ?? 0);
+
+                $this->progressBar = $command->getOutput()->createProgressBar($numberItems);
                 $this->progressBar->setFormat('debug');
                 $this->progressBar->start();
             } else {
-                $command->line('Steps '.number_format($this->count()));
+                $command->line('Steps '.number_format($numberItems));
             }
 
             $this->fetchAll($source, $command);
             $this->progressBar?->finish();
         }
 
-        if($command->getName()=='fetch:prospects') {
+        if ($command->getName() == 'fetch:prospects') {
             HydrateModelTypeQueries::run('Prospect');
         }
-
+        UpdateFetch::run($this->fetch, ['finished_at' => now()]);
 
         return 0;
     }
 
+
+    private function getFetchType(Command $command): ?FetchTypeEnum
+    {
+        return match ($command->getName()) {
+            'fetch:prospects' => FetchTypeEnum::PROSPECTS,
+            default           => null
+        };
+    }
 
 }

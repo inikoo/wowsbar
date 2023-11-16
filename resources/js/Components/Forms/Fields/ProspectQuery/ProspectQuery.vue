@@ -28,11 +28,9 @@ const props = defineProps<{
     }
 }>()
 
-props.form.query_builder = descriptor.defaultValue
 const tagsOptions = ref([])
 
-console.log(props)
-
+if(!props.form[props.fieldName]) props.form.query_builder = descriptor.defaultValue
 const getTagsOptions = async () => {
     try {
         const response = await axios.get(
@@ -52,17 +50,19 @@ onMounted(() => {
     getTagsOptions()
 })
 
+console.log(props.form)
+
 </script>
   
 <template>
     <div>
         <div class="mb-4">
             <div class="flex flex-wrap items-center">
-                <div v-for="(query, index) in descriptor.QueryLists" :key="query" class="flex items-center mr-4 mb-2 ">
+                <div v-for="(query, index) in descriptor.QueryLists" :key="query.value" class="flex items-center mr-4 mb-2 ">
                     <div class="py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
-                        <input type="checkbox" :id="'query_' + query" :value="query" v-model="form[fieldName].query"
+                        <input type="checkbox" :id="'query_' + query.value" :value="query.value" v-model="form[fieldName].query"
                             class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                        <label :for="'query_' + query" class="ml-2">{{ query }}</label>
+                        <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
                     </div>
 
                 </div>
@@ -90,13 +90,12 @@ onMounted(() => {
                         <div>
                             <fieldset class="mt-4">
                                 <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                    <div v-for="filter in descriptor.FilterTags" :key="filter" class="flex items-center">
-                                        <input :id="filter" name="notification-method" type="radio" :value="filter"
+                                    <div v-for="filter in descriptor.FilterTags" :key="filter.value" class="flex items-center">
+                                        <input :id="filter.value" name="notification-method" type="radio" :value="filter.value"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            v-model="form[fieldName].tag.filter" />
-                                        <label :for="filter"
-                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter
-                                            }}</label>
+                                            v-model="form[fieldName].tag.state" />
+                                        <label :for="filter.value"
+                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label }}</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -104,7 +103,7 @@ onMounted(() => {
                     </div>
                     <div>
                         <Multiselect v-model="form[fieldName].tag.tags" mode="tags" placeholder="Select the tag"
-                            valueProp="id" trackBy="name" label="name" :close-on-select="false" :searchable="true"
+                            valueProp="slug" trackBy="name" label="name" :close-on-select="false" :searchable="true"
                             :caret="false" :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
                             <template
@@ -136,19 +135,19 @@ onMounted(() => {
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
-                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
-                            v-model="form[fieldName].last_contact.filter" :can-clear="false"></Multiselect>
+                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"  valueProp="value" trackBy="label" label="label"
+                            v-model="form[fieldName].last_contact.state" :can-clear="false"></Multiselect>
                     </div>
 
-                    <div v-if="form[fieldName].last_contact.filter == 'Last Contact'" class="flex flex-col gap-y-2 mt-4">
+                    <div v-if="form[fieldName].last_contact.state" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
-                                    v-model="form[fieldName].last_contact.data.count" />
+                                    v-model="form[fieldName].last_contact.data.quantity" />
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                                    v-model="form[fieldName].last_contact.data.range" :can-clear="false" />
+                                    v-model="form[fieldName].last_contact.data.unit" :can-clear="false" />
                             </div>
                         </div>
                     </div>

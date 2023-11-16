@@ -25,6 +25,11 @@ trait WithAuroraParsers
         return ($value && $value  != '2018-00-00 00:00:00') ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
+    protected function parseDatetime($value): ?string
+    {
+        return ($value && $value  != '2018-00-00 00:00:00') ? Carbon::parse($value)->format('Y-m-d H:m:s') : null;
+    }
+
 
     protected function parseLanguageID($locale): int|null
     {

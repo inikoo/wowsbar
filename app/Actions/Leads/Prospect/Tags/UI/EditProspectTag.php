@@ -9,7 +9,6 @@ namespace App\Actions\Leads\Prospect\Tags\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Models\Helpers\Tag;
 use App\Models\Market\Shop;
 use Exception;
@@ -55,10 +54,10 @@ class EditProspectTag extends InertiaAction
             'icon'   => 'fal fa-sliders-h',
             'fields' => [
                 'name' => [
-                    'type' => 'input',
-                    'label' => __('name'),
+                    'type'     => 'input',
+                    'label'    => __('name'),
                     'required' => true,
-                    'value' => $tag->name
+                    'value'    => $tag->name
                 ],
             ]
         ];

@@ -38,13 +38,13 @@ class StoreProspect
     use WithProspectPrepareForValidation;
 
     private bool $asAction = false;
-    /**
-     * @var \App\Models\Market\Shop|\App\Models\Portfolio\PortfolioWebsite
-     */
+
     private PortfolioWebsite|Shop $scope;
+
 
     public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
     {
+
         $addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
 
