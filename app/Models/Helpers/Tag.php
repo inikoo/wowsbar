@@ -7,7 +7,10 @@
 
 namespace App\Models\Helpers;
 
+use App\Models\Traits\HasTagSlug;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Builder;
+
 use Spatie\Tags\Tag as BaseTag;
 
 /**
@@ -21,6 +24,8 @@ use Spatie\Tags\Tag as BaseTag;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $number_subjects
+ * @property string|null $tag_slug
+ * @property string|null $label
  * @property-read \App\Models\Helpers\TagCrmStats|null $crmStats
  * @method static Builder|Tag containing(string $name, $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
@@ -29,12 +34,14 @@ use Spatie\Tags\Tag as BaseTag;
  * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLabel($value)
  * @method static Builder|Tag whereLocale(string $column, string $locale)
  * @method static Builder|Tag whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereNumberSubjects($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereOrderColumn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag whereTagSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
  * @method static Builder|Tag withType(?string $type = null)
@@ -42,9 +49,12 @@ use Spatie\Tags\Tag as BaseTag;
  */
 class Tag extends BaseTag
 {
+    use HasTagSlug;
+
+
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'tag_slug';
     }
 
     public function crmStats(): HasOne

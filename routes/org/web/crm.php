@@ -113,7 +113,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('tags')->as('tags.')->group(function () {
             Route::get('/', [IndexProspectTags::class, 'inShop'])->name('index');
             Route::get('/create', CreateProspectQuery::class)->name('create'); //todo CreateProspectTag
-            Route::get('{tag}', ShowProspectTag::class)->name('show');
+            Route::get('{tag}', [ShowProspectTag::class, 'inShop'])->name('show');
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {

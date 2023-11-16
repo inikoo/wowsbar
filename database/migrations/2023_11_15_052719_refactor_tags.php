@@ -14,6 +14,8 @@ return new class () extends Migration {
     {
         Schema::table('tags', function (Blueprint $table) {
             $table->unsignedSmallInteger('number_subjects')->default(0);
+            $table->string('tag_slug')->nullable()->unique()->collation('und_ns');
+            $table->string('label')->nullable()->index()->collation('und_ns_ci');
         });
     }
 
@@ -21,7 +23,7 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->dropColumn('number_subjects');
+            $table->dropColumn(['number_subjects', 'label','tag_slug']);
         });
     }
 };

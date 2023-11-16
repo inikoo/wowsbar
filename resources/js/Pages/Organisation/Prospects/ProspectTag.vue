@@ -7,8 +7,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { faUserSlash,faUser, faPaperclip, faCameraRetro,faIdCard} from '@fal/';
-import { router } from '@inertiajs/vue3'
+import { faTags} from '@fal/';
 import { capitalize } from "@/Composables/capitalize"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue';
@@ -17,17 +16,13 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { computed, defineAsyncComponent, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import DataModel from "@/Pages/DataModel.vue";
 
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableProspects from "@/Components/Tables/TableProspects.vue";
 
 library.add(
-    faUserSlash,
-    faUser,
-    faPaperclip,
-    faCameraRetro,faIdCard
+   faTags
 )
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))

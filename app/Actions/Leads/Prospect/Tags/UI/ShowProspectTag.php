@@ -7,13 +7,12 @@
 
 namespace App\Actions\Leads\Prospect\Tags\UI;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
-use App\Models\Helpers\Query;
+use App\Http\Resources\History\HistoryResource;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -28,7 +27,7 @@ class ShowProspectTag extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo('crm.view');
+        return $request->user()->hasPermissionTo('crm.prospects.view');
     }
 
     public function handle(Tag $tag): Tag
@@ -36,9 +35,9 @@ class ShowProspectTag extends InertiaAction
         return $tag;
     }
 
-    public function asController(Shop $shop, $tag, ActionRequest $request): Tag
+    public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
-        $tag = Tag::findFromString($tag);
+
         $this->parent = $shop;
         $this->initialisation($request)->withTab(ShowProspectTabsEnum::values());
 
@@ -52,52 +51,94 @@ class ShowProspectTag extends InertiaAction
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'title'    => __($tag->name),
                 'pageHead' => [
                     'title'     => __($tag->name),
+                    'icon'      => [
+                        'tooltip' => __('tag'),
+                        'icon'    => 'fal fa-tags'
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => ShowProspectTabsEnum::navigation()
                 ],
-                'tags' => $tag,
+                'tags'                                 => $tag,
                 ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
-                    fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())
-                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())),
+                    fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())
+                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())),
+
+                ShowProspectTabsEnum::HISTORY->value => $this->tab == ShowProspectTabsEnum::HISTORY->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $tag,
+                            prefix: ShowProspectTabsEnum::HISTORY->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $tag,
+                            prefix: ShowProspectTabsEnum::HISTORY->value
+                        )
+                    )),
             ]
         )->table(IndexProspects::make()->tableStructure(parent: $this->parent, prefix: ShowProspectTabsEnum::PROSPECTS->value));
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+
+    public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
     {
-        $headCrumb = function (array $routeParameters = []) {
+        $headCrumb = function (string $type, Tag $tag, array $routeParameters, string $suffix = null) {
             return [
                 [
-                    'type'   => 'simple',
-                    'simple' => [
-                        'route' => $routeParameters,
-                        'label' => __('images'),
-                        'icon'  => 'fal fa-bars'
+                    'type'           => $type,
+                    'modelWithIndex' => [
+                        'index' => [
+                            'route' => $routeParameters['index'],
+                            'label' => __('tags')
+                        ],
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $tag->label,
+                        ],
+
                     ],
+                    'simple' => [
+                        'route' => $routeParameters['model'],
+                        'label' => $tag->label
+                    ],
+                    'suffix' => $suffix
                 ],
             ];
         };
 
         return match ($routeName) {
-            'customer.portfolio.images.index' =>
+            'org.crm.shop.prospects.tags.show',
+            'org.crm.shop.prospects.tags.edit' =>
             array_merge(
-                ShowProspect::make()->getBreadcrumbs($routeName, $routeParameters),
+                IndexProspects::make()->getBreadcrumbs(
+                    'org.crm.shop.prospects.index',
+                    $routeParameters
+                ),
                 $headCrumb(
+                    'modelWithIndex',
+                    Tag::firstWhere('tag_slug', $routeParameters['tag']),
                     [
-                        'name' => 'portfolio.images.index',
-                        null
-                    ]
+                        'index' => [
+                            'name'       => 'org.crm.shop.prospects.tags.index',
+                            'parameters' => $routeParameters
+                        ],
+                        'model' => [
+                            'name'       => 'org.crm.shop.prospects.tags.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
                 ),
             ),
-
             default => []
         };
     }

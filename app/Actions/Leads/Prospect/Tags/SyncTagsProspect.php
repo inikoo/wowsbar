@@ -7,6 +7,9 @@
 
 namespace App\Actions\Leads\Prospect\Tags;
 
+use App\Actions\Helpers\Tag\Hydrators\TagHydrateProspects;
+use App\Actions\Helpers\Tag\Hydrators\TagHydrateSubjects;
+use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,10 +25,28 @@ class SyncTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
+
+        $oldTags=$prospect->tags()->pluck('id');
+
+
         $prospect->syncTagsWithType(
             Arr::get($modelData, 'tags', []),
             Arr::get($modelData, 'type')
         );
+
+        $currentTags=$prospect->tags()->pluck('id');
+
+        $newTags     =$currentTags->diff($oldTags);
+        $removedTags =$oldTags->diff($currentTags);
+        $affectedTags=$newTags->merge($removedTags);
+
+        foreach ($affectedTags as $tagId) {
+            $tag=Tag::find($tagId);
+            TagHydrateSubjects::dispatch($tag);
+            TagHydrateProspects::dispatch($tag);
+        }
+
+
 
         return $prospect;
     }

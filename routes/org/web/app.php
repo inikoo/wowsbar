@@ -80,6 +80,9 @@ Route::middleware(["org-web"])->group(function () {
             Route::prefix("queries")
                 ->name("query.")
                 ->group(__DIR__ . "/query.php");
+            Route::prefix("json")
+                ->name("json.")
+                ->group(__DIR__ . "/json.php");
         });
     });
 

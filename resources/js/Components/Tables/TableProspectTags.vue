@@ -6,17 +6,10 @@
 
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useLocaleStore } from "@/Stores/locale"
-import Button from '@/Components/Elements/Buttons/Button.vue'
-import { reactive } from 'vue'
-import {Link, usePage} from '@inertiajs/vue3'
-
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {Link} from '@inertiajs/vue3'
 import { faEnvelope, faAsterisk } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
-import PureInput from '@/Components/Pure/PureInput.vue'
 library.add(faEnvelope, faAsterisk)
 
 const props = defineProps<{
@@ -32,21 +25,22 @@ function tagRoute(tag: object)
         case 'org.crm.shop.prospects.tags.index':
             return route(
                 'org.crm.shop.prospects.tags.show',
-                [route().params.shop, tag.slug]);
+                [route().params.shop, tag.tag_slug]);
         default:
             return route(
                 'org.crm.tags.show',
-                [tag.slug]);
+                [tag.tag_slug]);
     }
 }
 
 </script>
 
 <template>
+
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(name)="{ item: tag }">
+        <template #cell(label)="{ item: tag }">
             <Link :href="tagRoute(tag)">
-                {{ tag["name"]}}
+                {{ tag["label"]}}
             </Link>
         </template>
     </Table>

@@ -116,12 +116,32 @@ test('can show list of prospects', function () {
     });
 });
 
+test('can show list of mailshots', function () {
+    $shop     = $this->shop;
+    $response = get(route('org.crm.shop.prospects.mailshots.index', [$shop->slug]));
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page
+            ->component('CRM/Prospects/Mailshots')
+            ->has('title');
+    });
+});
+
 test('can show list of prospects lists', function () {
     $shop     = $this->shop;
     $response = get(route('org.crm.shop.prospects.lists.index', [$shop->slug]));
     $response->assertInertia(function (AssertableInertia $page) {
         $page
             ->component('CRM/Prospects/Queries')
+            ->has('title');
+    });
+});
+
+test('can show list of tags', function () {
+    $shop     = $this->shop;
+    $response = get(route('org.crm.shop.prospects.tags.index', [$shop->slug]));
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page
+            ->component('CRM/Prospects/Tags')
             ->has('title');
     });
 });
