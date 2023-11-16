@@ -8,7 +8,6 @@
 namespace App\Actions\Leads\Prospect\Tags\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -51,8 +50,8 @@ class CreateProspectTag extends InertiaAction
                                 'title'  => __('name'),
                                 'fields' => [
                                     'name' => [
-                                        'type'  => 'input',
-                                        'label' => __('name'),
+                                        'type'     => 'input',
+                                        'label'    => __('name'),
                                         'required' => true
                                     ],
                                 ]

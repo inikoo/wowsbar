@@ -150,6 +150,22 @@ class Prospect extends Model implements Auditable
         'location' => '{}',
     ];
 
+    protected array $auditInclude = [
+        'name',
+        'contact_name',
+        'company_name',
+        'email',
+        'phone',
+        'identity_document_type',
+        'identity_document_number',
+        'contact_website',
+        'location',
+        'state',
+        'last_contacted',
+        'dont_contact_me',
+        'bounce_status'
+    ];
+
     public function generateTags(): array
     {
         return [

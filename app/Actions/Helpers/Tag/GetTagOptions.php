@@ -8,7 +8,6 @@
 namespace App\Actions\Helpers\Tag;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Customer;
 use App\Models\Helpers\Tag;
 use Lorisleiva\Actions\Concerns\AsObject;
 

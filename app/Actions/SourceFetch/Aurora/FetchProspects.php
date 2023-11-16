@@ -27,6 +27,8 @@ class FetchProspects extends FetchAction
         $shop = Shop::first();
 
         if ($prospectData = $source->fetchProspect($sourceId)) {
+
+
             if ($prospect = Prospect::withTrashed()->whereJsonContains('data->source->source_id', Arr::get($prospectData, 'prospect.data.source.source_id'))->first()) {
                 $prospect = UpdateProspect::make()->action($shop, $prospect, $prospectData['prospect']);
                 if ($prospect->wasChanged()) {
@@ -38,6 +40,11 @@ class FetchProspects extends FetchAction
                 }
             } else {
                 // print_r($prospectData['prospect']);
+                data_set($prospectData['prospect'], 'data.bulk_import', [
+                    'id'   => $this->fetch->id,
+                    'type' => 'Fetch'
+                ]);
+
                 $prospect = StoreProspect::make()->action($shop, $prospectData['prospect']);
                 $this->number_stores++;
                 UpdateFetch::run($this->fetch, ['number_stores' => $this->number_stores]);

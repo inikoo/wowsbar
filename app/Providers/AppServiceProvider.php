@@ -63,8 +63,8 @@ class AppServiceProvider extends ServiceProvider
                 'PaymentAccount'         => 'App\Models\Accounting\PaymentAccount',
                 'JobPosition'            => 'App\Models\HumanResources\JobPosition',
                 'PortfolioSocialAccount' => 'App\Models\Portfolio\PortfolioSocialAccount',
-                'CustomerSocialAccount'  => 'App\Models\Portfolios\CustomerSocialAccount'
-
+                'CustomerSocialAccount'  => 'App\Models\Portfolios\CustomerSocialAccount',
+                'Fetch'                  => 'App\Models\Helpers\Fetch',
 
             ]
         );

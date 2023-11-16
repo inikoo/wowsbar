@@ -21,9 +21,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property FetchTypeEnum $type
  * @property int $number_items
+ * @property int $number_no_changes
  * @property int $number_updates
  * @property int $number_stores
+ * @property int $number_errors
  * @property string|null $finished_at
+ * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -32,9 +35,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch query()
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereFinishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereNumberErrors($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereNumberItems($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereNumberNoChanges($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereNumberStores($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereNumberUpdates($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fetch whereSlug($value)
