@@ -43,7 +43,7 @@ let sizeClass = ''
 // Styling the Button depends on the 'style' props
 if (props.style == 'primary' || props.style == 'create' || props.style == 'save') {
     if(layout.systemName == 'org') {
-        styleClass = 'bg-teal-700 bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:bg-none'
+        styleClass = 'bg-org-600 bg-gradient-to-r from-org-400 to-org-600 text-white hover:bg-none'
     } else {
         styleClass = 'bg-gray-800 bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:bg-none'
     }

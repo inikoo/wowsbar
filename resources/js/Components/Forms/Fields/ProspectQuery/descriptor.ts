@@ -1,27 +1,17 @@
 export default {
-    QueryLists: [
-        { id: 1, title: "Email" },
-        { id: 2, title: "Phone" },
-        { id: 3, title: "Address" },
-    ],
-
-    FilterTags: [
-        { id: 1, title: "All" },
-        { id: 2, title: "Any" },
-        { id: 3, title: "Not Set" },
-    ],
-    contact: ["Never", "Last Contact"],
-
+    QueryLists: [ 'Email','Phone','Address'],
+    FilterTags: ["All","Any","Not Set"],
+    contact: [ {label : "Last Contact" , value : true}, {label : "Never" , value : false} ],
     defaultValue: {
-        query: ['email'],
+        query: ['Email'],
         tag: {
-            filter: "all",
-            tag: ["seo", "ppc", "ssm", "developer"],
+            filter: "All",
+            tags: [],
         },
         last_contact: {
-            filter: "last contact",
+            filter: false,
             data: {
-                range: "week",
+                range: 'day',
                 count: 1,
             },
         },

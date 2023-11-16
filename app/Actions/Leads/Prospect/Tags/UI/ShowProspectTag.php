@@ -7,10 +7,13 @@
 
 namespace App\Actions\Leads\Prospect\Tags\UI;
 
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
+use App\Http\Resources\History\HistoryResource;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -21,6 +24,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowProspectTag extends InertiaAction
 {
+    use WithActionButtons;
+
     public Organisation|Shop $parent;
 
     public function authorize(ActionRequest $request): bool
@@ -58,6 +63,10 @@ class ShowProspectTag extends InertiaAction
                         'tooltip' => __('tag'),
                         'icon'    => 'fal fa-tags'
                     ],
+                    'actions'   => [
+                        $this->getEditActionIcon($request),
+                        $this->getDeleteActionIcon($request)
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
@@ -65,8 +74,23 @@ class ShowProspectTag extends InertiaAction
                 ],
                 'tags'                                 => $tag,
                 ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
-                    fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())
-                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())),
+                    fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())
+                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())),
+
+                ShowProspectTabsEnum::HISTORY->value => $this->tab == ShowProspectTabsEnum::HISTORY->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $tag,
+                            prefix: ShowProspectTabsEnum::HISTORY->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $tag,
+                            prefix: ShowProspectTabsEnum::HISTORY->value
+                        )
+                    )),
             ]
         )->table(IndexProspects::make()->tableStructure(parent: $this->parent, prefix: ShowProspectTabsEnum::PROSPECTS->value));
     }

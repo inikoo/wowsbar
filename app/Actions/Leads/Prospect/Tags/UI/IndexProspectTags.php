@@ -125,7 +125,17 @@ class IndexProspectTags extends InertiaAction
                 'pageHead'    => [
                     'title' => __('tags'),
                     'meta'  => $meta,
-
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('tags'),
+                            'route' => [
+                                'name'       => 'org.crm.shop.prospects.tags.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
+                    ],
                 ],
 
                 'tabs' => [

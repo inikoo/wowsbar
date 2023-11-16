@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Tag;
 
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCrmTags;
+use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Tag\TagResource;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
@@ -18,34 +19,19 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreTag
+class UpdateTag
 {
     use AsAction;
     use WithAttributes;
+    use WithActionUpdate;
 
     private bool $asAction = false;
     private Shop $parent;
 
 
-    public function handle(array $modelData): Tag
+    public function handle(Tag $tag, array $modelData): Tag
     {
-        /** @var Tag $tag */
-        $tag=  Tag::findOrCreate($modelData['name'], $modelData['type']);
-        $tag->update(
-            [
-                'label'=> $tag->name
-            ]
-        );
-        $tag->generateTagSlug();
-        $tag->saveQuietly();
-        if($tag->type=='crm') {
-            if(!$tag->crmStats) {
-                $tag->crmStats()->create();
-                OrganisationHydrateCrmTags::dispatch();
-            }
-        }
-
-        return $tag;
+        return $this->update($tag, $modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -61,32 +47,16 @@ class StoreTag
     {
         return [
             'name' => ['required', 'string'],
-            'type' => ['required', 'string']
+            'type' => ['required', 'string'],
         ];
     }
 
-    public function htmlResponse(): RedirectResponse
-    {
-        return redirect()->route(
-            'org.crm.shop.prospects.tags.index',
-            $this->parent->slug
-        );
-    }
-
-    public function jsonResponse(Tag $tag): TagResource
-    {
-        return new TagResource($tag);
-    }
-
-
-    public function inProspect(Shop $shop, ActionRequest $request): Tag
+    public function inProspect(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
         $this->parent = $shop;
         $this->fillFromRequest($request);
         $this->fill(['type' => 'crm']);
 
-        return $this->handle($this->validateAttributes());
+        return $this->handle($tag, $this->validateAttributes());
     }
-
-
 }

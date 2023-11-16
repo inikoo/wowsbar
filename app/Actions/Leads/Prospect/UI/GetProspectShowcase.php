@@ -17,41 +17,23 @@ class GetProspectShowcase
 
     public function handle(Prospect $prospect): array
     {
-
         return [
-            'info'    => ProspectResource::make($prospect)->getArray(),
-            'timeline'=> [
-                [
-                    'title' => 'Prospect Created',
-                    'value' => $prospect->created_at
-                ],
-                [
-                    'title' => 'Prospect Updated',
-                    'value' => $prospect->updated_at
-                ],
-                [
-                    'title' => 'Prospect Deleted',
-                    'value' => $prospect->deleted_at
-                ],
-                [
-                    'title' => 'Prospect Last Contacted',
-                    'value' => $prospect->last_contacted_at
-                ],
-                [
-                    'title' => 'Prospect Not Interested',
-                    'value' => $prospect->not_interested_at
-                ],
-                [
-                    'title' => 'Prospect Registered',
-                    'value' => $prospect->registered_at
-                ],
-                [
-                    'title' => 'Prospect Invoiced',
-                    'value' => $prospect->invoiced_at
-                ]
-            ]
+            'info' => ProspectResource::make($prospect)->getArray(),
+            'timeline' => $prospect->audits->map(function ($value) {
+                return [
+                    $value->updated_at->toISOString() => [
+                        'Prospect ' . $value->event,
+                    ]
+                ];
+            }),
+            'feeds' => $prospect->audits()->orderby('id')->get()->map(function ($value) {
+                return [
+                    'name' => $value->user?->name,
+                    'action' => $value->event,
+                    'dateTime' => $value->created_at,
+                    'comment' => $value->comments,
+                ];
+            }),
         ];
-
     }
-
 }

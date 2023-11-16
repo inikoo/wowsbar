@@ -79,17 +79,17 @@ onMounted(() => {
 
 <template>
     <!-- If props.element not empty -->
-    <div v-if="!!selectedGroup" class="flex items-center text-xs justify-between">
-        <div class="text-2xl flex items-center gap-x-2">
+    <div v-if="!!selectedGroup" class="flex items-center text-xs justify-between w-fit">
+        <div v-if="title.leftIcon || title.title" class="text-2xl flex items-center gap-x-2">
             <FontAwesomeIcon v-if="title.leftIcon" :icon="title.leftIcon" aria-hidden="true" />
             <p class="inline font-semibold leading-none capitalize">{{ title.title ? (title.title) : '' }}</p>
         </div>
-        <div class="flex items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
+
+        <div class="flex w-fit items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
             <!-- List of element (checkbox) -->
-            <div class="grid justify-items-center grid-flow-col auto-cols-fr divide-x-1 divide-gray-300 ">
-                <div
-                    v-for="(value, element, index) of props.elements[selectedGroup]?.elements" :key="element"
-                    class="flex items-center gap-x-1 w-fit px-3 cursor-pointer select-none "
+            <div class="flex w-fit flex-wrap justify-end divide-x divide-gray-300 ">
+                <div v-for="(value, element, index) of props.elements[selectedGroup]?.elements" :key="element"
+                    class="flex items-center gap-x-1 w-fit px-3 py-2.5 cursor-pointer select-none "
                     @click="onClickCheckbox(element, selectedGroup)"
                     @dblclick="onDoubleClickCheckbox(element, selectedGroup)"
                     role="filter"
@@ -97,8 +97,7 @@ onMounted(() => {
                 >
                     <FontAwesomeIcon v-if="selectedElement[selectedGroup]?.includes(element)" icon="far fa-check-square" aria-hidden="true" />
                     <FontAwesomeIcon v-else icon="far fa-square" aria-hidden="true" />
-                    <div
-                        :class="[ isChecked ? 'text-gray-600' : 'text-gray-400',
+                    <div :class="[ isChecked ? 'text-gray-600' : 'text-gray-400',
                             'grid justify-center grid-flow-col items-center capitalize hover:text-gray-600']">
                         {{ value[0] }} ({{ value[1] }})
                     </div>

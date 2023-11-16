@@ -63,7 +63,7 @@ class CreateProspectQuery extends InertiaAction
                                     ],
                                     'query_builder' => [
                                         'type'  => 'prospect_query',
-                                        'label' => __('query')
+                                        'label' => __('query by')
                                     ],
 
 
