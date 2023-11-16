@@ -25,7 +25,17 @@ class GetProspectShowcase
                         'Prospect ' . $value->event,
                     ]
                 ];
-            })
+            }),
+            'feeds' => [
+                $prospect->audits->map(function ($value) {
+                    return [
+                        'name' => $value->user?->name,
+                        'action' => $value->event,
+                        'dateTime' => $value->created_at,
+                        'comment' => $value->comments,
+                    ];
+                }),
+            ]
         ];
     }
 }
