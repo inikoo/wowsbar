@@ -69,7 +69,7 @@ return [
             'driver'         => 'mysql',
             'host'           => env('AURORA_DB_HOST', '127.0.0.1'),
             'port'           => env('AURORA_DB_PORT', '3306'),
-            'database'       => null,
+            'database'       => env('AURORA_DB_DATABASE'),
             'username'       => env('AURORA_DB_USERNAME', ''),
             'password'       => env('AURORA_DB_PASSWORD', ''),
             'unix_socket'    => env('AURORA_DB_PDB_SOCKET', ''),

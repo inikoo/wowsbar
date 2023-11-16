@@ -96,9 +96,9 @@ class BuildQuery
                         }
                     }
                 );
-        } else if($constrainType == 'all') {
+        } elseif($constrainType == 'all') {
             $queryBuilder->withAllTags($constrainData, 'crm');
-        } else if($constrainType == 'any') {
+        } elseif($constrainType == 'any') {
             $queryBuilder->withAnyTags($constrainData, 'crm');
         }
 

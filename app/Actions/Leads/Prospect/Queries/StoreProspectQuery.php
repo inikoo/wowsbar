@@ -40,11 +40,11 @@ class StoreProspectQuery
 
         $data = [
             [
-                'slug' => Str::slug($modelData['name']),
-                'name' => $modelData['name'],
+                'slug'       => Str::slug($modelData['name']),
+                'name'       => $modelData['name'],
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with' => $query['query'],
+                    'with'  => $query['query'],
                     'group' => [
                         'where' => [
                             'contact_state',
@@ -56,9 +56,9 @@ class StoreProspectQuery
                 ],
                 'arguments' => $query['last_contact']['state'] ? [
                     '__date__' => [
-                        'type' => 'dateSubtraction',
+                        'type'  => 'dateSubtraction',
                         'value' => [
-                            'unit' => $query['last_contact']['data']['unit'],
+                            'unit'     => $query['last_contact']['data']['unit'],
                             'quantity' => $query['last_contact']['data']['quantity']
                         ]
                     ]
@@ -76,9 +76,9 @@ class StoreProspectQuery
         }
 
         foreach ($data as $queryData) {
-            $queryData['is_seeded'] = true;
+            $queryData['is_seeded']  = true;
             $queryData['scope_type'] = 'Shop';
-            $queryData['scope_id'] = $shop->id;
+            $queryData['scope_id']   = $shop->id;
 
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);
@@ -111,7 +111,7 @@ class StoreProspectQuery
     public function rules(ActionRequest $request): array
     {
         return [
-            'name'  => ['required', 'string', 'max:255'],
+            'name'            => ['required', 'string', 'max:255'],
             'query_builder.*' => ['required', 'array']
         ];
     }
