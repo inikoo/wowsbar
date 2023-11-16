@@ -7,7 +7,7 @@ export default {
     defaultValue: {
         query: ['Email'],
         tag: {
-            filter: "all",
+            filter: "All",
             tags: [],
         },
         last_contact: {

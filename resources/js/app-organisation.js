@@ -10,6 +10,8 @@ import Notifications from '@kyvg/vue3-notification';
 import { setupCalendar } from 'v-calendar';
 import * as Sentry from '@sentry/vue';
 import {createPinia} from 'pinia';
+import FloatingVue from 'floating-vue'
+import 'floating-vue/dist/style.css'
 
 const appName =
           window.document.getElementsByTagName('title')[0]?.innerText ||
@@ -43,6 +45,7 @@ createInertiaApp(
             use(ZiggyVue, Ziggy).
             use(Notifications).
             use(setupCalendar, {}).
+            use(FloatingVue).
             use(i18nVue, {
               resolve: async (lang) => {
                 const languages = import.meta.glob(
