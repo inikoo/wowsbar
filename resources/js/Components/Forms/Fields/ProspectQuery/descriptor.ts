@@ -5,14 +5,14 @@ export default {
     defaultValue: {
         query: ['Email'],
         tag: {
-            filter: "All",
+            state: "All",
             tags: [],
         },
         last_contact: {
-            filter: false,
+            state: false,
             data: {
-                range: 'day',
-                count: 1,
+                unit: 'day',
+                quantity: 1,
             },
         },
     },

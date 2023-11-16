@@ -93,7 +93,7 @@ console.log(props.form)
                                     <div v-for="filter in descriptor.FilterTags" :key="filter" class="flex items-center">
                                         <input :id="filter" name="notification-method" type="radio" :value="filter"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            v-model="form[fieldName].tag.filter" />
+                                            v-model="form[fieldName].tag.state" />
                                         <label :for="filter"
                                             class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter
                                             }}</label>
@@ -137,18 +137,18 @@ console.log(props.form)
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
                         <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"  valueProp="value" trackBy="label" label="label"
-                            v-model="form[fieldName].last_contact.filter" :can-clear="false"></Multiselect>
+                            v-model="form[fieldName].last_contact.state" :can-clear="false"></Multiselect>
                     </div>
 
-                    <div v-if="form[fieldName].last_contact.filter" class="flex flex-col gap-y-2 mt-4">
+                    <div v-if="form[fieldName].last_contact.state" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
-                                    v-model="form[fieldName].last_contact.data.count" />
+                                    v-model="form[fieldName].last_contact.data.quantity" />
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                                    v-model="form[fieldName].last_contact.data.range" :can-clear="false" />
+                                    v-model="form[fieldName].last_contact.data.unit" :can-clear="false" />
                             </div>
                         </div>
                     </div>
