@@ -64,6 +64,7 @@ class FetchAuroraProspect extends FetchAurora
         }
 
 
+
         //enum('NoContacted','Contacted','NotInterested','Registered','Invoiced','Bounced')
         switch ($this->auroraModelData->{'Prospect Status'}) {
             case 'NoContacted':

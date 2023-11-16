@@ -25,9 +25,9 @@ trait WithAuroraParsers
         return ($value && $value  != '2018-00-00 00:00:00') ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
-    protected function parseDatetime($value): ?string
+    protected function parseDatetime($value): ?Carbon
     {
-        return ($value && $value  != '2018-00-00 00:00:00') ? Carbon::parse($value)->format('Y-m-d H:m:s') : null;
+        return ($value && $value  != '2018-00-00 00:00:00') ? Carbon::parse($value) : null;
     }
 
 
