@@ -26,9 +26,6 @@ const props = defineProps<{
 console.log(props)
 
 props.form.query_builder = descriptor.defaultValue
-const FilterTag = ref(descriptor.FilterTags[0]);
-const queryType = ref([]);
-const Contact = ref(descriptor.contact[0]);
 
 </script>
   
@@ -36,18 +33,18 @@ const Contact = ref(descriptor.contact[0]);
     <div>
         <div class="mb-4">
             <div class="flex flex-wrap items-center">
-                <div v-for="query in descriptor.QueryLists" :key="query.id" class="flex items-center mr-4 mb-2 ">
+                <div v-for="(query,index) in descriptor.QueryLists" :key="query" class="flex items-center mr-4 mb-2 ">
                     <div class="p-2 border border-solid border-blue-500 rounded-lg">
-                        <input type="checkbox" :id="'query_' + query.id" :value="query" v-model="queryType"
+                        <input type="checkbox" :id="'query_' + query" :value="query" v-model="form[fieldName].query"
                             class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                        <label :for="'query_' + query.id" class="ml-2">{{ query.title }}</label>
+                        <label :for="'query_' + query" class="ml-2">{{ query }}</label>
                     </div>
 
                 </div>
             </div>
 
         </div>
-        <div v-if="queryType.length">
+        <div v-if="form[fieldName].query.length">
             <Disclosure v-slot="{ open }">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -60,13 +57,9 @@ const Contact = ref(descriptor.contact[0]);
                             <fieldset class="mt-4">
                                 <legend class="sr-only">Notification method</legend>
                                 <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                    <div v-for="filter in descriptor.FilterTags" :key="filter.id" class="flex items-center">
-                                        <input :id="filter.id" name="notification-method" type="radio"
-                                            :checked="filter.id === 'email'"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                        <label :for="filter.id"
-                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{
-                                                filter.title }}</label>
+                                    <div v-for="filter in descriptor.FilterTags" :key="filter" class="flex items-center">
+                                        <input :id="filter" name="notification-method" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" v-model="form[fieldName].tag.filter" />
+                                        <label :for="filter" class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter }}</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -75,7 +68,7 @@ const Contact = ref(descriptor.contact[0]);
                     <div>
                         <Multiselect mode="tags" placeholder="Select the tag" valueProp="name" trackBy="name" label="name"
                             :close-on-select="false" :searchable="true" :create-option="true" :caret="false"
-                            noResultsText="No one left. Type to add new one." appendNewTag>
+                            noResultsText="No one left. Type to add new one." appendNewTag v-model="form[fieldName].tag.tag">
                         </Multiselect>
                     </div>
 
@@ -89,16 +82,16 @@ const Contact = ref(descriptor.contact[0]);
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
-                        <Multiselect placeholder="Select contact" noResultsText="No one left. Type to add new one." :options="descriptor.contact" v-model="Contact"></Multiselect>
+                        <Multiselect placeholder="Select contact" noResultsText="No one left. Type to add new one." :options="descriptor.contact" v-model="form[fieldName].last_contact.filter"></Multiselect>
                     </div>
-
-                    <div v-if="Contact == 'Last Contact'" class="flex flex-col gap-y-2 mt-4">
+                   
+                    <div v-if="form[fieldName].last_contact.filter == 'Last Contact'" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput type="number" :minValue="1" :caret="false" placeholder="7" />
+                                <PureInput type="number" :minValue="1" :caret="false" placeholder="7" v-model="form[fieldName].last_contact.data.count"/>
                             </div>
                             <div class="w-full">
-                                <PureMultiselect :options="['day', 'week', 'month']" required />
+                                <PureMultiselect :options="['day', 'week', 'month']" required v-model="form[fieldName].last_contact.data.range" />
                             </div>
                         </div>
                     </div>
