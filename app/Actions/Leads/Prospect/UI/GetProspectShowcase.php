@@ -26,7 +26,7 @@ class GetProspectShowcase
                     ]
                 ];
             }),
-            'feeds' => $prospect->audits->map(function ($value) {
+            'feeds' => $prospect->audits()->orderby('id')->get()->map(function ($value) {
                 return [
                     'name' => $value->user?->name,
                     'action' => $value->event,
