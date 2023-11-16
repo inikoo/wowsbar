@@ -65,8 +65,8 @@ class ShowProspectTag extends InertiaAction
                 ],
                 'tags'                                 => $tag,
                 ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
-                    fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())
-                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTags($tag->name)->paginate())),
+                    fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())
+                    : Inertia::lazy(fn () => ProspectsResource::collection(Prospect::withAnyTagsOfAnyType($tag->tag_slug)->paginate())),
             ]
         )->table(IndexProspects::make()->tableStructure(parent: $this->parent, prefix: ShowProspectTabsEnum::PROSPECTS->value));
     }
