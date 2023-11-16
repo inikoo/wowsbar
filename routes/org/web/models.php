@@ -24,6 +24,7 @@ use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\Helpers\Tag\StoreTag;
+use App\Actions\Helpers\Tag\UpdateTag;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
@@ -93,7 +94,8 @@ Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.rem
 Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
 Route::post('/shop/{shop:id}/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
-Route::post('/prospect/{tag}', DeleteTagsProspect::class)->name('prospect.tag.delete');
+Route::patch('/shop/{shop}/prospect/tags/{tag}', [UpdateTag::class,'inProspect'])->name('prospect.tag.update');
+Route::get('/shop/{shop}/prospect/tags/{tag}', DeleteTagsProspect::class)->name('prospect.tag.delete');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 
