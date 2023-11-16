@@ -4,7 +4,7 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-<script setup>
+<script setup lang="ts">
 
 import {faExclamationCircle, faCheckCircle} from '@fas/';
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -23,6 +23,7 @@ if (props.options !== undefined && props.options.defaultCountry) {
 
 const handleChange = (number,phoneObject) => {
     props.form.phone = phoneObject.number
+    props.form.errors[props.fieldName] = ''
 };
 
 const phone = ref(props.form[props['fieldName']]);

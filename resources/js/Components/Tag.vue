@@ -49,28 +49,28 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-        <div class="flex items-center gap-x-1 rounded select-none px-1.5 py-1 w-fit font-medium border"
-            :class="[
-                `text-${size}`,
-                stringToColor ? false : compTheme  // If stringToColor false then take provided style
-            ]"
-            :style="[
-                stringToColor ? [  // if stringToColor true
-                    `background-color: ${useStringToHex(label) + '30'}`,
-                    `border: 1px solid ${useStringToHex(label) + '90'}`,
-                    `color: ${useStringToHex(label)}`
-                ] : ''
-            ]"
-        >
-            <slot>
-                {{ label }}
-            </slot>
+    <div class="inline-flex items-center gap-x-1 rounded select-none px-1.5 py-1 w-fit font-medium border"
+        :class="[
+            `text-${size}`,
+            stringToColor ? false : compTheme  // If stringToColor false then take provided style
+        ]"
+        :style="[
+            stringToColor ? [  // if stringToColor true
+                `background-color: ${useStringToHex(label) + '30'}`,
+                `border: 1px solid ${useStringToHex(label) + '90'}`,
+                `color: ${useStringToHex(label)}`
+            ] : ''
+        ]"
+    >
+        <slot>
+            {{ label }}
+        </slot>
 
-            <!-- Button: Close (X icon) -->
-            <div v-if="closeButton"
-                @click="(event) => emits('onClose', event)"
-                class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
-                <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
-            </div>
+        <!-- Button: Close (X icon) -->
+        <div v-if="closeButton"
+            @click="(event) => emits('onClose', event)"
+            class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
+            <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
         </div>
+    </div>
 </template>
