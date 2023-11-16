@@ -45,6 +45,7 @@ class StoreProspect
 
     public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
     {
+
         $addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
 

@@ -17,7 +17,7 @@ enum ShowProspectTabsEnum: string
 
     case SHOWCASE  = 'showcase';
     case PROSPECTS = 'prospects';
-    case HISTORY = 'history';
+    case HISTORY   = 'history';
 
     public function blueprint(): array
     {

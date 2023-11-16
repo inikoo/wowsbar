@@ -46,10 +46,10 @@ class EditTag extends InertiaAction
             'icon'   => 'fal fa-sliders-h',
             'fields' => [
                 'name' => [
-                    'type' => 'input',
-                    'label' => __('name'),
+                    'type'     => 'input',
+                    'label'    => __('name'),
                     'required' => true,
-                    'value' => $tag->name
+                    'value'    => $tag->name
                 ],
             ]
         ];
