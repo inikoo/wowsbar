@@ -28,11 +28,9 @@ const props = defineProps<{
     }
 }>()
 
-props.form.query_builder = descriptor.defaultValue
 const tagsOptions = ref([])
 
-console.log(props)
-
+if(!props.form[props.fieldName]) props.form.query_builder = descriptor.defaultValue
 const getTagsOptions = async () => {
     try {
         const response = await axios.get(
@@ -51,6 +49,8 @@ const getTagsOptions = async () => {
 onMounted(() => {
     getTagsOptions()
 })
+
+console.log(props.form)
 
 </script>
   
@@ -104,7 +104,7 @@ onMounted(() => {
                     </div>
                     <div>
                         <Multiselect v-model="form[fieldName].tag.tags" mode="tags" placeholder="Select the tag"
-                            valueProp="id" trackBy="name" label="name" :close-on-select="false" :searchable="true"
+                            valueProp="slug" trackBy="name" label="name" :close-on-select="false" :searchable="true"
                             :caret="false" :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
                             <template
@@ -136,11 +136,11 @@ onMounted(() => {
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
-                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
+                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"  valueProp="value" trackBy="label" label="label"
                             v-model="form[fieldName].last_contact.filter" :can-clear="false"></Multiselect>
                     </div>
 
-                    <div v-if="form[fieldName].last_contact.filter == 'Last Contact'" class="flex flex-col gap-y-2 mt-4">
+                    <div v-if="form[fieldName].last_contact.filter" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"

@@ -1,9 +1,7 @@
 export default {
     QueryLists: [ 'Email','Phone','Address'],
-    FilterTags: ["All","Any","Not Set"
-    ],
-    contact: ["Never", "Last Contact"],
-
+    FilterTags: ["All","Any","Not Set"],
+    contact: [ {label : "Last Contact" , value : true}, {label : "Never" , value : false} ],
     defaultValue: {
         query: ['Email'],
         tag: {
@@ -11,10 +9,10 @@ export default {
             tags: [],
         },
         last_contact: {
-            filter: "Never",
+            filter: false,
             data: {
-                range: null,
-                count: null,
+                range: 'day',
+                count: 1,
             },
         },
     },
