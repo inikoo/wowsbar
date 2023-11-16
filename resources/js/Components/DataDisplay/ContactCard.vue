@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
-import { useFormatTime } from '../../Composables/useFormatTime';
+import { useFormatTime } from '@/Composables/useFormatTime';
 import CopyButton from '@/Components/Utils/CopyButton.vue';
 library.add(faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe)
 
@@ -26,7 +26,9 @@ const props = defineProps<{
             <div class="flex justify-between items-end w-full px-6 py-6">
                 <div class="flex flex-col items-end">
                     <!-- <dt class="text-sm font-semibold leading-6">Amount</dt> -->
-                    <dd class="bg-gradient-to-br from-slate-900 via-purple-800 to-slate-900 bg-clip-text text-transparent mt-1 text-lg font-semibold whitespace-nowrap">{{ data.name }}</dd>
+                    <dd class="bg-gradient-to-br from-slate-900 via-purple-800 to-slate-900 bg-clip-text text-transparent mt-1 text-xl font-semibold whitespace-nowrap">
+                        {{ data.name }}
+                    </dd>
                 </div>
 
                 <!-- Section: Tag -->
