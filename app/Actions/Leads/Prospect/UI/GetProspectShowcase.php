@@ -18,24 +18,22 @@ class GetProspectShowcase
     public function handle(Prospect $prospect): array
     {
         return [
-            'info'    => ProspectResource::make($prospect)->getArray(),
-            'timeline'=> $prospect->audits->map(function ($value) {
+            'info' => ProspectResource::make($prospect)->getArray(),
+            'timeline' => $prospect->audits->map(function ($value) {
                 return [
                     $value->updated_at->toISOString() => [
                         'Prospect ' . $value->event,
                     ]
                 ];
             }),
-            'feeds' => [
-                $prospect->audits->map(function ($value) {
-                    return [
-                        'name' => $value->user?->name,
-                        'action' => $value->event,
-                        'dateTime' => $value->created_at,
-                        'comment' => $value->comments,
-                    ];
-                }),
-            ]
+            'feeds' => $prospect->audits->map(function ($value) {
+                return [
+                    'name' => $value->user?->name,
+                    'action' => $value->event,
+                    'dateTime' => $value->created_at,
+                    'comment' => $value->comments,
+                ];
+            }),
         ];
     }
 }
