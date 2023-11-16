@@ -5,18 +5,17 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect\Tags\UI;
+namespace App\Actions\Helpers\Tag\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateProspectTag extends InertiaAction
+class CreateTag extends InertiaAction
 {
-    public function handle(Shop $parent, ActionRequest $request): Response
+    public function handle(ActionRequest $request): Response
     {
         return Inertia::render(
             'CreateModel',
@@ -25,53 +24,43 @@ class CreateProspectTag extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title'       => __('new tag'),
-                'pageHead'    => [
-                    'title'   => __('new tag'),
-                    'icon'    => [
-                        'icon'  => ['fal', 'fa-transporter'],
+                'title' => __('new tag'),
+                'pageHead' => [
+                    'title' => __('new tag'),
+                    'icon' => [
+                        'icon' => ['fal', 'fa-transporter'],
                         'title' => __('tag')
                     ],
                     'actions' => [
                         [
-                            'type'  => 'button',
+                            'type' => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                'name' => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
                     ]
                 ],
-                'formData'    => [
+                'formData' => [
                     'blueprint' =>
                         [
                             [
-                                'title'  => __('name'),
+                                'title' => __('tag properties'),
                                 'fields' => [
                                     'name' => [
-                                        'type'  => 'input',
+                                        'type' => 'input',
                                         'label' => __('name'),
                                         'required' => true
                                     ],
                                 ]
                             ],
                         ],
-                    'route'     =>
-                        match (class_basename($parent)) {
-                            'Shop' => [
-                                'name'       => 'org.models.prospect.tag.store',
-                                'parameters' => [$parent->id]
-                            ],
-                            default => [
-                                [
-                                    'name' => 'org.models.tag.store',
-                                ]
-                            ]
-                        }
+                    'route' => [
+                        'name' => 'org.models.tag.store',
+                    ]
                 ]
-
             ]
         );
     }
@@ -82,23 +71,23 @@ class CreateProspectTag extends InertiaAction
     }
 
 
-    public function inShop(Shop $shop, ActionRequest $request): Response
+    public function inShop(ActionRequest $request): Response
     {
         $this->initialisation($request);
 
-        return $this->handle($shop, $request);
+        return $this->handle($request);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-            IndexProspectTags::make()->getBreadcrumbs(
+            IndexProspects::make()->getBreadcrumbs(
                 routeName: preg_replace('/create$/', 'index', $routeName),
                 routeParameters: $routeParameters,
             ),
             [
                 [
-                    'type'          => 'creatingModel',
+                    'type' => 'creatingModel',
                     'creatingModel' => [
                         'label' => __('creating tag'),
                     ]
