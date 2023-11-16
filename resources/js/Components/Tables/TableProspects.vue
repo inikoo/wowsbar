@@ -51,7 +51,6 @@ function prospectRoute(prospect: Prospect) {
                 [prospect.slug]);
     }
 }
-console.log(props.tagsList)
 const tagsListTemp: Ref<tag[]> = ref(props.tagsList)
 const maxId = ref(Math.max(...tagsListTemp.value.map(item => item.id)))
 
