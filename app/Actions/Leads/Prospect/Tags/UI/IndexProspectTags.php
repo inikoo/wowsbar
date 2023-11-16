@@ -126,7 +126,7 @@ class IndexProspectTags extends InertiaAction
                     'title' => __('tags'),
                     'meta'  => $meta,
                     'actions'   => [
-                        $this->canEdit ? [
+                        [
                             'type'  => 'button',
                             'style' => 'create',
                             'label' => __('tags'),
@@ -134,7 +134,7 @@ class IndexProspectTags extends InertiaAction
                                 'name'       => 'org.crm.shop.prospects.tags.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : []
+                        ]
                     ],
                 ],
 
