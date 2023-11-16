@@ -8,13 +8,13 @@ export default {
         query: ['Email'],
         tag: {
             filter: "all",
-            tag: ["seo", "ppc", "ssm", "developer"],
+            tags: [],
         },
         last_contact: {
-            filter: "last contact",
+            filter: "Never",
             data: {
-                range: "week",
-                count: 1,
+                range: null,
+                count: null,
             },
         },
     },
