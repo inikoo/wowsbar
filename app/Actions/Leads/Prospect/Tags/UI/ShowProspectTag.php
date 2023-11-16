@@ -10,6 +10,7 @@ namespace App\Actions\Leads\Prospect\Tags\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\History\HistoryResource;
@@ -23,6 +24,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowProspectTag extends InertiaAction
 {
+    use WithActionButtons;
+
     public Organisation|Shop $parent;
 
     public function authorize(ActionRequest $request): bool
@@ -59,6 +62,10 @@ class ShowProspectTag extends InertiaAction
                     'icon'      => [
                         'tooltip' => __('tag'),
                         'icon'    => 'fal fa-tags'
+                    ],
+                    'actions'   => [
+                        $this->getEditActionIcon($request),
+                        $this->getDeleteActionIcon($request)
                     ],
                 ],
                 'tabs'        => [

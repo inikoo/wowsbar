@@ -36,8 +36,8 @@ const props = defineProps<{
             <FontAwesomeIcon v-if="props.notification.item.type == 'info'" icon='fal fa-info-circle' class='h-7'
                 aria-hidden='true' />
         </div>
-        <div>
-            <p class="font-bold mb-0">
+        <div class="flex flex-col justify-center">
+            <p class="font-bold">
                 {{ props.notification.item.title }}
             </p>
             <!-- <button class="close" @click="props.notification.close">
