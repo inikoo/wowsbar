@@ -33,6 +33,7 @@ use App\Actions\HumanResources\Workplace\DeleteWorkplace;
 use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Leads\Prospect\Queries\StoreProspectQuery;
+use App\Actions\Leads\Prospect\Queries\UpdateProspectQuery;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
@@ -130,6 +131,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect-mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');
 
         Route::post('prospect-queries', [StoreProspectQuery::class, 'inShop'])->name('prospect-query.store');
+        Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
     });

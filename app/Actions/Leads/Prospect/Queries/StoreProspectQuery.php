@@ -52,7 +52,9 @@ class StoreProspectQuery
                             ProspectContactStateEnum::NO_CONTACTED->value
                         ],
                     ],
-                    $query['tag']['state'] => $query['tag']['tags']
+                    'filter' => [
+                        $query['tag']['state'] => $query['tag']['tags']
+                    ],
                 ],
                 'arguments' => $query['last_contact']['state'] ? [
                     '__date__' => [
