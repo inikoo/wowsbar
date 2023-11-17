@@ -50,11 +50,13 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             data_set($modelData, 'phone', null, overwrite: false);
             data_set($modelData, 'contact_website', null, overwrite: false);
 
-
             StoreProspect::make()->action(
                 $this->scope,
                 $modelData
             );
+
+
+
             $this->setRecordAsCompleted($uploadRecord);
         } catch (Exception $e) {
             $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
@@ -72,7 +74,7 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             }
         }
 
-
+        $data['tags'] = explode(',', Arr::get($data, 'tags'));
 
         return $data;
     }
@@ -82,12 +84,6 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function rules(): array
     {
 
-        $extraConditions = match (class_basename($this->scope)) {
-            'Shop' => [
-                ['column' => 'shop_id', 'value' => $this->scope->id],
-            ],
-            default => []
-        };
 
         return [
             'contact_name'    => ['required', 'nullable', 'string', 'max:255'],
@@ -104,9 +100,9 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 'nullable',
                 'phone:AUTO',
             ],
-            'contact_website' => ['nullable', 'url',
-
-            ],
+            'contact_website' => ['nullable', 'url',],
+            'tags'            => ['required', 'array'],
+            'tags.*'          => ['string'],
         ];
     }
 }

@@ -41,7 +41,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 array_keys(
                     Arr::except(
                         $this->rules(),
-                        ['name', 'starting_date', 'workplace',]
+                        ['name', 'starting_date', 'workplace']
                     )
                 ),
                 [

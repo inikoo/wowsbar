@@ -42,6 +42,7 @@ beforeEach(function () {
 test('create prospect', function () {
     $shop      = $this->shop;
     $modelData = Prospect::factory()->definition();
+    data_set($modelData, 'tags', ['seo','tag 1',' hello ','Seo']);
     $prospect  = StoreProspect::make()->action($shop, $modelData);
     expect($prospect)->toBeInstanceOf(Prospect::class)
         ->and($shop->crmStats->number_prospects)->toBe(1)
@@ -59,6 +60,7 @@ test('create prospect', function () {
         ->and(organisation()->crmStats->number_prospects_state_invoiced)->toBe(0)
         ->and(organisation()->crmStats->number_prospects_state_bounced)->toBe(0);
 
+    $this->assertDatabaseCount('tags', 3);
     return $prospect;
 });
 

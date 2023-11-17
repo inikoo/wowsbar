@@ -110,6 +110,7 @@ class UpdateProspect
             ],
             'contact_website'   => [
                 'sometimes',
+                'nullable',
                 'url:http,https',
                 new IUnique(
                     table: 'prospects',
@@ -135,6 +136,7 @@ class UpdateProspect
         $this->scope     = $scope;
         $this->currentID = $prospect->id;
         $this->setRawAttributes($objectData);
+
         $validatedData = $this->validateAttributes();
 
         return $this->handle($prospect, $validatedData);

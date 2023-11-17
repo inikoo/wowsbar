@@ -122,9 +122,9 @@ class StoreEmployee
             'date_of_birth'       => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
             'job_title'           => ['required', 'string', 'max:256'],
             'state'               => ['required', new Enum(EmployeeStateEnum::class)],
+            'positions'           => ['required', 'array'],
             'positions.*'         => ['exists:job_positions,slug'],
             'email'               => ['present', 'nullable', 'email'],
-            'positions'           => ['required', 'array'],
             'username'            => ['nullable', new AlphaDashDot(), 'iunique:organisation_users'],
             'password'            => ['exclude_if:username,null', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'reset_password'      => ['sometimes', 'boolean']
