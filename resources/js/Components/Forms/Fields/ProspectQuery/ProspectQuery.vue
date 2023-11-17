@@ -168,10 +168,18 @@ console.log(props.form)
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
                                     v-model="form[fieldName].last_contact.data.quantity" />
+                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
+                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                        {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
+                                    </p>
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
                                     v-model="form[fieldName].last_contact.data.unit" :can-clear="false" />
+                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
+                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                        {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
+                                    </p>
                             </div>
                         </div>
                     </div>
