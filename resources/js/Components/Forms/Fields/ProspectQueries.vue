@@ -4,13 +4,34 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } 
 import PureRadio from '@/Components/Pure/PureRadio.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEnvelope, faAsterisk } from '@fal/'
+import { faEnvelope, faAsterisk, faCodeBranch, faTags } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faEnvelope, faAsterisk)
+library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 
 
-const props = defineProps(['form', 'fieldName', 'fieldData'])
+const props = defineProps<{
+    form: {
+        query: {
+            selectedTab: string
+            dataTab: {
+                list: string
+            }
+        }
+    }
+    fieldName: string
+    tabName: string  // 'list', 'custom', 'select'
+    fieldData: any
+    options: {
+        data: {
+            id: number
+            name: string
+        }[]
+    }
+}>()
 
+const emits = defineEmits<{
+    (e: 'update:modelValue', val: string): void
+}>()
 
 </script>
 
@@ -29,29 +50,29 @@ const props = defineProps(['form', 'fieldName', 'fieldData'])
             </thead>
 
             <tbody class="divide-y divide-gray-200 bg-white">
-                <tr v-for="option in fieldData.options.data" :key="option.id" class=""
+                <tr v-for="option in options.data" :key="option.id" class=""
                     :class="[
-                        option.id == form[fieldName] ? 'bg-org-100 text-org-700' : '',
+                        option.id == form[fieldName].dataTab[tabName] ? 'bg-org-100 text-org-700' : '',
                         option.number_items < 1? 'bg-gray-100 text-gray-400' : 'text-gray-500'
                     ]">
-                    <td class="whitespace-nowrap py-2 pl-2 pr-4 ">{{ option.name }}</td>
-                    <td class="whitespace-nowrap">
+                    <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
+                    <td class="">
                         <div class="flex items-center gap-x-1">
                             <div v-if="option.constrains.with === 'email'" class="inline-flex items-start" title="Prospect have email">
                                 <!-- <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' /> -->
                                 <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
                             </div>
                             <p v-if="option.constrains.where?.[2]" class="">(Not contacted yet)</p>
-                            <p v-if="option.constrains?.group" class=" whitespace-nowrap">
+                            <p v-if="option.constrains?.group" class="">
                                 (Last contacted at: {{ option.arguments?.__date__?.value?.quantity }} {{ option.arguments?.__date__?.value?.unit }})
                             </p>
                         </div>
                     </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
-                    <td class="relative whitespace-nowrap py-2 px-3 text-right font-medium">
+                    <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
+                    <td class="relative py-2 px-3 text-right font-medium">
                         <div v-if="option.number_items > 0" >
                             <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form[fieldName]" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
+                            <input v-model="form[fieldName].dataTab[tabName]" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
                         </div>
                     </td>
                 </tr>

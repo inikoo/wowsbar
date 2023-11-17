@@ -56,12 +56,27 @@ class CreateProspectsMailshot extends InertiaAction
         $fields[] = [
             'title'  => '',
             'fields' => [
-                'subject' => [
-                    'type'        => 'prospectsQueries',
-                    'label'       => __('prospects'),
-                    'placeholder' => __('Email subject'),
+                'query' => [
+                    'type'        => 'prospectQueryChooser',
+                    'label'       => __('prospects query'),
                     'required'    => true,
-                    'options'     => IndexProspectQueries::run(),
+                    'options'     => [
+                        'list' => IndexProspectQueries::run(),
+                        'custom' => '',
+                    ],
+                    'value'     => [
+                        'selectedTab' => '',
+                        'dataTab' => [
+                            'list'  => '',
+                            'custom'=> [
+                                'query' => '',
+                                'tag' => [
+                                    'tags' => ''
+                                ]
+                            ],
+                            'select'=> ''
+                        ]
+                    ]
                 ],
             ]
         ];
