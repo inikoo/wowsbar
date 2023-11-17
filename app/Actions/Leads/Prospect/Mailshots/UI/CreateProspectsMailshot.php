@@ -68,12 +68,7 @@ class CreateProspectsMailshot extends InertiaAction
                         'selectedTab' => '',
                         'dataTab' => [
                             'list'  => '',
-                            'custom'=> [
-                                'query' => '',
-                                'tag' => [
-                                    'tags' => ''
-                                ]
-                            ],
+                            'custom'=> null,
                             'select'=> ''
                         ]
                     ]
