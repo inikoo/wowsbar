@@ -34,6 +34,7 @@ import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
 import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
+import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQuery.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@fad/'
@@ -85,6 +86,7 @@ const components = {
     'checkbox': Checkbox,
     'customerRoles': CustomerRoles,
     'jobPosition': JobPosition,
+    'prospect_query': ProspectsQuery,
 };
 
 const getComponent = (componentName) => {

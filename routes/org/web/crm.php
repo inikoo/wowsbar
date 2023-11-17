@@ -23,6 +23,7 @@ use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\Queries\UI\CreateProspectQuery;
+use App\Actions\Leads\Prospect\Queries\UI\EditProspectQuery;
 use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Actions\Leads\Prospect\Queries\UI\ShowProspectQuery;
 use App\Actions\Leads\Prospect\RemoveProspect;
@@ -109,7 +110,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('lists')->as('lists.')->group(function () {
             Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
             Route::get('/create', [CreateProspectQuery::class, 'inShop'])->name('create');
-            Route::get('/{query}/edit', [CreateProspectQuery::class, 'inShop'])->name('edit');
+            Route::get('/{query}/edit', [EditProspectQuery::class, 'inShop'])->name('edit');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
         });
 
