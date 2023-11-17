@@ -33,7 +33,7 @@ jobs:
       - name: Generate database dumps 📚
         run: ./generate_testing_db_dumps.sh ${{vars.TESTING_DB_PORT}}
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
