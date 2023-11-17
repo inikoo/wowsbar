@@ -10,6 +10,7 @@ namespace App\Actions\Leads\Prospect;
 use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Actions\Helpers\Query\HydrateModelTypeQueries;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
@@ -44,6 +45,8 @@ class StoreProspect
 
     public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
     {
+        $tags = Arr::get($modelData, 'tags', []);
+        Arr::forget($modelData, 'tags');
 
         $addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
@@ -74,6 +77,10 @@ class StoreProspect
 
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(2));
 
+        if (count($tags)) {
+            SyncTagsProspect::make()->action($prospect, ['tags' => $tags, 'type' => 'crm']);
+        }
+
         return $prospect;
     }
 
@@ -90,6 +97,7 @@ class StoreProspect
     {
         $this->scope = $shop;
         $this->fillFromRequest($request);
+
         return $this->handle($shop, $this->validateAttributes());
     }
 
@@ -116,6 +124,8 @@ class StoreProspect
             'address'           => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'      => ['nullable', 'string', 'max:255'],
             'company_name'      => ['nullable', 'string', 'max:255'],
+            'tags'              => ['sometimes', 'array'],
+            'tags.*'            => ['string'],
             'email'             => [
                 'required_without:phone',
                 'email',

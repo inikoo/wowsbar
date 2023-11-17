@@ -8,7 +8,7 @@
 namespace App\Actions\Search\UniversalSearch\UI\Organisation;
 
 use App\Actions\InertiaAction;
-use App\Http\Resources\UniversalSearch\Customers\UniversalSearchResource;
+use App\Http\Resources\UniversalSearch\Organisation\UniversalSearchResource;
 use App\Models\Search\UniversalSearch;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

@@ -15,6 +15,7 @@ import { faEnvelope, faAsterisk } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
+import {Link} from "@inertiajs/vue3";
 library.add(faEnvelope, faAsterisk)
 
 const props = defineProps<{
@@ -24,11 +25,29 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
+function listRoute(prospect_list) {
+    switch (route().current()) {
+        case 'org.crm.shop.prospects.lists.index':
+            return route(
+                'org.crm.shop.prospects.lists.show',
+                [route().params['shop'], prospect_list.slug]);
+        default:
+            return route(
+                'org.crm.lists.show',
+                [prospect_list.slug]);
+    }
+}
+
 </script>
 
 <template>
     <!-- <pre>{{ usePage().props }}</pre> -->
     <Table :resource="data" :name="tab" class="mt-5">
+        <template #cell(name)="{ item: prospect_list }">
+            <Link :href="listRoute(prospect_list)">
+                {{ prospect_list['name'] }}
+            </Link>
+        </template>
         <!-- Cell: Prospects (Number Items) -->
         <template #cell(number_items)="{ item: prospect_list }">
             <span class="tabular-nums">{{ locale.number(prospect_list['number_items']) }}</span>
@@ -42,10 +61,10 @@ const locale = useLocaleStore()
                     <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' />
                     <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
                 </div>
-                
+
                 <p v-if="prospect_list.constrains.where?.[2]" class="text-gray-500">(Not contacted yet)</p>
                 <p v-if="prospect_list.constrains?.group" class="text-gray-500 whitespace-nowrap">
-                    (Last contacted at: 
+                    (Last contacted at:
                     <div class="relative inline-flex">
                         <Popover :popover-placement="'bottom-start'" v-slot="{ open }">
                             <PopoverButton tabindex="-1">

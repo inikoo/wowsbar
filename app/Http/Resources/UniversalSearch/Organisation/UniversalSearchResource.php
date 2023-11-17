@@ -21,6 +21,8 @@ class UniversalSearchResource extends JsonResource
             'model'      => $this->when(true, function () {
                 return match (class_basename($this->resource->model)) {
                     'CustomerWebsite'       => new CustomerWebsiteSearchResultResource($this->resource->model),
+                    'Prospect'              => new ProspectSearchResultResource($this->resource->model),
+
                     default                 => [],
                 };
             }),

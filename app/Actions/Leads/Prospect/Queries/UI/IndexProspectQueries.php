@@ -5,10 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect\UI;
+namespace App\Actions\Leads\Prospect\Queries\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithProspectsMeta;
 use App\Enums\UI\Organisation\ProspectsQueriesTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
@@ -166,7 +167,8 @@ class IndexProspectQueries extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
     {
         return match ($routeName) {
-            'org.crm.shop.prospects.lists.index' =>
+            'org.crm.shop.prospects.lists.index',
+            'org.crm.shop.prospects.lists.show' =>
             array_merge(
                 (new IndexProspects())->getBreadcrumbs(
                     'org.crm.shop.prospects.index',

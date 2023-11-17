@@ -41,6 +41,12 @@ const props = defineProps<{
     },
     history?: object
     prospects?:object
+    tags: {
+        id: number
+        slug: string
+        name: string
+        type: boolean
+    }
 
 }>()
 
@@ -63,5 +69,5 @@ const component = computed(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="[tags]"></component>
 </template>

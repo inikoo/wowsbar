@@ -25,8 +25,7 @@ class SyncTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-
-        $oldTags=$prospect->tags()->pluck('id');
+        $oldTags = $prospect->tags()->pluck('id');
 
 
         $prospect->syncTagsWithType(
@@ -34,18 +33,17 @@ class SyncTagsProspect
             Arr::get($modelData, 'type')
         );
 
-        $currentTags=$prospect->tags()->pluck('id');
+        $currentTags = $prospect->tags()->pluck('id');
 
-        $newTags     =$currentTags->diff($oldTags);
-        $removedTags =$oldTags->diff($currentTags);
-        $affectedTags=$newTags->merge($removedTags);
+        $newTags      = $currentTags->diff($oldTags);
+        $removedTags  = $oldTags->diff($currentTags);
+        $affectedTags = $newTags->merge($removedTags);
 
         foreach ($affectedTags as $tagId) {
-            $tag=Tag::find($tagId);
+            $tag = Tag::find($tagId);
             TagHydrateSubjects::dispatch($tag);
             TagHydrateProspects::dispatch($tag);
         }
-
 
 
         return $prospect;
@@ -63,16 +61,38 @@ class SyncTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['nullable', 'array'],
-            'type' => ['nullable', 'string']
+            'tags'   => ['nullable', 'array'],
+            'tags.*' => ['string'],
+            'type'   => ['nullable', 'string']
         ];
     }
+
 
     public function asController(Prospect $prospect, ActionRequest $request): Prospect
     {
         $this->fillFromRequest($request);
         $this->fill(['type' => 'crm']);
 
-        return $this->handle($prospect, $this->validateAttributes());
+        return $this->handle($prospect, $this->trimTags($this->validateAttributes()));
+    }
+
+    public function action(Prospect $prospect, array $objectData): Prospect
+    {
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($prospect, $this->trimTags($validatedData));
+    }
+
+    private function trimTags(array $modelData): array
+    {
+        if (is_array($modelData['tags'])) {
+
+            data_set($modelData, 'tags', array_map('trim', $modelData['tags']));
+            data_set($modelData, 'tags', array_intersect_key($modelData['tags'], array_unique(array_map('strtolower', $modelData['tags']))));
+
+        }
+        return $modelData;
     }
 }

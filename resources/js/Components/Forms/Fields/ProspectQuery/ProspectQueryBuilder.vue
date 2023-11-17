@@ -95,8 +95,8 @@ console.log(props.form)
                 </DisclosureButton>
                 <DisclosurePanel class="px-4  pb-2 text-sm text-gray-500">
                     <div class="mb-4">
-                        <div>
-                            <fieldset class="mt-4">
+                        <div class="mt-4">
+                            <fieldset>
                                 <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                                     <div v-for="(filter, filterIndex) in descriptor.FilterTags" :key="filter.value"
                                         class="flex items-center">

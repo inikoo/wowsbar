@@ -23,6 +23,9 @@ use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\Queries\UI\CreateProspectQuery;
+use App\Actions\Leads\Prospect\Queries\UI\EditProspectQuery;
+use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
+use App\Actions\Leads\Prospect\Queries\UI\ShowProspectQuery;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\Tags\UI\CreateProspectTag;
 use App\Actions\Leads\Prospect\Tags\UI\EditProspectTag;
@@ -30,10 +33,8 @@ use App\Actions\Leads\Prospect\Tags\UI\IndexProspectTags;
 use App\Actions\Leads\Prospect\Tags\UI\ShowProspectTag;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\EditProspect;
-use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspect;
-use App\Actions\Leads\Prospect\UI\ShowProspectQuery;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
@@ -109,6 +110,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('lists')->as('lists.')->group(function () {
             Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
             Route::get('/create', [CreateProspectQuery::class, 'inShop'])->name('create');
+            Route::get('/{query}/edit', [EditProspectQuery::class, 'inShop'])->name('edit');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
         });
 
