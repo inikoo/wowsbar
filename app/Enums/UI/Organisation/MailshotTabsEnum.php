@@ -17,6 +17,7 @@ enum MailshotTabsEnum: string
 
     case SHOWCASE               = 'showcase';
     case RECIPIENTS             = 'recipients';
+    case EMAIL                  = 'email';
 
 
     case CHANGELOG            = 'changelog';
@@ -32,7 +33,12 @@ enum MailshotTabsEnum: string
             ],
             MailshotTabsEnum::RECIPIENTS => [
                 'title' => __('recipients'),
-                'icon'  => 'fal fa-envelope',
+                'icon'  => 'fal fa-at',
+            ],
+
+            MailshotTabsEnum::EMAIL => [
+                'title' => __('email'),
+                'icon'  => 'fal fa-envelope-square',
             ],
 
             MailshotTabsEnum::CHANGELOG => [
