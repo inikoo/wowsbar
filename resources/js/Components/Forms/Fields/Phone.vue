@@ -11,7 +11,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {VueTelInput} from 'vue-tel-input';
 import 'vue-tel-input/vue-tel-input.css';
-import {ref} from 'vue';
+import { ref } from 'vue';
 library.add(faExclamationCircle, faCheckCircle);
 
 const props = defineProps(['form', 'fieldName', 'options', 'fieldData']);
@@ -22,7 +22,7 @@ if (props.options !== undefined && props.options.defaultCountry) {
 }
 
 const handleChange = (number,phoneObject) => {
-    props.form.phone = phoneObject.number
+    if(number) props.form.phone = phoneObject.number
     props.form.errors[props.fieldName] = ''
 };
 
