@@ -22,6 +22,8 @@ class EditProspectQuery extends InertiaAction
     {
         $filter = Arr::get($query->constrains, 'filter', []);
         $tags = Arr::get($filter, array_key_first($filter), []);
+        $lastContact = Arr::get($query->arguments, '__date__');
+        $lastContactValue =  Arr::get($lastContact, 'value');
 
         return Inertia::render(
             'EditModel',
@@ -70,10 +72,10 @@ class EditProspectQuery extends InertiaAction
                                                 'tags' => $tags
                                             ],
                                             'last_contact' => [
-                                                'state' => (bool) Arr::get($query->arguments, '__date__'),
+                                                'state' => $lastContact != null,
                                                 'data' => [
-                                                    'unit' => Arr::get($query->arguments, '__date__')['value']['unit'],
-                                                    'quantity' => Arr::get($query->arguments, '__date__')['value']['quantity']
+                                                    'unit' => Arr::get($lastContactValue, 'unit'),
+                                                    'quantity' => Arr::get($lastContactValue, 'quantity')
                                                 ]
                                             ],
                                         ]
