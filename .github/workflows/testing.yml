@@ -44,3 +44,10 @@ jobs:
         run: npm run build
       - name: Run test
         run: vendor/bin/pest
+      - name: Discord notification if fail
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.FAIL_TEST_DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: '😱 {{ EVENT_PAYLOAD.repository.full_name }} tests failing.'
