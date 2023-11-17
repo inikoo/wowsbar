@@ -16,10 +16,10 @@ import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 import EmailPreview from "@/Components/Email/EmailPreview.vue";
 
-import {faEnvelopeSquare,faAt} from '@fal/'
+import {faEnvelopeSquare, faAt, faPaperPlane} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
-library.add(faEnvelopeSquare,faAt)
+library.add(faEnvelopeSquare, faAt, faPaperPlane)
 
 const props = defineProps<{
     title: string,
@@ -30,7 +30,7 @@ const props = defineProps<{
     }
     changelog?: object,
     showcase?: object,
-    email?:object
+    email?: object
     recipients?: object,
 }>()
 

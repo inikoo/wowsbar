@@ -58,10 +58,17 @@ class ShowProspectMailshot extends InertiaAction
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
-        $iconActions = [
-            $this->canDelete ? $this->getDeleteActionIcon($request) : null,
-            $this->canEdit ? $this->getEditActionIcon($request) : null,
-        ];
+
+        $iconActions=[];
+
+        if($this->canDelete and !$mailshot->start_sending_at) {
+            $iconActions[]=$this->getDeleteActionIcon($request);
+        }
+        if($this->canEdit and !$mailshot->start_sending_at) {
+            $iconActions[]=$this->getEditActionIcon($request);
+        }
+
+
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $iconActions[] = [
