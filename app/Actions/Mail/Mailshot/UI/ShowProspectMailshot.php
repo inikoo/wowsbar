@@ -145,32 +145,30 @@ class ShowProspectMailshot extends InertiaAction
                 MailshotTabsEnum::RECIPIENTS->value => $this->tab == MailshotTabsEnum::RECIPIENTS->value
                     ?
                     match ($mailshot->state) {
-                        MailshotStateEnum::SENDING,
-                        MailshotStateEnum::READY,
-                        MailshotStateEnum::SENT => fn () => DispatchedEmailResource::collection(
-                            IndexDispatchedEmail::run(
+                        MailshotStateEnum::IN_PROCESS,
+                        MailshotStateEnum::READY => fn () => MailshotRecipientsResource::collection(
+                            IndexEstimatedRecipients::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
                             )
                         ),
-                        default => fn () => MailshotRecipientsResource::collection(
-                            IndexEstimatedRecipients::run(
+                        default => fn () => DispatchedEmailResource::collection(
+                            IndexDispatchedEmail::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
                             )
                         ),
                     }
                     : Inertia::lazy(fn () => match ($mailshot->state) {
-                        MailshotStateEnum::SENDING,
-                        MailshotStateEnum::READY,
-                        MailshotStateEnum::SENT => fn () => DispatchedEmailResource::collection(
-                            IndexDispatchedEmail::run(
+                        MailshotStateEnum::IN_PROCESS,
+                        MailshotStateEnum::READY => fn () => MailshotRecipientsResource::collection(
+                            IndexEstimatedRecipients::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
                             )
                         ),
-                        default => fn () => MailshotRecipientsResource::collection(
-                            IndexEstimatedRecipients::run(
+                        default => fn () => DispatchedEmailResource::collection(
+                            IndexDispatchedEmail::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
                             )

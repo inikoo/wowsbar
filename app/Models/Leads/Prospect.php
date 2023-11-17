@@ -58,11 +58,11 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property string|null $last_contacted_at
- * @property string|null $not_interested_at
- * @property string|null $registered_at
- * @property string|null $invoiced_at
- * @property string|null $last_bounced_at
+ * @property Carbon|null $last_contacted_at
+ * @property Carbon|null $not_interested_at
+ * @property Carbon|null $registered_at
+ * @property Carbon|null $invoiced_at
+ * @property Carbon|null $last_bounced_at
  * @property ProspectContactStateEnum $contact_state
  * @property ProspectOutcomeStatusEnum|null $outcome_status
  * @property ProspectBounceStatusEnum|null $bounce_status

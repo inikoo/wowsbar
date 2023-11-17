@@ -20,9 +20,9 @@ class EditProspectQuery extends InertiaAction
 {
     public function handle(Shop $parent, Query $query, ActionRequest $request): Response
     {
-        $filter = Arr::get($query->constrains, 'filter', []);
-        $tags = Arr::get($filter, array_key_first($filter), []);
-        $lastContact = Arr::get($query->arguments, '__date__');
+        $filter           = Arr::get($query->constrains, 'filter', []);
+        $tags             = Arr::get($filter, array_key_first($filter), []);
+        $lastContact      = Arr::get($query->arguments, '__date__');
         $lastContactValue =  Arr::get($lastContact, 'value');
 
         return Inertia::render(
@@ -46,7 +46,7 @@ class EditProspectQuery extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                'parameters' =>$request->route()->originalParameters()
+                                'parameters' => $request->route()->originalParameters()
                             ],
                         ]
                     ]
@@ -67,14 +67,14 @@ class EditProspectQuery extends InertiaAction
                                         'label' => __('query by'),
                                         'value' => [
                                             'query' => (array) Arr::get($query->constrains, 'with', []),
-                                            'tag'  => [
+                                            'tag'   => [
                                                 'state' => array_key_first($filter),
-                                                'tags' => $tags
+                                                'tags'  => $tags
                                             ],
                                             'last_contact' => [
                                                 'state' => $lastContact != null,
-                                                'data' => [
-                                                    'unit' => Arr::get($lastContactValue, 'unit'),
+                                                'data'  => [
+                                                    'unit'     => Arr::get($lastContactValue, 'unit'),
                                                     'quantity' => Arr::get($lastContactValue, 'quantity')
                                                 ]
                                             ],

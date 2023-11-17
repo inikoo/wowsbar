@@ -58,7 +58,7 @@ class ShowProspectQuery extends InertiaAction
                 'title'    => __($query->name),
                 'pageHead' => [
                     'title'     => __($query->name),
-                    'actions' => [
+                    'actions'   => [
                         $this->getEditActionIcon($request)
                     ]
                 ],
