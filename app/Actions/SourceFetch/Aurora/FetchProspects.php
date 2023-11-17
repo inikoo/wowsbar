@@ -28,8 +28,8 @@ class FetchProspects extends FetchAction
 
         if ($prospectData = $source->fetchProspect($sourceId)) {
 
-
             if ($prospect = Prospect::withTrashed()->whereJsonContains('data->source->source_id', Arr::get($prospectData, 'prospect.data.source.source_id'))->first()) {
+
                 $prospect = UpdateProspect::make()->action($shop, $prospect, $prospectData['prospect']);
                 if ($prospect->wasChanged()) {
                     $this->number_updates++;

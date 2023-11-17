@@ -136,13 +136,18 @@ class Prospect extends Model implements Auditable
     use HasAddress;
 
     protected $casts = [
-        'data'           => 'array',
-        'location'       => 'array',
-        'state'          => ProspectStateEnum::class,
-        'contact_state'  => ProspectContactStateEnum::class,
-        'outcome_status' => ProspectOutcomeStatusEnum::class,
-        'bounce_status'  => ProspectBounceStatusEnum::class,
-        'not_interested' => 'boolean'
+        'data'              => 'array',
+        'location'          => 'array',
+        'state'             => ProspectStateEnum::class,
+        'contact_state'     => ProspectContactStateEnum::class,
+        'outcome_status'    => ProspectOutcomeStatusEnum::class,
+        'bounce_status'     => ProspectBounceStatusEnum::class,
+        'not_interested'    => 'boolean',
+        'last_contacted_at' => 'datetime',
+        'not_interested_at' => 'datetime',
+        'registered_at'     => 'datetime',
+        'invoiced_at'       => 'datetime',
+        'last_bounced_at'   => 'datetime',
     ];
 
     protected $attributes = [
@@ -162,6 +167,10 @@ class Prospect extends Model implements Auditable
         'location',
         'state',
         'last_contacted',
+        'not_interested_at',
+        'registered_at',
+        'invoiced_at',
+        'last_bounced_at',
         'dont_contact_me',
         'bounce_status'
     ];

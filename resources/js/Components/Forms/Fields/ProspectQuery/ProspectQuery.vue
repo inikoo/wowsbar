@@ -13,8 +13,9 @@ import descriptor from './descriptor'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
+import { get } from 'lodash'
 
-library.add(faChevronCircleLeft,faInfoCircle)
+library.add(faChevronCircleLeft, faInfoCircle)
 
 const props = defineProps<{
     form?: any
@@ -28,9 +29,10 @@ const props = defineProps<{
     }
 }>()
 
+if (!props.form[props.fieldName]) props.form.query_builder = descriptor.defaultValue
+
 const tagsOptions = ref([])
 
-if(!props.form[props.fieldName]) props.form.query_builder = descriptor.defaultValue
 const getTagsOptions = async () => {
     try {
         const response = await axios.get(
@@ -50,6 +52,7 @@ onMounted(() => {
     getTagsOptions()
 })
 
+
 console.log(props.form)
 
 </script>
@@ -58,14 +61,19 @@ console.log(props.form)
     <div>
         <div class="mb-4">
             <div class="flex flex-wrap items-center">
-                <div v-for="(query, index) in descriptor.QueryLists" :key="query.value" class="flex items-center mr-4 mb-2 ">
+                <div v-for="(query, index) in descriptor.QueryLists" :key="query.value"
+                    class="flex items-center mr-4 mb-2 ">
                     <div class="py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
-                        <input type="checkbox" :id="'query_' + query.value" :value="query.value" v-model="form[fieldName].query"
+                        <input type="checkbox" :id="'query_' + query.value" :value="query.value"
+                            v-model="form[fieldName].query"
                             class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                         <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
                     </div>
-
                 </div>
+                <p v-if="get(form, ['errors', `${fieldName}.query`])" class="mt-2 text-sm text-red-600"
+                    :id="`${fieldName}-error`">
+                    {{ form.errors[`${fieldName}.query`] }}
+                </p>
             </div>
 
         </div>
@@ -82,7 +90,7 @@ console.log(props.form)
                                 filter deliveries based on seo tags
                             </template>
                         </VTooltip>
-                   <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
+                        <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
                     </div>
                 </DisclosureButton>
                 <DisclosurePanel class="px-4  pb-2 text-sm text-gray-500">
@@ -90,13 +98,20 @@ console.log(props.form)
                         <div>
                             <fieldset class="mt-4">
                                 <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                    <div v-for="filter in descriptor.FilterTags" :key="filter.value" class="flex items-center">
-                                        <input :id="filter.value" name="notification-method" type="radio" :value="filter.value"
+                                    <div v-for="filter in descriptor.FilterTags" :key="filter.value"
+                                        class="flex items-center">
+                                        <input :id="filter.value" name="notification-method" type="radio"
+                                            :value="filter.value"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                             v-model="form[fieldName].tag.state" />
                                         <label :for="filter.value"
-                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label }}</label>
+                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label
+                                            }}</label>
                                     </div>
+                                    <p v-if="get(form, ['errors', `${fieldName}.tag.state`])"
+                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                        {{ form.errors[`${fieldName}.tag.state`] }}
+                                    </p>
                                 </div>
                             </fieldset>
                         </div>
@@ -114,6 +129,10 @@ console.log(props.form)
                                 </div>
                             </template>
                         </Multiselect>
+                        <p v-if="get(form, ['errors', `${fieldName}.tag.tags`])" class="mt-2 text-sm text-red-600"
+                            :id="`${fieldName}-error`">
+                            {{ form.errors[`${fieldName}.tag.tags`] }}
+                        </p>
                     </div>
 
                 </DisclosurePanel>
@@ -130,13 +149,18 @@ console.log(props.form)
                                 filter deliveries based on the last contact with the customer
                             </template>
                         </VTooltip>
-                   <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
+                        <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
                     </div>
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
-                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"  valueProp="value" trackBy="label" label="label"
-                            v-model="form[fieldName].last_contact.state" :can-clear="false"></Multiselect>
+                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
+                            valueProp="value" trackBy="label" label="label" v-model="form[fieldName].last_contact.state"
+                            :can-clear="false"></Multiselect>
+                        <p v-if="get(form, ['errors', `${fieldName}.last_contact.state`])" class="mt-2 text-sm text-red-600"
+                            :id="`${fieldName}-error`">
+                            {{ form.errors[`${fieldName}.last_contact.state`] }}
+                        </p>
                     </div>
 
                     <div v-if="form[fieldName].last_contact.state" class="flex flex-col gap-y-2 mt-4">
@@ -144,10 +168,18 @@ console.log(props.form)
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
                                     v-model="form[fieldName].last_contact.data.quantity" />
+                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
+                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                        {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
+                                    </p>
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
                                     v-model="form[fieldName].last_contact.data.unit" :can-clear="false" />
+                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
+                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                        {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
+                                    </p>
                             </div>
                         </div>
                     </div>
@@ -176,5 +208,4 @@ console.log(props.form)
 
 .multiselect-tag-remove-icon {
     @apply text-lime-800
-}
-</style>
+}</style>

@@ -42,3 +42,6 @@ import-customers.sh
 /upload_coverage.sh
 _ide_helper.php
 .phpstorm.meta.php
+/dump_aurora_db.sh
+/export_wowsbar_aurora_db.sh
+/devops/tests/paso/

@@ -9,6 +9,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
+use App\Models\Helpers\Fetch;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\Outbox;
@@ -35,6 +36,7 @@ beforeEach(function () {
     );
     actingAs($this->organisationUser, 'org');
 });
+
 
 
 test('create prospect', function () {
@@ -144,4 +146,35 @@ test('can show list of tags', function () {
             ->component('CRM/Prospects/Tags')
             ->has('title');
     });
+});
+
+test('can fetch 1 prospect from aurora', function () {
+    $shop           = $this->shop;
+    $auProspectData = DB::connection('aurora')->table('Prospect Dimension')->where('Prospect Store Key', env('FETCH_PROSPECTS_STORE_KEY'))
+        ->select(['Prospect Key', 'Prospect Store Key'])->first();
+
+    $command = join(
+        ' ',
+        [
+            'fetch:prospects',
+            config('database.connections.aurora.database'),
+            '-S '.$auProspectData->{'Prospect Store Key'},
+            '-s '.$auProspectData->{'Prospect Key'}
+        ]
+    );
+
+    $this->artisan($command)->assertExitCode(0);
+
+    expect($shop->crmStats->number_prospects)->toBe(3);
+    $fetch=Fetch::first();
+    expect($fetch->number_items)->toBe(1)->and($fetch->number_stores)->toBe(1);
+    $this->artisan($command)->assertExitCode(0);
+    $secondFetch=Fetch::find(2);
+
+
+
+    expect($shop->crmStats->number_prospects)->toBe(3)
+        ->and($secondFetch->number_stores)->toBe(0)
+        ->and($secondFetch->number_no_changes)->toBe(1);
+
 });
