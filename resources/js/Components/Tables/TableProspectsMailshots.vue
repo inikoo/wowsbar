@@ -5,11 +5,11 @@
   -->
 
 <script setup lang="ts">
-import {Link} from '@inertiajs/vue3';
-import Table from '@/Components/Table/Table.vue';
-import {trans} from "laravel-vue-i18n";
-import Icon from "@/Components/Icon.vue";
-import {useLocaleStore} from "@/Stores/locale";
+import { Link } from '@inertiajs/vue3'
+import Table from '@/Components/Table/Table.vue'
+import { trans } from "laravel-vue-i18n"
+import Icon from "@/Components/Icon.vue"
+import { useLocaleStore } from "@/Stores/locale"
 
 const props = defineProps<{
     data: object,
@@ -22,7 +22,7 @@ function mailshotRoute(mailshot: Mailshot) {
         case 'org.crm.shop.prospects.mailshots.index':
             return route(
                 'org.crm.shop.prospects.mailshots.show',
-                [route().params.shop, mailshot.slug]);
+                [route().params.shop, mailshot.slug])
 
     }
 }
@@ -31,16 +31,19 @@ function mailshotRoute(mailshot: Mailshot) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
+        <template #cell(state)="{ item: mailshot }">
+            <Icon :data="mailshot['state_icon']" class="px-1" />
+        </template>
+
         <template #cell(subject)="{ item: mailshot }">
-            <Link :href="mailshotRoute(mailshot)">
-                <span v-if="mailshot.subject">{{ mailshot['subject'] }}</span><span v-else class="italic opacity-50">{{trans('Unknown')}}</span>
+            <Link :href="mailshotRoute(mailshot)" class="specialUnderlineOrg py-1">
+                <span v-if="mailshot.subject">{{ mailshot['subject'] }}</span>
+                <span v-else class="italic opacity-50">{{ trans('Unknown') }}</span>
             </Link>
         </template>
-        <template #cell(state)="{ item: mailshot }">
-            <Icon :data="mailshot['state_icon']" class="px-1"/>
-        </template>
+
         <template #cell(number_recipients)="{ item: mailshot }">
-            {{locale.number(mailshot['number_recipients'])}}
+            {{ locale.number(mailshot['number_recipients']) }}
         </template>
     </Table>
 </template>
