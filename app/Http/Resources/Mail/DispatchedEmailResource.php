@@ -21,7 +21,7 @@ class DispatchedEmailResource extends JsonResource
         $dispatchedEmail = $this;
 
         return [
-            'contact_name'=> $dispatchedEmail->mailshotRecipient->recipient->contact_name,
+            'contact_name'=> $dispatchedEmail->mailshotRecipient?->recipient?->contact_name,
             'subject'     => $dispatchedEmail->mailshot->subject,
             'email'       => $dispatchedEmail->email->address,
             'state'       => $dispatchedEmail->state,
