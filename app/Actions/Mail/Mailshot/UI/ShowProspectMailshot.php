@@ -24,6 +24,7 @@ use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Spatie\Mjml\Mjml;
 
 class ShowProspectMailshot extends InertiaAction
 {
@@ -107,18 +108,18 @@ class ShowProspectMailshot extends InertiaAction
         return Inertia::render(
             'CRM/Prospects/Mailshot',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'breadcrumbs'                     => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation' => [
+                'navigation'                      => [
                     'previous' => $this->getPrevious($mailshot, $request),
                     'next'     => $this->getNext($mailshot, $request),
                 ],
-                'title'    => $mailshot->subject,
-                'pageHead' => [
-                    'title' => $mailshot->subject,
-                    'icon'  => [
+                'title'                           => $mailshot->subject,
+                'pageHead'                        => [
+                    'title'     => $mailshot->subject,
+                    'icon'      => [
                         'tooltip' => __('mailshot'),
                         'icon'    => 'fal fa-mail-bulk'
                     ],
@@ -131,7 +132,7 @@ class ShowProspectMailshot extends InertiaAction
                         ...$action
                     ]
                 ],
-                'tabs' => [
+                'tabs'                            => [
                     'current'    => $this->tab,
                     'navigation' => MailshotTabsEnum::navigation()
                 ],
@@ -140,6 +141,12 @@ class ShowProspectMailshot extends InertiaAction
                     fn () => MailshotResource::make($mailshot)->getArray()
                     : Inertia::lazy(
                         fn () => MailshotResource::make($mailshot)->getArray()
+                    ),
+                MailshotTabsEnum::EMAIL->value    => $this->tab == MailshotTabsEnum::EMAIL->value
+                    ?
+                    fn () => $this->getEmailPreview($mailshot)
+                    : Inertia::lazy(
+                        fn () => $this->getEmailPreview($mailshot)
                     ),
 
                 MailshotTabsEnum::RECIPIENTS->value => $this->tab == MailshotTabsEnum::RECIPIENTS->value
@@ -198,6 +205,17 @@ class ShowProspectMailshot extends InertiaAction
         )->table(IndexDispatchedEmail::make()->tableStructure(prefix: MailshotTabsEnum::RECIPIENTS->value));
     }
 
+    private function getEmailPreview(Mailshot $mailshot): array
+    {
+        $layout = $mailshot->layout;
+
+        return [
+            'sender'    => $mailshot->sender(),
+            'subject'   => $mailshot->subject,
+            'emailBody' => Mjml::new()->minify()->toHtml($layout['html'][0]['html'])
+        ];
+    }
+
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
     {
         $headCrumb = function (string $type, Mailshot $mailshot, array $routeParameters, string $suffix = null) {
@@ -215,11 +233,11 @@ class ShowProspectMailshot extends InertiaAction
                         ],
 
                     ],
-                    'simple' => [
+                    'simple'         => [
                         'route' => $routeParameters['model'],
                         'label' => $mailshot->subject
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
         };

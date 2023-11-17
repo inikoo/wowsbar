@@ -36,7 +36,7 @@ enum MailshotTabsEnum: string
             ],
 
             MailshotTabsEnum::EMAIL => [
-                'title' => __('email'),
+                'title' => __('email preview'),
                 'icon'  => 'fal fa-envelope-square',
             ],
 

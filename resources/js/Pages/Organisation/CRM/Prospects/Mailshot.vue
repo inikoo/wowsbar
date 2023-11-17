@@ -14,6 +14,7 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
+import EmailPreview from "@/Components/Email/EmailPreview.vue";
 
 import {faEnvelopeSquare,faAt} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
@@ -29,6 +30,7 @@ const props = defineProps<{
     }
     changelog?: object,
     showcase?: object,
+    email?:object
     recipients?: object,
 }>()
 
@@ -39,6 +41,7 @@ const component = computed(() => {
 
     const components = {
         showcase: MailshotShowcase,
+        email: EmailPreview,
         details: ModelDetails,
         changelog: TableHistories,
         recipients: TableHistories,
