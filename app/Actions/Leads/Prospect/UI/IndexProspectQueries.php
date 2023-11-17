@@ -166,7 +166,8 @@ class IndexProspectQueries extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
     {
         return match ($routeName) {
-            'org.crm.shop.prospects.lists.index' =>
+            'org.crm.shop.prospects.lists.index',
+            'org.crm.shop.prospects.lists.show' =>
             array_merge(
                 (new IndexProspects())->getBreadcrumbs(
                     'org.crm.shop.prospects.index',

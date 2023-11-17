@@ -91,7 +91,6 @@ class UpdateProspect
             'company_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
             'email'             => [
                 'sometimes',
-                'required_without:phone',
                 'email',
                 'max:500',
                 new IUnique(
@@ -102,7 +101,6 @@ class UpdateProspect
             ],
             'phone'             => [
                 'sometimes',
-                'required_without:email',
                 'nullable',
                 'phone:AUTO',
                 new IUnique(
@@ -110,7 +108,14 @@ class UpdateProspect
                     extraConditions: $extraConditions
                 ),
             ],
-            'contact_website'   => ['sometimes', 'nullable', 'iunique:prospects', 'active_url'],
+            'contact_website'   => [
+                'sometimes',
+                'url:http,https',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
+            ],
         ];
     }
 
@@ -120,9 +125,8 @@ class UpdateProspect
         $this->scope     = $shop;
         $this->currentID = $prospect->id;
         $this->fillFromRequest($request);
-        $request->validate();
 
-        return $this->handle($prospect, $request->validated());
+        return $this->handle($prospect, $this->validateAttributes());
     }
 
     public function action(Shop $scope, Prospect $prospect, $objectData): Prospect

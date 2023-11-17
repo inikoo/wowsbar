@@ -11,7 +11,9 @@ use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
+use App\Http\Resources\Tag\TagResource;
 use App\Models\Helpers\Query;
+use App\Models\Helpers\Tag;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
@@ -58,6 +60,8 @@ class ShowProspectQuery extends InertiaAction
                     'navigation' => ShowProspectTabsEnum::navigation()
                 ],
 
+                'tags' => TagResource::collection(Tag::all()),
+
                 ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
                     fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())
                     : Inertia::lazy(fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())),
@@ -74,21 +78,21 @@ class ShowProspectQuery extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('images'),
-                        'icon'  => 'fal fa-bars'
+                        'label' => __('prospect list'),
+                        'icon'  => 'fal fa-envelope'
                     ],
                 ],
             ];
         };
 
         return match ($routeName) {
-            'customer.portfolio.images.index' =>
+            'org.crm.shop.prospects.lists.show' =>
             array_merge(
-                ShowProspect::make()->getBreadcrumbs($routeName, $routeParameters),
+                IndexProspectQueries::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.images.index',
-                        null
+                        'name' => 'org.crm.shop.prospects.lists.show',
+                        'parameters' => array_values($this->originalParameters)
                     ]
                 ),
             ),
