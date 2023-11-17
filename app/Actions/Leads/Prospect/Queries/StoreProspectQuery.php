@@ -111,12 +111,12 @@ class StoreProspectQuery
     public function rules(ActionRequest $request): array
     {
         return [
-            'name'            => ['required', 'string', 'max:255'],
-            'query_builder.query' => ['required'],
-            'query_builder.tag.state' => ['required', 'string'],
-            'query_builder.tag.tags' => ['nullable', 'array'],
-            'query_builder.last_contact.state' => ['required', 'boolean'],
-            'query_builder.last_contact.data.unit' => ['required_if:query_builder.last_contact.state,true', 'string'],
+            'name'                                     => ['required', 'string', 'max:255'],
+            'query_builder.query'                      => ['required'],
+            'query_builder.tag.state'                  => ['required', 'string'],
+            'query_builder.tag.tags'                   => ['nullable', 'array'],
+            'query_builder.last_contact.state'         => ['required', 'boolean'],
+            'query_builder.last_contact.data.unit'     => ['required_if:query_builder.last_contact.state,true', 'string'],
             'query_builder.last_contact.data.quantity' => ['required_if:query_builder.last_contact.state,true', 'integer']
         ];
     }
@@ -124,10 +124,10 @@ class StoreProspectQuery
     public function getValidationMessages(): array
     {
         return [
-            'query_builder.query.required' => __('The query is required'),
-            'query_builder.tag.state.required' => __('The tag state is required'),
-            'query_builder.last_contact.state.required' => __('The last contact state is required'),
-            'query_builder.last_contact.data.unit.required_if' => __('The last contact unit is required'),
+            'query_builder.query.required'                         => __('The query is required'),
+            'query_builder.tag.state.required'                     => __('The tag state is required'),
+            'query_builder.last_contact.state.required'            => __('The last contact state is required'),
+            'query_builder.last_contact.data.unit.required_if'     => __('The last contact unit is required'),
             'query_builder.last_contact.data.quantity.required_if' => __('The last contact quantity is required'),
         ];
     }

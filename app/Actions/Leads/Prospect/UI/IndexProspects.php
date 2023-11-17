@@ -64,7 +64,7 @@ class IndexProspects extends InertiaAction
         $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = $shop;
 
-        return $this->handle($shop,'prospects');
+        return $this->handle($shop, 'prospects');
     }
 
     protected function getElementGroups($parent): array

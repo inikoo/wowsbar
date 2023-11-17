@@ -92,7 +92,7 @@ class ShowProspectQuery extends InertiaAction
                 IndexProspectQueries::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'org.crm.shop.prospects.lists.show',
+                        'name'       => 'org.crm.shop.prospects.lists.show',
                         'parameters' => array_values($this->originalParameters)
                     ]
                 ),
