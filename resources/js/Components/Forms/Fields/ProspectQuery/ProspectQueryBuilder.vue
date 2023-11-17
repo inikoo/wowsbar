@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faChevronCircleLeft } from '@fas/'
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, reactive } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import descriptor from './descriptor'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
-import { get } from 'lodash'
+import { get, set } from 'lodash'
 
 library.add(faChevronCircleLeft, faInfoCircle)
 
@@ -28,10 +28,9 @@ const props = defineProps<{
     }
 }>()
 
-if (!props.form[props.fieldName]) props.form[props.fieldName] = descriptor.defaultValue
+/* if (!props.form[props.fieldName]) props.form[props.fieldName] = descriptor.defaultValue */ 
 
 const tagsOptions = ref([])
-
 const getTagsOptions = async () => {
     try {
         const response = await axios.get(
@@ -47,12 +46,48 @@ const getTagsOptions = async () => {
     }
 }
 
+const emits = defineEmits();
+
+
+const setFormValue = (data: Object, fieldName: String) => {
+    if (Array.isArray(fieldName)) {
+        return getNestedValue(data, fieldName);
+    } else {
+        console.log('ss',data[fieldName])
+        return !data[fieldName] ? descriptor.defaultValue :  data[fieldName]
+    }
+};
+
+const getNestedValue = (obj: Object, keys: Array) => {
+    return keys.reduce((acc, key) => {
+        if (acc && typeof acc === "object" && key in acc) return  !acc[key] ? descriptor.defaultValue : acc[key];
+        return descriptor.defaultValue ;
+    }, obj);
+};
+
+const value = reactive(setFormValue(props.form, props.fieldName));
+
+const updateFormValue = (newValue) => {
+    let target = props.form;
+    if (Array.isArray(props.fieldName)) {
+        set(target, props.fieldName, newValue);
+    } else {
+        target[props.fieldName] = newValue;
+    }
+    emits("update:form", target);
+};
+
+
+watch(value, (newValue) => {
+    updateFormValue(newValue);
+    props.form.errors[props.fieldName] = ''
+});
+
 onMounted(() => {
     getTagsOptions()
 })
 
-
-console.log(props.form)
+console.log(props, value)
 
 </script>
   
@@ -63,22 +98,21 @@ console.log(props.form)
                 <div v-for="(query, index) in descriptor.QueryLists" :key="query.value"
                     class="flex items-center mr-4 mb-2 py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
                     <input type="checkbox"
-                        v-model="form[fieldName].query"
+                        v-model="value.query"
                         :id="'query_' + query.value"
                         :key="'query_' + query.value"
                         :value="query.value"
                         class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                     <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
-                    {{query.value  }}
                 </div>
-                <p v-if="get(form, ['errors', `${fieldName}.query`])" class="mt-2 text-sm text-red-600"
+            </div>
+            <p v-if="get(form, ['errors', `${fieldName}.query`])" class="mt-2 text-sm text-red-600"
                     :id="`${fieldName}-error`">
                     {{ form.errors[`${fieldName}.query`] }}
                 </p>
-            </div>
 
         </div>
-        <div v-if="form[fieldName].query.length">
+        <div v-if="value.query.length">
             <Disclosure v-slot="{ open }" :defaultOpen="true">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -104,21 +138,21 @@ console.log(props.form)
                                         <input :id="filter.value" name="notification-method" type="radio"
                                             :value="filter.value"
                                             class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            v-model="form[fieldName].tag.state" />
+                                            v-model="value.tag.state" />
                                         <label :for="filter.value"
                                             class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label
                                             }}</label>
                                     </div>
-                                    <p v-if="get(form, ['errors', `${fieldName}.tag.state`])"
+                                </div>
+                                <p v-if="get(form, ['errors', `${fieldName}.tag.state`])"
                                         class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
                                         {{ form.errors[`${fieldName}.tag.state`] }}
                                     </p>
-                                </div>
                             </fieldset>
                         </div>
                     </div>
                     <div>
-                        <Multiselect v-model="form[fieldName].tag.tags" mode="tags" placeholder="Select the tag"
+                        <Multiselect v-model="value.tag.tags" mode="tags" placeholder="Select the tag"
                             valueProp="slug" trackBy="name" label="name" :close-on-select="false" :searchable="true"
                             :caret="false" :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
@@ -156,7 +190,7 @@ console.log(props.form)
                 <DisclosurePanel class="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div>
                         <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
-                            valueProp="value" trackBy="label" label="label" v-model="form[fieldName].last_contact.state"
+                            valueProp="value" trackBy="label" label="label" v-model="value.last_contact.state"
                             :can-clear="false"></Multiselect>
                         <p v-if="get(form, ['errors', `${fieldName}.last_contact.state`])" class="mt-2 text-sm text-red-600"
                             :id="`${fieldName}-error`">
@@ -164,11 +198,11 @@ console.log(props.form)
                         </p>
                     </div>
 
-                    <div v-if="form[fieldName].last_contact.state" class="flex flex-col gap-y-2 mt-4">
+                    <div v-if="value.last_contact.state" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
-                                    v-model="form[fieldName].last_contact.data.quantity" />
+                                    v-model="value.last_contact.data.quantity" />
                                     <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
                                         class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
                                         {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
@@ -176,7 +210,7 @@ console.log(props.form)
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                                    v-model="form[fieldName].last_contact.data.unit" :can-clear="false" />
+                                    v-model="value.last_contact.data.unit" :can-clear="false" />
                                     <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
                                         class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
                                         {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
