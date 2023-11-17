@@ -109,6 +109,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('lists')->as('lists.')->group(function () {
             Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
             Route::get('/create', [CreateProspectQuery::class, 'inShop'])->name('create');
+            Route::get('/{query}/edit', [CreateProspectQuery::class, 'inShop'])->name('edit');
             Route::get('{query}', ShowProspectQuery::class)->name('show');
         });
 
