@@ -46,7 +46,15 @@ class UpdateTag
         ];
     }
 
-    public function inProspect(Shop $shop, Tag $tag, ActionRequest $request): Tag
+    public function inProspect(Tag $tag, ActionRequest $request): Tag
+    {
+        $this->fillFromRequest($request);
+        $this->fill(['type' => 'crm']);
+
+        return $this->handle($tag, $this->validateAttributes());
+    }
+
+    public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
         $this->parent = $shop;
         $this->fillFromRequest($request);

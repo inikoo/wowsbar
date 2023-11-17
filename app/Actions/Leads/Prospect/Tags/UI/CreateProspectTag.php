@@ -60,7 +60,7 @@ class CreateProspectTag extends InertiaAction
                     'route'     =>
                         match (class_basename($parent)) {
                             'Shop' => [
-                                'name'       => 'org.models.prospect.tag.store',
+                                'name'       => 'org.models.shop.prospect.tag.store',
                                 'parameters' => [$parent->id]
                             ],
                             default => [
