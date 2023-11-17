@@ -5,10 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect\UI;
+namespace App\Actions\Leads\Prospect\Queries\UI;
 
 use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\Tag\TagResource;

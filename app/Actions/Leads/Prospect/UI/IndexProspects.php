@@ -10,6 +10,7 @@ namespace App\Actions\Leads\Prospect\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
+use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\WithProspectsMeta;
 use App\Enums\CRM\Prospect\ProspectStateEnum;

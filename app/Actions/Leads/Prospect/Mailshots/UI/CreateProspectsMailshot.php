@@ -8,7 +8,7 @@
 namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\UI\IndexProspectQueries;
+use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
