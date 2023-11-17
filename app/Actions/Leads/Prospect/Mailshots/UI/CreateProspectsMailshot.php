@@ -61,15 +61,15 @@ class CreateProspectsMailshot extends InertiaAction
                     'label'       => __('prospects query'),
                     'required'    => true,
                     'options'     => [
-                        'list' => IndexProspectQueries::run(),
+                        'query' => IndexProspectQueries::run(),
                         'custom' => '',
                     ],
                     'value'     => [
-                        'selectedTab' => '',
+                        'recipient_builder_type' => 'list',
                         'dataTab' => [
-                            'list'  => '',
+                            'query'  => '',
                             'custom'=> null,
-                            'select'=> ''
+                            'prospects'=> ''
                         ]
                     ]
                 ],

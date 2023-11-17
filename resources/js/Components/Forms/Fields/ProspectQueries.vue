@@ -12,14 +12,14 @@ library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 const props = defineProps<{
     form: {
         query: {
-            selectedTab: string
+            recipient_builder_type: string
             dataTab: {
-                list: string
+                query: string
             }
         }
     }
     fieldName: string
-    tabName: string  // 'list', 'custom', 'select'
+    tabName: string  // 'query', 'custom', 'select'
     fieldData: any
     options: {
         data: {
