@@ -96,10 +96,12 @@ class BuildQuery
                         }
                     }
                 );
-        } elseif($constrainType == 'all') {
-            $queryBuilder->withAllTags($constrainData, 'crm');
-        } elseif($constrainType == 'any') {
-            $queryBuilder->withAnyTags($constrainData, 'crm');
+        } elseif ($constrainType == 'filter') {
+            if(Arr::get($constrainData, 'all')) {
+                $queryBuilder->withAllTags($constrainData['all'], 'crm');
+            } elseif(Arr::get($constrainData, 'any')) {
+                $queryBuilder->withAnyTags($constrainData['any'], 'crm');
+            }
         }
 
         return $queryBuilder;

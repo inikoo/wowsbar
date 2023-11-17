@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Models\Helpers\Query;
 use App\Models\Market\Shop;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -19,6 +20,9 @@ class EditProspectQuery extends InertiaAction
 {
     public function handle(Shop $parent, Query $query, ActionRequest $request): Response
     {
+        $filter = Arr::get($query->constrains, 'filter', []);
+        $tags = Arr::get($filter, array_key_first($filter), []);
+
         return Inertia::render(
             'EditModel',
             [
@@ -59,7 +63,20 @@ class EditProspectQuery extends InertiaAction
                                     'query_builder' => [
                                         'type'  => 'prospect_query',
                                         'label' => __('query by'),
-                                        'value' => $query->constrains
+                                        'value' => [
+                                            'query' => (array) Arr::get($query->constrains, 'with', []),
+                                            'tag'  => [
+                                                'state' => array_key_first($filter),
+                                                'tags' => $tags
+                                            ],
+                                            'last_contact' => [
+                                                'state' => (bool) Arr::get($query->arguments, '__date__'),
+                                                'data' => [
+                                                    'unit' => Arr::get($query->arguments, '__date__')['value']['unit'],
+                                                    'quantity' => Arr::get($query->arguments, '__date__')['value']['quantity']
+                                                ]
+                                            ],
+                                        ]
                                     ],
 
 
@@ -69,8 +86,8 @@ class EditProspectQuery extends InertiaAction
                     'args'      => [
                         'updateRoute'     =>
                             [
-                                'name'       => 'org.models.shop.prospect-query.store',
-                                'parameters' => [$parent->id]
+                                'name'       => 'org.models.shop.prospect-query.update',
+                                'parameters' => [$parent->id, $query->slug]
                             ]
                     ]
                 ]
