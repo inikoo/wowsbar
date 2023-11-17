@@ -15,13 +15,14 @@ enum MailshotTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE               = 'showcase';
-    case RECIPIENTS             = 'recipients';
-    case EMAIL                  = 'email';
+    case SHOWCASE = 'showcase';
+
+    case ESTIMATED_RECIPIENTS = 'estimated-recipients';
+    case RECIPIENTS           = 'recipients';
+    case EMAIL                = 'email';
 
 
-    case CHANGELOG            = 'changelog';
-
+    case CHANGELOG = 'changelog';
 
 
     public function blueprint(): array
@@ -30,6 +31,11 @@ enum MailshotTabsEnum: string
             MailshotTabsEnum::SHOWCASE => [
                 'title' => __('mailshot'),
                 'icon'  => 'fas fa-info-circle',
+            ],
+            MailshotTabsEnum::ESTIMATED_RECIPIENTS => [
+                'title' => __('recipients'),
+                'icon'  => 'fal fa-at',
+                'class' => 'animate-pulse'
             ],
             MailshotTabsEnum::RECIPIENTS => [
                 'title' => __('recipients'),

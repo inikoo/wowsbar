@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faChevronCircleLeft } from '@fas/'
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { ref, onMounted, watch, reactive } from 'vue'
@@ -12,8 +11,9 @@ import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 import { get, set } from 'lodash'
+import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
 
-library.add(faChevronCircleLeft, faInfoCircle)
+library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
 
 const props = defineProps<{
     form?: any
@@ -28,7 +28,7 @@ const props = defineProps<{
     }
 }>()
 
-/* if (!props.form[props.fieldName]) props.form[props.fieldName] = descriptor.defaultValue */ 
+/* if (!props.form[props.fieldName]) props.form[props.fieldName] = descriptor.defaultValue */
 
 const tagsOptions = ref([])
 const getTagsOptions = async () => {
@@ -53,15 +53,15 @@ const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName);
     } else {
-        console.log('ss',data[fieldName])
-        return !data[fieldName] ? descriptor.defaultValue :  data[fieldName]
+        console.log('ss', data[fieldName])
+        return !data[fieldName] ? descriptor.defaultValue : data[fieldName]
     }
 };
 
 const getNestedValue = (obj: Object, keys: Array) => {
     return keys.reduce((acc, key) => {
-        if (acc && typeof acc === "object" && key in acc) return  !acc[key] ? descriptor.defaultValue : acc[key];
-        return descriptor.defaultValue ;
+        if (acc && typeof acc === "object" && key in acc) return !acc[key] ? descriptor.defaultValue : acc[key];
+        return descriptor.defaultValue;
     }, obj);
 };
 
@@ -87,7 +87,7 @@ onMounted(() => {
     getTagsOptions()
 })
 
-console.log(props, value)
+console.log(props.form)
 
 </script>
   
@@ -97,19 +97,22 @@ console.log(props, value)
             <div class="flex flex-wrap items-center">
                 <div v-for="(query, index) in descriptor.QueryLists" :key="query.value"
                     class="flex items-center mr-4 mb-2 py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
-                    <input type="checkbox"
-                        v-model="value.query"
-                        :id="'query_' + query.value"
-                        :key="'query_' + query.value"
-                        :value="query.value"
-                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                    <input type="checkbox" v-model="value.query" :id="'query_' + query.value" :key="'query_' + query.value"
+                        :value="query.value" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                     <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
+                </div>
+                <div class="flex items-center mr-4 mb-2 py-[4px] px-2.5">
+                    <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}.query`])" icon="fas fa-exclamation-circle"
+                        class="h-5 w-5 text-red-500" aria-hidden="true" />
+                    <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
+                        class="h-5 w-5 text-green-500" aria-hidden="true" />
+                    <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin" />
                 </div>
             </div>
             <p v-if="get(form, ['errors', `${fieldName}.query`])" class="mt-2 text-sm text-red-600"
-                    :id="`${fieldName}-error`">
-                    {{ form.errors[`${fieldName}.query`] }}
-                </p>
+                :id="`${fieldName}-error`">
+                {{ form.errors[`${fieldName}.query`] }}
+            </p>
 
         </div>
         <div v-if="value.query.length">
@@ -143,18 +146,27 @@ console.log(props, value)
                                             class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label
                                             }}</label>
                                     </div>
+                                    <div class="flex items-center mr-4 mb-2 py-[4px] px-2.5">
+                                        <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}.tag.state`])"
+                                            icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500"
+                                            aria-hidden="true" />
+                                        <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
+                                            class="h-5 w-5 text-green-500" aria-hidden="true" />
+                                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third"
+                                            class="h-5 w-5 animate-spin" />
+                                    </div>
                                 </div>
-                                <p v-if="get(form, ['errors', `${fieldName}.tag.state`])"
-                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                        {{ form.errors[`${fieldName}.tag.state`] }}
-                                    </p>
+                                <p v-if="get(form, ['errors', `${fieldName}.tag.state`])" class="mt-2 text-sm text-red-600"
+                                    :id="`${fieldName}-error`">
+                                    {{ form.errors[`${fieldName}.tag.state`] }}
+                                </p>
                             </fieldset>
                         </div>
                     </div>
                     <div>
-                        <Multiselect v-model="value.tag.tags" mode="tags" placeholder="Select the tag"
-                            valueProp="slug" trackBy="name" label="name" :close-on-select="false" :searchable="true"
-                            :caret="false" :options="tagsOptions" noResultsText="No one left. Type to add new one.">
+                        <Multiselect v-model="value.tag.tags" mode="tags" placeholder="Select the tag" valueProp="slug"
+                            trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
+                            :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
                             <template
                                 #tag="{ option, handleTagRemove, disabled }: { option: tag, handleTagRemove: Function, disabled: boolean }">
@@ -203,18 +215,18 @@ console.log(props, value)
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
                                     v-model="value.last_contact.data.quantity" />
-                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
-                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                        {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
-                                    </p>
+                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
+                                    class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                    {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
+                                </p>
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
                                     v-model="value.last_contact.data.unit" :can-clear="false" />
-                                    <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
-                                        class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                        {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
-                                    </p>
+                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
+                                    class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
+                                    {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -243,4 +255,5 @@ console.log(props, value)
 
 .multiselect-tag-remove-icon {
     @apply text-lime-800
-}</style>
+}
+</style>
