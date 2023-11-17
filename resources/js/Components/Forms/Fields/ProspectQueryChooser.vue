@@ -41,6 +41,8 @@ const categories = [
     },
 ]
 
+
+console.log('ssd',props)
 </script>
 
 <template>
