@@ -55,7 +55,7 @@ class IndexProspects extends InertiaAction
         $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = organisation();
 
-        return $this->handle($this->parent);
+        return $this->handle($this->parent, 'prospects');
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
@@ -63,7 +63,7 @@ class IndexProspects extends InertiaAction
         $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = $shop;
 
-        return $this->handle($shop);
+        return $this->handle($shop,'prospects');
     }
 
     protected function getElementGroups($parent): array
@@ -100,10 +100,6 @@ class IndexProspects extends InertiaAction
 
         $query = QueryBuilder::for(Prospect::class);
 
-        if (class_basename($parent) == 'Shop') {
-            $query->where('shop_id', $parent->id);
-        }
-
         foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
             $query->whereElementGroup(
@@ -114,6 +110,9 @@ class IndexProspects extends InertiaAction
             );
         }
 
+        if (class_basename($parent) == 'Shop') {
+            $query->where('shop_id', $parent->id);
+        }
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $query
