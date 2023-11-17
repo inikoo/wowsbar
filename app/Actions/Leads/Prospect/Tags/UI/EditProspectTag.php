@@ -130,7 +130,7 @@ class EditProspectTag extends InertiaAction
                     'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'org.models.prospect.tag.update',
+                            'name'       => 'org.models.shop.prospect.tag.update',
                             'parameters' => array_values($request->route()->originalParameters())
                         ],
                     ]

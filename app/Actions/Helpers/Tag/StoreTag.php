@@ -77,7 +77,15 @@ class StoreTag
     }
 
 
-    public function inProspect(Shop $shop, ActionRequest $request): Tag
+    public function inProspect(ActionRequest $request): Tag
+    {
+        $this->fillFromRequest($request);
+        $this->fill(['type' => 'crm']);
+
+        return $this->handle($this->validateAttributes());
+    }
+
+    public function inShop(Shop $shop, ActionRequest $request): Tag
     {
         $this->parent = $shop;
         $this->fillFromRequest($request);
@@ -85,6 +93,5 @@ class StoreTag
 
         return $this->handle($this->validateAttributes());
     }
-
 
 }
