@@ -3,9 +3,9 @@ export default {
     FilterTags: [{label : "All" , value : 'all'},{label : "Any" , value : 'any'},{label : "Not Set" , value : 'not_set'}],
     contact: [ {label : "Last Contact" , value : true}, {label : "Never" , value : false} ],
     defaultValue: {
-        query: ['email'],
+        query: [],
         tag: {
-            state: "all",
+            state: undefined,
             tags: [],
         },
         last_contact: {

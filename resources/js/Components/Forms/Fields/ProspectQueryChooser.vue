@@ -26,17 +26,20 @@ const props = defineProps<{
 const categories = [
     {
         name: 'list',
+        fieldName : "query",
         label: 'List',
         component: ProspectQueries
     },
     {
         name: 'custom',
+        fieldName : ["query",'dataTab','custom'],
         label: 'Custom',
         component: ProspectQueryBuilder
     },
     {
         name: 'select',
         label: 'Select',
+        fieldName : "query",
         component: 'div'
     },
 ]
@@ -67,7 +70,7 @@ console.log('ssd',props)
                 >
                     <component :is="category.component"
                         :form="form"
-                        :fieldName="fieldName"
+                        :fieldName="category.fieldName"
                         :tabName="category.name"
                         :fieldData="fieldData"
                         :options="options[category.name]"
