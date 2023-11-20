@@ -112,7 +112,7 @@ class ShowProspectMailshot extends InertiaAction
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::STOPPED) {
             $action[] = [
                 'type'  => 'button',
-                'style' => 'primary',
+                'style' => 'positive',
                 'label' => __('Resume'),
                 'icon'  => ["fas", "fa-play"],
                 'route' => [

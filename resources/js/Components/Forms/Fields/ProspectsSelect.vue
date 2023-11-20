@@ -120,7 +120,7 @@ const isScrollAtBottom = () => {
 </script>
   
 <template>
-    <Multiselect v-model="value" mode="tags" placeholder="Select the tag" valueProp="slug" trackBy="name" label="name"
+    <Multiselect v-model="value" mode="tags" placeholder="Select the prospects" valueProp="slug" trackBy="name" label="name"
         :close-on-select="false" :searchable="true" :caret="false" :options="Options" ref="multiselectRef"
         noResultsText="No one left. Type to add new one." @open="getOptions" @search-change="SearchChange">
         <template
