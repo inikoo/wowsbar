@@ -83,7 +83,7 @@ enum MailshotStateEnum: string
             'stopped'     => [
 
                 'tooltip' => __('stopped'),
-                'icon'    => 'fal fa-paper-plane',
+                'icon'    => 'fas fa-stop',
                 'class'   => 'text-red-600'
             ],
 
