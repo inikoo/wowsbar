@@ -97,6 +97,23 @@ class IndexProspectMailshots extends InertiaAction
 
             $table
                 ->withGlobalSearch()
+                ->withEmptyState(
+                    [
+                        'title'       => __('no mailshots'),
+                        'description' => $this->canEdit ? __('Get started by creating a new mailshots.') : null,
+                        'count'       => 0,
+                        'action'      => $this->canEdit ? [
+                            'type'    => 'button',
+                            'style'   => 'create',
+                            'tooltip' => __('new mailshot'),
+                            'label'   => __('mailshot'),
+                            'route'   => [
+                                'name'       => 'org.crm.shop.prospects.mailshots.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : null
+                    ]
+                )
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
@@ -138,7 +155,7 @@ class IndexProspectMailshots extends InertiaAction
                                 'label' => __('New mailshot'),
                                 'route' => [
                                     'name'       => 'org.crm.shop.prospects.mailshots.create',
-                                    'parameters' => $this->parent->slug
+                                    'parameters' => array_values($this->originalParameters)
                                 ]
                             ]
                         ]
