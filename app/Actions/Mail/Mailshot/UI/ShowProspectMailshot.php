@@ -95,6 +95,34 @@ class ShowProspectMailshot extends InertiaAction
             ];
         }
 
+        if ($this->canEdit && $mailshot->state == MailshotStateEnum::SENDING) {
+            $action[] = [
+                'type'  => 'button',
+                'style' => 'delete',
+                'label' => __('Stop'),
+                'icon'  => ["fas", "fa-stop"],
+                'route' => [
+                    'name'       => 'org.models.mailshot.stop',
+                    'parameters' => $mailshot->id,
+                    'method'     => 'post',
+                ]
+            ];
+        }
+
+        if ($this->canEdit && $mailshot->state == MailshotStateEnum::STOPPED) {
+            $action[] = [
+                'type'  => 'button',
+                'style' => 'primary',
+                'label' => __('Resume'),
+                'icon'  => ["fas", "fa-play"],
+                'route' => [
+                    'name'       => 'org.models.mailshot.resume',
+                    'parameters' => $mailshot->id,
+                    'method'     => 'post',
+                ]
+            ];
+        }
+
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
             $action[] = [
                 'type'  => 'button',
@@ -105,7 +133,6 @@ class ShowProspectMailshot extends InertiaAction
                     'name'       => 'org.models.mailshot.send',
                     'parameters' => $mailshot->id,
                     'method'     => 'post',
-
                 ]
             ];
         }

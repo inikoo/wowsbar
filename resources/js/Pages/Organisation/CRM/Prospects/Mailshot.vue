@@ -15,11 +15,12 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 import EmailPreview from "@/Components/Email/EmailPreview.vue";
+import {faStop, faPlay} from '@fas/'
 
-import {faEnvelopeSquare, faAt, faPaperPlane} from '@fal/'
+import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
-library.add(faEnvelopeSquare, faAt, faPaperPlane)
+library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
 
 const props = defineProps<{
     title: string,
