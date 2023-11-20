@@ -9,11 +9,13 @@ const props = defineProps<{
         [key: string]: {
             recipient_builder_type: string  // query | custom | prospects
             recipient_builder_data: {
-                query_id: number
-            } | number[] | null
+                query: number
+                custom: {}
+                prospects: {}
+            }
         }
     }
-    fieldName: string
+    fieldName: string  // "query"
     fieldData: {
 
     }
@@ -36,7 +38,7 @@ const categories = [
     },
     {
         name: 'custom',
-        fieldName: ["query", 'recipient_builder_data'],
+        fieldName: ["query", 'recipient_builder_data', 'custom'],
         label: 'Custom',
         component: ProspectQueryBuilder
     },
@@ -48,21 +50,11 @@ const categories = [
     },
 ]
 
-// Store to variable to keep data while change tab
-const valueTab: { [key: string]: any } = {
-    query: 0,
-    custom: '',
-    prospects: []
-}
-
 </script>
 
 <template>
     <div class="w-full max-w-md px-2 sm:px-0">
-        <TabGroup @change="(tabIndex) => {
-                form[fieldName].recipient_builder_type = categories[tabIndex].name,
-                form[fieldName].recipient_builder_data = null
-        }">
+        <TabGroup @change="(tabIndex) => form[fieldName].recipient_builder_type = categories[tabIndex].name">
             <TabList class="flex space-x-8 ">
                 <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"
                     v-slot="{ selected }">
@@ -86,7 +78,6 @@ const valueTab: { [key: string]: any } = {
                         :tabName="category.name"
                         :fieldData="fieldData"
                         :options="options[category.name]"
-                        :valueTab="valueTab[category.name]"
                     />
                 </TabPanel>
             </TabPanels>
@@ -94,5 +85,5 @@ const valueTab: { [key: string]: any } = {
     </div>
     <!-- {{ options }} -->
     <!-- <pre>{{ form[fieldName] }}</pre> -->
-    <pre>{{ form }}</pre>
+    <!-- <pre>{{ form }}</pre> -->
 </template>
