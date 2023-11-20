@@ -85,16 +85,16 @@ class IndexMailshots extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no guest'),
-                        'description' => $this->canEdit ? __('Get started by creating a new guest.') : null,
-                        'count'       => customer()->stats->number_guests_status_active,
+                        'title'       => __('no mailshots'),
+                        'description' => $this->canEdit ? __('Get started by creating a new mailshots.') : null,
+                        'count'       => 0,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
-                            'tooltip' => __('new guest'),
-                            'label'   => __('guest'),
+                            'tooltip' => __('new mailshot'),
+                            'label'   => __('mailshot'),
                             'route'   => [
-                                'name'       => 'sysadmin.guests.create',
+                                'name'       => 'org.crm.shop.prospects.mailshots.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null

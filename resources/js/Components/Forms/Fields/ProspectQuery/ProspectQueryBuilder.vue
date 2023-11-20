@@ -10,7 +10,7 @@ import descriptor from './descriptor'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
-import { get, set } from 'lodash'
+import { get, set, isArray } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
 
 library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
@@ -28,9 +28,10 @@ const props = defineProps<{
     }
 }>()
 
-/* if (!props.form[props.fieldName]) props.form[props.fieldName] = descriptor.defaultValue */
 
 const tagsOptions = ref([])
+
+/* get tags option */
 const getTagsOptions = async () => {
     try {
         const response = await axios.get(
@@ -49,45 +50,29 @@ const getTagsOptions = async () => {
 const emits = defineEmits();
 
 
-const setFormValue = (data: Object, fieldName: String) => {
-    if (Array.isArray(fieldName)) {
-        return getNestedValue(data, fieldName);
-    } else {
-        console.log('ss', data[fieldName])
-        return !data[fieldName] ? descriptor.defaultValue : data[fieldName]
-    }
+const setFormValue = (data,fieldName) => {
+    if (isArray(fieldName)) return get(data, fieldName, descriptor.defaultValue); /* if fieldName array */
+    else return get(data, fieldName, descriptor.defaultValue); /* if fieldName string */
 };
 
-const getNestedValue = (obj: Object, keys: Array) => {
-    return keys.reduce((acc, key) => {
-        if (acc && typeof acc === "object" && key in acc) return !acc[key] ? descriptor.defaultValue : acc[key];
-        return descriptor.defaultValue;
-    }, obj);
-};
+const value = reactive(setFormValue(props.form, props.fieldName));/* get value from form */
 
-const value = reactive(setFormValue(props.form, props.fieldName));
 
+/* set form when data changes */
 const updateFormValue = (newValue) => {
     let target = props.form;
-    if (Array.isArray(props.fieldName)) {
-        set(target, props.fieldName, newValue);
-    } else {
-        target[props.fieldName] = newValue;
-    }
+    set(target, props.fieldName, newValue);
     emits("update:form", target);
 };
 
-
 watch(value, (newValue) => {
     updateFormValue(newValue);
-    props.form.errors[props.fieldName] = ''
 });
 
 onMounted(() => {
     getTagsOptions()
 })
 
-console.log(props.form)
 
 </script>
   
