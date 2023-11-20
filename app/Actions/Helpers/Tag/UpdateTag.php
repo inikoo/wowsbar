@@ -7,6 +7,7 @@
 
 namespace App\Actions\Helpers\Tag;
 
+use App\Actions\Leads\Prospect\Tags\Hydrators\TagHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Helpers\Tag;
 use App\Models\Market\Shop;
@@ -26,7 +27,10 @@ class UpdateTag
 
     public function handle(Tag $tag, array $modelData): Tag
     {
-        return $this->update($tag, $modelData);
+        $tag = $this->update($tag, $modelData);
+        TagHydrateUniversalSearch::dispatch($tag);
+
+        return $tag;
     }
 
     public function authorize(ActionRequest $request): bool
