@@ -6,8 +6,9 @@
 
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 import { useLocaleStore } from "@/Stores/locale"
-import {Link} from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 import { faEnvelope, faAsterisk } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faEnvelope, faAsterisk)
@@ -19,8 +20,7 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
-function tagRoute(tag: object)
-{
+function tagRoute(tag: object) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.tags.index':
             return route(
@@ -36,12 +36,15 @@ function tagRoute(tag: object)
 </script>
 
 <template>
-
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(label)="{ item: tag }">
             <Link :href="tagRoute(tag)">
-                {{ tag["label"]}}
+                {{ tag["label"] }}
             </Link>
+        </template>
+
+        <template #cell(actions)="{ item }">
+            <Button label="New Mailshot" :style="'secondary'" size="xs" />
         </template>
     </Table>
 </template>

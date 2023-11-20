@@ -11,7 +11,7 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithProspectsMeta;
-use App\Enums\UI\Organisation\ProspectsTagsTabsEnum;
+use App\Enums\UI\Organisation\TagsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\CrmTagResource;
 use App\InertiaTable\InertiaTable;
@@ -46,18 +46,18 @@ class IndexProspectTags extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(ProspectsTagsTabsEnum::values());
+        $this->initialisation($request)->withTab(TagsTabsEnum::values());
         $this->parent = organisation();
 
-        return $this->handle(prefix: ProspectsTagsTabsEnum::TAGS->value);
+        return $this->handle(prefix: TagsTabsEnum::TAGS->value);
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(ProspectsTagsTabsEnum::values());
+        $this->initialisation($request)->withTab(TagsTabsEnum::values());
         $this->parent = $shop;
 
-        return $this->handle(prefix: ProspectsTagsTabsEnum::TAGS->value);
+        return $this->handle(prefix: TagsTabsEnum::TAGS->value);
     }
 
     public function handle($prefix = null): LengthAwarePaginator
@@ -140,21 +140,21 @@ class IndexProspectTags extends InertiaAction
 
                 'tabs' => [
                     'current'    => $this->tab,
-                    'navigation' => ProspectsTagsTabsEnum::navigation(),
+                    'navigation' => TagsTabsEnum::navigation(),
                 ],
 
-                ProspectsTagsTabsEnum::TAGS->value => $this->tab == ProspectsTagsTabsEnum::TAGS->value ?
+                TagsTabsEnum::TAGS->value => $this->tab == TagsTabsEnum::TAGS->value ?
                     fn () => CrmTagResource::collection($tags)
                     : Inertia::lazy(fn () => CrmTagResource::collection($tags)),
 
-                ProspectsTagsTabsEnum::HISTORY->value => $this->tab == ProspectsTagsTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTagsTabsEnum::HISTORY->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsTagsTabsEnum::HISTORY->value))),
+                TagsTabsEnum::HISTORY->value => $this->tab == TagsTabsEnum::HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: TagsTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: TagsTabsEnum::HISTORY->value))),
 
 
             ]
-        )->table($this->tableStructure(prefix: ProspectsTagsTabsEnum::TAGS->value))
-            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTagsTabsEnum::HISTORY->value));
+        )->table($this->tableStructure(prefix: TagsTabsEnum::TAGS->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: TagsTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
