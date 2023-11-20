@@ -31,6 +31,8 @@ class MailshotsResource extends JsonResource
             'state'             => $mailshot->state,
             'state_label'       => $mailshot->state->labels()[$mailshot->state->value],
             'state_icon'        => $mailshot->state->stateIcon()[$mailshot->state->value],
+            'start_sending_at'  => $mailshot->start_sending_at,
+            'sent_at'           => $mailshot->sent_at,
             'number_recipients' => $mailshot->start_sending_at ? $this->number_dispatched_emails : $this->number_estimated_dispatched_emails,
             'number_delivered'  => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_delivered : null,
             'number_opened'     => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_opened : null,
