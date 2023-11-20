@@ -43,6 +43,7 @@ class SendSesEmail
             );
 
 
+
             return $dispatchedEmail;
         }
 

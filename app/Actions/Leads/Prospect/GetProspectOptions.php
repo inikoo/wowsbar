@@ -8,7 +8,6 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\InertiaAction;
-use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;

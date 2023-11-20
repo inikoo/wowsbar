@@ -7,6 +7,8 @@
 
 namespace App\Actions\Mail\MailshotSendChannel;
 
+use App\Enums\Mail\MailshotSendChannelStateEnum;
+use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -18,6 +20,12 @@ class StoreMailshotSendChannel
     public function handle(Mailshot $mailshot, array $modelData = []): MailshotSendChannel
     {
         data_set($modelData, 'number_emails', 0, overwrite: false);
+
+        $mailshot->refresh();
+        if($mailshot->state==MailshotStateEnum::STOPPED) {
+            data_set($modelData, 'state', MailshotSendChannelStateEnum::STOPPED->value);
+        }
+
         /** @var MailshotSendChannel $mailshotSendChannel */
         $mailshotSendChannel = $mailshot->channels()->create($modelData);
 

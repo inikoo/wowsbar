@@ -12,6 +12,7 @@ use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
 use App\Actions\Mail\Mailshot\UpdateMailshotSentState;
 use App\Actions\Mail\Ses\SendSesEmail;
 use App\Enums\Mail\MailshotSendChannelStateEnum;
+use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Exception;
@@ -46,6 +47,18 @@ class SendMailshotChannel
 
         foreach ($mailshot->recipients()->where('channel', $mailshotSendChannel->id)->get() as $recipient) {
 
+            $mailshot->refresh();
+            if($mailshot->state==MailshotStateEnum::STOPPED) {
+
+                UpdateMailshotSendChannel::run(
+                    $mailshotSendChannel,
+                    [
+                        'state'            => MailshotSendChannelStateEnum::STOPPED
+                    ]
+                );
+
+                return;
+            }
 
 
             $html=$emailHtmlBody;
@@ -72,6 +85,7 @@ class SendMailshotChannel
                 dispatchedEmail: $recipient->dispatchedEmail,
                 sender: $mailshot->sender()
             );
+
         }
 
 
