@@ -15,6 +15,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $subject
  * @property mixed $number_dispatched_emails
  * @property mixed $number_estimated_dispatched_emails
+ * @property mixed $number_dispatched_emails_state_delivered
+ * @property mixed $number_dispatched_emails_state_opened
  */
 class MailshotsResource extends JsonResource
 {
@@ -29,11 +31,13 @@ class MailshotsResource extends JsonResource
             'state'             => $mailshot->state,
             'state_label'       => $mailshot->state->labels()[$mailshot->state->value],
             'state_icon'        => $mailshot->state->stateIcon()[$mailshot->state->value],
-            'number_recipients' => $mailshot->start_sending_at
-                ?
-                $this->number_dispatched_emails
-                :
-                $this->number_estimated_dispatched_emails
+            'number_recipients' => $mailshot->start_sending_at ? $this->number_dispatched_emails : $this->number_estimated_dispatched_emails,
+            'number_delivered'  => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_delivered : null,
+            'number_opened'     => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_opened : null,
+            'percentage_opened' => $mailshot->start_sending_at ?
+                $this->number_dispatched_emails_state_opened  // todo use ww-30 for this percentage($this->number_dispatched_emails_state_opened,$this->number_dispatched_emails_state_delivered)
+                : null,
+
 
         ];
     }

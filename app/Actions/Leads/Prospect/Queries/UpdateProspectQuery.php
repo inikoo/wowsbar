@@ -35,7 +35,7 @@ class UpdateProspectQuery
 
     public function handle(Shop $shop, Query $query, array $modelData): Query
     {
-        $data = [];
+        $data         = [];
         $queryBuilder = Arr::get($modelData, 'query_builder');
 
         if ($queryBuilder) {
@@ -44,7 +44,7 @@ class UpdateProspectQuery
                 [
                     'model_type' => class_basename(Prospect::class),
                     'constrains' => [
-                        'with' => $queryBuilder['query'],
+                        'with'  => $queryBuilder['query'],
                         'group' => [
                             'where' => [
                                 'contact_state',
@@ -58,9 +58,9 @@ class UpdateProspectQuery
                     ],
                     'arguments' => $queryBuilder['last_contact']['state'] ? [
                         '__date__' => [
-                            'type' => 'dateSubtraction',
+                            'type'  => 'dateSubtraction',
                             'value' => [
-                                'unit' => $queryBuilder['last_contact']['data']['unit'],
+                                'unit'     => $queryBuilder['last_contact']['data']['unit'],
                                 'quantity' => $queryBuilder['last_contact']['data']['quantity']
                             ]
                         ]
@@ -83,9 +83,9 @@ class UpdateProspectQuery
         }
 
         foreach ($data as $queryBuilderData) {
-            $queryBuilderData['is_seeded'] = true;
+            $queryBuilderData['is_seeded']  = true;
             $queryBuilderData['scope_type'] = 'Shop';
-            $queryBuilderData['scope_id'] = $shop->id;
+            $queryBuilderData['scope_id']   = $shop->id;
 
             $query = UpdateQuery::run($query, $queryBuilderData);
             QueryHydrateCount::run($query);
@@ -106,7 +106,7 @@ class UpdateProspectQuery
     public function htmlResponse(Query $query): RedirectResponse
     {
         return redirect()->route('org.crm.shop.prospects.lists.edit', [
-            'shop' => $this->scope->slug,
+            'shop'  => $this->scope->slug,
             'query' => $query->slug,
         ]);
     }
@@ -122,12 +122,12 @@ class UpdateProspectQuery
     public function rules(ActionRequest $request): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'query_builder.query' => ['sometimes'],
-            'query_builder.tag.state' => ['sometimes', 'string'],
-            'query_builder.tag.tags' => ['sometimes', 'array'],
-            'query_builder.last_contact.state' => ['sometimes', 'boolean'],
-            'query_builder.last_contact.data.unit' => ['sometimes:query_builder.last_contact.state,true'],
+            'name'                                     => ['sometimes', 'string', 'max:255'],
+            'query_builder.query'                      => ['sometimes'],
+            'query_builder.tag.state'                  => ['sometimes', 'string'],
+            'query_builder.tag.tags'                   => ['sometimes', 'array'],
+            'query_builder.last_contact.state'         => ['sometimes', 'boolean'],
+            'query_builder.last_contact.data.unit'     => ['sometimes:query_builder.last_contact.state,true'],
             'query_builder.last_contact.data.quantity' => ['sometimes:query_builder.last_contact.state,true']
         ];
     }
@@ -135,10 +135,10 @@ class UpdateProspectQuery
     public function getValidationMessages(): array
     {
         return [
-            'query_builder.query.required' => __('The query is required'),
-            'query_builder.tag.state.required' => __('The tag state is required'),
-            'query_builder.last_contact.state.required' => __('The last contact state is required'),
-            'query_builder.last_contact.data.unit.required_if' => __('The last contact unit is required'),
+            'query_builder.query.required'                         => __('The query is required'),
+            'query_builder.tag.state.required'                     => __('The tag state is required'),
+            'query_builder.last_contact.state.required'            => __('The last contact state is required'),
+            'query_builder.last_contact.data.unit.required_if'     => __('The last contact unit is required'),
             'query_builder.last_contact.data.quantity.required_if' => __('The last contact quantity is required'),
         ];
     }
