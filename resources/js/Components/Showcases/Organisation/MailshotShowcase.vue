@@ -11,6 +11,7 @@ import { faPaperPlane } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
+import CountUp from 'vue-countup-v3';
 
 library.add(faPaperPlane)
 
@@ -153,7 +154,8 @@ const compSortSteps = computed(() => {
                     <dt class="text-gray-400 capitalize">{{ statistic.label }}</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-2xl font-semibold text-org-600">
-                            {{ locale.number(statistic.value) }}
+                            <!-- {{ locale.number(statistic.value) }} -->
+                            <CountUp :endVal="statistic.value" />
                             <!-- <span class="ml-2 text-sm font-medium text-gray-500">from {{ statistic.value }}</span> -->
                         </div>
 
