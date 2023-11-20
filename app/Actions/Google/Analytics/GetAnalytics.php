@@ -44,7 +44,7 @@ class GetAnalytics
     {
         $result =  $this->handle($command->argument('property'), Carbon::make($command->argument('startAt')));
 
-        print_r($result);
+        //print_r($result);
 
         return 0;
     }

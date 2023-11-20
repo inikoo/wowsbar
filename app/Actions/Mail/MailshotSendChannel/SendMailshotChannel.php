@@ -7,10 +7,11 @@
 
 namespace App\Actions\Mail\MailshotSendChannel;
 
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmails;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateCumulativeDispatchedEmailsState;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\UpdateMailshotSentState;
 use App\Actions\Mail\Ses\SendSesEmail;
+use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Enums\Mail\MailshotSendChannelStateEnum;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
@@ -97,8 +98,8 @@ class SendMailshotChannel
             ]
         );
         $mailshot->refresh();
-        MailshotHydrateSentEmails::run($mailshot);
-        MailshotHydrateDispatchedEmails::run($mailshot);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SENT);
+        MailshotHydrateDispatchedEmailsState::run($mailshot);
         UpdateMailshotSentState::run($mailshot);
 
     }

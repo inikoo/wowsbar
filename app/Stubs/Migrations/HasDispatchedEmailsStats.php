@@ -17,7 +17,7 @@ trait HasDispatchedEmailsStats
 
         $table->unsignedInteger("number_emails")->default(0);
         $table->unsignedInteger("number_error_emails")->default(0);
-        $table->unsignedInteger("number_rejected__emails")->default(0);
+        $table->unsignedInteger("number_rejected_emails")->default(0);
         $table->unsignedInteger("number_sent_emails")->default(0);
         $table->unsignedInteger("number_delivered_emails")->default(0);
         $table->unsignedInteger("number_hard_bounced_emails")->default(0);

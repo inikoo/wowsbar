@@ -4,7 +4,7 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
 use App\Actions\Mail\MailshotRecipient\StoreMailshotRecipient;
 use App\Actions\Mail\MailshotSendChannel\SendMailshotChannel;
@@ -103,7 +103,7 @@ class ProcessSendMailshot
             ]
         );
         MailshotHydrateEmails::run($mailshot);
-        MailshotHydrateDispatchedEmails::run($mailshot);
+        MailshotHydrateDispatchedEmailsState::run($mailshot);
 
     }
 

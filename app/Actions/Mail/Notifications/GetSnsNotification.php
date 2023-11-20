@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Notifications;
 
+use App\Actions\Mail\SesNotification\ProcessSesNotification;
 use App\Models\Mail\SesNotification;
 use Aws\Sns\Message;
 use Aws\Sns\MessageValidator;
@@ -41,6 +42,9 @@ class GetSnsNotification
                             'data'      => $messageData
                         ]
                     );
+
+                    ProcessSesNotification::dispatch($sesNotification);
+
                 }
 
 

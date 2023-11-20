@@ -27,6 +27,12 @@ class ProcessSesNotification
     {
         $dispatchedEmail = DispatchedEmail::where('provider_message_id', $sesNotification->message_id)->first();
 
+        if (!$dispatchedEmail) {
+            $sesNotification->delete();
+
+            return [];
+        }
+
         switch (Arr::get($sesNotification->data, 'eventType')) {
             case 'Bounce':
                 $type = DispatchedEmailEventTypeEnum::BOUNCE;
@@ -58,10 +64,10 @@ class ProcessSesNotification
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state'          => $isHardBounce ? DispatchedEmailStateEnum::HARD_BOUNCE : DispatchedEmailStateEnum::SOFT_BOUNCE,
-                        'date'           => $date,
-                        'is_hard_bounced'=> $isHardBounce,
-                        'is_soft_bounced'=> !$isHardBounce
+                        'state'           => $isHardBounce ? DispatchedEmailStateEnum::HARD_BOUNCE : DispatchedEmailStateEnum::SOFT_BOUNCE,
+                        'date'            => $date,
+                        'is_hard_bounced' => $isHardBounce,
+                        'is_soft_bounced' => !$isHardBounce
 
                     ]
                 );
@@ -75,9 +81,9 @@ class ProcessSesNotification
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state'  => DispatchedEmailStateEnum::SPAM,
-                        'is_spam'=> true,
-                        'date'   => $date,
+                        'state'   => DispatchedEmailStateEnum::SPAM,
+                        'is_spam' => true,
+                        'date'    => $date,
                     ]
                 );
                 break;
@@ -102,8 +108,8 @@ class ProcessSesNotification
                     UpdateDispatchedEmail::run(
                         $dispatchedEmail,
                         [
-                            'state'      => DispatchedEmailStateEnum::REJECTED,
-                            'is_rejected'=> true,
+                            'state'       => DispatchedEmailStateEnum::REJECTED,
+                            'is_rejected' => true,
                         ]
                     );
                 }
@@ -120,9 +126,9 @@ class ProcessSesNotification
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state'   => DispatchedEmailStateEnum::OPENED,
-                        'date'    => $date,
-                        'is_open' => true
+                        'state'     => DispatchedEmailStateEnum::OPENED,
+                        'date'      => $date,
+                        'is_opened' => true
                     ]
                 );
 
@@ -160,17 +166,16 @@ class ProcessSesNotification
         $sesNotification->delete();
 
 
-        if ($dispatchedEmail) {
-            $eventData = [
-                'type' => $type,
-                'date' => $date,
-                'data' => $data
-            ];
+        $eventData = [
+            'type' => $type,
+            'date' => $date,
+            'data' => $data
+        ];
 
-            //  dd($eventData);
+        //  dd($eventData);
 
-            $dispatchedEmail->events()->create($eventData);
-        }
+        $dispatchedEmail->events()->create($eventData);
+
 
         return null;
     }
@@ -183,7 +188,7 @@ class ProcessSesNotification
     {
         if ($command->argument('id')) {
             try {
-                $sesNotification = SesNotification::find('slug', $command->argument('id'));
+                $sesNotification = SesNotification::find($command->argument('id'));
                 $command->line($sesNotification->message_id);
                 $this->handle($sesNotification);
 

@@ -28,16 +28,18 @@ const props = defineProps<{
         }
         stats: {
             number_estimated_dispatched_emails: number
-            number_dispatched_emails_state_clicked: number
             number_dispatched_emails: number
-            number_dispatched_emails_state_error: number
-            number_dispatched_emails_state_hard_bounce: number
-            number_dispatched_emails_state_soft_bounce: number
+            number_error_emails: number
+            number_rejected_emails: number
+            number_sent_emails: number
+            number_delivered_emails: number
+            number_hard_bounced_emails: number
+            number_soft_bounced_emails: number
+            number_opened_emails: number
+            number_clicked_emails: number
+            number_spam_emails: number
+            number_unsubscribed_emails: number
 
-            number_dispatched_emails_state_delivered: number
-            number_dispatched_emails_state_opened: number
-            number_dispatched_emails_state_spam: number
-            number_dispatched_emails_state_unsubscribed: number
         }
         recipient_stored_at: string
         schedule_at: string
@@ -51,6 +53,8 @@ const props = defineProps<{
     }
     tab?: string
 }>()
+
+
 
 const dataStatistic = [
 
@@ -73,24 +77,24 @@ const dataStatistic = [
         label: trans('Bounced')
     },
     {
-        value: props.data.stats.number_dispatched_emails_state_delivered,
+        value: props.data.stats.number_delivered_emails,
         label: trans('Delivered')
     },
 
     {
-        value: props.data.stats.number_dispatched_emails_state_opened,
+        value: props.data.stats.number_opened_emails,
         label: 'Opened'
     },
     {
-        value: props.data.stats.number_dispatched_emails_state_clicked,
+        value: props.data.stats.number_clicked_emails,
         label: 'Clicked'
     },
     {
-        value: props.data.stats.number_dispatched_emails_state_spam,
+        value: props.data.stats.number_spam_emails,
         label: 'Spam'
     },
     {
-        value: props.data.stats.number_dispatched_emails_state_unsubscribed,
+        value: props.data.stats.number_unsubscribed_emails,
         label: 'Unsubscribed'
     },
 ]
@@ -149,6 +153,7 @@ const compSortSteps = computed(() => {
 
 
 <template>
+    {{ data }}
     <!-- <pre>{{ compSortSteps }}</pre>------------------ -->
     <!-- <pre>{{ stepsOptions }}</pre>--------------- -->
     <!-- <div v-for="xx, zz in compSortSteps">

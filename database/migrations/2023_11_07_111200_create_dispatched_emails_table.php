@@ -29,6 +29,10 @@ return new class () extends Migration {
             $table->boolean('is_delivered')->default(false);
             $table->boolean('is_hard_bounced')->default(false);
             $table->boolean('is_soft_bounced')->default(false);
+            $table->boolean('is_opened')->default(false);
+            $table->boolean('is_clicked')->default(false);
+            $table->boolean('is_spam')->default(false);
+            $table->boolean('is_unsubscribed')->default(false);
             $table->dateTimeTz('sent_at')->nullable();
             $table->dateTimeTz('delivered_at')->nullable();
             $table->dateTimeTz('date')->index();

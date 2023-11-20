@@ -28,6 +28,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $is_delivered
  * @property bool $is_hard_bounced
  * @property bool $is_soft_bounced
+ * @property bool $is_opened
+ * @property bool $is_clicked
+ * @property bool $is_spam
+ * @property bool $is_unsubscribed
  * @property string|null $sent_at
  * @property string|null $delivered_at
  * @property string $date
@@ -51,13 +55,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereDeliveredAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsClicked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsDelivered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsError($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsHardBounced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsOpened($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsRejected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSoftBounced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsSpam($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsTest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereIsUnsubscribed($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereOutboxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereProviderMessageId($value)

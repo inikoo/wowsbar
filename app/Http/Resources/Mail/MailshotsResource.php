@@ -23,6 +23,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $number_dispatched_emails_state_unsubscribed
  * @property mixed $number_dispatched_emails_state_spam
  * @property mixed $number_dispatched_emails_state_error
+ * @property mixed $number_delivered_emails
+ * @property mixed $number_spam_emails
+ * @property mixed $number_opened_emails
+ * @property mixed $number_clicked_emails
+ * @property mixed $number_unsubscribed_emails
  */
 class MailshotsResource extends JsonResource
 {
@@ -32,7 +37,7 @@ class MailshotsResource extends JsonResource
         $mailshot = $this;
 
         $numberBounced = $this->number_dispatched_emails_state_error + $this->number_dispatched_emails_state_hard_bounce + $this->number_dispatched_emails_state_soft_bounce;
-
+        //Hard bounces, Clicks, Complaints, Deliveries, Delivery delays, Opens, Rejects
         return [
             'slug'                 => $this->slug,
             'subject'              => $this->subject,
@@ -51,16 +56,16 @@ class MailshotsResource extends JsonResource
             'number_delivered'       => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_delivered : null,
             'number_opened'          => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_opened : null,
             'percentage_opened'      => $mailshot->start_sending_at ?
-                percentage($this->number_dispatched_emails_state_clicked, $this->number_dispatched_emails_state_delivered)
+                percentage($this->number_opened_emails, $this->number_delivered_emails)
                 : null,
             'percentage_clicked'     => $mailshot->start_sending_at ?
-                percentage($this->number_dispatched_emails_state_opened, $this->number_dispatched_emails_state_delivered)
+                percentage($this->number_clicked_emails, $this->number_delivered_emails)
                 : null,
             'percentage_unsubscribe' => $mailshot->start_sending_at ?
-                percentage($this->number_dispatched_emails_state_delivered, $this->number_dispatched_emails_state_unsubscribed)
+                percentage($this->number_unsubscribed_emails, $this->number_delivered_emails)
                 : null,
             'percentage_spam'        => $mailshot->start_sending_at ?
-                percentage($this->number_dispatched_emails_state_delivered, $this->number_dispatched_emails_state_spam)
+                percentage($this->number_spam_emails, $this->number_delivered_emails)
                 : null,
 
         ];

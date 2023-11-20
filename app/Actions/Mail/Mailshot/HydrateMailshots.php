@@ -8,11 +8,11 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\HydrateModel;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmails;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateCumulativeDispatchedEmailsState;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateErrorEmails;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateSentEmails;
+use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Collection;
 
@@ -20,11 +20,19 @@ class HydrateMailshots extends HydrateModel
 {
     public function handle(Mailshot $mailshot): void
     {
-        MailshotHydrateDispatchedEmails::run($mailshot);
+        MailshotHydrateDispatchedEmailsState::run($mailshot);
         MailshotHydrateEmails::run($mailshot);
-        MailshotHydrateErrorEmails::run($mailshot);
         MailshotHydrateEstimatedEmails::run($mailshot);
-        MailshotHydrateSentEmails::run($mailshot);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::ERROR);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::REJECTED);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SENT);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::DELIVERED);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::HARD_BOUNCE);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SOFT_BOUNCE);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::OPENED);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::CLICKED);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SPAM);
+        MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::UNSUBSCRIBED);
 
     }
 

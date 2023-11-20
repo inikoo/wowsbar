@@ -15,7 +15,7 @@ use App\Models\Mail\Mailshot;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class MailshotHydrateDispatchedEmails
+class MailshotHydrateDispatchedEmailsState
 {
     use AsAction;
     use WithEnumStats;
