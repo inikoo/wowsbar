@@ -14,7 +14,9 @@ const props = defineProps<{
     form: {
         [key: string]: {
             recipient_builder_type: string
-            recipient_builder_data: number
+            recipient_builder_data: {
+                query_id: number
+            }
         }
     }
     fieldName: string
@@ -28,6 +30,10 @@ const props = defineProps<{
         }[]
     }
 }>()
+
+props.form.query.recipient_builder_data = {
+    query_id: 3
+}
 
 // const emits = defineEmits<{
 //     (e: 'update:modelValue', val: string): void
@@ -52,7 +58,7 @@ const props = defineProps<{
             <tbody class="divide-y divide-gray-200 bg-white">
                 <tr v-for="option in options.data" :key="option.id" class=""
                     :class="[
-                        option.id == form[fieldName].recipient_builder_data ? 'bg-org-100 text-org-700' : '',
+                        option.id == form[fieldName].recipient_builder_data.query_id ? 'bg-org-100 text-org-700' : '',
                         option.number_items < 1? 'bg-gray-100 text-gray-400' : 'text-gray-500'
                     ]">
                     <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
@@ -72,7 +78,7 @@ const props = defineProps<{
                     <td class="relative py-2 px-3 text-right font-medium">
                         <div v-if="option.number_items > 0" >
                             <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form[fieldName].recipient_builder_data" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
+                            <input v-model="form[fieldName].recipient_builder_data.query_id" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
                         </div>
                     </td>
                 </tr>
