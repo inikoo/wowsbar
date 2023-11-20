@@ -31,7 +31,9 @@ class StoreDispatchedEmail
             ], $modelData)
         );
 
-        OutboxHydrateEmails::dispatch($dispatchedEmail->outbox);
+        if($dispatchedEmail->outbox_id) {
+            OutboxHydrateEmails::dispatch($dispatchedEmail->outbox);
+        }
 
         return $dispatchedEmail;
     }
