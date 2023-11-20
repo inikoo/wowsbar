@@ -17,7 +17,7 @@ use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\UI\Organisation\MailshotTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Mail\DispatchedEmailResource;
-use App\Http\Resources\Mail\MailshotRecipientsResource;
+use App\Http\Resources\Mail\MailshotEstimatedRecipientsResource;
 use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -58,16 +58,14 @@ class ShowProspectMailshot extends InertiaAction
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
+        $iconActions = [];
 
-        $iconActions=[];
-
-        if($this->canDelete and !$mailshot->start_sending_at) {
-            $iconActions[]=$this->getDeleteActionIcon($request);
+        if ($this->canDelete and !$mailshot->start_sending_at) {
+            $iconActions[] = $this->getDeleteActionIcon($request);
         }
-        if($this->canEdit and !$mailshot->start_sending_at) {
-            $iconActions[]=$this->getEditActionIcon($request);
+        if ($this->canEdit and !$mailshot->start_sending_at) {
+            $iconActions[] = $this->getEditActionIcon($request);
         }
-
 
 
         if ($this->canEdit && $mailshot->state == MailshotStateEnum::READY) {
@@ -160,7 +158,7 @@ class ShowProspectMailshot extends InertiaAction
                     ?
                     match ($mailshot->state) {
                         MailshotStateEnum::IN_PROCESS,
-                        MailshotStateEnum::READY => fn () => MailshotRecipientsResource::collection(
+                        MailshotStateEnum::READY => fn () => MailshotEstimatedRecipientsResource::collection(
                             IndexEstimatedRecipients::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
@@ -175,7 +173,7 @@ class ShowProspectMailshot extends InertiaAction
                     }
                     : Inertia::lazy(fn () => match ($mailshot->state) {
                         MailshotStateEnum::IN_PROCESS,
-                        MailshotStateEnum::READY => fn () => MailshotRecipientsResource::collection(
+                        MailshotStateEnum::READY => fn () => MailshotEstimatedRecipientsResource::collection(
                             IndexEstimatedRecipients::run(
                                 $mailshot,
                                 prefix: MailshotTabsEnum::RECIPIENTS->value
@@ -209,7 +207,14 @@ class ShowProspectMailshot extends InertiaAction
             IndexHistory::make()->tableStructure(
                 prefix: MailshotTabsEnum::CHANGELOG->value
             )
-        )->table(IndexDispatchedEmail::make()->tableStructure(prefix: MailshotTabsEnum::RECIPIENTS->value));
+        )->table(
+            match ($mailshot->state) {
+                MailshotStateEnum::IN_PROCESS,
+                MailshotStateEnum::READY =>
+                IndexEstimatedRecipients::make()->tableStructure(prefix: MailshotTabsEnum::RECIPIENTS->value),
+                default => IndexDispatchedEmail::make()->tableStructure(prefix: MailshotTabsEnum::RECIPIENTS->value)
+            }
+        );
     }
 
     private function getEmailPreview(Mailshot $mailshot): array
