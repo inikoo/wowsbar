@@ -2,10 +2,12 @@
 import { ref, watchEffect } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
 import PureRadio from '@/Components/Pure/PureRadio.vue'
-
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk, faCodeBranch, faTags } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
+import PureInput from '@/Components/Pure/PureInput.vue'
 library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 
 
@@ -58,16 +60,61 @@ const emits = defineEmits<{
                     ]">
                     <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
                     <td class="">
-                        <div class="flex items-center gap-x-1">
+                      <!-- <div class="flex items-center gap-x-1">
+                      {{  option }}
                             <div v-if="option.constrains.with === 'email'" class="inline-flex items-start" title="Prospect have email">
-                                <!-- <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' /> -->
+                              
                                 <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
                             </div>
                             <p v-if="option.constrains.where?.[2]" class="">(Not contacted yet)</p>
                             <p v-if="option.constrains?.group" class="">
                                 (Last contacted at: {{ option.arguments?.__date__?.value?.quantity }} {{ option.arguments?.__date__?.value?.unit }})
                             </p>
-                        </div>
+                        </div>  -->
+
+                        <div class="flex items-center gap-x-2">
+                <!-- Icon: Email -->
+                <div v-if="option.constrains.with === 'email'" class="inline-flex items-start">
+                    <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' />
+                    <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
+                </div>
+
+                <p v-if="option.constrains.where?.[2]" class="text-gray-500">(Not contacted yet)</p>
+                <p v-if="option.constrains?.group" class="text-gray-500 whitespace-nowrap">
+                    (Last contacted at:
+                    <div class="relative inline-flex">
+                        <Popover :popover-placement="'bottom-start'" v-slot="{ open }">
+                            <PopoverButton tabindex="-1">
+                                <div class="font-bold specialUnderlineOrg py-1 focus:outline-none focus:ring-0">
+                                    {{ option.arguments.__date__?.value?.quantity ? option.arguments.__date__?.value?.quantity : 0  }} {{ option.arguments.__date__?.value?.unit }}{{ option.arguments.__date__?.value?.quantity > 1 ? 's' : '' }})
+                                </div>
+                            </PopoverButton>
+
+                            <!-- Popover -->
+                            <transition>
+                                <PopoverPanel class="absolute w-64 max-w-md z-[99] mt-3 right-0 translate-x-2 transform py-3 px-4 bg-gray-100 ring-1 ring-gray-300 rounded-md shadow-md ">
+                                    <div class="flex flex-col gap-y-2">
+                                        <div class="text-center text-base font-semibold">Select your time</div>
+                                        <div class="flex gap-x-2">
+                                            <div v-if="option.arguments.__date__?.value" class="w-20">
+                                                <PureInput v-model="option.arguments.__date__.value.quantity" type="number" :minValue="1" :caret="false" placeholder="7" />
+                                            </div>
+                                            <div v-if="option.arguments.__date__?.value?.unit" class="w-full">
+                                                <PureMultiselect v-model="option.arguments.__date__.value.unit" :options="['day', 'week', 'month']" required />
+                                            </div>
+                                        </div>
+                                        <div class="mt-5 text-gray-500 italic flex justify-between">
+                                            <p>Will be send in <span class="font-bold">{{ option.arguments.__date__?.value?.quantity }} {{  option.arguments.__date__?.value?.unit }}</span></p>
+                                            <Button label="Set" size="xxs" />
+                                        </div>
+                                    </div>
+                                </PopoverPanel>
+                            </transition>
+                        </Popover>
+                    </div>
+                </p>
+            </div>
+                        
                     </td>
                     <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
                     <td class="relative py-2 px-3 text-right font-medium">
