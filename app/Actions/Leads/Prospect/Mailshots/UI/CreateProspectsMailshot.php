@@ -64,6 +64,7 @@ class CreateProspectsMailshot extends InertiaAction
                         'query'  => IndexProspectQueries::run(),
                         'custom' => '',
                     ],
+                    'full'      => true,
                     'value'     => [
                         'recipient_builder_type' => 'query',
                         'recipient_builder_data' => [

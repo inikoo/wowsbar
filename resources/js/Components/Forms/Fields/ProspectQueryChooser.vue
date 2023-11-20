@@ -54,7 +54,7 @@ const categories = [
 </script>
 
 <template>
-    <div class="w-full max-w-md px-2 sm:px-0">
+    <div class="w-full px-2 sm:px-0">
         <TabGroup @change="(tabIndex) => form[fieldName].recipient_builder_type = categories[tabIndex].name">
             <TabList class="flex space-x-8 ">
                 <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"

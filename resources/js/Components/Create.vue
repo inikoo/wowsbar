@@ -165,8 +165,9 @@ onMounted(() => {
                     <div class="mt-2 pt-4 sm:pt-5">
                         <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
                             <dl class="divide-y divide-green-200  ">
-                                <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
-
+                                <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4"
+                                    :class="fieldData.full ? '' : 'max-w-2xl'"
+                                >
                                     <!-- Title of Field -->
                                     <dt class="text-sm font-medium text-gray-500 capitalize">
                                         <div class="inline-flex items-start leading-none">
@@ -177,8 +178,8 @@ onMounted(() => {
                                         </div>
                                     </dt>
 
-                                    <!-- Field -->
-                                    <dd class="sm:col-span-2">
+                                    <!-- Field (Full: to full the component field i.e create Prospects Mailshot) -->
+                                    <dd :class="fieldData.full ? 'sm:col-span-3' : 'sm:col-span-2'">
                                         <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                             <div class="relative flex-grow">
                                                 <!-- Dynamic component -->
