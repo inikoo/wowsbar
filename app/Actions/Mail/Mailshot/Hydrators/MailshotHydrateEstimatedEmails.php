@@ -74,9 +74,9 @@ class MailshotHydrateEstimatedEmails
         }
     }
 
-    public function getNumberEstimatedRecipients(array $recipients_recipe): int
+    public function getNumberEstimatedRecipients(array $recipientsRecipe): int
     {
-        $query = Query::find(Arr::get($recipients_recipe, 'query_id'));
+        $query = Query::find(Arr::get($recipientsRecipe, 'query_id'));
 
         $queryBuilder = BuildQuery::run($query);
 
