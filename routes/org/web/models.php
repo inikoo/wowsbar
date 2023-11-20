@@ -44,11 +44,13 @@ use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\DeleteMailshot;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
+use App\Actions\Mail\Mailshot\ResumeMailshot;
 use App\Actions\Mail\Mailshot\SendMailshot;
 use App\Actions\Mail\Mailshot\SendMailshotTest;
 use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
+use App\Actions\Mail\Mailshot\StopMailshot;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
@@ -95,11 +97,11 @@ Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.rem
 
 Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
-Route::post('/shop/{shop:id}/prospect/tags', [StoreTag::class,'inShop'])->name('shop.prospect.tag.store');
-Route::patch('/shop/{shop}/prospect/tags/{tag}', [UpdateTag::class,'inShop'])->name('shop.prospect.tag.update');
+Route::post('/shop/{shop:id}/prospect/tags', [StoreTag::class, 'inShop'])->name('shop.prospect.tag.store');
+Route::patch('/shop/{shop}/prospect/tags/{tag}', [UpdateTag::class, 'inShop'])->name('shop.prospect.tag.update');
 
-Route::post('/prospect/tags', [StoreTag::class,'inProspect'])->name('prospect.tag.store');
-Route::patch('/prospect/tags/{tag}', [UpdateTag::class,'inProspect'])->name('prospect.tag.update');
+Route::post('/prospect/tags', [StoreTag::class, 'inProspect'])->name('prospect.tag.store');
+Route::patch('/prospect/tags/{tag}', [UpdateTag::class, 'inProspect'])->name('prospect.tag.update');
 Route::get('/shop/{shop}/prospect/tags/{tag}', DeleteTagsProspect::class)->name('prospect.tag.delete');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
@@ -142,19 +144,17 @@ Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}/state', UpdateWebsiteState::class)->name('state.update');
     Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
 
-    Route::post('{website:id}/images/header', [UploadImagesToWebsite::class,'header'])->name('header.images.store');
-    Route::post('{website:id}/images/footer', [UploadImagesToWebsite::class,'footer'])->name('footer.images.store');
-    Route::post('{website:id}/images/favicon', [UploadImagesToWebsite::class,'favicon'])->name('favicon.images.store');
+    Route::post('{website:id}/images/header', [UploadImagesToWebsite::class, 'header'])->name('header.images.store');
+    Route::post('{website:id}/images/footer', [UploadImagesToWebsite::class, 'footer'])->name('footer.images.store');
+    Route::post('{website:id}/images/favicon', [UploadImagesToWebsite::class, 'favicon'])->name('favicon.images.store');
 
     Route::post('{website:id}/header/content', UpdateWebsiteHeaderContent::class)->name('header.content.update');
-    Route::post('{website:id}/header/publish', [PublishWebsiteMarginal::class,'header'])->name('header.content.publish');
+    Route::post('{website:id}/header/publish', [PublishWebsiteMarginal::class, 'header'])->name('header.content.publish');
     Route::get('{website:id}/header/content', ShowWebsiteHeaderContent::class)->name('header.content.show');
 
     Route::post('{website:id}/footer/content', UpdateWebsiteFooterContent::class)->name('footer.content.update');
-    Route::post('{website:id}/footer/publish', [PublishWebsiteMarginal::class,'footer'])->name('footer.content.publish');
+    Route::post('{website:id}/footer/publish', [PublishWebsiteMarginal::class, 'footer'])->name('footer.content.publish');
     Route::get('{website:id}/footer/content', ShowWebsiteFooterContent::class)->name('footer.content.show');
-
-
 });
 
 Route::prefix('webpage')->as('webpage.')->group(function () {
@@ -184,7 +184,6 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
     Route::post('users', StoreOrgCustomerUser::class)->name('customer-user.store');
     Route::delete('', DeleteCustomer::class)->name('delete');
-
 });
 
 Route::patch('websites/{customerWebsite:id}', UpdateCustomerWebsite::class)->name('customer-website.update');
@@ -198,6 +197,9 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
 
     Route::post('{mailshot:id}/send', SendMailshot::class)->name('send');
+    Route::post('{mailshot:id}/stop', StopMailshot::class)->name('stop');
+    Route::post('{mailshot:id}/resume', ResumeMailshot::class)->name('resume');
+
     Route::delete('{mailshot:id}/delete', DeleteMailshot::class)->name('delete');
 
     Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
