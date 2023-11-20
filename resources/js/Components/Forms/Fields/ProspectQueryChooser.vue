@@ -10,7 +10,7 @@ const props = defineProps<{
             recipient_builder_type: string  // query | custom | prospects
             recipient_builder_data: {
                 query_id: number
-            } | number[]
+            } | number[] | null
         }
     }
     fieldName: string
@@ -59,7 +59,10 @@ const valueTab: { [key: string]: any } = {
 
 <template>
     <div class="w-full max-w-md px-2 sm:px-0">
-        <TabGroup @change="(tabIndex) => form[fieldName].recipient_builder_type = categories[tabIndex].name">
+        <TabGroup @change="(tabIndex) => {
+                form[fieldName].recipient_builder_type = categories[tabIndex].name,
+                form[fieldName].recipient_builder_data = null
+        }">
             <TabList class="flex space-x-8 ">
                 <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"
                     v-slot="{ selected }">
