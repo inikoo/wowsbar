@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
 import PureRadio from '@/Components/Pure/PureRadio.vue'
 
@@ -10,12 +10,11 @@ library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 
 
 const props = defineProps<{
+    valueTab: number
     form: {
-        query: {
+        [key: string]: {
             recipient_builder_type: string
-            dataTab: {
-                query: string
-            }
+            recipient_builder_data: number
         }
     }
     fieldName: string
@@ -25,13 +24,14 @@ const props = defineProps<{
         data: {
             id: number
             name: string
+            number_items: number
         }[]
     }
 }>()
 
-const emits = defineEmits<{
-    (e: 'update:modelValue', val: string): void
-}>()
+// const emits = defineEmits<{
+//     (e: 'update:modelValue', val: string): void
+// }>()
 
 </script>
 
@@ -52,7 +52,7 @@ const emits = defineEmits<{
             <tbody class="divide-y divide-gray-200 bg-white">
                 <tr v-for="option in options.data" :key="option.id" class=""
                     :class="[
-                        option.id == form[fieldName].dataTab[tabName] ? 'bg-org-100 text-org-700' : '',
+                        option.id == form[fieldName].recipient_builder_data ? 'bg-org-100 text-org-700' : '',
                         option.number_items < 1? 'bg-gray-100 text-gray-400' : 'text-gray-500'
                     ]">
                     <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
@@ -72,7 +72,7 @@ const emits = defineEmits<{
                     <td class="relative py-2 px-3 text-right font-medium">
                         <div v-if="option.number_items > 0" >
                             <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form[fieldName].dataTab[tabName]" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
+                            <input v-model="form[fieldName].recipient_builder_data" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none text-org-500 focus:outline-org-500" />
                         </div>
                     </td>
                 </tr>

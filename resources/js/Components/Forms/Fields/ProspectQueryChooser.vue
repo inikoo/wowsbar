@@ -7,7 +7,10 @@ import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/Prospe
 const props = defineProps<{
     form: {
         [key: string]: {
-            recipient_builder_type: string
+            recipient_builder_type: string  // query | custom | prospects
+            recipient_builder_data: {
+                query_id: number
+            } | number[]
         }
     }
     fieldName: string
@@ -45,7 +48,12 @@ const categories = [
     },
 ]
 
-
+// Store to variable to keep data while change tab
+const valueTab: { [key: string]: any } = {
+    query: 0,
+    custom: '',
+    prospects: []
+}
 
 </script>
 
@@ -70,13 +78,19 @@ const categories = [
             <TabPanels class="mt-2">
                 <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
                     class="rounded bg-gray-100 p-3 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none">
-                    <component :is="category.component" :form="form" :fieldName="category.fieldName"
-                        :tabName="category.name" :fieldData="fieldData" :options="options[category.name]" />
+                    <component :is="category.component"
+                        :form="form"
+                        :fieldName="category.fieldName"
+                        :tabName="category.name"
+                        :fieldData="fieldData"
+                        :options="options[category.name]"
+                        :valueTab="valueTab[category.name]"
+                    />
                 </TabPanel>
             </TabPanels>
         </TabGroup>
     </div>
     <!-- {{ options }} -->
     <!-- <pre>{{ form[fieldName] }}</pre> -->
-    <!-- <pre>{{ form }}</pre> -->
+    <pre>{{ form }}</pre>
 </template>
