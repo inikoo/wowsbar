@@ -22,6 +22,7 @@ import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
+import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 library.add(
     faStickyNote,
@@ -46,6 +47,7 @@ const props = defineProps<{
         navigation: object;
     }
     showcase?:object
+    history?: object
 }>()
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
@@ -53,9 +55,8 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        // showcase: CustomerShowcase,
-        showcase: ProspectShowcase
-        // history: ModelChangelog,
+        showcase: ProspectShowcase,
+        history: TableHistories,
     };
     return components[currentTab.value];
 

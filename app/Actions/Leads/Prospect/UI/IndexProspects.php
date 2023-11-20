@@ -88,10 +88,10 @@ class IndexProspects extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('prospects.name', '~*', "\y$value\y")
-                    ->orWhere('prospects.email', '=', $value)
-                    ->orWhere('prospects.phone', '=', $value)
-                    ->orWhere('prospects.contact_website', '=', $value);
+                $query->whereAnyWordStartWith('prospects.name', $value)
+                    ->orWhereWith('prospects.email', $value)
+                    ->orWhereWith('prospects.phone', $value)
+                    ->orWhereWith('prospects.contact_website', $value);
             });
         });
 
@@ -142,6 +142,8 @@ class IndexProspects extends InertiaAction
                     );
                 }
             }
+
+
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
@@ -149,7 +151,7 @@ class IndexProspects extends InertiaAction
                     [
                         'title'       => __('no prospects'),
                         'description' => null,
-                        'count'       => 0
+                        'count'       => $parent->crmStats->number_prospects
                     ]
                 )
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')

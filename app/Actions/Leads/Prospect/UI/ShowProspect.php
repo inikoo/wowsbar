@@ -7,10 +7,13 @@
 
 namespace App\Actions\Leads\Prospect\UI;
 
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Enums\UI\ProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
+use App\Http\Resources\History\HistoryResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -40,6 +43,7 @@ class ShowProspect extends InertiaAction
         return $this->handle($prospect);
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
         $this->initialisation($request)->withTab(ProspectTabsEnum::values());
@@ -97,8 +101,13 @@ class ShowProspect extends InertiaAction
                     fn () => GetProspectShowcase::run($prospect)
                     : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
 
+                ProspectsTabsEnum::HISTORY->value   => $this->tab == ProspectsTabsEnum::HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))),
+
+
             ]
-        );
+        )->table(IndexHistory::make()->tableStructure(prefix: ProspectTabsEnum::HISTORY->value));
     }
 
     public function jsonResponse(Prospect $prospect): ProspectResource

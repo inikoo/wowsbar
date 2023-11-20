@@ -10,6 +10,11 @@ import Table from '@/Components/Table/Table.vue'
 import { trans } from "laravel-vue-i18n"
 import Icon from "@/Components/Icon.vue"
 import { useLocaleStore } from "@/Stores/locale"
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import { faTransporter3} from '@far/'
+
+library.add(faTransporter3)
 
 const props = defineProps<{
     data: object,
@@ -43,7 +48,10 @@ function mailshotRoute(mailshot: Mailshot) {
         </template>
 
         <template #cell(number_recipients)="{ item: mailshot }">
-            {{ locale.number(mailshot['number_recipients']) }}
+            <span v-if="!mailshot.start_sending_at" class="italic opacity-75">℮ {{ locale.number(mailshot['number_recipients']) }}</span>
+            <span v-else-if="mailshot.start_sending_at && !mailshot.sent_at"> <font-awesome-icon class="animate-pulse" :icon="['far', 'transporter-3']" /> {{ locale.number(mailshot['number_recipients']) }}</span>
+            <span v-else>{{ locale.number(mailshot['number_recipients']) }}</span>
+
         </template>
     </Table>
 </template>
