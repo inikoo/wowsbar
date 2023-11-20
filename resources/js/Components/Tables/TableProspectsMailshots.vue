@@ -48,9 +48,10 @@ function mailshotRoute(mailshot: Mailshot) {
         </template>
 
         <template #cell(number_recipients)="{ item: mailshot }">
-            <span v-if="!mailshot.recipients_stored_at" class="italic opacity-75" >℮ {{ locale.number(mailshot['number_recipients']) }}</span>
+            <span v-if="!mailshot.recipients_stored_at" class="italic opacity-75" >
+                ℮ {{ locale.number(mailshot['number_recipients']) }}
+            </span>
             <span v-else>{{ locale.number(mailshot['number_recipients']) }}</span>
-
         </template>
     </Table>
 </template>

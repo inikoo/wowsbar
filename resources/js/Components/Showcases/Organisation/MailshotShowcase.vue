@@ -11,6 +11,7 @@ import { faPaperPlane } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
+import CountUp from 'vue-countup-v3';
 
 library.add(faPaperPlane)
 
@@ -28,9 +29,13 @@ const props = defineProps<{
             number_estimated_dispatched_emails: number
             number_dispatched_emails_state_clicked: number
             number_dispatched_emails: number
-            number_dispatched_emails_state_error: number
             number_dispatched_emails_state_hard_bounce: number
             number_dispatched_emails_state_soft_bounce: number
+
+            number_dispatched_emails_state_delivered: number
+            number_dispatched_emails_state_opened: number
+            number_dispatched_emails_state_spam: number
+            number_dispatched_emails_state_unsubscribed: number
         }
         recipient_stored_at: string
         schedule_at: string
@@ -48,27 +53,35 @@ const props = defineProps<{
 const dataStatistic = [
     {
         value: props.data.stats.number_estimated_dispatched_emails,
-        label: 'est. dispatched emails'
+        label: 'Est.'
     },
     {
         value: props.data.stats.number_dispatched_emails,
-        label: 'actual dispatched emails'
+        label: 'Recipient'
     },
     {
-        value: props.data.stats.number_dispatched_emails_state_error,
-        label: 'Emails error'
+        value: props.data.stats.number_dispatched_emails_state_delivered,
+        label: 'Delivered'
     },
     {
         value: props.data.stats.number_dispatched_emails_state_hard_bounce + props.data.stats.number_dispatched_emails_state_soft_bounce,
-        label: 'Emails bounce'
+        label: 'Bounced'
+    },
+    {
+        value: props.data.stats.number_dispatched_emails_state_opened,
+        label: 'Opened'
     },
     {
         value: props.data.stats.number_dispatched_emails_state_clicked,
-        label: 'Emails clicked'
+        label: 'Clicked'
+    },
+    {
+        value: props.data.stats.number_dispatched_emails_state_spam,
+        label: 'Spam'
     },
     {
         value: props.data.stats.number_dispatched_emails_state_unsubscribed,
-        label: 'Emails unsubscribed'
+        label: 'Unsubscribed'
     },
 ]
 
@@ -133,30 +146,18 @@ const compSortSteps = computed(() => {
     </div> -->
     <div class="py-3 mx-auto px-5 w-full">
         <Timeline :options="compSortSteps" />
-        <!-- <div class="grid grid-cols-4 h-64 w-full gap-x-2 gap-y-3">
-            <div
-                class="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-org-700 to-gray-900 text-gray-50 flex flex-col justify-end px-7 py-6 rounded-lg shadow col-span-2 row-span-2 border-2 border-org-100">
-                <span class="text-gray-300 italic">{{ data.slug }}</span>
-                <div class="text-3xl font-semibold leading-none">
-                    {{ data.subject }}
-                    <FontAwesomeIcon :icon='data.state_icon.icon' class="text-lg" :class='data.state_icon.class'
-                        :title="data.state_icon.tooltip" aria-hidden='true' />
-                </div>
-            </div>
-        </div> -->
 
-        <div>
+        <div class="mt-5">
             <!-- <h3 class="font-semibold leading-6 text-gray-900">Last 30 days</h3> -->
-            <dl
-                class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-1">
-                <div v-for="(statistic, index) in dataStatistic" :key="index" class="px-4 py-5 sm:p-6">
-                    <dt class="text-gray-400 capitalize">{{ statistic.label }}</dt>
-                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-2xl font-semibold text-org-600">
-                            {{ locale.number(statistic.value) }}
+            <dl class="grid grid-rows-2 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-rows-1 grid-flow-col md:divide-x md:divide-y-0">
+                <div v-for="(statistic, index) in dataStatistic" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">{{ statistic.label }}</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <!-- {{ locale.number(statistic.value) }} -->
+                            <CountUp :endVal="statistic.value" />
                             <!-- <span class="ml-2 text-sm font-medium text-gray-500">from {{ statistic.value }}</span> -->
                         </div>
-
                     </dd>
                 </div>
             </dl>
