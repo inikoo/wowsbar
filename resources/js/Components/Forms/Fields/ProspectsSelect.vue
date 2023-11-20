@@ -24,6 +24,7 @@ const props = defineProps<{
     }
 }>()
 
+const emits = defineEmits();
 let timeoutId: any
 const Options = ref([])
 const q = ref('')
@@ -31,7 +32,6 @@ const page = ref(1)
 const multiselectRef = ref<HTMLElement | null>(null);
 
 const getOptions = async () => {
-    console.log(multiselectRef.value)
     try {
         const response = await axios.get(
             route('org.json.prospects', {
@@ -39,8 +39,7 @@ const getOptions = async () => {
                 page: page.value
             }),
         )
-        const data = Object.values(response.data)
-        Options.value = [...Options.value, ...data]
+        onGetOptionsSucces(response)
     } catch (error) {
         notify({
             title: "Failed",
@@ -50,7 +49,11 @@ const getOptions = async () => {
     }
 }
 
-const emits = defineEmits();
+const onGetOptionsSucces=(response)=>{
+    const data = Object.values(response.data)
+    if( q.value.length)   Options.value = [...data]
+    else Options.value = [...Options.value, ...data]
+}
 
 
 const setFormValue = (data, fieldName) => {
