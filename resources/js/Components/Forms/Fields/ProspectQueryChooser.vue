@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
+import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 
 const props = defineProps<{
     form: {
@@ -44,9 +45,9 @@ const categories = [
     },
     {
         name: 'prospects',
+        fieldName: ["query", 'recipient_builder_data', 'prospects'],
         label: 'Prospects',
-        fieldName: "query",
-        component: 'div'
+        component: ProspectSelect
     },
 ]
 
