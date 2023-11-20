@@ -130,6 +130,7 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
         <template #cell(tags)="{ item }">
             <div class="min-w-[200px]">
                 <Multiselect v-model="item.tags"
+                    :key="item.id"
                     mode="tags"
                     placeholder="Select the tag"
                     valueProp="name"
