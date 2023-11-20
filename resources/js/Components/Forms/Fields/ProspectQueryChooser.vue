@@ -35,19 +35,26 @@ const categories = [
         name: 'query',
         fieldName: "query",
         label: 'Query',
-        component: ProspectQueries
+        component: ProspectQueries,
+        options : props.options["query"]
     },
     {
         name: 'custom',
         fieldName: ["query", 'recipient_builder_data', 'custom'],
         label: 'Custom',
-        component: ProspectQueryBuilder
+        component: ProspectQueryBuilder,
+        options : {
+            use : ["tags","contact"],
+            ...props.options["custom"]
+            
+        }
     },
     {
         name: 'prospects',
         fieldName: ["query", 'recipient_builder_data', 'prospects'],
         label: 'Prospects',
-        component: ProspectSelect
+        component: ProspectSelect,
+        options : props.options["prospects"]
     },
 ]
 
@@ -78,7 +85,7 @@ const categories = [
                         :fieldName="category.fieldName"
                         :tabName="category.name"
                         :fieldData="fieldData"
-                        :options="options[category.name]"
+                        :options="category.options"
                     />
                 </TabPanel>
             </TabPanels>
