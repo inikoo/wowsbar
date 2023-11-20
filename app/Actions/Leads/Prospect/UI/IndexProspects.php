@@ -142,6 +142,8 @@ class IndexProspects extends InertiaAction
                     );
                 }
             }
+
+
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
@@ -149,7 +151,7 @@ class IndexProspects extends InertiaAction
                     [
                         'title'       => __('no prospects'),
                         'description' => null,
-                        'count'       => 0
+                        'count'       => $parent->crmStats->number_prospects
                     ]
                 )
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
