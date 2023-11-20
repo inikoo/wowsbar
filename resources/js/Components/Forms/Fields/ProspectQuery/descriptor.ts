@@ -1,6 +1,6 @@
 export default {
     QueryLists: [{label : "Email" , value : 'email'}, {label : 'Phone' , value : 'phone'}, {label : "Address" , value : 'address'}],
-    FilterTags: [{label : "All" , value : 'all'},{label : "Any" , value : 'any'},{label : "Not Set" , value : 'not_set'}],
+    FilterTags: [{label : "All" , value : 'all'},{label : "Any" , value : 'any'}],
     contact: [ {label : "Last Contact" , value : true}, {label : "Never" , value : false} ],
     defaultValue: {
         query: [],
