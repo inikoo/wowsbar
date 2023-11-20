@@ -12,7 +12,6 @@ use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -57,9 +56,9 @@ class CreateProspectsMailshot extends InertiaAction
         $fields[] = [
             'title'  => '',
             'fields' => [
-                'query' => [
+                'recipients' => [
                     'type'        => 'prospectQueryChooser',
-                    'label'       => __('prospects query'),
+                    'label'       => __('recipients'),
                     'required'    => true,
                     'options'     => [
                         'query'  => IndexProspectQueries::run(),
@@ -72,14 +71,14 @@ class CreateProspectsMailshot extends InertiaAction
                             'query'     => null,
                             'custom'    => [
                                 'query' => [],
-                                'tag' => [
+                                'tag'   => [
                                     'state' => (bool) $request->get('tags'),
-                                    'tags' => explode(',', $request->get('tags'))
+                                    'tags'  => explode(',', $request->get('tags'))
                                 ],
                                 'last_contact' => [
                                     'state' => null,
-                                    'data' => [
-                                        'unit' => null,
+                                    'data'  => [
+                                        'unit'     => null,
                                         'quantity' => null
                                     ]
                                 ],
