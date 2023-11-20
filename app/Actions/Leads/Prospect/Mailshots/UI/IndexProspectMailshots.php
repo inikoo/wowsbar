@@ -118,7 +118,7 @@ class IndexProspectMailshots extends InertiaAction
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'date', label: __('date'), sortable: true)
                 ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
-                ->column(key: 'bounces_percentage', label: __('bounces'), sortable: true)
+                ->column(key: 'percentage_bounced', label: __('bounces'), sortable: true)
                 ->column(key: 'number_delivered', label: __('delivered'), sortable: true)
                 ->column(key: 'percentage_opened', label: __('opened'), sortable: true)
                 ->column(key: 'percentage_clicked', label: __('clicked'), sortable: true)

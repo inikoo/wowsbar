@@ -12,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
+import {trans} from "laravel-vue-i18n";
 
 library.add(faPaperPlane)
 
@@ -29,6 +30,7 @@ const props = defineProps<{
             number_estimated_dispatched_emails: number
             number_dispatched_emails_state_clicked: number
             number_dispatched_emails: number
+            number_dispatched_emails_state_error: number
             number_dispatched_emails_state_hard_bounce: number
             number_dispatched_emails_state_soft_bounce: number
 
@@ -51,22 +53,30 @@ const props = defineProps<{
 }>()
 
 const dataStatistic = [
-    {
-        value: props.data.stats.number_estimated_dispatched_emails,
-        label: 'Est.'
-    },
+
     {
         value: props.data.stats.number_dispatched_emails,
-        label: 'Recipient'
+        label: trans('Recipients')
+    },
+    // todo if number_dispatched_emails_state_error==0 do not show this stat
+    // todo should accept classes or style : error
+    {
+        value: props.data.stats.number_dispatched_emails_state_error,
+        label: trans('Errors'),
+        class: 'text-red'
+    },
+    //todo need to show hard and soft bounces separately  [ 3 , 9 ]  use icon left of each number
+    // <i class="fal fa-dungeon"></i>  for soft bounce
+    // <i class="fal fa-skull"></i> hard bounce
+    {
+        value: props.data.stats.number_dispatched_emails_state_hard_bounce + props.data.stats.number_dispatched_emails_state_soft_bounce,
+        label: trans('Bounced')
     },
     {
         value: props.data.stats.number_dispatched_emails_state_delivered,
-        label: 'Delivered'
+        label: trans('Delivered')
     },
-    {
-        value: props.data.stats.number_dispatched_emails_state_hard_bounce + props.data.stats.number_dispatched_emails_state_soft_bounce,
-        label: 'Bounced'
-    },
+
     {
         value: props.data.stats.number_dispatched_emails_state_opened,
         label: 'Opened'

@@ -22,25 +22,27 @@ if (!function_exists('customer')) {
     }
 }
 
-if(!function_exists('percentage')) {
-    function percentage($a, $b, $fixed = 1, $error_txt = 'NA', $psign = '%', $plus_sign = false): string
+if (!function_exists('percentage')) {
+    function percentage($quantity, $total, int $fixed = 1, ?string $errorMessage =null, $percentageSign = '%', $plusSing = false): string
     {
         $locale_info = localeconv();
-        $per = '';
-        $error_txt = _($error_txt);
 
-        if ($b > 0) {
-            if ($plus_sign && $a > 0) {
+
+        if ($total > 0) {
+            if ($plusSing && $quantity > 0) {
                 $sign = '+';
             } else {
                 $sign = '';
             }
 
-            $per = $sign . number_format(
-                    ($a / $b) * 100, $fixed, $locale_info['decimal_point'], $locale_info['thousands_sep']
-                ) . $psign;
+            $per = $sign.number_format(
+                ($quantity / $total) * 100,
+                $fixed,
+                $locale_info['decimal_point'],
+                $locale_info['thousands_sep']
+            ).$percentageSign;
         } else {
-            $per = $error_txt;
+            $per = is_null($errorMessage) ? percentage(0, 1) : $errorMessage;
         }
 
         return $per;
