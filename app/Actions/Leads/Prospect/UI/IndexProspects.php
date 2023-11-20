@@ -88,10 +88,10 @@ class IndexProspects extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('prospects.name', '~*', "\y$value\y")
-                    ->orWhere('prospects.email', '=', $value)
-                    ->orWhere('prospects.phone', '=', $value)
-                    ->orWhere('prospects.contact_website', '=', $value);
+                $query->whereAnyWordStartWith('prospects.name', $value)
+                    ->orWhereWith('prospects.email', $value)
+                    ->orWhereWith('prospects.phone', $value)
+                    ->orWhereWith('prospects.contact_website', $value);
             });
         });
 
