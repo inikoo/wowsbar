@@ -65,12 +65,8 @@ class CreateProspectsMailshot extends InertiaAction
                         'custom' => '',
                     ],
                     'value'     => [
-                        'recipient_builder_type' => 'list',
-                        'dataTab'                => [
-                            'query'    => '',
-                            'custom'   => null,
-                            'prospects'=> ''
-                        ]
+                        'recipient_builder_type' => 'query',
+                        'recipient_builder_data' => null
                     ]
                 ],
             ]

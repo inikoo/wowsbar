@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\Tags;
 
 use App\Actions\Helpers\Tag\Hydrators\TagHydrateProspects;
 use App\Actions\Helpers\Tag\Hydrators\TagHydrateSubjects;
+use App\Actions\Leads\Prospect\Tags\Hydrators\TagHydrateUniversalSearch;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use Illuminate\Support\Arr;
@@ -43,6 +44,7 @@ class SyncTagsProspect
             $tag = Tag::find($tagId);
             TagHydrateSubjects::dispatch($tag);
             TagHydrateProspects::dispatch($tag);
+            TagHydrateUniversalSearch::dispatch($tag);
         }
 
 

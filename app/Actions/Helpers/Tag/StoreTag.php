@@ -7,6 +7,7 @@
 
 namespace App\Actions\Helpers\Tag;
 
+use App\Actions\Leads\Prospect\Tags\Hydrators\TagHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCrmTags;
 use App\Http\Resources\Tag\TagResource;
 use App\Models\Helpers\Tag;
@@ -42,6 +43,7 @@ class StoreTag
                 OrganisationHydrateCrmTags::dispatch();
             }
         }
+        TagHydrateUniversalSearch::dispatch($tag);
 
         return $tag;
     }

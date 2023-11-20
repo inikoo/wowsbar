@@ -8,6 +8,7 @@
 namespace App\Models\Helpers;
 
 use App\Models\Traits\HasTagSlug;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 
@@ -50,6 +51,7 @@ use Spatie\Tags\Tag as BaseTag;
 class Tag extends BaseTag
 {
     use HasTagSlug;
+    use HasUniversalSearch;
 
 
     public function getRouteKeyName(): string
