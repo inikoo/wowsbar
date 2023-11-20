@@ -11,13 +11,11 @@ use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
-use App\Http\Resources\Mail\MailshotRecipientsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -58,10 +56,6 @@ class IndexEstimatedRecipients extends InertiaAction
             ->withQueryString();
     }
 
-    public function jsonResponse(Mailshot $mailshot): AnonymousResourceCollection
-    {
-        return MailshotRecipientsResource::collection($this->handle($mailshot));
-    }
 
     public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
@@ -88,6 +82,7 @@ class IndexEstimatedRecipients extends InertiaAction
             $table->column(key: 'contact_name', label: __('contact name'))
                 ->column(key: 'email', label: __('email'))
                 ->column(key: 'state', label: __('state'))
+                ->column(key: 'last_contacted_at', label: __('last contacted'))
                 ->defaultSort('email');
         };
     }

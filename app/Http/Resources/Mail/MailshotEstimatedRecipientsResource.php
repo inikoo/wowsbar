@@ -10,7 +10,7 @@ namespace App\Http\Resources\Mail;
 use App\Http\Resources\HasSelfCall;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MailshotRecipientsResource extends JsonResource
+class MailshotEstimatedRecipientsResource extends JsonResource
 {
     use HasSelfCall;
 
@@ -20,9 +20,11 @@ class MailshotRecipientsResource extends JsonResource
         $prospect = $this;
 
         return [
-            'contact_name'=> $prospect->contact_name,
-            'email'       => $prospect->email,
-            'state'       => $prospect->state
+            'contact_name'      => $prospect->contact_name,
+            'email'             => $prospect->email,
+            'state'             => $prospect->state,
+            'last_contacted_at' => $prospect->last_contacted_at
+
         ];
     }
 }
