@@ -26,17 +26,18 @@ class MailshotsResource extends JsonResource
         $mailshot = $this;
 
         return [
-            'slug'              => $this->slug,
-            'subject'           => $this->subject,
-            'state'             => $mailshot->state,
-            'state_label'       => $mailshot->state->labels()[$mailshot->state->value],
-            'state_icon'        => $mailshot->state->stateIcon()[$mailshot->state->value],
-            'start_sending_at'  => $mailshot->start_sending_at,
-            'sent_at'           => $mailshot->sent_at,
-            'number_recipients' => $mailshot->start_sending_at ? $this->number_dispatched_emails : $this->number_estimated_dispatched_emails,
-            'number_delivered'  => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_delivered : null,
-            'number_opened'     => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_opened : null,
-            'percentage_opened' => $mailshot->start_sending_at ?
+            'slug'                 => $this->slug,
+            'subject'              => $this->subject,
+            'state'                => $mailshot->state,
+            'state_label'          => $mailshot->state->labels()[$mailshot->state->value],
+            'state_icon'           => $mailshot->state->stateIcon()[$mailshot->state->value],
+            'start_sending_at'     => $mailshot->start_sending_at,
+            'sent_at'              => $mailshot->sent_at,
+            'recipients_stored_at' => $mailshot->recipients_stored_at,
+            'number_recipients'    => $mailshot->start_sending_at ? $this->number_dispatched_emails : $this->number_estimated_dispatched_emails,
+            'number_delivered'     => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_delivered : null,
+            'number_opened'        => $mailshot->start_sending_at ? $this->number_dispatched_emails_state_opened : null,
+            'percentage_opened'    => $mailshot->start_sending_at ?
                 $this->number_dispatched_emails_state_opened  // todo use ww-30 for this percentage($this->number_dispatched_emails_state_opened,$this->number_dispatched_emails_state_delivered)
                 : null,
 

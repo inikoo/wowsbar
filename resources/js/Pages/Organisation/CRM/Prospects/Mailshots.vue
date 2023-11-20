@@ -14,8 +14,9 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
+import {faStop, faPlay} from '@fas/'
 
-library.add(faRoad, faTerminal, faUserCircle, faSpellCheck)
+library.add(faRoad, faTerminal, faUserCircle, faSpellCheck,  faStop, faPlay)
 const props = defineProps<{
     pageHead: object
     tabs: {
