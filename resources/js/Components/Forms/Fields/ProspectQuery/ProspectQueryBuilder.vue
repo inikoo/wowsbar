@@ -90,7 +90,7 @@ onMounted(() => {
         <Disclosure v-if="options.use.includes('filter')" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
             <DisclosureButton
                 class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                <span>Prospects Filter</span>
+                <span>Prospects filter</span>
                 <div class="flex gap-2">
                     <VTooltip>
                         <font-awesome-icon :icon="['far', 'info-circle']" />
@@ -197,7 +197,7 @@ onMounted(() => {
             <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('contact')">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>Tags Last contact</span>
+                    <span>Tags last contact</span>
                     <div class="flex gap-2">
                         <VTooltip>
                             <font-awesome-icon :icon="['far', 'info-circle']" />
