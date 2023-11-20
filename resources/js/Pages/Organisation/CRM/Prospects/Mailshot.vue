@@ -20,7 +20,7 @@ import {faStop, faPlay} from '@fas/'
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
-library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPLay, faSpellCheck)
+library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
 
 const props = defineProps<{
     title: string,
