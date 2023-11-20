@@ -10,7 +10,7 @@ import descriptor from './descriptor'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
-import { get, set, isArray } from 'lodash'
+import { get, set, isArray, isNull } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
 
 library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
@@ -51,8 +51,11 @@ const emits = defineEmits();
 
 
 const setFormValue = (data,fieldName) => {
-    if (isArray(fieldName)) return get(data, fieldName, descriptor.defaultValue); /* if fieldName array */
-    else return get(data, fieldName, descriptor.defaultValue); /* if fieldName string */
+    if (isArray(fieldName)){  /* if fieldName array */
+        if(get(data, fieldName)) return get(data, fieldName, descriptor.defaultValue);  /* Chek if data null or undefined or has a objecjt*/
+        else return descriptor.defaultValue
+    }  else return get(data, fieldName, descriptor.defaultValue); /* if fieldName string */
+
 };
 
 const value = reactive(setFormValue(props.form, props.fieldName));/* get value from form */
