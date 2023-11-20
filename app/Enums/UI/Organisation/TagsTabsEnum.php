@@ -10,7 +10,7 @@ namespace App\Enums\UI\Organisation;
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum ProspectsTagsTabsEnum: string
+enum TagsTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
@@ -23,11 +23,11 @@ enum ProspectsTagsTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            ProspectsTagsTabsEnum::TAGS => [
+            TagsTabsEnum::TAGS => [
                 'title' => __('tags'),
                 'icon'  => 'fal fa-tags',
             ],
-            ProspectsTagsTabsEnum::HISTORY => [
+            TagsTabsEnum::HISTORY => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

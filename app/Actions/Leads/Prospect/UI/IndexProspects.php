@@ -125,7 +125,7 @@ class IndexProspects extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(Organisation|Shop $parent, ?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(Organisation|Shop|Tag $parent, ?array $modelOperations = null, $prefix = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $parent) {
             if ($prefix) {
@@ -133,15 +133,15 @@ class IndexProspects extends InertiaAction
                     ->name($prefix)
                     ->pageName($prefix.'Page');
             }
-
-            foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
+            if (class_basename($parent) != 'Tag') {
+                foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
+                    $table->elementGroup(
+                        key: $key,
+                        label: $elementGroup['label'],
+                        elements: $elementGroup['elements']
+                    );
+                }
             }
-
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
@@ -156,8 +156,11 @@ class IndexProspects extends InertiaAction
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'phone', label: __('phone'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true);
+                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
+
+            if (class_basename($parent) != 'Tag') {
+                $table->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true);
+            }
         };
     }
 

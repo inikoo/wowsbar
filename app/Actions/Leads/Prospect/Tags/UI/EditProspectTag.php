@@ -11,7 +11,6 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Models\Helpers\Tag;
 use App\Models\Market\Shop;
-use Exception;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -26,38 +25,26 @@ class EditProspectTag extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("crm.edit");
-
-    }
-
-    public function asController(Tag $tag, ActionRequest $request): Tag
-    {
-        $this->initialisation($request);
-
-        return $this->handle($tag);
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
         $this->initialisation($request);
-
         return $this->handle($tag);
     }
 
-    /**
-     * @throws Exception
-     */
     public function htmlResponse(Tag $tag, ActionRequest $request): Response
     {
         $sections['properties'] = [
             'label'  => __('tag properties'),
             'icon'   => 'fal fa-sliders-h',
             'fields' => [
-                'name' => [
+                'label' => [
                     'type'     => 'input',
-                    'label'    => __('name'),
+                    'label'    => __('label'),
                     'required' => true,
-                    'value'    => $tag->name
+                    'value'    => $tag->label
                 ],
             ]
         ];
@@ -105,8 +92,6 @@ class EditProspectTag extends InertiaAction
                         'title' => __('query'),
                         'icon'  => 'fal fa-globe'
                     ],
-
-
                     'iconRight' =>
                         [
                             'icon'  => ['fal', 'fa-edit'],

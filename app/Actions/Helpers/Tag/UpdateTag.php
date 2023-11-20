@@ -11,6 +11,8 @@ use App\Actions\Leads\Prospect\Tags\Hydrators\TagHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Helpers\Tag;
 use App\Models\Market\Shop;
+use App\Rules\IUnique;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -23,11 +25,21 @@ class UpdateTag
 
     private bool $asAction = false;
     private Shop $parent;
+    /**
+     * @var \App\Models\Helpers\Tag
+     */
+    private Tag $tag;
 
 
     public function handle(Tag $tag, array $modelData): Tag
     {
+        if (Arr::has($modelData, 'label')) {
+            data_set($modelData, 'name', Arr::get($modelData, 'label'));
+        }
+
         $tag = $this->update($tag, $modelData);
+
+
         TagHydrateUniversalSearch::dispatch($tag);
 
         return $tag;
@@ -45,15 +57,23 @@ class UpdateTag
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'type' => ['required', 'string'],
+            'label' => [
+                'required',
+                'string',
+                new IUnique(
+                    table: 'tags',
+                    extraConditions: [
+                        ['column' => 'type', 'value' => $this->tag->type]
+                    ],
+                ),
+            ],
         ];
     }
 
     public function inProspect(Tag $tag, ActionRequest $request): Tag
     {
+        $this->tag = $tag;
         $this->fillFromRequest($request);
-        $this->fill(['type' => 'crm']);
 
         return $this->handle($tag, $this->validateAttributes());
     }
@@ -61,8 +81,8 @@ class UpdateTag
     public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
         $this->parent = $shop;
+        $this->tag    = $tag;
         $this->fillFromRequest($request);
-        $this->fill(['type' => 'crm']);
 
         return $this->handle($tag, $this->validateAttributes());
     }
