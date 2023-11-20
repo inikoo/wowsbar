@@ -30,7 +30,6 @@ const props = defineProps<{
 
 const pathname  = location.search
 if(pathname)  props.form[props.fieldName].recipient_builder_type = "custom"
-console.log(props.form)
 
 const categories = [
     {
