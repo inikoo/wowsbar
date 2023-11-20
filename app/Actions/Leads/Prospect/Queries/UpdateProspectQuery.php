@@ -136,7 +136,6 @@ class UpdateProspectQuery
     {
         return [
             'query_builder.query.required'                         => __('The query is required'),
-            'query_builder.tag.state.required'                     => __('The tag state is required'),
             'query_builder.last_contact.state.required'            => __('The last contact state is required'),
             'query_builder.last_contact.data.unit.required_if'     => __('The last contact unit is required'),
             'query_builder.last_contact.data.quantity.required_if' => __('The last contact quantity is required'),
