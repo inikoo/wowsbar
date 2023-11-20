@@ -32,6 +32,7 @@ const props = defineProps<{
     <Link v-else-if="action.route"
         :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`"
         :method="action.route?.method ?? 'get'"
+        :as="action.route?.method ? 'button' : undefined"
         :data="action.route?.method !== 'get' ? dataToSubmit : null"
     >
     <!-- {{ actions }} -->
