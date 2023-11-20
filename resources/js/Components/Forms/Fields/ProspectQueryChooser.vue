@@ -36,7 +36,7 @@ const categories = [
     },
     {
         name: 'custom',
-        fieldName: ["query", 'dataTab', 'custom'],
+        fieldName: ["query", 'recipient_builder_data'],
         label: 'Custom',
         component: ProspectQueryBuilder
     },
@@ -60,15 +60,14 @@ const valueTab: { [key: string]: any } = {
 <template>
     <div class="w-full max-w-md px-2 sm:px-0">
         <TabGroup @change="(tabIndex) => form[fieldName].recipient_builder_type = categories[tabIndex].name">
-            <TabList class="flex space-x-1 rounded-lg bg-org-500 p-1">
+            <TabList class="flex space-x-8 ">
                 <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"
                     v-slot="{ selected }">
                     <button :class="[
-                        'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                        'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                        'whitespace-nowrap border-b-2 py-1.5 px-1 text-sm font-medium focus:ring-0 focus:outline-none',
                         selected
-                            ? 'bg-white text-blue-700 shadow'
-                            : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                            ? 'border-org-5s00 text-org-500'
+                            : 'border-transparent text-gray-400 hover:border-gray-300',
                     ]">
                         {{ category.label }}
                     </button>
@@ -77,7 +76,7 @@ const valueTab: { [key: string]: any } = {
 
             <TabPanels class="mt-2">
                 <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
-                    class="rounded bg-gray-100 p-3 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none">
+                    class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none">
                     <component :is="category.component"
                         :form="form"
                         :fieldName="category.fieldName"
