@@ -21,6 +21,9 @@ class StoreDispatchedEmail
 
     public function handle(Email $email, ?Mailshot $mailshot, array $modelData=[]): DispatchedEmail
     {
+
+        data_set($modelData, 'outbox_id', $mailshot->outbox_id, overwrite: false);
+
         /** @var DispatchedEmail $dispatchedEmail */
         $dispatchedEmail = DispatchedEmail::create(
             array_merge([
@@ -32,7 +35,7 @@ class StoreDispatchedEmail
         );
 
         if($dispatchedEmail->outbox_id) {
-            OutboxHydrateEmails::dispatch($dispatchedEmail->outbox);
+            OutboxHydrateEmails::dispatch($dispatchedEmail->outbox)->delay(60);
         }
 
         return $dispatchedEmail;
