@@ -2,7 +2,7 @@
 import Multiselect from "@vueform/multiselect"
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, onMounted, watch, reactive } from 'vue'
+import { ref, onMounted, watch, reactive, onUnmounted } from 'vue'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
@@ -24,15 +24,22 @@ const props = defineProps<{
     }
 }>()
 
+const emits = defineEmits();
+let timeoutId: any
+const Options = ref([])
+const q = ref('')
+const page = ref(1)
+const multiselectRef = ref<HTMLElement | null>(null);
 
-const tagsOptions = ref([])
-
-const getTagsOptions = async () => {
+const getOptions = async () => {
     try {
         const response = await axios.get(
-            route('org.json.tags'),
+            route('org.json.prospects', {
+                q: q.value,
+                page: page.value
+            }),
         )
-        tagsOptions.value = Object.values(response.data)
+        onGetOptionsSucces(response)
     } catch (error) {
         notify({
             title: "Failed",
@@ -42,10 +49,14 @@ const getTagsOptions = async () => {
     }
 }
 
-const emits = defineEmits();
+const onGetOptionsSucces=(response)=>{
+    const data = Object.values(response.data)
+    if( q.value.length)   Options.value = [...data]
+    else Options.value = [...Options.value, ...data]
+}
 
 
-const setFormValue = (data,fieldName) => {
+const setFormValue = (data, fieldName) => {
     if (isArray(fieldName)) return get(data, fieldName, []);  /* if fieldName array */
     else return get(data, fieldName, []); /* if fieldName string */
 };
@@ -66,26 +77,60 @@ const updateFormValue = (newValue) => {
     emits("update:form", target);
 };
 
+const SearchChange = (value) => {
+    q.value = value
+    page.value = 1
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+        getOptions()
+    }, 900)
+}
+
+const handleScroll = () => {
+    if (isScrollAtBottom()) {
+        page.value++;
+        getOptions();
+    }
+};
 
 onMounted(() => {
-    getTagsOptions()
-})
+    const multiselectDropdown = document.querySelector('.multiselect-dropdown');
+    if (multiselectDropdown) {
+        multiselectDropdown.addEventListener('scroll', handleScroll);
+    }
+});
+
+onUnmounted(() => {
+    const multiselectDropdown = document.querySelector('.multiselect-dropdown');
+    if (multiselectDropdown) {
+        multiselectDropdown.removeEventListener('scroll', handleScroll);
+    }
+});
+
+const isScrollAtBottom = () => {
+    const multiselectDropdown = document.querySelector('.multiselect-dropdown');
+    if (!multiselectDropdown) return false;
+
+    const { scrollTop, scrollHeight, clientHeight } = multiselectDropdown;
+
+    return scrollTop + clientHeight >= scrollHeight;
+}
+
 
 </script>
   
 <template>
-        <Multiselect v-model="value" mode="tags" placeholder="Select the tag" valueProp="slug" trackBy="name"
-            label="name" :close-on-select="false" :searchable="true" :caret="false" :options="tagsOptions"
-            noResultsText="No one left. Type to add new one.">
-
-            <template
-                #tag="{ option, handleTagRemove, disabled }: { option: tag, handleTagRemove: Function, disabled: boolean }">
-                <div class="px-0.5 py-[3px]">
-                    <Tag :theme="option.id" :label="option.name" :closeButton="true" :stringToColor="true" size="sm"
-                        @onClose="(event) => handleTagRemove(option, event)" />
-                </div>
-            </template>
-        </Multiselect>
+    <Multiselect v-model="value" mode="tags" placeholder="Select the prospects" valueProp="slug" trackBy="name" label="name"
+        :close-on-select="false" :searchable="true" :caret="false" :options="Options" ref="multiselectRef"
+        noResultsText="No one left. Type to add new one." @open="getOptions" @search-change="SearchChange">
+        <template
+            #tag="{ option, handleTagRemove, disabled }: { option: tag, handleTagRemove: Function, disabled: boolean }">
+            <div class="px-0.5 py-[3px]">
+                <Tag :theme="option.id" :label="option.name" :closeButton="true" :stringToColor="true" size="sm"
+                    @onClose="(event) => handleTagRemove(option, event)" />
+            </div>
+        </template>
+    </Multiselect>
 </template>
   
 <style lang="scss">

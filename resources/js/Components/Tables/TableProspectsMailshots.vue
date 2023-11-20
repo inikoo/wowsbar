@@ -48,8 +48,7 @@ function mailshotRoute(mailshot: Mailshot) {
         </template>
 
         <template #cell(number_recipients)="{ item: mailshot }">
-            <span v-if="!mailshot.start_sending_at" class="italic opacity-75">℮ {{ locale.number(mailshot['number_recipients']) }}</span>
-            <span v-else-if="mailshot.start_sending_at && !mailshot.recipients_stored_at"> <font-awesome-icon class="animate-pulse" :icon="['far', 'transporter-3']" /> {{ locale.number(mailshot['number_recipients']) }}</span>
+            <span v-if="!mailshot.recipients_stored_at" class="italic opacity-75" >℮ {{ locale.number(mailshot['number_recipients']) }}</span>
             <span v-else>{{ locale.number(mailshot['number_recipients']) }}</span>
 
         </template>
