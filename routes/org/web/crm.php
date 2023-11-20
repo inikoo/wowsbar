@@ -124,7 +124,6 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
             Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', [CreateProspectsMailshot::class, 'inShop'])->name('create');
-
             Route::get('{mailshot}/edit', EditProspectMailshot::class)->name('edit');
             Route::get('{mailshot}/workshop', ShowProspectMailshotWorkshop::class)->name('workshop');
             Route::get('{mailshot}', ShowProspectMailshot::class)->name('show');

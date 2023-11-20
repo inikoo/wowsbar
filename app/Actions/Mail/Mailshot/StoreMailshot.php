@@ -88,7 +88,7 @@ class StoreMailshot
     {
         if (!$this->get('query_id')) {
             //todo this is only for testing
-            $this->fill(['query_id' => Query::first()->id]);
+            $this->fill(['query_id' => 1]);
         }
     }
 
@@ -129,6 +129,7 @@ class StoreMailshot
 
 
         $validatedData = $this->validateAttributes();
+
 
         return $this->handle($shop, $validatedData);
     }

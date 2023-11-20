@@ -31,7 +31,6 @@ const props = defineProps<{
             number_dispatched_emails_state_error: number
             number_dispatched_emails_state_hard_bounce: number
             number_dispatched_emails_state_soft_bounce: number
-            number_dispatched_emails_state_clicked: number
         }
         recipient_stored_at: string
         schedule_at: string

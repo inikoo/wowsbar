@@ -59,7 +59,12 @@ class SendMailshotTest
                 }
             }
 
-            $dispatchedEmails[] = SendSesEmail::run($mailshot->subject, $html, $dispatchedEmail, $mailshot->sender());
+            $dispatchedEmails[] = SendSesEmail::run(
+                $mailshot->subject,
+                $html,
+                $dispatchedEmail,
+                $mailshot->sender()
+            );
         }
 
         return collect($dispatchedEmails);

@@ -15,9 +15,7 @@ enum MailshotTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE = 'showcase';
-
-    case ESTIMATED_RECIPIENTS = 'estimated-recipients';
+    case SHOWCASE             = 'showcase';
     case RECIPIENTS           = 'recipients';
     case EMAIL                = 'email';
 
@@ -32,18 +30,13 @@ enum MailshotTabsEnum: string
                 'title' => __('mailshot'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            MailshotTabsEnum::ESTIMATED_RECIPIENTS => [
-                'title' => __('recipients'),
-                'icon'  => 'fal fa-at',
-                'class' => 'animate-pulse'
-            ],
             MailshotTabsEnum::RECIPIENTS => [
                 'title' => __('recipients'),
                 'icon'  => 'fal fa-at',
             ],
 
             MailshotTabsEnum::EMAIL => [
-                'title' => __('email'),
+                'title' => __('email preview'),
                 'icon'  => 'fal fa-envelope-square',
             ],
 
