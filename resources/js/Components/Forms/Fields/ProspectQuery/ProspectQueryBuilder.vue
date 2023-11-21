@@ -12,6 +12,7 @@ import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 import { get, set, isArray, isNull } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
+import {trans} from "laravel-vue-i18n";
 
 library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
 
@@ -84,7 +85,7 @@ onMounted(() => {
 
 
 </script>
-  
+
 <template>
     <div>
   <!--   Prospect Filter -->
@@ -130,16 +131,9 @@ onMounted(() => {
             <Disclosure v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('tags')">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>Tags</span>
+                    <span>{{trans('Tags')}}</span>
                     <div class="flex gap-2">
-                        <VTooltip>
-                            <font-awesome-icon :icon="['far', 'info-circle']" />
 
-                            <template #popper>
-                                filter deliveries based on seo tags
-                            </template>
-                        </VTooltip>
-                        <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
                     </div>
                 </DisclosureButton>
                 <DisclosurePanel class="px-4 text-sm text-gray-500">
@@ -200,13 +194,13 @@ onMounted(() => {
             <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('contact')">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>Tags last contact</span>
+                    <span>{{trans('Last contacted')}}</span>
                     <div class="flex gap-2">
                         <VTooltip>
                             <font-awesome-icon :icon="['far', 'info-circle']" />
 
                             <template #popper>
-                                filter deliveries based on the last contact with the customer
+                                {{trans('filter recipients based on the last mailshot sent to them')}}
                             </template>
                         </VTooltip>
                         <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
@@ -248,7 +242,7 @@ onMounted(() => {
               <!-- end last contact  -->
         </div>
 </template>
-  
+
 <style lang="scss">
 .multiselect-tags-search {
     @apply focus:outline-none focus:ring-0
