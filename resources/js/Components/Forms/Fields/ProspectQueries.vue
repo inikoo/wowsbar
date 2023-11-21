@@ -120,7 +120,7 @@ const emits = defineEmits<{
                     <td class="relative py-2 px-3 text-right font-medium">
                         <div v-if="option.number_items > 0" >
                             <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form.query.recipient_builder_data.query" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
+                            <input v-model="form.recipients.recipient_builder_data.query" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
                         </div>
                     </td>
                 </tr>
