@@ -77,7 +77,7 @@ const emits = defineEmits<{
                 <div v-if="option.constrains.with === 'email'" class="inline-flex items-start">
                     <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' />
                     <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
-                </div>
+                </div>s
 
                 <p v-if="option.constrains.where?.[2]" class="text-gray-500">(Not contacted yet)</p>
                 <p v-if="option.constrains?.group" class="text-gray-500 whitespace-nowrap">
