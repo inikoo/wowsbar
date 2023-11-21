@@ -67,6 +67,7 @@ class EditProspectMailshot extends InertiaAction
                     'type' => 'prospectQueryChooser',
                     'label' => __('prospects query'),
                     'required' => true,
+                    'full'     => true,
                     'options' => [
                         'query' => IndexProspectQueries::run(),
                         'custom' => '',
