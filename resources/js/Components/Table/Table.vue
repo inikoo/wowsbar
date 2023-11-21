@@ -29,6 +29,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 
 import {useLocaleStore} from '@/Stores/locale.js';
+import CountUp from 'vue-countup-v3';
 const locale = useLocaleStore();
 
 const props = defineProps(
@@ -589,7 +590,13 @@ watch(name, () => {
                         <div class="flex gap-2 items-center">
                             <div class="grid border rounded-md border-gray-300 justify-end items-center text-base font-normal text-gray-700"
                                 title="Results">
-                                <div v-if="compResourceMeta.total" class="px-2 py-1.5 whitespace-nowrap ">{{ locale.number(compResourceMeta.total) }} {{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
+                                <div v-if="compResourceMeta.total" class="px-2 py-1.5 whitespace-nowrap flex gap-x-1 flex-nowrap">
+                                    <span class="font-semibold tabular-nums">
+                                        <CountUp :endVal="compResourceMeta.total" :duration="1.2" />
+                                    </span>
+                                    <!-- {{ locale.number(compResourceMeta.total) }} -->
+                                    <span class="font-thin">{{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</span>
+                                </div>
                                 <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
                             </div>
 

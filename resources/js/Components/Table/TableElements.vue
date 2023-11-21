@@ -87,7 +87,7 @@ onMounted(() => {
 
         <div class="flex w-fit items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
             <!-- List of element (checkbox) -->
-            <div class="flex w-fit flex-wrap justify-end divide-x divide-gray-300 ">
+            <div class="grid grid-rows-2 xl:grid-rows-1 grid-flow-col w-fit flex-wrap justify-end divide-x divide-gray-300 ">
                 <div v-for="(value, element, index) of props.elements[selectedGroup]?.elements" :key="element"
                     class="flex items-center gap-x-1 w-fit px-3 py-2.5 cursor-pointer select-none "
                     @click="onClickCheckbox(element, selectedGroup)"
