@@ -4,11 +4,13 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
 use App\Models\Mail\Mailshot;
+use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
 class EstimateRecipientsCreatingMailshot
 {
     use AsCommand;
+    use AsAction;
 
     public function handle(): int
     {
