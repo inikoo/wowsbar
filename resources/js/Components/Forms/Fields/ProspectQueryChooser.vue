@@ -99,7 +99,7 @@ watch(props.form.recipients,getTagsOptions, {deep: true})
                     </button>
                 </Tab>
                 <div style="margin-left: auto;">
-                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm font-medium focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold hover:border-gray-300">
+                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
                       Total recipients :  {{ recipientsCount }}
                     </button>
                 </div>
