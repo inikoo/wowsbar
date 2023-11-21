@@ -6,15 +6,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaperPlane } from '@fal/'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
 import {trans} from "laravel-vue-i18n";
 
-library.add(faPaperPlane)
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPaperPlane, faDungeon, faSkull } from '@fal/'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faPaperPlane, faDungeon, faSkull)
 
 const locale = useLocaleStore()
 const props = defineProps<{
@@ -57,45 +57,52 @@ const props = defineProps<{
 
 
 const dataStatistic = [
-
     {
         value: props.data.stats.number_dispatched_emails,
         label: trans('Recipients')
     },
-    // todo if number_dispatched_emails_state_error==0 do not show this stat
-    // todo should accept classes or style : error
     {
-        value: props.data.stats.number_dispatched_emails_state_error,
+        name: 'error',
         label: trans('Errors'),
-        class: 'text-red'
-    },
-    //todo need to show hard and soft bounces separately  [ 3 , 9 ]  use icon left of each number
-    // <i class="fal fa-dungeon"></i>  for soft bounce
-    // <i class="fal fa-skull"></i> hard bounce
-    {
-        value: props.data.stats.number_dispatched_emails_state_hard_bounce + props.data.stats.number_dispatched_emails_state_soft_bounce,
-        label: trans('Bounced')
+        class: 'text-red-500',
+        value: props.data.stats.number_rejected_emails
     },
     {
-        value: props.data.stats.number_delivered_emails,
-        label: trans('Delivered')
+        label: trans('bounced'),
+        type: 'multi',
+        list: [
+            {
+                value: props.data.stats.number_hard_bounced_emails,
+                icon: 'fal fa-skull',
+                tooltip: trans('Hard bounce')
+            },
+            {
+                value: props.data.stats.number_soft_bounced_emails,
+                icon: 'fal fa-dungeon',
+                tooltip: trans('Soft bounce')
+            }
+        ]
+    },
+    {
+        label: trans('delivered'),
+        value: props.data.stats.number_delivered_emails
     },
 
     {
-        value: props.data.stats.number_opened_emails,
-        label: 'Opened'
+        label: trans('opened'),
+        value: props.data.stats.number_opened_emails
     },
     {
-        value: props.data.stats.number_clicked_emails,
-        label: 'Clicked'
+        label: trans('clicked'),
+        value: props.data.stats.number_clicked_emails
     },
     {
-        value: props.data.stats.number_spam_emails,
-        label: 'Spam'
+        label: trans('spam'),
+        value: props.data.stats.number_spam_emails
     },
     {
-        value: props.data.stats.number_unsubscribed_emails,
-        label: 'Unsubscribed'
+        label: trans('unsubscribed'),
+        value: props.data.stats.number_unsubscribed_emails
     },
 ]
 
@@ -153,30 +160,31 @@ const compSortSteps = computed(() => {
 
 
 <template>
-    {{ data }}
-    <!-- <pre>{{ compSortSteps }}</pre>------------------ -->
-    <!-- <pre>{{ stepsOptions }}</pre>--------------- -->
-    <!-- <div v-for="xx, zz in compSortSteps">
-        {{ zz }}
-    </div> -->
     <div class="py-3 mx-auto px-5 w-full">
         <Timeline :options="compSortSteps" />
 
-        <div class="mt-5">
-            <!-- <h3 class="font-semibold leading-6 text-gray-900">Last 30 days</h3> -->
-            <dl class="grid grid-rows-2 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-rows-1 grid-flow-col md:divide-x md:divide-y-0">
-                <div v-for="(statistic, index) in dataStatistic" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
-                    <dt class="text-gray-400 capitalize text-sm">{{ statistic.label }}</dt>
+        <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 md:divide-x md:divide-y-0 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+            <template v-for="(statistic, index) in dataStatistic">
+                <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <!-- Title -->
+                    <dt class="text-gray-400 capitalize text-sm" :class="statistic.class">{{ statistic.label }}</dt>
+                    
+                    <!-- Value -->
                     <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
                             <!-- {{ locale.number(statistic.value) }} -->
-                            <CountUp :endVal="statistic.value" />
-                            <!-- <span class="ml-2 text-sm font-medium text-gray-500">from {{ statistic.value }}</span> -->
+                            <div v-if="statistic.type == 'multi'" class="flex gap-x-6 flex-wrap">
+                                <div v-for="subValue in statistic.list" v-tooltip="subValue.tooltip" class="flex flex-nowrap items-center gap-x-1.5">
+                                    <FontAwesomeIcon :icon='subValue.icon' class='text-base text-org-200' aria-hidden='true' />
+                                    <span>{{ subValue.value }}</span>
+                                </div>
+                            </div>
+                            <CountUp v-else :endVal="statistic.value" />
                         </div>
                     </dd>
                 </div>
-            </dl>
-        </div>
+            </template>
+        </dl>
     </div>
 
     <!-- <pre>{{ data }}</pre> -->
