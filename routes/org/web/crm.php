@@ -124,7 +124,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
-            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
+            Route::post('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
