@@ -28,19 +28,20 @@ const props = defineProps<{
     }
 }>()
 
-
+const pathname  = location.search
+if(pathname)  props.form[props.fieldName].recipient_builder_type = "custom"
 
 const categories = [
     {
         name: 'query',
-        fieldName: "query",
+        fieldName: "recipients",
         label: 'Query',
         component: ProspectQueries,
         options : props.options["query"]
     },
     {
         name: 'custom',
-        fieldName: ["query", 'recipient_builder_data', 'custom'],
+        fieldName: ["recipients", 'recipient_builder_data', 'custom'],
         label: 'Custom',
         component: ProspectQueryBuilder,
         options : {
@@ -51,14 +52,13 @@ const categories = [
     },
     {
         name: 'prospects',
-        fieldName: ["query", 'recipient_builder_data', 'prospects'],
+        fieldName: ["recipients", 'recipient_builder_data', 'prospects'],
         label: 'Prospects',
         component: ProspectSelect,
         options : props.options["prospects"]
     },
 ]
 
-console.log(props)
 
 </script>
 
@@ -95,5 +95,5 @@ console.log(props)
     </div>
     <!-- {{ options }} -->
     <!-- <pre>{{ form[fieldName] }}</pre> -->
-    <!-- <pre>{{ form }}</pre> -->
+ <!--    <pre>{{ form }}</pre> -->
 </template>

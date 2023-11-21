@@ -108,14 +108,13 @@ const updateTagItemTable = async (idTag: number[], idData: number) => {
 
         <template #cell(name)="{ item: prospect }">
             <div class="flex items-center">
-                <Link v-if="prospect.name" :href="prospectRoute(prospect)"
-                    class="py-1"
-                    :class="[`specialUnderlineOrg`]"
-                >
-                    <span>{{ prospect['name'] }}</span>
-                </Link>
+                <template v-if="prospect.name">
+                    <Link :href="prospectRoute(prospect)" class="py-1 specialUnderlineOrg">
+                        <span>{{ prospect['name'] }}</span>
+                    </Link>
+                    <CopyButton :text="prospect.name" />
+                </template>
                 <span v-else class="italic opacity-50">{{ trans('Unknown') }}</span>
-                <CopyButton :text="prospect.name" />
             </div>
         </template>
 

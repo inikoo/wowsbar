@@ -59,11 +59,12 @@ class MailshotHydrateEstimatedEmails
             }
         );
 
+        $estimatedNumberRecipients =$this->getNumberEstimatedRecipients($mailshot->recipients_recipe);
 
 
         $mailshot->mailshotStats()->update(
             [
-                'number_estimated_dispatched_emails'       => $counter,
+                'number_estimated_dispatched_emails'       => $estimatedNumberRecipients,
                 'estimated_dispatched_emails_calculated_at'=> now()
             ]
         );
@@ -73,6 +74,30 @@ class MailshotHydrateEstimatedEmails
         }
     }
 
+    public function getNumberEstimatedRecipients(array $recipientsRecipe): int
+    {
+        $query = Query::find(Arr::get($recipientsRecipe, 'query_id'));
+
+        $queryBuilder = BuildQuery::run($query);
+
+        $counter = 0;
+        $queryBuilder->chunk(
+            1000,
+            function ($recipients) use (&$counter) {
+                foreach ($recipients as $recipient) {
+                    if (!$this->canSend($recipient)) {
+                        continue;
+                    }
+                    $counter++;
+                }
+
+
+            }
+        );
+
+        return $counter;
+
+    }
 
 
 }
