@@ -136,8 +136,6 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect-queries', [StoreProspectQuery::class, 'inShop'])->name('prospect-query.store');
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
 
-        Route::post('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients.index');
-
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
     });
 });

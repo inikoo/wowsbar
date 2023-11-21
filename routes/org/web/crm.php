@@ -38,6 +38,7 @@ use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Mail\DispatchedEmail\UI\ShowDispatchedEmail;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
+use App\Actions\Mail\Mailshot\EstimateRecipientsCreatingMailshot;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
@@ -130,6 +131,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
 
             Route::get('{mailshot}/recipients/{dispatchedEmail:id}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('recipients.show');
+            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
         });
 
         Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
