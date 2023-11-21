@@ -62,20 +62,30 @@ const categories = [
     },
 ]
 
+console.log(props.form)
+
 const getTagsOptions = async () => {
-    try {
-        const response = await axios.get(
-            route('org.crm.shop.prospects.mailshots.estimated-recipients',route().params),
-        )
-        recipientsCount.value = response.data
-    } catch (error) {
-        console.log(error)
-        notify({
-            title: "Failed",
-            text: "Failed to count recipients",
-            type: "error"
-        });
-    }
+        try {
+            const formData = props.form.data(); // Assuming props.form.data() retrieves the form data
+
+            const response = await axios.post(
+                route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
+                formData // Sending form data as part of the POST request
+            );
+
+            // Assuming recipientsCount is a variable or element to store the response data
+            recipientsCount.value = response.data; // Set the received data to recipientsCount
+
+        } catch (error) {
+            console.error(error); // Log the error for debugging purposes
+
+            // Notify user about the failure
+            notify({
+                title: "Failed",
+                text: "Failed to count recipients",
+                type: "error"
+            });
+        }
 }
 
 watch(props.form.recipients,getTagsOptions, {deep: true})
