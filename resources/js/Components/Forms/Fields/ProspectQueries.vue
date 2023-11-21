@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
-import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
-import PureRadio from '@/Components/Pure/PureRadio.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk, faCodeBranch, faTags } from '@fal/'
@@ -107,7 +104,7 @@ console.log(props)
                                         </div>
                                         <div class="mt-5 text-gray-500 italic flex justify-between">
                                             <p>Last contacted <span class="font-bold">{{ option.arguments.__date__?.value?.quantity }} {{  option.arguments.__date__?.value?.unit }}</span></p>
-                                            <Button label="Set" size="xxs" @click="closed" />
+                                            <Button label="cancel" size="xxs" @click="closed" style="secondary"/>
                                         </div>
                                     </div>
                                 </PopoverPanel>
