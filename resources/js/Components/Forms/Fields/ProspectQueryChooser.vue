@@ -58,6 +58,8 @@ const categories = [
     },
 ]
 
+console.log(props)
+
 </script>
 
 <template>
