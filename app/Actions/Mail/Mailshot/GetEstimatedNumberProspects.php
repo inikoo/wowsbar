@@ -8,7 +8,7 @@ use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
-class GetEstimatedNumberRecipients
+class GetEstimatedNumberProspects
 {
     use AsCommand;
 

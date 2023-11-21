@@ -35,6 +35,7 @@ import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
+import ProspectQueryChooser from '@/Components/Forms/Fields/ProspectQueryChooser.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@fad/'
@@ -87,6 +88,7 @@ const components = {
     'customerRoles': CustomerRoles,
     'jobPosition': JobPosition,
     'prospect_query': ProspectsQuery,
+    'prospectQueryChooser': ProspectQueryChooser,
 };
 
 const getComponent = (componentName) => {
@@ -111,12 +113,12 @@ function submit() {
 
 <template>
     <form @submit.prevent="submit">
-        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200 max-w-2xl ">
+        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200" :class="props.fieldData.full ? '' : 'max-w-2xl'">
             <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
                 <dt class="text-sm font-medium text-gray-400 capitalize">
                     <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
                 </dt>
-                <dd class="sm:col-span-2  ">
+                <dd :class="props.fieldData.full ? 'sm:col-span-3' : 'sm:col-span-2'">
                     <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
                         <div class="relative  flex-grow">
                             <component :is="getComponent(fieldData['type'])" :form=form :fieldName=field

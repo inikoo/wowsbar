@@ -87,22 +87,21 @@ onMounted(() => {
   
 <template>
     <div>
+  <!--   Prospect Filter -->
         <Disclosure v-if="options.use.includes('filter')" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
             <DisclosureButton
                 class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                <span>Prospects filter</span>
+                <span>Prospects by</span>
                 <div class="flex gap-2">
                     <VTooltip>
                         <font-awesome-icon :icon="['far', 'info-circle']" />
-
-                        <template #popper>
-                            filter deliveries based on the prospect
-                        </template>
+                            <template #popper>
+                                filter deliveries based on the prospect
+                            </template>
                     </VTooltip>
-                    <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
                 </div>
             </DisclosureButton>
-            <DisclosurePanel class="px-4 pt-2 pb-2 text-sm text-gray-500">
+            <DisclosurePanel class="px-4 pt-3 pb-2 text-sm text-gray-500">
                     <div class="flex flex-wrap items-center">
                         <div v-for="(query, index) in descriptor.QueryLists" :key="query.value"
                             class="flex items-center mr-4 mb-2 py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
@@ -126,6 +125,8 @@ onMounted(() => {
                     </p>
             </DisclosurePanel>
         </Disclosure>
+          <!--  end  Prospect Filter -->
+           <!-- tags  -->
             <Disclosure v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('tags')">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -194,6 +195,8 @@ onMounted(() => {
 
                 </DisclosurePanel>
             </Disclosure>
+               <!-- end tags  -->
+                  <!-- last contact  -->
             <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('contact')">
                 <DisclosureButton
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -242,6 +245,7 @@ onMounted(() => {
                     </div>
                 </DisclosurePanel>
             </Disclosure>
+              <!-- end last contact  -->
         </div>
 </template>
   
