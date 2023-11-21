@@ -18,4 +18,9 @@ class EstimateRecipientsCreatingMailshot
 
         return MailshotHydrateEstimatedEmails::make()->getNumberEstimatedRecipients($mailshot->recipients_recipe);
     }
+
+    public function asController(): int
+    {
+        return $this->handle();
+    }
 }
