@@ -8,6 +8,7 @@
 namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Exception;
@@ -54,6 +55,24 @@ class EditProspectMailshot extends InertiaAction
                     'value'    => $mailshot->subject,
                     'required' => true,
                 ],
+                'query' => [
+                    'type'        => 'prospectQueryChooser',
+                    'label'       => __('prospects query'),
+                    'required'    => true,
+                    'options'     => [
+                        'query'  => IndexProspectQueries::run(),
+                        'custom' => '',
+                    ],
+                    'value'     => [
+                        'recipient_builder_type' => 'query',
+                        'recipient_builder_data' => [
+                            'query'     => null,
+                            'custom'    => null,
+                            'prospects' => null,
+                        ]
+                    ]
+                ],
+
 
             ]
         ];
