@@ -35,6 +35,7 @@ use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Leads\Prospect\UI\EditProspect;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspect;
+use App\Actions\Mail\DispatchedEmail\UI\ShowDispatchedEmail;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
@@ -51,87 +52,89 @@ use App\Actions\Subscriptions\CustomerWebsite\UI\ShowCustomerWebsite;
 Route::get('/', function () {
     return redirect('/crm/dashboard');
 });
-Route::get('/dashboard', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
+Route::get('/dashboard', ['icon' => 'fa-envelope', 'label' => 'show crm dashboard'])->uses([ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
-Route::get('customers', IndexCustomers::class)->name('customers.index');
-Route::get('customers/create', CreateCustomer::class)->name('customers.create');
+Route::get('customers', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses(IndexCustomers::class)->name('customers.index');
+Route::get('customers/create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses(CreateCustomer::class)->name('customers.create');
 
 Route::prefix('customers/{customer}')->as('customers.')->group(function () {
-    Route::get('', ShowCustomer::class)->name('show');
-    Route::get('edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
-    Route::get('delete', RemoveCustomer::class)->name('remove');
-    Route::get('customer-users', [IndexOrgCustomerUsers::class, 'inCustomer'])->name('show.customer-users.index');
-    Route::get('customer-users/create', [CreateOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.create');
-    Route::get('customer-users/{user}', [ShowOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.show');
-    Route::get('customer-users/{user}/edit', [EditOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.edit');
+    Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses(ShowCustomer::class)->name('show');
+    Route::get('edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inOrganisation'])->name('edit');
+    Route::get('delete', ['icon' => 'fa-envelope', 'label' => 'remove customer'])->uses(RemoveCustomer::class)->name('remove');
+    Route::get('customer-users', ['icon' => 'fa-envelope', 'label' => 'customer users'])->uses([IndexOrgCustomerUsers::class, 'inCustomer'])->name('show.customer-users.index');
+    Route::get('customer-users/create', ['icon' => 'fa-envelope', 'label' => 'create customer user'])->uses([CreateOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.create');
+    Route::get('customer-users/{user}', ['icon' => 'fa-envelope', 'label' => 'show customer user'])->uses([ShowOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.show');
+    Route::get('customer-users/{user}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer user'])->uses([EditOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.edit');
 });
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
-    Route::get('/', IndexProspects::class)->name('index');
-    Route::get('/mailshots', [IndexProspectMailshots::class, 'inShop'])->name('mailshots.index');
+    Route::get('/', ['icon' => 'fa-envelope', 'label' => 'prospects'])->uses(IndexProspects::class)->name('index');
+    Route::get('/mailshots', ['icon' => 'fa-envelope', 'label' => 'prospect mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('mailshots.index');
 
-    Route::get('/{prospect}', IndexProspects::class)->name('show');
-    Route::get('/{prospect}/delete', RemoveProspect::class)->name('remove');
+    Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses(ShowProspect::class)->name('show');
+    Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'crm dashboard'])->uses(RemoveProspect::class)->name('remove');
 });
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::get('/', function ($shop) {
         return redirect()->route('org.crm.shop.dashboard', [$shop]);
     });
-    Route::get('/dashboard', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
+    Route::get('/dashboard', ['icon' => 'fa-envelope', 'label' => 'crm dashboard'])->uses([ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
-    Route::get('customers', [IndexCustomers::class, 'inShop'])->name('customers.index');
-    Route::get('customers/create', [CreateCustomer::class, 'inShop'])->name('customers.create');
+    Route::get('customers', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses([IndexCustomers::class, 'inShop'])->name('customers.index');
+    Route::get('customers/create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses([CreateCustomer::class, 'inShop'])->name('customers.create');
 
     Route::prefix('customers/{customer}')->as('customers.')->group(function () {
-        Route::get('', [ShowCustomer::class, 'inShop'])->name('show');
-        Route::get('/edit', [EditCustomer::class, 'inShop'])->name('edit');
+        Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses([ShowCustomer::class, 'inShop'])->name('show');
+        Route::get('/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inShop'])->name('edit');
 
-        Route::get('/social-accounts/{customerSocialAccount}', [ShowCustomerSocialAccount::class, 'inCustomer'])->name('show.customer-social-accounts.show');
+        Route::get('/social-accounts/{customerSocialAccount}', ['icon' => 'fa-envelope', 'label' => 'show social account'])->uses([ShowCustomerSocialAccount::class, 'inCustomer'])->name('show.customer-social-accounts.show');
 
-        Route::get('/users', [IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
-        Route::get('/users/create', [CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
-        Route::get('/users/{customerUser}', [ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.show');
-        Route::get('users/{customerUser}/edit', [EditOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
+        Route::get('/users', ['icon' => 'fa-envelope', 'label' => 'customer users'])->uses([IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
+        Route::get('/users/create', ['icon' => 'fa-envelope', 'label' => 'create customer user'])->uses([CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
+        Route::get('/users/{customerUser}', ['icon' => 'fa-envelope', 'label' => 'show customer user'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.show');
+        Route::get('users/{customerUser}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer user'])->uses([EditOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
 
-        Route::get('/customer-websites', [IndexCustomerWebsites::class, 'inCustomerInShop'])->name('show.customer-websites.index');
-        Route::get('/customer-websites/create', [CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');
-        Route::get('/customer-websites/{customerWebsite}', [ShowCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.show');
-        Route::get('/customer-websites/{customerWebsite}/edit', [EditCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.edit');
+        Route::get('/customer-websites', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([IndexCustomerWebsites::class, 'inCustomerInShop'])->name('show.customer-websites.index');
+        Route::get('/customer-websites/create', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');
+        Route::get('/customer-websites/{customerWebsite}', ['icon' => 'fa-envelope', 'label' => 'show customer website'])->uses([ShowCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.show');
+        Route::get('/customer-websites/{customerWebsite}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer website'])->uses([EditCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.edit');
     });
 
 
     Route::prefix('prospects')->as('prospects.')->group(function () {
-        Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
-        Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
+        Route::get('/', ['icon' => 'fa-envelope', 'label' => 'prospects'])->uses([IndexProspects::class, 'inShop'])->name('index');
+        Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create prospect'])->uses([CreateProspect::class, 'inShop'])->name('create');
 
         Route::get('/export', ExportProspects::class)->name('export');
 
         Route::prefix('lists')->as('lists.')->group(function () {
-            Route::get('/', [IndexProspectQueries::class, 'inShop'])->name('index');
-            Route::get('/create', [CreateProspectQuery::class, 'inShop'])->name('create');
-            Route::get('/{query}/edit', [EditProspectQuery::class, 'inShop'])->name('edit');
-            Route::get('{query}', ShowProspectQuery::class)->name('show');
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'prospect lists'])->uses([IndexProspectQueries::class, 'inShop'])->name('index');
+            Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create prospect list'])->uses([CreateProspectQuery::class, 'inShop'])->name('create');
+            Route::get('/{query}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect list'])->uses([EditProspectQuery::class, 'inShop'])->name('edit');
+            Route::get('{query}', ['icon' => 'fa-envelope', 'label' => 'show prospect list'])->uses(ShowProspectQuery::class)->name('show');
         });
 
         Route::prefix('tags')->as('tags.')->group(function () {
-            Route::get('/', [IndexProspectTags::class, 'inShop'])->name('index');
-            Route::get('/create', [CreateProspectTag::class, 'inShop'])->name('create');
-            Route::get('{tag}/edit', [EditProspectTag::class, 'inShop'])->name('edit');
-            Route::get('{tag}', [ShowProspectTag::class, 'inShop'])->name('show');
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'prospect tags'])->uses([IndexProspectTags::class, 'inShop'])->name('index');
+            Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create prospect tag'])->uses([CreateProspectTag::class, 'inShop'])->name('create');
+            Route::get('{tag}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect tag'])->uses([EditProspectTag::class, 'inShop'])->name('edit');
+            Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show prospect tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
-            Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
-            Route::get('create', [CreateProspectsMailshot::class, 'inShop'])->name('create');
-            Route::get('{mailshot}/edit', EditProspectMailshot::class)->name('edit');
-            Route::get('{mailshot}/workshop', ShowProspectMailshotWorkshop::class)->name('workshop');
-            Route::get('{mailshot}', ShowProspectMailshot::class)->name('show');
+            Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
+            Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
+            Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
+            Route::get('{mailshot}/workshop', ['icon' => 'fa-envelope', 'label' => 'workshop mailshot'])->uses(ShowProspectMailshotWorkshop::class)->name('workshop');
+            Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
+
+            Route::get('{mailshot}/recipients/{dispatchedEmail}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('recipients.show');
         });
 
-        Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
-        Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');
-        Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
+        Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
+        Route::get('/{prospect}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect'])->uses([EditProspect::class, 'inShop'])->name('edit');
+        Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'remove prospect'])->uses([RemoveProspect::class, 'inShop'])->name('remove');
     });
 
 
@@ -139,8 +142,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailroom'])->uses([ShowMailroomDashboard::class, 'inShop'])->name('dashboard');
 
         Route::prefix('templates')->as('templates.')->group(function () {
-            Route::get('{emailTemplate}', [ShowEmailTemplate::class, 'inShop'])->name('show');
-            Route::get('{emailTemplate}/workshop', ShowEmailTemplateWorkshop::class)->name('workshop');
+            Route::get('{emailTemplate}', ['icon' => 'fa-envelope', 'label' => 'email template'])->uses([ShowEmailTemplate::class, 'inShop'])->name('show');
+            Route::get('{emailTemplate}/workshop', ['icon' => 'fa-envelope', 'label' => 'email template workshop'])->uses(ShowEmailTemplateWorkshop::class)->name('workshop');
         });
     });
 
