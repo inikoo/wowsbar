@@ -1,9 +1,11 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
+import { notify } from "@kyvg/vue3-notification"
+import axios from "axios"
 
 const props = defineProps<{
     form: {
@@ -29,6 +31,7 @@ const props = defineProps<{
 }>()
 
 const pathname  = location.search
+const recipientsCount = ref(0)
 if(pathname)  props.form[props.fieldName].recipient_builder_type = "custom"
 
 const categories = [
@@ -59,6 +62,24 @@ const categories = [
     },
 ]
 
+const getTagsOptions = async () => {
+    try {
+        const response = await axios.get(
+            route('org.crm.shop.prospects.mailshots.estimated-recipients',route().params),
+        )
+        recipientsCount.value = response.data
+    } catch (error) {
+        console.log(error)
+        notify({
+            title: "Failed",
+            text: "Failed to count recipients",
+            type: "error"
+        });
+    }
+}
+
+watch(props.form.recipients,getTagsOptions, {deep: true})
+
 
 </script>
 
@@ -77,6 +98,11 @@ const categories = [
                         {{ category.label }}
                     </button>
                 </Tab>
+                <div style="margin-left: auto;">
+                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm font-medium focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold hover:border-gray-300">
+                      Total recipients :  {{ recipientsCount }}
+                    </button>
+                </div>
             </TabList>
 
             <TabPanels class="mt-2">

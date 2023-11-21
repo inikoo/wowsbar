@@ -124,6 +124,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
+            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
@@ -131,7 +132,6 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
 
             Route::get('{mailshot}/recipients/{dispatchedEmail:id}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('recipients.show');
-            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
         });
 
         Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
