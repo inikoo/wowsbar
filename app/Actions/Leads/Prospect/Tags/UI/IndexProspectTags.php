@@ -143,6 +143,13 @@ class IndexProspectTags extends InertiaAction
                     'navigation' => TagsTabsEnum::navigation(),
                 ],
 
+                    'create_mailshot' => [
+                        'route' => [
+                            'name' => 'org.crm.shop.prospects.mailshots.create',
+                            'parameters' =>array_values($this->originalParameters)
+                        ]
+                    ],
+
                 TagsTabsEnum::TAGS->value => $this->tab == TagsTabsEnum::TAGS->value ?
                     fn () => CrmTagResource::collection($tags)
                     : Inertia::lazy(fn () => CrmTagResource::collection($tags)),
