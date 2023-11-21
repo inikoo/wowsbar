@@ -19,6 +19,7 @@ import {faStop, faPlay} from '@fas/'
 
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
 
@@ -45,7 +46,7 @@ const component = computed(() => {
         email: EmailPreview,
         details: ModelDetails,
         changelog: TableHistories,
-        recipients: TableHistories,
+        recipients: TableDispatchedEmails,
     };
     return components[currentTab.value];
 

@@ -129,7 +129,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('{mailshot}/workshop', ['icon' => 'fa-envelope', 'label' => 'workshop mailshot'])->uses(ShowProspectMailshotWorkshop::class)->name('workshop');
             Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
 
-            Route::get('{mailshot}/recipients/{dispatchedEmail}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('recipients.show');
+            Route::get('{mailshot}/recipients/{dispatchedEmail:id}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('recipients.show');
         });
 
         Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
