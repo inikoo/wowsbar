@@ -13,6 +13,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class MailshotPusherEvent implements ShouldBroadcastNow
@@ -32,7 +33,7 @@ class MailshotPusherEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('mailshot.'.$this->mailshot->slug)
+            new Channel('hydrate.sent.emails')
         ];
     }
 
@@ -44,6 +45,11 @@ class MailshotPusherEvent implements ShouldBroadcastNow
 
     public function broadcastAs(): string
     {
-        return 'hydrate.sent.emails';
+        return 'mailshot.'.$this->mailshot->slug;
     }
+    public function middleware(): array
+    {
+        return [(new WithoutOverlapping($this->mailshot->mailshotStats->number_delivered_emails))->dontRelease()];
+    }
+
 }
