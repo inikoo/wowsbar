@@ -88,7 +88,7 @@ class StoreMailshot
     {
         if (!$this->get('query_id')) {
             //todo this is only for testing
-            $this->fill(['query_id' => 1]);
+            $this->fill(['query_id' => 2]);
         }
     }
 
@@ -112,6 +112,8 @@ class StoreMailshot
 
     public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
+        // dd($request->all());
+
         $this->queryRules = [
             'model_type' => 'Prospect',
             'scope_type' => 'Shop',
