@@ -592,7 +592,7 @@ watch(name, () => {
                                 title="Results">
                                 <div v-if="compResourceMeta.total" class="px-2 py-1.5 whitespace-nowrap flex gap-x-1 flex-nowrap">
                                     <span class="font-semibold tabular-nums">
-                                        <CountUp :endVal="compResourceMeta.total" :duration="1.2" />
+                                        <CountUp :endVal="compResourceMeta.total" :duration="1.2" :scrollSpyOnce="true" />
                                     </span>
                                     <!-- {{ locale.number(compResourceMeta.total) }} -->
                                     <span class="font-thin">{{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</span>
