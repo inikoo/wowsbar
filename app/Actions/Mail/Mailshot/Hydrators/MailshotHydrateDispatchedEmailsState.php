@@ -41,7 +41,7 @@ class MailshotHydrateDispatchedEmailsState
             enum: DispatchedEmailStateEnum::class,
             models: DispatchedEmail::class,
             where: function ($q) use ($mailshot) {
-                $q->where('mailshot_id', $mailshot->id);
+                $q->where('mailshot_id', $mailshot->id)->where('is_test', false);
             }
         );
         $mailshot->mailshotStats()->update($stats);

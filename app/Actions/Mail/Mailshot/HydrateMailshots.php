@@ -22,7 +22,6 @@ class HydrateMailshots extends HydrateModel
     {
         MailshotHydrateDispatchedEmailsState::run($mailshot);
         MailshotHydrateEmails::run($mailshot);
-        MailshotHydrateEstimatedEmails::run($mailshot);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::ERROR);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::REJECTED);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SENT);
@@ -33,6 +32,11 @@ class HydrateMailshots extends HydrateModel
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::CLICKED);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SPAM);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::UNSUBSCRIBED);
+
+        if(!$mailshot->start_sending_at) {
+            MailshotHydrateEstimatedEmails::run($mailshot);
+        }
+
 
     }
 
