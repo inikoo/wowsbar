@@ -32,6 +32,7 @@ export default {
         {
             label: "Propspect by",
             name: "propspect_by",
+            information : "filter deliveries based on the prospect",
             value : {
                 by : []
             },
@@ -39,6 +40,7 @@ export default {
         {
             label: "Tags",
             name: "tag",
+            information : "Filter by SEO tags",
             value : {
                 tags : [],
                 state : 'all'
@@ -47,6 +49,7 @@ export default {
         {
             label: "Last contacted",
             name: "last_contact",
+            information : "filter recipients based on the last mailshot sent to them",
             value : {
                 state : false,
                 data: {
