@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
@@ -59,18 +59,19 @@ const props = defineProps<{
 const reactiveProps = ref({...props.data})
 
 // List data of statistic
-const dataStatistic = computed(() => {
-    return [
+const dataStatistic = reactive([
     {
         name: 'recipient',
-        value: reactiveProps.value.stats.number_dispatched_emails,
-        label: trans('Recipients')
+        value: props.data.stats.number_dispatched_emails,
+        label: trans('Recipients'),
+        component: null
     },
     {
         name: 'error',
         label: trans('Errors'),
         class: 'text-red-500',
-        value: reactiveProps.value.stats.number_rejected_emails
+        value: props.data.stats.number_rejected_emails,
+        component: null
     },
     {
         name: 'bounced',
@@ -78,44 +79,50 @@ const dataStatistic = computed(() => {
         type: 'multi',
         list: [
             {
-                value: reactiveProps.value.stats.number_hard_bounced_emails,
+                value: props.data.stats.number_hard_bounced_emails,
                 icon: 'fal fa-skull',
                 tooltip: trans('Hard bounce')
             },
             {
-                value: reactiveProps.value.stats.number_soft_bounced_emails,
+                value: props.data.stats.number_soft_bounced_emails,
                 icon: 'fal fa-dungeon',
                 tooltip: trans('Soft bounce')
             }
-        ]
+        ],
+        component: null
     },
     {
         name: 'delivered',
         label: trans('delivered'),
-        value: reactiveProps.value.stats.number_delivered_emails
+        value: props.data.stats.number_delivered_emails,
+        component: null
     },
 
     {
         name: 'opened',
         label: trans('opened'),
-        value: reactiveProps.value.stats.number_opened_emails
+        value: props.data.stats.number_opened_emails,
+        component: null
     },
     {
         name: 'clicked',
         label: trans('clicked'),
-        value: reactiveProps.value.stats.number_clicked_emails
+        value: props.data.stats.number_clicked_emails,
+        component: null
     },
     {
         name: 'spam',
         label: trans('spam'),
-        value: reactiveProps.value.stats.number_spam_emails
+        value: props.data.stats.number_spam_emails,
+        component: null
     },
     {
         name: 'unsubscribed',
         label: trans('unsubscribed'),
-        value: reactiveProps.value.stats.number_unsubscribed_emails
+        value: props.data.stats.number_unsubscribed_emails,
+        component: null
     },
-]})
+])
 
 const stepsOptions = {
     // recipient_stored_at: props.data.recipient_stored_at,
@@ -135,7 +142,16 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 })
 const channel = pusher.subscribe('hydrate.sent.emails')
 channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
-    reactiveProps.value = {...data.mailshot}
+    // reactiveProps.value = {...data.mailshot}
+    dataStatistic[0].component.update(data.mailshot.stats.number_dispatched_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_rejected_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_hard_bounced_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_soft_bounced_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_delivered_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_opened_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_clicked_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_spam_emails)
+    dataStatistic[0].component.update(data.mailshot.stats.number_unsubscribed_emails)
 })
 
 // To convert data to wanted data
@@ -176,6 +192,8 @@ const compSortSteps = computed(() => {
     return sortedData
 })
 
+const qqwee = () => {
+}
 
 </script>
 
@@ -200,13 +218,14 @@ const compSortSteps = computed(() => {
                                     <span>{{ subValue.value }}</span>
                                 </div>
                             </div>
-                            <CountUp v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
+                            <CountUp @init="(el) => statistic.component = el" v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
                         </div>
                     </dd>
                 </div>
             </template>
         </dl>
     </div>
+    <!-- <div @click="qqwee">dddddddddddddddddddddddddddddddddddddddd</div> -->
 
     <!-- <pre>{{ reactiveProps }}</pre> -->
 </template>
