@@ -29,13 +29,13 @@ const props = withDefaults(defineProps<{
     }
 }>(), {
     options: {
-        use: ['filter', "tags", "contact"],
+        use: ['propspect_by', "tag", "last_contact"],
     }
 
 })
 const emits = defineEmits();
 const sectionValue = ref([])
-
+const schemaForm = descriptor['schemaForm'].filter((item)=>props.options.use.includes(item.name))
 const tagsOptions = ref([])
 /* get tags option */
 const getTagsOptions = async () => {
@@ -55,8 +55,10 @@ const getTagsOptions = async () => {
 
 
 const setFormValue = (data, fieldName) => {
-    if (isArray(fieldName)) return get(data, fieldName, {});
-    else return get(data, fieldName, {});
+    if (isArray(fieldName)) {  /* if fieldName array */
+        if (get(data, fieldName)) return get(data, fieldName, {});  /* Chek if data null or undefined or has a objecjt*/
+        else return {}
+    } else return get(data, fieldName, {}); /* if fieldName string */
 
 };
 
@@ -71,8 +73,8 @@ const updateFormValue = (newValue) => {
 };
 
 const changeSection = (index: Number) => {
-    if (sectionValue.value.includes(index)) set(value, descriptor.schemaForm[index].name, descriptor.schemaForm[index].value);
-    else delete value[descriptor.schemaForm[index].name]
+    if (sectionValue.value.includes(index)) set(value, schemaForm[index].name, schemaForm[index].value);
+    else delete value[schemaForm[index].name]
 }
 
 
@@ -91,7 +93,7 @@ console.log(value)
 <template>
     <div class="flex">
         <div class="w-[20%] px-2">
-            <div v-for="(sectionData, sectionIdx ) in descriptor['schemaForm']" :key="sectionIdx" class="relative py-1">
+            <div v-for="(sectionData, sectionIdx ) in schemaForm" :key="sectionIdx" class="relative py-1">
                 <div
                     class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                     <label :for="sectionData.name" class="ml-2">{{ sectionData.label }}</label>
@@ -104,7 +106,7 @@ console.log(value)
 
         <div class="w-[80%] bg-gray-50 p-4 rounded-md border border-gray-300">
             <!--   Prospect By -->
-            <div v-if="value.propspect_by">
+            <div v-if="get(value,'propspect_by')  && options.use.includes('propspect_by')">
                 <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
                     <DisclosureButton
                         class="flex w-full justify-between  bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -145,7 +147,7 @@ console.log(value)
             </div>
             <!--  end By -->
             <!--   tags By -->
-            <div v-if="value.tag">
+            <div v-if="get(value,'tag') && options.use.includes('tag')">
                 <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
                     <DisclosureButton
                         class="flex w-full justify-between  bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
@@ -211,7 +213,7 @@ console.log(value)
             </div>
             <!--  tags By -->
             <!-- last_contacted -->
-            <div v-if="value.last_contact">
+            <div v-if="get(value,'last_contact') && options.use.includes('last_contact')">
                 <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
                     <DisclosureButton
                         class="flex w-full justify-between  bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">

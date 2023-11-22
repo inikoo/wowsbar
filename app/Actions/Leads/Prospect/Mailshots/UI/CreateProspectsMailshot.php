@@ -69,20 +69,7 @@ class CreateProspectsMailshot extends InertiaAction
                         'recipient_builder_type' => 'query',
                         'recipient_builder_data' => [
                             'query'     => null,
-                            'custom'    => [
-                                'query' => [],
-                                'tag'   => [
-                                    'state' => 'all',
-                                    'tags'  => explode(',', $request->get('tags'))
-                                ],
-                                'last_contact' => [
-                                    'state' => false,
-                                    'data'  => [
-                                        'unit'     => 'week',
-                                        'quantity' =>  1
-                                    ]
-                                ],
-                            ],
+                            'custom'    => null,
                             'prospects' => null,
                         ]
                     ]
