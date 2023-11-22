@@ -66,6 +66,19 @@ trait WithCustomersSubNavigation
 
         $meta[] = [
             'href'     => [
+                'name'       => 'org.crm.shop.prospects.tags.index',
+                'parameters' => $request->route()->originalParameters()
+            ],
+            'number'   => $this->parent->crmStats->number_surveys,
+            'label'    => __('Surveys'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-poll-people',
+                'tooltip' => __('surveys')
+            ]
+        ];
+
+        $meta[] = [
+            'href'     => [
                 'name'       => 'org.crm.shop.prospects.lists.index',
                 'parameters' => $request->route()->originalParameters()
             ],
@@ -89,6 +102,8 @@ trait WithCustomersSubNavigation
                 'tooltip' => __('tags')
             ]
         ];
+
+
 
         return $meta;
     }

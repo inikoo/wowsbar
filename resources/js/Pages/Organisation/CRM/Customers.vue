@@ -4,20 +4,20 @@
   -  Copyright (c) 2022, Raul A Perusquia Flores
   -->
 
-<script setup  lang="ts">
+<script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import TableCustomers from '@/Components/Tables/TableCustomers.vue';
-import { capitalize } from "@/Composables/capitalize"
+import {capitalize} from "@/Composables/capitalize"
 import {PageHeading as TSPageHeading} from "@/types/PageHeading";
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faTachometerAlt, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faNewspaper} from '@fal/'
+import {faTachometerAlt, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faNewspaper, faPollPeople} from '@fal/'
 import CustomersDashboard from "@/Pages/Organisation/CRM/Customers/CustomersDashboard.vue";
 
-library.add(faTachometerAlt,  faCodeBranch, faMailBulk, faNewspaper, faStore, faClock, faInfo, faTags)
+library.add(faTachometerAlt, faCodeBranch, faMailBulk, faNewspaper, faStore, faClock, faInfo, faTags, faPollPeople)
 
 
 const props = defineProps<{
@@ -51,5 +51,5 @@ const component = computed(() => {
     <PageHeading :data="pageHead"></PageHeading>
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]" ></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
