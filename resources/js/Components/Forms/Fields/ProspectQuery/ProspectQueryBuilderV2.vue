@@ -14,6 +14,7 @@ import Multiselect from "@vueform/multiselect"
 import Tag from "@/Components/Tag.vue"
 import PureInput from '@/Components/Pure/PureInput.vue'
 import {trans} from "laravel-vue-i18n";
+import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 
 library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight, faBoxOpen)
 
@@ -115,7 +116,7 @@ console.log(value)
                 </div>
             </div>
               <!-- end  if value is null -->
-              
+
             <!--   Prospect By -->
             <div v-if="get(value,'propspect_by')  && options.use.includes('propspect_by')">
                 <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
@@ -241,7 +242,7 @@ console.log(value)
                     </DisclosureButton>
                     <DisclosurePanel
                         class="px-4 pt-3 pb-2 text-sm text-gray-500 bg-white border-gray-300 border border-t-0"> 
-                        <div>
+                        <!-- <div>
                             <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
                                 valueProp="value" trackBy="label" label="label" v-model="value.last_contact.state"
                                 :can-clear="false"></Multiselect>
@@ -249,7 +250,17 @@ console.log(value)
                                 class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
                                 {{ form.errors[`${fieldName}.last_contact.state`] }}
                             </p>
-                        </div>
+                        </div> -->
+
+                        <SwitchGroup as="div" class="flex items-center">
+                            <Switch v-model="value.last_contact.state" :class="[value.last_contact.state ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
+                            <span aria-hidden="true" :class="[value.last_contact.state ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
+                            </Switch>
+                            <SwitchLabel as="span" class="ml-3 text-sm">
+                            <span class="font-medium text-gray-900">{{ value.last_contact.state ? 'Last contact' : 'Never'}}</span>
+                            </SwitchLabel>
+                        </SwitchGroup>
+                        
 
                         <div v-if="value.last_contact.state" class="flex flex-col gap-y-2 mt-4">
                             <div class="flex gap-x-2">
