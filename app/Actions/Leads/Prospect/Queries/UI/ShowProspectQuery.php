@@ -11,6 +11,7 @@ use App\Actions\Helpers\Query\BuildQuery;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ShowProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\Tag\TagResource;
@@ -25,6 +26,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspectQuery extends InertiaAction
 {
     use WithActionButtons;
+    use WithProspectsSubNavigation;
 
     public Organisation|Shop $parent;
 
@@ -48,6 +50,7 @@ class ShowProspectQuery extends InertiaAction
 
     public function htmlResponse(Query $query, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
         return Inertia::render(
             'Prospects/ProspectQuery',
             [
@@ -57,8 +60,9 @@ class ShowProspectQuery extends InertiaAction
                 ),
                 'title'    => __($query->name),
                 'pageHead' => [
-                    'title'     => __($query->name),
-                    'actions'   => [
+                    'title'            => __($query->name),
+                    'subNavigation'    => $subNavigation,
+                    'actions'          => [
                         $this->getEditActionIcon($request)
                     ]
                 ],

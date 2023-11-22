@@ -9,9 +9,9 @@ namespace App\Actions\Traits;
 
 use Lorisleiva\Actions\ActionRequest;
 
-trait WithProspectsMeta
+trait WithProspectsSubNavigation
 {
-    public function getMeta(ActionRequest $request): array
+    public function getSubNavigation(ActionRequest $request): array
     {
         $meta = [];
 

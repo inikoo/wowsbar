@@ -13,6 +13,7 @@ use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Mail\DispatchedEmail\UI\IndexDispatchedEmail;
 use App\Actions\Mail\MailshotRecipient\UI\IndexEstimatedRecipients;
 use App\Actions\Traits\Actions\WithActionButtons;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\UI\Organisation\MailshotTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -30,7 +31,9 @@ class ShowProspectMailshot extends InertiaAction
 {
     use WithActionButtons;
     use WithProspectMailshotNavigation;
+    use WithProspectsSubNavigation;
 
+    public Shop $parent;
 
     public function handle(Mailshot $mailshot): Mailshot
     {
@@ -50,6 +53,7 @@ class ShowProspectMailshot extends InertiaAction
 
     public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
+        $this->parent = $shop;
         $this->initialisation($request)->withTab(MailshotTabsEnum::values());
 
         return $this->handle($mailshot);
@@ -58,6 +62,8 @@ class ShowProspectMailshot extends InertiaAction
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
+
         $iconActions = [];
 
         if ($this->canDelete and !$mailshot->start_sending_at) {
@@ -150,13 +156,14 @@ class ShowProspectMailshot extends InertiaAction
                 ],
                 'title'                           => $mailshot->subject,
                 'pageHead'                        => [
-                    'title'     => $mailshot->subject,
-                    'icon'      => [
+                    'title'         => $mailshot->subject,
+                    'subNavigation' => $subNavigation,
+                    'icon'          => [
                         'tooltip' => __('mailshot'),
                         'icon'    => 'fal fa-mail-bulk'
                     ],
-                    'iconRight' => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'actions'   => [
+                    'iconRight'     => $mailshot->state->stateIcon()[$mailshot->state->value],
+                    'actions'       => [
                         [
                             'type'        => 'buttonGroup',
                             'buttonGroup' => $iconActions
