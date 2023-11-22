@@ -48,44 +48,44 @@ class EditProspectMailshot extends InertiaAction
     {
         $query = Query::findOrFail(Arr::get($mailshot->recipients_recipe, 'query_id'));
 
-        $filter = Arr::get($query->constrains, 'filter', []);
-        $tags = Arr::get($filter, array_key_first($filter), []);
-        $lastContact = Arr::get($query->arguments, '__date__');
+        $filter           = Arr::get($query->constrains, 'filter', []);
+        $tags             = Arr::get($filter, array_key_first($filter), []);
+        $lastContact      = Arr::get($query->arguments, '__date__');
         $lastContactValue = Arr::get($lastContact, 'value');
 
         $sections['properties'] = [
-            'label' => __('Mailshot properties'),
-            'icon' => 'fal fa-sliders-h',
+            'label'  => __('Mailshot properties'),
+            'icon'   => 'fal fa-sliders-h',
             'fields' => [
                 'name' => [
-                    'type' => 'input',
-                    'label' => __('subject'),
-                    'value' => $mailshot->subject,
+                    'type'     => 'input',
+                    'label'    => __('subject'),
+                    'value'    => $mailshot->subject,
                     'required' => true,
                 ],
                 'query' => [
-                    'type' => 'prospectQueryChooser',
-                    'label' => __('prospects query'),
+                    'type'     => 'prospectQueryChooser',
+                    'label'    => __('prospects query'),
                     'required' => true,
                     'full'     => true,
-                    'options' => [
-                        'query' => IndexProspectQueries::run(),
+                    'options'  => [
+                        'query'  => IndexProspectQueries::run(),
                         'custom' => '',
                     ],
                     'value' => [
                         'recipient_builder_type' => 'query',
                         'recipient_builder_data' => [
-                            'query' => $query->id,
+                            'query'  => $query->id,
                             'custom' => [
                                 'query' => (array)Arr::get($query->constrains, 'with', []),
-                                'tag' => [
+                                'tag'   => [
                                     'state' => array_key_first($filter),
-                                    'tags' => $tags
+                                    'tags'  => $tags
                                 ],
                                 'last_contact' => [
                                     'state' => $lastContact != null,
-                                    'data' => [
-                                        'unit' => Arr::get($lastContactValue, 'unit'),
+                                    'data'  => [
+                                        'unit'     => Arr::get($lastContactValue, 'unit'),
                                         'quantity' => Arr::get($lastContactValue, 'quantity')
                                     ]
                                 ],
@@ -101,18 +101,18 @@ class EditProspectMailshot extends InertiaAction
 
 
         $sections['delete'] = [
-            'label' => __('Delete'),
-            'icon' => 'fal fa-trash-alt',
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
             'fields' => [
                 'name' => [
-                    'type' => 'action',
+                    'type'   => 'action',
                     'action' => [
-                        'type' => 'button',
-                        'style' => 'delete',
-                        'label' => __('delete mailshot'),
+                        'type'   => 'button',
+                        'style'  => 'delete',
+                        'label'  => __('delete mailshot'),
                         'method' => 'delete',
-                        'route' => [
-                            'name' => 'org.models.mailshot.delete',
+                        'route'  => [
+                            'name'       => 'org.models.mailshot.delete',
                             'parameters' => [
                                 'mailshot' => $mailshot->id
                             ],
@@ -131,40 +131,40 @@ class EditProspectMailshot extends InertiaAction
         return Inertia::render(
             'EditModel',
             [
-                'title' => __("Edit mailshot"),
+                'title'       => __("Edit mailshot"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
                 'navigation' => [
                     'previous' => $this->getPrevious($mailshot, $request),
-                    'next' => $this->getNext($mailshot, $request),
+                    'next'     => $this->getNext($mailshot, $request),
                 ],
                 'pageHead' => [
                     'title' => $mailshot->subject,
-                    'icon' => [
+                    'icon'  => [
                         'tooltip' => __('mailshot'),
-                        'icon' => 'fal fa-sign'
+                        'icon'    => 'fal fa-sign'
                     ],
                     'iconRight' => $mailshot->state->stateIcon()[$mailshot->state->value],
-                    'actions' => [
+                    'actions'   => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'exit',
                             'label' => __('Exit edit'),
                             'route' => [
-                                'name' => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ]
                     ],
                 ],
                 'formData' => [
-                    'current' => $currentSection,
+                    'current'   => $currentSection,
                     'blueprint' => $sections,
-                    'args' => [
+                    'args'      => [
                         'updateRoute' => [
-                            'name' => 'org.models.mailshot.update',
+                            'name'       => 'org.models.mailshot.update',
                             'parameters' => $mailshot->id
                         ],
                     ]

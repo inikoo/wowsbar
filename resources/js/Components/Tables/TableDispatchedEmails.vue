@@ -6,15 +6,9 @@
 
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { useLocaleStore } from "@/Stores/locale"
-import Button from '@/Components/Elements/Buttons/Button.vue'
-
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
-import PureInput from '@/Components/Pure/PureInput.vue'
 import {Link} from "@inertiajs/vue3";
 library.add(faEnvelope, faAsterisk)
 
