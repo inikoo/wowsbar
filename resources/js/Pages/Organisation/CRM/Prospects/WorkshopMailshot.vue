@@ -187,18 +187,18 @@ const onSuccess = (response,closedPopover) => {
             </div>
 
             <div class="flex rounded-md overflow-hidden">
-                <Link v-if="setAsReadyRoute?.name" method="post" :href="route(
+                <Link v-if="setAsReadyRoute?.name" as="button" method="post" :href="route(
                     props.setAsReadyRoute?.name,
                     props.setAsReadyRoute?.parameters
                 )">
-                <Button class="rounded-r-none py-[9px]">
+                <Button class="rounded-r-none py-[9px] bg-gradient-to-r from-org-500 to-org-500" key="4">
                     <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
                 </Button>
                 </Link>
                 <Popover>
                     <template #button>
-                        <div class="relative" title="Scheduled publish">
-                            <Button class="rounded-none">
+                        <div class="relative border-l border-org-300" title="Scheduled publish">
+                            <Button class="rounded-none bg-gradient-to-r from-org-500 to-org-500">
                                 <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
@@ -213,7 +213,7 @@ const onSuccess = (response,closedPopover) => {
                             </div>
                             <div class="flex justify-between">
                                 <div class="p-[4px] cursor-pointer" @click="onCancel">Cancel</div>
-                                <Link method="post" :data="{ schedule_at: date.toISOString() }" :href="route(
+                                <Link as="button" method="post" :data="{ schedule_at: date.toISOString() }" :href="route(
                                     props.setAsScheduledRoute.name,
                                     props.setAsScheduledRoute.parameters
                                 )">
@@ -224,7 +224,7 @@ const onSuccess = (response,closedPopover) => {
                     </template>
                 </Popover>
 
-                <Link method="post" :href="route(
+                <Link as="button" method="post" :href="route(
                     props.sendRoute.name,
                     props.sendRoute.parameters
                 )">

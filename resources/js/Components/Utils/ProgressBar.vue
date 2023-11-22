@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 // Used well in EmployeesUpload.vue
 import { watch } from 'vue'
+import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -15,6 +16,7 @@ const props = defineProps<{
         countFails: number
         countTotal: number
     }
+    description?: string
 }>()
 
 const emits = defineEmits<{
@@ -41,7 +43,7 @@ watch(() => props.progressData.progressPercentage, () => {
     <div :class="progressData.isShowProgress ? 'bottom-16' : '-bottom-16'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1 tabular-nums">
         <div class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
             <div v-if="progressData.progressPercentage >= 100">Finished!!🥳</div>
-            <div v-else>Adding Employees ({{ progressData.countSuccess + progressData.countFails }}/<span class="font-semibold inline">{{ progressData.countTotal }}</span>)</div>
+            <div v-else>{{ description ?? trans('Adding')}} ({{ progressData.countSuccess + progressData.countFails }}/<span class="font-semibold inline">{{ progressData.countTotal }}</span>)</div>
             
             <!-- Progress Bar -->
             <div class="overflow-hidden rounded-full bg-gray-200 w-64 flex justify-start">
