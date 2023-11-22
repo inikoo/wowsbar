@@ -5,11 +5,12 @@
   -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
 import {trans} from "laravel-vue-i18n";
+import Pusher from 'pusher-js'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaperPlane, faDungeon, faSkull } from '@fal/'
@@ -54,30 +55,32 @@ const props = defineProps<{
     tab?: string
 }>()
 
+const reactiveProps = ref({...props.data})
 
-
-const dataStatistic = [
+// List data of statistic
+const dataStatistic = computed(() => {
+    return [
     {
-        value: props.data.stats.number_dispatched_emails,
+        value: reactiveProps.value.stats.number_dispatched_emails,
         label: trans('Recipients')
     },
     {
         name: 'error',
         label: trans('Errors'),
         class: 'text-red-500',
-        value: props.data.stats.number_rejected_emails
+        value: reactiveProps.value.stats.number_rejected_emails
     },
     {
         label: trans('bounced'),
         type: 'multi',
         list: [
             {
-                value: props.data.stats.number_hard_bounced_emails,
+                value: reactiveProps.value.stats.number_hard_bounced_emails,
                 icon: 'fal fa-skull',
                 tooltip: trans('Hard bounce')
             },
             {
-                value: props.data.stats.number_soft_bounced_emails,
+                value: reactiveProps.value.stats.number_soft_bounced_emails,
                 icon: 'fal fa-dungeon',
                 tooltip: trans('Soft bounce')
             }
@@ -85,26 +88,26 @@ const dataStatistic = [
     },
     {
         label: trans('delivered'),
-        value: props.data.stats.number_delivered_emails
+        value: reactiveProps.value.stats.number_delivered_emails
     },
 
     {
         label: trans('opened'),
-        value: props.data.stats.number_opened_emails
+        value: reactiveProps.value.stats.number_opened_emails
     },
     {
         label: trans('clicked'),
-        value: props.data.stats.number_clicked_emails
+        value: reactiveProps.value.stats.number_clicked_emails
     },
     {
         label: trans('spam'),
-        value: props.data.stats.number_spam_emails
+        value: reactiveProps.value.stats.number_spam_emails
     },
     {
         label: trans('unsubscribed'),
-        value: props.data.stats.number_unsubscribed_emails
+        value: reactiveProps.value.stats.number_unsubscribed_emails
     },
-]
+]})
 
 const stepsOptions = {
     // recipient_stored_at: props.data.recipient_stored_at,
@@ -118,6 +121,17 @@ const stepsOptions = {
     updated_at: props.data.updated_at,
 }
 
+// Pusher: subscribe
+const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+    cluster: 'ap1'
+})
+const channel = pusher.subscribe('hydrate.sent.emails')
+channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
+    reactiveProps.value = {...data.mailshot}
+    console.log("========", reactiveProps.value.stats.number_delivered_emails)
+})
+
+// To convert data to wanted data
 const compSortSteps = computed(() => {
     const outputData: any = {};
 
@@ -179,7 +193,7 @@ const compSortSteps = computed(() => {
                                     <span>{{ subValue.value }}</span>
                                 </div>
                             </div>
-                            <CountUp v-else :endVal="statistic.value" />
+                            <CountUp v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
                         </div>
                     </dd>
                 </div>
@@ -187,6 +201,6 @@ const compSortSteps = computed(() => {
         </dl>
     </div>
 
-    <!-- <pre>{{ data }}</pre> -->
+    <!-- <pre>{{ reactiveProps }}</pre> -->
 </template>
 
