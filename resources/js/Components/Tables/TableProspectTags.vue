@@ -16,6 +16,7 @@ library.add(faEnvelope, faAsterisk)
 const props = defineProps<{
     data: object
     tab?: string
+    create_mailshot:object
 }>()
 
 const locale = useLocaleStore()
@@ -43,8 +44,10 @@ function tagRoute(tag: object) {
             </Link>
         </template>
 
-        <template #cell(actions)="{ item }">
-            <Button label="New Mailshot" :style="'secondary'" size="xs" />
+        <template #cell(actions)="{ item : tag }">
+            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.tag_slug }">
+                <Button label="New Mailshot" :style="'secondary'" size="xs" />
+            </Link>
         </template>
     </Table>
 </template>

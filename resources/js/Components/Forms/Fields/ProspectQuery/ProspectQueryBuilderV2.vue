@@ -3,7 +3,7 @@ import Multiselect from "@vueform/multiselect"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, onMounted, watch, reactive } from 'vue'
+import { ref, onMounted, watch, reactive, computed } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import descriptor from './descriptor'
@@ -12,7 +12,7 @@ import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 import { get, set, isArray, isNull } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
-import {trans} from "laravel-vue-i18n";
+import { trans } from "laravel-vue-i18n";
 
 library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
 
@@ -28,15 +28,15 @@ const props = withDefaults(defineProps<{
         searchable?: boolean
     }
 }>(), {
-    options : {
+    options: {
         use: ['filter', "tags", "contact"],
     }
 
 })
 
 
-const tagsOptions = ref([])
 
+const tagsOptions = ref([])
 /* get tags option */
 const getTagsOptions = async () => {
     try {
@@ -74,6 +74,10 @@ const updateFormValue = (newValue) => {
     emits("update:form", target);
 };
 
+const computedValue = (sectionData) => {
+ return 'dsd'
+}
+
 watch(value, (newValue) => {
     updateFormValue(newValue);
 });
@@ -82,14 +86,24 @@ onMounted(() => {
     getTagsOptions()
 })
 
-
-
+console.log(props,value)
 </script>
 
 <template>
-    <div>
-  <!--   Prospect Filter -->
-        <Disclosure v-if="options.use.includes('filter')" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
+    <div class="flex">
+        <div class="w-[20%] px-2">
+            <div v-for="(sectionData, sectionIdx ) in descriptor['schemaForm']" :key="sectionIdx" class="relative py-1">
+                <div
+                    class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
+                    <label :for="sectionData.name" class="ml-2">{{ sectionData.label }}</label>
+                    <input type="checkbox" :id="sectionData.name" :key="sectionData.name" :value="sectionData.defaultValue"
+                  class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-[80%]">
+            <Disclosure v-if="options.use.includes('filter')" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
             <DisclosureButton
                 class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                 <span>Prospects by</span>
@@ -239,8 +253,9 @@ onMounted(() => {
                     </div>
                 </DisclosurePanel>
             </Disclosure>
-              <!-- end last contact  -->
         </div>
+
+    </div>
 </template>
 
 <style lang="scss">

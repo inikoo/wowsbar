@@ -43,6 +43,7 @@ use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\DeleteMailshot;
+use App\Actions\Mail\Mailshot\EstimateRecipientsCreatingMailshot;
 use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\ResumeMailshot;
 use App\Actions\Mail\Mailshot\SendMailshot;

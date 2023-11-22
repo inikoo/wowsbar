@@ -69,7 +69,7 @@ function getAwayStatus(lastActive)
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
                 <div v-if="activeUserDataLength" v-for="(dataUser, index) in activeUserData" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
-                    
+
                 >
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
                     <span class="font-semibold text-gray-700">{{ dataUser.id }}</span> -
@@ -78,7 +78,7 @@ function getAwayStatus(lastActive)
                         class="flex-shrink-0 h-3 w-3 mr-1 opacity-80"
                         :icon="'fal fa-'+dataUser.route.icon"
                         aria-hidden="true" /> -->
-                    <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.name) : '' }}</span>
+                    <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>
                     <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-800">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span>
                     <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
                 </div>

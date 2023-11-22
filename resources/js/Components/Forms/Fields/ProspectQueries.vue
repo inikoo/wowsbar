@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
-import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
-import PureRadio from '@/Components/Pure/PureRadio.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelope, faAsterisk, faCodeBranch, faTags } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+
 library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
-
-
 const props = defineProps<{
     form: {
         [key: string]: {
             recipient_builder_type: string
             recipient_builder_data: {
-                query: number
+                query: object
             }
         }
     }
@@ -35,6 +32,8 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'onUpdate'): void
 }>()
+
+console.log(props)
 
 </script>
 
@@ -77,7 +76,7 @@ const emits = defineEmits<{
                 <div v-if="option.constrains.with === 'email'" class="inline-flex items-start">
                     <FontAwesomeIcon icon='fal fa-asterisk' class='h-2 text-red-500' aria-hidden='true' />
                     <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
-                </div>
+                </div>s
 
                 <p v-if="option.constrains.where?.[2]" class="text-gray-500">(Not contacted yet)</p>
                 <p v-if="option.constrains?.group" class="text-gray-500 whitespace-nowrap">
@@ -92,9 +91,9 @@ const emits = defineEmits<{
 
                             <!-- Popover -->
                             <transition>
-                                <PopoverPanel class="absolute w-64 max-w-md z-[99] mt-3 right-0 translate-x-2 transform py-3 px-4 bg-gray-100 ring-1 ring-gray-300 rounded-md shadow-md ">
+                                <PopoverPanel v-slot="{ close : closed }" class="absolute w-64 max-w-md z-[99] mt-3 right-0 translate-x-2 transform py-3 px-4 bg-gray-100 ring-1 ring-gray-300 rounded-md shadow-md ">
                                     <div class="flex flex-col gap-y-2">
-                                        <div class="text-center text-base font-semibold">Select your time</div>
+                                        <div class="text-center text-base font-semibold">Interval</div>
                                         <div class="flex gap-x-2">
                                             <div v-if="option.arguments.__date__?.value" class="w-20">
                                                 <PureInput v-model="option.arguments.__date__.value.quantity" type="number" :minValue="1" :caret="false" placeholder="7" />
@@ -104,8 +103,8 @@ const emits = defineEmits<{
                                             </div>
                                         </div>
                                         <div class="mt-5 text-gray-500 italic flex justify-between">
-                                            <p>Will be send in <span class="font-bold">{{ option.arguments.__date__?.value?.quantity }} {{  option.arguments.__date__?.value?.unit }}</span></p>
-                                            <Button label="Set" size="xxs" />
+                                            <p>Last contacted <span class="font-bold">{{ option.arguments.__date__?.value?.quantity }} {{  option.arguments.__date__?.value?.unit }}</span></p>
+                                            <Button label="cancel" size="xxs" @click="closed" style="secondary"/>
                                         </div>
                                     </div>
                                 </PopoverPanel>
@@ -120,7 +119,7 @@ const emits = defineEmits<{
                     <td class="relative py-2 px-3 text-right font-medium">
                         <div v-if="option.number_items > 0" >
                             <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form.query.recipient_builder_data.query" :value="option.id" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
+                            <input v-model="form.recipients.recipient_builder_data.query" :value="{id : option.id, arguments: option.arguments }" type="radio" :id="'radioProspects' + option.id" name="radioProspects" class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
                         </div>
                     </td>
                 </tr>

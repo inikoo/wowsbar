@@ -1,9 +1,11 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
+import { notify } from "@kyvg/vue3-notification"
+import axios from "axios"
 
 const props = defineProps<{
     form: {
@@ -28,19 +30,21 @@ const props = defineProps<{
     }
 }>()
 
-
+const pathname  = location.search
+const recipientsCount = ref(0)
+if(pathname)  props.form[props.fieldName].recipient_builder_type = "custom"
 
 const categories = [
     {
         name: 'query',
-        fieldName: "query",
+        fieldName: "recipients",
         label: 'Query',
         component: ProspectQueries,
         options : props.options["query"]
     },
     {
         name: 'custom',
-        fieldName: ["query", 'recipient_builder_data', 'custom'],
+        fieldName: ["recipients", 'recipient_builder_data', 'custom'],
         label: 'Custom',
         component: ProspectQueryBuilder,
         options : {
@@ -51,14 +55,41 @@ const categories = [
     },
     {
         name: 'prospects',
-        fieldName: ["query", 'recipient_builder_data', 'prospects'],
+        fieldName: ["recipients", 'recipient_builder_data', 'prospects'],
         label: 'Prospects',
         component: ProspectSelect,
         options : props.options["prospects"]
     },
 ]
 
-console.log(props)
+console.log(props.form)
+
+const getTagsOptions = async () => {
+        try {
+            const formData = props.form.data(); // Assuming props.form.data() retrieves the form data
+
+            const response = await axios.post(
+                route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
+                formData // Sending form data as part of the POST request
+            );
+
+            // Assuming recipientsCount is a variable or element to store the response data
+            recipientsCount.value = response.data; // Set the received data to recipientsCount
+
+        } catch (error) {
+            console.error(error); // Log the error for debugging purposes
+
+            // Notify user about the failure
+            notify({
+                title: "Failed",
+                text: "Failed to count recipients",
+                type: "error"
+            });
+        }
+}
+
+watch(props.form.recipients,getTagsOptions, {deep: true})
+
 
 </script>
 
@@ -77,6 +108,11 @@ console.log(props)
                         {{ category.label }}
                     </button>
                 </Tab>
+                <div style="margin-left: auto;">
+                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                      Total recipients :  {{ recipientsCount }}
+                    </button>
+                </div>
             </TabList>
 
             <TabPanels class="mt-2">
@@ -95,5 +131,5 @@ console.log(props)
     </div>
     <!-- {{ options }} -->
     <!-- <pre>{{ form[fieldName] }}</pre> -->
-    <!-- <pre>{{ form }}</pre> -->
+ <!--    <pre>{{ form }}</pre> -->
 </template>
