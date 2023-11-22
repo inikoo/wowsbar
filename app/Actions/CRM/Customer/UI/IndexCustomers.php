@@ -9,6 +9,7 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\CustomersTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
@@ -27,6 +28,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexCustomers extends InertiaAction
 {
+    use WithCustomersSubNavigation;
+
     protected Organisation|Shop $parent;
 
 
@@ -151,6 +154,9 @@ class IndexCustomers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $customers, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
+
+
         $scope     = $this->parent;
         $container = null;
         if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops > 1) {
@@ -170,13 +176,14 @@ class IndexCustomers extends InertiaAction
                 ),
                 'title'       => __('customers'),
                 'pageHead'    => [
-                    'title'     => __('customers'),
-                    'container' => $container,
-                    'iconRight' => [
+                    'title'         => __('customers'),
+                    'subNavigation' => $subNavigation,
+                    'container'     => $container,
+                    'iconRight'     => [
                         'icon'  => ['fal', 'fa-user'],
                         'title' => __('customer')
                     ],
-                    'actions'   =>
+                    'actions'       =>
                         [
                             $this->canEdit ? [
                                 'type'    => 'button',
@@ -190,7 +197,7 @@ class IndexCustomers extends InertiaAction
                             ] : []
                         ]
                 ],
-                'tabs' => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => CustomersTabsEnum::navigation(),
                 ],
@@ -204,9 +211,8 @@ class IndexCustomers extends InertiaAction
                     : Inertia::lazy(fn () => CustomerResource::collection($customers)),
 
 
-
             ]
-        )->table($this->tableStructure(parent:$this->parent, prefix:CustomersTabsEnum::CUSTOMERS->value));
+        )->table($this->tableStructure(parent: $this->parent, prefix: CustomersTabsEnum::CUSTOMERS->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
