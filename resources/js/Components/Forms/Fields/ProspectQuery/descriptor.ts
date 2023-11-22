@@ -15,7 +15,7 @@ export default {
     defaultValue: {
         query: [],
         tag: {
-            state: undefined,
+            state: "all",
             tags: [],
         },
         last_contact: {

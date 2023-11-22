@@ -72,14 +72,14 @@ class CreateProspectsMailshot extends InertiaAction
                             'custom'    => [
                                 'query' => [],
                                 'tag'   => [
-                                    'state' => (bool) $request->get('tags'),
+                                    'state' => 'all',
                                     'tags'  => explode(',', $request->get('tags'))
                                 ],
                                 'last_contact' => [
-                                    'state' => null,
+                                    'state' => false,
                                     'data'  => [
-                                        'unit'     => null,
-                                        'quantity' => null
+                                        'unit'     => 'week',
+                                        'quantity' =>  1
                                     ]
                                 ],
                             ],
