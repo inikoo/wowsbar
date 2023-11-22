@@ -16650,16 +16650,16 @@
         },
         {
             "name": "pestphp/pest",
-            "version": "v2.24.3",
+            "version": "v2.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest.git",
-                "reference": "f235d84d95aca83425d83e64792352a7424a89d5"
+                "reference": "83f8de17c8e9f318052027938577fedd567b09a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest/zipball/f235d84d95aca83425d83e64792352a7424a89d5",
-                "reference": "f235d84d95aca83425d83e64792352a7424a89d5",
+                "url": "https://api.github.com/repos/pestphp/pest/zipball/83f8de17c8e9f318052027938577fedd567b09a4",
+                "reference": "83f8de17c8e9f318052027938577fedd567b09a4",
                 "shasum": ""
             },
             "require": {
@@ -16678,7 +16678,7 @@
             },
             "require-dev": {
                 "pestphp/pest-dev-tools": "^2.16.0",
-                "pestphp/pest-plugin-type-coverage": "^2.4.0",
+                "pestphp/pest-plugin-type-coverage": "^2.5.0",
                 "symfony/process": "^6.3.4"
             },
             "bin": [
@@ -16742,7 +16742,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pestphp/pest/issues",
-                "source": "https://github.com/pestphp/pest/tree/v2.24.3"
+                "source": "https://github.com/pestphp/pest/tree/v2.25.0"
             },
             "funding": [
                 {
@@ -16754,7 +16754,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-08T09:47:14+00:00"
+            "time": "2023-11-22T07:17:30+00:00"
         },
         {
             "name": "pestphp/pest-plugin",

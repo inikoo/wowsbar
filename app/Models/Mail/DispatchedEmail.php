@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int|null $outbox_id
  * @property int|null $mailshot_id
  * @property int $email_id
+ * @property string|null $recipient_type
+ * @property int|null $recipient_id
  * @property string|null $provider_message_id
  * @property DispatchedEmailStateEnum $state
  * @property bool $is_error
@@ -69,6 +71,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereOutboxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereProviderMessageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereRecipientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereRecipientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereSentAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail whereUlid($value)
