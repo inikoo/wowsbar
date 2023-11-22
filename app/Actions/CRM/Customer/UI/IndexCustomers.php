@@ -9,6 +9,7 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Enums\UI\Organisation\CustomersTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
@@ -31,14 +32,14 @@ class IndexCustomers extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(CustomersTabsEnum::values());
 
         return $this->handle(organisation());
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(CustomersTabsEnum::values());
 
         return $this->handle($shop);
     }
@@ -189,10 +190,23 @@ class IndexCustomers extends InertiaAction
                             ] : []
                         ]
                 ],
-                'data'        => CustomerResource::collection($customers),
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => CustomersTabsEnum::navigation(),
+                ],
+
+
+                CustomersTabsEnum::DASHBOARD->value => $this->tab == CustomersTabsEnum::DASHBOARD->value ?
+                    fn () => GetCustomersDashboard::run($this->parent, $request)
+                    : Inertia::lazy(fn () => GetCustomersDashboard::run($this->parent, $request)),
+                CustomersTabsEnum::CUSTOMERS->value => $this->tab == CustomersTabsEnum::CUSTOMERS->value ?
+                    fn () => CustomerResource::collection($customers)
+                    : Inertia::lazy(fn () => CustomerResource::collection($customers)),
+
+
 
             ]
-        )->table($this->tableStructure($this->parent));
+        )->table($this->tableStructure(parent:$this->parent, prefix:CustomersTabsEnum::CUSTOMERS->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
