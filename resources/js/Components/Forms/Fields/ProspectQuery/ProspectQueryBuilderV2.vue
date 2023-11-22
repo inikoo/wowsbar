@@ -7,6 +7,7 @@ import axios from "axios"
 import { notify } from "@kyvg/vue3-notification"
 import { get, set, isArray, cloneDeep } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronDown, faChevronRight } from '@fas/';
+import { faBoxOpen } from '@fal/';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import Multiselect from "@vueform/multiselect"
@@ -14,7 +15,7 @@ import Tag from "@/Components/Tag.vue"
 import PureInput from '@/Components/Pure/PureInput.vue'
 import {trans} from "laravel-vue-i18n";
 
-library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight)
+library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight, faBoxOpen)
 
 const props = withDefaults(defineProps<{
     form?: any
@@ -105,6 +106,16 @@ console.log(value)
         </div>
 
         <div class="w-[80%] bg-gray-50 p-4 rounded-md border border-gray-300">
+
+           <!--  if value is null -->
+            <div v-if="Object.keys(value).length === 0 && value.constructor === Object" class="flex justify-center items-center">
+                <div class="text-center">
+                    <font-awesome-icon class="h-16" :icon="['fal', 'box-open']" />
+                    <div class="mt-1 text-xs">You don't have any filter data</div>
+                </div>
+            </div>
+              <!-- end  if value is null -->
+              
             <!--   Prospect By -->
             <div v-if="get(value,'propspect_by')  && options.use.includes('propspect_by')">
                 <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">

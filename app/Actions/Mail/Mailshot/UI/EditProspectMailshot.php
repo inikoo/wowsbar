@@ -63,7 +63,7 @@ class EditProspectMailshot extends InertiaAction
                     'value' => $mailshot->subject,
                     'required' => true,
                 ],
-                'query' => [
+                'recipients' => [
                     'type' => 'prospectQueryChooser',
                     'label' => __('prospects query'),
                     'required' => true,
