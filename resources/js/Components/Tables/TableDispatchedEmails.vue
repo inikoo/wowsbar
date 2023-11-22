@@ -25,27 +25,24 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
-function listRoute(prospect) {
+function listRoute(dispatchedEmail) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.mailshots.show':
             return route(
-                'org.crm.shop.prospects.mailshots.recipients.show',
-                [route().params['shop'], route().params['mailshot'], prospect.slug]);
-        default:
-            return route(
-                'org.crm.lists.show',
-                [prospect.slug]);
+                'org.crm.shop.prospects.mailshots.show.recipients.show',
+                [route().params['shop'], route().params['mailshot'], dispatchedEmail.id]);
+
     }
 }
 
 </script>
 
 <template>
-    <!-- <pre>{{ usePage().props }}</pre> -->
+
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(contact_name)="{ item: prospect }">
-            <Link :href="listRoute(prospect)">
-                {{ prospect['contact_name'] }}
+        <template #cell(contact_namez)="{ item: dispatchedEmail }">
+            <Link :href="listRoute(dispatchedEmail)">
+                {{ dispatchedEmail['contact_name'] }}
             </Link>
         </template>
     </Table>
