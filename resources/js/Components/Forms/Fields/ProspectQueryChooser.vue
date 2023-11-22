@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
@@ -30,9 +30,8 @@ const props = defineProps<{
     }
 }>()
 
-const pathname  = location.search
+const selectedIndex = ref(0)
 const recipientsCount = ref(0)
-if(pathname)  props.form[props.fieldName].recipient_builder_type = "custom"
 
 const categories = [
     {
@@ -62,7 +61,6 @@ const categories = [
     },
 ]
 
-console.log(props.form)
 
 const getTagsOptions = async () => {
         try {
@@ -88,14 +86,27 @@ const getTagsOptions = async () => {
         }
 }
 
+const changeTab=(tabIndex : number)=>{
+    props.form[props.fieldName].recipient_builder_type = categories[tabIndex].name
+    selectedIndex.value = tabIndex
+}
+
 watch(props.form.recipients,getTagsOptions, {deep: true})
 
+
+onMounted(() => {
+    const pathname = location.search
+    if (pathname) {
+        props.form[props.fieldName].recipient_builder_type = "custom"
+        selectedIndex.value = 1
+    }
+})
 
 </script>
 
 <template>
     <div class="w-full px-2 sm:px-0">
-        <TabGroup @change="(tabIndex) => form[fieldName].recipient_builder_type = categories[tabIndex].name">
+        <TabGroup manual @change="changeTab"  :selectedIndex="selectedIndex">
             <TabList class="flex space-x-8 ">
                 <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"
                     v-slot="{ selected }">

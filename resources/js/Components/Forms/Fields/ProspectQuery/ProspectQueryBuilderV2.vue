@@ -234,7 +234,7 @@ console.log(props,value)
                     <div v-if="value.last_contact.state" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput type="number" :minValue="1" :caret="false" placeholder="7"
+                                <PureInput type="number" :minValue="1" :caret="false" placeholder="range"
                                     v-model="value.last_contact.data.quantity" />
                                 <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
                                     class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">

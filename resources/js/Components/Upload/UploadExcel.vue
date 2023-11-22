@@ -20,6 +20,7 @@ const props = defineProps<{
         channel: string
         event: string
     }
+    description?: string
 }>()
 
 const emits = defineEmits<{
@@ -70,6 +71,7 @@ const compProgressBar = computed(() => {
             countFails: dataPusher.data.number_fails,
             countTotal: dataPusher.data.number_rows
         }"
+        :description="description"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
         @resetData="dataPusher.data = { number_rows: 0, number_success: 0, number_fails: 0 }"
     />
