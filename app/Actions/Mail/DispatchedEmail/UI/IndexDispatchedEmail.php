@@ -50,7 +50,7 @@ class IndexDispatchedEmail extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(DispatchedEmail::class);
 
-        $queryBuilder->where('mailshot_id', $mailshot->id);
+        $queryBuilder->where('mailshot_id', $mailshot->id)->where('is_test', false);
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])

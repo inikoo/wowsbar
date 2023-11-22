@@ -145,8 +145,8 @@ class IndexProspectTags extends InertiaAction
 
                     'create_mailshot' => [
                         'route' => [
-                            'name' => 'org.crm.shop.prospects.mailshots.create',
-                            'parameters' =>array_values($this->originalParameters)
+                            'name'       => 'org.crm.shop.prospects.mailshots.create',
+                            'parameters' => array_values($this->originalParameters)
                         ]
                     ],
 

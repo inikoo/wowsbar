@@ -82,7 +82,7 @@ class SendMailshotChannel
 
             SendSesEmail::run(
                 subject: $mailshot->subject,
-                emailHtmlBody: $emailHtmlBody,
+                emailHtmlBody: $html,
                 dispatchedEmail: $recipient->dispatchedEmail,
                 sender: $mailshot->sender()
             );

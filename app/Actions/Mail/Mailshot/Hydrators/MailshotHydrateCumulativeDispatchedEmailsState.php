@@ -42,7 +42,7 @@ class MailshotHydrateCumulativeDispatchedEmailsState
 
         /** @noinspection PhpUncoveredEnumCasesInspection */
         $count = DB::table('dispatched_emails')
-            ->where('mailshot_id', $mailshot->id)
+            ->where('mailshot_id', $mailshot->id)->where('is_test', false)
             ->where(
                 match ($state) {
                     DispatchedEmailStateEnum::ERROR        => 'is_error',
