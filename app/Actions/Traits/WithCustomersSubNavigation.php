@@ -42,7 +42,7 @@ trait WithCustomersSubNavigation
                     'name'       => 'org.crm.shop.prospects.mailshots.index',
                     'parameters' => $request->route()->originalParameters()
                 ],
-                'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+                'number'   => $this->parent->mailStats->number_mailshots_type_newsletter,
                 'label'    => __('Newsletters'),
                 'leftIcon' => [
                     'icon'    => 'fal fa-newspaper',
@@ -55,7 +55,7 @@ trait WithCustomersSubNavigation
                     'name'       => 'org.crm.shop.prospects.mailshots.index',
                     'parameters' => $request->route()->originalParameters()
                 ],
-                'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
+                'number'   => $this->parent->mailStats->number_mailshots_type_marketing,
                 'label'    => __('Mailshots'),
                 'leftIcon' => [
                     'icon'    => 'fal fa-mail-bulk',
@@ -69,7 +69,7 @@ trait WithCustomersSubNavigation
                 'name'       => 'org.crm.shop.prospects.lists.index',
                 'parameters' => $request->route()->originalParameters()
             ],
-            'number'   => $this->parent->crmStats->number_prospect_queries,
+            'number'   => $this->parent->crmStats->number_customer_queries,
             'label'    => __('Lists'),
             'leftIcon' => [
                 'icon'    => 'fal fa-code-branch',
