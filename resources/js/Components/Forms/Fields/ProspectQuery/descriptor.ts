@@ -12,6 +12,7 @@ export default {
         { label: "Last Contact", value: true },
         { label: "Never", value: false },
     ],
+
     defaultValue: {
         query: [],
         tag: {
@@ -21,7 +22,7 @@ export default {
         last_contact: {
             state: false,
             data: {
-                unit: "day",
+                unit: "week",
                 quantity: 1,
             },
         },
@@ -31,32 +32,29 @@ export default {
         {
             label: "Propspect by",
             name: "propspect_by",
-            fields: [
-                {
-                    type: "checkbox",
-                    name: "by",
-                },
-            ],
+            value : {
+                by : []
+            },
         },
         {
             label: "Tags",
-            name: "tags",
-            fields: [
-                {
-                    type: "checkbox",
-                    name: "by",
-                },
-            ],
+            name: "tag",
+            value : {
+                tags : [],
+                state : 'all'
+            },
         },
         {
             label: "Last contacted",
-            name: "last_contacted",
-            fields: [
-                {
-                    type: "checkbox",
-                    name: "by",
+            name: "last_contact",
+            value : {
+                state : false,
+                data: {
+                    unit: "week",
+                    quantity: 1,
                 },
-            ],
+            }
         },
     ],
+
 };
