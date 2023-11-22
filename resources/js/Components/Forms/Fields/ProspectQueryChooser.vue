@@ -6,6 +6,7 @@ import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/Prospe
 import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
+import { trans } from "laravel-vue-i18n";
 
 const props = defineProps<{
     form: {
