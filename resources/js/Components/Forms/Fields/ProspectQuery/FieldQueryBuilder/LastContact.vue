@@ -4,12 +4,15 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 import Multiselect from "@vueform/multiselect"
+import { computed } from 'vue'
+import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 
 const props = withDefaults(defineProps<{
     value: any
     fieldName: any
 }>(), {})
 
+const availableOptions = ['day', 'week', 'month']
 </script>
 
 <template>
@@ -32,8 +35,7 @@ const props = withDefaults(defineProps<{
                     v-model="value[fieldName].data.quantity" />
             </div>
             <div class="w-full">
-                <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                    v-model="value[fieldName].data.unit" :can-clear="false" />
+                <PureMultiselect  v-model="value[fieldName].data.unit"  :options="['day', 'week', 'month']" required />
             </div>
         </div>
     </div>
