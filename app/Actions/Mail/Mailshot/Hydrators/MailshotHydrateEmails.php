@@ -32,7 +32,7 @@ class MailshotHydrateEmails
     public function handle(Mailshot $mailshot): void
     {
         $count = DB::table('dispatched_emails')
-            ->where('mailshot_id', $mailshot->id)->count();
+            ->where('mailshot_id', $mailshot->id)->where('is_test', false)->count();
 
 
         $mailshot->mailshotStats()->update(

@@ -36,10 +36,11 @@ return new class () extends Migration {
             $table->dateTimeTz('sent_at')->nullable();
             $table->dateTimeTz('delivered_at')->nullable();
             $table->dateTimeTz('date')->index();
-            $table->boolean('is_test')->default(false);
+            $table->boolean('is_test')->default(false)->index();
             $table->jsonb('data');
             $table->ulid();
             $table->timestampsTz();
+            $table->index(['mailshot_id', 'is_test']);
         });
     }
 

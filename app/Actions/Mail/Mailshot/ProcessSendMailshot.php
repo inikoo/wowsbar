@@ -56,12 +56,12 @@ class ProcessSendMailshot
                     $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
 
                     if (!$recipientExists) {
-                        if (app()->environment('production')) {
-                            $emailAddress = $recipient->email;
-                        } else {
+                        if (!app()->environment('production') and env('REWRITE_MAILSHOT_RECIPIENTS_EMAIL', true)) {
                             $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 20];
                             $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
                             $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";
+                        } else {
+                            $emailAddress = $recipient->email;
                         }
 
                         $email = Email::firstOrCreate(['address' => $emailAddress]);
@@ -76,8 +76,6 @@ class ProcessSendMailshot
                                 'channel' => $mailshotSendChannel->id,
                             ]
                         );
-
-
                     }
                     $counter++;
                 }
@@ -104,7 +102,6 @@ class ProcessSendMailshot
         );
         MailshotHydrateEmails::run($mailshot);
         MailshotHydrateDispatchedEmailsState::run($mailshot);
-
     }
 
 

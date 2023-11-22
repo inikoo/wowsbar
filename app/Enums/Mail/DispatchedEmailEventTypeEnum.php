@@ -21,5 +21,6 @@ enum DispatchedEmailEventTypeEnum: string
     case CLICK          = 'click';
     case DELIVERY_DELAY = 'delivery-delay';
 
+    case UNSUBSCRIBE          = 'unsubscribe';
 
 }
