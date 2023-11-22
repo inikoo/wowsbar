@@ -22,6 +22,7 @@ const props = defineProps<{
     data: {
         slug: string
         subject: string
+        state: string
         state_icon: {
             icon: string
             class: string
@@ -61,6 +62,7 @@ const reactiveProps = ref({...props.data})
 const dataStatistic = computed(() => {
     return [
     {
+        name: 'recipient',
         value: reactiveProps.value.stats.number_dispatched_emails,
         label: trans('Recipients')
     },
@@ -71,6 +73,7 @@ const dataStatistic = computed(() => {
         value: reactiveProps.value.stats.number_rejected_emails
     },
     {
+        name: 'bounced',
         label: trans('bounced'),
         type: 'multi',
         list: [
@@ -87,23 +90,28 @@ const dataStatistic = computed(() => {
         ]
     },
     {
+        name: 'delivered',
         label: trans('delivered'),
         value: reactiveProps.value.stats.number_delivered_emails
     },
 
     {
+        name: 'opened',
         label: trans('opened'),
         value: reactiveProps.value.stats.number_opened_emails
     },
     {
+        name: 'clicked',
         label: trans('clicked'),
         value: reactiveProps.value.stats.number_clicked_emails
     },
     {
+        name: 'spam',
         label: trans('spam'),
         value: reactiveProps.value.stats.number_spam_emails
     },
     {
+        name: 'unsubscribed',
         label: trans('unsubscribed'),
         value: reactiveProps.value.stats.number_unsubscribed_emails
     },
@@ -128,7 +136,6 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 const channel = pusher.subscribe('hydrate.sent.emails')
 channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
     reactiveProps.value = {...data.mailshot}
-    console.log("========", reactiveProps.value.stats.number_delivered_emails)
 })
 
 // To convert data to wanted data
@@ -175,7 +182,7 @@ const compSortSteps = computed(() => {
 
 <template>
     <div class="py-3 mx-auto px-5 w-full">
-        <Timeline :options="compSortSteps" />
+        <Timeline v-if="data.state === 'sent'" :options="compSortSteps" />
 
         <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 md:divide-x md:divide-y-0 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
             <template v-for="(statistic, index) in dataStatistic">
