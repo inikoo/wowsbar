@@ -15,6 +15,7 @@ use Aws\Exception\AwsException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class SendSesEmail
 {
@@ -29,19 +30,18 @@ class SendSesEmail
             return $dispatchedEmail;
         }
 
-        if (!app()->isProduction() and  (!config('mail.devel.send_ses_emails')  and  !$dispatchedEmail->is_test)) {
+        if (!app()->isProduction() and (!config('mail.devel.send_ses_emails') and !$dispatchedEmail->is_test)) {
 
             UpdateDispatchedEmail::run(
                 $dispatchedEmail,
                 [
-                    'state'               => DispatchedEmailStateEnum::SENT,
-                    'is_sent'             => true,
-                    'sent_at'             => now(),
-                    'date'                => now(),
-                    'provider_message_id' => 'devel-'.Str::uuid()
+                    'state' => DispatchedEmailStateEnum::SENT,
+                    'is_sent' => true,
+                    'sent_at' => now(),
+                    'date' => now(),
+                    'provider_message_id' => 'devel-' . Str::uuid()
                 ]
             );
-
 
 
             return $dispatchedEmail;
@@ -62,36 +62,38 @@ class SendSesEmail
 
 
         $emailData = [
-            'Source'      => $sender,
+            'Source' => $sender,
             'Destination' => [
                 'ToAddresses' => [
                     $dispatchedEmail->email->address
                 ]
             ],
-            'Message'          => $message['Message'],
-            'List-Unsubscribe' => '<'. route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid) .'>',
+            'Message' => $message['Message'],
+            'Headers' => [
+                'List-Unsubscribe' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+                'List-Unsubscribe-Post' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+            ],
         ];
 
 
         $numberAttempts = 12;
-        $attempt        = 0;
+        $attempt = 0;
 
         do {
             try {
-                $result = $this->getSesClient()->sendEmail($emailData);
+                $result = $this->getSesClient()->sendRawEmail($this->getRawEmail($emailData));
 
 
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state'               => DispatchedEmailStateEnum::SENT,
-                        'is_sent'             => true,
-                        'sent_at'             => now(),
-                        'date'                => now(),
+                        'state' => DispatchedEmailStateEnum::SENT,
+                        'is_sent' => true,
+                        'sent_at' => now(),
+                        'date' => now(),
                         'provider_message_id' => Arr::get($result, 'MessageId')
                     ]
                 );
-
 
 
             } catch (AwsException $e) {
@@ -104,13 +106,13 @@ class SendSesEmail
                     UpdateDispatchedEmail::run(
                         $dispatchedEmail,
                         [
-                            'state'       => DispatchedEmailStateEnum::ERROR,
-                            'is_error'    => true,
-                            'date'        => now(),
+                            'state' => DispatchedEmailStateEnum::ERROR,
+                            'is_error' => true,
+                            'date' => now(),
                             'data->error' =>
                                 [
-                                    'code'    => $e->getAwsErrorCode(),
-                                    'msg'     => $e->getAwsErrorMessage(),
+                                    'code' => $e->getAwsErrorCode(),
+                                    'msg' => $e->getAwsErrorMessage(),
                                     'attempt' => $attempt
 
                                 ],
@@ -126,6 +128,33 @@ class SendSesEmail
 
 
         return $dispatchedEmail;
+    }
+
+    public function getRawEmail(array $emailData): array
+    {
+        $mail = new PHPMailer();
+
+        $mail->addAddress($emailData['Destination']['ToAddresses'][0]);
+        $mail->setFrom($emailData['Source']);
+
+        foreach (Arr::get($emailData, 'Headers', []) as $key => $header) {
+            $mail->addCustomHeader($key, $header);
+        }
+        $mail->isHTML();
+        $mail->Subject = $emailData['Message']['Subject']['Data'];
+        $mail->CharSet = 'UTF-8';
+
+        $mail->Body = $emailData['Message']['Body']['Html']['Data'];
+
+        $mail->preSend();
+
+        return [
+            'Source' => $emailData['Source'],
+            'Destinations' => $emailData['Destination']['ToAddresses'],
+            'RawMessage' => [
+                'Data' => $mail->getSentMIMEMessage(),
+            ]
+        ];
     }
 
 
