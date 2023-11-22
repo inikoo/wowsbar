@@ -13,7 +13,7 @@ export default {
         { label: "Never", value: false },
     ],
 
-    defaultValue: {
+ /*    defaultValue: {
         query: [],
         tag: {
             state: "all",
@@ -26,7 +26,7 @@ export default {
                 quantity: 1,
             },
         },
-    },
+    }, */
 
     schemaForm: [
         {
