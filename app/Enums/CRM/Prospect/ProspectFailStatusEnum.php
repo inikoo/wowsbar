@@ -51,7 +51,7 @@ enum ProspectFailStatusEnum: string
 
             ],
 
-            '' => [
+            'unsubscribed' => [
 
                 'tooltip' => __('Unsubscribed'),
                 'icon'    => 'fal fa-comment=slash',
