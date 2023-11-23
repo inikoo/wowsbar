@@ -35,8 +35,6 @@ const props = withDefaults(defineProps<{
 const emits = defineEmits();
 const sectionValue = ref([])
 const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.includes(item.name))
-const tagsOptions = ref([])
-
 
 const getComponent = (componentName: string) => {
     const components: any = {
