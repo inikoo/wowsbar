@@ -11,8 +11,7 @@ use App\Actions\Helpers\Query\Hydrators\QueryHydrateCount;
 use App\Actions\Helpers\Query\StoreQuery;
 use App\Actions\Helpers\Query\UpdateQuery;
 use App\Actions\Traits\WithShopsArgument;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -46,9 +45,9 @@ class ShopScopeQuerySeeder
 
                     'with'  => 'email',
                     'where' => [
-                        'contact_state',
+                        'state',
                         '=',
-                        ProspectContactStateEnum::NO_CONTACTED->value
+                        ProspectStateEnum::NO_CONTACTED->value
                     ]
 
 
@@ -64,18 +63,17 @@ class ShopScopeQuerySeeder
 
                     'group' => [
                         'where' => [
-                            'contact_state',
+                            'state',
                             '=',
-                            ProspectContactStateEnum::NO_CONTACTED->value
+                            ProspectStateEnum::NO_CONTACTED->value
                         ],
 
                         'orGroup' => [
-                            'whereIn' => [
-                                'outcome_status',
-                                [
-                                    ProspectOutcomeStatusEnum::SOFT_FAIL->value,
-                                    ProspectOutcomeStatusEnum::WAITING->value
-                                ]
+                            'where' => [
+                                'state',
+                                '=',
+                                ProspectStateEnum::CONTACTED
+
                             ],
                             'where'   => [
                                 'last_contacted_at',

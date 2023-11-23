@@ -5,13 +5,13 @@
   -->
 
 <script setup lang="ts">
-import Stats from "@/Components/DataDisplay/Stats.vue"
-import { usePage } from '@inertiajs/vue3'
+
 import CountUp from 'vue-countup-v3'
 import { routeType } from '@/types/route'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
-import { useLocaleStore } from '@/Stores/locale.js'
+import {trans} from "laravel-vue-i18n";
+
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
 
@@ -29,48 +29,44 @@ const props = defineProps<{
 const dataDoughnut = [
 
     {
-        title: 'Prospects',
-        labels: ['Not contacted', 'Contacted', 'Not interested', 'Registered', 'Invoiced', 'Bounced'],
+        title: trans('Prospects'),
+        labels: [trans('Not contacted'), trans('Contacted'), trans('Fail'),trans('Success')],
         total: props.data.crmStats.number_prospects,
         datasets: [
             {
                 data: [
                     props.data.crmStats.number_prospects_state_no_contacted,
                     props.data.crmStats.number_prospects_state_contacted,
-                    props.data.crmStats.number_prospects_state_not_interested,
-                    props.data.crmStats.number_prospects_state_registered,
-                    props.data.crmStats.number_prospects_state_invoiced,
-                    props.data.crmStats.number_prospects_state_bounced,
+                    props.data.crmStats.number_prospects_state_fail,
+                    props.data.crmStats.number_prospects_state_success,
                 ]
             }
         ]
     },
     {
-        title: 'Prospects Bounce',
-        labels: ['Hard', 'Soft', 'Ok'],
-        total: props.data.crmStats.number_prospects_bounce_status_hard_bounce + props.data.crmStats.number_prospects_bounce_status_soft_bounce + props.data.crmStats.number_prospects_bounce_status_ok,
+        title: trans('Failed'),
+        labels: [trans('Not interested'), trans('Unsubscribed'), trans('Invalid')],
+        total:props.data.crmStats.number_prospects_state_fail,
         datasets: [
             {
                 data: [
-                    props.data.crmStats.number_prospects_bounce_status_hard_bounce,
-                    props.data.crmStats.number_prospects_bounce_status_soft_bounce,
-                    props.data.crmStats.number_prospects_bounce_status_ok
+                    props.data.crmStats.number_prospects_fail_status_not_interested,
+                    props.data.crmStats.number_prospects_fail_status_unsubscribed,
+                    props.data.crmStats.number_prospects_fail_status_invalid
                 ]
             }
         ]
     },
     {
-        title: 'Prospects Outcome',
-        labels: ['Hard fail', 'Soft fail', 'Waiting', 'Soft success', 'Hard success'],
-        total: props.data.crmStats.number_prospects_bounce_status_hard_bounce + props.data.crmStats.number_prospects_bounce_status_soft_bounce + props.data.crmStats.number_prospects_bounce_status_ok,
+        title: trans('Success'),
+        labels: [trans('Registered'), trans('Invoiced')],
+        total:props.data.crmStats.number_prospects_state_success,
         datasets: [
             {
                 data: [
-                    props.data.crmStats.number_prospects_outcome_status_hard_fail,
-                    props.data.crmStats.number_prospects_outcome_status_soft_fail,
-                    props.data.crmStats.number_prospects_outcome_status_waiting,
-                    props.data.crmStats.number_prospects_outcome_status_soft_success,
-                    props.data.crmStats.number_prospects_outcome_status_hard_success,
+                    props.data.crmStats.number_prospects_success_status_registered,
+                    props.data.crmStats.number_prospects_success_status_invoiced,
+
                 ]
             }
         ]

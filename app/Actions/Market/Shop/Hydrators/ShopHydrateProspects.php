@@ -8,9 +8,6 @@
 namespace App\Actions\Market\Shop\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
-use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -26,35 +23,9 @@ class ShopHydrateProspects
         $stats = [
             'number_prospects'                 => Prospect::where('shop_id', $shop->id)->count(),
             'number_prospects_dont_contact_me' => Prospect::where('shop_id', $shop->id)->where('dont_contact_me', true)->count(),
-            'number_prospects_contacted'       => Prospect::where('shop_id', $shop->id)->where('contact_state', ProspectContactStateEnum::CONTACTED)->count(),
-            'number_prospects_not_contacted'   => Prospect::where('shop_id', $shop->id)->where('contact_state', ProspectContactStateEnum::NO_CONTACTED)->count(),
         ];
 
-        $stats=array_merge(
-            $stats,
-            $this->getEnumStats(
-                model: 'prospects',
-                field: 'outcome_status',
-                enum: ProspectOutcomeStatusEnum::class,
-                models: Prospect::class,
-                where: function ($q) use ($shop) {
-                    $q->where('shop_id', $shop->id);
-                }
-            )
-        );
 
-        $stats=array_merge(
-            $stats,
-            $this->getEnumStats(
-                model: 'prospects',
-                field: 'bounce_status',
-                enum: ProspectBounceStatusEnum::class,
-                models: Prospect::class,
-                where: function ($q) use ($shop) {
-                    $q->where('shop_id', $shop->id);
-                }
-            )
-        );
 
         $stats=array_merge(
             $stats,
@@ -69,16 +40,6 @@ class ShopHydrateProspects
             )
         );
 
-
-        $stats=array_merge($stats, $this->getEnumStats(
-            model:'prospects',
-            field: 'state',
-            enum: ProspectStateEnum::class,
-            models: Prospect::class,
-            where: function ($q) use ($shop) {
-                $q->where('shop_id', $shop->id);
-            }
-        ));
 
 
         $shop->crmStats()->update($stats);

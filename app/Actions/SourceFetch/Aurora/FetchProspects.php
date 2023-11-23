@@ -39,6 +39,7 @@ class FetchProspects extends FetchAction
                     $this->number_no_changes++;
                     UpdateFetch::run($this->fetch, ['number_no_changes' => $this->number_no_changes]);
                 }
+
             } else {
                 // print_r($prospectData['prospect']);
                 data_set($prospectData['prospect'], 'data.bulk_import', [

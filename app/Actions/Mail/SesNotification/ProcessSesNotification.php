@@ -45,8 +45,8 @@ class ProcessSesNotification
                     UpdateProspect::run(
                         $dispatchedEmail->mailshotRecipient->recipient,
                         [
-                            'bounce_status' =>
-                                $isHardBounce ? ProspectBounceStatusEnum::HARD_BOUNCE : ProspectBounceStatusEnum::SOFT_BOUNCE
+                            //todo
+                           // 'bounce_status' => $isHardBounce ? ProspectBounceStatusEnum::HARD_BOUNCE : ProspectBounceStatusEnum::SOFT_BOUNCE
                         ]
                     );
                 }
