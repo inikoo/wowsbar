@@ -15,69 +15,52 @@ enum ProspectStateEnum: string
 {
     use EnumHelperTrait;
 
-    case NO_CONTACTED   = 'no-contacted';
-    case CONTACTED      = 'contacted';
-    case NOT_INTERESTED = 'not-interested';
-    case REGISTERED     = 'registered';
-    case INVOICED       = 'invoiced';
-    case BOUNCED        = 'bounced';
+    case NO_CONTACTED = 'no-contacted';
+    case CONTACTED    = 'contacted';
+    case FAIL         = 'fail';
+    case SUCCESS      = 'success';
+
 
     public static function labels(): array
     {
         return [
-            'no-contacted'   => __('No contacted'),
-            'contacted'      => __('Contacted'),
-            'not-interested' => __('Not interested'),
-            'registered'     => __('Registered'),
-            'invoiced'       => __('Invoiced'),
-            'bounced'        => __('Invalid'),
+            'no-contacted' => __('No contacted'),
+            'contacted'    => __('Contacted'),
+            'fail'         => __('Fail'),
+            'success'      => __('Success'),
         ];
     }
 
     public static function stateIcon(): array
     {
         return [
-            'no-contacted'   => [
-
+            'no-contacted' => [
                 'tooltip' => __('no contacted'),
                 'icon'    => 'fal fa-seedling',
                 'class'   => 'text-indigo-500'
 
 
             ],
-            'contacted'      => [
+            'contacted'    => [
 
                 'tooltip' => __('contacted'),
                 'icon'    => 'fal fa-comment-dots',
                 'class'   => 'text-green'
 
             ],
-            'not-interested' => [
+            'fail'         => [
 
-                'tooltip' => __('not interested'),
-                'icon'    => 'fal fa-comment-exclamation',
+                'tooltip' => __('fail'),
+                'icon'    => 'fal fa-sad-tear',
                 'class'   => 'text-red'
 
             ],
-            'registered'     => [
+            'success'      => [
 
-                'tooltip' => __('registered'),
-                'icon'    => 'fal fa-sign-in'
-
-            ],
-            'invoiced'       => [
-
-                'tooltip' => __('invoiced'),
-                'icon'    => 'fal fa-file-invoice'
+                'tooltip' => __('success'),
+                'icon'    => 'fal fa-laugh'
 
             ],
-            'bounced'        => [
-
-                'tooltip' => __('invalid'),
-                'icon'    => 'fal fa-poo',
-                'class'   => 'text-red-300'
-            ],
-
 
         ];
     }
@@ -87,12 +70,10 @@ enum ProspectStateEnum: string
         $stats = $parent->crmStats;
 
         return [
-            'no-contacted'   => $stats->number_prospects_state_no_contacted,
-            'contacted'      => $stats->number_prospects_state_contacted,
-            'not-interested' => $stats->number_prospects_state_not_interested,
-            'registered'     => $stats->number_prospects_state_registered,
-            'invoiced'       => $stats->number_prospects_state_invoiced,
-            'bounced'        => $stats->number_prospects_state_bounced
+            'no-contacted' => $stats->number_prospects_state_no_contacted,
+            'contacted'    => $stats->number_prospects_state_contacted,
+            'fail'         => $stats->number_prospects_state_fail,
+            'success'      => $stats->number_prospects_state_success
         ];
     }
 
