@@ -120,16 +120,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.288.0",
+            "version": "3.288.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "6485aad8d3cfa55e3bcea2b4b347f86ee233fc33"
+                "reference": "a1dfa12c7165de0b731ae8074c4ba1f3ae733f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6485aad8d3cfa55e3bcea2b4b347f86ee233fc33",
-                "reference": "6485aad8d3cfa55e3bcea2b4b347f86ee233fc33",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a1dfa12c7165de0b731ae8074c4ba1f3ae733f89",
+                "reference": "a1dfa12c7165de0b731ae8074c4ba1f3ae733f89",
                 "shasum": ""
             },
             "require": {
@@ -209,9 +209,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.288.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.288.1"
             },
-            "time": "2023-11-21T19:08:29+00:00"
+            "time": "2023-11-22T19:35:38+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -1965,16 +1965,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.25",
+            "version": "8.13.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "fe9c0b201941977b91b6b086c9551aff07a733ae"
+                "reference": "1d730fe40d5f32641c12ca143a086757c95cfccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/fe9c0b201941977b91b6b086c9551aff07a733ae",
-                "reference": "fe9c0b201941977b91b6b086c9551aff07a733ae",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/1d730fe40d5f32641c12ca143a086757c95cfccf",
+                "reference": "1d730fe40d5f32641c12ca143a086757c95cfccf",
                 "shasum": ""
             },
             "require": {
@@ -2033,7 +2033,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2023-11-13T09:34:15+00:00"
+            "time": "2023-11-23T07:57:25+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -10241,16 +10241,16 @@
         },
         {
             "name": "spatie/crawler",
-            "version": "8.0.2",
+            "version": "8.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/crawler.git",
-                "reference": "62354d296c6112ab4694f594ad620139e3f0fed2"
+                "reference": "6983c78d32d4b4dfab2ead4da3bfc7396a0fa6c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/crawler/zipball/62354d296c6112ab4694f594ad620139e3f0fed2",
-                "reference": "62354d296c6112ab4694f594ad620139e3f0fed2",
+                "url": "https://api.github.com/repos/spatie/crawler/zipball/6983c78d32d4b4dfab2ead4da3bfc7396a0fa6c5",
+                "reference": "6983c78d32d4b4dfab2ead4da3bfc7396a0fa6c5",
                 "shasum": ""
             },
             "require": {
@@ -10293,7 +10293,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/crawler/issues",
-                "source": "https://github.com/spatie/crawler/tree/8.0.2"
+                "source": "https://github.com/spatie/crawler/tree/8.0.3"
             },
             "funding": [
                 {
@@ -10305,7 +10305,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-20T08:04:52+00:00"
+            "time": "2023-11-22T12:56:26+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -11489,16 +11489,16 @@
         },
         {
             "name": "spatie/robots-txt",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/robots-txt.git",
-                "reference": "f40a12b89f98dd18f3665673d04757298f5fbbf9"
+                "reference": "dacba2ba159364987392aa1b0002e196c5923970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/f40a12b89f98dd18f3665673d04757298f5fbbf9",
-                "reference": "f40a12b89f98dd18f3665673d04757298f5fbbf9",
+                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/dacba2ba159364987392aa1b0002e196c5923970",
+                "reference": "dacba2ba159364987392aa1b0002e196c5923970",
                 "shasum": ""
             },
             "require": {
@@ -11534,7 +11534,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/robots-txt/issues",
-                "source": "https://github.com/spatie/robots-txt/tree/2.0.2"
+                "source": "https://github.com/spatie/robots-txt/tree/2.0.3"
             },
             "funding": [
                 {
@@ -11546,7 +11546,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-18T15:14:21+00:00"
+            "time": "2023-11-22T12:57:35+00:00"
         },
         {
             "name": "spatie/temporary-directory",
@@ -19189,5 +19189,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

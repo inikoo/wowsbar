@@ -8,7 +8,10 @@
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
+use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -25,9 +28,7 @@ class OrganisationHydrateProspects
 
         ];
 
-
-
-        $stats=array_merge(
+        $stats = array_merge(
             $stats,
             $this->getEnumStats(
                 model: 'prospects',
@@ -40,18 +41,46 @@ class OrganisationHydrateProspects
             )
         );
 
-        $stats=array_merge(
+        $stats = array_merge(
             $stats,
             $this->getEnumStats(
                 model: 'prospects',
-                field: 'state',
-                enum: ProspectStateEnum::class,
+                field: 'contacted_state',
+                enum: ProspectContactedStateEnum::class,
                 models: Prospect::class,
                 where: function ($q) {
                     $q->where('scope_type', 'Shop');
                 }
             )
         );
+
+        $stats = array_merge(
+            $stats,
+            $this->getEnumStats(
+                model: 'prospects',
+                field: 'fail_status',
+                enum: ProspectFailStatusEnum::class,
+                models: Prospect::class,
+                where: function ($q) {
+                    $q->where('scope_type', 'Shop');
+                }
+            )
+        );
+
+        $stats = array_merge(
+            $stats,
+            $this->getEnumStats(
+                model: 'prospects',
+                field: 'success_status',
+                enum: ProspectSuccessStatusEnum::class,
+                models: Prospect::class,
+                where: function ($q) {
+                    $q->where('scope_type', 'Shop');
+                }
+            )
+        );
+
+
         organisation()->crmStats()->update($stats);
     }
 }
