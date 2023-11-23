@@ -14,12 +14,24 @@ use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ShopHydrateProspects
 {
     use AsAction;
     use WithEnumStats;
+
+    private Shop $shop;
+    public function __construct(Shop $shop)
+    {
+        $this->shop = $shop;
+    }
+
+    public function getJobMiddleware(): array
+    {
+        return [(new WithoutOverlapping($this->shop->id))->dontRelease()];
+    }
 
     public function handle(Shop $shop): void
     {

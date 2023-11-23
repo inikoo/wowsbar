@@ -13,12 +13,18 @@ use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\Leads\Prospect;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateProspects
 {
     use AsAction;
     use WithEnumStats;
+
+    public function getJobMiddleware(): array
+    {
+        return [(new WithoutOverlapping(1))->dontRelease()];
+    }
 
     public function handle(): void
     {
