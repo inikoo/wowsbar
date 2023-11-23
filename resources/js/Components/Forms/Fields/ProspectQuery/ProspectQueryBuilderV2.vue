@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, watch, reactive } from 'vue'
+import { ref, watch, reactive, onMounted } from 'vue'
 import descriptor from './descriptor'
 import { get, set, isArray, cloneDeep } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronDown, faChevronRight } from '@fas/';
@@ -35,8 +35,6 @@ const props = withDefaults(defineProps<{
 const emits = defineEmits();
 const sectionValue = ref([])
 const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.includes(item.name))
-const tagsOptions = ref([])
-
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -77,6 +75,13 @@ const changeSection = (index: Number) => {
 watch(value, (newValue) => {
     updateFormValue(newValue);
 });
+
+onMounted(()=>{
+    for(const item in value){
+        const index =  schemaForm.findIndex((i)=> i.name == item)
+        if(index != -1) sectionValue.value.push(index)
+    }
+})
 
 
 </script>

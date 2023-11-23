@@ -127,6 +127,7 @@ onMounted(() => {
             [grapesJSMJML]: {
                 blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
                     'mj-social-element', 'mj-spacer', 'mj-navbar', 'mj-navbar-link', 'mj-hero', 'mj-wrapper', 'mj-raw'],
+                useCustomTheme : true
             },
             [RTE]: {
                 options: {
@@ -286,6 +287,229 @@ onMounted(() => {
     }
 }
 
+
+/* //change-theme-button */
+.gjs-cv-canvas {
+    box-sizing: border-box;
+    width: 80%;
+    height: calc(100% - 40px);
+    bottom: 0;
+    margin: auto;
+    overflow: hidden;
+    z-index: 1;
+    position: absolute;
+    left: 35px;
+    top: 70px;
+}
+
+.editor{
+    width: 100%;
+    height: calc(100% - 4rem);
+}
+
+.gjs-pn-views{
+    background: #F3F4F6 !important;
+}
+
+.panel {
+    width: 90%;
+    max-width: 700px;
+    border-radius: 3px;
+    padding: 30px 20px;
+    margin: 150px auto 0px;
+    background-color: #d983a6;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.75);
+    font: caption;
+    font-weight: 100;
+}
+
+.gjs-pn-panel {
+    padding: -10px;
+}
+
+.gjs-block svg {
+    width: 100%;
+}
+
+.change-theme-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.change-theme-button:focus {
+    /* background-color: yellow; */
+    outline: none;
+    box-shadow: 0 0 0 2pt #c5c5c575;
+}
+
+#gjs {
+    border: none;
+}
+
+.gjs-one-bg {
+    background-color: #f9fafb !important;
+}
+
+.gjs-three-bg {
+    background-color: rgb(107 114 128) !important;
+    @apply text-gray-100;
+}
+
+.gjs-two-color {
+    color: rgb(75 85 99) !important;
+}
+
+.gjs-clm-header-label {
+    @apply text-gray-600;
+}
+
+
+.gjs-layer.gjs-selected .gjs-layer-title {
+    @apply bg-gray-300 hover:bg-gray-200;
+}
+
+
+.gjs-hovered {
+    background-color: rgb(0, 94, 255) !important;
+}
+
+
+.gjs-pn-btn {
+    @apply hover:ring-1 hover:ring-gray-400 text-gray-500;
+
+    &.gjs-pn-active {
+        @apply shadow-none bg-gray-300 ring-1 ring-gray-400 text-gray-600 hover:text-gray-700;
+    }
+}
+
+.gjs-four-color-h:hover {
+    @apply hover:text-gray-600;
+}
+
+
+.gjs-block {
+    @apply bg-gray-200 text-gray-500 hover:text-gray-600 hover:ring-2 hover:ring-gray-500 transition-all duration-100 ease-in-out;
+}
+
+
+.gjs-sm-sector-title,
+.gjs-block-category {
+    @apply bg-gray-600 hover:bg-gray-500 text-white;
+}
+
+
+.gjs-sm-properties,
+.gjs-blocks-c {
+    @apply bg-gray-100 text-gray-600 pb-2;
+}
+
+
+.gjs-sm-stack #gjs-sm-add {
+    @apply text-gray-500;
+}
+
+.gjs-field input:focus {
+    @apply text-gray-600;
+}
+
+#gjs-clm-states {
+    @apply text-xs;
+}
+
+.gjs-field {
+    @apply bg-gray-300 text-gray-700;
+
+    &input#gjs-clm-new {
+        @apply text-gray-500;
+    }
+}
+
+.gjs-clm-tags #gjs-clm-new {
+    @apply text-gray-600;
+}
+
+.grp-wrapper {
+  background-image: url("data:image/png:base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==");
+}
+.grp-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+.grp-handler {
+  width: 4px;
+  margin-left: -2px;
+  user-select: none;
+  height: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.grp-handler-close {
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 0 2px 10px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  margin-left: -5px;
+  line-height: 10px;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.grp-handler-close {
+  position: absolute;
+  top: -17px;
+}
+
+.grp-handler-drag {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: col-resize;
+  width: 100%;
+  height: 100%;
+}
+
+.grp-handler-selected .grap-handler-drag {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.grp-handler-cp-c {
+  display: none;
+}
+
+.grp-handler-selected .grp-handler-cp-c {
+  display: block;
+}
+
+.grp-handler-cp-wrap {
+  width: 15px;
+  height: 15px;
+  margin-left: -8px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.grp-handler-cp-wrap input[type="color"] {
+  opacity: 0;
+  cursor: pointer;
+}
+
+
+.gjs-frame a {
+    /* color: #0d6efd; */
+    background-color: red !important;
+    text-decoration: none !important;
+}
 
 
 
