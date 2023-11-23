@@ -12,11 +12,11 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
 import {Doughnut} from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faChair, faGhost, faLaugh, faSnooze, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer} from '@fal/'
+import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer} from '@fal/'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useLocaleStore} from "@/Stores/locale";
 
-library.add(faChair, faGhost, faLaugh, faSnooze, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer)
+library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer)
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 

@@ -49,7 +49,7 @@ enum ProspectStateEnum: string
             'fail'         => [
 
                 'tooltip' => __('fail'),
-                'icon'    => 'fal fa-ghost',
+                'icon'    => 'fal fa-thumbs-down',
                 'class'   => 'text-red'
 
             ],
