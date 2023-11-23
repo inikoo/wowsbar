@@ -45,7 +45,7 @@ function tagRoute(tag: object) {
         </template>
 
         <template #cell(actions)="{ item : tag }">
-            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.tag_slug }">
+            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.id }">
                 <Button label="New Mailshot" :style="'secondary'" size="xs" />
             </Link>
         </template>
