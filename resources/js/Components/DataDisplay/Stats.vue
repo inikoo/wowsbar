@@ -30,7 +30,7 @@ const locale = useLocaleStore()
                 <dt class="truncate text-sm font-medium text-gray-500 capitalize">{{ item.name }}</dt>
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-600">
                     <Link v-if="item.href" :href="route(item.href.name, item.href.parameters)"
-                        :class="[`specialUnderline${capitalize(useLayoutStore().systemName)}`]">
+                        :class="[`inline-block specialUnderline${capitalize(useLayoutStore().systemName)}`]">
                         <CountUp :endVal="locale.number(item.stat) ?? 0" />
                     </Link>
                     <span v-else>
