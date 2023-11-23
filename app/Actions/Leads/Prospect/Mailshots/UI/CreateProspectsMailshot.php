@@ -12,6 +12,7 @@ use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -53,6 +54,8 @@ class CreateProspectsMailshot extends InertiaAction
             ]
         ];
 
+        $tags = explode(',', $request->get('tags'));
+
         $fields[] = [
             'title'  => '',
             'fields' => [
@@ -69,12 +72,12 @@ class CreateProspectsMailshot extends InertiaAction
                         'recipient_builder_type' => 'query',
                         'recipient_builder_data' => [
                             'query'     => null,
-                            'custom'    => [
+                            'custom'    =>  $tags[0] != '' ? [
                                 'tag'   => [
                                     'state' => 'all',
-                                    'tags'  => explode(',', $request->get('tags'))
+                                    'tags'  => $tags
                                 ],
-                            ],
+                            ] : null,
                             'prospects' => null,
                         ]
                     ]

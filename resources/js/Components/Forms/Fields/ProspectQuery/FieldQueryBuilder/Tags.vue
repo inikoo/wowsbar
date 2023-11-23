@@ -37,7 +37,7 @@ onMounted(() => {
 <template>
     <div>
         <div>
-            <Multiselect v-model="value[fieldName].tags" mode="tags" placeholder="Select the tag" valueProp="slug"
+            <Multiselect v-model="value[fieldName].tags" mode="tags" placeholder="Select the tag" valueProp="id"
                 trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
                 :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
