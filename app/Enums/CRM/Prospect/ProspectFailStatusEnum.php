@@ -46,7 +46,7 @@ enum ProspectFailStatusEnum: string
             'not-interested' => [
 
                 'tooltip' => __('not interested'),
-                'icon'    => 'fal fa-comment-exclamation',
+                'icon'    => 'fal fa-snooze',
                 'class'   => 'text-red'
 
             ],
@@ -54,14 +54,14 @@ enum ProspectFailStatusEnum: string
             'unsubscribed' => [
 
                 'tooltip' => __('Unsubscribed'),
-                'icon'    => 'fal fa-comment-slash',
+                'icon'    => 'fal fa-unlink',
                 'class'   => 'text-red-300'
             ],
 
             'invalid' => [
 
                 'tooltip' => __('invalid'),
-                'icon'    => 'fal fa-exclamation-circle',
+                'icon'    => 'fal fa-exclamation-triangle',
                 'class'   => 'text-red-300'
             ],
 
