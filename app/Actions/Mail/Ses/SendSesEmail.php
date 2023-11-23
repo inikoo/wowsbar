@@ -35,10 +35,10 @@ class SendSesEmail
             UpdateDispatchedEmail::run(
                 $dispatchedEmail,
                 [
-                    'state' => DispatchedEmailStateEnum::SENT,
-                    'is_sent' => true,
-                    'sent_at' => now(),
-                    'date' => now(),
+                    'state'               => DispatchedEmailStateEnum::SENT,
+                    'is_sent'             => true,
+                    'sent_at'             => now(),
+                    'date'                => now(),
                     'provider_message_id' => 'devel-' . Str::uuid()
                 ]
             );
@@ -62,7 +62,7 @@ class SendSesEmail
 
 
         $emailData = [
-            'Source' => $sender,
+            'Source'      => $sender,
             'Destination' => [
                 'ToAddresses' => [
                     $dispatchedEmail->email->address
@@ -70,14 +70,14 @@ class SendSesEmail
             ],
             'Message' => $message['Message'],
             'Headers' => [
-                'List-Unsubscribe' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+                'List-Unsubscribe'      => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
                 'List-Unsubscribe-Post' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
             ],
         ];
 
 
         $numberAttempts = 12;
-        $attempt = 0;
+        $attempt        = 0;
 
         do {
             try {
@@ -87,10 +87,10 @@ class SendSesEmail
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
-                        'state' => DispatchedEmailStateEnum::SENT,
-                        'is_sent' => true,
-                        'sent_at' => now(),
-                        'date' => now(),
+                        'state'               => DispatchedEmailStateEnum::SENT,
+                        'is_sent'             => true,
+                        'sent_at'             => now(),
+                        'date'                => now(),
                         'provider_message_id' => Arr::get($result, 'MessageId')
                     ]
                 );
@@ -106,13 +106,13 @@ class SendSesEmail
                     UpdateDispatchedEmail::run(
                         $dispatchedEmail,
                         [
-                            'state' => DispatchedEmailStateEnum::ERROR,
-                            'is_error' => true,
-                            'date' => now(),
+                            'state'       => DispatchedEmailStateEnum::ERROR,
+                            'is_error'    => true,
+                            'date'        => now(),
                             'data->error' =>
                                 [
-                                    'code' => $e->getAwsErrorCode(),
-                                    'msg' => $e->getAwsErrorMessage(),
+                                    'code'    => $e->getAwsErrorCode(),
+                                    'msg'     => $e->getAwsErrorMessage(),
                                     'attempt' => $attempt
 
                                 ],
@@ -149,9 +149,9 @@ class SendSesEmail
         $mail->preSend();
 
         return [
-            'Source' => $emailData['Source'],
+            'Source'       => $emailData['Source'],
             'Destinations' => $emailData['Destination']['ToAddresses'],
-            'RawMessage' => [
+            'RawMessage'   => [
                 'Data' => $mail->getSentMIMEMessage(),
             ]
         ];

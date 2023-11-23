@@ -21,6 +21,8 @@ return new class () extends Migration {
             $table->foreign('mailshot_id')->references('id')->on('mailshots')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('email_id')->index();
             $table->foreign('email_id')->references('id')->on('emails')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('recipient_type')->nullable();
+            $table->unsignedInteger('recipient_id')->nullable();
             $table->string('provider_message_id')->nullable()->index();
             $table->string('state')->index()->default(DispatchedEmailStateEnum::READY);
             $table->boolean('is_error')->default(false);

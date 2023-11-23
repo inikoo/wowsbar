@@ -10,7 +10,7 @@ namespace App\Actions\Leads\Prospect\Tags\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Traits\WithProspectsMeta;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\TagsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\CrmTagResource;
@@ -29,7 +29,7 @@ use Spatie\Tags\Tag;
 
 class IndexProspectTags extends InertiaAction
 {
-    use WithProspectsMeta;
+    use WithProspectsSubNavigation;
 
     private Shop|Organisation $parent;
 
@@ -112,7 +112,7 @@ class IndexProspectTags extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $tags, ActionRequest $request): Response
     {
-        $meta = $this->getMeta($request);
+        $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
             'CRM/Prospects/Tags',
@@ -123,9 +123,9 @@ class IndexProspectTags extends InertiaAction
                 ),
                 'title'       => __('prospect tags'),
                 'pageHead'    => [
-                    'title'     => __('tags'),
-                    'meta'      => $meta,
-                    'actions'   => [
+                    'title'              => __('tags'),
+                    'subNavigation'      => $subNavigation,
+                    'actions'            => [
                         [
                             'type'  => 'button',
                             'style' => 'create',

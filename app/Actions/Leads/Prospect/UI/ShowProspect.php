@@ -10,23 +10,28 @@ namespace App\Actions\Leads\Prospect\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Enums\UI\ProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class ShowProspect extends InertiaAction
 {
+    use WithProspectsSubNavigation;
+
+    public Organisation|Shop $parent;
+
     public function handle(Prospect $prospect): Prospect
     {
         return $prospect;
     }
-
 
     public function authorize(ActionRequest $request): bool
     {
@@ -38,21 +43,24 @@ class ShowProspect extends InertiaAction
 
     public function asController(Prospect $prospect, ActionRequest $request): Prospect
     {
+        $this->parent = organisation();
         $this->initialisation($request)->withTab(ProspectTabsEnum::values());
 
         return $this->handle($prospect);
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
         $this->initialisation($request)->withTab(ProspectTabsEnum::values());
+        $this->parent = $shop;
 
         return $this->handle($prospect);
     }
 
     public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
+
         return Inertia::render(
             'CRM/Prospect',
             [
@@ -66,13 +74,14 @@ class ShowProspect extends InertiaAction
                     'next'     => $this->getNext($prospect, $request),
                 ],
                 'pageHead'    => [
-                    'title'       => $prospect->name??$prospect->email??$prospect->slug,
-                    'noCapitalise'=> !$prospect->name,
-                    'icon'        => [
+                    'title'         => $prospect->name ?? $prospect->email ?? $prospect->slug,
+                    'subNavigation' => $subNavigation,
+                    'noCapitalise'  => !$prospect->name,
+                    'icon'          => [
                         'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
-                    'actions' => [
+                    'actions'       => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -101,7 +110,7 @@ class ShowProspect extends InertiaAction
                     fn () => GetProspectShowcase::run($prospect)
                     : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
 
-                ProspectsTabsEnum::HISTORY->value   => $this->tab == ProspectsTabsEnum::HISTORY->value ?
+                ProspectsTabsEnum::HISTORY->value => $this->tab == ProspectsTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))),
 
@@ -138,6 +147,7 @@ class ShowProspect extends InertiaAction
                 ],
             ];
         };
+
         return match ($routeName) {
             'org.crm.prospects.show',
             'org.crm.prospects.edit'

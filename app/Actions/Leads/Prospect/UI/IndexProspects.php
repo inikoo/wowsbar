@@ -12,7 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
-use App\Actions\Traits\WithProspectsMeta;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
@@ -36,7 +36,7 @@ use Spatie\Tags\Tag;
 
 class IndexProspects extends InertiaAction
 {
-    use WithProspectsMeta;
+    use WithProspectsSubNavigation;
 
     private Shop|Organisation $parent;
 
@@ -174,7 +174,7 @@ class IndexProspects extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
-        $meta = $this->getMeta($request);
+        $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
             'CRM/Prospects',
@@ -218,7 +218,7 @@ class IndexProspects extends InertiaAction
 
                         ] : false
                     ],
-                    'meta'    => $meta,
+                    'subNavigation'    => $subNavigation,
                 ],
                 'uploads'      => [
                     'templates' => [

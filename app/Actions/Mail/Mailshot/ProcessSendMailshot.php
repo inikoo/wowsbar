@@ -66,7 +66,15 @@ class ProcessSendMailshot
 
                         $email = Email::firstOrCreate(['address' => $emailAddress]);
 
-                        $dispatchedEmail = StoreDispatchedEmail::run($email, $mailshot);
+                        $dispatchedEmail = StoreDispatchedEmail::run(
+                            email:$email,
+                            mailshot:$mailshot,
+                            modelData:[
+                                'recipient_type'=> $recipient->getMorphClass(),
+                                'recipient_id'  => $recipient->id
+
+                            ]
+                        );
 
                         StoreMailshotRecipient::run(
                             $mailshot,

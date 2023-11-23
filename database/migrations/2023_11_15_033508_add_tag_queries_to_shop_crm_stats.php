@@ -15,9 +15,11 @@ return new class () extends Migration {
         Schema::table('shop_crm_stats', function (Blueprint $table) {
             $table->unsignedSmallInteger('number_prospect_queries')->default(0);
             $table->unsignedSmallInteger('number_customer_queries')->default(0);
+            $table->unsignedSmallInteger('number_surveys')->default(0);
         });
         Schema::table('organisation_crm_stats', function (Blueprint $table) {
             $table->unsignedSmallInteger('number_tags')->default(0);
+            $table->unsignedSmallInteger('number_surveys')->default(0);
         });
     }
 
@@ -25,10 +27,10 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('organisation_crm_stats', function (Blueprint $table) {
-            $table->dropColumn('number_tags');
+            $table->dropColumn(['number_tags','number_surveys']);
         });
         Schema::table('shop_crm_stats', function (Blueprint $table) {
-            $table->dropColumn(['number_prospect_queries', 'number_customer_queries']);
+            $table->dropColumn(['number_prospect_queries', 'number_customer_queries','number_surveys']);
         });
     }
 };

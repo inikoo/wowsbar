@@ -37,6 +37,7 @@ const props = defineProps<{
             tooltip: string
         }
         actionActualMethod?: string
+        subNavigation?: any
         meta?: any
         actions?: ActionTS[]
         iconRight?: {
@@ -66,24 +67,47 @@ const originUrl = location.origin
 <template>
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
         <div>
-            <div class="flex leading-none py-1 items-center gap-x-2 font-bold text-gray-700 text-2xl tracking-tight ">
-                <div v-if="data.container" class="text-slate-500 text-lg">
-                    <Link v-if="data.container.href"
-                        :href="route(
-                            data.container.href['name'],
-                            data.container.href['parameters']
-                    )">
-                        <Container :data="data.container"/>
-                    </Link>
-                    <div v-else class="flex items-center gap-x-1">
-                        <Container :data="data.container" />
-                    </div>
-                </div>
-                <div v-if="data.icon" class="inline text-gray-400">
-                    <FontAwesomeIcon :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
-                        :icon="data.icon.icon" size="sm" class=""/>
-                    <!-- <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
-                        :icon="data.iconBis.icon" size="sm" class="" :class="data.iconBis.class"/> -->
+
+            <!-- todo ww-62 create own component SubNavigation.vue -->
+         <div class="mb-1 flex flex-col  sm:flex-row sm:flex-wrap sm:space-x-6">
+             <div class="flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6 text-gray-500 text-xs">
+                 <div v-for="item in data.subNavigation" class="flex items-center">
+                     <FontAwesomeIcon v-if="item.leftIcon"
+                                      :title="capitalize(item.leftIcon.tooltip)"
+                                      aria-hidden="true" :icon="item.leftIcon.icon"  class="text-gray-400 pr-2"/>
+                     <Link v-if="item.href" :href="`${route(item.href.name, item.href.parameters)}`"
+                           :class="[
+                             $page.url.startsWith((route(item.href.name, item.href.parameters)).replace(new RegExp(originUrl, 'g'), '')) ? 'text-org-600 font-medium' : 'text-org-300 hover:text-org-500'
+                         ]"
+                     >
+                         <MetaLabel :item=item />
+                     </Link>
+                     <span v-else>
+                         <MetaLabel :item=item />
+                     </span>
+                 </div>
+             </div>
+         </div>
+       <!-- ww-62 until here ========================================================   -->
+
+         <div class="flex leading-none py-1 items-center gap-x-2 font-bold text-gray-700 text-2xl tracking-tight ">
+             <div v-if="data.container" class="text-slate-500 text-lg">
+                 <Link v-if="data.container.href"
+                     :href="route(
+                         data.container.href['name'],
+                         data.container.href['parameters']
+                 )">
+                     <Container :data="data.container"/>
+                 </Link>
+                 <div v-else class="flex items-center gap-x-1">
+                     <Container :data="data.container" />
+                 </div>
+             </div>
+             <div v-if="data.icon" class="inline text-gray-400">
+                 <FontAwesomeIcon :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
+                     :icon="data.icon.icon" size="sm" class=""/>
+                 <!-- <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
+                     :icon="data.iconBis.icon" size="sm" class="" :class="data.iconBis.class"/> -->
                 </div>
                 <h2 :class="!data.noCapitalise? 'capitalize':''">{{ data.title }}</h2>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"

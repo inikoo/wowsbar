@@ -10,7 +10,7 @@ namespace App\Actions\Leads\Prospect\Queries\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Traits\WithProspectsMeta;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ProspectsQueriesTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
 use App\Http\Resources\History\HistoryResource;
@@ -31,7 +31,7 @@ use Spatie\Tags\Tag;
 
 class IndexProspectQueries extends InertiaAction
 {
-    use WithProspectsMeta;
+    use WithProspectsSubNavigation;
 
     private Shop|Organisation $parent;
 
@@ -116,7 +116,7 @@ class IndexProspectQueries extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
-        $meta = $this->getMeta($request);
+        $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
             'CRM/Prospects/Queries',
@@ -127,9 +127,9 @@ class IndexProspectQueries extends InertiaAction
                 ),
                 'title'       => __('prospect lists'),
                 'pageHead'    => [
-                    'title'   => __('prospect lists'),
-                    'meta'    => $meta,
-                    'actions' => [
+                    'title'            => __('prospect lists'),
+                    'subNavigation'    => $subNavigation,
+                    'actions'          => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',

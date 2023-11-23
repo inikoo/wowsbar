@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property int $number_mailshots
  * @property int $number_emails
  * @property int $number_error_emails
- * @property int $number_rejected__emails
+ * @property int $number_rejected_emails
  * @property int $number_sent_emails
  * @property int $number_delivered_emails
  * @property int $number_hard_bounced_emails

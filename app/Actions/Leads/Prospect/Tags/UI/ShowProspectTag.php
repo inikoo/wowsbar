@@ -11,6 +11,7 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ShowProspectTagTabsEnum;
 use App\Http\Resources\CRM\ProspectsResource;
 use App\Http\Resources\History\HistoryResource;
@@ -25,6 +26,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspectTag extends InertiaAction
 {
     use WithActionButtons;
+    use WithProspectsSubNavigation;
 
     public Organisation|Shop $parent;
 
@@ -40,7 +42,6 @@ class ShowProspectTag extends InertiaAction
 
     public function inShop(Shop $shop, Tag $tag, ActionRequest $request): Tag
     {
-
         $this->parent = $shop;
         $this->initialisation($request)->withTab(ShowProspectTagTabsEnum::values());
 
@@ -49,26 +50,29 @@ class ShowProspectTag extends InertiaAction
 
     public function htmlResponse(Tag $tag, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
+
         return Inertia::render(
             'Prospects/ProspectTag',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'breadcrumbs'                             => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title'    => __($tag->name),
-                'pageHead' => [
-                    'title'     => __($tag->name),
-                    'icon'      => [
+                'title'                                   => __($tag->name),
+                'pageHead'                                => [
+                    'title'         => __($tag->name),
+                    'subNavigation' => $subNavigation,
+                    'icon'          => [
                         'tooltip' => __('tag'),
                         'icon'    => 'fal fa-tags'
                     ],
-                    'actions'   => [
+                    'actions'       => [
                         $this->getEditActionIcon($request),
                         $this->getDeleteActionIcon($request)
                     ],
                 ],
-                'tabs'        => [
+                'tabs'                                    => [
                     'current'    => $this->tab,
                     'navigation' => ShowProspectTagTabsEnum::navigation()
                 ],
@@ -113,11 +117,11 @@ class ShowProspectTag extends InertiaAction
                         ],
 
                     ],
-                    'simple' => [
+                    'simple'         => [
                         'route' => $routeParameters['model'],
                         'label' => $tag->label
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
         };

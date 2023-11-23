@@ -9,7 +9,7 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Traits\WithProspectsMeta;
+use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;
@@ -27,7 +27,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspectMailshots extends InertiaAction
 {
-    use WithProspectsMeta;
+    use WithProspectsSubNavigation;
 
     private Shop|Organisation $parent;
 
@@ -141,7 +141,7 @@ class IndexProspectMailshots extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $mailshots, ActionRequest $request): Response
     {
-        $meta = $this->getMeta($request);
+        $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
             'CRM/Prospects/Mailshots',
@@ -152,9 +152,9 @@ class IndexProspectMailshots extends InertiaAction
                 ),
                 'title'       => __('prospects mailshots'),
                 'pageHead'    => [
-                    'title'   => __('prospects mailshots'),
-                    'meta'    => $meta,
-                    'actions' =>
+                    'title'            => __('prospects mailshots'),
+                    'subNavigation'    => $subNavigation,
+                    'actions'          =>
                         [
                             [
                                 'type'  => 'button',

@@ -65,6 +65,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_dont_contact_me
  * @property int $number_prospect_queries
  * @property int $number_customer_queries
+ * @property int $number_surveys
  * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
@@ -117,6 +118,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNotInterested($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateRegistered($value)
+ * @method static Builder|ShopCRMStats whereNumberSurveys($value)
  * @method static Builder|ShopCRMStats whereShopId($value)
  * @method static Builder|ShopCRMStats whereUpdatedAt($value)
  * @mixin Eloquent
