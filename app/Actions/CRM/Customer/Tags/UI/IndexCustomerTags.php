@@ -11,7 +11,6 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithCustomersSubNavigation;
-use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\TagsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\CrmTagResource;
