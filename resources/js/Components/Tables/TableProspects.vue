@@ -82,10 +82,7 @@ const addNewTag = async (option: tag) => {
 const updateTagItemTable = async (idTag: number[], idData: number) => {
     try {
         const response = await axios.post(route('org.models.prospect.tag.attach', idData),
-            {tags: idTag},
-            {
-                headers: {"Content-Type": "multipart/form-data"},
-            }
+            { tags: idTag },
         )
     } catch (error: any) {
         notify({
