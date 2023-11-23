@@ -13,6 +13,7 @@ use App\Actions\Leads\Prospect\UpdateProspectEmailOpened;
 use App\Actions\Leads\Prospect\UpdateProspectEmailSoftBounced;
 use App\Actions\Leads\Prospect\UpdateProspectEmailUnsubscribed;
 use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
+use App\Actions\Utils\IsGoogleIp;
 use App\Enums\Mail\DispatchedEmailEventTypeEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
@@ -36,7 +37,6 @@ class ProcessSesNotification
 
             return [];
         }
-
         switch (Arr::get($sesNotification->data, 'eventType')) {
             case 'Bounce':
                 $type = DispatchedEmailEventTypeEnum::BOUNCE;
@@ -135,6 +135,16 @@ class ProcessSesNotification
                 $date = Arr::get($sesNotification->data, 'open.timestamp');
                 $data = Arr::only($sesNotification->data['open'], ['ipAddress', 'userAgent']);
 
+
+
+                if(Arr::get($data, 'userAgent')=="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246 Mozilla/5.0"
+                    and IsGoogleIp::run(Arr::get($data, 'ipAddress'))
+                ) {
+                    $sesNotification->delete();
+                    return null;
+                }
+
+
                 if ($dispatchedEmail->recipient_type == 'Prospect') {
                     UpdateProspectEmailOpened::run($dispatchedEmail->recipient, new Carbon($date));
                 }
@@ -192,7 +202,6 @@ class ProcessSesNotification
             'data' => $data
         ];
 
-        //  dd($eventData);
 
         $dispatchedEmail->events()->create($eventData);
 
@@ -209,6 +218,8 @@ class ProcessSesNotification
         if ($command->argument('id')) {
             try {
                 $sesNotification = SesNotification::find($command->argument('id'));
+
+
                 $command->line($sesNotification->message_id);
                 $this->handle($sesNotification);
 
