@@ -51,7 +51,7 @@ enum ProspectFailStatusEnum: string
 
             ],
 
-            'unsubscribed' => [
+            '' => [
 
                 'tooltip' => __('Unsubscribed'),
                 'icon'    => 'fal fa-comment=slash',
@@ -74,9 +74,9 @@ enum ProspectFailStatusEnum: string
         $stats = $parent->crmStats;
 
         return [
-            'no-applicable'  => $stats->number_prospects_fail_status_no_appliable,
+            'no-applicable'  => $stats->number_prospects_fail_status_no_applicable,
             'not-interested' => $stats->number_prospects_fail_status_not_interested,
-            'hard-bounced'   => $stats->number_prospects_fail_status_hard_bounced,
+            'unsubscribed'   => $stats->number_prospects_fail_status_unsubscribed,
             'invalid'        => $stats->number_prospects_fail_status_invalid,
         ];
     }

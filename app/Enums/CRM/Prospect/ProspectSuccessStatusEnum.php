@@ -56,7 +56,7 @@ enum ProspectSuccessStatusEnum: string
         $stats = $parent->crmStats;
 
         return [
-            'no-applicable' => $stats->number_prospects_success_status_no_appliable,
+            'no-applicable' => $stats->number_prospects_success_status_no_applicable,
             'registered'    => $stats->number_prospects_success_status_registered,
             'invoiced'      => $stats->number_prospects_success_status_invoiced,
         ];
