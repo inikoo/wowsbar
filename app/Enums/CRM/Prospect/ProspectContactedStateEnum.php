@@ -36,31 +36,31 @@ enum ProspectContactedStateEnum: string
     public static function stateIcon(): array
     {
         return [
-            'no-contacted' => [
-                'tooltip' => __('no contacted'),
+            'no-applicable' => [
+                'tooltip' => __('NA'),
                 'icon'    => 'fal fa-seedling',
                 'class'   => 'text-indigo-500'
 
 
             ],
-            'soft-bounced' => [
+            'soft-bounced'  => [
 
                 'tooltip' => __('Bounced'),
                 'icon'    => 'fal fa-dungeon',
 
             ],
-            'never-open'   => [
+            'never-open'    => [
 
                 'tooltip' => __('Never open'),
                 'icon'    => 'fal fa-eye-slash',
                 'class'   => 'text-red'
 
             ],
-            'open'         => [
+            'open'          => [
                 'tooltip' => __('open'),
                 'icon'    => 'fal fa-eye'
             ],
-            'clicked'      => [
+            'clicked'       => [
                 'tooltip' => __('clicked'),
                 'icon'    => 'fal fa-mouse-pointer'
             ],
@@ -72,11 +72,11 @@ enum ProspectContactedStateEnum: string
         $stats = $parent->crmStats;
 
         return [
-            'no-contacted' => $stats->number_prospects_contacted_state_no_contacted,
-            'soft-bounced' => $stats->number_prospects_contacted_state_soft_bounced,
-            'never-open'   => $stats->number_prospects_contacted_state_never_opened,
-            'open'         => $stats->number_prospects_contacted_state_open,
-            'clicked'      => $stats->number_prospects_contacted_state_clicked
+            'no-applicable' => $stats->number_prospects_contacted_state_no_applicable,
+            'soft-bounced'  => $stats->number_prospects_contacted_state_soft_bounced,
+            'never-open'    => $stats->number_prospects_contacted_state_never_open,
+            'open'          => $stats->number_prospects_contacted_state_open,
+            'clicked'       => $stats->number_prospects_contacted_state_clicked
         ];
     }
 

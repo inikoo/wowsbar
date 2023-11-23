@@ -17,6 +17,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
 const props = defineProps<{
     data: {
+        prospectStats: object,
         crmStats: {}
         stats: {
             name: string
@@ -32,6 +33,9 @@ const dataDoughnut = [
         title: trans('Prospects'),
         labels: [trans('Not contacted'), trans('Contacted'), trans('Fail'),trans('Success')],
         total: props.data.crmStats.number_prospects,
+        elements: [
+
+        ],
         datasets: [
             {
                 data: [
@@ -85,6 +89,7 @@ const options = {
 
 
 <template>
+    {{data.prospectStats}}
     <div class="px-6">
         <dl class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-3">
             <!-- Box: Customers -->
@@ -93,8 +98,13 @@ const options = {
                 <dd class="flex items-baseline justify-between">
                     <div class="flex gap-x-2 leading-none items-baseline text-2xl font-semibold text-org-500">
                         <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
-                        <span class="text-sm font-medium leading-none text-gray-500">in total</span>
+                        <span class="text-sm font-medium leading-none text-gray-500">{{trans('in total')}}</span>
+
                     </div>
+                    <div>
+
+                    </div>
+
                     <div class="w-20">
                         <Doughnut :data="doughnut" :options="options" />
                     </div>
