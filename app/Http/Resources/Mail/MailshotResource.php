@@ -36,7 +36,6 @@ class MailshotResource extends JsonResource
             'date'                => $mailshot->date,
             'created_at'          => $mailshot->created_at,
             'updated_at'          => $mailshot->updated_at,
-            ''
         ];
     }
 }

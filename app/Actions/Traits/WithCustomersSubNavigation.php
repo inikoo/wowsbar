@@ -66,7 +66,7 @@ trait WithCustomersSubNavigation
 
         $meta[] = [
             'href'     => [
-                'name'       => 'org.crm.shop.prospects.tags.index',
+                'name'       => 'org.crm.shop.customers.tags.index',
                 'parameters' => $request->route()->originalParameters()
             ],
             'number'   => $this->parent->crmStats->number_surveys,
@@ -79,7 +79,7 @@ trait WithCustomersSubNavigation
 
         $meta[] = [
             'href'     => [
-                'name'       => 'org.crm.shop.prospects.lists.index',
+                'name'       => 'org.crm.shop.customers.lists.index',
                 'parameters' => $request->route()->originalParameters()
             ],
             'number'   => $this->parent->crmStats->number_customer_queries,
@@ -92,7 +92,7 @@ trait WithCustomersSubNavigation
 
         $meta[] = [
             'href'     => [
-                'name'       => 'org.crm.shop.prospects.tags.index',
+                'name'       => 'org.crm.shop.customers.tags.index',
                 'parameters' => $request->route()->originalParameters()
             ],
             'number'   => organisation()->crmStats->number_tags,
