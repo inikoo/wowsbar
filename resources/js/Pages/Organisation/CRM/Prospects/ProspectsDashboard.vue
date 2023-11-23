@@ -11,12 +11,16 @@ import { routeType } from '@/types/route'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCommentDots, faSadTear, faLaugh, faCommentExclamation, faCommentSlash, faExclamationCircle, faSignIn } from '@fal/'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faCommentDots, faSadTear, faLaugh, faCommentExclamation, faCommentSlash, faExclamationCircle, faSignIn)
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
-
 const props = defineProps<{
     data: {
+        prospectStats: object,
         crmStats: {}
         stats: {
             name: string
@@ -26,12 +30,15 @@ const props = defineProps<{
     }
 }>()
 
+console.log(props.data.prospectStats)
 const dataDoughnut = [
-
     {
         title: trans('Prospects'),
         labels: [trans('Not contacted'), trans('Contacted'), trans('Fail'),trans('Success')],
-        total: props.data.crmStats.number_prospects,
+        total: props.data.prospectStats.prospects.count,
+        elements: [
+
+        ],
         datasets: [
             {
                 data: [
@@ -41,12 +48,13 @@ const dataDoughnut = [
                     props.data.crmStats.number_prospects_state_success,
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.prospects.cases
     },
     {
         title: trans('Failed'),
         labels: [trans('Not interested'), trans('Unsubscribed'), trans('Invalid')],
-        total:props.data.crmStats.number_prospects_state_fail,
+        total: props.data.prospectStats.fail.count,
         datasets: [
             {
                 data: [
@@ -55,12 +63,13 @@ const dataDoughnut = [
                     props.data.crmStats.number_prospects_fail_status_invalid
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.fail.cases
     },
     {
         title: trans('Success'),
         labels: [trans('Registered'), trans('Invoiced')],
-        total:props.data.crmStats.number_prospects_state_success,
+        total: props.data.prospectStats.success.count,
         datasets: [
             {
                 data: [
@@ -69,7 +78,23 @@ const dataDoughnut = [
 
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.success.cases
+    },
+    {
+        title: trans('Contacted'),
+        labels: [trans('Registered'), trans('Invoiced')],
+        total: props.data.prospectStats.contacted.count,
+        datasets: [
+            {
+                data: [
+                    props.data.crmStats.number_prospects_success_status_registered,
+                    props.data.crmStats.number_prospects_success_status_invoiced,
+
+                ]
+            }
+        ],
+        cases: props.data.prospectStats.contacted.cases
     },
 ]
 
@@ -91,10 +116,20 @@ const options = {
             <div v-for="doughnut in dataDoughnut" class="px-4 py-5 sm:p-6 rounded-lg bg-white hover:bg-org-30 shadow ">
                 <dt class="text-base font-medium text-gray-400">{{doughnut.title}}</dt>
                 <dd class="flex items-baseline justify-between">
-                    <div class="flex gap-x-2 leading-none items-baseline text-2xl font-semibold text-org-500">
-                        <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
-                        <span class="text-sm font-medium leading-none text-gray-500">in total</span>
+                    <div class="flex flex-col gap-x-2 gap-y-3 leading-none items-baseline text-2xl font-semibold text-org-500">
+                        <div class="flex gap-x-2 items-end">
+                            <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
+                            <span class="text-sm font-medium leading-none text-gray-500">{{trans('in total')}}</span>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            <div v-for="dCase in doughnut.cases" class="flex gap-x-2 items-center font-normal">
+                                <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' :title="dCase.icon.tooltip" aria-hidden='true' />
+                                <div class="">{{ dCase.value }}: <span class="font-semibold">{{ dCase.count ?? 0 }}</span></div>
+                            </div>
+                        </div>
+                        
                     </div>
+
                     <div class="w-20">
                         <Doughnut :data="doughnut" :options="options" />
                     </div>
@@ -102,6 +137,7 @@ const options = {
             </div>
         </dl>
     </div>
+    <!-- <pre>{{ props.data.prospectStats.prospects }}</pre> -->
 
     <!-- <pre>{{ data.crmStats }}</pre> -->
     <!-- <Stats class="p-4" :stats="data.stats"/> -->
