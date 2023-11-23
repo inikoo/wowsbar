@@ -7,9 +7,12 @@
 
 namespace App\Actions\Mail\SesNotification;
 
-use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Leads\Prospect\UpdateProspectEmailClicked;
+use App\Actions\Leads\Prospect\UpdateProspectEmailHardBounced;
+use App\Actions\Leads\Prospect\UpdateProspectEmailOpened;
+use App\Actions\Leads\Prospect\UpdateProspectEmailSoftBounced;
+use App\Actions\Leads\Prospect\UpdateProspectEmailUnsubscribed;
 use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
-use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
 use App\Enums\Mail\DispatchedEmailEventTypeEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
@@ -17,6 +20,7 @@ use App\Models\Mail\SesNotification;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProcessSesNotification
@@ -41,14 +45,18 @@ class ProcessSesNotification
 
                 $isHardBounce = Arr::get($sesNotification->data, 'bounce.bounceType') == 'Permanent';
 
-                if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
-                    UpdateProspect::run(
-                        $dispatchedEmail->mailshotRecipient->recipient,
-                        [
-                            //todo
-                           // 'bounce_status' => $isHardBounce ? ProspectBounceStatusEnum::HARD_BOUNCE : ProspectBounceStatusEnum::SOFT_BOUNCE
-                        ]
-                    );
+                if ($dispatchedEmail->recipient_type == 'Prospect') {
+                    if ($isHardBounce) {
+                        UpdateProspectEmailHardBounced::run(
+                            $dispatchedEmail->recipient,
+                            new Carbon($date)
+                        );
+                    } else {
+                        UpdateProspectEmailSoftBounced::run(
+                            $dispatchedEmail->recipient,
+                            new Carbon($date)
+                        );
+                    }
                 }
 
 
@@ -77,6 +85,10 @@ class ProcessSesNotification
                 $type = DispatchedEmailEventTypeEnum::COMPLAIN;
                 $date = Arr::get($sesNotification->data, 'complaint.timestamp');
                 $data = Arr::only($sesNotification->data['complaint'], ['userAgent', 'complaintSubType', 'complaintFeedbackType']);
+
+                if ($dispatchedEmail->recipient_type == 'Prospect') {
+                    UpdateProspectEmailUnsubscribed::run($dispatchedEmail->recipient, new Carbon($date));
+                }
 
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
@@ -123,6 +135,10 @@ class ProcessSesNotification
                 $date = Arr::get($sesNotification->data, 'open.timestamp');
                 $data = Arr::only($sesNotification->data['open'], ['ipAddress', 'userAgent']);
 
+                if ($dispatchedEmail->recipient_type == 'Prospect') {
+                    UpdateProspectEmailOpened::run($dispatchedEmail->recipient, new Carbon($date));
+                }
+
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
                     [
@@ -137,6 +153,10 @@ class ProcessSesNotification
                 $type = DispatchedEmailEventTypeEnum::CLICK;
                 $date = Arr::get($sesNotification->data, 'click.timestamp');
                 $data = Arr::only($sesNotification->data['click'], ['ipAddress', 'userAgent', 'link', 'linkTags']);
+
+                if ($dispatchedEmail->recipient_type == 'Prospect') {
+                    UpdateProspectEmailClicked::run($dispatchedEmail->recipient, new Carbon($date));
+                }
 
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,

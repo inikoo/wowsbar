@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Ses;
 
+use App\Actions\Leads\Prospect\UpdateProspectEmailSent;
 use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Enums\Mail\DispatchedEmailStateEnum;
@@ -43,6 +44,9 @@ class SendSesEmail
                 ]
             );
 
+            if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
+                UpdateProspectEmailSent::run($dispatchedEmail->recipient);
+            }
 
             return $dispatchedEmail;
         }
@@ -95,6 +99,9 @@ class SendSesEmail
                     ]
                 );
 
+                if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
+                    UpdateProspectEmailSent::run($dispatchedEmail->recipient);
+                }
 
             } catch (AwsException $e) {
                 if ($e->getAwsErrorCode() == 'Throttling' and $attempt < $numberAttempts - 1) {
