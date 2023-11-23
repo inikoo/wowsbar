@@ -56,15 +56,13 @@ const props = defineProps<{
     tab?: string
 }>()
 
-const reactiveProps = ref({...props.data})
-
 // List data of statistic
 const dataStatistic = reactive([
     {
         name: 'recipient',
         value: props.data.stats.number_dispatched_emails,
         label: trans('Recipients'),
-        component: null
+        component: <any>null
     },
     {
         name: 'error',
@@ -192,17 +190,29 @@ const compSortSteps = computed(() => {
     return sortedData
 })
 
-const qqwee = () => {
-}
-
 </script>
 
 
 <template>
+    <!-- {{ data.state }} -->
     <div class="py-3 mx-auto px-5 w-full">
         <Timeline v-if="data.state === 'sent'" :options="compSortSteps" />
 
-        <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 md:divide-x md:divide-y-0 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+        <div v-if="data.state === 'in-process'"
+            class="bg-white min-w-fit w-64 shadow mt-3 px-4 py-5 sm:px-5 sm:pt-5 sm:pb-4 rounded-lg"
+        >
+            <!-- Title -->
+            <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
+                    
+            <!-- Value -->
+            <dd class="mt-3 flex items-baseline justify-between md:block lg:flex">
+                <div class="flex items-baseline text-3xl font-semibold text-org-600 tabular-nums">
+                    <CountUp :endVal="`${dataStatistic[0].value}`" :scrollSpyOnce="true" :duration="1.2" />
+                </div>
+            </dd>
+        </div>
+        
+        <dl v-else class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 md:divide-x md:divide-y-0 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
             <template v-for="(statistic, index) in dataStatistic">
                 <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
                     <!-- Title -->
