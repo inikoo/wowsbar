@@ -12,9 +12,9 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
+use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Http\Resources\CRM\ProspectResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -35,14 +35,14 @@ class UpdateProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $addressData = Arr::get($modelData, 'address');
+        //$addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
-        if ($addressData) {
-            //todo
-            //UpdateAddress::run($prospect->getAddress('contact'),$addressData);
-            //$prospect->location = $prospect->getLocation();
-            //$prospect->save();
-        }
+        //if ($addressData) {
+        //todo
+        //UpdateAddress::run($prospect->getAddress('contact'),$addressData);
+        //$prospect->location = $prospect->getLocation();
+        //$prospect->save();
+        //}
 
 
         $prospect = $this->update($prospect, $modelData, ['data']);
@@ -52,10 +52,10 @@ class UpdateProspect
                 OrganisationHydrateProspects::dispatch();
                 ShopHydrateProspects::dispatch($prospect->scope);
             }
-
         }
         ProspectHydrateUniversalSearch::dispatch($prospect);
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(5));
+
         return $prospect;
     }
 
@@ -82,11 +82,11 @@ class UpdateProspect
         };
 
         return [
-            'contact_state'     => ['sometimes', Rule::enum(ProspectContactStateEnum::class)],
-            'outcome_status'    => ['sometimes', 'nullable', Rule::enum(ProspectOutcomeStatusEnum::class)],
-            'bounce_status'     => ['sometimes', 'nullable', Rule::enum(ProspectBounceStatusEnum::class)],
+            'contacted_state'   => ['sometimes', Rule::enum(ProspectContactedStateEnum::class)],
+            'fail_status'       => ['sometimes', 'nullable', Rule::enum(ProspectFailStatusEnum::class)],
+            'success_status'    => ['sometimes', 'nullable', Rule::enum(ProspectSuccessStatusEnum::class)],
             'dont_contact_me'   => ['sometimes', 'boolean'],
-            'last_contacted_at' => 'sometimes|date',
+            'last_contacted_at' => 'sometimes|nullable|date',
             'contact_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
             'company_name'      => ['sometimes', 'nullable', 'string', 'max:255'],
             'email'             => [

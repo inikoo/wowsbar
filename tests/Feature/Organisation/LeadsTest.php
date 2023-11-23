@@ -48,17 +48,13 @@ test('create prospect', function () {
         ->and($shop->crmStats->number_prospects)->toBe(1)
         ->and($shop->crmStats->number_prospects_state_no_contacted)->toBe(1)
         ->and($shop->crmStats->number_prospects_state_contacted)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_not_interested)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_registered)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_invoiced)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_bounced)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_fail)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_success)->toBe(0)
         ->and(organisation()->crmStats->number_prospects)->toBe(1)
         ->and(organisation()->crmStats->number_prospects_state_no_contacted)->toBe(1)
         ->and(organisation()->crmStats->number_prospects_state_contacted)->toBe(0)
-        ->and(organisation()->crmStats->number_prospects_state_not_interested)->toBe(0)
-        ->and(organisation()->crmStats->number_prospects_state_registered)->toBe(0)
-        ->and(organisation()->crmStats->number_prospects_state_invoiced)->toBe(0)
-        ->and(organisation()->crmStats->number_prospects_state_bounced)->toBe(0);
+        ->and(organisation()->crmStats->number_prospects_state_fail)->toBe(0)
+        ->and(organisation()->crmStats->number_prospects_state_success)->toBe(0);
 
     $this->assertDatabaseCount('tags', 3);
     return $prospect;
@@ -73,17 +69,13 @@ test('create 2nd prospect', function () {
         ->and($shop->crmStats->number_prospects)->toBe(2)
         ->and($shop->crmStats->number_prospects_state_no_contacted)->toBe(2)
         ->and($shop->crmStats->number_prospects_state_contacted)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_not_interested)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_registered)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_invoiced)->toBe(0)
-        ->and($shop->crmStats->number_prospects_state_bounced)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_fail)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_success)->toBe(0)
         ->and($organisation->crmStats->number_prospects)->toBe(2)
         ->and($organisation->crmStats->number_prospects_state_no_contacted)->toBe(2)
         ->and($organisation->crmStats->number_prospects_state_contacted)->toBe(0)
-        ->and($organisation->crmStats->number_prospects_state_not_interested)->toBe(0)
-        ->and($organisation->crmStats->number_prospects_state_registered)->toBe(0)
-        ->and($organisation->crmStats->number_prospects_state_invoiced)->toBe(0)
-        ->and($organisation->crmStats->number_prospects_state_bounced)->toBe(0);
+        ->and($organisation->crmStats->number_prospects_state_fail)->toBe(0)
+        ->and($organisation->crmStats->number_prospects_state_success)->toBe(0);
 
     return $prospect;
 });

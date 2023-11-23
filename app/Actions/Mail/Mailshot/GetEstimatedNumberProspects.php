@@ -2,7 +2,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,9 +21,9 @@ class GetEstimatedNumberProspects
                     'with'  => $queryBuilder['query'],
                     'group' => [
                         'where' => [
-                            'contact_state',
+                            'state',
                             '=',
-                            ProspectContactStateEnum::NO_CONTACTED->value
+                            ProspectStateEnum::NO_CONTACTED->value
                         ],
                     ],
                     'filter' => [

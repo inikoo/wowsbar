@@ -5,7 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
+use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Stubs\Migrations\HasProspectStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,20 +19,30 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('prospects', function (Blueprint $table) {
-            $table->string('contact_state')->default(ProspectContactStateEnum::NO_CONTACTED->value);
-            $table->string('outcome_status')->nullable();
-            $table->string('bounce_status')->nullable();
+            $table->string('contacted_state')->default(ProspectContactedStateEnum::NA->value);
+            $table->string('fail_status')->default(ProspectFailStatusEnum::NA);
+            $table->string('success_status')->default(ProspectSuccessStatusEnum::NA);
             $table->boolean('dont_contact_me')->default(false);
         });
 
         Schema::table('organisation_crm_stats', function (Blueprint $table) {
-            $this->prospectsStatsBis($table);
+            $this->prospectsPrepareForStatsVersion2($table);
         });
         Schema::table('shop_crm_stats', function (Blueprint $table) {
-            $this->prospectsStatsBis($table);
+            $this->prospectsPrepareForStatsVersion2($table);
         });
         Schema::table('portfolio_website_stats', function (Blueprint $table) {
-            $this->prospectsStatsBis($table);
+            $this->prospectsPrepareForStatsVersion2($table);
+        });
+
+        Schema::table('organisation_crm_stats', function (Blueprint $table) {
+            $this->prospectsStatsVersion2($table);
+        });
+        Schema::table('shop_crm_stats', function (Blueprint $table) {
+            $this->prospectsStatsVersion2($table);
+        });
+        Schema::table('portfolio_website_stats', function (Blueprint $table) {
+            $this->prospectsStatsVersion2($table);
         });
 
     }
@@ -48,13 +60,13 @@ return new class () extends Migration {
         });
 
         Schema::table('organisation_crm_stats', function (Blueprint $table) {
-            $this->undoProspectsStatsBis($table);
+            $this->undoProspectsStatsVersion2($table);
         });
         Schema::table('shop_crm_stats', function (Blueprint $table) {
-            $this->undoProspectsStatsBis($table);
+            $this->undoProspectsStatsVersion2($table);
         });
         Schema::table('portfolio_website_stats', function (Blueprint $table) {
-            $this->undoProspectsStatsBis($table);
+            $this->undoProspectsStatsVersion2($table);
         });
     }
 };
