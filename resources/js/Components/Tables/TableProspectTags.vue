@@ -24,6 +24,7 @@ const locale = useLocaleStore()
 function tagRoute(tag: object) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.tags.index':
+        case 'org.crm.shop.customers.tags.index':
             return route(
                 'org.crm.shop.prospects.tags.show',
                 [route().params.shop, tag.tag_slug]);
