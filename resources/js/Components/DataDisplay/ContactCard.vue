@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
 import { useFormatTime } from '@/Composables/useFormatTime';
 import CopyButton from '@/Components/Utils/CopyButton.vue';
+import { capitalize } from '@/Composables/capitalize'
 library.add(faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe)
 
 const props = defineProps<{
@@ -15,13 +16,20 @@ const props = defineProps<{
         phone: string
         website: string
         tags: string[]
+        state: string
     }
 }>()
 
 </script>
 
 <template>
-    <div class="w-fit rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
+    <div v-tooltip="capitalize((data.state).replace('-', ' '))" class="w-fit rounded-lg shadow-sm"
+        :class="[
+            { 'ring-1 ring-gray-500/30': data.state === 'no-contacted' },
+            { 'bg-lime-50 ring-1 ring-lime-700/50': data.state === 'interested' },
+            { 'bg-rose-200 ring-1 ring-rose-700/50': data.state === 'not-interested' },
+        ]"
+    >
         <dl class="w-fit flex flex-col divide-y divide-gray-900/5">
             <div class="flex justify-between items-end w-full px-6 py-6">
                 <div class="flex flex-col items-end">
