@@ -30,8 +30,9 @@ class UpdateProspectEmailUnsubscribed
         }
 
         if ($prospect->state != ProspectStateEnum::SUCCESS) {
-            $dataToUpdate['state']       = ProspectStateEnum::FAIL;
-            $dataToUpdate['fail_status'] = ProspectFailStatusEnum::UNSUBSCRIBED;
+            $dataToUpdate['state']           = ProspectStateEnum::FAIL;
+            $dataToUpdate['fail_status']     = ProspectFailStatusEnum::UNSUBSCRIBED;
+            $dataToUpdate['contacted_state'] = ProspectFailStatusEnum::NA;
         }
 
         UpdateProspect::run(

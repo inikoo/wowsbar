@@ -26,8 +26,9 @@ class UpdateProspectEmailHardBounced
         }
 
         if ($prospect->state != ProspectStateEnum::SUCCESS) {
-            $dataToUpdate['state']       = ProspectStateEnum::FAIL;
-            $dataToUpdate['fail_status'] = ProspectFailStatusEnum::INVALID;
+            $dataToUpdate['state']           = ProspectStateEnum::FAIL;
+            $dataToUpdate['fail_status']     = ProspectFailStatusEnum::INVALID;
+            $dataToUpdate['contacted_state'] = ProspectFailStatusEnum::NA;
         }
 
         UpdateProspect::run(
