@@ -89,7 +89,6 @@ const options = {
 
 
 <template>
-    {{data.prospectStats}}
     <div class="px-6">
         <dl class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-3">
             <!-- Box: Customers -->
