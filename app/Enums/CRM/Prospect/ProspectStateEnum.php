@@ -17,6 +17,7 @@ enum ProspectStateEnum: string
 
     case NO_CONTACTED = 'no-contacted';
     case CONTACTED    = 'contacted';
+    case BOUNCED    = 'bounced';
     case FAIL         = 'fail';
     case SUCCESS      = 'success';
 
@@ -28,6 +29,7 @@ enum ProspectStateEnum: string
             'contacted'    => __('Contacted'),
             'fail'         => __('Fail'),
             'success'      => __('Success'),
+            'bounced'      => __('Bounced'),
         ];
     }
 
@@ -59,6 +61,13 @@ enum ProspectStateEnum: string
                 'icon'    => 'fal fa-laugh'
 
             ],
+            'bounced'      => [
+
+                'tooltip' => __('bounced'),
+                'icon'    => 'fal fa-laugh'
+
+            ],
+
 
         ];
     }
@@ -71,7 +80,8 @@ enum ProspectStateEnum: string
             'no-contacted' => $stats->number_prospects_state_no_contacted,
             'contacted'    => $stats->number_prospects_state_contacted,
             'fail'         => $stats->number_prospects_state_fail,
-            'success'      => $stats->number_prospects_state_success
+            'success'      => $stats->number_prospects_state_success,
+            'bounced'      => $stats->number_prospects_contacted_state_soft_bounced
         ];
     }
 
