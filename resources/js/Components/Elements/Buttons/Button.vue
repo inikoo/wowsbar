@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
     'label'?: string
     'full'?: boolean
     capitalize?: boolean
+    tooltip?: string
 }>(), {
     style: 'primary',
     size: 'm',
@@ -155,7 +156,9 @@ const getActionIcon = (icon: any) => {
             styleClass,
             sizeClass
         ]"
-        :disabled="style == 'disabled'">
+        :disabled="style == 'disabled'"
+        v-tooltip="tooltip ?? undefined"    
+    >
         <slot>
             <slot name="icon">
                 <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" fixed-width class="" aria-hidden="true"/>
