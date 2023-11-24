@@ -25,10 +25,11 @@ class MailshotResource extends JsonResource
         $timelineData = ['schedule_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
 
         foreach ($timelineData as $timeline) {
+            $timelineKey = Str::replace('_at', '', $timeline);
             if (!blank($mailshot->{$timeline})) {
                 $timelines[$mailshot->{$timeline}->toISOString()] = [
-                    'label' => 'Mailshot ' . Str::replace('_at', '', $timeline),
-                    'icon' => $timeline == 'created_at' ? 'fal fa-sparkles' : null
+                    'label' => 'Mailshot ' . $timelineKey,
+                    'icon' => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
                 ];
             }
         }
