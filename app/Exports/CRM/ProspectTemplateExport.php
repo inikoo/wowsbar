@@ -24,7 +24,7 @@ class ProspectTemplateExport extends Factory implements FromArray
                 fake()->name,
                 fake()->company,
                 fake()->email,
-                fake()->phoneNumber,
+                '+447429741' . rand(111, 999),
                 fake()->domainName
             ];
         } while(count($array) <= 5);

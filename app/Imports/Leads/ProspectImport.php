@@ -66,15 +66,19 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function prepareForValidation($data)
     {
 
-        if (Arr::get($data, 'contact_website')) {
+//        if (Arr::get($data, 'contact_website')) {
+//
+//            if(!preg_match('/^https?:\/\//', '')) {
+//                $data['contact_website'] = 'https://'.$data['contact_website'];
+//
+//            }
+//        }
 
-            if(!preg_match('/^https?:\/\//', '')) {
-                $data['contact_website'] = 'https://'.$data['contact_website'];
+        $tags = explode(',', Arr::get($data, 'tags'));
 
-            }
+        if($tags[0] != '') {
+            $data['tags'] = $tags;
         }
-
-        $data['tags'] = explode(',', Arr::get($data, 'tags'));
 
         return $data;
     }
@@ -98,11 +102,11 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'phone'           => [
                 'present',
                 'nullable',
-                'phone:AUTO',
+//                'phone:AUTO',
             ],
-            'contact_website' => ['nullable', 'url',],
-            'tags'            => ['required', 'array'],
-            'tags.*'          => ['string'],
+            'contact_website' => ['nullable'],
+            'tags'            => ['nullable', 'array'],
+            'tags.*'          => ['nullable', 'string'],
         ];
     }
 }
