@@ -1,4 +1,4 @@
-import InlineEditor from   "@ckeditor/ckeditor5-build-decoupled-document";
+import InlineEditor from  "@ckeditor/ckeditor5-build-decoupled-document";
 
 function getMergeTagData(grapesjsEditor) {
   grapesjsEditor.setCustomRte({
@@ -95,6 +95,20 @@ function getMergeTagData(grapesjsEditor) {
       } else {
         console.error('Editor async was not initialized');
       }
+
+      console.log('ijijiji',rte)
+
+
+      rte.editing.view.document.on('enter', (event, data) => {
+        event.preventDefault();
+        rte.model.change(writer => {
+          const newParagraph = writer.createElement('paragraph');
+          writer.append(newParagraph, rte.model.document.getRoot());
+          writer.setSelection(newParagraph, 'on');
+        });
+      });
+
+
   
       return rte;
     },
