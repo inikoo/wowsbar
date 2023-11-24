@@ -131,12 +131,12 @@ class UpdateProspect
         return $this->handle($prospect, $this->validateAttributes());
     }
 
-    public function action(Shop $scope, Prospect $prospect, $objectData): Prospect
+    public function action(Shop $scope, Prospect $prospect, $modelData): Prospect
     {
         $this->asAction  = true;
         $this->scope     = $scope;
         $this->currentID = $prospect->id;
-        $this->setRawAttributes($objectData);
+        $this->setRawAttributes($modelData);
 
         $validatedData = $this->validateAttributes();
 
