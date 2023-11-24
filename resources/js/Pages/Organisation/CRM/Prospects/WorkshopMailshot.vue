@@ -11,9 +11,9 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue'
 import { ref } from "vue"
-import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal/'
+import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck } from '@fal/'
 import { faFlask } from '@fad/'
-import { faCaretDown, faPaperPlane, faAsterisk } from '@fas/'
+import { faCaretDown, faPaperPlane, faCheckCircle, faStopwatch, faAsterisk } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
@@ -186,15 +186,15 @@ const onSuccess = (response,closedPopover) => {
                     props.setAsReadyRoute?.name,
                     props.setAsReadyRoute?.parameters
                 )">
-                <Button class="rounded-r-none py-[9px] bg-gradient-to-r from-org-500 to-org-500" key="4">
-                    <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
-                </Button>
+                    <Button class="rounded-r-none" key="4" :style="'orgSolid'">
+                        <FontAwesomeIcon icon='fas fa-check-circle' class='h-4' aria-hidden='true' />
+                    </Button>
                 </Link>
                 <Popover>
                     <template #button>
-                        <div class="relative border-l border-org-300" title="Scheduled publish">
-                            <Button class="rounded-none bg-gradient-to-r from-org-500 to-org-500">
-                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4' aria-hidden='true' />
+                        <div class="relative border-x border-fuchsia-400" title="Scheduled publish">
+                            <Button class="rounded-none" :style="'orgSolid'">
+                                <FontAwesomeIcon :icon="['fas', 'stopwatch']" class='h-4' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
@@ -212,7 +212,7 @@ const onSuccess = (response,closedPopover) => {
                                     props.setAsScheduledRoute.name,
                                     props.setAsScheduledRoute.parameters
                                 )">
-                                <Button>Schedule</Button>
+                                    <Button>Schedule</Button>
                                 </Link>
                             </div>
                         </div>
@@ -223,10 +223,10 @@ const onSuccess = (response,closedPopover) => {
                     props.sendRoute.name,
                     props.sendRoute.parameters
                 )">
-                <Button class="rounded-none">
-                    Send Now
-                    <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
-                </Button>
+                    <Button class="rounded-none">
+                        Send Now
+                        <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
+                    </Button>
                 </Link>
             </div>
         </template>
