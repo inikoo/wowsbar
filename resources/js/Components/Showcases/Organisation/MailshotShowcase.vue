@@ -18,7 +18,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
 library.add(faPaperPlane, faDungeon, faSkull)
 
-const locale = useLocaleStore()
 const props = defineProps<{
     data: {
         slug: string
@@ -53,6 +52,12 @@ const props = defineProps<{
         date: string
         created_at: string
         updated_at: string
+        timeline: {
+            [key: string]: {
+                label: string
+                icon: string | string[]
+            }
+        }
     }
     tab?: string
 }>()
@@ -135,6 +140,7 @@ const stepsOptions = {
     updated_at: props.data.updated_at,
 }
 
+
 // Pusher: subscribe
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
@@ -152,6 +158,7 @@ channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
     dataStatistic[0].component.update(data.mailshot.stats.number_spam_emails)
     dataStatistic[0].component.update(data.mailshot.stats.number_unsubscribed_emails)
 })
+
 
 // To convert data to wanted data
 const compSortSteps = computed(() => {
@@ -195,9 +202,9 @@ const compSortSteps = computed(() => {
 
 
 <template>
-    <!-- {{ data.state }} -->
     <div class="py-3 mx-auto px-5 w-full">
-        <Timeline v-if="data.state === 'sent'" :options="compSortSteps" />
+        <!-- <Timeline v-if="data.state === 'sent'" :options="data.timeline" /> -->
+        <Timeline :options="data.timeline" />
 
         <!-- <div class="bg-white min-w-fit w-64 shadow mt-3 px-4 py-5 sm:px-5 sm:pt-5 sm:pb-4 rounded-lg">
             
@@ -210,18 +217,17 @@ const compSortSteps = computed(() => {
             </dd>
         </div> -->
 
-        <Stats 
-            :stats="[{ name: 'recipient', stat: dataStatistic[0].value}]"
-        />
+        <!-- <Stats 
+            :stats="[{ name: 'recipient', stat: dataStatistic[0].value }]"
+        /> -->
         
-        
-        <!-- <dl v-else class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 md:divide-x md:divide-y-0 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
+        <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 divide-x divide-y divide-gray-200 md:divide-x md:divide-y-0 overflow-hidden rounded-lg bg-white shadow">
             <template v-for="(statistic, index) in dataStatistic">
                 <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
-                    Title
+                    <!-- Title -->
                     <dt class="text-gray-400 capitalize text-sm" :class="statistic.class">{{ statistic.label }}</dt>
                     
-                    Value
+                    <!-- Value -->
                     <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
                             <div v-if="statistic.type == 'multi'" class="flex gap-x-6 flex-wrap">
@@ -235,7 +241,7 @@ const compSortSteps = computed(() => {
                     </dd>
                 </div>
             </template>
-        </dl> -->
+        </dl>
     </div>
     <!-- <div @click="qqwee">dddddddddddddddddddddddddddddddddddddddd</div> -->
 
