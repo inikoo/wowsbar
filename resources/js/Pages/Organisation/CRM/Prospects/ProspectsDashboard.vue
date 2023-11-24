@@ -12,11 +12,12 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
 import {Doughnut} from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer} from '@fal/'
+import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze} from '@fal/'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useLocaleStore} from "@/Stores/locale";
+import { capitalize } from '@/Composables/capitalize'
 
-library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer)
+library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze)
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
@@ -114,23 +115,33 @@ const options = {
     <div class="px-6">
         <dl class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-3">
             <!-- Box: Customers -->
-            <div v-for="doughnut in dataDoughnut" class="px-4 py-5 sm:p-6 rounded-lg bg-white hover:bg-org-30 shadow ">
+            <div v-for="doughnut in dataDoughnut" class="px-4 py-5 sm:p-6 rounded-lg bg-white shadow">
                 <dt class="text-base font-medium text-gray-400">{{ doughnut.title }}</dt>
-                <dd class="flex items-baseline justify-between">
+                <dd class="mt-2 flex justify-between">
                     <div class="flex flex-col gap-x-2 gap-y-3 leading-none items-baseline text-2xl font-semibold text-org-500">
+                        <!-- In Total -->
                         <div class="flex gap-x-2 items-end">
-                            <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
-                            <span class="text-sm font-medium leading-none text-gray-500">{{ trans('in total') }}</span>
+                            <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1.5" :options="{
+                                formattingFn: (number) => locale.number(number)
+                            }" />
+                            <span class="text-sm font-medium leading-4 text-gray-500 ">{{ trans('in total') }}</span>
                         </div>
-                        <div class="text-sm text-gray-500 border-2">
-                            <span v-for="dCase in doughnut.cases" class="flex gap-x-2 items-center font-normal">
+
+                        <!-- Statistic -->
+                        <div class="text-sm text-gray-500 border-l-4 border-org-100 pl-2">
+                            <span v-for="dCase in doughnut.cases" class="flex gap-x-2 items-center font-normal" v-tooltip="capitalize(dCase.icon.tooltip)">
                                 <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' fixed-width :title="dCase.icon.tooltip" aria-hidden='true'/>
-                                <span class="font-semibold">{{ locale.number(dCase.count) }}</span>
+                                <span class="font-semibold">
+                                    <CountUp :end-val="dCase.count" :duration="1" :options="{
+                                        formattingFn: (number) => locale.number(number)
+                                    }" />
+                                </span>
                             </span>
                         </div>
 
                     </div>
 
+                    <!-- Dougnut -->
                     <div class="w-20">
                         <Doughnut :data="doughnut" :options="options"/>
                     </div>
