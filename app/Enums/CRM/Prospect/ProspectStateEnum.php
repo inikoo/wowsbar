@@ -44,14 +44,12 @@ enum ProspectStateEnum: string
             'contacted'    => [
 
                 'tooltip' => __('contacted'),
-                'icon'    => 'fal fa-comment-dots',
-                'class'   => 'text-green'
-
+                'icon'    => 'fal fa-chair',
             ],
             'fail'         => [
 
                 'tooltip' => __('fail'),
-                'icon'    => 'fal fa-sad-tear',
+                'icon'    => 'fal fa-thumbs-down',
                 'class'   => 'text-red'
 
             ],

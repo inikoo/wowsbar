@@ -7,10 +7,9 @@
 
 namespace App\Actions\Mail\Mailshot\Unsubscribe;
 
-use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Leads\Prospect\UpdateProspectEmailUnsubscribed;
 use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\Mail\DispatchedEmailEventTypeEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
@@ -30,10 +29,7 @@ class UnsubscribeMailshot
 
         $recipient = $dispatchedEmail->mailshotRecipient->recipient;
         if (class_basename($recipient) == 'Prospect') {
-            UpdateProspect::run(
-                $recipient,
-                ['state' => ProspectStateEnum::NOT_INTERESTED]
-            );
+            UpdateProspectEmailUnsubscribed::run($recipient, now());
         }
 
         UpdateDispatchedEmail::run(
@@ -47,9 +43,9 @@ class UnsubscribeMailshot
         );
 
         $eventData = [
-            'type'            => DispatchedEmailEventTypeEnum::UNSUBSCRIBE,
-            'date'            => now(),
-            'data'            => [
+            'type' => DispatchedEmailEventTypeEnum::UNSUBSCRIBE,
+            'date' => now(),
+            'data' => [
                 'ipAddress' => $request->ip(),
                 'userAgent' => $request->userAgent()
             ]

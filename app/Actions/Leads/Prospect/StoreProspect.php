@@ -71,7 +71,7 @@ class StoreProspect
             PortfolioWebsiteHydrateProspects::dispatch();
         } elseif (class_basename($scope) == 'Shop') {
             ProspectHydrateUniversalSearch::dispatch($prospect);
-            OrganisationHydrateProspects::dispatch();
+            OrganisationHydrateProspects::dispatch()->delay(now()->addSeconds(2));
             ShopHydrateProspects::dispatch($scope);
         }
 

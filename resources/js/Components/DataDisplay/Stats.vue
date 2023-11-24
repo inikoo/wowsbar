@@ -10,7 +10,7 @@ import { capitalize } from '@/Composables/capitalize'
 import { useLayoutStore } from '@/Stores/layout'
 import { useLocaleStore } from '@/Stores/locale.js'
 import { routeType } from '@/types/route'
-import CountUp from 'vue-countup-v3';
+
 
 const props = defineProps<{
     stats: {
@@ -31,10 +31,10 @@ const locale = useLocaleStore()
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-600">
                     <Link v-if="item.href" :href="route(item.href.name, item.href.parameters)"
                         :class="[`inline-block specialUnderline${capitalize(useLayoutStore().systemName)}`]">
-                        <CountUp :endVal="locale.number(item.stat) ?? 0" />
+                        {{locale.number(item.stat??0)}}
                     </Link>
                     <span v-else>
-                        <CountUp :endVal="locale.number(item.stat)" />
+                       {{locale.number(item.stat??0)}}
                     </span>
                 </dd>
             </div>

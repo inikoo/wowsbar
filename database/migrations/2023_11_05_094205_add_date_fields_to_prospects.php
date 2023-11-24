@@ -13,11 +13,15 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('prospects', function (Blueprint $table) {
+            $table->dateTimeTz('contacted_at')->nullable()->index();
             $table->dateTimeTz('last_contacted_at')->nullable()->index();
-            $table->dateTimeTz('not_interested_at')->nullable();
+            $table->dateTimeTz('last_opened_at')->nullable()->index();
+            $table->dateTimeTz('last_clicked_at')->nullable()->index();
+            $table->dateTimeTz('dont_contact_me_at')->nullable();
+            $table->dateTimeTz('failed_at')->nullable();
             $table->dateTimeTz('registered_at')->nullable();
             $table->dateTimeTz('invoiced_at')->nullable();
-            $table->dateTimeTz('last_bounced_at')->nullable();
+            $table->dateTimeTz('last_soft_bounced_at')->nullable();
 
         });
     }
@@ -27,11 +31,15 @@ return new class () extends Migration {
     {
         Schema::table('prospects', function (Blueprint $table) {
             $table->dropColumn([
+                'contacted_at',
                 'last_contacted_at',
-                'not_interested_at',
+                'last_opened_at',
+                'last_clicked_at',
+                'dont_contact_me_at',
                 'registered_at',
+                'failed_at',
                 'invoiced_at',
-                'last_bounced_at',
+                'last_soft_bounced_at',
             ]);
         });
     }

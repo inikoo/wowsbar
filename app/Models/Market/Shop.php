@@ -213,7 +213,7 @@ class Shop extends Model implements Auditable
 
     public function portfoliosStats(): HasOne
     {
-        return $this->hasOne(ShopCRMStats::class);
+        return $this->hasOne(ShopPortfoliosStats::class);
     }
 
     public function mailStats(): HasOne

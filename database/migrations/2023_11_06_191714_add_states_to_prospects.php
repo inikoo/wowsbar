@@ -52,10 +52,10 @@ return new class () extends Migration {
     {
         Schema::table('prospects', function (Blueprint $table) {
             $table->dropColumn([
-                'contact_state',
-                'outcome_status',
-                'bounce_status',
-                'not_interested'
+                'contacted_state',
+                'fail_status',
+                'success_status',
+                'dont_contact_me'
             ]);
         });
 

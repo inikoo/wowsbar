@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * App\Models\Mail\DispatchedEmail
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \App\Models\Mail\Mailshot|null $mailshot
  * @property-read \App\Models\Mail\MailshotRecipient|null $mailshotRecipient
  * @property-read \App\Models\Mail\Outbox|null $outbox
+ * @property-read Model|\Eloquent $recipient
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DispatchedEmail query()
@@ -100,6 +102,11 @@ class DispatchedEmail extends Model
     public function mailshotRecipient(): HasOne
     {
         return $this->hasOne(MailshotRecipient::class);
+    }
+
+    public function recipient(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     public function events(): HasMany
