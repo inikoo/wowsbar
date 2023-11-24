@@ -10,6 +10,7 @@ namespace App\Actions\Leads\Prospect\UI;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Enums\UI\ProspectTabsEnum;
@@ -25,6 +26,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspect extends InertiaAction
 {
     use WithProspectsSubNavigation;
+    use WithActionButtons;
 
     public Organisation|Shop $parent;
 
@@ -81,25 +83,10 @@ class ShowProspect extends InertiaAction
                         'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
-                    'actions'       => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.crm.shop.prospects.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ] : []
-                    ]
+                    'actions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
