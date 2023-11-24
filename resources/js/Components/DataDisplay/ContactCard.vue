@@ -6,6 +6,7 @@ import Tag from '@/Components/Tag.vue';
 import { useFormatTime } from '@/Composables/useFormatTime';
 import CopyButton from '@/Components/Utils/CopyButton.vue';
 import { capitalize } from '@/Composables/capitalize'
+import { trans } from 'laravel-vue-i18n'
 library.add(faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe)
 
 const props = defineProps<{
@@ -25,7 +26,7 @@ const props = defineProps<{
 <template>
     <div v-tooltip="capitalize((data.state).replace('-', ' '))" class="w-fit rounded-lg shadow-sm"
         :class="[
-            { 'ring-1 ring-gray-500/30': data.state === 'no-contacted' },
+            { 'ring-1 ring-gray-500/30': data.state === 'no-contacted' || data.state === 'contacted' },
             { 'bg-lime-50 ring-1 ring-lime-700/50': data.state === 'interested' },
             { 'bg-rose-200 ring-1 ring-rose-700/50': data.state === 'not-interested' },
         ]"
@@ -34,8 +35,8 @@ const props = defineProps<{
             <div class="flex justify-between items-end w-full px-6 py-6">
                 <div class="flex flex-col items-end">
                     <!-- <dt class="text-sm font-semibold leading-6">Amount</dt> -->
-                    <dd class="bg-gradient-to-br from-slate-900 via-purple-800 to-slate-900 bg-clip-text text-transparent mt-1 text-xl font-semibold whitespace-nowrap">
-                        {{ data.name }}
+                    <dd :class="[data.name ? 'bg-gradient-to-br from-slate-900 via-purple-800 to-slate-900 bg-clip-text text-transparent mt-1 text-xl font-semibold whitespace-nowrap' : 'italic opacity-50']">
+                        <span>{{ data.name ?? trans('Unknown') }}</span>
                     </dd>
                 </div>
 
