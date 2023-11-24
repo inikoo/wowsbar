@@ -167,17 +167,12 @@ const onSuccess = (response,closedPopover) => {
                     </template>
                     <template #content="{ close: closed }">
                         <dd class="w-64">
-                            <div class="flex items-center">
-                                <div class="relative w-80">
-                                    <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
-                                        class="rounded-r-none" />
-                                </div>
-                                <span class="">
-                                    <!-- Assuming sendEmailtest() is a method to send an email -->
-                                    <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane"
-                                        class="py-4 md:py-3.5 rounded-l-none"
-                                        :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
-                                </span>
+                            <div class="flex items-center border border-gray-300 rounded-md overflow-hidden">
+                                <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
+                                    class="rounded-r-none ring-1 ring-transparent focus-within:ring-2 focus-within:ring-transparent" />
+                                <!-- Assuming sendEmailtest() is a method to send an email -->
+                                <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane" size="xl" class="py-3.5 border-0 border-l rounded-l-none "
+                                    :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
                             </div>
                             <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{
                                 testEmail.errorMessage }}</p>

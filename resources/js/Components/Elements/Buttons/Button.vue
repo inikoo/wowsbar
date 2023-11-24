@@ -140,7 +140,7 @@ const getActionIcon = (icon: any) => {
 
 <template>
     <button type="button"
-        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2s"
+        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
         :class="[
             // icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
             full ? 'w-full justify-center' : 'min-w-max',
