@@ -74,7 +74,8 @@
         "pestphp/pest-plugin-faker": "^2.0",
         "pestphp/pest-plugin-laravel": "^2.2",
         "phpunit/phpunit": "^10.1",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.0",
+        "ta-tikoma/phpunit-architecture-test": "^0.7.5"
     },
     "autoload": {
         "psr-4": {

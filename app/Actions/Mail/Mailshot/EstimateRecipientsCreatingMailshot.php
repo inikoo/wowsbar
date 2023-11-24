@@ -16,7 +16,7 @@ class EstimateRecipientsCreatingMailshot
     public function handle($recipientsData): int
     {
         return 100;
-        dd($recipientsData);
+        // dd($recipientsData);
 
         return MailshotHydrateEstimatedEmails::make()->getNumberEstimatedRecipients($mailshot->recipients_recipe);
     }

@@ -6,9 +6,25 @@
  */
 
 
-
-test('globals')->todo()
+test('globals')
     ->expect(['dd', 'dump'])
-    ->not->toBeUsed();
+    ->not->toBeUsedIn([
 
-// Need to create a test that check if Store|Update actions has authorize method
+        'App\Actions',
+        'App\Adapter',
+        'App\Concerns',
+        'App\Console',
+        'App\Enums',
+        'App\Events',
+        'App\Exceptions',
+        'App\Exports',
+        'App\Helpers',
+        'App\Http',
+        'App\Imports',
+        'App\InertiaTable',
+        'App\Models',
+        'App\Notifications',
+        'App\Rules',
+        'App\Services',
+        'App\Stubs',
+    ]);

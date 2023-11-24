@@ -41,8 +41,7 @@ class StoreMailshot
 
     public function handle(Customer|Shop $parent, array $modelData): Mailshot
     {
-        dd($modelData);
-        exit;
+
 
         $this->parent = $parent;
 
