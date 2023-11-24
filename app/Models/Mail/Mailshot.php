@@ -93,8 +93,12 @@ class Mailshot extends Model
         'recipients_recipe' => 'array',
         'layout'            => 'array',
         'type'              => MailshotTypeEnum::class,
-        'state'             => MailshotStateEnum::class
-
+        'state'             => MailshotStateEnum::class,
+        'sent_at' => 'datetime',
+        'schedule_at' => 'datetime',
+        'ready_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+        'stopped_at' => 'datetime',
     ];
 
     protected $attributes = [
