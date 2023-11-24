@@ -214,7 +214,11 @@ class Customer extends Model implements HasMedia, Auditable
 
         static::updated(function (Customer $customer) {
             if ($customer->wasChanged(['contact_name', 'company_name'])) {
-                $customer->name = $customer->company_name == '' ? $customer->contact_name : $customer->company_name;
+                $customer->updateQuietly(
+                    [
+                        'name'=> $customer->company_name == '' ? $customer->contact_name : $customer->company_name
+                    ]
+                );
             }
         });
     }

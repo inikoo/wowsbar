@@ -14,10 +14,11 @@ trait WithActionButtons
     protected function getDeleteActionIcon(ActionRequest $request): array
     {
         return [
-            'tooltip' => __('delete'),
+            'type'    => 'button',
+            'tooltip' => __('Delete'),
             'icon'    => 'fal fa-trash-alt',
             'style'   => 'negative',
-            'href'    => [
+            'route'   => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(
                     [
@@ -34,10 +35,11 @@ trait WithActionButtons
     protected function getEditActionIcon(ActionRequest $request, string $sectionName = 'properties'): array
     {
         return [
+            'type'    => 'button',
             'tooltip' => __('Edit'),
             'icon'    => 'fal fa-pencil',
-            'style'   => 'tertiary',
-            'href'    => [
+            'style'   => 'secondary',
+            'route'   => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(
                     [
