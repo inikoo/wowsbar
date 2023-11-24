@@ -28,6 +28,7 @@ const locale = useLocaleStore()
 function listRoute(prospect_list) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.lists.index':
+        case 'org.crm.shop.customers.lists.index':
             return route(
                 'org.crm.shop.prospects.lists.show',
                 [route().params['shop'], prospect_list.slug]);

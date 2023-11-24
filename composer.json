@@ -41,6 +41,7 @@
         "phpmailer/phpmailer": "^6.8",
         "propaganistas/laravel-phone": "^5.0",
         "pusher/pusher-php-server": "^7.2",
+        "react/promise": "^2.3",
         "rmunate/spell-number": "^4.1",
         "sentry/sentry-laravel": "^3.7",
         "spatie/crawler": "^8.0",

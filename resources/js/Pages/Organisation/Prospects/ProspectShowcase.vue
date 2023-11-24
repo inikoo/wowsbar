@@ -19,6 +19,7 @@ const props = defineProps<{
             comment?: string
             dateTime: string
         }[]
+        state: string
     }
 }>()
 
@@ -28,13 +29,13 @@ const dataContact = {
     email: props.data.info.email,
     phone: props.data.info.phone,
     website: props.data.info.website,
-    tags: props.data.info.tags
+    tags: props.data.info.tags,
+    state: props.data.state
 }
 
 </script>
 
 <template>
-    <!-- <pre>{{ data.feeds }}</pre> -->
     <div class="grid md:grid-cols-8 px-4 py-4 gap-y-4 md:gap-y-0">
         <!-- Section: Contact Card -->
         <div class="order-2 md:order-none md:col-span-5 space-y-8">

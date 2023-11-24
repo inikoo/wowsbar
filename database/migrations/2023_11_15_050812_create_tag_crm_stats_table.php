@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasProspectStats;
+
     public function up(): void
     {
         Schema::create('tag_crm_stats', function (Blueprint $table) {
@@ -26,11 +27,21 @@ return new class () extends Migration {
                 $table->unsignedInteger("number_customers_state_{$customerState->snake()}")->default(0);
             }
 
-            $table=$this->prospectsStats($table);
-            $table=$this->prospectsStatsBis($table);
+            $this->prospectsStats($table);
 
+
+
+        });
+
+        Schema::table('tag_crm_stats', function (Blueprint $table) {
+            $this->prospectsPrepareForStatsVersion2($table);
+        });
+
+        Schema::table('tag_crm_stats', function (Blueprint $table) {
+            $this->prospectsStatsVersion2($table);
             $table->timestampsTz();
         });
+
     }
 
     public function down(): void

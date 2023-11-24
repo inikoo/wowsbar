@@ -24,6 +24,7 @@ const locale = useLocaleStore()
 function tagRoute(tag: object) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.tags.index':
+        case 'org.crm.shop.customers.tags.index':
             return route(
                 'org.crm.shop.prospects.tags.show',
                 [route().params.shop, tag.tag_slug]);
@@ -45,7 +46,7 @@ function tagRoute(tag: object) {
         </template>
 
         <template #cell(actions)="{ item : tag }">
-            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.tag_slug }">
+            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.id }">
                 <Button label="New Mailshot" :style="'secondary'" size="xs" />
             </Link>
         </template>

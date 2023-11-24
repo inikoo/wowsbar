@@ -40,7 +40,13 @@ const isShowProgress = ref(false)
 
 // Pusher: subscribe
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
+    cluster: 'ap1',
+    wsHost: import.meta.env.VITE_PUSHER_HOST,
+    wsPort: 6001,
+    wssPort: 6001,
+    forceTLS: false,
+    disableStats: true,
+    enabledTransports: ['ws', 'wss']
 })
 const channel = pusher.subscribe(props.dataPusher.channel)
 channel.bind(props.dataPusher.event, (data: any) => {

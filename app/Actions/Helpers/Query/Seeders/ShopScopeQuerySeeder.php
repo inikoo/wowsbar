@@ -11,8 +11,7 @@ use App\Actions\Helpers\Query\Hydrators\QueryHydrateCount;
 use App\Actions\Helpers\Query\StoreQuery;
 use App\Actions\Helpers\Query\UpdateQuery;
 use App\Actions\Traits\WithShopsArgument;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -28,29 +27,22 @@ class ShopScopeQuerySeeder
     {
         $data = [
             [
-                'slug'       => 'prospects-email',
-                'name'       => 'Prospects with email',
-                'model_type' => class_basename(Prospect::class),
-                'constrains' => [
-                    'with' => 'email'
-                ],
-
-
-            ],
-            [
                 'slug'       => 'prospects-not-contacted',
                 'name'       => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-
-
-                    'with'  => 'email',
-                    'where' => [
-                        'contact_state',
-                        '=',
-                        ProspectContactStateEnum::NO_CONTACTED->value
+                    [
+                        'type'       => 'with',
+                        'parameters' => 'email'
+                    ],
+                    [
+                        'type'       => 'where',
+                        'parameters' => [
+                            'state',
+                            '=',
+                            ProspectStateEnum::NO_CONTACTED->value
+                        ]
                     ]
-
 
                 ]
             ],
@@ -60,30 +52,42 @@ class ShopScopeQuerySeeder
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
 
-                    'with' => 'email',
+                    [
+                        'type'       => 'with',
+                        'parameters' => 'email'
+                    ],
 
-                    'group' => [
-                        'where' => [
-                            'contact_state',
-                            '=',
-                            ProspectContactStateEnum::NO_CONTACTED->value
-                        ],
-
-                        'orGroup' => [
-                            'whereIn' => [
-                                'outcome_status',
-                                [
-                                    ProspectOutcomeStatusEnum::SOFT_FAIL->value,
-                                    ProspectOutcomeStatusEnum::WAITING->value
+                    [
+                        'type'       => 'group',
+                        'parameters' => [
+                            [
+                                'type'       => 'where',
+                                'parameters' => [
+                                    'state',
+                                    '=',
+                                    ProspectStateEnum::NO_CONTACTED->value
                                 ]
                             ],
-                            'where'   => [
-                                'last_contacted_at',
-                                '<=',
-                                '__date__'
+                            [
+                                'type'       => 'orGroup',
+                                'parameters' => [
+                                    [
+                                        'type'       => 'where',
+                                        'parameters' => ['state', '=', ProspectStateEnum::CONTACTED],
+                                    ],
+                                    [
+                                        'type'       => 'where',
+                                        'parameters' => [
+                                            'last_contacted_at',
+                                            '<=',
+                                            '__date__'
+                                        ],
+                                    ]
+
+
+                                ]
                             ],
                         ]
-
                     ],
 
 
@@ -114,7 +118,7 @@ class ShopScopeQuerySeeder
         }
     }
 
-    public string $commandSignature = 'query:seed-shops {shops?*} ';
+    public string $commandSignature = 'query:seed-shops {shops?*}';
 
     public function asCommand(Command $command): int
     {

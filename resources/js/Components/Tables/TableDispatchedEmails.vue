@@ -34,7 +34,7 @@ function listRoute(dispatchedEmail) {
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(contact_namez)="{ item: dispatchedEmail }">
+        <template #cell(contact_name)="{ item: dispatchedEmail }">
             <Link :href="listRoute(dispatchedEmail)">
                 {{ dispatchedEmail['contact_name'] }}
             </Link>

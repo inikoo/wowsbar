@@ -24,7 +24,7 @@ class MailshotEstimatedRecipientsResource extends JsonResource
             'email'             => $prospect->email,
             'state'             => $prospect->state,
             'last_contacted_at' => $prospect->last_contacted_at,
-            'slug'              => $prospect->slug
+            'id'                => $prospect->id
         ];
     }
 }

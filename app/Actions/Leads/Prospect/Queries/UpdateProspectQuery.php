@@ -10,7 +10,7 @@ namespace App\Actions\Leads\Prospect\Queries;
 use App\Actions\Helpers\Query\Hydrators\QueryHydrateCount;
 use App\Actions\Helpers\Query\UpdateQuery;
 use App\Actions\Leads\Prospect\WithProspectPrepareForValidation;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -47,9 +47,9 @@ class UpdateProspectQuery
                         'with'  => $queryBuilder['query'],
                         'group' => [
                             'where' => [
-                                'contact_state',
+                                'state',
                                 '=',
-                                ProspectContactStateEnum::NO_CONTACTED->value
+                                ProspectStateEnum::NO_CONTACTED->value
                             ],
                         ],
                         'filter' => [

@@ -5,18 +5,25 @@
   -->
 
 <script setup lang="ts">
-import Stats from "@/Components/DataDisplay/Stats.vue"
-import { usePage } from '@inertiajs/vue3'
+
 import CountUp from 'vue-countup-v3'
-import { routeType } from '@/types/route'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js'
-import { Doughnut } from 'vue-chartjs'
-import { useLocaleStore } from '@/Stores/locale.js'
+import {routeType} from '@/types/route'
+import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
+import {Doughnut} from 'vue-chartjs'
+import {trans} from "laravel-vue-i18n";
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer} from '@fal/'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {useLocaleStore} from "@/Stores/locale";
+
+library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer)
+
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
-
+const locale = useLocaleStore()
 const props = defineProps<{
     data: {
+        prospectStats: object,
         crmStats: {}
         stats: {
             name: string
@@ -26,54 +33,69 @@ const props = defineProps<{
     }
 }>()
 
+console.log(props.data.prospectStats)
 const dataDoughnut = [
-
     {
-        title: 'Prospects',
-        labels: ['Not contacted', 'Contacted', 'Not interested', 'Registered', 'Invoiced', 'Bounced'],
-        total: props.data.crmStats.number_prospects,
+        title: trans('Prospects'),
+        labels: [trans('Not contacted'), trans('Contacted'), trans('Fail'), trans('Success')],
+        total: props.data.prospectStats.prospects.count,
+        elements: [],
         datasets: [
             {
                 data: [
                     props.data.crmStats.number_prospects_state_no_contacted,
                     props.data.crmStats.number_prospects_state_contacted,
-                    props.data.crmStats.number_prospects_state_not_interested,
-                    props.data.crmStats.number_prospects_state_registered,
-                    props.data.crmStats.number_prospects_state_invoiced,
-                    props.data.crmStats.number_prospects_state_bounced,
+                    props.data.crmStats.number_prospects_state_fail,
+                    props.data.crmStats.number_prospects_state_success,
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.prospects.cases
     },
     {
-        title: 'Prospects Bounce',
-        labels: ['Hard', 'Soft', 'Ok'],
-        total: props.data.crmStats.number_prospects_bounce_status_hard_bounce + props.data.crmStats.number_prospects_bounce_status_soft_bounce + props.data.crmStats.number_prospects_bounce_status_ok,
+        title: trans('Failed'),
+        labels: [trans('Not interested'), trans('Unsubscribed'), trans('Invalid')],
+        total: props.data.prospectStats.fail.count,
         datasets: [
             {
                 data: [
-                    props.data.crmStats.number_prospects_bounce_status_hard_bounce,
-                    props.data.crmStats.number_prospects_bounce_status_soft_bounce,
-                    props.data.crmStats.number_prospects_bounce_status_ok
+                    props.data.crmStats.number_prospects_fail_status_not_interested,
+                    props.data.crmStats.number_prospects_fail_status_unsubscribed,
+                    props.data.crmStats.number_prospects_fail_status_invalid
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.fail.cases
     },
     {
-        title: 'Prospects Outcome',
-        labels: ['Hard fail', 'Soft fail', 'Waiting', 'Soft success', 'Hard success'],
-        total: props.data.crmStats.number_prospects_bounce_status_hard_bounce + props.data.crmStats.number_prospects_bounce_status_soft_bounce + props.data.crmStats.number_prospects_bounce_status_ok,
+        title: trans('Success'),
+        labels: [trans('Registered'), trans('Invoiced')],
+        total: props.data.prospectStats.success.count,
         datasets: [
             {
                 data: [
-                    props.data.crmStats.number_prospects_outcome_status_hard_fail,
-                    props.data.crmStats.number_prospects_outcome_status_soft_fail,
-                    props.data.crmStats.number_prospects_outcome_status_waiting,
-                    props.data.crmStats.number_prospects_outcome_status_soft_success,
-                    props.data.crmStats.number_prospects_outcome_status_hard_success,
+                    props.data.crmStats.number_prospects_success_status_registered,
+                    props.data.crmStats.number_prospects_success_status_invoiced,
+
                 ]
             }
-        ]
+        ],
+        cases: props.data.prospectStats.success.cases
+    },
+    {
+        title: trans('Contacted'),
+        labels: [trans('Registered'), trans('Invoiced')],
+        total: props.data.prospectStats.contacted.count,
+        datasets: [
+            {
+                data: [
+                    props.data.crmStats.number_prospects_success_status_registered,
+                    props.data.crmStats.number_prospects_success_status_invoiced,
+
+                ]
+            }
+        ],
+        cases: props.data.prospectStats.contacted.cases
     },
 ]
 
@@ -93,19 +115,30 @@ const options = {
         <dl class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-3">
             <!-- Box: Customers -->
             <div v-for="doughnut in dataDoughnut" class="px-4 py-5 sm:p-6 rounded-lg bg-white hover:bg-org-30 shadow ">
-                <dt class="text-base font-medium text-gray-400">{{doughnut.title}}</dt>
+                <dt class="text-base font-medium text-gray-400">{{ doughnut.title }}</dt>
                 <dd class="flex items-baseline justify-between">
-                    <div class="flex gap-x-2 leading-none items-baseline text-2xl font-semibold text-org-500">
-                        <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
-                        <span class="text-sm font-medium leading-none text-gray-500">in total</span>
+                    <div class="flex flex-col gap-x-2 gap-y-3 leading-none items-baseline text-2xl font-semibold text-org-500">
+                        <div class="flex gap-x-2 items-end">
+                            <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
+                            <span class="text-sm font-medium leading-none text-gray-500">{{ trans('in total') }}</span>
+                        </div>
+                        <div class="text-sm text-gray-500 border-2">
+                            <span v-for="dCase in doughnut.cases" class="flex gap-x-2 items-center font-normal">
+                                <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' fixed-width :title="dCase.icon.tooltip" aria-hidden='true'/>
+                                <span class="font-semibold">{{ locale.number(dCase.count) }}</span>
+                            </span>
+                        </div>
+
                     </div>
+
                     <div class="w-20">
-                        <Doughnut :data="doughnut" :options="options" />
+                        <Doughnut :data="doughnut" :options="options"/>
                     </div>
                 </dd>
             </div>
         </dl>
     </div>
+    <!-- <pre>{{ props.data.prospectStats.prospects }}</pre> -->
 
     <!-- <pre>{{ data.crmStats }}</pre> -->
     <!-- <Stats class="p-4" :stats="data.stats"/> -->

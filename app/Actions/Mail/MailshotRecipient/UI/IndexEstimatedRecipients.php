@@ -79,7 +79,7 @@ class IndexEstimatedRecipients extends InertiaAction
                 $table->withExportLinks($exportLinks);
             }
 
-            $table->column(key: 'contact_name', label: __('contact name'))
+            $table->column(key: 'contact_name', label: __('prospect'))
                 ->column(key: 'email', label: __('email'))
                 ->column(key: 'state', label: __('state'))
                 ->column(key: 'last_contacted_at', label: __('last contacted'))

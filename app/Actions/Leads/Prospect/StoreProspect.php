@@ -14,10 +14,10 @@ use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
-use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
+use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -71,7 +71,7 @@ class StoreProspect
             PortfolioWebsiteHydrateProspects::dispatch();
         } elseif (class_basename($scope) == 'Shop') {
             ProspectHydrateUniversalSearch::dispatch($prospect);
-            OrganisationHydrateProspects::dispatch();
+            OrganisationHydrateProspects::dispatch()->delay(now()->addSeconds(2));
             ShopHydrateProspects::dispatch($scope);
         }
 
@@ -113,13 +113,13 @@ class StoreProspect
 
 
         return [
-            'contact_state'     => ['sometimes', Rule::enum(ProspectContactStateEnum::class)],
-            'outcome_status'    => ['sometimes', 'nullable', Rule::enum(ProspectOutcomeStatusEnum::class)],
-            'bounce_status'     => ['sometimes', 'nullable', Rule::enum(ProspectBounceStatusEnum::class)],
+            'contacted_state'   => ['sometimes', Rule::enum(ProspectContactedStateEnum::class)],
+            'fail_status'       => ['sometimes', 'nullable', Rule::enum(ProspectFailStatusEnum::class)],
+            'success_status'    => ['sometimes', 'nullable', Rule::enum(ProspectSuccessStatusEnum::class)],
             'dont_contact_me'   => ['sometimes', 'boolean'],
             'state'             => ['sometimes', new Enum(ProspectStateEnum::class)],
             'data'              => 'sometimes|array',
-            'last_contacted_at' => 'sometimes|date',
+            'last_contacted_at' => 'sometimes|nullable|date',
             'created_at'        => 'sometimes|date',
             'address'           => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'      => ['nullable', 'string', 'max:255'],

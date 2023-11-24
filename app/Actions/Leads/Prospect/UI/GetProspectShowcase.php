@@ -34,6 +34,7 @@ class GetProspectShowcase
                     'comment'  => $value->comments,
                 ];
             }),
+            'state' => $prospect->state
         ];
     }
 }

@@ -20,12 +20,14 @@ import { Link } from '@inertiajs/vue3'
 import { Ref } from 'vue'
 // import { router } from "@inertiajs/vue3"
 import { useLayoutStore } from '@/Stores/layout'
+import Button from '@/Components/Elements/Buttons/Button.vue';
 
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@fad/'
 import { faSeedling } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import Tag from '@/Components/Tag.vue';
 library.add(faSpinnerThird, faSeedling)
 
 const open = ref(true)
@@ -95,6 +97,7 @@ function handleKeyDown() {
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
             </TransitionChild>
+            
             <div class="fixed inset-0 z-10 overflow-y-auto pt-20 px-12">
                 <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 scale-95" enter-to="opacity-100 scale-100" leave="ease-in duration-1000" leave-from="opacity-100 scale-100" leave-to="opacity-0 scale-95">
                     <DialogPanel class="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
@@ -110,32 +113,25 @@ function handleKeyDown() {
                                 <div :class="['h-fit min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4 transition-all duration-500 ease-in-out', {'sm:h-96': false}]">
                                     <div hold class="-mx-2 text-sm text-gray-600">
                                         <!-- Looping: Results -->
-                                        <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
-                                            <div>
-                                                <Link v-if="item.model?.route?.name" :href="`${route(item.model?.route?.name, item.model?.route?.parameters)}`"
-                                                    class="group flex relative cursor-pointer select-none items-center rounded p-2 gap-x-2" :class="[active ? 'bg-gray-100 text-gray-600' : '']">
-                                                    <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
-                                                    <div class="w-full">
-                                                        <div v-if="item.model_type == 'CustomerUser'">
-                                                            <span class="truncate">{{ item.model.contact_name }}</span>
-                                                        </div>
-                                                        <div v-else-if="item.model_type == 'Banner'" class="truncate">
-                                                            {{ item.model.name }}
-                                                        </div>
-                                                        <div v-else-if="item.model_type == 'PortfolioWebsite'" class="truncate">
-                                                            {{ item.model.name }}
-                                                        </div>
-                                                        <div v-else-if="item.model_type == 'CustomerWebsite'" class="truncate">
-                                                            {{ item.model.name }}
-                                                        </div>
-                                                        <div v-else="">
-                                                            Not found
-                                                        </div>
+                                        <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="(item, itemIndex) in resultsSearch?.data" :key="itemIndex" :value="item" as="div" v-slot="{ active }">
+                                            <Link v-if="item.model?.route?.name" :href="`${route(item.model?.route?.name, item.model?.route?.parameters)}`"
+                                                class="group flex relative cursor-pointer select-none items-center rounded p-2 gap-x-2" :class="[active ? 'bg-gray-100 text-gray-600' : '']">
+                                                <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
+
+                                                <div class="w-full">
+                                                    <div v-if="item.model_type == 'CustomerUser'">
+                                                        <span class="truncate">{{ item.model.contact_name }}</span>
                                                     </div>
-                                                    <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="relative h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                                                    <div v-else class="truncate font-semibold">
+                                                        {{ item.model.name ?? '' }}
+                                                    </div>
+                                                </div>
 
-
-                                                </Link>
+                                                <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="relative h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                                            </Link>
+                                            
+                                            <div v-else>
+                                                {{ item.model ?? '' }}
                                             </div>
                                         </ComboboxOption>
 
@@ -178,21 +174,19 @@ function handleKeyDown() {
 
                                     <!-- Hover the result -->
                                     <div v-else-if="activeOption">
-                                        <div class="flex-none p-6 text-center">
-                                            <div v-if="activeOption.model_type == 'Banner'" class="bg-gray-100 ring-2 shadow mx-auto h-16 w-16 rounded-full overflow-hidden"
-                                                :class="activeOption.model.state_icon.tooltip == 'unpublished' ? 'ring-indigo-300' : activeOption.model.state_icon.tooltip == 'live' ? 'ring-green-500' : 'ring-gray-500'">
-                                                <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
-                                            </div>
-                                            <div v-else class="bg-gray-100 ring-2 ring-gray-300 shadow mx-auto h-16 w-16 rounded-full overflow-hidden">
-                                                <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
-                                            </div>
-                                            <h2 v-if="activeOption.model_type == 'CustomerUser'" class="mt-3 font-semibold text-gray-600">
-                                                {{ activeOption.model.contact_name }}
-                                            </h2>
-                                        </div>
+                                        
                                         <div class="flex flex-auto flex-col justify-between p-6">
                                             <!-- CustomerUser -->
                                             <dl v-if="activeOption.model_type == 'CustomerUser'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <div class="flex-none p-6 text-center">
+                                                    <div class="bg-gray-100 ring-2 ring-gray-300 shadow mx-auto h-16 w-16 rounded-full overflow-hidden">
+                                                        <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
+                                                    </div>
+                                                    <h2 class="mt-3 font-semibold text-gray-600">
+                                                        {{ activeOption.model.contact_name }}
+                                                    </h2>
+                                                </div>
+
                                                 <dt class="col-end-1 font-semibold text-gray-600">Email:</dt>
                                                 <dd>{{ activeOption.model.email }}</dd>
                                                 <dt class="col-end-1 font-semibold text-gray-600">Roles:</dt>
@@ -201,6 +195,13 @@ function handleKeyDown() {
 
                                             <!-- Banner -->
                                             <dl v-if="activeOption.model_type == 'Banner'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <div class="flex-none p-6 text-center">
+                                                    <div class="bg-gray-100 ring-2 shadow mx-auto h-16 w-16 rounded-full overflow-hidden"
+                                                        :class="activeOption.model.state_icon.tooltip == 'unpublished' ? 'ring-indigo-300' : activeOption.model.state_icon.tooltip == 'live' ? 'ring-green-500' : 'ring-gray-500'">
+                                                        <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
+                                                    </div>
+                                                </div>
+
                                                 <dt class="col-end-1 font-semibold text-gray-600">Name:</dt>
                                                 <dd>{{ activeOption.model.name }}</dd>
                                                 <dt class="col-end-1 font-semibold text-gray-600">Status:</dt>
@@ -214,10 +215,38 @@ function handleKeyDown() {
 
                                             <!-- Website -->
                                             <dl v-if="activeOption.model_type == 'PortfolioWebsite'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <div class="flex-none p-6 text-center">
+                                                    <div class="bg-gray-100 ring-2 ring-gray-300 shadow mx-auto h-16 w-16 rounded-full overflow-hidden">
+                                                        <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
+                                                    </div>
+                                                </div>
                                                 <dt class="col-end-1 font-semibold text-gray-600">Name:</dt>
                                                 <dd>{{ activeOption.model.name }}</dd>
                                                 <dt class="col-end-1 font-semibold text-gray-600">Banners count:</dt>
                                                 <dd>{{ activeOption.model.banner }}</dd>
+                                            </dl>
+
+                                            <!-- Prospect -->
+                                            <dl v-if="activeOption.model_type == 'Prospect'" class="flex flex-col gap-x-6 gap-y-3 text-sm text-gray-500">
+                                                <div class="p-3 text-center text-lg font-bold">
+                                                    {{ activeOption.model.name }}
+                                                    <FontAwesomeIcon :icon='activeOption.model.state_icon.icon' :class='activeOption.model.state_icon.class' :title="activeOption.model.state_icon.tooltip" aria-hidden='true' />
+                                                </div>
+                                                
+                                                <div class="">
+                                                    <dt v-if="activeOption.model.email" class="font-semibold">Email: <span class="font-normal ml-1">{{ activeOption.model.email }}</span></dt>
+                                                    <dt v-if="activeOption.model.phone" class="font-semibold">Phone: <span class="font-normal ml-1">{{ activeOption.model.phone }}</span></dt>
+                                                    <dt v-if="activeOption.model.tags.length > 0" class="flex gap-x-1.5">
+                                                        <div class="font-semibold text-gray-600">Tags:</div>
+                                                        <div class="flex gap-x-1 gap-y-1.5">
+                                                            <Tag v-for="tag in activeOption.model.tags" stringToColor :label="tag" />
+                                                        </div>
+                                                    </dt>
+                                                </div>
+
+                                                <Link :href="route(activeOption.model.route.name, activeOption.model.route.parameters)" class="mt-4">
+                                                    <Button full label="open" />
+                                                </Link>
                                             </dl>
 
 

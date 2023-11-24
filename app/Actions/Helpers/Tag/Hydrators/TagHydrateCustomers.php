@@ -17,7 +17,6 @@ class TagHydrateCustomers
     use AsAction;
 
     private Tag $tag;
-
     public function __construct(Tag $tag)
     {
         $this->tag = $tag;

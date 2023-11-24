@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format, formatDuration, intervalToDuration } from 'date-fns'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { zhCN, enUS, fr, de, id, ja, sk, es } from 'date-fns/locale'
 
@@ -28,5 +28,17 @@ export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTim
     let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
     const date = new Date(dateIso)
 
-    return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode] })
+    return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode], includeSeconds: true })
+}
+
+// Time countdown
+export const useTimeCountdown = (dateIso: string, options?: {}) => {
+    if (!dateIso) return '-'  // If the provided data date is null
+
+    const countdown = intervalToDuration({
+        start: new Date(),
+        end: new Date(dateIso)
+    })
+
+    return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
 }

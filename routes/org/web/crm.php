@@ -10,6 +10,8 @@ use App\Actions\CRM\Appointment\UI\CreateAppointment;
 use App\Actions\CRM\Appointment\UI\EditAppointment;
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\CRM\Appointment\UI\ShowAppointment;
+use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
+use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
@@ -82,24 +84,36 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     });
     Route::get('/dashboard', ['icon' => 'fa-envelope', 'label' => 'crm dashboard'])->uses([ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
-    Route::get('customers', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses([IndexCustomers::class, 'inShop'])->name('customers.index');
-    Route::get('customers/create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses([CreateCustomer::class, 'inShop'])->name('customers.create');
+    Route::prefix('customers')->as('customers.')->group(function () {
+        Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses([IndexCustomers::class, 'inShop'])->name('index');
+        Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses([CreateCustomer::class, 'inShop'])->name('create');
 
-    Route::prefix('customers/{customer}')->as('customers.')->group(function () {
-        Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses([ShowCustomer::class, 'inShop'])->name('show');
-        Route::get('/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inShop'])->name('edit');
+        Route::prefix('lists')->as('lists.')->group(function () {
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer lists'])->uses([IndexCustomerQueries::class, 'inShop'])->name('index');
+            Route::get('{query}', ['icon' => 'fa-envelope', 'label' => 'show customer list'])->uses(ShowProspectQuery::class)->name('show');
+        });
 
-        Route::get('/social-accounts/{customerSocialAccount}', ['icon' => 'fa-envelope', 'label' => 'show social account'])->uses([ShowCustomerSocialAccount::class, 'inCustomer'])->name('show.customer-social-accounts.show');
+        Route::prefix('tags')->as('tags.')->group(function () {
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer tags'])->uses([IndexCustomerTags::class, 'inShop'])->name('index');
+            Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
+        });
 
-        Route::get('/users', ['icon' => 'fa-envelope', 'label' => 'customer users'])->uses([IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
-        Route::get('/users/create', ['icon' => 'fa-envelope', 'label' => 'create customer user'])->uses([CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
-        Route::get('/users/{customerUser}', ['icon' => 'fa-envelope', 'label' => 'show customer user'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.show');
-        Route::get('users/{customerUser}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer user'])->uses([EditOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
+        Route::prefix('{customer}')->group(function () {
+            Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses([ShowCustomer::class, 'inShop'])->name('show');
+            Route::get('/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inShop'])->name('edit');
 
-        Route::get('/customer-websites', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([IndexCustomerWebsites::class, 'inCustomerInShop'])->name('show.customer-websites.index');
-        Route::get('/customer-websites/create', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');
-        Route::get('/customer-websites/{customerWebsite}', ['icon' => 'fa-envelope', 'label' => 'show customer website'])->uses([ShowCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.show');
-        Route::get('/customer-websites/{customerWebsite}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer website'])->uses([EditCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.edit');
+            Route::get('/social-accounts/{customerSocialAccount}', ['icon' => 'fa-envelope', 'label' => 'show social account'])->uses([ShowCustomerSocialAccount::class, 'inCustomer'])->name('show.customer-social-accounts.show');
+
+            Route::get('/users', ['icon' => 'fa-envelope', 'label' => 'customer users'])->uses([IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
+            Route::get('/users/create', ['icon' => 'fa-envelope', 'label' => 'create customer user'])->uses([CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
+            Route::get('/users/{customerUser}', ['icon' => 'fa-envelope', 'label' => 'show customer user'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.show');
+            Route::get('users/{customerUser}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer user'])->uses([EditOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
+
+            Route::get('/customer-websites', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([IndexCustomerWebsites::class, 'inCustomerInShop'])->name('show.customer-websites.index');
+            Route::get('/customer-websites/create', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');
+            Route::get('/customer-websites/{customerWebsite}', ['icon' => 'fa-envelope', 'label' => 'show customer website'])->uses([ShowCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.show');
+            Route::get('/customer-websites/{customerWebsite}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer website'])->uses([EditCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.edit');
+        });
     });
 
 

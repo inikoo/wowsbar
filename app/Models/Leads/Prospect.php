@@ -9,10 +9,10 @@ namespace App\Models\Leads;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
-use App\Enums\CRM\Prospect\ProspectBounceStatusEnum;
-use App\Enums\CRM\Prospect\ProspectContactStateEnum;
-use App\Enums\CRM\Prospect\ProspectOutcomeStatusEnum;
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
+use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -58,14 +58,18 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property string|null $contacted_at
  * @property Carbon|null $last_contacted_at
- * @property Carbon|null $not_interested_at
+ * @property Carbon|null $last_opened_at
+ * @property Carbon|null $last_clicked_at
+ * @property Carbon|null $dont_contact_me_at
+ * @property Carbon|null $failed_at
  * @property Carbon|null $registered_at
  * @property Carbon|null $invoiced_at
- * @property Carbon|null $last_bounced_at
- * @property ProspectContactStateEnum $contact_state
- * @property ProspectOutcomeStatusEnum|null $outcome_status
- * @property ProspectBounceStatusEnum|null $bounce_status
+ * @property Carbon|null $last_soft_bounced_at
+ * @property ProspectContactedStateEnum $contacted_state
+ * @property ProspectFailStatusEnum $fail_status
+ * @property ProspectSuccessStatusEnum $success_status
  * @property bool $dont_contact_me
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
@@ -85,28 +89,31 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()
  * @method static Builder|Prospect query()
- * @method static Builder|Prospect whereBounceStatus($value)
  * @method static Builder|Prospect whereCompanyName($value)
  * @method static Builder|Prospect whereContactName($value)
- * @method static Builder|Prospect whereContactState($value)
  * @method static Builder|Prospect whereContactWebsite($value)
+ * @method static Builder|Prospect whereContactedAt($value)
+ * @method static Builder|Prospect whereContactedState($value)
  * @method static Builder|Prospect whereCreatedAt($value)
  * @method static Builder|Prospect whereCustomerId($value)
  * @method static Builder|Prospect whereData($value)
  * @method static Builder|Prospect whereDeleteComment($value)
  * @method static Builder|Prospect whereDeletedAt($value)
  * @method static Builder|Prospect whereDontContactMe($value)
+ * @method static Builder|Prospect whereDontContactMeAt($value)
  * @method static Builder|Prospect whereEmail($value)
+ * @method static Builder|Prospect whereFailStatus($value)
+ * @method static Builder|Prospect whereFailedAt($value)
  * @method static Builder|Prospect whereId($value)
  * @method static Builder|Prospect whereIdentityDocumentNumber($value)
  * @method static Builder|Prospect whereIdentityDocumentType($value)
  * @method static Builder|Prospect whereInvoicedAt($value)
- * @method static Builder|Prospect whereLastBouncedAt($value)
+ * @method static Builder|Prospect whereLastClickedAt($value)
  * @method static Builder|Prospect whereLastContactedAt($value)
+ * @method static Builder|Prospect whereLastOpenedAt($value)
+ * @method static Builder|Prospect whereLastSoftBouncedAt($value)
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
- * @method static Builder|Prospect whereNotInterestedAt($value)
- * @method static Builder|Prospect whereOutcomeStatus($value)
  * @method static Builder|Prospect wherePhone($value)
  * @method static Builder|Prospect wherePortfolioWebsiteId($value)
  * @method static Builder|Prospect whereRegisteredAt($value)
@@ -115,6 +122,7 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereShopId($value)
  * @method static Builder|Prospect whereSlug($value)
  * @method static Builder|Prospect whereState($value)
+ * @method static Builder|Prospect whereSuccessStatus($value)
  * @method static Builder|Prospect whereUpdatedAt($value)
  * @method static Builder|Prospect withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  * @method static Builder|Prospect withAllTagsOfAnyType($tags)
@@ -136,18 +144,21 @@ class Prospect extends Model implements Auditable
     use HasAddress;
 
     protected $casts = [
-        'data'              => 'array',
-        'location'          => 'array',
-        'state'             => ProspectStateEnum::class,
-        'contact_state'     => ProspectContactStateEnum::class,
-        'outcome_status'    => ProspectOutcomeStatusEnum::class,
-        'bounce_status'     => ProspectBounceStatusEnum::class,
-        'not_interested'    => 'boolean',
-        'last_contacted_at' => 'datetime',
-        'not_interested_at' => 'datetime',
-        'registered_at'     => 'datetime',
-        'invoiced_at'       => 'datetime',
-        'last_bounced_at'   => 'datetime',
+        'data'                 => 'array',
+        'location'             => 'array',
+        'state'                => ProspectStateEnum::class,
+        'contacted_state'      => ProspectContactedStateEnum::class,
+        'fail_status'          => ProspectFailStatusEnum::class,
+        'success_status'       => ProspectSuccessStatusEnum::class,
+        'dont_contact_me'      => 'boolean',
+        'last_contacted_at'    => 'datetime',
+        'last_opened_at'       => 'datetime',
+        'last_clicked_at'      => 'datetime',
+        'dont_contact_me_at'   => 'datetime',
+        'failed_at'            => 'datetime',
+        'registered_at'        => 'datetime',
+        'invoiced_at'          => 'datetime',
+        'last_soft_bounced_at' => 'datetime',
     ];
 
     protected $attributes = [
@@ -167,12 +178,11 @@ class Prospect extends Model implements Auditable
         'location',
         'state',
         'last_contacted',
-        'not_interested_at',
+        'last_clicked_at',
         'registered_at',
         'invoiced_at',
-        'last_bounced_at',
-        'dont_contact_me',
-        'bounce_status'
+        'last_soft_bounced_at',
+        'dont_contact_me'
     ];
 
     public function generateTags(): array
