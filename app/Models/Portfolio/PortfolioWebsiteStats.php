@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -81,6 +82,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderMale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderOther($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateBounced($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateContacted($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateFail($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNoContacted($value)

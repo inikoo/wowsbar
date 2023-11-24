@@ -21,7 +21,7 @@ class MailshotResource extends JsonResource
         /** @var Mailshot $mailshot */
         $mailshot = $this;
 
-        $timelines = [];
+        $timelines    = [];
         $timelineData = ['schedule_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
 
         foreach ($timelineData as $timeline) {
@@ -29,7 +29,7 @@ class MailshotResource extends JsonResource
             if (!blank($mailshot->{$timeline})) {
                 $timelines[$mailshot->{$timeline}->toISOString()] = [
                     'label' => 'Mailshot ' . $timelineKey,
-                    'icon' => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
+                    'icon'  => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
                 ];
             }
         }
@@ -39,22 +39,22 @@ class MailshotResource extends JsonResource
         })->toArray();
 
         return [
-            'slug' => $mailshot->slug,
-            'subject' => $mailshot->subject,
-            'state' => $mailshot->state,
-            'state_label' => $mailshot->state->labels()[$mailshot->state->value],
-            'state_icon' => $mailshot->state->stateIcon()[$mailshot->state->value],
-            'stats' => MailshotStatResource::make($mailshot->mailshotStats)->getArray(),
+            'slug'                => $mailshot->slug,
+            'subject'             => $mailshot->subject,
+            'state'               => $mailshot->state,
+            'state_label'         => $mailshot->state->labels()[$mailshot->state->value],
+            'state_icon'          => $mailshot->state->stateIcon()[$mailshot->state->value],
+            'stats'               => MailshotStatResource::make($mailshot->mailshotStats)->getArray(),
             'recipient_stored_at' => $mailshot->recipients_stored_at,
-            'schedule_at' => $mailshot->schedule_at,
-            'ready_at' => $mailshot->ready_at,
-            'sent_at' => $mailshot->sent_at,
-            'cancelled_at' => $mailshot->cancelled_at,
-            'stopped_at' => $mailshot->stopped_at,
-            'date' => $mailshot->date,
-            'created_at' => $mailshot->created_at,
-            'updated_at' => $mailshot->updated_at,
-            'timeline' => $sortedTimeline
+            'schedule_at'         => $mailshot->schedule_at,
+            'ready_at'            => $mailshot->ready_at,
+            'sent_at'             => $mailshot->sent_at,
+            'cancelled_at'        => $mailshot->cancelled_at,
+            'stopped_at'          => $mailshot->stopped_at,
+            'date'                => $mailshot->date,
+            'created_at'          => $mailshot->created_at,
+            'updated_at'          => $mailshot->updated_at,
+            'timeline'            => $sortedTimeline
         ];
     }
 }

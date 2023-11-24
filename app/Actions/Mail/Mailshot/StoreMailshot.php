@@ -41,6 +41,9 @@ class StoreMailshot
 
     public function handle(Customer|Shop $parent, array $modelData): Mailshot
     {
+        dd($modelData);
+        exit;
+
         $this->parent = $parent;
 
         data_set($modelData, 'recipients_recipe', Arr::only($modelData, ['query_id', 'query_arguments']));
@@ -95,9 +98,11 @@ class StoreMailshot
     public function rules(): array
     {
         return [
-            'outbox_id'       => ['required', 'exists:outboxes,id'],
-            'subject'         => ['required', 'string', 'max:255'],
-            'type'            => ['required', new Enum(MailshotTypeEnum::class)],
+            'outbox_id'  => ['required', 'exists:outboxes,id'],
+            'subject'    => ['required', 'string', 'max:255'],
+            'type'       => ['required', new Enum(MailshotTypeEnum::class)],
+            'recipients' => ['required', 'array']
+            /*
             'query_arguments' => ['sometimes', 'array'],
             'query_id'        => [
                 'required',
@@ -107,13 +112,12 @@ class StoreMailshot
                         ->where('scope_id', $this->queryRules['scope_id']);
                 }),
             ]
+            */
         ];
     }
 
     public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
-        // dd($request->all());
-
         $this->queryRules = [
             'model_type' => 'Prospect',
             'scope_type' => 'Shop',

@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects_gender_other
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -70,6 +71,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateFail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateNoContacted($value)

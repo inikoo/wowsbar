@@ -17,7 +17,7 @@ enum ProspectStateEnum: string
 
     case NO_CONTACTED = 'no-contacted';
     case CONTACTED    = 'contacted';
-    case BOUNCED    = 'bounced';
+    case BOUNCED      = 'bounced';
     case FAIL         = 'fail';
     case SUCCESS      = 'success';
 

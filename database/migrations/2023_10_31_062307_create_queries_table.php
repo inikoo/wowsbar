@@ -22,7 +22,7 @@ return new class () extends Migration {
             $table->string('name')->index()->collation('und_ns');
             $table->string('model_type')->index();
             $table->jsonb('constrains');
-            $table->jsonb('arguments');
+            $table->jsonb('compiled_constrains');
             $table->boolean('is_seeded')->index()->default(false);
             $table->unsignedInteger('number_items')->nullable();
             $table->dateTimeTz('counted_at')->nullable();

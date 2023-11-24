@@ -21,17 +21,17 @@ class GetProspectShowcase
         $prospectColumns = ['created_at', 'deleted_at',
             'last_contacted_at', 'not_interested_at', 'registered_at', 'invoiced_at', 'invoiced_at', 'last_bounced_at'];
         $timelines = [];
-        $feeds    = [];
+        $feeds     = [];
 
         foreach ($prospect->audits()->orderby('id')->get() as $value) {
             if($value->event == 'created') {
                 $feeds[$value->created_at->toISOString()] = [
-                    'label' => 'Prospect ' . $value->event,
+                    'label'   => 'Prospect ' . $value->event,
                     'comment' => $value->comments
                 ];
             } else {
                 $feeds[$value->updated_at->toISOString()] = [
-                    'label' => 'The ' . natural_language_join(array_keys($value->new_values)) . ' has been updated',
+                    'label'   => 'The ' . natural_language_join(array_keys($value->new_values)) . ' has been updated',
                     'comment' => $value->comments
                 ];
             }
@@ -42,7 +42,7 @@ class GetProspectShowcase
             if (!blank($prospect->{$timeline})) {
                 $timelines[$prospect->{$timeline}->toISOString()] = [
                     'label' => 'Prospect ' . $timelineKey,
-                    'icon' => $timeline == 'created_at' ? 'fal fa-sparkles' : null
+                    'icon'  => $timeline == 'created_at' ? 'fal fa-sparkles' : null
                 ];
             }
         }
@@ -56,10 +56,10 @@ class GetProspectShowcase
         })->toArray();
 
         return [
-            'info' => ProspectResource::make($prospect)->getArray(),
+            'info'     => ProspectResource::make($prospect)->getArray(),
             'timeline' => $sortedTimeline,
-            'feeds' => $sortedFeed,
-            'state' => $prospect->state
+            'feeds'    => $sortedFeed,
+            'state'    => $prospect->state
         ];
     }
 }

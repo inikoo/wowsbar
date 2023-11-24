@@ -8,7 +8,7 @@
 namespace App\Actions\Market\Shop;
 
 use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
-use App\Actions\Helpers\Query\Seeders\ShopScopeQuerySeeder;
+use App\Actions\Helpers\Query\Seeders\ProspectQuerySeeder;
 use App\Actions\Mail\Outbox\SeedShopOutboxes;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
@@ -80,7 +80,7 @@ class StoreShop
         $paymentAccount->slug = 'accounts-'.$shop->slug;
         $paymentAccount->save();
 
-        ShopScopeQuerySeeder::run($shop);
+        ProspectQuerySeeder::run($shop);
 
         $shop = AttachPaymentAccountToShop::run($shop, $paymentAccount);
 
