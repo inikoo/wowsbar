@@ -101,7 +101,7 @@ function handleKeyDown() {
             <div class="fixed inset-0 z-10 overflow-y-auto pt-20 px-12">
                 <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 scale-95" enter-to="opacity-100 scale-100" leave="ease-in duration-1000" leave-from="opacity-100 scale-100" leave-to="opacity-0 scale-95">
                     <DialogPanel class="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-                        <Combobox v-slot="{ activeOption }" @update:modelValue="">
+                        <Combobox v-slot="{ activeOption }">
                             <div class="relative">
                                 <FontAwesomeIcon class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" aria-hidden="true" icon="fa-regular fa-search" size="lg"/>
                                 <input type="text" v-model="searchInput" @input="handleSearchInput" @keydown="handleKeyDown"
@@ -123,7 +123,7 @@ function handleKeyDown() {
                                                         <span class="truncate">{{ item.model.contact_name }}</span>
                                                     </div>
                                                     <div v-else class="truncate font-semibold">
-                                                        {{ item.model.name ?? '' }}
+                                                        {{ item.model.name ?? item.model.email ?? item.model.phone ?? 'Unknown' }}
                                                     </div>
                                                 </div>
 
@@ -228,14 +228,15 @@ function handleKeyDown() {
 
                                             <!-- Prospect -->
                                             <dl v-if="activeOption.model_type == 'Prospect'" class="flex flex-col gap-x-6 gap-y-3 text-sm text-gray-500">
-                                                <div class="p-3 text-center text-lg font-bold">
-                                                    {{ activeOption.model.name }}
+                                                <div class="p-3 text-center text-lg font-bold capitalize">
+                                                    <span :class="{'opacity-50 font-normal italic mr-1': !activeOption.model.name}">{{ activeOption.model.name ?? trans('unknown')}}</span>
                                                     <FontAwesomeIcon :icon='activeOption.model.state_icon.icon' :class='activeOption.model.state_icon.class' :title="activeOption.model.state_icon.tooltip" aria-hidden='true' />
                                                 </div>
                                                 
                                                 <div class="">
                                                     <dt v-if="activeOption.model.email" class="font-semibold">Email: <span class="font-normal ml-1">{{ activeOption.model.email }}</span></dt>
                                                     <dt v-if="activeOption.model.phone" class="font-semibold">Phone: <span class="font-normal ml-1">{{ activeOption.model.phone }}</span></dt>
+                                                    <dt v-if="activeOption.model.website" class="font-semibold">Website: <span class="font-normal ml-1">{{ activeOption.model.website }}</span></dt>
                                                     <dt v-if="activeOption.model.tags.length > 0" class="flex gap-x-1.5">
                                                         <div class="font-semibold text-gray-600">Tags:</div>
                                                         <div class="flex gap-x-1 gap-y-1.5">
