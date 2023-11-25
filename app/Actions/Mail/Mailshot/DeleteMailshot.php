@@ -31,7 +31,7 @@ class DeleteMailshot
 
         OrganisationHydrateMailshots::dispatch();
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
-            ShopHydrateMailshots::dispatch($mailshot->scope);
+            ShopHydrateMailshots::dispatch($mailshot->parent);
         }
 
         return $mailshot;
@@ -72,7 +72,7 @@ class DeleteMailshot
             return redirect()->route(
                 'org.crm.shop.prospects.mailshots.index',
                 [
-                    $mailshot->scope->slug,
+                    $mailshot->parent->slug,
                     $mailshot->slug
                 ]
             );

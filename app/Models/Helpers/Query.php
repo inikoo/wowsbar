@@ -16,8 +16,6 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Helpers\Query
  *
  * @property int $id
- * @property string $scope_type
- * @property int $scope_id
  * @property string $parent_type
  * @property int $parent_id
  * @property string $slug
@@ -53,8 +51,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereNumberItems($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereParentType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereUpdatedAt($value)
  * @mixin \Eloquent
