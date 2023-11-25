@@ -101,7 +101,7 @@ class PortfolioWebsite extends Model implements Auditable
 
     public function scopedProspects(): MorphMany
     {
-        return $this->morphMany(Prospect::class, 'scope');
+        return $this->morphMany(Prospect::class, 'parent');
     }
 
 }

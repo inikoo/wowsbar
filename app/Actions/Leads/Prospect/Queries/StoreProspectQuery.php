@@ -78,9 +78,9 @@ class StoreProspectQuery
         }
 
         foreach ($data as $queryData) {
-            $queryData['is_seeded']  = true;
-            $queryData['scope_type'] = 'Shop';
-            $queryData['scope_id']   = $shop->id;
+            $queryData['is_seeded']   = true;
+            $queryData['parent_type'] = 'Shop';
+            $queryData['parent_id']   = $shop->id;
 
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);

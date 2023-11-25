@@ -40,10 +40,10 @@ class StoreProspect
 
     private bool $asAction = false;
 
-    private PortfolioWebsite|Shop $scope;
+    private PortfolioWebsite|Shop $parent;
 
 
-    public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
+    public function handle(Shop|PortfolioWebsite $parent, array $modelData): Prospect
     {
         $tags = Arr::get($modelData, 'tags', []);
         Arr::forget($modelData, 'tags');
@@ -51,28 +51,28 @@ class StoreProspect
         $addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
 
-        if (class_basename($scope) == 'PortfolioWebsite') {
-            data_set($modelData, 'customer_id', $scope->customer_id);
-            data_set($modelData, 'portfolio_website_id', $scope->id);
-        } elseif (class_basename($scope) == 'Shop') {
-            data_set($modelData, 'shop_id', $scope->id);
+        if (class_basename($parent) == 'PortfolioWebsite') {
+            data_set($modelData, 'customer_id', $parent->customer_id);
+            data_set($modelData, 'portfolio_website_id', $parent->id);
+        } elseif (class_basename($parent) == 'Shop') {
+            data_set($modelData, 'shop_id', $parent->id);
         }
 
 
         /** @var Prospect $prospect */
-        $prospect = $scope->scopedProspects()->create($modelData);
+        $prospect = $parent->scopedProspects()->create($modelData);
 
         if ($addressData) {
             StoreAddressAttachToModel::run($prospect, $addressData, ['scope' => 'contact']);
             $prospect->location = $prospect->getLocation();
             $prospect->save();
         }
-        if (class_basename($scope) == 'PortfolioWebsite') {
+        if (class_basename($parent) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateProspects::dispatch();
-        } elseif (class_basename($scope) == 'Shop') {
+        } elseif (class_basename($parent) == 'Shop') {
             ProspectHydrateUniversalSearch::dispatch($prospect);
             OrganisationHydrateProspects::dispatch()->delay(now()->addSeconds(2));
-            ShopHydrateProspects::dispatch($scope);
+            ShopHydrateProspects::dispatch($parent);
         }
 
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(2));
@@ -95,7 +95,7 @@ class StoreProspect
 
     public function inShop(Shop $shop, ActionRequest $request): Prospect
     {
-        $this->scope = $shop;
+        $this->parent = $shop;
         $this->fillFromRequest($request);
 
         return $this->handle($shop, $this->validateAttributes());
@@ -104,9 +104,9 @@ class StoreProspect
 
     public function rules(ActionRequest $request): array
     {
-        $extraConditions = match (class_basename($this->scope)) {
+        $extraConditions = match (class_basename($this->parent)) {
             'Shop' => [
-                ['column' => 'shop_id', 'value' => $this->scope->id],
+                ['column' => 'shop_id', 'value' => $this->parent->id],
             ],
             default => []
         };
@@ -156,14 +156,14 @@ class StoreProspect
         ];
     }
 
-    public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
+    public function action(Shop|PortfolioWebsite $parent, array $objectData): Prospect
     {
-        $this->scope    = $scope;
-        $this->asAction = true;
+        $this->parent    = $parent;
+        $this->asAction  = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($scope, $validatedData);
+        return $this->handle($parent, $validatedData);
     }
 
     public function htmlResponse(Prospect $prospect): RedirectResponse

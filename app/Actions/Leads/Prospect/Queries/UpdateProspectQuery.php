@@ -83,9 +83,9 @@ class UpdateProspectQuery
         }
 
         foreach ($data as $queryBuilderData) {
-            $queryBuilderData['is_seeded']  = true;
-            $queryBuilderData['scope_type'] = 'Shop';
-            $queryBuilderData['scope_id']   = $shop->id;
+            $queryBuilderData['is_seeded']   = true;
+            $queryBuilderData['parent_type'] = 'Shop';
+            $queryBuilderData['parent_id']   = $shop->id;
 
             $query = UpdateQuery::run($query, $queryBuilderData);
             QueryHydrateCount::run($query);

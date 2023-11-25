@@ -14,8 +14,6 @@ return new class () extends Migration {
     {
         Schema::table('email_templates', function (Blueprint $table) {
             $table->string('slug')->unique()->after('id');
-            $table->renameColumn('parent_id', 'scope_id');
-            $table->renameColumn('parent_type', 'scope_type');
         });
     }
 
@@ -24,8 +22,6 @@ return new class () extends Migration {
     {
         Schema::table('email_templates', function (Blueprint $table) {
             $table->dropColumn('slug');
-            $table->renameColumn('scope_id', 'parent_id');
-            $table->renameColumn('scope_type', 'parent_type');
         });
     }
 };

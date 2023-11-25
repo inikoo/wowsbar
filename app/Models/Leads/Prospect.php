@@ -38,8 +38,8 @@ use Spatie\Tags\HasTags;
  *
  * @property int $id
  * @property string|null $slug
- * @property string $scope_type
- * @property int $scope_id
+ * @property string $parent_type
+ * @property int $parent_id
  * @property int|null $shop_id
  * @property int|null $customer_id
  * @property int|null $portfolio_website_id
@@ -79,6 +79,7 @@ use Spatie\Tags\HasTags;
  * @property-read Customer|null $customer
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
+ * @property-read Model|\Eloquent $parent
  * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Tag> $tags
  * @property-read Shop|null $shop
@@ -114,11 +115,11 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereLastSoftBouncedAt($value)
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
+ * @method static Builder|Prospect whereParentId($value)
+ * @method static Builder|Prospect whereParentType($value)
  * @method static Builder|Prospect wherePhone($value)
  * @method static Builder|Prospect wherePortfolioWebsiteId($value)
  * @method static Builder|Prospect whereRegisteredAt($value)
- * @method static Builder|Prospect whereScopeId($value)
- * @method static Builder|Prospect whereScopeType($value)
  * @method static Builder|Prospect whereShopId($value)
  * @method static Builder|Prospect whereSlug($value)
  * @method static Builder|Prospect whereState($value)
@@ -249,7 +250,7 @@ class Prospect extends Model implements Auditable
         return $this->belongsTo(PortfolioWebsite::class);
     }
 
-    public function scope(): MorphTo
+    public function parent(): MorphTo
     {
         return $this->morphTo();
     }
