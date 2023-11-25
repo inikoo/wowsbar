@@ -65,10 +65,10 @@ class ProspectQuerySeeder
         ];
 
         foreach ($data as $queryData) {
-            $queryData['is_seeded']  = true;
-            $queryData['scope_type'] = 'Shop';
-            $queryData['scope_id']   = $shop->id;
-            $queryData['model_type'] = 'Prospect';
+            $queryData['is_seeded']   = true;
+            $queryData['parent_type'] = 'Shop';
+            $queryData['parent_id']   = $shop->id;
+            $queryData['model_type']  = 'Prospect';
 
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::make()->action($query, $queryData);

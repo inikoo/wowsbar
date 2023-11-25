@@ -137,7 +137,7 @@ class StoreProspectQuery
     public function htmlResponse(Query $query): RedirectResponse
     {
         return Redirect::route('org.crm.shop.prospects.lists.index', [
-            $query->scope->slug
+            $query->parent->slug
         ]);
     }
 }
