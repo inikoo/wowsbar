@@ -2,7 +2,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
@@ -31,7 +31,7 @@ class ProcessSendMailshot
     {
         $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
 
-        $queryBuilder = BuildQuery::run($query);
+        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
 
         $counter = 1;
         $limit   = app()->isProduction() ? null : config('mail.devel.max_mailshot_recipients');

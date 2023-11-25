@@ -35,7 +35,7 @@ import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
-import ProspectQueryChooser from '@/Components/Forms/Fields/ProspectQueryChooser.vue'
+import ProspectQueryChooser from '@/Components/Forms/Fields/prospectRecipients.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@fad/'

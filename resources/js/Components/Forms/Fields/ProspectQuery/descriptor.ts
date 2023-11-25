@@ -13,25 +13,11 @@ export default {
         { label: "Never", value: false },
     ],
 
- /*    defaultValue: {
-        query: [],
-        tag: {
-            state: "all",
-            tags: [],
-        },
-        last_contact: {
-            state: false,
-            data: {
-                unit: "week",
-                quantity: 1,
-            },
-        },
-    }, */
 
     schemaForm: [
         {
-            label: "Propspect by",
-            name: "propspect_by",
+            label: "Prospect with",
+            name: "prospect_with",
             information : "filter deliveries based on the prospect",
             value : {
                 by : []
@@ -48,7 +34,7 @@ export default {
         },
         {
             label: "Last contacted",
-            name: "last_contact",
+            name: "prospect_last_contacted",
             information : "filter recipients based on the last mailshot sent to them",
             value : {
                 state : false,

@@ -2,8 +2,8 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
 use App\Models\Market\Shop;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -12,26 +12,42 @@ class EstimateRecipientsCreatingMailshot
 {
     use AsAction;
     use WithAttributes;
+    use WithRecipientsInput;
 
-    public function handle($recipientsData): int
+    private bool $asAction = false;
+
+    public function handle(Shop $parent, $recipientsData): int
     {
-        return 100;
-        // dd($recipientsData);
+        return GetEstimatedNumberRecipients::run($parent, $recipientsData);
+    }
 
-        return MailshotHydrateEstimatedEmails::make()->getNumberEstimatedRecipients($mailshot->recipients_recipe);
+    public function authorize(ActionRequest $request): bool
+    {
+        if ($this->asAction) {
+            return true;
+        }
+
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array
     {
         return [
-            'recipients' => ['required', 'array']
+            'recipients_recipe' => ['required', 'array']
         ];
     }
 
+
+    /**
+     * @throws \Exception
+     */
     public function asController(Shop $shop, ActionRequest $request): int
     {
         $this->fillFromRequest($request);
 
-        return $this->handle($this->validateAttributes());
+        return $this->handle(
+            $shop,
+            $this->postProcessRecipients(Arr::get($this->validateAttributes(), 'recipients_recipe'))
+        );
     }
 }

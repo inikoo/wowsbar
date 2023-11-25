@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\Traits\WithCheckCanSendEmail;
 use App\Events\MailshotPusherEvent;
 use App\Models\Helpers\Query;
@@ -40,25 +40,6 @@ class MailshotHydrateEstimatedEmails
     {
 
 
-        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
-
-        $queryBuilder = BuildQuery::run($query);
-
-        $counter = 0;
-        $queryBuilder->chunk(
-            1000,
-            function ($recipients) use ($mailshot, &$counter) {
-                foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
-                        continue;
-                    }
-                    $counter++;
-                }
-
-
-            }
-        );
-
         $estimatedNumberRecipients =$this->getNumberEstimatedRecipients($mailshot->recipients_recipe);
 
 
@@ -78,7 +59,7 @@ class MailshotHydrateEstimatedEmails
     {
         $query = Query::find(Arr::get($recipientsRecipe, 'query_id'));
 
-        $queryBuilder = BuildQuery::run($query);
+        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
 
         $counter = 0;
         $queryBuilder->chunk(

@@ -2,11 +2,11 @@
 import Multiselect from "@vueform/multiselect"
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, onMounted, watch, reactive, onUnmounted } from 'vue'
+import { ref, onMounted, watch, onUnmounted } from 'vue'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
-import { get, set, isArray, isNull } from 'lodash'
+import { get, set, isArray } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
 
 library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
@@ -39,17 +39,17 @@ const getOptions = async () => {
                 page: page.value
             }),
         )
-        onGetOptionsSucces(response)
+        onGetOptionsSuccess(response)
     } catch (error) {
         notify({
             title: "Failed",
-            text: "Failed to get data, Tags, please reload you page",
+            text: "Error while fetching prospects",
             type: "error"
         });
     }
 }
 
-const onGetOptionsSucces=(response)=>{
+const onGetOptionsSuccess=(response)=>{
     const data = Object.values(response.data)
     if( q.value.length)   Options.value = [...data]
     else Options.value = [...Options.value, ...data]
@@ -118,7 +118,7 @@ const isScrollAtBottom = () => {
 
 
 </script>
-  
+
 <template>
     <Multiselect v-model="value" mode="tags" placeholder="Select the prospects" valueProp="id" trackBy="name" label="name"
         :close-on-select="false" :searchable="true" :caret="false" :options="Options" ref="multiselectRef"
@@ -132,7 +132,7 @@ const isScrollAtBottom = () => {
         </template>
     </Multiselect>
 </template>
-  
+
 <style lang="scss">
 .multiselect-tags-search {
     @apply focus:outline-none focus:ring-0

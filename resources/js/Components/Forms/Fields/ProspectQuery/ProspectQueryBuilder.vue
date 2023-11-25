@@ -209,30 +209,30 @@ onMounted(() => {
                 <DisclosurePanel class="px-4 pt-2 pb-2 text-sm text-gray-500">
                     <div>
                         <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
-                            valueProp="value" trackBy="label" label="label" v-model="value.last_contact.state"
+                            valueProp="value" trackBy="label" label="label" v-model="value.prospect_last_contacted.state"
                             :can-clear="false"></Multiselect>
-                        <p v-if="get(form, ['errors', `${fieldName}.last_contact.state`])" class="mt-2 text-sm text-red-600"
+                        <p v-if="get(form, ['errors', `${fieldName}.prospect_last_contacted.state`])" class="mt-2 text-sm text-red-600"
                             :id="`${fieldName}-error`">
-                            {{ form.errors[`${fieldName}.last_contact.state`] }}
+                            {{ form.errors[`${fieldName}.prospect_last_contacted.state`] }}
                         </p>
                     </div>
 
-                    <div v-if="value.last_contact.state" class="flex flex-col gap-y-2 mt-4">
+                    <div v-if="value.prospect_last_contacted.state" class="flex flex-col gap-y-2 mt-4">
                         <div class="flex gap-x-2">
                             <div class="w-20">
                                 <PureInput type="number" :minValue="1" :caret="false" placeholder="range"
-                                    v-model="value.last_contact.data.quantity" />
-                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
+                                    v-model="value.prospect_last_contacted.data.quantity" />
+                                <p v-if="get(form, ['errors', `${fieldName}.prospect_last_contacted.data.quantity`])"
                                     class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                    {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
+                                    {{ form.errors[`${fieldName}.prospect_last_contacted.data.quantity`] }}
                                 </p>
                             </div>
                             <div class="w-full">
                                 <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                                    v-model="value.last_contact.data.unit" :can-clear="false" />
-                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
+                                    v-model="value.prospect_last_contacted.data.unit" :can-clear="false" />
+                                <p v-if="get(form, ['errors', `${fieldName}.prospect_last_contacted.data.unit`])"
                                     class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                    {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
+                                    {{ form.errors[`${fieldName}.prospect_last_contacted.data.unit`] }}
                                 </p>
                             </div>
                         </div>

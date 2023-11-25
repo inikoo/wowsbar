@@ -62,6 +62,9 @@ class Query extends Model
     protected $casts = [
         'constrains'          => 'array',
         'compiled_constrains' => 'array',
+        'informatics'         => 'array',
+        'is_seeded'           => 'boolean',
+        'has_arguments'       => 'boolean'
     ];
 
     protected $attributes = [

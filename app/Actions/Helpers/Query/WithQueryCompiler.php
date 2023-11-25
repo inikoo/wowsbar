@@ -94,7 +94,7 @@ trait WithQueryCompiler
                         'parameters' => [
                             [
                                 'type'       => 'where',
-                                'parameters' => ['state', '=', ProspectStateEnum::CONTACTED],
+                                'parameters' => ['state', '=', ProspectStateEnum::CONTACTED->value],
                             ],
                             [
                                 'type'       => 'where',

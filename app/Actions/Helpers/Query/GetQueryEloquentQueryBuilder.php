@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsObject;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class BuildQuery
+class GetQueryEloquentQueryBuilder
 {
     use AsObject;
 
@@ -24,19 +24,24 @@ class BuildQuery
      */
     public function handle(Query $query): QueryBuilder
     {
-
-        if($query->model_type=='Prospect') {
+        if ($query->model_type == 'Prospect') {
             $class = Prospect::class;
         } else {
             throw new \Exception('Unknown model type: '.$query->model_type);
         }
 
-        $queryBuilder = QueryBuilder::for($class);
-        if ($query->scope_type == 'Shop') {
-            $queryBuilder->where('shop_id', $query->scope_id);
+        return $this->buildQuery($class, $query->parent, $query->compiled_constrains);
+    }
+
+
+    public function buildQuery($model, $parent, array $compiledConstrains): QueryBuilder
+    {
+        $queryBuilder = QueryBuilder::for($model);
+        if (class_basename($parent) == 'Shop') {
+            $queryBuilder->where('shop_id', $parent->id);
         }
 
-        foreach (Arr::get($query->compiled_constrains, 'constrains') as $constrainData) {
+        foreach (Arr::get($compiledConstrains, 'constrains') as $constrainData) {
             $constrainType = $constrainData['type'];
 
 
@@ -45,12 +50,11 @@ class BuildQuery
 
                 $queryBuilder
                     ->where(
-                        function (Builder $subQueryBuilder) use ($subConstrainData, $query) {
+                        function (Builder $subQueryBuilder) use ($subConstrainData, $compiledConstrains) {
                             foreach ($subConstrainData as $constrainData) {
+                                $constrainType = $constrainData['type'];
 
-                                $constrainType   = $constrainData['type'];
-
-                                $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData['parameters'], $query);
+                                $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData['parameters'], $compiledConstrains);
                             }
                         }
                     );
@@ -58,15 +62,15 @@ class BuildQuery
                 $subConstrainData = $constrainData['parameters'];
                 $queryBuilder
                     ->where(
-                        function (Builder $subQueryBuilder) use ($subConstrainData, $query) {
+                        function (Builder $subQueryBuilder) use ($subConstrainData, $compiledConstrains) {
                             foreach ($subConstrainData as $constrainData) {
                                 $constrainType   = $constrainData['type'];
-                                $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData['parameters'], $query);
+                                $subQueryBuilder = $this->addConstrain($subQueryBuilder, $constrainType, $constrainData['parameters'], $compiledConstrains);
                             }
                         }
                     );
             } else {
-                $queryBuilder = $this->addConstrain($queryBuilder, $constrainType, $constrainData['parameters'], $query);
+                $queryBuilder = $this->addConstrain($queryBuilder, $constrainType, $constrainData['parameters'], $compiledConstrains);
             }
         }
 
@@ -74,9 +78,9 @@ class BuildQuery
         return $queryBuilder;
     }
 
-    protected function addConstrain($queryBuilder, $constrainType, $constrainData, $query)
-    {
 
+    protected function addConstrain($queryBuilder, $constrainType, $constrainData, $compiledConstrains)
+    {
         if ($constrainType == 'with') {
             if (is_array($constrainData)) {
                 foreach ($constrainData as $constrain) {
@@ -90,7 +94,7 @@ class BuildQuery
         } elseif ($constrainType == 'where') {
             $value = $constrainData[2];
             if (preg_match('/^__.+__$/', $value)) {
-                $value = $this->getArgument(Arr::get($query->compiled_constrains['arguments'], $value));
+                $value = $this->getArgument(Arr::get($compiledConstrains['arguments'], $value));
             }
             $queryBuilder->where($constrainData[0], $constrainData[1], $value);
         } elseif ($constrainType == 'whereIn') {
@@ -100,18 +104,18 @@ class BuildQuery
         } elseif ($constrainType == 'Group') {
             $queryBuilder
                 ->where(
-                    function (Builder $subQueryBuilder) use ($constrainData, $query) {
-                        foreach ($constrainData as  $subConstrainData) {
-                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainData['type'], $subConstrainData['parameters'], $query);
+                    function (Builder $subQueryBuilder) use ($constrainData, $compiledConstrains) {
+                        foreach ($constrainData as $subConstrainData) {
+                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainData['type'], $subConstrainData['parameters'], $compiledConstrains);
                         }
                     }
                 );
         } elseif ($constrainType == 'orGroup') {
             $queryBuilder
                 ->orWhere(
-                    function (Builder $subQueryBuilder) use ($constrainData, $query) {
+                    function (Builder $subQueryBuilder) use ($constrainData, $compiledConstrains) {
                         foreach ($constrainData as $subConstrainData) {
-                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainData['type'], $subConstrainData['parameters'], $query);
+                            $subQueryBuilder = $this->addConstrain($subQueryBuilder, $subConstrainData['type'], $subConstrainData['parameters'], $compiledConstrains);
                         }
                     }
                 );

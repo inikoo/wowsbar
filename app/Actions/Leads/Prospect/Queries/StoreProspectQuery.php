@@ -56,19 +56,19 @@ class StoreProspectQuery
                         $query['tag']['state'] => $query['tag']['tags']
                     ],
                 ],
-                'arguments' => $query['last_contact']['state'] ? [
+                'arguments' => $query['prospect_last_contacted']['state'] ? [
                     '__date__' => [
                         'type'  => 'dateSubtraction',
                         'value' => [
-                            'unit'     => $query['last_contact']['data']['unit'],
-                            'quantity' => $query['last_contact']['data']['quantity']
+                            'unit'     => $query['prospect_last_contacted']['data']['unit'],
+                            'quantity' => $query['prospect_last_contacted']['data']['quantity']
                         ]
                     ]
                 ] : []
             ],
         ];
 
-        if($query['last_contact']['state']) {
+        if($query['prospect_last_contacted']['state']) {
             $lastContacted = [
                 'last_contacted_at',
                 '<=',

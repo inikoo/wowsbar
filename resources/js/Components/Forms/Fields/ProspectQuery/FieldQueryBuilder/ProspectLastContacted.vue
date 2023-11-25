@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { get, set, isArray, cloneDeep } from 'lodash'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
-import Multiselect from "@vueform/multiselect"
-import { computed } from 'vue'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 
 const props = withDefaults(defineProps<{
@@ -12,7 +8,7 @@ const props = withDefaults(defineProps<{
     fieldName: any
 }>(), {})
 
-const availableOptions = ['day', 'week', 'month']
+
 </script>
 
 <template>
@@ -41,6 +37,4 @@ const availableOptions = ['day', 'week', 'month']
     </div>
 </template>
 
-<style>
-</style>
 
