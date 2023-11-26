@@ -14,6 +14,8 @@ use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateProspects;
+use App\Actions\Traits\WithCheckCanContactByEmail;
+use App\Actions\Traits\WithCheckCanContactByPhone;
 use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
@@ -37,6 +39,8 @@ class StoreProspect
     use AsAction;
     use WithAttributes;
     use WithProspectPrepareForValidation;
+    use WithCheckCanContactByEmail;
+    use WithCheckCanContactByPhone;
 
     private bool $asAction = false;
 
@@ -59,8 +63,14 @@ class StoreProspect
         }
 
 
+
         /** @var Prospect $prospect */
         $prospect = $parent->scopedProspects()->create($modelData);
+
+        $prospect->can_contact_by_email=$this->canContactByEmail($prospect);
+        $prospect->can_contact_by_phone=$this->canContactByEmail($prospect);
+
+        $prospect->save();
 
         if ($addressData) {
             StoreAddressAttachToModel::run($prospect, $addressData, ['scope' => 'contact']);

@@ -10,7 +10,7 @@ use App\Actions\Mail\MailshotRecipient\StoreMailshotRecipient;
 use App\Actions\Mail\MailshotSendChannel\SendMailshotChannel;
 use App\Actions\Mail\MailshotSendChannel\StoreMailshotSendChannel;
 use App\Actions\Mail\MailshotSendChannel\UpdateMailshotSendChannel;
-use App\Actions\Traits\WithCheckCanSendEmail;
+use App\Actions\Traits\WithCheckCanContactByEmail;
 use App\Helpers\ArrayWIthProbabilities;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Email;
@@ -23,7 +23,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class ProcessSendMailshot
 {
     use AsAction;
-    use WithCheckCanSendEmail;
+    use WithCheckCanContactByEmail;
 
     public string $jobQueue = 'default_long';
 
@@ -43,7 +43,7 @@ class ProcessSendMailshot
 
 
                 foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
+                    if (!$this->canContactByEmail($recipient)) {
                         continue;
                     }
 

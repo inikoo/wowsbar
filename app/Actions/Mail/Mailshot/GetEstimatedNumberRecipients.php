@@ -9,7 +9,7 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\Helpers\Query\WithQueryCompiler;
-use App\Actions\Traits\WithCheckCanSendEmail;
+use App\Actions\Traits\WithCheckCanContactByEmail;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -19,7 +19,7 @@ use Lorisleiva\Actions\Concerns\AsObject;
 class GetEstimatedNumberRecipients
 {
     use AsObject;
-    use WithCheckCanSendEmail;
+    use WithCheckCanContactByEmail;
     use WithQueryCompiler;
 
     public function handle(Shop $parent, array $recipientsData): int
@@ -45,7 +45,7 @@ class GetEstimatedNumberRecipients
                 1000,
                 function ($recipients) use (&$counter) {
                     foreach ($recipients as $recipient) {
-                        if (!$this->canSend($recipient)) {
+                        if (!$this->canContactByEmail($recipient)) {
                             continue;
                         }
                         $counter++;
@@ -63,7 +63,7 @@ class GetEstimatedNumberRecipients
 
         foreach ($prospectIDs as $prospectID) {
             $prospect = Prospect::find($prospectID);
-            if (!$this->canSend($prospect)) {
+            if (!$this->canContactByEmail($prospect)) {
                 continue;
             }
             $counter++;
@@ -89,7 +89,7 @@ class GetEstimatedNumberRecipients
             1000,
             function ($recipients) use (&$counter) {
                 foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
+                    if (!$this->canContactByEmail($recipient)) {
                         continue;
                     }
                     $counter++;

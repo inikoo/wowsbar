@@ -71,6 +71,9 @@ use Spatie\Tags\HasTags;
  * @property ProspectFailStatusEnum $fail_status
  * @property ProspectSuccessStatusEnum $success_status
  * @property bool $dont_contact_me
+ * @property bool $can_contact_by_email
+ * @property bool $can_contact_by_phone
+ * @property bool $can_contact_by_address
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -90,6 +93,9 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()
  * @method static Builder|Prospect query()
+ * @method static Builder|Prospect whereCanContactByAddress($value)
+ * @method static Builder|Prospect whereCanContactByEmail($value)
+ * @method static Builder|Prospect whereCanContactByPhone($value)
  * @method static Builder|Prospect whereCompanyName($value)
  * @method static Builder|Prospect whereContactName($value)
  * @method static Builder|Prospect whereContactWebsite($value)

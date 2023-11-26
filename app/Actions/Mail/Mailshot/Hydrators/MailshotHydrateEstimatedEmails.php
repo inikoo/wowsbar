@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
 use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
-use App\Actions\Traits\WithCheckCanSendEmail;
+use App\Actions\Traits\WithCheckCanContactByEmail;
 use App\Events\MailshotPusherEvent;
 use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
@@ -19,7 +19,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class MailshotHydrateEstimatedEmails
 {
     use AsAction;
-    use WithCheckCanSendEmail;
+    use WithCheckCanContactByEmail;
 
 
 
@@ -66,7 +66,7 @@ class MailshotHydrateEstimatedEmails
             1000,
             function ($recipients) use (&$counter) {
                 foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
+                    if (!$this->canContactByEmail($recipient)) {
                         continue;
                     }
                     $counter++;
