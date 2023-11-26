@@ -1,41 +1,42 @@
+import { trans } from "laravel-vue-i18n";
 export default {
     QueryLists: [
-        { label: "Email", value: "email" },
-        { label: "Phone", value: "phone" },
-        { label: "Address", value: "address" },
+        { label:  trans("Email") , value: "email" },
+        { label: trans("Phone") , value: "phone" },
+        { label: trans("Address") , value: "address" },
     ],
     FilterTags: [
-        { label: "All", value: "all" },
-        { label: "Any", value: "any" },
+        { label:  trans("All") , value: "all" },
+        { label:  trans("Any"), value: "any" },
     ],
     contact: [
-        { label: "Last Contact", value: true },
-        { label: "Never", value: false },
+        { label: trans("Last Contact"), value: true },
+        { label: trans("Never"), value: false },
     ],
 
 
     schemaForm: [
         {
-            label: "Prospect with",
+            label:  trans("Prospect with"),
             name: "prospect_with",
-            information : "filter deliveries based on the prospect",
+            information : trans("filter deliveries based on the prospect"),
             value : {
                 by : []
             },
         },
         {
-            label: "Tags",
+            label: trans("Tags"),
             name: "tag",
-            information : "Filter by SEO tags",
+            information :  trans("Filter by SEO tags"),
             value : {
                 tags : [],
                 state : 'all'
             },
         },
         {
-            label: "Last contacted",
+            label:  trans("Last contacted"),
             name: "prospect_last_contacted",
-            information : "filter recipients based on the last mailshot sent to them",
+            information : trans("filter recipients based on the last mailshot sent to them"),
             value : {
                 state : false,
                 data: {
