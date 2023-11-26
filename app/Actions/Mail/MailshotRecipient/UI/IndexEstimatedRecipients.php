@@ -34,7 +34,6 @@ class IndexEstimatedRecipients extends InertiaAction
             );
     }
 
-    /** @noinspection PhpUndefinedMethodInspection */
     public function handle(Mailshot $mailshot, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
