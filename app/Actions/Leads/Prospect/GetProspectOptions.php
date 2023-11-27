@@ -25,11 +25,11 @@ class GetProspectOptions extends InertiaAction
         foreach ($prospects as $prospect) {
             $selectOptions[$prospect->id] =
                 [
-                    'id'   => $prospect->id,
-                    'slug' => $prospect->slug,
-                    'name' => $prospect->name,
-                    'email' => $prospect->email,
-                    'phone' => $prospect->phone,
+                    'id'       => $prospect->id,
+                    'slug'     => $prospect->slug,
+                    'name'     => $prospect->name,
+                    'email'    => $prospect->email,
+                    'phone'    => $prospect->phone,
                     'websites' => $prospect->websites,
                 ];
         }
