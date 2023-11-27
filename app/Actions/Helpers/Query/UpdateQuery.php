@@ -32,7 +32,6 @@ class UpdateQuery
         if (Arr::exists($modelData, 'constrains')) {
             data_set($modelData, 'compiled_constrains', $this->compileConstrains($modelData['constrains']));
         }
-
         return $this->update($query, $modelData);
     }
 

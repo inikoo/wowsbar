@@ -33,10 +33,11 @@ class ProspectQuerySeeder
                 'name'       => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with'                    => [
-                        'fields' => ['email'],
-                        'logic'  => 'all'
-                    ],
+                    'can_contact_by' =>
+                        [
+                            'logic'  => 'all',
+                            'fields' => ['email']
+                        ],
                     'prospect_last_contacted' => [
                         'state' => false,
                         'data'  => []
@@ -49,9 +50,11 @@ class ProspectQuerySeeder
                 'name'       => 'Prospects last contacted (within interval)',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with'                    => [
-                        'fields' => ['email']
-                    ],
+                    'can_contact_by'          =>
+                        [
+                            'logic'  => 'any',
+                            'fields' => ['email']
+                        ],
                     'prospect_last_contacted' => [
                         'state' => true,
                         'data'  => [

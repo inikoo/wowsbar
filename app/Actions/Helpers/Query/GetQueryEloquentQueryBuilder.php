@@ -41,13 +41,29 @@ class GetQueryEloquentQueryBuilder
             $queryBuilder->where('shop_id', $parent->id);
         }
 
+        foreach (Arr::get($compiledConstrains, 'joins', [])as $join) {
+
+            switch ($join['type']) {
+                case 'left':
+                    $queryBuilder->leftJoin($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+                case 'right':
+                    $queryBuilder->rightJoin($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+                case 'inner':
+                    $queryBuilder->join($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+            }
+
+        }
+
+
         foreach (Arr::get($compiledConstrains, 'constrains') as $constrainData) {
             $constrainType = $constrainData['type'];
 
 
             if ($constrainType == 'group') {
                 $subConstrainData = $constrainData['parameters'];
-
                 $queryBuilder
                     ->where(
                         function (Builder $subQueryBuilder) use ($subConstrainData, $compiledConstrains) {
@@ -97,6 +113,12 @@ class GetQueryEloquentQueryBuilder
                 $value = $this->getArgument(Arr::get($compiledConstrains['arguments'], $value));
             }
             $queryBuilder->where($constrainData[0], $constrainData[1], $value);
+        } elseif ($constrainType == 'orWhere') {
+            $value = $constrainData[2];
+            if (preg_match('/^__.+__$/', $value)) {
+                $value = $this->getArgument(Arr::get($compiledConstrains['arguments'], $value));
+            }
+            $queryBuilder->orWhere($constrainData[0], $constrainData[1], $value);
         } elseif ($constrainType == 'whereIn') {
             $queryBuilder->whereIn($constrainData[0], $constrainData[1]);
         } elseif ($constrainType == 'orWhereNull') {
