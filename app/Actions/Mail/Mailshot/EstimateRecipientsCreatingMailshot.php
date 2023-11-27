@@ -3,26 +3,35 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
-use App\Models\Mail\Mailshot;
+use App\Models\Market\Shop;
+use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsCommand;
+use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class EstimateRecipientsCreatingMailshot
 {
-    use AsCommand;
     use AsAction;
+    use WithAttributes;
 
-    public function handle(): int
+    public function handle($recipientsData): int
     {
-        // TODO: What need to do here?
-
-        $mailshot = Mailshot::find(1); // Just for placeholder
+        return 100;
+        // dd($recipientsData);
 
         return MailshotHydrateEstimatedEmails::make()->getNumberEstimatedRecipients($mailshot->recipients_recipe);
     }
 
-    public function asController(): int
+    public function rules(): array
     {
-        return $this->handle();
+        return [
+            'recipients' => ['required', 'array']
+        ];
+    }
+
+    public function asController(Shop $shop, ActionRequest $request): int
+    {
+        $this->fillFromRequest($request);
+
+        return $this->handle($this->validateAttributes());
     }
 }

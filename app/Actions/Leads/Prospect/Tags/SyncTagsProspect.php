@@ -78,10 +78,10 @@ class SyncTagsProspect
         return $this->handle($prospect, $this->trimTags($this->validateAttributes()));
     }
 
-    public function action(Prospect $prospect, array $objectData): Prospect
+    public function action(Prospect $prospect, array $modelData): Prospect
     {
         $this->asAction = true;
-        $this->setRawAttributes($objectData);
+        $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
         return $this->handle($prospect, $this->trimTags($validatedData));

@@ -19,14 +19,24 @@ class BuildQuery
 {
     use AsObject;
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Query $query): QueryBuilder
     {
-        $queryBuilder = QueryBuilder::for(Prospect::class);
+
+        if($query->model_type=='Prospect') {
+            $class = Prospect::class;
+        } else {
+            throw new \Exception('Unknown model type: '.$query->model_type);
+        }
+
+        $queryBuilder = QueryBuilder::for($class);
         if ($query->scope_type == 'Shop') {
             $queryBuilder->where('shop_id', $query->scope_id);
         }
 
-        foreach ($query->constrains as $constrainData) {
+        foreach (Arr::get($query->compiled_constrains, 'constrains') as $constrainData) {
             $constrainType = $constrainData['type'];
 
 
@@ -80,7 +90,7 @@ class BuildQuery
         } elseif ($constrainType == 'where') {
             $value = $constrainData[2];
             if (preg_match('/^__.+__$/', $value)) {
-                $value = $this->getArgument(Arr::get($query->arguments, $value));
+                $value = $this->getArgument(Arr::get($query->compiled_constrains['arguments'], $value));
             }
             $queryBuilder->where($constrainData[0], $constrainData[1], $value);
         } elseif ($constrainType == 'whereIn') {

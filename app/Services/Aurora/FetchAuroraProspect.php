@@ -12,20 +12,18 @@ use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class FetchAuroraProspect extends FetchAurora
 {
+    /**
+     * @throws \Exception
+     */
     protected function parseModel(): void
     {
         $lastContacted = null;
         if ($this->parseDatetime($this->auroraModelData->{'Prospect Last Contacted Date'})) {
             $lastContacted = $this->parseDatetime($this->auroraModelData->{'Prospect Last Contacted Date'});
         }
-
-
-        // $state = Str::kebab($this->auroraModelData->{'Prospect Status'});
-        //enum('NoContacted','Contacted','NotInterested','Registered','Invoiced','Bounced')
 
         $dontContactMe  = false;
         $contactedState = ProspectContactedStateEnum::NA;
@@ -58,7 +56,8 @@ class FetchAuroraProspect extends FetchAurora
                 $failStatus = ProspectFailStatusEnum::INVALID;
                 break;
             default:
-                dd(Str::kebab($this->auroraModelData->{'Prospect Status'}));
+                throw new \Exception('Invalid status: '.$this->auroraModelData->{'Prospect Status'});
+
         }
 
 

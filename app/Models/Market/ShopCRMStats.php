@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_customer_users_status_inactive
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -111,6 +112,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderMale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderOther($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsStateBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateContacted($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateFail($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)

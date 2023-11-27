@@ -46,10 +46,10 @@ trait WithImport
     {
         return [
             BeforeImport::class => function (BeforeImport $event) {
-                $totalRows = $event->getReader()->getTotalRows();
+                $totalRows = $event->getReader()->getActiveSheet()->getHighestRow();
                 $this->upload->update(
                     [
-                        'number_rows' => (int) Arr::get($totalRows, 'Worksheet') - 1
+                        'number_rows' => $totalRows - 1
                     ]
                 );
             }

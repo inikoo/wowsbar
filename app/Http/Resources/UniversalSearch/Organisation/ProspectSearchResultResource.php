@@ -18,18 +18,21 @@ class ProspectSearchResultResource extends JsonResource
         $prospect = $this;
 
         return [
-            'slug'  => $prospect->slug,
-            'name'  => $prospect->name,
-            'email' => $prospect->email,
-            'phone' => $prospect->phone,
-            'tags'  => $prospect->tags()->pluck('name'),
-            'route' => [
+            'slug'         => $prospect->slug,
+            'name'         => $prospect->name,
+            'company'      => $prospect->name == $prospect->company_name ? null : $prospect->company_name,
+            'contact_name' => $prospect->name == $prospect->contact_name ? null : $prospect->contact_name,
+            'email'        => $prospect->email,
+            'phone'        => $prospect->phone,
+            'website'      => $prospect->contact_website,
+            'tags'         => $prospect->tags()->pluck('name'),
+            'route'        => [
                 'name'       => 'org.crm.shop.prospects.show',
-                'parameters' => [$prospect->scope_id, $prospect->slug]
+                'parameters' => [$prospect->scope->slug, $prospect->slug]
             ],
-            'state'      => $prospect->state,
-            'state_icon' => $prospect->state->stateIcon()[$prospect->state->value],
-            'icon'       => ['fal', 'fa-transporter']
+            'state'        => $prospect->state,
+            'state_icon'   => $prospect->state->stateIcon()[$prospect->state->value],
+            'icon'         => ['fal', 'fa-transporter']
 
 
         ];

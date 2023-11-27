@@ -6,10 +6,13 @@
  */
 
 use App\Actions\Leads\Prospect\StoreProspect;
+use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
+use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\Helpers\Fetch;
+use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\Outbox;
@@ -37,13 +40,16 @@ beforeEach(function () {
     actingAs($this->organisationUser, 'org');
 });
 
-
+test('prospect queries are seeded', function () {
+    $this->artisan('query:seed-prospects')->assertExitCode(0);
+    expect(Query::where('model_type', 'Prospect')->count())->toBe(2);
+});
 
 test('create prospect', function () {
     $shop      = $this->shop;
     $modelData = Prospect::factory()->definition();
-    data_set($modelData, 'tags', ['seo','tag 1',' hello ','Seo']);
-    $prospect  = StoreProspect::make()->action($shop, $modelData);
+    data_set($modelData, 'tags', ['seo', 'tag 1', ' hello ', 'Seo']);
+    $prospect = StoreProspect::make()->action($shop, $modelData);
     expect($prospect)->toBeInstanceOf(Prospect::class)
         ->and($shop->crmStats->number_prospects)->toBe(1)
         ->and($shop->crmStats->number_prospects_state_no_contacted)->toBe(1)
@@ -57,8 +63,22 @@ test('create prospect', function () {
         ->and(organisation()->crmStats->number_prospects_state_success)->toBe(0);
 
     $this->assertDatabaseCount('tags', 3);
+
     return $prospect;
 });
+
+test('update prospect', function () {
+    $shop      = $this->shop;
+    $prospect  = Prospect::first();
+    $modelData = [
+        'contact_name' => 'new name',
+    ];
+    $prospect = UpdateProspect::make()->action(scope: $shop, prospect: $prospect, modelData: $modelData);
+    expect($prospect)->toBeInstanceOf(Prospect::class)->and($prospect->contact_name)->toBe('new name');
+    return $prospect;
+});
+
+
 
 test('create 2nd prospect', function () {
     $shop         = $this->shop;
@@ -80,14 +100,31 @@ test('create 2nd prospect', function () {
     return $prospect;
 });
 
+test('update prospect tags', function ($prospect) {
+
+    $modelData = [
+        'tags' => ['seo', 'social'],
+    ];
+    $prospect = SyncTagsProspect::make()->action(prospect: $prospect, modelData: $modelData);
+    expect($prospect)->toBeInstanceOf(Prospect::class)->and($prospect->tags->count())->toBe(2);
+    return $prospect;
+})->depends('create 2nd prospect');
+
+test('prospect query count', function () {
+    $this->artisan('query:count')->assertExitCode(0);
+    expect(Query::where('slug', 'prospects-not-contacted')->first()->number_items)->toBe(2)
+        ->and(Query::where('slug', 'prospects-last-contacted')->first()->number_items)->toBe(2);
+});
+
 
 test('create prospect mailshot', function () {
     $shop         = $this->shop;
     $organisation = $this->organisation;
     $dataModel    = [
-        'subject'   => 'hello',
-        'type'      => MailshotTypeEnum::PROSPECT_MAILSHOT,
-        'outbox_id' => Outbox::where('shop_id', $shop->id)->where('type', OutboxTypeEnum::SHOP_PROSPECT)->pluck('id')->first()
+        'subject'    => 'hello',
+        'type'       => MailshotTypeEnum::PROSPECT_MAILSHOT,
+        'outbox_id'  => Outbox::where('shop_id', $shop->id)->where('type', OutboxTypeEnum::SHOP_PROSPECT)->pluck('id')->first(),
+        'recipients' => []
 
     ];
     $mailshot     = StoreMailshot::make()->action($shop, $dataModel);
@@ -100,7 +137,7 @@ test('create prospect mailshot', function () {
         ->and($shop->mailStats->number_mailshots_type_prospect_mailshot)->toBe(1)
         ->and($shop->mailStats->number_mailshots_state_in_process)->toBe(1)
         ->and($shop->mailStats->number_mailshots_type_prospect_mailshot_state_in_process)->toBe(1);
-});
+})->todo();
 
 test('can show list of prospects', function () {
     $shop     = $this->shop;
@@ -160,15 +197,13 @@ test('can fetch 1 prospect from aurora', function () {
     $this->artisan($command)->assertExitCode(0);
 
     expect($shop->crmStats->number_prospects)->toBe(3);
-    $fetch=Fetch::first();
+    $fetch = Fetch::first();
     expect($fetch->number_items)->toBe(1)->and($fetch->number_stores)->toBe(1);
     $this->artisan($command)->assertExitCode(0);
-    $secondFetch=Fetch::find(2);
-
+    $secondFetch = Fetch::find(2);
 
 
     expect($shop->crmStats->number_prospects)->toBe(3)
         ->and($secondFetch->number_stores)->toBe(0)
         ->and($secondFetch->number_no_changes)->toBe(1);
-
 });

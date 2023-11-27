@@ -50,6 +50,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 })
 const channel = pusher.subscribe(props.dataPusher.channel)
 channel.bind(props.dataPusher.event, (data: any) => {
+    console.log('xxx', data)
     dataPusher.value = data
 })
 

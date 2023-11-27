@@ -99,7 +99,9 @@ const options = {
                 <dt class="text-base font-medium text-gray-400">{{doughnut.title}}</dt>
                 <dd class="flex items-baseline justify-between">
                     <div class="flex gap-x-2 leading-none items-baseline text-2xl font-semibold text-org-500">
-                        <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1"></CountUp>
+                        <CountUp :start-val="doughnut.total/2" :end-val="doughnut.total" :duration="1" :options="{
+                                formattingFn: (number) => useLocaleStore().number(number)
+                            }"></CountUp>
                         <span class="text-sm font-medium leading-none text-gray-500">in total</span>
                     </div>
                     <div class="w-20">

@@ -22,7 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property string $model_type
  * @property array $constrains
- * @property array $arguments
+ * @property array $compiled_constrains
  * @property bool $is_seeded
  * @property int|null $number_items
  * @property string|null $counted_at
@@ -33,7 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query query()
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereArguments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereCompiledConstrains($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereConstrains($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereCountedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereCreatedAt($value)
@@ -55,15 +55,13 @@ class Query extends Model
     use HasSlug;
 
     protected $casts = [
-        'constrains'  => 'array',
-        'arguments'   => 'array',
-
-
+        'constrains'          => 'array',
+        'compiled_constrains' => 'array',
     ];
 
     protected $attributes = [
-        'constrains'  => '{}',
-        'arguments'   => '{}',
+        'constrains'          => '{}',
+        'compiled_constrains' => '{}',
     ];
 
     protected $guarded = [];

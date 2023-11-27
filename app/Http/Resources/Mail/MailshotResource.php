@@ -10,6 +10,7 @@ namespace App\Http\Resources\Mail;
 use App\Http\Resources\HasSelfCall;
 use App\Models\Mail\Mailshot;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class MailshotResource extends JsonResource
 {
@@ -19,6 +20,23 @@ class MailshotResource extends JsonResource
     {
         /** @var Mailshot $mailshot */
         $mailshot = $this;
+
+        $timelines    = [];
+        $timelineData = ['schedule_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
+
+        foreach ($timelineData as $timeline) {
+            $timelineKey = Str::replace('_at', '', $timeline);
+            if (!blank($mailshot->{$timeline})) {
+                $timelines[$mailshot->{$timeline}->toISOString()] = [
+                    'label' => 'Mailshot ' . $timelineKey,
+                    'icon'  => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
+                ];
+            }
+        }
+
+        $sortedTimeline = collect($timelines)->sortBy(function ($value, $key) {
+            return $key;
+        })->toArray();
 
         return [
             'slug'                => $mailshot->slug,
@@ -36,6 +54,7 @@ class MailshotResource extends JsonResource
             'date'                => $mailshot->date,
             'created_at'          => $mailshot->created_at,
             'updated_at'          => $mailshot->updated_at,
+            'timeline'            => $sortedTimeline
         ];
     }
 }

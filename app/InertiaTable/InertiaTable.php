@@ -343,10 +343,10 @@ class InertiaTable
                 key: $key,
                 label: $label ?: Str::headline($key),
                 options: $options,
-                value: $defaultValue,
                 noFilterOption: $noFilterOption,
                 noFilterOptionLabel: $noFilterOptionLabel ?: '-',
-                type: 'select'
+                type: 'select',
+                value: $defaultValue
             )
         )->values();
 

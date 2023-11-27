@@ -63,14 +63,15 @@ const clearValue=()=>{
                 :required="required"
                 :pattern="pattern ?? type == 'number' ? '[0-9]*' : undefined"
                 :autocomplete="autocomplete"
-                class="remove-arrows-input bg-transparent py-2.5 px-3 block w-full
+                class="remove-arrows-input bg-transparent py-2.5 block w-full
                     text-gray-600 sm:text-sm placeholder:text-gray-400
                     border-transparent
                     focus:ring-0 focus:ring-gray-500 focus:outline-0 focus:border-transparent
                     read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:focus:border-transparent read-only:focus:border-gray-300 read-only:text-gray-500
                 "
                 :class="[
-                    caret ? '' : '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                    caret ? '' : '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
+                    clear && modelValue.length ? 'pl-3 pr-7' : 'px-3'
                 ]"
             />
             <div v-if="copyButton"

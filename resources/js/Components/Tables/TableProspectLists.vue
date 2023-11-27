@@ -103,7 +103,7 @@ function listRoute(prospect_list) {
         <!-- {{ prospect_list.arguments }} -->
         <template #cell(actions)="{ item: prospect_list }">
             <div class="flex gap-x-2 items-center">
-                <Button :style="prospect_list.arguments != false ? 'secondary' : 'tertiary'" label="Send Mailshot" size="xs" />
+                <Button :style="prospect_list.arguments != false ? 'primary' : 'tertiary'" label="Send Mailshot" size="xs" />
             </div>
         </template>
     </Table>

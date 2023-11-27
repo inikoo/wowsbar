@@ -200,10 +200,13 @@ class Prospect extends Model implements Auditable
             }
         );
 
-
         static::updated(function (Prospect $prospect) {
             if ($prospect->wasChanged(['company_name', 'contact_name'])) {
-                $prospect->name = $prospect->company_name == '' ? $prospect->contact_name : $prospect->company_name;
+                $prospect->updateQuietly(
+                    [
+                        'name'=> $prospect->company_name == '' ? $prospect->contact_name : $prospect->company_name
+                    ]
+                );
             }
         });
     }

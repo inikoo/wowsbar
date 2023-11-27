@@ -40,7 +40,9 @@ class CrawlerPortfolioWebsite extends CrawlObserver
 
             return 0;
         } catch (\Exception $e) {
-            dd($e);
+            echo $e->getMessage() . "\n";
+
+            return 1;
         }
     }
 

@@ -21,7 +21,7 @@ const props = defineProps<{
                 :href="`${button.route?.name ? route(button.route?.name, button.route?.parameters) : route(button.href?.name, button.href?.parameters)}`" class=""
                 :method="button.route?.method ?? 'get'"
             >
-                <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight" :key="`${button.label}${button.style}`"
+                <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight" :key="`${button.label}${button.style}`" :tooltip="button.tooltip"
                     class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
                 </Button>
             </Link>
@@ -36,7 +36,7 @@ const props = defineProps<{
         :data="action.route?.method !== 'get' ? dataToSubmit : null"
     >
     <!-- {{ actions }} -->
-        <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" :key="`${action.label}${action.style}`" />
+        <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" :key="`${action.label}${action.style}`" :tooltip="action.tooltip" />
     </Link>
 
     <!-- <slot v-if="button.type === 'modal'" name="modal" :data="{...props }"/> -->

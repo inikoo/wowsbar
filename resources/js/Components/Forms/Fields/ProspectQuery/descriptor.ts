@@ -1,32 +1,19 @@
+import { trans } from "laravel-vue-i18n";
 export default {
     QueryLists: [
-        { label: "Email", value: "email" },
-        { label: "Phone", value: "phone" },
-        { label: "Address", value: "address" },
+        { label:  trans("Email") , value: "email" },
+        { label: trans("Phone") , value: "phone" },
+        { label: trans("Address") , value: "address" },
     ],
     FilterTags: [
-        { label: "All", value: "all" },
-        { label: "Any", value: "any" },
+        { label:  trans("All") , value: "all" },
+        { label:  trans("Any"), value: "any" },
     ],
     contact: [
-        { label: "Last Contact", value: true },
-        { label: "Never", value: false },
+        { label: trans("Last Contact"), value: true },
+        { label: trans("Never"), value: false },
     ],
 
- /*    defaultValue: {
-        query: [],
-        tag: {
-            state: "all",
-            tags: [],
-        },
-        last_contact: {
-            state: false,
-            data: {
-                unit: "week",
-                quantity: 1,
-            },
-        },
-    }, */
 
     schemaForm: [
         {

@@ -193,7 +193,7 @@ class IndexProspects extends InertiaAction
                                 match (class_basename($this->parent)) {
                                     'Shop' => [
                                         [
-                                            'style' => 'secondary',
+                                            'style' => 'primary',
                                             'icon'  => ['fal', 'fa-upload'],
                                             'label' => 'upload',
                                             'route' => [

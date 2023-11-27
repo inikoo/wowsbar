@@ -27,16 +27,16 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $subject
  * @property MailshotStateEnum $state
- * @property string|null $schedule_at
+ * @property \Illuminate\Support\Carbon|null $schedule_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property MailshotTypeEnum $type
  * @property string $date
- * @property string|null $ready_at
+ * @property \Illuminate\Support\Carbon|null $ready_at
  * @property string|null $start_sending_at
- * @property string|null $sent_at
- * @property string|null $cancelled_at
- * @property string|null $stopped_at
+ * @property \Illuminate\Support\Carbon|null $sent_at
+ * @property \Illuminate\Support\Carbon|null $cancelled_at
+ * @property \Illuminate\Support\Carbon|null $stopped_at
  * @property array $layout
  * @property array $recipients_recipe
  * @property int|null $publisher_id org user
@@ -93,8 +93,12 @@ class Mailshot extends Model
         'recipients_recipe' => 'array',
         'layout'            => 'array',
         'type'              => MailshotTypeEnum::class,
-        'state'             => MailshotStateEnum::class
-
+        'state'             => MailshotStateEnum::class,
+        'sent_at'           => 'datetime',
+        'schedule_at'       => 'datetime',
+        'ready_at'          => 'datetime',
+        'cancelled_at'      => 'datetime',
+        'stopped_at'        => 'datetime',
     ];
 
     protected $attributes = [

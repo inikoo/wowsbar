@@ -11,9 +11,9 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue'
 import { ref } from "vue"
-import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal/'
+import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck } from '@fal/'
 import { faFlask } from '@fad/'
-import { faCaretDown, faPaperPlane, faAsterisk } from '@fas/'
+import { faCaretDown, faPaperPlane, faCheckCircle, faStopwatch, faAsterisk } from '@fas/'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
@@ -167,17 +167,12 @@ const onSuccess = (response,closedPopover) => {
                     </template>
                     <template #content="{ close: closed }">
                         <dd class="w-64">
-                            <div class="flex items-center">
-                                <div class="relative w-80">
-                                    <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
-                                        class="rounded-r-none" />
-                                </div>
-                                <span class="">
-                                    <!-- Assuming sendEmailtest() is a method to send an email -->
-                                    <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane"
-                                        class="py-4 md:py-3.5 rounded-l-none"
-                                        :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
-                                </span>
+                            <div class="flex items-center border border-gray-300 rounded-md overflow-hidden">
+                                <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
+                                    class="rounded-r-none ring-1 ring-transparent focus-within:ring-2 focus-within:ring-transparent" />
+                                <!-- Assuming sendEmailtest() is a method to send an email -->
+                                <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane" size="xl" class="py-3.5 border-0 border-l rounded-l-none "
+                                    :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
                             </div>
                             <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{
                                 testEmail.errorMessage }}</p>
@@ -191,15 +186,15 @@ const onSuccess = (response,closedPopover) => {
                     props.setAsReadyRoute?.name,
                     props.setAsReadyRoute?.parameters
                 )">
-                <Button class="rounded-r-none py-[9px] bg-gradient-to-r from-org-500 to-org-500" key="4">
-                    <FontAwesomeIcon icon='fal fa-check-circle' class='' aria-hidden='true' />
-                </Button>
+                    <Button class="rounded-r-none" key="4" :style="'orgSolid'">
+                        <FontAwesomeIcon icon='fas fa-check-circle' class='h-4' aria-hidden='true' />
+                    </Button>
                 </Link>
                 <Popover>
                     <template #button>
-                        <div class="relative border-l border-org-300" title="Scheduled publish">
-                            <Button class="rounded-none bg-gradient-to-r from-org-500 to-org-500">
-                                <FontAwesomeIcon :icon="['fal', 'stopwatch']" class='h-4' aria-hidden='true' />
+                        <div class="relative border-x border-fuchsia-400" title="Scheduled publish">
+                            <Button class="rounded-none" :style="'orgSolid'">
+                                <FontAwesomeIcon :icon="['fas', 'stopwatch']" class='h-4' aria-hidden='true' />
                                 <div class="absolute inset-0 w-full flex items-center justify-center" />
                             </Button>
                         </div>
@@ -217,7 +212,7 @@ const onSuccess = (response,closedPopover) => {
                                     props.setAsScheduledRoute.name,
                                     props.setAsScheduledRoute.parameters
                                 )">
-                                <Button>Schedule</Button>
+                                    <Button>Schedule</Button>
                                 </Link>
                             </div>
                         </div>
@@ -228,10 +223,10 @@ const onSuccess = (response,closedPopover) => {
                     props.sendRoute.name,
                     props.sendRoute.parameters
                 )">
-                <Button class="rounded-none">
-                    Send Now
-                    <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
-                </Button>
+                    <Button class="rounded-none">
+                        Send Now
+                        <FontAwesomeIcon icon='fas fa-paper-plane' class='' aria-hidden='true' />
+                    </Button>
                 </Link>
             </div>
         </template>

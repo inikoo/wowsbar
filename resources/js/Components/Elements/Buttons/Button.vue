@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
     'label'?: string
     'full'?: boolean
     capitalize?: boolean
+    tooltip?: string
 }>(), {
     style: 'primary',
     size: 'm',
@@ -43,12 +44,20 @@ let sizeClass = ''
 // Styling the Button depends on the 'style' props
 if (props.style == 'primary' || props.style == 'create' || props.style == 'save') {
     if(layout.systemName == 'org') {
-        styleClass = 'bg-org-600 bg-gradient-to-r from-org-400 to-org-600 text-white hover:bg-none'
+        styleClass = 'bg-fuchsia-700 bg-gradient-to-r from-fuchsia-600 to-fuchsia-700 text-gray-100 hover:bg-none'
     } else {
-        styleClass = 'bg-gray-800 bg-gradient-to-r from-gray-600 to-gray-800 text-white hover:bg-none'
+        styleClass = 'bg-gray-700 bg-gradient-to-r from-gray-600 to-gray-800 text-gray-100 hover:bg-none'
     }
 }
-else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 border border-gray-400/80 text-gray-600 hover:bg-none'
+else if (props.style == 'orgSolid') styleClass = 'bg-fuchsia-600 text-gray-100 hover:bg-fuchsia-700'
+
+else if (props.style == 'secondary' || props.style == 'edit') {
+    if(layout.systemName == 'org') {
+        styleClass = 'bg-org-400 bg-gradient-to-r from-org-400 to-org-600 text-white hover:bg-none'
+    } else {
+        styleClass = 'bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 text-white hover:bg-none'
+    }
+} 
 else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-200/70'
 else if (props.style == 'rainbow') styleClass = 'bg-gradient-to-r from-blue-500 to-purple-600 border border-gray-300 text-gray-100 hover:bg-purple-600'
 
@@ -140,14 +149,16 @@ const getActionIcon = (icon: any) => {
 
 <template>
     <button type="button"
-        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2s"
+        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
         :class="[
             // icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
             full ? 'w-full justify-center' : 'min-w-max',
             styleClass,
             sizeClass
         ]"
-        :disabled="style == 'disabled'">
+        :disabled="style == 'disabled'"
+        v-tooltip="tooltip ?? undefined"    
+    >
         <slot>
             <slot name="icon">
                 <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" fixed-width class="" aria-hidden="true"/>
