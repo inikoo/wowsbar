@@ -1,0 +1,68 @@
+<?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 27 Nov 2023 14:23:00 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
+namespace App\Actions\Mail\Mailshot;
+
+use Exception;
+use Illuminate\Support\Arr;
+
+trait WithRecipientsInput
+{
+    /**
+     * @throws \Exception
+     */
+    public function postProcessRecipients(array $recipients): array
+    {
+        switch (Arr::get($recipients, 'recipient_builder_type')) {
+            case 'query':
+                Arr::forget($recipients, ['custom_prospects_query', 'prospects']);
+                break;
+            case 'custom_prospects_query':
+                Arr::forget($recipients, ['query', 'prospects']);
+
+                data_set(
+                    $recipients,
+                    'recipient_builder_data.custom_prospects_query',
+                    $this->cleanCustomProspectsQuery(Arr::get($recipients, 'recipient_builder_data.custom_prospects_query', []))
+                );
+
+                break;
+            case 'prospects':
+                Arr::forget($recipients, ['custom_prospects_query', 'query']);
+                break;
+            default:
+                throw new Exception('Invalid recipient builder type');
+        }
+
+
+        return $recipients;
+    }
+
+    public function cleanCustomProspectsQuery(array $queryComponents): array
+    {
+        $queryComponents = array_merge(
+            [
+                'can_contact_by' =>
+                    [
+                        'fields' => ['email']
+                    ],
+            ],
+            $queryComponents
+        );
+
+        foreach ($queryComponents as $type => $queryComponent) {
+            if ($type === 'tag') {
+                if (count(Arr::get($queryComponent, 'tags', [])) === 0) {
+                    Arr::forget($queryComponents, $type);
+                }
+            }
+        }
+
+        return $queryComponents;
+    }
+
+}
