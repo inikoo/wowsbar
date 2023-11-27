@@ -17,26 +17,26 @@ export default {
 
     schemaForm: [
         {
-            label: "Propspect by",
+            label:  trans("Propspect by"),
             name: "propspect_by",
-            information : "filter deliveries based on the prospect",
+            information : trans("filter deliveries based on the prospect"),
             value : {
                 by : []
             },
         },
         {
-            label: "Tags",
+            label: trans("Tags"),
             name: "tag",
-            information : "Filter by SEO tags",
+            information :  trans("Filter by SEO tags"),
             value : {
                 tags : [],
                 state : 'all'
             },
         },
         {
-            label: "Last contacted",
+            label:  trans("Last contacted"),
             name: "last_contact",
-            information : "filter recipients based on the last mailshot sent to them",
+            information : trans("filter recipients based on the last mailshot sent to them"),
             value : {
                 state : false,
                 data: {

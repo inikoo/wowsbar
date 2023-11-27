@@ -59,9 +59,7 @@ onMounted(() => {
                             <input :id="filter.value" name="notification-method" type="radio" :value="filter.value"
                                 class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 v-model="value[fieldName].state" />
-                            <label :for="filter.value" class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{
-                                filter.label
-                            }}</label>
+                            <label :for="filter.value" class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{filter.label}}</label>
                         </div>
                     </div>
                 </fieldset>
