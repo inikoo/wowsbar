@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { get, set, isArray, cloneDeep } from 'lodash'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
-import Multiselect from "@vueform/multiselect"
-import { computed } from 'vue'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 
 const props = withDefaults(defineProps<{
