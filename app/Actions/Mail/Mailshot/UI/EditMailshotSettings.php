@@ -8,9 +8,6 @@
 namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
-use App\Models\Helpers\Query;
-use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Support\Arr;

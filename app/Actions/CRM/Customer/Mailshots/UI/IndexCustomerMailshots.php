@@ -10,7 +10,6 @@ namespace App\Actions\CRM\Customer\Mailshots\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithCustomersSubNavigation;
-use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;
