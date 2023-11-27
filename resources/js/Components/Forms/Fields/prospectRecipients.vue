@@ -82,6 +82,8 @@ const getTagsOptions = async () => {
                     }
                 }
             );
+            //if(response.data.type==='query'){
+            //    props.form[props.fieldName].recipient_builder_data.query = response.data.count //todo
 
             recipientsCount.value = locale.number(response.data) ;
 
@@ -132,7 +134,13 @@ onMounted(() => {
                 </Tab>
                 <div style="margin-left: auto;">
                     <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                      {{trans('Total recipients')}}:  {{ recipientsCount }}
+                      {{trans('Total recipients')}}:  {{ recipientsCount }} Q
+                    </button>
+                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:  {{ recipientsCount }} C
+                    </button>
+                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:  {{ recipientsCount }} P
                     </button>
                 </div>
             </TabList>
