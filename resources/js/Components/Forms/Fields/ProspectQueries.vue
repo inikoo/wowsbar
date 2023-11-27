@@ -9,6 +9,7 @@ import {faEnvelope, faAsterisk, faCodeBranch, faTags} from '@fal/'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {trans} from "laravel-vue-i18n";
 import {useLocaleStore} from "@/Stores/locale";
+import { get } from 'lodash'
 
 library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 const props = defineProps<{
@@ -57,7 +58,7 @@ const locale = useLocaleStore()
             <tbody class="divide-y divide-gray-200 bg-white">
             <tr v-for="option in options.data" :key="option.id" class=""
                 :class="[
-                        option.id == form[fieldName].recipient_builder_data.query ? 'bg-org-50 text-gray-600' : '',
+                        option.id == get(form[fieldName],['recipient_builder_data','query']) ? 'bg-org-50 text-gray-600' : '',
                         option.number_items < 1? 'bg-gray-100 text-gray-400' : 'text-gray-500'  // If the prospects is 0
                     ]">
                 <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
