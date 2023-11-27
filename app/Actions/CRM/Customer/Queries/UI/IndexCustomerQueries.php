@@ -11,7 +11,7 @@ use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithCustomersSubNavigation;
-use App\Enums\UI\Organisation\ProspectsQueriesTabsEnum;
+use App\Enums\UI\Organisation\CustomersQueriesTabsEnum;
 use App\Http\Resources\CRM\ProspectQueriesResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\TagResource;
@@ -48,7 +48,7 @@ class IndexCustomerQueries extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+        $this->initialisation($request)->withTab(CustomersQueriesTabsEnum::values());
         $this->parent = organisation();
 
         return $this->handle();
@@ -56,7 +56,7 @@ class IndexCustomerQueries extends InertiaAction
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(ProspectsQueriesTabsEnum::values());
+        $this->initialisation($request)->withTab(CustomersQueriesTabsEnum::values());
         $this->parent = $shop;
 
         return $this->handle($shop);
@@ -75,7 +75,7 @@ class IndexCustomerQueries extends InertiaAction
         }
 
         $query = QueryBuilder::for(Query::class)
-            ->where('model_type', 'Prospect');
+            ->where('model_type', 'Customer');
 
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -125,32 +125,32 @@ class IndexCustomerQueries extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters(),
                 ),
-                'title'       => __('prospect lists'),
+                'title'       => __('customer lists'),
                 'pageHead'    => [
-                    'title'            => __('prospect lists'),
+                    'title'            => __('customer lists'),
                     'subNavigation'    => $subNavigation,
                 ],
 
                 'tabs' => [
                     'current'    => $this->tab,
-                    'navigation' => ProspectsQueriesTabsEnum::navigation(),
+                    'navigation' => CustomersQueriesTabsEnum::navigation(),
                 ],
 
                 'tags' => TagResource::collection(Tag::all()),
 
 
-                ProspectsQueriesTabsEnum::LISTS->value => $this->tab == ProspectsQueriesTabsEnum::LISTS->value ?
-                    fn () => ProspectQueriesResource::collection(IndexCustomerQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))
-                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexCustomerQueries::run(prefix: ProspectsQueriesTabsEnum::LISTS->value))),
+                CustomersQueriesTabsEnum::LISTS->value => $this->tab == CustomersQueriesTabsEnum::LISTS->value ?
+                    fn () => ProspectQueriesResource::collection(IndexCustomerQueries::run(prefix: CustomersQueriesTabsEnum::LISTS->value))
+                    : Inertia::lazy(fn () => ProspectQueriesResource::collection(IndexCustomerQueries::run(prefix: CustomersQueriesTabsEnum::LISTS->value))),
 
-                ProspectsQueriesTabsEnum::HISTORY->value => $this->tab == ProspectsQueriesTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: ProspectsQueriesTabsEnum::HISTORY->value))),
+                CustomersQueriesTabsEnum::HISTORY->value => $this->tab == CustomersQueriesTabsEnum::HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: CustomersQueriesTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: CustomersQueriesTabsEnum::HISTORY->value))),
 
 
             ]
-        )->table($this->tableStructure(prefix: ProspectsQueriesTabsEnum::LISTS->value))
-            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsQueriesTabsEnum::HISTORY->value));
+        )->table($this->tableStructure(prefix: CustomersQueriesTabsEnum::LISTS->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: CustomersQueriesTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
@@ -168,7 +168,7 @@ class IndexCustomerQueries extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name'       => 'org.crm.shop.prospects.lists.index',
+                                'name'       => 'org.crm.shop.customers.lists.index',
                                 'parameters' => $routeParameters
                             ],
                             'label' => __('lists'),
