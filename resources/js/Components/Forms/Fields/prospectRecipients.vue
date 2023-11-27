@@ -8,7 +8,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
-import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue'
+import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
@@ -55,11 +55,7 @@ const categories = [
         label: 'Custom',
         component: ProspectQueryBuilder,
         options : {
-<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQueryChooser.vue
             use : ["tags", "prospect_last_contacted"],
-=======
-            use : ["tag","prospect_last_contacted"],
->>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/prospectRecipients.vue
             ...props.options["custom"]
 
         }
