@@ -33,6 +33,8 @@ trait WithRecipientsInput
                 break;
             case 'prospects':
                 Arr::forget($recipients, ['custom_prospects_query', 'query']);
+                data_set($recipients, 'recipient_builder_data.prospects', [], overwrite: false);
+
                 break;
             default:
                 throw new Exception('Invalid recipient builder type');
@@ -44,7 +46,7 @@ trait WithRecipientsInput
 
     public function cleanCustomProspectsQuery(array $queryComponents): array
     {
-        $queryComponents = array_merge(
+        return array_merge(
             [
                 'can_contact_by' =>
                     [
@@ -53,16 +55,6 @@ trait WithRecipientsInput
             ],
             $queryComponents
         );
-
-        foreach ($queryComponents as $type => $queryComponent) {
-            if ($type === 'tag') {
-                if (count(Arr::get($queryComponent, 'tags', [])) === 0) {
-                    Arr::forget($queryComponents, $type);
-                }
-            }
-        }
-
-        return $queryComponents;
     }
 
 }

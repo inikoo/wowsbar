@@ -44,7 +44,7 @@ const recipientsCount = ref(0)
 const categories = [
     {
         name: 'query',
-        fieldName: "recipients",
+        fieldName: "recipients_recipe",
         label: 'Query',
         component: ProspectQueries,
         options : props.options["query"]
@@ -71,7 +71,7 @@ const categories = [
 const locale = useLocaleStore();
 
 
-const getTagsOptions = async () => {
+const getEstimateRecipients = async () => {
         try {
             const formData = props.form.data();
             const response = await axios.get(
@@ -85,7 +85,7 @@ const getTagsOptions = async () => {
             //if(response.data.type==='query'){
             //    props.form[props.fieldName].recipient_builder_data.query = response.data.count //todo
 
-            recipientsCount.value = locale.number(response.data) ;
+            recipientsCount.value = response.data ;
 
         } catch (error) {
             console.error(error); // Log the error for debugging purposes
@@ -104,7 +104,7 @@ const changeTab=(tabIndex : number)=>{
     selectedIndex.value = tabIndex
 }
 
-watch(props.form[props.fieldName],getTagsOptions, {deep: true})
+watch(props.form[props.fieldName],getEstimateRecipients, {deep: true})
 
 
 onMounted(() => {
@@ -133,14 +133,14 @@ onMounted(() => {
                     </button>
                 </Tab>
                 <div style="margin-left: auto;">
-                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                      {{trans('Total recipients')}}:  {{ recipientsCount }} Q
+                    <button  v-if="recipientsCount.type == 'prospects'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                      {{trans('Total recipients')}}:  {{ recipientsCount.count }}
                     </button>
-                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                        {{trans('Total recipients')}}:  {{ recipientsCount }} C
+                    <button  v-if="recipientsCount.type == 'custom_prospects_query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:   {{ recipientsCount.count }}
                     </button>
-                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                        {{trans('Total recipients')}}:  {{ recipientsCount }} P
+                    <button  v-if="recipientsCount.type == 'query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:  {{ recipientsCount.count }}
                     </button>
                 </div>
             </TabList>

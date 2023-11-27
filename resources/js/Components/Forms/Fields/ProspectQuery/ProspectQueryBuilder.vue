@@ -10,6 +10,8 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n";
 import Tags from './FieldQueryBuilder/Tags.vue'
+import PropspectBy from './FieldQueryBuilder/ProspectWith.vue'
+import LastContact from './FieldQueryBuilder/ProspectLastContacted.vue'
 
 library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight, faBoxOpen)
 

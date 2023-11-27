@@ -15,6 +15,7 @@ trait WithQueryCompiler
 {
     private array $arguments = [];
     private array $joins     = [];
+    private bool $returnZero = false;
 
     /**
      * @throws \Exception
@@ -29,9 +30,10 @@ trait WithQueryCompiler
         }
 
         return [
-            'constrains' => $compiledConstrains,
-            'arguments'  => $this->arguments,
-            'joins'      => $this->joins
+            'constrains'  => $compiledConstrains,
+            'arguments'   => $this->arguments,
+            'joins'       => $this->joins,
+            'returnZero'  => $this->returnZero
         ];
     }
 
@@ -53,10 +55,7 @@ trait WithQueryCompiler
                 default => throw new Exception('Unknown constrain type: '.Arr::get($constrainData, 'type', 'Type not set'))
             };
         } catch (Exception $e) {
-            if (app()->environment('local')) {
-                print_r($e);
-            }
-            $compiledConstrain = ['xx'];
+            $compiledConstrain = null;
         }
 
 
@@ -65,6 +64,11 @@ trait WithQueryCompiler
 
     public function compileTagConstrain(array $constrainData): array
     {
+        if (count(Arr::get($constrainData, 'tag_ids', [])) == 0) {
+            $this->returnZero = true;
+        }
+
+
         $this->joins[] = [
             'type'     => 'left',
             'table'    => 'taggables',
