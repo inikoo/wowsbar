@@ -81,7 +81,7 @@ class SetMailshotAsReady
 
 
         return Redirect::route('org.crm.shop.prospects.mailshots.show', [
-            $mailshot->scope->slug,
+            $mailshot->parent->slug,
             $mailshot->slug
         ]);
     }

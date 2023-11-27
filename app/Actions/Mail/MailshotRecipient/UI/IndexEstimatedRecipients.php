@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\MailshotRecipient\UI;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
@@ -34,7 +34,6 @@ class IndexEstimatedRecipients extends InertiaAction
             );
     }
 
-    /** @noinspection PhpUndefinedMethodInspection */
     public function handle(Mailshot $mailshot, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -48,7 +47,7 @@ class IndexEstimatedRecipients extends InertiaAction
         }
 
         $query        = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
-        $queryBuilder = BuildQuery::run($query);
+        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])

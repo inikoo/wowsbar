@@ -70,7 +70,7 @@ class SendMailshotChannel
                     if($placeholder=='unsubscribe') {
                         $placeholder = sprintf(
                             "<a href=\"%s\">%s</a>",
-                            $mailshot->scope->website->domain . '/webhooks/unsubscribe/' . $recipient->dispatchedEmail->ulid,
+                            $mailshot->parent->website->domain . '/webhooks/unsubscribe/' . $recipient->dispatchedEmail->ulid,
                             __('Unsubscribe')
                         );
                     }

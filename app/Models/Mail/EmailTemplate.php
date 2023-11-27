@@ -22,8 +22,8 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $title
- * @property string $scope_type
- * @property int $scope_id
+ * @property string $parent_type
+ * @property int $parent_id
  * @property array $data
  * @property array $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -32,6 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot
+ * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read Snapshot|null $unpublishedSnapshot
@@ -42,8 +43,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereScopeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereScopeType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
@@ -75,7 +76,7 @@ class EmailTemplate extends Model
         return 'slug';
     }
 
-    public function scope(): MorphTo
+    public function parent(): MorphTo
     {
         return $this->morphTo();
     }

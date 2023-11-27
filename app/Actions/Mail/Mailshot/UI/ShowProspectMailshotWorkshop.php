@@ -201,7 +201,7 @@ class ShowProspectMailshotWorkshop extends InertiaAction
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        $mailshot->scope->slug,
+                        $mailshot->parent->slug,
                         $mailshot->slug
                     ]
                 ]

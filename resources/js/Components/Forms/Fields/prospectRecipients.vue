@@ -1,3 +1,9 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Fri, 24 Nov 2023 17:31:58 Malaysia Time, Kuala Lumpur, Malaysia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang='ts'>
 import { ref, watch, onMounted } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
@@ -7,6 +13,7 @@ import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 import { trans } from "laravel-vue-i18n";
+import {useLocaleStore} from "@/Stores/locale";
 
 const props = defineProps<{
     form: {
@@ -43,37 +50,44 @@ const categories = [
         options : props.options["query"]
     },
     {
-        name: 'custom',
-        fieldName: ["recipients", 'recipient_builder_data', 'custom'],
+        name: 'custom_prospects_query',
+        fieldName: ["recipients_recipe", 'recipient_builder_data', 'custom_prospects_query'],
         label: 'Custom',
         component: ProspectQueryBuilder,
         options : {
+<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQueryChooser.vue
             use : ["tags", "prospect_last_contacted"],
+=======
+            use : ["tag","prospect_last_contacted"],
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/prospectRecipients.vue
             ...props.options["custom"]
-            
+
         }
     },
     {
         name: 'prospects',
-        fieldName: ["recipients", 'recipient_builder_data', 'prospects'],
+        fieldName: ["recipients_recipe", 'recipient_builder_data', 'prospects'],
         label: 'Prospects',
         component: ProspectSelect,
         options : props.options["prospects"]
     },
 ]
+const locale = useLocaleStore();
 
 
 const getTagsOptions = async () => {
         try {
-            const formData = props.form.data(); // Assuming props.form.data() retrieves the form data
-
-            const response = await axios.post(
+            const formData = props.form.data();
+            const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
-                formData // Sending form data as part of the POST request
+                {
+                    params: {
+                        ...formData
+                    }
+                }
             );
 
-            // Assuming recipientsCount is a variable or element to store the response data
-            recipientsCount.value = response.data; // Set the received data to recipientsCount
+            recipientsCount.value = locale.number(response.data) ;
 
         } catch (error) {
             console.error(error); // Log the error for debugging purposes
@@ -92,7 +106,7 @@ const changeTab=(tabIndex : number)=>{
     selectedIndex.value = tabIndex
 }
 
-watch(props.form.recipients,getTagsOptions, {deep: true})
+watch(props.form[props.fieldName],getTagsOptions, {deep: true})
 
 
 onMounted(() => {
@@ -122,7 +136,7 @@ onMounted(() => {
                 </Tab>
                 <div style="margin-left: auto;">
                     <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                      Total recipients :  {{ recipientsCount }}
+                      {{trans('Total recipients')}}:  {{ recipientsCount }}
                     </button>
                 </div>
             </TabList>

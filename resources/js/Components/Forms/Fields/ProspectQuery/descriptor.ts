@@ -17,8 +17,13 @@ export default {
 
     schemaForm: [
         {
+<<<<<<< HEAD
             label:  trans("Prospect Can Contact By"),
             name: "prospect_can_contact_by",
+=======
+            label:  trans("Prospect with"),
+            name: "prospect_with",
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7
             information : trans("filter deliveries based on the prospect"),
             value : {
                 fields : [],
@@ -35,7 +40,11 @@ export default {
             },
         },
         {
+<<<<<<< HEAD
             label:  trans("Prospect Last Contacted"),
+=======
+            label:  trans("Last contacted"),
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7
             name: "prospect_last_contacted",
             information : trans("filter recipients based on the last mailshot sent to them"),
             value : {

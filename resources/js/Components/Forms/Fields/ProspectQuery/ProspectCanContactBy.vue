@@ -3,15 +3,15 @@ import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { ref, watch, reactive, onMounted } from 'vue'
 import descriptor from './descriptor'
-import { get, set, isArray, cloneDeep } from 'lodash'
+import { get, set, isArray } from 'lodash'
 import { faExclamationCircle, faCheckCircle, faChevronDown, faChevronRight } from '@fas/';
 import { faBoxOpen } from '@fal/';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n";
-import PropspectBy from './FieldQueryBuilder/PropspectBy.vue'
+import ProspectWith from './FieldQueryBuilder/ProspectWith.vue'
 import Tags from './FieldQueryBuilder/Tags.vue'
-import LastContact from './FieldQueryBuilder/LastContact.vue'
+import ProspectLastContacted from './FieldQueryBuilder/ProspectLastContacted.vue'
 
 library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight, faBoxOpen)
 
@@ -28,19 +28,31 @@ const props = withDefaults(defineProps<{
     }
 }>(), {
     options: {
+<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue
         use: ['prospect_can_contact_by', "tags", "prospect_last_contacted"],
+=======
+        use: ['prospect_with', "tag", "prospect_last_contacted"],
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue
     }
 
 })
+
+
 const emits = defineEmits();
 const sectionValue = ref([])
 const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.includes(item.name))
 
 const getComponent = (componentName: string) => {
     const components: any = {
+<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue
         "prospect_can_contact_by": PropspectBy,
         "tags" : Tags,
         "prospect_last_contacted" : LastContact
+=======
+        "prospect_with": ProspectWith,
+        "tag" : Tags,
+        "prospect_last_contacted" : ProspectLastContacted
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue
 
     };
     return components[componentName] ?? null;
@@ -50,7 +62,7 @@ const getComponent = (componentName: string) => {
 
 const setFormValue = (data, fieldName) => {
     if (isArray(fieldName)) {  /* if fieldName array */
-        if (get(data, fieldName)) return get(data, fieldName, {});  /* Chek if data null or undefined or has a objecjt*/
+        if (get(data, fieldName)) return get(data, fieldName, {});  /* Check if data null or undefined or has an object*/
         else return {}
     } else return get(data, fieldName, {}); /* if fieldName string */
 
@@ -134,10 +146,10 @@ console.log("as", schemaForm, props.form)
                         </div>
                     </DisclosureButton>
                     <DisclosurePanel class="px-4 pt-3 pb-2 text-sm text-gray-500 bg-white border-gray-300 border border-t-0">
-                      
+
                             <component :is="getComponent(key)" :value="value" :fieldName="key">
                             </component>
-                        
+
                     </DisclosurePanel>
                 </Disclosure>
             </div>

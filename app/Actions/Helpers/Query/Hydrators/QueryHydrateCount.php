@@ -7,7 +7,7 @@
 
 namespace App\Actions\Helpers\Query\Hydrators;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Models\Helpers\Query;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -21,7 +21,7 @@ class QueryHydrateCount
 
     public function handle(Query $query)
     {
-        $queryBuilder = BuildQuery::run($query);
+        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
 
         //print($queryBuilder->toSql()."\n");
 

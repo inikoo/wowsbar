@@ -6,11 +6,30 @@
 
 <script setup lang="ts">
 import {  useForm } from '@inertiajs/vue3'
-import { jumpToElement } from "@/Composables/jumpToElement"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExclamationCircle, faCheckCircle, faAsterisk } from '@fas/'
 import { library } from "@fortawesome/fontawesome-svg-core"
+import Input from '@/Components/Forms/Fields/Input.vue'
+import Select from '@/Components/Forms/Fields/Select.vue'
+import Phone from '@/Components/Forms/Fields/Phone.vue'
+import Date from '@/Components/Forms/Fields/Date.vue'
+import { trans } from "laravel-vue-i18n"
+import Address from "@/Components/Forms/Fields/Address.vue"
+import Radio from '@/Components/Forms/Fields/Radio.vue'
+import Country from "@/Components/Forms/Fields/Country.vue"
+import Currency from "@/Components/Forms/Fields/Currency.vue"
+import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
+import Password from "@/Components/Forms/Fields/Password.vue"
+import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
+import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
+import prospectRecipients from '@/Components/Forms/Fields/prospectRecipients.vue'
+import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue'
+
+import { ref, onMounted } from 'vue'
+import Textarea from "@/Components/Forms/Fields/Textarea.vue";
+
+
 library.add(faExclamationCircle, faAsterisk, faCheckCircle)
 
 const props = defineProps<{
@@ -29,6 +48,7 @@ const props = defineProps<{
     appName: string
 }>()
 
+<<<<<<< HEAD
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
@@ -44,9 +64,9 @@ import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ProspectQueryChooser from '@/Components/Forms/Fields/ProspectQueryChooser.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue'
+=======
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7
 
-import { ref, onMounted } from 'vue'
-import Textarea from "@/Components/Forms/Fields/Textarea.vue";
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -64,7 +84,7 @@ const getComponent = (componentName: string) => {
         'textarea': Textarea,
         'jobPosition': JobPosition,
         'prospectQueryBuilder': ProspectQueryBuilder,
-        'prospectQueryChooser': ProspectQueryChooser,
+        'prospectRecipients': prospectRecipients,
     };
     return components[componentName] ?? null;
 

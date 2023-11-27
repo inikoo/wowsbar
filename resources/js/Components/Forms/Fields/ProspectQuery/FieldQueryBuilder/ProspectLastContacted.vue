@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<{
     fieldName: any
 }>(), {})
 
-const availableOptions = ['day', 'week', 'month']
+
 </script>
 
 <template>
@@ -38,6 +38,4 @@ const availableOptions = ['day', 'week', 'month']
     </div>
 </template>
 
-<style>
-</style>
 

@@ -10,22 +10,26 @@ namespace App\Actions\Traits;
 use App\Models\CRM\Customer;
 use App\Models\Leads\Prospect;
 
-trait WithCheckCanSendEmail
+trait WithCheckCanContactByEmail
 {
-    protected function canSend(Prospect|Customer $recipient): bool
+    protected function canContactByEmail(Prospect|Customer $recipient): bool
     {
         return match (class_basename($recipient)) {
-            'Prospect' => $this->canSendProspect($recipient),
-            'Customer' => $this->canSendCustomer($recipient)
+            'Prospect' => $this->canContactProspectByEmail($recipient),
+            'Customer' => $this->canContactCustomerByEmail($recipient)
         };
     }
 
-    protected function canSendCustomer(Customer $customer): bool
+    protected function canContactCustomerByEmail(Customer $customer): bool
     {
-        return false;
+        if(!filter_var($customer->email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        return true;
     }
 
-    protected function canSendProspect(Prospect $prospect): bool
+    protected function canContactProspectByEmail(Prospect $prospect): bool
     {
         if ($prospect->dont_contact_me) {
             return false;

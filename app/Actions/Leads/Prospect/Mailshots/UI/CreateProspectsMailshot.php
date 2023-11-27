@@ -58,8 +58,8 @@ class CreateProspectsMailshot extends InertiaAction
         $fields[] = [
             'title'  => '',
             'fields' => [
-                'recipients' => [
-                    'type'        => 'prospectQueryChooser',
+                'recipients_recipe' => [
+                    'type'        => 'prospectRecipients',
                     'label'       => __('recipients'),
                     'required'    => true,
                     'options'     => [

@@ -82,7 +82,7 @@ class EditProspectMailshot extends InertiaAction
                                     'state' => array_key_first($filter),
                                     'tags'  => $tags
                                 ],
-                                'last_contact' => [
+                                'prospect_last_contacted' => [
                                     'state' => $lastContact != null,
                                     'data'  => [
                                         'unit'     => Arr::get($lastContactValue, 'unit'),

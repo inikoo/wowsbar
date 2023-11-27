@@ -29,8 +29,8 @@ class OrganisationHydrateProspects
     public function handle(): void
     {
         $stats = [
-            'number_prospects'                 => Prospect::where('scope_type', 'Shop')->count(),
-            'number_prospects_dont_contact_me' => Prospect::where('scope_type', 'Shop')->where('dont_contact_me', true)->count(),
+            'number_prospects'                 => Prospect::where('parent_type', 'Shop')->count(),
+            'number_prospects_dont_contact_me' => Prospect::where('parent_type', 'Shop')->where('dont_contact_me', true)->count(),
 
         ];
 
@@ -42,7 +42,7 @@ class OrganisationHydrateProspects
                 enum: ProspectStateEnum::class,
                 models: Prospect::class,
                 where: function ($q) {
-                    $q->where('scope_type', 'Shop');
+                    $q->where('parent_type', 'Shop');
                 }
             )
         );
@@ -55,7 +55,7 @@ class OrganisationHydrateProspects
                 enum: ProspectContactedStateEnum::class,
                 models: Prospect::class,
                 where: function ($q) {
-                    $q->where('scope_type', 'Shop');
+                    $q->where('parent_type', 'Shop');
                 }
             )
         );
@@ -68,7 +68,7 @@ class OrganisationHydrateProspects
                 enum: ProspectFailStatusEnum::class,
                 models: Prospect::class,
                 where: function ($q) {
-                    $q->where('scope_type', 'Shop');
+                    $q->where('parent_type', 'Shop');
                 }
             )
         );
@@ -81,7 +81,7 @@ class OrganisationHydrateProspects
                 enum: ProspectSuccessStatusEnum::class,
                 models: Prospect::class,
                 where: function ($q) {
-                    $q->where('scope_type', 'Shop');
+                    $q->where('parent_type', 'Shop');
                 }
             )
         );

@@ -40,8 +40,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $layout
  * @property array $recipients_recipe
  * @property int|null $publisher_id org user
- * @property string $scope_type
- * @property int $scope_id
+ * @property string $parent_type
+ * @property int $parent_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
@@ -50,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
  * @property-read \App\Models\Mail\Outbox|null $outbox
+ * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
  * @property-read int|null $recipients_count
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
@@ -64,13 +65,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereOutboxId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereParentType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsRecipe($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipientsStoredAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereSentAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereStartSendingAt($value)
@@ -125,7 +126,7 @@ class Mailshot extends Model
     }
 
 
-    public function scope(): MorphTo
+    public function parent(): MorphTo
     {
         return $this->morphTo();
     }
@@ -143,7 +144,7 @@ class Mailshot extends Model
     public function sender()
     {
         if (app()->environment('production')) {
-            $sender = $this->scope->sender_email_address;
+            $sender = $this->parent->sender_email_address;
         } else {
             $sender = config('mail.devel.sender_email_address');
         }

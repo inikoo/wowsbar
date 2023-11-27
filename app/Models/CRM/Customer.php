@@ -298,7 +298,7 @@ class Customer extends Model implements HasMedia, Auditable
 
     public function scopedProspects(): MorphMany
     {
-        return $this->morphMany(Prospect::class, 'scope');
+        return $this->morphMany(Prospect::class, 'parent');
     }
 
     public function socialAccounts(): HasMany

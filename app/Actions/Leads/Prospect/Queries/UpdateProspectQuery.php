@@ -56,18 +56,18 @@ class UpdateProspectQuery
                             $queryBuilder['tag']['state'] => $queryBuilder['tag']['tags']
                         ],
                     ],
-                    'arguments' => $queryBuilder['last_contact']['state'] ? [
+                    'arguments' => $queryBuilder['prospect_last_contacted']['state'] ? [
                         '__date__' => [
                             'type'  => 'dateSubtraction',
                             'value' => [
-                                'unit'     => $queryBuilder['last_contact']['data']['unit'],
-                                'quantity' => $queryBuilder['last_contact']['data']['quantity']
+                                'unit'     => $queryBuilder['prospect_last_contacted']['data']['unit'],
+                                'quantity' => $queryBuilder['prospect_last_contacted']['data']['quantity']
                             ]
                         ]
                     ] : []
                 ],
             ];
-            if ($queryBuilder['last_contact']['state']) {
+            if ($queryBuilder['prospect_last_contacted']['state']) {
                 $lastContacted = [
                     'last_contacted_at',
                     '<=',
@@ -83,9 +83,9 @@ class UpdateProspectQuery
         }
 
         foreach ($data as $queryBuilderData) {
-            $queryBuilderData['is_seeded']  = true;
-            $queryBuilderData['scope_type'] = 'Shop';
-            $queryBuilderData['scope_id']   = $shop->id;
+            $queryBuilderData['is_seeded']   = true;
+            $queryBuilderData['parent_type'] = 'Shop';
+            $queryBuilderData['parent_id']   = $shop->id;
 
             $query = UpdateQuery::run($query, $queryBuilderData);
             QueryHydrateCount::run($query);

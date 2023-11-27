@@ -31,6 +31,7 @@ class StoreMailshot
 {
     use AsAction;
     use WithAttributes;
+    use WithRecipientsInput;
 
     private bool $asAction = false;
 
@@ -62,7 +63,7 @@ class StoreMailshot
 
         OrganisationHydrateMailshots::dispatch();
         if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
-            ShopHydrateMailshots::dispatch($mailshot->scope);
+            ShopHydrateMailshots::dispatch($mailshot->parent);
         }
 
         $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
@@ -94,21 +95,32 @@ class StoreMailshot
         }
     }
 
+    /**
+     * @throws \Exception
+     */
+    public function afterValidator(): void
+    {
+
+        $this->fill([
+            'recipients_recipe', $this->postProcessRecipients($this->get('recipients_recipe'))
+        ]);
+    }
+
     public function rules(): array
     {
         return [
-            'outbox_id'  => ['required', 'exists:outboxes,id'],
-            'subject'    => ['required', 'string', 'max:255'],
-            'type'       => ['required', new Enum(MailshotTypeEnum::class)],
-            'recipients' => ['required', 'array']
+            'outbox_id'         => ['required', 'exists:outboxes,id'],
+            'subject'           => ['required', 'string', 'max:255'],
+            'type'              => ['required', new Enum(MailshotTypeEnum::class)],
+            'recipients_recipe' => ['required', 'array']
             /*
             'query_arguments' => ['sometimes', 'array'],
             'query_id'        => [
                 'required',
                 Rule::exists('queries', 'id')->where(function (Builder $query) {
                     return $query->where('model_type', $this->queryRules['model_type'])
-                        ->where('scope_type', $this->queryRules['scope_type'])
-                        ->where('scope_id', $this->queryRules['scope_id']);
+                        ->where('parent_type', $this->queryRules['parent_type'])
+                        ->where('parent_id', $this->queryRules['parent_id']);
                 }),
             ]
             */
@@ -118,9 +130,9 @@ class StoreMailshot
     public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
         $this->queryRules = [
-            'model_type' => 'Prospect',
-            'scope_type' => 'Shop',
-            'scope_id'   => $shop->id
+            'model_type'  => 'Prospect',
+            'parent_type' => 'Shop',
+            'parent_id'   => $shop->id
         ];
 
         $this->fillFromRequest($request);
@@ -144,9 +156,9 @@ class StoreMailshot
     {
         if (Arr::get($objectData, 'type') == MailshotTypeEnum::PROSPECT_MAILSHOT) {
             $this->queryRules = [
-                'model_type' => 'Prospect',
-                'scope_type' => class_basename($parent),
-                'scope_id'   => $parent->id
+                'model_type'  => 'Prospect',
+                'parent_type' => class_basename($parent),
+                'parent_id'   => $parent->id
             ];
         }
 
@@ -175,11 +187,13 @@ class StoreMailshot
             MailshotTypeEnum::PROSPECT_MAILSHOT => redirect()->route(
                 'org.crm.shop.prospects.mailshots.workshop',
                 [
-                    $mailshot->scope->slug,
+                    $mailshot->parent->slug,
                     $mailshot->slug
                 ]
             ),
             default => null
         };
     }
+
+
 }

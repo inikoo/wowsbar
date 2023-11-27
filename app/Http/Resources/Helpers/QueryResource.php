@@ -29,7 +29,8 @@ class QueryResource extends JsonResource
             'model_type' => $this->model_type,
             'constrains' => $this->constrains,
             'arguments'  => $this->arguments,
-            'is_seeded'  => $this->is_seeded
+            'is_seeded'  => $this->is_seeded,
+            'informatics'=> ''
         ];
     }
 }
