@@ -32,8 +32,7 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'onUpdate'): void
 }>()
-
-console.log(props)
+import { trans } from "laravel-vue-i18n"
 
 </script>
 
@@ -42,11 +41,11 @@ console.log(props)
         <table class="min-w-full divide-y divide-gray-300 border-b border-gray-200 text-xs">
             <thead>
                 <tr class="text-left text-sm font-semibold text-gray-600">
-                    <th scope="col" class="whitespace-nowrap pb-2.5 pl-4 pr-3 sm:pl-0">Name</th>
-                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">Description</th>
-                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">Prospects</th>
+                    <th scope="col" class="whitespace-nowrap pb-2.5 pl-4 pr-3 sm:pl-0">{{trans('Name')}}</th>
+                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{trans('Description')}}</th>
+                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{trans('Prospects')}}</th>
                     <th scope="col" class="relative whitespace-nowrap pb-2.5 pl-3 pr-4 sm:pr-0">
-                        <span class="sr-only">Edit</span>
+                        <span class="sr-only">{{trans('Edit')}}</span>
                     </th>
                 </tr>
             </thead>
@@ -66,7 +65,7 @@ console.log(props)
                     <FontAwesomeIcon icon='fal fa-envelope' class='' aria-hidden='true' />
                 </div>
 
-                <p v-if="option.constrains.where?.[2]" class="text-gray-500">(Not contacted yet)</p>
+                <p v-if="option.constrains.where?.[2]" class="text-gray-500">({{trans('Not contacted yet')}})</p>
                 <p v-if="option.constrains?.group" class="text-gray-500 whitespace-nowrap">
                     (Last contacted at:
                     <div class="relative inline-flex">
@@ -101,7 +100,7 @@ console.log(props)
                     </div>
                 </p>
             </div>
-                        
+
                     </td>
                     <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
                     <td class="relative py-2 px-3 text-right font-medium">
