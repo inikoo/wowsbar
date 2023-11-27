@@ -16,9 +16,8 @@ enum ProspectsMailshotsTabsEnum: string
     use HasTabs;
 
     case MAILSHOTS = 'mailshots';
-
-    case HISTORY     = 'history';
-    case UNSUBSCRIBE = 'unsubscribe';
+    case HISTORY   = 'history';
+    case SETTINGS  = 'settings';
 
 
     public function blueprint(): array
@@ -31,9 +30,9 @@ enum ProspectsMailshotsTabsEnum: string
                 'icon'  => 'fal fa-bars',
             ],
 
-            ProspectsMailshotsTabsEnum::UNSUBSCRIBE => [
+            ProspectsMailshotsTabsEnum::SETTINGS => [
                 'title' => __('unsubscribe'),
-                'icon'  => 'fal fa-text',
+                'icon'  => 'fal fa-sliders-h',
                 'type'  => 'icon',
                 'align' => 'right'
             ],

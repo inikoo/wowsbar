@@ -20,6 +20,7 @@ import {faStop, faPlay} from '@fas/'
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
+import EditModel from "@/Pages/Organisation/EditModel.vue";
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
 
@@ -34,6 +35,7 @@ const props = defineProps<{
     showcase?: object,
     email?: object
     recipients?: object,
+    settings?: object,
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -47,6 +49,7 @@ const component = computed(() => {
         details: ModelDetails,
         changelog: TableHistories,
         recipients: TableDispatchedEmails,
+        settings: EditModel,
     };
     return components[currentTab.value];
 
