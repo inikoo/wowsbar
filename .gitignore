@@ -45,3 +45,4 @@ _ide_helper.php
 /dump_aurora_db.sh
 /export_wowsbar_aurora_db.sh
 /devops/tests/paso/
+.bashrc
