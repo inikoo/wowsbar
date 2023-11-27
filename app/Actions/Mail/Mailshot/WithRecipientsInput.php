@@ -46,7 +46,7 @@ trait WithRecipientsInput
 
     public function cleanCustomProspectsQuery(array $queryComponents): array
     {
-        $queryComponents = array_merge(
+        return array_merge(
             [
                 'can_contact_by' =>
                     [
@@ -55,16 +55,6 @@ trait WithRecipientsInput
             ],
             $queryComponents
         );
-
-        foreach ($queryComponents as $type => $queryComponent) {
-            if ($type === 'tag') {
-                if (count(Arr::get($queryComponent, 'tags', [])) === 0) {
-                    Arr::forget($queryComponents, $type);
-                }
-            }
-        }
-
-        return $queryComponents;
     }
 
 }

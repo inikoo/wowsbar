@@ -37,6 +37,11 @@ class GetQueryEloquentQueryBuilder
     public function buildQuery($model, $parent, array $compiledConstrains): QueryBuilder
     {
         $queryBuilder = QueryBuilder::for($model);
+        if(Arr::get($compiledConstrains, 'returnZero', false)) {
+            return $queryBuilder->whereRaw('0=1');
+        }
+
+
         if (class_basename($parent) == 'Shop') {
             $queryBuilder->where('shop_id', $parent->id);
         }
@@ -57,12 +62,12 @@ class GetQueryEloquentQueryBuilder
 
         }
 
-
         foreach (Arr::get($compiledConstrains, 'constrains') as $constrainData) {
             $constrainType = $constrainData['type'];
 
-
-            if ($constrainType == 'group') {
+            if ($constrainType == 'false') {
+                $queryBuilder->where(true, false);
+            } elseif ($constrainType == 'group') {
                 $subConstrainData = $constrainData['parameters'];
                 $queryBuilder
                     ->where(

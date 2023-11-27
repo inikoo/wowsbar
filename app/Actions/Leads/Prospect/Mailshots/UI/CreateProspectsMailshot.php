@@ -73,7 +73,7 @@ class CreateProspectsMailshot extends InertiaAction
                             'query'     => null,
                             'custom'    => $tags[0] != '' ? [
                                 'tags'   => [
-                                    'logic' => 'all',
+                                    'logic'    => 'all',
                                     'tag_ids'  => $tags
                                 ],
                             ] : null,
