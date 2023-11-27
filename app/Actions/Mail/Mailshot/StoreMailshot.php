@@ -31,7 +31,7 @@ class StoreMailshot
 {
     use AsAction;
     use WithAttributes;
-    use WithRecipientsInput;
+    // use WithRecipientsInput;
 
     private bool $asAction = false;
 
