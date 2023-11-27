@@ -72,9 +72,9 @@ class CreateProspectsMailshot extends InertiaAction
                         'recipient_builder_data' => [
                             'query'     => null,
                             'custom'    => $tags[0] != '' ? [
-                                'tag'   => [
-                                    'state' => 'all',
-                                    'tags'  => $tags
+                                'tags'   => [
+                                    'logic' => 'all',
+                                    'tag_ids'  => $tags
                                 ],
                             ] : null,
                             'prospects' => null,

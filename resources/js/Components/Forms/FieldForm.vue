@@ -34,8 +34,13 @@ import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
 import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
+<<<<<<< HEAD
+import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue'
+import ProspectQueryChooser from '@/Components/Forms/Fields/ProspectQueryChooser.vue'
+=======
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import ProspectQueryChooser from '@/Components/Forms/Fields/prospectRecipients.vue'
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@fad/'

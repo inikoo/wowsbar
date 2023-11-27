@@ -48,6 +48,24 @@ const props = defineProps<{
     appName: string
 }>()
 
+<<<<<<< HEAD
+import Input from '@/Components/Forms/Fields/Input.vue'
+import Select from '@/Components/Forms/Fields/Select.vue'
+import Phone from '@/Components/Forms/Fields/Phone.vue'
+import Date from '@/Components/Forms/Fields/Date.vue'
+import { trans } from "laravel-vue-i18n"
+import Address from "@/Components/Forms/Fields/Address.vue"
+import Radio from '@/Components/Forms/Fields/Radio.vue'
+import Country from "@/Components/Forms/Fields/Country.vue"
+import Currency from "@/Components/Forms/Fields/Currency.vue"
+import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
+import Password from "@/Components/Forms/Fields/Password.vue"
+import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
+import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
+import ProspectQueryChooser from '@/Components/Forms/Fields/ProspectQueryChooser.vue'
+import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue'
+=======
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7
 
 
 const getComponent = (componentName: string) => {

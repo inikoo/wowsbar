@@ -28,7 +28,11 @@ const props = withDefaults(defineProps<{
     }
 }>(), {
     options: {
+<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue
+        use: ['prospect_can_contact_by', "tags", "prospect_last_contacted"],
+=======
         use: ['prospect_with', "tag", "prospect_last_contacted"],
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue
     }
 
 })
@@ -40,9 +44,15 @@ const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.i
 
 const getComponent = (componentName: string) => {
     const components: any = {
+<<<<<<< HEAD:resources/js/Components/Forms/Fields/ProspectQuery/ProspectCanContactBy.vue
+        "prospect_can_contact_by": PropspectBy,
+        "tags" : Tags,
+        "prospect_last_contacted" : LastContact
+=======
         "prospect_with": ProspectWith,
         "tag" : Tags,
         "prospect_last_contacted" : ProspectLastContacted
+>>>>>>> 0db5b54788658860ebbb8f6e29fd949bb8a767e7:resources/js/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue
 
     };
     return components[componentName] ?? null;
@@ -85,6 +95,7 @@ onMounted(()=>{
     }
 })
 
+console.log("as", schemaForm, props.form)
 
 </script>
 
