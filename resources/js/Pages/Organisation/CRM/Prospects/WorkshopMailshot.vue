@@ -32,10 +32,6 @@ library.add(faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faChec
 const props = defineProps<{
     title: string,
     pageHead: object,
-    // tabs: {
-    //     current: string;
-    //     navigation: object;
-    // }
     mailshot: {}
     changelog?: object,
     workshop?: object,
