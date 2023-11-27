@@ -7,6 +7,7 @@
 
 namespace App\Actions\Traits;
 
+use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Models\CRM\Customer;
 use App\Models\Leads\Prospect;
 
@@ -31,6 +32,15 @@ trait WithCheckCanContactByEmail
 
     protected function canContactProspectByEmail(Prospect $prospect): bool
     {
+
+        if (in_array($prospect->fail_status, [
+            ProspectFailStatusEnum::HARD_BOUNCED,
+            ProspectFailStatusEnum::INVALID,
+            ProspectFailStatusEnum::UNSUBSCRIBED
+        ])) {
+            return false;
+        }
+
         if ($prospect->dont_contact_me) {
             return false;
         }

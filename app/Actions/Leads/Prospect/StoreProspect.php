@@ -62,13 +62,20 @@ class StoreProspect
             data_set($modelData, 'shop_id', $parent->id);
         }
 
+        if ((!Arr::has($modelData, 'state')  or Arr::has($modelData, 'state')==ProspectStateEnum::NO_CONTACTED)
+            and Arr::get($modelData, 'email') != '') {
+            if (!filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
+                data_set($modelData, 'state', ProspectStateEnum::FAIL);
+                data_set($modelData, 'fail_status', ProspectFailStatusEnum::INVALID);
+            }
+        }
 
 
         /** @var Prospect $prospect */
         $prospect = $parent->scopedProspects()->create($modelData);
 
-        $prospect->can_contact_by_email=$this->canContactByEmail($prospect);
-        $prospect->can_contact_by_phone=$this->canContactByEmail($prospect);
+        $prospect->can_contact_by_email = $this->canContactByEmail($prospect);
+        $prospect->can_contact_by_phone = $this->canContactByPhone($prospect);
 
         $prospect->save();
 
@@ -168,8 +175,8 @@ class StoreProspect
 
     public function action(Shop|PortfolioWebsite $parent, array $objectData): Prospect
     {
-        $this->parent    = $parent;
-        $this->asAction  = true;
+        $this->parent   = $parent;
+        $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 

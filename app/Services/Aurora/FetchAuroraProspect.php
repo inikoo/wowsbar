@@ -53,7 +53,7 @@ class FetchAuroraProspect extends FetchAurora
                 break;
             case 'Bounced':
                 $state      = ProspectStateEnum::FAIL;
-                $failStatus = ProspectFailStatusEnum::INVALID;
+                $failStatus = ProspectFailStatusEnum::HARD_BOUNCED;
                 break;
             default:
                 throw new \Exception('Invalid status: '.$this->auroraModelData->{'Prospect Status'});
@@ -91,7 +91,6 @@ class FetchAuroraProspect extends FetchAurora
                         'source_type' => 'aurora',
                         'source_id'   => $this->auroraModelData->{'Prospect Key'},
                     ]
-
                 ],
                 //'customer_id'     => $customer_id
                 'address' => $this->parseAddress(prefix: 'Prospect Contact', auAddressData: $this->auroraModelData)

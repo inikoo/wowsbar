@@ -28,7 +28,7 @@ trait WithRecipientsInput
 
                 break;
             case 'custom_prospects_query':
-                Arr::forget($recipients, ['query', 'prospects']);
+                Arr::forget($recipients, ['recipient_builder_data,query', 'recipient_builder_data,prospects']);
 
                 data_set(
                     $recipients,
@@ -38,7 +38,7 @@ trait WithRecipientsInput
 
                 break;
             case 'prospects':
-                Arr::forget($recipients, ['custom_prospects_query', 'query']);
+                Arr::forget($recipients, ['recipient_builder_data.custom_prospects_query', 'recipient_builder_data.query']);
                 data_set($recipients, 'recipient_builder_data.prospects', [], overwrite: false);
 
                 break;

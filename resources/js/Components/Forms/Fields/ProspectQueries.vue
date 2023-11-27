@@ -58,7 +58,7 @@ const locale = useLocaleStore()
             <tr v-for="option in options.data" :key="option.id" class=""
                 :class="[
                         option.id == form[fieldName].recipient_builder_data.query ? 'bg-org-50 text-gray-600' : '',
-                        option.number_items < 1? 'bg-gray-100 text-gray-400' : 'text-gray-500'  // If the prospects is 0
+                        option.number_items ===0? 'bg-gray-100 text-gray-400' : 'text-gray-500'  // If the prospects is 0
                     ]">
                 <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
                 <td class>

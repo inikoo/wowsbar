@@ -7,16 +7,14 @@
 
 namespace App\Actions\Mail\MailshotRecipient\UI;
 
-use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\InertiaAction;
+use App\Actions\Mail\Mailshot\GetRecipients;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -46,8 +44,8 @@ class IndexEstimatedRecipients extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $query        = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
-        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
+        $queryBuilder=GetRecipients::run($mailshot);
+
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])

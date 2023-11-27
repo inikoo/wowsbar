@@ -11,9 +11,10 @@ const props = defineProps<{
             email: string
             phone: string
             website: string
-            tags: string[]
+            tags: string[],
+            fail_status:string
         }
-        feeds: { 
+        feeds: {
             name: string
             action: string
             comment?: string
@@ -39,8 +40,10 @@ const dataContact = {
     <div class="grid md:grid-cols-8 px-4 py-4 gap-y-4 md:gap-y-0">
         <!-- Section: Contact Card -->
         <div class="order-2 md:order-none md:col-span-5 space-y-8">
+            {{data.info.fail_status}}
             <ContactCard :data="dataContact"/>
         </div>
+
 
         <!-- Section: Feeds -->
         <div class="md:col-span-3 pt-3 pb-5 pl-4 pr-8 h-fit rounded-md border border-gray-200 shadow">
