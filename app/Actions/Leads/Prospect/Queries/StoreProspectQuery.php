@@ -60,8 +60,8 @@ class StoreProspectQuery
                     '__date__' => [
                         'type'  => 'dateSubtraction',
                         'value' => [
-                            'unit'     => $query['prospect_last_contacted']['data']['unit'],
-                            'quantity' => $query['prospect_last_contacted']['data']['quantity']
+                            'unit'     => $query['prospect_last_contacted']['argument']['unit'],
+                            'quantity' => $query['prospect_last_contacted']['argument']['quantity']
                         ]
                     ]
                 ] : []
