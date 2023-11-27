@@ -21,7 +21,6 @@ return new class () extends Migration {
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('name')->index()->collation('und_ns');
             $table->string('model_type')->index();
-            $table->jsonb('informatics');
             $table->jsonb('constrains');
             $table->jsonb('compiled_constrains');
             $table->boolean('has_arguments')->index()->default(false);
