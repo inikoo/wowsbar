@@ -44,7 +44,7 @@ const recipientsCount = ref(0)
 const categories = [
     {
         name: 'query',
-        fieldName: "recipients",
+        fieldName: "recipients_recipe",
         label: 'Query',
         component: ProspectQueries,
         options : props.options["query"]
@@ -136,7 +136,7 @@ onMounted(() => {
                     <button  v-if="recipientsCount.type == 'prospects'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
                       {{trans('Total recipients')}}:  {{ recipientsCount.count }}
                     </button>
-                    <button  v-if="recipientsCount.type == 'custom'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                    <button  v-if="recipientsCount.type == 'custom_prospects_query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
                         {{trans('Total recipients')}}:   {{ recipientsCount.count }}
                     </button>
                     <button  v-if="recipientsCount.type == 'query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
