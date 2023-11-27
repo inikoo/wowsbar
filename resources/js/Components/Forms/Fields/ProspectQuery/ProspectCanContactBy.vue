@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<{
     }
 }>(), {
     options: {
-        use: ['propspect_by', "tag", "last_contact"],
+        use: ['prospect_can_contact_by', "tags", "prospect_last_contacted"],
     }
 
 })
@@ -38,9 +38,9 @@ const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.i
 
 const getComponent = (componentName: string) => {
     const components: any = {
-        "propspect_by": PropspectBy,
-        "tag" : Tags,
-        "last_contact" : LastContact
+        "prospect_can_contact_by": PropspectBy,
+        "tags" : Tags,
+        "prospect_last_contacted" : LastContact
 
     };
     return components[componentName] ?? null;
@@ -83,6 +83,7 @@ onMounted(()=>{
     }
 })
 
+console.log("as", schemaForm, props.form)
 
 </script>
 
