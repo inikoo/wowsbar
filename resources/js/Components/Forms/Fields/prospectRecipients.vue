@@ -45,25 +45,25 @@ const categories = [
     {
         name: 'query',
         fieldName: "recipients_recipe",
-        label: 'Query',
+        label: trans('Query'),
         component: ProspectQueries,
         options : props.options["query"]
     },
     {
         name: 'custom_prospects_query',
         fieldName: ["recipients_recipe", 'recipient_builder_data', 'custom_prospects_query'],
-        label: 'Custom',
+        label: trans('Custom'),
         component: ProspectQueryBuilder,
         options : {
             use : ["tags", "prospect_last_contacted"],
-            ...props.options["custom"]
+            ...props.options["custom_prospects_query"]
 
         }
     },
     {
         name: 'prospects',
         fieldName: ["recipients_recipe", 'recipient_builder_data', 'prospects'],
-        label: 'Prospects',
+        label: trans('Prospects'),
         component: ProspectSelect,
         options : props.options["prospects"]
     },

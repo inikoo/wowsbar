@@ -31,7 +31,7 @@ class StoreMailshot
 {
     use AsAction;
     use WithAttributes;
-    // use WithRecipientsInput;
+    use WithRecipientsInput;
 
     private bool $asAction = false;
 
@@ -42,12 +42,7 @@ class StoreMailshot
 
     public function handle(Customer|Shop $parent, array $modelData): Mailshot
     {
-
-
         $this->parent = $parent;
-
-        data_set($modelData, 'recipients_recipe', Arr::only($modelData, ['query_id', 'query_arguments']));
-        Arr::forget($modelData, ['query_id', 'query_arguments']);
 
         data_set($modelData, 'date', now());
         data_set(
@@ -66,12 +61,7 @@ class StoreMailshot
             ShopHydrateMailshots::dispatch($mailshot->parent);
         }
 
-        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
-        $mailshot->mailshotStats()->update(
-            [
-                'number_estimated_dispatched_emails' => $query->number_items,
-            ]
-        );
+
         MailshotHydrateEstimatedEmails::dispatch($mailshot);
         OutboxHydrateMailshots::dispatch($mailshot->outbox);
 
@@ -95,16 +85,6 @@ class StoreMailshot
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function afterValidator(): void
-    {
-
-        $this->fill([
-            'recipients_recipe', $this->postProcessRecipients($this->get('recipients_recipe'))
-        ]);
-    }
 
     public function rules(): array
     {
@@ -127,6 +107,9 @@ class StoreMailshot
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
         $this->queryRules = [
@@ -147,6 +130,7 @@ class StoreMailshot
 
         $validatedData = $this->validateAttributes();
 
+        data_set($validatedData, 'recipients_recipe', $this->postProcessRecipients(Arr::get($validatedData, 'recipients_recipe')));
 
         return $this->handle($shop, $validatedData);
     }

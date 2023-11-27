@@ -22,10 +22,13 @@ class GetEstimatedNumberRecipients
     use WithCheckCanContactByEmail;
     use WithQueryCompiler;
 
+    /**
+     * @throws \Exception
+     */
     public function handle(Shop $parent, array $recipientsData): int
     {
         return match (Arr::get($recipientsData, 'recipient_builder_type')) {
-            'query'                  => $this->getEstimatedNumberRecipientsQuery(Arr::get($recipientsData, 'recipient_builder_data,query')),
+            'query'                  => $this->getEstimatedNumberRecipientsQuery(Arr::get($recipientsData, 'recipient_builder_data.query')),
             'prospects'              => $this->getEstimatedNumberRecipientsProspects(Arr::get($recipientsData, 'recipient_builder_data.prospects')),
             'custom_prospects_query' => $this->getEstimatedNumberRecipientsCustomProspectsQuery($parent, Arr::get($recipientsData, 'recipient_builder_data.custom_prospects_query')),
             default                  => 11
@@ -34,6 +37,7 @@ class GetEstimatedNumberRecipients
 
     private function getEstimatedNumberRecipientsQuery($queryData): int
     {
+
         $counter = 0;
 
         $query = Query::find(Arr::get($queryData, 'id'));

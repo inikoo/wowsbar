@@ -19,7 +19,13 @@ trait WithRecipientsInput
     {
         switch (Arr::get($recipients, 'recipient_builder_type')) {
             case 'query':
-                Arr::forget($recipients, ['custom_prospects_query', 'prospects']);
+                Arr::forget(
+                    $recipients,
+                    [
+                    'recipient_builder_data.custom_prospects_query',
+                    'recipient_builder_data.prospects']
+                );
+
                 break;
             case 'custom_prospects_query':
                 Arr::forget($recipients, ['query', 'prospects']);

@@ -21,7 +21,7 @@ const props = defineProps<{
         }
     }
     fieldName: string
-    tabName: string  // 'query', 'custom', 'select'
+    tabName: string
     fieldData: any
     options: {
         data: {
