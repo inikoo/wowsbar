@@ -33,6 +33,8 @@ trait WithRecipientsInput
                 break;
             case 'prospects':
                 Arr::forget($recipients, ['custom_prospects_query', 'query']);
+                data_set($recipients, 'recipient_builder_data.prospects', [], overwrite: false);
+
                 break;
             default:
                 throw new Exception('Invalid recipient builder type');
