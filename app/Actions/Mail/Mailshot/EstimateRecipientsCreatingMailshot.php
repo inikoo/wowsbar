@@ -41,13 +41,20 @@ class EstimateRecipientsCreatingMailshot
     /**
      * @throws \Exception
      */
-    public function asController(Shop $shop, ActionRequest $request): int
+    public function asController(Shop $shop, ActionRequest $request): array
     {
         $this->fillFromRequest($request);
 
-        return $this->handle(
+        $recipientsData = $this->postProcessRecipients(Arr::get($this->validateAttributes(), 'recipients_recipe'));
+
+        $count = $this->handle(
             $shop,
-            $this->postProcessRecipients(Arr::get($this->validateAttributes(), 'recipients_recipe'))
+            $recipientsData
         );
+
+        return [
+            'type'  => $recipientsData['recipient_builder_type'],
+            'count' => $count
+        ];
     }
 }
