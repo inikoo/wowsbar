@@ -7,12 +7,12 @@ import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 import { get, set, isArray, isNull} from 'lodash'
-import { faTrash } from '@fas/';
+import { faTimes } from '@far/';
 import {trans} from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import { useFormatTime } from '@/Composables/useFormatTime';
 
-library.add(faTrash)
+library.add(faTimes)
 
 const props = defineProps<{
     form?: any
@@ -225,7 +225,7 @@ onUnmounted(() => {
                   <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ option.email }}</td>
                   <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ get(option,"state","-") }}</td>
                   <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ useFormatTime(option.last_contacted_at) }}</td>
-                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500"><Button icon="fas fa-trash" size="xs" :style="'red'" @click="()=>deleteValueFromTable(option)"></Button></td>
+                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500"><Button icon="far fa-times" size="xs" :style="'red'" @click="()=>deleteValueFromTable(option)"></Button></td>
                 </tr>
               </tbody>
             </table>
