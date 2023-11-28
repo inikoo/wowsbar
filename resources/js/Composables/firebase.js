@@ -1,10 +1,10 @@
 import {initializeApp} from 'firebase/app';
 import {getDatabase, set, ref as dbRef} from 'firebase/database';
 import {useDatabaseList} from 'vuefire';
-import {
-    initializeAppCheck,
-    ReCaptchaEnterpriseProvider,
-} from 'firebase/app-check';
+// import {
+//     initializeAppCheck,
+//     ReCaptchaEnterpriseProvider,
+// } from 'firebase/app-check';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
