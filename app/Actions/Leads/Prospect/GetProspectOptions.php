@@ -35,6 +35,8 @@ class GetProspectOptions extends InertiaAction
                     'email'    => $prospect->email,
                     'phone'    => $prospect->phone,
                     'websites' => $prospect->websites,
+                    'state'    => $prospect->state,
+                    'last_contacted_at'    => $prospect->last_contacted_at,
                 ];
         }
 

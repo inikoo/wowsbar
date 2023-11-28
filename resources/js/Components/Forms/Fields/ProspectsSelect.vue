@@ -10,6 +10,7 @@ import { get, set, isArray, isNull} from 'lodash'
 import { faTrash } from '@fas/';
 import {trans} from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue"
+import { useFormatTime } from '@/Composables/useFormatTime';
 
 library.add(faTrash)
 
@@ -213,8 +214,8 @@ onUnmounted(() => {
                 <tr>
                   <th scope="col" class="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">{{ trans('Name') }}</th>
                   <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900">{{ trans('Email') }}</th>
-                  <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900">{{ trans('Phone') }}</th>
-                  <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900">{{ trans('Websites') }}</th>
+                  <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900">{{ trans('State') }}</th>
+                  <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900">{{ trans('Last Contacted At') }}</th>
                   <th scope="col" class="px-3 py-2 text-left text-sm font-semibold text-gray-900"></th>
                 </tr>
               </thead>
@@ -222,8 +223,8 @@ onUnmounted(() => {
                 <tr v-for="(option,index) in valueTable" :key="option.id">
                   <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ option.name }}</td>
                   <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ option.email }}</td>
-                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ get(option,"phone","-") }}</td>
-                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ get(option,"websites","-") }}</td>
+                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ get(option,"state","-") }}</td>
+                  <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500">{{ useFormatTime(option.last_contacted_at) }}</td>
                   <td class="whitespace-nowrap px-3 py-2 text-sm text-gray-500"><Button icon="fas fa-trash" size="xs" :style="'red'" @click="()=>deleteValueFromTable(option)"></Button></td>
                 </tr>
               </tbody>
