@@ -23,7 +23,7 @@ import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import Password from "@/Components/Forms/Fields/Password.vue"
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
-import prospectRecipients from '@/Components/Forms/Fields/prospectRecipients.vue'
+import prospectRecipients from '@/Components/Forms/Fields/ProspectRecipients.vue'
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 
 import { ref, onMounted } from 'vue'

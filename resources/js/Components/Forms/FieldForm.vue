@@ -33,7 +33,7 @@ import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
 import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
-import ProspectRecipients from '@/Components/Forms/Fields/prospectRecipients.vue'
+import ProspectRecipients from '@/Components/Forms/Fields/ProspectRecipients.vue'
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 
 
