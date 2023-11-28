@@ -13,6 +13,7 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Mail\DispatchedEmailEventTypeEnum;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -65,12 +66,15 @@ class UnsubscribeMailshot
 
     public function htmlResponse(DispatchedEmail $dispatchedEmail): Response
     {
+        $title = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.title');
+        $description = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.description');
+
         return Inertia::render('Utils/Unsubscribe', [
             'title'    => __("Unsubscribe"),
             'mailshot' => $dispatchedEmail,
             'message'  => [
-                'title'       => __('Unsubscription successful'),
-                'description' => __("You have been unsubscribed, sorry for any inconvenience caused."),
+                'title'       => __($title ?? "Unsubscription successful"),
+                'description' => __($description ?? "You have been unsubscribed, sorry for any inconvenience caused."),
                 'caution'     => match ($dispatchedEmail->is_test) {
                     true    => __("This is a test mailshot, no action was taken and you can ignore this message."),
                     default => null

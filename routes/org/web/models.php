@@ -53,6 +53,7 @@ use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
+use App\Actions\Mail\Mailshot\UpdateShopMailshotSetting;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\DeleteGuest;
@@ -136,6 +137,8 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
+
+        Route::patch('mailshots/settings', UpdateShopMailshotSetting::class)->name('mailshots.settings.update');
     });
 });
 

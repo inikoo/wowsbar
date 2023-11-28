@@ -17,18 +17,18 @@ import {useLocaleStore} from "@/Stores/locale";
 
 library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 const props = defineProps<{
-    form: {
-        [key: string]: {
-            recipient_builder_type: string
-            recipient_builder_data: {
-                query: object
-            }
-        }
-    }
-    fieldName: string
-    tabName: string  // 'query', 'custom', 'select'
-    fieldData: any
-    options: {
+    // form: {
+    //     [key: string]: {
+    //         recipient_builder_type: string
+    //         recipient_builder_data: {
+    //             query: object
+    //         }
+    //     }
+    // }
+    // fieldName: string
+    // tabName: string  // 'query', 'custom', 'select'
+    // fieldData: any
+    option: {
         data: {
             id: number
             name: string
@@ -41,8 +41,7 @@ const emits = defineEmits<{
     (e: 'onUpdate'): void
 }>()
 const locale = useLocaleStore()
-
-
+console.log('qqqqqqq', props.option)
 </script>
 
 <template>

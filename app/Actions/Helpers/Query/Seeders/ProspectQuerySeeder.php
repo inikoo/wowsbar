@@ -39,8 +39,8 @@ class ProspectQuerySeeder
                             'fields' => ['email']
                         ],
                     'prospect_last_contacted' => [
-                        'state' => false,
-                        'data'  => []
+                        'state'     => false,
+                        'argument'  => []
                     ]
 
                 ],
@@ -56,8 +56,8 @@ class ProspectQuerySeeder
                             'fields' => ['email']
                         ],
                     'prospect_last_contacted' => [
-                        'state' => true,
-                        'data'  => [
+                        'state'     => true,
+                        'argument'  => [
                             'unit'     => 'week',
                             'quantity' => 1
                         ]
