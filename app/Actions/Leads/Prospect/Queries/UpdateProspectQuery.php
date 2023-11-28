@@ -60,8 +60,8 @@ class UpdateProspectQuery
                         '__date__' => [
                             'type'  => 'dateSubtraction',
                             'value' => [
-                                'unit'     => $queryBuilder['prospect_last_contacted']['data']['unit'],
-                                'quantity' => $queryBuilder['prospect_last_contacted']['data']['quantity']
+                                'unit'     => $queryBuilder['prospect_last_contacted']['argument']['unit'],
+                                'quantity' => $queryBuilder['prospect_last_contacted']['argument']['quantity']
                             ]
                         ]
                     ] : []

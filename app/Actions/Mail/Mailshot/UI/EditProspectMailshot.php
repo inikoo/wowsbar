@@ -83,8 +83,8 @@ class EditProspectMailshot extends InertiaAction
                                     'tags'  => $tags
                                 ],
                                 'prospect_last_contacted' => [
-                                    'state' => $lastContact != null,
-                                    'data'  => [
+                                    'state'     => $lastContact != null,
+                                    'argument'  => [
                                         'unit'     => Arr::get($lastContactValue, 'unit'),
                                         'quantity' => Arr::get($lastContactValue, 'quantity')
                                     ]

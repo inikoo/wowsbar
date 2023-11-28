@@ -41,7 +41,7 @@ export default {
             information : trans("filter recipients based on the last mailshot sent to them"),
             value : {
                 state : false,
-                data: {
+                argument: {
                     unit: "week",
                     quantity: 1,
                 },
