@@ -27,7 +27,10 @@ class GetProspectOptions extends InertiaAction
                 [
                     'id'   => $prospect->id,
                     'slug' => $prospect->slug,
-                    'name' => $prospect->name
+                    'name' => $prospect->name,
+                    'email' => $prospect->email,
+                    'phone' => $prospect->phone,
+                    'websites' => $prospect->websites,
                 ];
         }
 

@@ -44,14 +44,14 @@ const recipientsCount = ref(0)
 const categories = [
     {
         name: 'query',
-        fieldName: "recipients_recipe",
+        fieldName: props.fieldName,
         label: trans('Query'),
         component: ProspectQueries,
         options : props.options["query"]
     },
     {
         name: 'custom_prospects_query',
-        fieldName: ["recipients_recipe", 'recipient_builder_data', 'custom_prospects_query'],
+        fieldName: [props.fieldName, 'recipient_builder_data', 'custom_prospects_query'],
         label: trans('Custom'),
         component: ProspectQueryBuilder,
         options : {
@@ -62,7 +62,7 @@ const categories = [
     },
     {
         name: 'prospects',
-        fieldName: ["recipients_recipe", 'recipient_builder_data', 'prospects'],
+        fieldName: [ props.fieldName, 'recipient_builder_data', 'prospects'],
         label: trans('Prospects'),
         component: ProspectSelect,
         options : props.options["prospects"]
