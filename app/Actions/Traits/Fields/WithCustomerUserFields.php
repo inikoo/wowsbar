@@ -71,7 +71,6 @@ trait WithCustomerUserFields
                         'label'             => __('permissions'),
                         'options'           => $user->getRoleNames(),
                         'value'             => $user->getRoleNames(),
-                        // 'fullComponentArea' => true,
                     ],
                 ]
             ],

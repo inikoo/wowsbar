@@ -15,11 +15,13 @@ const props = defineProps<{
             fail_status:string
         }
         feeds: {
-            name: string
-            action: string
-            comment?: string
-            dateTime: string
-        }[]
+            [key: string]: {
+                name?: string
+                label: string
+                description?: string
+                comment?: string
+            }
+        }
         state: string
     }
 }>()

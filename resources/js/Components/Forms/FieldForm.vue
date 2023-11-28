@@ -57,8 +57,8 @@ const props = defineProps<{
         value: any
         mode?: string
         required?: boolean
-        fullComponentArea?: boolean
         options?: {}[]
+        full: boolean
     }
     args: {
         updateRoute: routeType
@@ -133,9 +133,8 @@ const checkVerification = async () => {
                 props.fieldData.verification?.route.name,
                 props.fieldData.verification?.route.parameters
             ),
-            { sender_email_address: form[props.field] },
+            { [props.field]: form[props.field] },
         )
-        console.log(response.data)
         labelVerification.value = response.data
         classVerification.value = 'text-lime-500'
 
@@ -152,7 +151,7 @@ const checkVerification = async () => {
 
 <template>
     <form @submit.prevent="submit">
-        <dl v-if="!props.fieldData.fullComponentArea" class="divide-y divide-gray-200" :class="props.fieldData.full ? '' : 'max-w-2xl'">
+        <dl class="divide-y divide-gray-200" :class="props.fieldData.full ? '' : 'max-w-2xl'">
             <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
                 <dt class="text-sm font-medium text-gray-400 capitalize">
                     <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
@@ -194,19 +193,6 @@ const checkVerification = async () => {
                     </div>
                 </dd>
             </div>
-        </dl>
-
-        <!-- full area components -->
-        <dl v-if="props.fieldData.fullComponentArea" class="divide-y divide-gray-200">
-                <dd class="sm:col-span-2  ">
-                    <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
-                        <div class="relative  flex-grow">
-                            <component :is="getComponent(fieldData['type'])" :form=form :fieldName=field
-                                :options="fieldData['options']" :fieldData="fieldData">
-                            </component>
-                        </div>
-                    </div>
-                </dd>
         </dl>
 
     </form>

@@ -203,52 +203,45 @@ const compSortSteps = computed(() => {
 
 
 <template>
-    <LabelEstimated :emailsEstimated="3" />
-
-
-
-    <div class="py-3 mx-auto px-5 w-full">
-
-        <!-- <Timeline v-if="data.state === 'sent'" :options="data.timeline" /> -->
-        <Timeline :options="data.timeline" />
-
-        <!-- <div class="bg-white min-w-fit w-64 shadow mt-3 px-4 py-5 sm:px-5 sm:pt-5 sm:pb-4 rounded-lg">
-
-            <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
-
-            <dd class="mt-3 flex items-baseline justify-between md:block lg:flex">
-                <div class="flex items-baseline text-3xl font-semibold text-org-600 tabular-nums">
-                    <CountUp :endVal="`${dataStatistic[0].value}`" :scrollSpyOnce="true" :duration="1.2" />
-                </div>
-            </dd>
-        </div> -->
-
-        <!-- <Stats
-            :stats="[{ name: 'recipient', stat: dataStatistic[0].value }]"
-        /> -->
-
-
-        <dl v-show="data.state!='in-process'"  class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 divide-x divide-y divide-gray-200 md:divide-x md:divide-y-0 overflow-hidden rounded-lg bg-white shadow">
-            <template v-for="(statistic, index) in dataStatistic">
-                <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
-                    <!-- Title -->
-                    <dt class="text-gray-400 capitalize text-sm" :class="statistic.class">{{ statistic.label }}</dt>
-
-                    <!-- Value -->
-                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
-                            <div v-if="statistic.type == 'multi'" class="flex gap-x-6 flex-wrap">
-                                <div v-for="subValue in statistic.list" v-tooltip="subValue.tooltip" class="flex flex-nowrap items-center gap-x-1.5">
-                                    <FontAwesomeIcon :icon='subValue.icon' class='text-base text-org-200' aria-hidden='true' />
-                                    <span>{{ subValue.value }}</span>
+    <div class="">
+        <LabelEstimated :emailsEstimated="3" />
+        <div class="py-3 mx-auto px-5 w-full">
+            <!-- <Timeline v-if="data.state === 'sent'" :options="data.timeline" /> -->
+            <Timeline :options="data.timeline" />
+            <!-- <div class="bg-white min-w-fit w-64 shadow mt-3 px-4 py-5 sm:px-5 sm:pt-5 sm:pb-4 rounded-lg">
+                <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
+                <dd class="mt-3 flex items-baseline justify-between md:block lg:flex">
+                    <div class="flex items-baseline text-3xl font-semibold text-org-600 tabular-nums">
+                        <CountUp :endVal="`${dataStatistic[0].value}`" :scrollSpyOnce="true" :duration="1.2" />
+                    </div>
+                </dd>
+            </div> -->
+            
+            <Stats
+                v-if="data.state == 'in-process' || data.state == 'ready'"
+                :stats="[{ name: 'recipient', stat: dataStatistic[0].value }]"
+            />
+            <dl v-else class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 gap-[1px] overflow-hidden rounded-lg bg-gray-200 shadow">
+                <template v-for="(statistic, index) in dataStatistic">
+                    <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                        <!-- Title -->
+                        <dt class="text-gray-400 capitalize text-sm" :class="statistic.class">{{ statistic.label }}</dt>
+                        <!-- Value -->
+                        <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                            <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                                <div v-if="statistic.type == 'multi'" class="flex gap-x-6 flex-wrap">
+                                    <div v-for="subValue in statistic.list" v-tooltip="subValue.tooltip" class="flex flex-nowrap items-center gap-x-1.5">
+                                        <FontAwesomeIcon :icon='subValue.icon' class='text-base text-org-200' aria-hidden='true' />
+                                        <span>{{ subValue.value }}</span>
+                                    </div>
                                 </div>
+                                <CountUp @init="(el) => statistic.component = el" v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
                             </div>
-                            <CountUp @init="(el) => statistic.component = el" v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
-                        </div>
-                    </dd>
-                </div>
-            </template>
-        </dl>
+                        </dd>
+                    </div>
+                </template>
+            </dl>
+        </div>
     </div>
 
 </template>
