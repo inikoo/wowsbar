@@ -9,6 +9,8 @@
 import { useForm } from '@inertiajs/vue3'
 import { useLayoutStore } from '@/Stores/layout'
 import { routeType } from '@/types/route'
+import { ref, computed } from 'vue'
+import axios from 'axios'
 
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
@@ -38,17 +40,20 @@ import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQuer
 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSave as fadSave } from '@fad/'
-import { faSave as falSave } from '@fal/'
-import { faAsterisk } from '@fas/'
+import { faSave as fadSave, } from '@fad/'
+import { faSave as falSave, faInfoCircle } from '@fal/'
+import { faAsterisk, faQuestion } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(fadSave, falSave, faAsterisk)
+library.add(fadSave, faQuestion, falSave, faInfoCircle, faAsterisk)
 
 const props = defineProps<{
     field: any
     fieldData: {
         type: string
         label: string
+        verification?: {
+            route: routeType
+        }
         value: any
         mode?: string
         required?: boolean
@@ -109,6 +114,40 @@ form['fieldType'] = 'edit'
 function submit() {
     form.post(route(updateRoute.name, updateRoute.parameters))
 }
+
+
+const classVerification = ref('')
+const isVerificationLoading = ref(false)
+const labelVerification = ref('')
+const stampDirtyValue = ref(props.fieldData.value ?? '')
+
+const isVerificationDirty = computed(() => {
+    return (stampDirtyValue.value !== form[props.field])
+})
+
+const checkVerification = async () => {    
+    isVerificationLoading.value = true
+    try {
+        const response = await axios.post(
+            route(
+                props.fieldData.verification?.route.name,
+                props.fieldData.verification?.route.parameters
+            ),
+            { sender_email_address: form[props.field] },
+        )
+        console.log(response.data)
+        labelVerification.value = response.data
+        classVerification.value = 'text-lime-500'
+
+    }
+    catch (error: any) {
+        labelVerification.value = error.response.data.message
+        classVerification.value = 'text-red-500'
+    }
+    isVerificationLoading.value = false
+
+    stampDirtyValue.value = form[props.field]
+}
 </script>
 
 <template>
@@ -124,17 +163,33 @@ function submit() {
                             <component :is="getComponent(fieldData['type'])" :form=form :fieldName=field
                                 :options="fieldData['options']" :fieldData="fieldData">
                             </component>
+
+                            <!-- Verification: Label -->
+                            <div v-if="labelVerification" class="mt-1" :class="classVerification">
+                                <FontAwesomeIcon icon='fal fa-info-circle' class='opacity-80' aria-hidden='true' />    
+                                <span class="ml-1 font-medium">{{ labelVerification }}</span>
+                            </div>
                         </div>
 
                         <!-- Button: Save -->
                         <span class="ml-2 flex-shrink-0">
-                            <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
+                            <button v-if="!fieldData.verification" class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
                                 <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-org-600"
                                     :style="{
                                         '--fa-secondary-color': [layout.systemName === 'org' ? 'rgb(69, 38, 80)' : 'rgb(0, 255, 4)']
                                     }" aria-hidden="true" />
                                 <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300" aria-hidden="true" />
                             </button>
+                            
+                            <!-- Verification: Button -->
+                            <div v-else>
+                                <FontAwesomeIcon v-if="isVerificationLoading" icon='fad fa-spinner-third' class='animate-spin h-8 text-gray-500 hover:text-gray-600 cursor-pointer' aria-hidden='true' />
+                                <FontAwesomeIcon v-else @click="isVerificationDirty ? checkVerification() : ''"
+                                    icon='fas fa-question'
+                                    class='h-8'
+                                    :class="isVerificationDirty ? 'text-gray-500 hover:text-gray-600 cursor-pointer' : 'text-gray-300'"
+                                    aria-hidden='true' />
+                            </div>
                         </span>
                     </div>
                 </dd>
