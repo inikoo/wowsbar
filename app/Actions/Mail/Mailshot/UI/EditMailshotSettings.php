@@ -19,9 +19,57 @@ class EditMailshotSettings extends InertiaAction
 {
     use WithProspectMailshotNavigation;
 
-    public function handle(Shop $shop): Shop
+    public function handle(Shop $shop, ActionRequest $request): array
     {
-        return $shop;
+        $sections['unsubscribe'] = [
+            'label'  => __('Mailshot unsubscribe'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'title' => [
+                    'type'     => 'input',
+                    'label'    => __('title'),
+                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
+                    'required' => true,
+                ],
+                'description' => [
+                    'type'     => 'input',
+                    'label'    => __('description'),
+                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $sections['sender_email'] = [
+            'label'  => __('Sender Email'),
+            'icon'   => 'fal fa-envelope',
+            'fields' => [
+                'sender_email_address' => [
+                    'type'     => 'input',
+                    'label'    => __('sender email address'),
+                    'value'    => $shop->sender_email_address,
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $currentSection = 'unsubscribe';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
+        return [
+            'formData' => [
+                'current'   => $currentSection,
+                'blueprint' => $sections,
+                'args'      => [
+                    'updateRoute' => [
+                        'name'       => 'org.models.shop.mailshots.settings.update',
+                        'parameters' => $shop->id
+                    ],
+                ]
+            ],
+        ];
     }
 
     public function authorize(ActionRequest $request): bool

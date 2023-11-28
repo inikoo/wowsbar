@@ -45,7 +45,7 @@ library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, f
 const props = defineProps<{
 
     formData: {
-        current:string,
+        current?:string,
         blueprint: {
             // sectionData
             label: string,
@@ -80,6 +80,8 @@ const props = defineProps<{
     }
     appName: string
 }>()
+
+console.log(props)
 
 const layout = useLayoutStore()
 const currentTab: Ref<string> = ref(props.formData.current ?? Object.keys(props.formData.blueprint)[0])  // if formData.current not exist, take first navigation
