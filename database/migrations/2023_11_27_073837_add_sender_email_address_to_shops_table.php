@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::table('shops', function (Blueprint $table) {
             $table->string('sender_email_address')->nullable()->after('email');
+            $table->dateTimeTz('sender_email_address_valid_at')->nullable()->after('sender_email_address');
         });
     }
 

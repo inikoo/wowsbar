@@ -23,30 +23,12 @@ class UpdateShopMailshotSetting
 
     private bool $asAction = false;
 
-    public function handle(Shop $shop, array $modelData): JsonResponse
+    public function handle(Shop $shop, array $modelData): JsonResponse|Shop
     {
-        if(Arr::get($modelData, 'title') && Arr::get($modelData, 'description')) {
+        if(Arr::get($modelData, 'title') or Arr::get($modelData, 'description')) {
+            $modelData = Arr::except($modelData, ['title', 'description']);
+
             $shop = $this->update($shop, $modelData, ['data', 'settings']);
-        }
-
-        if(Arr::get($modelData, 'sender_email_address')) {
-            $this->update($shop, $modelData);
-
-            $identities = GetListIdentityEmailVerification::run($modelData);
-
-            if (!in_array(Arr::get($modelData, 'sender_email_address'), ($identities))) {
-                SendIdentityEmailVerification::run($modelData);
-
-                return response()->json([
-                    'status'  => 'needValidation',
-                    'message' => __('The email is not registered, we\'ve sent u verification to your email, please check your email.')
-                ]);
-            }
-
-            return response()->json([
-                'status'  => 'validated',
-                'message' => __('The email is validated.')
-            ]);
         }
 
         return $shop;
@@ -70,9 +52,10 @@ class UpdateShopMailshotSetting
         ];
     }
 
-    public function asController(Shop $shop, ActionRequest $request): JsonResponse
+    public function asController(Shop $shop, ActionRequest $request): JsonResponse|Shop
     {
         $this->fillFromRequest($request);
+        $modelData = $this->validateAttributes();
 
         foreach ($this->validateAttributes() as $key => $value) {
             data_set(
@@ -88,7 +71,7 @@ class UpdateShopMailshotSetting
 
         return $this->handle(
             shop:$shop,
-            modelData: $this->validateAttributes()
+            modelData: $modelData
         );
     }
 }

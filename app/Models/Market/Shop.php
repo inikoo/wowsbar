@@ -53,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $contact_name
  * @property string|null $email
  * @property string|null $sender_email_address
+ * @property string|null $sender_email_address_valid_at
  * @property string|null $phone
  * @property string|null $identity_document_type
  * @property string|null $identity_document_number
