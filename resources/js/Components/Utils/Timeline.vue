@@ -45,6 +45,10 @@ const isTodayHours = (date: string | Date) => {
         >
             <template v-for="(stepValue, stepTime, stepIndex) in options">
                 <SwiperSlide>
+                    <div class="w-fit mx-auto capitalize text-sm md:text-base font-semibold text-gray-500 text-center">
+                        {{ stepValue.label }}
+                    </div>
+
                     <div class="relative mb-2 py-1.5">
                         <!-- Step: Tail -->
                         <div v-if="stepIndex != 0"
@@ -61,13 +65,8 @@ const isTodayHours = (date: string | Date) => {
                     </div>
 
                     <!-- Step: Description -->
-                    <div class="">
-                        <div class="text-xs md:text-xs lg:text-base text-center font-semibold text-gray-600">
-                            {{ useFormatTime(stepTime, { formatTime: 'hms' }) }}
-                        </div>
-                        <div class="w-fit mx-auto capitalize text-sm font-thin text-gray-500 text-center">
-                            {{ stepValue.label }}
-                        </div>
+                    <div class="text-xs md:text-xs font-thin text-gray-500 text-center">
+                        {{ useFormatTime(stepTime, { formatTime: 'hms' }) }}
                     </div>
                 </SwiperSlide>
             </template>
