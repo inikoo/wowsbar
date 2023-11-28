@@ -66,7 +66,7 @@ class UnsubscribeMailshot
 
     public function htmlResponse(DispatchedEmail $dispatchedEmail): Response
     {
-        $title = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.title');
+        $title       = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.title');
         $description = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.description');
 
         return Inertia::render('Utils/Unsubscribe', [

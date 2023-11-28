@@ -13,9 +13,7 @@ use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Market\Shop;
-use App\Rules\AwsEmail;
 use Illuminate\Support\Arr;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Lorisleiva\Actions\ActionRequest;
 
