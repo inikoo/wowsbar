@@ -102,7 +102,7 @@ onMounted(() => {
     route().v().query ? currentTab == getLodash(route().v().query, 'section') : ''  // To auto open the navigation as the 'section' in url
 
     // To indicate active state that on viewport
-    buttonRefs.value.forEach((element, index) => {
+    buttonRefs.value.forEach((element: any, index: number) => {
         const observer = new IntersectionObserver(handleIntersection(element, index));
         observer.observe(element);
 
@@ -114,7 +114,7 @@ onMounted(() => {
 
     // Clean up all the observers when the component is unmounted
     return () => {
-        buttonRefs.value.forEach((button) => button.cleanupObserver());
+        buttonRefs.value.forEach((button: any) => button.cleanupObserver());
     };
 })
 
