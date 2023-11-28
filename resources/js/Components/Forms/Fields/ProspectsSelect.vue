@@ -6,7 +6,7 @@ import { ref, onMounted, watch, onUnmounted } from 'vue'
 import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
-import { get, set, isArray } from 'lodash'
+import { get, set, isArray, isNull} from 'lodash'
 import { faTrash } from '@fas/';
 import {trans} from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -31,6 +31,7 @@ let timeoutId: any
 const Options = ref([])
 const q = ref('')
 const page = ref(1)
+const modelValue = ref([])
 
 const getOptions = async () => {
     try {
@@ -50,11 +51,27 @@ const getOptions = async () => {
     }
 }
 
-const onGetOptionsSuccess=(response)=>{
-    const data = Object.values(response.data)
-    if( q.value.length)   Options.value = [...data]
-    else Options.value = [...Options.value, ...data]
+const onGetOptionsSuccess = (response) => {
+    const data = Object.values(response.data);
+    
+    if (isNull(value.value)) {
+        if (q.value.length) {
+            Options.value = [...data];
+        } else {
+            Options.value = [...Options.value, ...data];
+        }
+    } else {
+        const namesArray3 = value.value.map(item => item.id);
+        const result = [...Options.value, ...data].filter(item => !namesArray3.includes(item.id));
+
+        if (q.value.length) {
+            Options.value = [...data];
+        } else {
+            Options.value = result;
+        }
+    }
 }
+
 
 
 const setFormValue = (data, fieldName) => {
@@ -104,8 +121,16 @@ const isScrollAtBottom = () => {
 }
 
 const deleteValueFromTable=(index)=>{
-    console.log(index)
     value.value.splice(index,1)
+}
+
+const onMultiselectChange=(data)=>{
+   
+        if(isNull(value.value)) value.value = [data]
+        else {
+            if(!(value.value.find((item)=>item.id == data.id))) value.value.push(data)
+        }
+    modelValue.value = {}
 }
 
 
@@ -124,24 +149,40 @@ onUnmounted(() => {
 });
 
 
-console.log(props.form,value)
 </script>
 
 <template>
-    <Multiselect v-model="value" mode="tags" placeholder="Select the prospects"  trackBy="name" label="name" :multiple="true" valueProp="id" :object="true"
-        :close-on-select="false" :searchable="true" :caret="false" :options="Options" 
-        noResultsText="No one left." @open="getOptions" @search-change="SearchChange">
+   <!--  <Multiselect v-model="value" mode="tags" placeholder="Serach the prospects"  trackBy="name" label="name"  valueProp="id" :object="true"
+        :close-on-select="true" :searchable="true" :caret="false" :options="Options" 
+        noResultsText="No one left." @open="getOptions" @search-change="SearchChange" :can-clear="false">
         <template
             #tag="{ option, handleTagRemove, disabled }: { option: tag, handleTagRemove: Function, disabled: boolean }">
             <div class="px-0.5 py-[3px]">
-                <Tag :theme="option.id" :label="option.name" :closeButton="true" :stringToColor="true" size="sm"
-                    @onClose="(event) => handleTagRemove(option, event)" />
+               
             </div>
         </template>
+    </Multiselect> -->
+
+    <Multiselect 
+        :value="modelValue" 
+        placeholder="Search prospect"  
+        trackBy="name" 
+        label="name" 
+        valueProp="id" 
+        :object="true"
+        :close-on-select="true" 
+        :searchable="true" 
+        :caret="false" 
+        :options="Options" 
+        noResultsText="No Result" 
+        @open="getOptions" 
+        @search-change="SearchChange"
+        @input="onMultiselectChange"
+        >
     </Multiselect>
 
 
-    <div v-if="get(value,'length',0) > 0" class="mt-8 flow-root">
+    <div v-if="get(value,'length',0) > 0" class="mt-4 flow-root">
       <div class="-mx-4 -my-2  sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div class="shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -173,7 +214,7 @@ console.log(props.form,value)
 </template>
 
 <style lang="scss">
-.multiselect-tags-search {
+.multiselect-search {
     @apply focus:outline-none focus:ring-0
 }
 
