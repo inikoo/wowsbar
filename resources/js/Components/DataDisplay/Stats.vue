@@ -15,8 +15,8 @@ import { routeType } from '@/types/route'
 const props = defineProps<{
     stats: {
         name: string
-        href: routeType
-        stat: number
+        href?: routeType
+        stat?: number
     }[]
 }>()
 const locale = useLocaleStore()
@@ -31,10 +31,10 @@ const locale = useLocaleStore()
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-600">
                     <Link v-if="item.href" :href="route(item.href.name, item.href.parameters)"
                         :class="[`inline-block specialUnderline${capitalize(useLayoutStore().systemName)}`]">
-                        {{locale.number(item.stat??0)}}
+                        {{ locale.number(item.stat ?? 0 )}}
                     </Link>
                     <span v-else>
-                       {{locale.number(item.stat??0)}}
+                       {{ locale.number(item.stat ?? 0) }}
                     </span>
                 </dd>
             </div>

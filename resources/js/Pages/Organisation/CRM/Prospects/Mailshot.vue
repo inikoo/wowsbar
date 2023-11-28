@@ -64,7 +64,9 @@ const component = computed(() => {
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <KeepAlive>
-        <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
+        <Transition name="slide-to-right" mode="out-in">
+            <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
+        </Transition>
     </KeepAlive>
 </template>
 
