@@ -20,7 +20,11 @@ class GetProspectOptions extends InertiaAction
     {
         $selectOptions = [];
         /** @var \App\Models\Leads\Prospect $prospects */
-        $prospects = Prospect::where('name', 'ILIKE', '%'.$request->get('q').'%')->paginate();
+        $prospectsQuery = Prospect::where('name', 'ILIKE', '%'.$request->get('q').'%');
+        if(count($request->get("id") ?? []) > 0){
+            $prospectsQuery->whereIn("id", $request->get("id"));
+        }
+        $prospects = $prospectsQuery->paginate();
 
         foreach ($prospects as $prospect) {
             $selectOptions[$prospect->id] =
