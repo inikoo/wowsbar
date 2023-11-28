@@ -38,11 +38,11 @@ const emits = defineEmits<{
         <table class="min-w-full divide-y divide-gray-300 border-b border-gray-200 text-xs">
             <thead>
                 <tr class="text-left text-sm font-semibold text-gray-600">
-                    <th scope="col" class="whitespace-nowrap pb-2.5 pl-4 pr-3 sm:pl-0">{{trans('Name')}}</th>
-                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{trans('Description')}}</th>
-                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{trans('Prospects')}}</th>
+                    <th scope="col" class="whitespace-nowrap pb-2.5 pl-4 pr-3 sm:pl-0">{{ trans('Name') }}</th>
+                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{ trans('Description') }}</th>
+                    <th scope="col" class="whitespace-nowrap px-2 pb-2.5">{{ trans('Prospects') }}</th>
                     <th scope="col" class="relative whitespace-nowrap pb-2.5 pl-3 pr-4 sm:pr-0">
-                        <span class="sr-only">{{trans('Edit')}}</span>
+                        <span class="sr-only">{{ trans('Edit') }}</span>
                     </th>
                 </tr>
             </thead>
@@ -55,7 +55,7 @@ const emits = defineEmits<{
                     ]">
                     <td class="py-2 pl-2 pr-4 ">{{ option.name }}</td>
                     <td>
-                      <QueryInformatics />
+                      <QueryInformatics :option="option"/>
 
                     </td>
                     <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
