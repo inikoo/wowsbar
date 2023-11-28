@@ -49,6 +49,12 @@ class EditMailshotSettings extends InertiaAction
                     'label'    => __('sender email address'),
                     'value'    => $shop->sender_email_address,
                     'required' => true,
+                    'verification' => [
+                        'route' => [
+                            'name'       => 'org.models.shop.mailshots.settings.email-verification.resend',
+                            'parameters' => $shop->id
+                        ]
+                    ]
                 ],
             ]
         ];
