@@ -61,7 +61,7 @@ reactivePropsData.data.forEach((item) => {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5">
+    <Table :resource="data" :name="tab">
         <template #cell(date)="{ item: mailshot }">
             <span class="whitespace-nowrap text-gray-500">{{ useFormatTime(mailshot.sent_at, { formatTime: 'hms' }) }}</span>
         </template>
