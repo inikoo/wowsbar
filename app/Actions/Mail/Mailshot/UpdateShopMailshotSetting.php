@@ -7,6 +7,8 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Helpers\AwsEmail\GetListIdentityEmailVerification;
+use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ShopResource;
@@ -33,14 +35,10 @@ class UpdateShopMailshotSetting
         if(Arr::get($modelData, 'sender_email_address')) {
             $shop = $this->update($shop, $modelData);
 
-            $result = $this->getSesClient()->listIdentities([
-                'IdentityType' => 'EmailAddress',
-            ]);
+            $identities = GetListIdentityEmailVerification::run($modelData);
 
-            if (!in_array(Arr::get($modelData, 'sender_email_address'), ($result['Identities']))) {
-                $this->getSesClient()->verifyEmailIdentity([
-                    'EmailAddress' => Arr::get($modelData, 'sender_email_address'),
-                ]);
+            if (!in_array(Arr::get($modelData, 'sender_email_address'), ($identities))) {
+                SendIdentityEmailVerification::run($modelData);
 
                 ValidationException::withMessages(['sender_email_address' => __('The email is not registered, we\'ve sent u verification to your email, please check your email.')]);
             }
