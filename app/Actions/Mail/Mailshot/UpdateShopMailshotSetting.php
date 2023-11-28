@@ -63,7 +63,7 @@ class UpdateShopMailshotSetting
         return [
             'title'                     => ['sometimes', 'required', 'string', 'max:255'],
             'description'               => ['sometimes', 'required', 'string', 'max:255'],
-            'sender_email_address'      => ['sometimes', 'nullable', 'string', new AwsEmail()]
+            'sender_email_address'      => ['sometimes', 'nullable', 'string']
         ];
     }
 
