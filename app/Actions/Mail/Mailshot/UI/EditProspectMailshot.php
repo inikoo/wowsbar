@@ -59,7 +59,7 @@ class EditProspectMailshot extends InertiaAction
                     'value'    => $mailshot->subject,
                     'required' => true,
                 ],
-                'recipients' => [
+                'recipients_recipe' => [
                     'type'     => 'ProspectRecipients',
                     'label'    => __('recipients'),
                     'required' => true,

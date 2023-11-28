@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import descriptor from '../descriptor'
-import { trans } from "laravel-vue-i18n";
 
 const props = withDefaults(defineProps<{
     value: any
@@ -14,7 +13,7 @@ const props = withDefaults(defineProps<{
             class="flex items-center mr-4 mb-2 py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
             <input type="checkbox" v-model="value[fieldName].fields" :id="query.value" :key="query.value"
                 :value="query.value" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-            <label :for="query.value" class="ml-2">{{ trans(query.label) }}</label>
+            <label :for="query.value" class="ml-2">{{ query.label }}</label>
         </div>
     </div>
     <div v-if="value[fieldName].fields.length > 1" class="mb-4">

@@ -106,14 +106,27 @@ const changeTab=(tabIndex : number)=>{
 
 watch(props.form[props.fieldName],getEstimateRecipients, {deep: true})
 
+const getParams = () => {
+    const pathname = location.search
+    const urlParams = new URLSearchParams(pathname);
+    const paramsObject = {};
+    for (const [key, value] of urlParams) {
+        paramsObject[key] = value;
+    }
+    return paramsObject
+}
 
 onMounted(() => {
-    const pathname = location.search
-    if (pathname) {
+    const pathname = getParams()
+    if (pathname.tags) {
         props.form[props.fieldName].recipient_builder_type = "custom"
         selectedIndex.value = 1
+    }else{
+     const index = categories.findIndex((item)=>item.name ==  props.form[props.fieldName].recipient_builder_type) 
+     if(index != -1)  selectedIndex.value = index
     }
 })
+
 
 </script>
 
