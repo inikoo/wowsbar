@@ -23,6 +23,7 @@ use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
+use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Actions\Helpers\Tag\StoreTag;
 use App\Actions\Helpers\Tag\UpdateTag;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
@@ -139,6 +140,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
 
         Route::patch('mailshots/settings', UpdateShopMailshotSetting::class)->name('mailshots.settings.update');
+        Route::post('mailshots/settings/email/resend', SendIdentityEmailVerification::class)->name('mailshots.settings.email-verification.resend');
     });
 });
 

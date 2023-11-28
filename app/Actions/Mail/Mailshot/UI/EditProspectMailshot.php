@@ -9,7 +9,6 @@ namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\Queries\UI\IndexProspectQueries;
-use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Exception;
@@ -36,6 +35,7 @@ class EditProspectMailshot extends InertiaAction
 
     public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
+
         $this->initialisation($request);
 
         return $this->handle($mailshot);
@@ -46,12 +46,8 @@ class EditProspectMailshot extends InertiaAction
      */
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
-        $query = Query::findOrFail(Arr::get($mailshot->recipients_recipe, 'query_id'));
 
-        $filter           = Arr::get($query->constrains, 'filter', []);
-        $tags             = Arr::get($filter, array_key_first($filter), []);
-        $lastContact      = Arr::get($query->arguments, '__date__');
-        $lastContactValue = Arr::get($lastContact, 'value');
+
 
         $sections['properties'] = [
             'label'  => __('Mailshot properties'),
@@ -69,30 +65,10 @@ class EditProspectMailshot extends InertiaAction
                     'required' => true,
                     'full'     => true,
                     'options'  => [
-                        'query'  => IndexProspectQueries::run(),
-                        'custom' => '',
+                        'query'                  => IndexProspectQueries::run(),
+                        'custom_prospects_query' => '',
                     ],
-                    'value' => [
-                        'recipient_builder_type' => 'query',
-                        'recipient_builder_data' => [
-                            'query'  => $query->id,
-                            'custom' => [
-                                'query' => (array)Arr::get($query->constrains, 'with', []),
-                                'tag'   => [
-                                    'state' => array_key_first($filter),
-                                    'tags'  => $tags
-                                ],
-                                'prospect_last_contacted' => [
-                                    'state'     => $lastContact != null,
-                                    'argument'  => [
-                                        'unit'     => Arr::get($lastContactValue, 'unit'),
-                                        'quantity' => Arr::get($lastContactValue, 'quantity')
-                                    ]
-                                ],
-                            ],
-                            'prospects' => null,
-                        ]
-                    ]
+                    'value' => $mailshot->recipients_recipe
                 ],
 
 
