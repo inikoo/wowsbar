@@ -25,7 +25,9 @@ class SenderEmailResource extends JsonResource
             'state'                          => $senderEmail->state,
             'last_verification_submitted_at' => $senderEmail->last_verification_submitted_at,
             'verified_at'                    => $senderEmail->verified_at,
-            'id'                             => $senderEmail->id
+            'id'                             => $senderEmail->id,
+            'message'                        => $senderEmail->state->message()[$senderEmail->state->value],
+
         ];
     }
 }
