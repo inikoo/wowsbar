@@ -9,7 +9,7 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Mail\Mailshot\UI\EditMailshotSettings;
+use App\Actions\Mail\Mailshot\UI\ProspectMailshotSettings;
 use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
@@ -177,8 +177,8 @@ class IndexProspectMailshots extends InertiaAction
                 ],
 
                 ProspectsMailshotsTabsEnum::SETTINGS->value => $this->tab == ProspectsMailshotsTabsEnum::SETTINGS->value ?
-                    fn () => EditMailshotSettings::run($this->parent, $request)
-                    : Inertia::lazy(fn () => EditMailshotSettings::run($this->parent, $request)),
+                    fn () => ProspectMailshotSettings::run($this->parent, $request)
+                    : Inertia::lazy(fn () => ProspectMailshotSettings::run($this->parent, $request)),
 
                 ProspectsMailshotsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsMailshotsTabsEnum::MAILSHOTS->value ?
                     fn () => MailshotsResource::collection($mailshots)

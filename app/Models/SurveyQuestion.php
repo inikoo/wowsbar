@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\SurveyQuestion
  *
  * @property int $id
+ * @property int $survey_id
  * @property string $question
  * @property string $type
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereQuestion($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereSurveyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SurveyQuestion whereUpdatedAt($value)
  * @mixin \Eloquent

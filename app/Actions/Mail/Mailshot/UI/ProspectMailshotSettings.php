@@ -15,7 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class EditMailshotSettings extends InertiaAction
+class ProspectMailshotSettings extends InertiaAction
 {
     use WithProspectMailshotNavigation;
 

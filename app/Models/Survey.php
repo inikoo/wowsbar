@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $shop_id
  * @property mixed $data
  * @property string|null $deleted_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Survey newModelQuery()
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Survey query()
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Survey whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereName($value)
