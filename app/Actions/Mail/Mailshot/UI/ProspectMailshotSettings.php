@@ -30,6 +30,10 @@ class ProspectMailshotSettings extends InertiaAction
                     'label'    => __('sender email address'),
                     'value'    => $shop->prospects_sender_email_address,
                     'required' => true,
+                    'options'  => [
+                        'validated'   => (bool)$shop->prospects_sender_email_address_validated_at,
+                        'validated_at'=> $shop->prospects_sender_email_address_validated_at
+                    ]
                 ],
             ]
         ];

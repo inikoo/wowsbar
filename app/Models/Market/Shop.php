@@ -73,9 +73,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property string|null $sender_email_address
- * @property string|null $sender_email_address_valid_at
+ * @property string|null $sender_email_address_validated_at
  * @property string|null $prospects_sender_email_address
- * @property string|null $prospects_sender_email_address_valid_at
+ * @property string|null $prospects_sender_email_address_validated_at
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
  * @property-read int|null $appointment_count
@@ -144,9 +144,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailAddressValidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailAddressValidatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailAddressValidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailAddressValidatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereState($value)

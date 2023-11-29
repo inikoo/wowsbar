@@ -14,7 +14,7 @@ return new class () extends Migration {
     {
         Schema::table('customers', function (Blueprint $table) {
             $table->string('prospects_sender_email_address')->nullable();
-            $table->dateTimeTz('prospects_sender_email_address_valid_at')->nullable();
+            $table->dateTimeTz('prospects_sender_email_address_validated_at')->nullable();
         });
     }
 
@@ -23,7 +23,7 @@ return new class () extends Migration {
     {
         Schema::table('customers', function (Blueprint $table) {
             $table->dropColumn('prospects_sender_email_address');
-            $table->dropColumn('prospects_sender_email_address_valid_at');
+            $table->dropColumn('prospects_sender_email_address_validated_at');
         });
     }
 };
