@@ -57,6 +57,7 @@ use App\Actions\Mail\Mailshot\UpdateMailshotContent;
 use App\Actions\Mail\Mailshot\UpdateShopMailshotSetting;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
 use App\Actions\Market\Shop\StoreShop;
+use App\Actions\Market\Shop\UpdateShop;
 use App\Actions\Organisation\Guest\DeleteGuest;
 use App\Actions\Organisation\Guest\ImportGuests;
 use App\Actions\Organisation\Guest\StoreGuest;
@@ -125,6 +126,7 @@ Route::patch('product-category/{productCategory}', UpdateProductCategory::class)
 
 Route::prefix('shop')->as('shop.')->group(function () {
     Route::post('', StoreShop::class)->name('store');
+    Route::patch('', UpdateShop::class)->name('update');
     Route::prefix('{shop:id}')->group(function () {
         Route::post('website/', StoreWebsite::class)->name('website.store');
         Route::post('customer/', [StoreCustomer::class, 'inShop'])->name('customer.store');

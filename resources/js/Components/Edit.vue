@@ -11,8 +11,6 @@ import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { get as getLodash } from 'lodash'
 import { capitalize } from "@/Composables/capitalize"
 import { useLayoutStore } from '@/Stores/layout'
-
-// import {jumpToElement} from "@/Composables/jumpToElement"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
