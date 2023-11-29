@@ -24,27 +24,28 @@ class SendIdentityEmailVerification
 
     public function handle(Shop $shop, array $modelData): JsonResponse
     {
-        $identities = GetListIdentityEmailVerification::run($modelData);
+        $message = __('The email is validated.');
+        $email = Arr::get($modelData, 'sender_email_address');
 
-        data_set($modelData, 'sender_email_address', Arr::get($modelData, 'sender_email_address'));
-
-        if (!in_array(Arr::get($modelData, 'sender_email_address'), ($identities))) {
+        $checkVerified = GetEmailVerified::make()->checkVerified($email);
+        data_set($modelData, 'sender_email_address', $email);
+        if (blank($checkVerified) or $checkVerified[$email]['VerificationStatus'] === 'Pending') {
             $result = $this->getSesClient()->verifyEmailIdentity([
-                'EmailAddress' => Arr::get($modelData, 'sender_email_address'),
+                'EmailAddress' => $email,
             ]);
 
             if ($result['@metadata']['statusCode'] != 200) {
-                return response()->json(__('There was an error sending the verification email.'));
+                $message = __('There was an error sending the verification email.');
+            } else {
+                $message = __('We\'ve sent you verification to your email, please check your email.');
             }
 
             data_set($modelData, 'sender_email_address_valid_at', null);
-
-            return response()->json(__('The email is not registered, we\'ve sent you verification to your email, please check your email.'));
         }
 
         $this->update($shop, $modelData);
 
-        return response()->json(__('The email is validated.'));
+        return response()->json($message);
     }
 
     public function authorize(ActionRequest $request): bool
