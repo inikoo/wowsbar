@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property SenderEmailStateEnum $state
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $last_verification_submitted_at
- * @property string|null $validated_at
+ * @property \Illuminate\Support\Carbon|null $verified_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail newModelQuery()
@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail whereUsageCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail whereValidatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SenderEmail whereVerifiedAt($value)
  * @mixin \Eloquent
  */
 class SenderEmail extends Model
