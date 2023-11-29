@@ -49,15 +49,20 @@ test('check seeded job positions', function () {
 
 test('create employee successful', function () {
     $arrayData = [
-        'alias'         => 'artha',
-        'contact_name'  => 'artha',
-        'date_of_birth' => '2019-01-01',
-        'job_title'     => 'director',
-        'state'         => EmployeeStateEnum::WORKING,
-        'positions'     => ['acc-m']
+        'alias'               => 'artha',
+        'contact_name'        => 'artha',
+        'employment_start_at' => '2019-01-01',
+        'date_of_birth'       => '2000-01-01',
+        'job_title'           => 'director',
+        'state'               => EmployeeStateEnum::WORKING,
+        'positions'           => ['acc-m'],
+        'worker_number'       => '1234567890',
+        'work_email'          => null,
+        'email'               => null,
+        'username'            => null
     ];
 
-    $employee = StoreEmployee::run(organisation(), $arrayData);
+    $employee = StoreEmployee::make()->action(organisation(), $arrayData);
 
 
     expect($employee)->toBeInstanceOf(Employee::class)
@@ -194,14 +199,16 @@ test('can show list of employees', function () {
 
 test('can show employees', function () {
     $employee = Employee::first();
+    expect($employee->organisationUser)->toBeInstanceOf(OrganisationUser::class);
+
     $response = get(route('org.hr.employees.show', [$employee->slug]));
 
     $response->assertInertia(function (AssertableInertia $page) use ($employee) {
         $page
             ->component('HumanResources/Employee')
             ->has('breadcrumbs', 3)
-            ->where('pageHead.meta.0.href.name', 'org.sysadmin.users.show')
-            ->where('pageHead.meta.0.href.parameters', $employee->alias)
+            ->where('pageHead.meta.1.href.name', 'org.sysadmin.users.show')
+            ->where('pageHead.meta.1.href.parameters', $employee->alias)
             ->has('tabs.navigation', 7);
     });
 });

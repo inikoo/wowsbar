@@ -41,7 +41,7 @@ return new class () extends Migration {
             $table->jsonb('job_position_scopes');
             $table->jsonb('errors');
             $table->timestampsTz();
-            $table=$this->softDeletes($table);
+            $this->softDeletes($table);
         });
         DB::statement("CREATE INDEX ON employees (lower('worker_number')) ");
         DB::statement("CREATE INDEX ON employees (lower('alias')) ");

@@ -21,7 +21,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $name
  * @property string $model_type
- * @property array $informatics
  * @property array $constrains
  * @property array $compiled_constrains
  * @property bool $has_arguments
@@ -44,7 +43,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereHasArguments($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereInformatics($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereIsSeeded($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereModelType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereName($value)

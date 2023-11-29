@@ -11,8 +11,6 @@ import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { get as getLodash } from 'lodash'
 import { capitalize } from "@/Composables/capitalize"
 import { useLayoutStore } from '@/Stores/layout'
-
-// import {jumpToElement} from "@/Composables/jumpToElement"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
@@ -81,7 +79,7 @@ const props = defineProps<{
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData.current ?? Object.keys(props.formData.blueprint)[0])  // if formData.current not exist, take first navigation
+const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})

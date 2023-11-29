@@ -130,7 +130,7 @@ class Guest extends Model implements HasMedia, Auditable
         static::updated(function (Guest $guest) {
             if (!$guest->wasRecentlyCreated) {
                 if ($guest->wasChanged('status')) {
-                    //HydrateOrganisation::make()->guestsStats();
+
                     if (!$guest->status) {
                         $guest->organisationUser->update(
                             [

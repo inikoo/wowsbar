@@ -86,7 +86,6 @@ onMounted(()=>{
     }
 })
 
-console.log("as", schemaForm, props.form)
 
 </script>
 
@@ -119,19 +118,19 @@ console.log("as", schemaForm, props.form)
 
 
             <div v-for="[key, item] in Object.entries(value)" :key="key">
-                <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
+                <Disclosure v-if="schemaForm.find(section => section.name === key)" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
                     <DisclosureButton
                         class="flex w-full justify-between  bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                         <div>
                             <font-awesome-icon class="h-[10px] pr-2 py-[2px]"
                                 :icon="open ? ['fas', 'chevron-down'] : ['fas', 'chevron-right']" />
-                            <span>{{ trans(schemaForm.find(section => section.name === key).label) }}</span>
+                            <span>{{ schemaForm.find(section => section.name === key).label }}</span>
                         </div>
                         <div class="flex gap-2">
                             <VTooltip>
                                 <font-awesome-icon :icon="['far', 'info-circle']" />
                                 <template #popper>
-                                    {{ trans(schemaForm.find(section => section.name === key).information) }}
+                                    {{ schemaForm.find(section => section.name === key).information }}
                                 </template>
                             </VTooltip>
                         </div>

@@ -15,14 +15,13 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 import EmailPreview from "@/Components/Email/EmailPreview.vue";
-import {faStop, faPlay} from '@fas/'
+import {faStop, faPlay, faPaperPlane as fasPaperPlane} from '@fas/'
 
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
-import EditModel from "@/Pages/Organisation/EditModel.vue";
 
-library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
+library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faSpellCheck)
 
 const props = defineProps<{
     title: string,
@@ -32,7 +31,9 @@ const props = defineProps<{
         navigation: object;
     }
     changelog?: object,
-    showcase?: object,
+    showcase?: {
+        state: string
+    },
     email?: object
     recipients?: object
 }>()
