@@ -8,15 +8,10 @@
 namespace App\Actions\CRM\Customer\Surveys;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\CRM\Customer;
-use App\Models\Market\Shop;
 use App\Models\Survey;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Throwable;
 
 class UpdateSurvey
 {
@@ -54,15 +49,13 @@ class UpdateSurvey
         return $this->handle($survey, $this->validateAttributes());
     }
 
-    /**
-     * @throws Throwable
-     */
-    public function action(Shop $shop, $objectData): Survey
+
+    public function action(Survey $survey, $objectData): Survey
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($shop, $validatedData);
+        return $this->handle($survey, $validatedData);
     }
 }

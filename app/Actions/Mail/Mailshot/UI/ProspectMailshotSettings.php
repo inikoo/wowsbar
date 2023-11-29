@@ -29,12 +29,12 @@ class ProspectMailshotSettings extends InertiaAction
                 'prospects_sender_email_address' => [
                     'type'     => 'senderEmail',
                     'label'    => __('sender email address'),
-                    'value'    => $shop->prospects_sender_email?->email_address,
+                    'value'    => $shop->prospectsSenderEmail?->email_address,
                     'required' => true,
                     'options'  => [
                         'senderEmail'=>
                             $shop->prospects_sender_email_id ?
-                                SenderEmailResource::make($shop->prospects_sender_email)->getArray() : null,
+                                SenderEmailResource::make($shop->prospectsSenderEmail)->getArray() : null,
 
                     ]
                 ],
