@@ -27,6 +27,7 @@ use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Models\Survey;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\Website;
@@ -333,5 +334,10 @@ class Shop extends Model implements Auditable
     public function emailTemplates(): MorphMany
     {
         return $this->morphMany(EmailTemplate::class, 'parent');
+    }
+
+    public function surveys(): HasMany
+    {
+        return $this->hasMany(Survey::class);
     }
 }
