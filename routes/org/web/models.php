@@ -54,7 +54,7 @@ use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
-use App\Actions\Mail\Mailshot\UpdateShopMailshotSetting;
+use App\Actions\Mail\Mailshot\UpdateProspectsMailshotSetting;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Market\Shop\UpdateShop;
@@ -141,8 +141,8 @@ Route::prefix('shop')->as('shop.')->group(function () {
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
 
-        Route::patch('mailshots/settings', UpdateShopMailshotSetting::class)->name('mailshots.settings.update');
-        Route::post('mailshots/settings/email/resend', SendIdentityEmailVerification::class)->name('mailshots.settings.email-verification.resend');
+        Route::patch('prospect-mailshots/settings', UpdateProspectsMailshotSetting::class)->name('prospect-mailshots.settings.update');
+        Route::post('prospect-mailshots/settings/email/resend', SendIdentityEmailVerification::class)->name('prospect-mailshots.settings.email-verification.resend');
     });
 });
 
