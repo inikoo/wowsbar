@@ -79,7 +79,7 @@ const props = defineProps<{
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData.current ?? Object.keys(props.formData.blueprint)[0])  // if formData.current not exist, take first navigation
+const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
