@@ -175,7 +175,7 @@ onMounted(() => {
 
         <div class="py-3 mx-auto px-5 w-full">
             <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" />
-            
+
             <!-- Component: Countdown Scheduled -->
             <div v-if="data.state == 'scheduled'" v-tooltip="useFormatTime(data.schedule_at, {formatTime: 'hms'})" class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
                 <div class="bg-org-500 text-white text-xs text-center py-2 tracking-wider">
@@ -200,7 +200,7 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            
+
             <Stats
                 v-if="data.state == 'in-process' || data.state == 'ready'"
                 :stats="[{ name: 'recipient', stat: dataStatistic[0].value }]"

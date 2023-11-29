@@ -62,7 +62,7 @@ const compTheme = computed(() => {
             ] : ''
         ]"
     >
-        <slot>
+        <slot name="label">
             {{ label }}
         </slot>
 

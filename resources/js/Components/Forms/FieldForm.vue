@@ -127,7 +127,7 @@ const isVerificationDirty = computed(() => {
     return (stampDirtyValue.value !== form[props.field])
 })
 
-const checkVerification = async () => {    
+const checkVerification = async () => {
     isVerificationLoading.value = true
     try {
         const response = await axios.post(
@@ -167,7 +167,7 @@ const checkVerification = async () => {
 
                             <!-- Verification: Label -->
                             <div v-if="labelVerification" class="mt-1" :class="classVerification">
-                                <FontAwesomeIcon icon='fal fa-info-circle' class='opacity-80' aria-hidden='true' />    
+                                <FontAwesomeIcon icon='fal fa-info-circle' class='opacity-80' aria-hidden='true' />
                                 <span class="ml-1 font-medium">{{ labelVerification }}</span>
                             </div>
                         </div>
@@ -181,7 +181,7 @@ const checkVerification = async () => {
                                     }" aria-hidden="true" />
                                 <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300" aria-hidden="true" />
                             </button>
-                            
+
                             <!-- Verification: Button -->
                             <div v-else>
                                 <FontAwesomeIcon v-if="isVerificationLoading" icon='fad fa-spinner-third' class='animate-spin h-8 text-gray-500 hover:text-gray-600 cursor-pointer' aria-hidden='true' />

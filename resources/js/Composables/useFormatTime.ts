@@ -33,7 +33,7 @@ export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime)
 // Relative time range (10 days ago)
 export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
-    
+
     let tempLocaleCode = OptionsTime?.localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
     const date = new Date(dateIso)
 
@@ -48,7 +48,7 @@ export const useTimeCountdown: any = (dateIso: string, options?: { human?: boole
         start: new Date(),
         end: new Date(dateIso)
     })
-    
+
     if(options?.human) return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
 
     return countdown
