@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->foreign('survey_id')->references('id')->on('surveys')->onUpdate('cascade')->onDelete('cascade');
             $table->string('question');
             $table->string('type');
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 

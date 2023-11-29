@@ -8,6 +8,7 @@
 namespace App\Actions\Mail\Mailshot\UI;
 
 use App\Actions\InertiaAction;
+use App\Http\Resources\Mail\SenderEmailResource;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Support\Arr;
@@ -28,11 +29,13 @@ class ProspectMailshotSettings extends InertiaAction
                 'prospects_sender_email_address' => [
                     'type'     => 'senderEmail',
                     'label'    => __('sender email address'),
-                    'value'    => $shop->prospects_sender_email_address,
+                    'value'    => $shop->prospects_sender_email?->email_address,
                     'required' => true,
                     'options'  => [
-                        'validated'   => (bool)$shop->prospects_sender_email_address_validated_at,
-                        'validated_at'=> $shop->prospects_sender_email_address_validated_at
+                        'senderEmail'=>
+                            $shop->prospects_sender_email_id ?
+                                SenderEmailResource::make($shop->prospects_sender_email)->getArray() : null,
+
                     ]
                 ],
             ]

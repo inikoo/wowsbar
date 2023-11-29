@@ -13,10 +13,10 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('shops', function (Blueprint $table) {
-            $table->string('sender_email_address')->nullable();
-            $table->dateTimeTz('sender_email_address_validated_at')->nullable();
-            $table->string('prospects_sender_email_address')->nullable();
-            $table->dateTimeTz('prospects_sender_email_address_validated_at')->nullable();
+            $table->unsignedSmallInteger('sender_email_id')->nullable();
+            $table->foreign('sender_email_id')->references('id')->on('sender_emails');
+            $table->unsignedSmallInteger('prospects_sender_email_id')->nullable();
+            $table->foreign('prospects_sender_email_id')->references('id')->on('sender_emails');
         });
     }
 
@@ -24,10 +24,8 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('shops', function (Blueprint $table) {
-            $table->dropColumn('sender_email_address');
-            $table->dropColumn('sender_email_address_validated_at');
-            $table->dropColumn('prospects_sender_email_address');
-            $table->dropColumn('prospects_sender_email_address_validated_at');
+            $table->dropColumn('sender_email_id');
+            $table->dropColumn('prospects_sender_email_id');
         });
     }
 };
