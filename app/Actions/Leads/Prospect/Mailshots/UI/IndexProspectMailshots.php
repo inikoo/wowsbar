@@ -157,7 +157,7 @@ class IndexProspectMailshots extends InertiaAction
                     'subNavigation'    => $subNavigation,
                     'actions'          =>
                         [
-                            [
+                            $this->parent->sender_email_address_valid_at ? [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('New mailshot'),
@@ -165,7 +165,7 @@ class IndexProspectMailshots extends InertiaAction
                                     'name'       => 'org.crm.shop.prospects.mailshots.create',
                                     'parameters' => array_values($this->originalParameters)
                                 ]
-                            ]
+                            ] : null
                         ]
 
 
