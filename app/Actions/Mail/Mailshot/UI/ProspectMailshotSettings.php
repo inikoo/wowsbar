@@ -25,10 +25,10 @@ class ProspectMailshotSettings extends InertiaAction
             'label'  => __('Sender email'),
             'icon'   => 'fal fa-envelope',
             'fields' => [
-                'sender_email_address' => [
-                    'type'     => 'input',
+                'prospects_sender_email_address' => [
+                    'type'     => 'senderEmail',
                     'label'    => __('sender email address'),
-                    'value'    => $shop->sender_email_address,
+                    'value'    => $shop->prospects_sender_email_address,
                     'required' => true,
                 ],
             ]
