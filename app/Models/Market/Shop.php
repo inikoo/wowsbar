@@ -25,6 +25,7 @@ use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
+use App\Models\Mail\SenderEmail;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Traits\HasHistory;
@@ -72,10 +73,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property string|null $sender_email_address
- * @property string|null $sender_email_address_validated_at
- * @property string|null $prospects_sender_email_address
- * @property string|null $prospects_sender_email_address_validated_at
+ * @property int|null $sender_email_id
+ * @property int|null $prospects_sender_email_id
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
  * @property-read int|null $appointment_count
@@ -111,6 +110,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
+ * @property-read SenderEmail|null $prospects_sender_email
+ * @property-read SenderEmail|null $sender_email
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
  * @property-read int|null $serial_references_count
  * @property-read \App\Models\Market\ShopStats|null $stats
@@ -143,10 +144,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereOpenAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailAddressValidatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailAddressValidatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereState($value)
@@ -339,5 +338,15 @@ class Shop extends Model implements Auditable
     public function emailTemplates(): MorphMany
     {
         return $this->morphMany(EmailTemplate::class, 'parent');
+    }
+
+    public function prospects_sender_email(): BelongsTo
+    {
+        return $this->belongsTo(SenderEmail::class, 'prospects_sender_email_id');
+    }
+
+    public function sender_email(): BelongsTo
+    {
+        return $this->belongsTo(SenderEmail::class, 'sender_email_id');
     }
 }

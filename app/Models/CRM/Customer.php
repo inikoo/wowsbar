@@ -74,8 +74,7 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property string|null $prospects_sender_email_address
- * @property string|null $prospects_sender_email_address_validated_at
+ * @property int|null $prospects_sender_email_id
  * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
  * @property-read int|null $appointment_count
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
@@ -127,8 +126,7 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Customer whereLocation($value)
  * @method static Builder|Customer whereName($value)
  * @method static Builder|Customer wherePhone($value)
- * @method static Builder|Customer whereProspectsSenderEmailAddress($value)
- * @method static Builder|Customer whereProspectsSenderEmailAddressValidatedAt($value)
+ * @method static Builder|Customer whereProspectsSenderEmailId($value)
  * @method static Builder|Customer whereReference($value)
  * @method static Builder|Customer whereShopId($value)
  * @method static Builder|Customer whereSlug($value)

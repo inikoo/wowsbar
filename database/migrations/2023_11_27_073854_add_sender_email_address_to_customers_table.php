@@ -13,8 +13,8 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->string('prospects_sender_email_address')->nullable();
-            $table->dateTimeTz('prospects_sender_email_address_validated_at')->nullable();
+            $table->unsignedSmallInteger('prospects_sender_email_id')->nullable();
+            $table->foreign('prospects_sender_email_id')->references('id')->on('sender_emails');
         });
     }
 
@@ -22,8 +22,7 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('prospects_sender_email_address');
-            $table->dropColumn('prospects_sender_email_address_validated_at');
+            $table->dropColumn('prospects_sender_email_id');
         });
     }
 };

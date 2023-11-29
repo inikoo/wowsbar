@@ -22,7 +22,7 @@ return new class () extends Migration {
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->jsonb('data');
             $table=$this->softDeletes($table);
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 

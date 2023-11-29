@@ -8,7 +8,9 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
+use App\Actions\Mail\SenderEmail\StoreSenderEmail;
 use App\Actions\Traits\WithActionUpdate;
+use App\Models\Mail\SenderEmail;
 use App\Models\Market\Shop;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
@@ -23,13 +25,30 @@ class UpdateProspectsMailshotSetting
 
     public function handle(Shop $shop, array $modelData): JsonResponse|Shop
     {
-        if (Arr::get($modelData, 'title') or Arr::get($modelData, 'description')) {
-            $modelData = Arr::except($modelData, ['title', 'description']);
+        if ($senderEmailAddress = Arr::get($modelData, 'prospects_sender_email_address')) {
+            Arr::forget($modelData, 'prospects_sender_email_address');
 
-            $shop = $this->update($shop, $modelData, ['data', 'settings']);
+            if (!$senderEmail = SenderEmail::where('email_address', $senderEmailAddress)->first()) {
+                $senderEmail = StoreSenderEmail::make()->action(
+                    [
+                        'email_address' => $senderEmailAddress,
+                    ]
+                );
+            }
+            data_set($modelData, 'prospects_sender_email_id', $senderEmail->id);
         }
 
-        return $shop;
+        if (Arr::get($modelData, 'title')) {
+            data_set($modelData, 'settings.mailshot.unsubscribe.title', Arr::get($modelData, 'title'));
+            Arr::forget($modelData, 'title');
+        }
+
+        if (Arr::get($modelData, 'description')) {
+            data_set($modelData, 'settings.mailshot.unsubscribe.description', Arr::get($modelData, 'description'));
+            Arr::forget($modelData, 'description');
+        }
+
+        return $this->update($shop, $modelData, ['data', 'settings']);
     }
 
     public function authorize(ActionRequest $request): bool
