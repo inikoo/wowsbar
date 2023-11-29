@@ -39,7 +39,7 @@ trait WithCustomersSubNavigation
 
             $meta[] = [
                 'href'     => [
-                    'name'       => 'org.crm.shop.prospects.mailshots.index',
+                    'name'       => 'org.crm.shop.customers.newsletters.index',
                     'parameters' => $request->route()->originalParameters()
                 ],
                 'number'   => $this->parent->mailStats->number_mailshots_type_newsletter,
@@ -52,7 +52,7 @@ trait WithCustomersSubNavigation
 
             $meta[] = [
                 'href'     => [
-                    'name'       => 'org.crm.shop.prospects.mailshots.index',
+                    'name'       => 'org.crm.shop.customers.mailshots.index',
                     'parameters' => $request->route()->originalParameters()
                 ],
                 'number'   => $this->parent->mailStats->number_mailshots_type_marketing,

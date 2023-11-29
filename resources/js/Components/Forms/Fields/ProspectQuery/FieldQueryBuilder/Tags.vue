@@ -37,7 +37,7 @@ onMounted(() => {
 <template>
     <div>
         <div>
-            <Multiselect v-model="value[fieldName].tags" mode="tags" placeholder="Select the tag" valueProp="id"
+            <Multiselect v-model="value[fieldName].tag_ids" mode="tags" placeholder="Select the tag" valueProp="id"
                 trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
                 :options="tagsOptions" noResultsText="No one left. Type to add new one.">
 
@@ -50,18 +50,16 @@ onMounted(() => {
                 </template>
             </Multiselect>
         </div>
-        <div v-if="value[fieldName].tags.length > 1" class="mb-4">
+        <div v-if="value[fieldName].tag_ids.length > 1" class="mb-4">
             <div class="mt-1">
                 <fieldset>
                     <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                        <div v-for="(filter, filterIndex) in descriptor.FilterTags" :key="filter.value"
+                        <div v-for="(filter, filterIndex) in descriptor.logic" :key="filter.value"
                             class="flex items-center">
-                            <input :id="filter.value" name="notification-method" type="radio" :value="filter.value"
+                            <input :id="filter.value" :name="'logic' + fieldName" type="radio" :value="filter.value"
                                 class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                v-model="value[fieldName].state" />
-                            <label :for="filter.value" class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{
-                                filter.label
-                            }}</label>
+                                v-model="value[fieldName].logic" />
+                            <label :for="filter.value" class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{filter.label}}</label>
                         </div>
                     </div>
                 </fieldset>

@@ -62,7 +62,6 @@ class ShowProspect extends InertiaAction
     public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
     {
         $subNavigation = $this->getSubNavigation($request);
-
         return Inertia::render(
             'CRM/Prospect',
             [
@@ -83,7 +82,8 @@ class ShowProspect extends InertiaAction
                         'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
-                    'actions' => [
+                    'iconRight'          => $prospect->state->stateIcon()[$prospect->state->value],
+                    'actions'            => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

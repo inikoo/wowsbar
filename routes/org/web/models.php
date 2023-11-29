@@ -23,6 +23,7 @@ use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
+use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Actions\Helpers\Tag\StoreTag;
 use App\Actions\Helpers\Tag\UpdateTag;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
@@ -53,6 +54,7 @@ use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
+use App\Actions\Mail\Mailshot\UpdateShopMailshotSetting;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\DeleteGuest;
@@ -136,6 +138,9 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
+
+        Route::patch('mailshots/settings', UpdateShopMailshotSetting::class)->name('mailshots.settings.update');
+        Route::post('mailshots/settings/email/resend', SendIdentityEmailVerification::class)->name('mailshots.settings.email-verification.resend');
     });
 });
 

@@ -15,7 +15,7 @@ import {
     faGraduationCap,
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
-    faTags,faCube,faCodeBranch
+    faTags,faCube,faCodeBranch,faThumbsDown, faLaugh, faChair
 } from '@fal/';
 
 import {useTabChange} from "@/Composables/tab-change";
@@ -34,7 +34,8 @@ library.add(
     faPaperclip,
     faPaperPlane,
     faCube,
-    faCodeBranch
+    faCodeBranch,
+    faThumbsDown, faLaugh, faChair
 )
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))

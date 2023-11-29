@@ -23,13 +23,16 @@ class QueryResource extends JsonResource
 {
     public function toArray($request): array
     {
+        /** @var \App\Models\Helpers\Query $query */
+        $query = $this;
+
         return [
-            'slug'       => $this->slug,
-            'name'       => $this->name,
-            'model_type' => $this->model_type,
-            'constrains' => $this->constrains,
-            'arguments'  => $this->arguments,
-            'is_seeded'  => $this->is_seeded
+            'slug'          => $query->slug,
+            'name'          => $query->name,
+            'model_type'    => $query->model_type,
+            'constrains'    => $query->constrains,
+            'has_arguments' => $query->has_arguments,
+            'is_seeded'     => $query->is_seeded
         ];
     }
 }

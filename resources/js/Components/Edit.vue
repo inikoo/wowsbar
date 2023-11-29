@@ -45,7 +45,7 @@ library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, f
 const props = defineProps<{
 
     formData: {
-        current:string,
+        current?:string,
         blueprint: {
             // sectionData
             label: string,
@@ -78,7 +78,6 @@ const props = defineProps<{
         }
         title?: string
     }
-    appName: string
 }>()
 
 const layout = useLayoutStore()
@@ -103,7 +102,7 @@ onMounted(() => {
     route().v().query ? currentTab == getLodash(route().v().query, 'section') : ''  // To auto open the navigation as the 'section' in url
 
     // To indicate active state that on viewport
-    buttonRefs.value.forEach((element, index) => {
+    buttonRefs.value.forEach((element: any, index: number) => {
         const observer = new IntersectionObserver(handleIntersection(element, index));
         observer.observe(element);
 
@@ -115,7 +114,7 @@ onMounted(() => {
 
     // Clean up all the observers when the component is unmounted
     return () => {
-        buttonRefs.value.forEach((button) => button.cleanupObserver());
+        buttonRefs.value.forEach((button: any) => button.cleanupObserver());
     };
 })
 
@@ -182,7 +181,7 @@ onBeforeUnmount(() => {
                                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                                 <div class="relative flex-grow">
                                                     <Action v-if="fieldData.type==='action'" :action="fieldData.action" :dataToSubmit="fieldData.action?.data" />
-                                                    <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                                                    <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" />
                                                 </div>
                                             </div>
                                         </dd>

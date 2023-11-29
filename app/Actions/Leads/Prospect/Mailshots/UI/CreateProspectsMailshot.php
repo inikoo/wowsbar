@@ -58,23 +58,23 @@ class CreateProspectsMailshot extends InertiaAction
         $fields[] = [
             'title'  => '',
             'fields' => [
-                'recipients' => [
-                    'type'        => 'prospectQueryChooser',
+                'recipients_recipe' => [
+                    'type'        => 'prospectRecipients',
                     'label'       => __('recipients'),
                     'required'    => true,
                     'options'     => [
-                        'query'  => IndexProspectQueries::run(),
-                        'custom' => '',
+                        'query'                  => IndexProspectQueries::run(),
+                        'custom_prospects_query' => '',
                     ],
                     'full'      => true,
                     'value'     => [
                         'recipient_builder_type' => 'query',
                         'recipient_builder_data' => [
-                            'query'     => null,
-                            'custom'    => $tags[0] != '' ? [
-                                'tag'   => [
-                                    'state' => 'all',
-                                    'tags'  => $tags
+                            'query'                     => null,
+                            'custom_prospects_query'    => $tags[0] != '' ? [
+                                'tags'   => [
+                                    'logic'    => 'all',
+                                    'tag_ids'  => $tags
                                 ],
                             ] : null,
                             'prospects' => null,

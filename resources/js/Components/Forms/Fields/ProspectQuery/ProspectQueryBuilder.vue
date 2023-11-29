@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import Multiselect from "@vueform/multiselect"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faInfoCircle } from '@far/'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { ref, onMounted, watch, reactive } from 'vue'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import PureInput from '@/Components/Pure/PureInput.vue'
+import { ref, watch, reactive, onMounted } from 'vue'
 import descriptor from './descriptor'
-import axios from "axios"
-import Tag from "@/Components/Tag.vue"
-import { notify } from "@kyvg/vue3-notification"
-import { get, set, isArray, isNull } from 'lodash'
-import { faExclamationCircle, faCheckCircle, faChevronCircleLeft } from '@fas/';
-import {trans} from "laravel-vue-i18n";
+import { get, set, isArray } from 'lodash'
+import { faExclamationCircle, faCheckCircle, faChevronDown, faChevronRight } from '@fas/';
+import { faBoxOpen } from '@fal/';
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { trans } from "laravel-vue-i18n";
+import Tags from './FieldQueryBuilder/Tags.vue'
+import PropspectBy from './FieldQueryBuilder/ProspectWith.vue'
+import LastContact from './FieldQueryBuilder/ProspectLastContacted.vue'
 
-library.add(faChevronCircleLeft, faInfoCircle, faExclamationCircle, faCheckCircle)
+library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faChevronRight, faBoxOpen)
 
 const props = withDefaults(defineProps<{
     form?: any
@@ -28,39 +27,35 @@ const props = withDefaults(defineProps<{
         searchable?: boolean
     }
 }>(), {
-    options : {
-        use: ['filter', "tags", "contact"],
+    options: {
+        use: ['prospect_can_contact_by', "tags", "prospect_last_contacted"],
     }
 
 })
 
 
-const tagsOptions = ref([])
-
-/* get tags option */
-const getTagsOptions = async () => {
-    try {
-        const response = await axios.get(
-            route('org.json.tags'),
-        )
-        tagsOptions.value = Object.values(response.data)
-    } catch (error) {
-        notify({
-            title: "Failed",
-            text: "Failed to get data, Tags, please reload you page",
-            type: "error"
-        });
-    }
-}
-
 const emits = defineEmits();
+const sectionValue = ref([])
+const schemaForm = descriptor['schemaForm'].filter((item) => props.options.use.includes(item.name))
+
+const getComponent = (componentName: string) => {
+    const components: any = {
+        "prospect_can_contact_by": PropspectBy,
+        "tags" : Tags,
+        "prospect_last_contacted" : LastContact
+
+
+    };
+    return components[componentName] ?? null;
+
+};
 
 
 const setFormValue = (data, fieldName) => {
     if (isArray(fieldName)) {  /* if fieldName array */
-        if (get(data, fieldName)) return get(data, fieldName, descriptor.defaultValue);  /* Chek if data null or undefined or has a objecjt*/
-        else return descriptor.defaultValue
-    } else return get(data, fieldName, descriptor.defaultValue); /* if fieldName string */
+        if (get(data, fieldName)) return get(data, fieldName, {});  /* Check if data null or undefined or has an object*/
+        else return {}
+    } else return get(data, fieldName, {}); /* if fieldName string */
 
 };
 
@@ -74,173 +69,87 @@ const updateFormValue = (newValue) => {
     emits("update:form", target);
 };
 
+const changeSection = (index: Number) => {
+    if (sectionValue.value.includes(index)) set(value, schemaForm[index].name, schemaForm[index].value);
+    else delete value[schemaForm[index].name]
+}
+
+
 watch(value, (newValue) => {
     updateFormValue(newValue);
 });
 
-onMounted(() => {
-    getTagsOptions()
+onMounted(()=>{
+    for(const item in value){
+        const index =  schemaForm.findIndex((i)=> i.name == item)
+        if(index != -1) sectionValue.value.push(index)
+    }
 })
 
-
+console.log("as", schemaForm, props.form)
 
 </script>
 
 <template>
-    <div>
-  <!--   Prospect Filter -->
-        <Disclosure v-if="options.use.includes('filter')" as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
-            <DisclosureButton
-                class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                <span>Prospects by</span>
-                <div class="flex gap-2">
-                    <VTooltip>
-                        <font-awesome-icon :icon="['far', 'info-circle']" />
-                            <template #popper>
-                                filter deliveries based on the prospect
-                            </template>
-                    </VTooltip>
+    <div class="flex">
+        <div class="w-[20%] px-2">
+            <div v-for="(sectionData, sectionIdx ) in schemaForm" :key="sectionIdx" class="relative py-1">
+                <div
+                    class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
+                    <label :for="sectionData.name" class="ml-2">{{ sectionData.label }}</label>
+                    <input type="checkbox" :id="sectionData.name" :key="sectionData.name" :value="sectionIdx"
+                        v-model="sectionValue" @change="changeSection(sectionIdx)"
+                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                 </div>
-            </DisclosureButton>
-            <DisclosurePanel class="px-4 pt-3 pb-2 text-sm text-gray-500">
-                    <div class="flex flex-wrap items-center">
-                        <div v-for="(query, index) in descriptor.QueryLists" :key="query.value"
-                            class="flex items-center mr-4 mb-2 py-[4px] px-2.5 border border-solid border-gray-300 rounded-lg">
-                            <input type="checkbox" v-model="value.query" :id="'query_' + query.value"
-                                :key="'query_' + query.value" :value="query.value"
-                                class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                            <label :for="'query_' + query.value" class="ml-2">{{ query.label }}</label>
-                        </div>
-                        <div class="flex items-center mr-4 mb-2 py-[4px] px-2.5">
-                            <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}.query`])"
-                                icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500" aria-hidden="true" />
-                            <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
-                                class="h-5 w-5 text-green-500" aria-hidden="true" />
-                            <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third"
-                                class="h-5 w-5 animate-spin" />
-                        </div>
-                    </div>
-                    <p v-if="get(form, ['errors', `${fieldName}.query`])" class="mt-2 text-sm text-red-600"
-                        :id="`${fieldName}-error`">
-                        {{ form.errors[`${fieldName}.query`] }}
-                    </p>
-            </DisclosurePanel>
-        </Disclosure>
-          <!--  end  Prospect Filter -->
-           <!-- tags  -->
-            <Disclosure v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('tags')">
-                <DisclosureButton
-                    class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>{{trans('Tags')}}</span>
-                    <div class="flex gap-2">
-
-                    </div>
-                </DisclosureButton>
-                <DisclosurePanel class="px-4 text-sm text-gray-500">
-                    <div class="mt-2">
-                        <Multiselect v-model="value.tag.tags" mode="tags" placeholder="Select the tag" valueProp="slug"
-                            trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
-                            :options="tagsOptions" noResultsText="No one left. Type to add new one.">
-
-                            <template
-                                #tag="{ option, handleTagRemove, disabled }: { option: tag, handleTagRemove: Function, disabled: boolean }">
-                                <div class="px-0.5 py-[3px]">
-                                    <Tag :theme="option.id" :label="option.name" :closeButton="true" :stringToColor="true"
-                                        size="sm" @onClose="(event) => handleTagRemove(option, event)" />
-                                </div>
-                            </template>
-                        </Multiselect>
-                        <p v-if="get(form, ['errors', `${fieldName}.tag.tags`])" class="mt-2 text-sm text-red-600"
-                            :id="`${fieldName}-error`">
-                            {{ form.errors[`${fieldName}.tag.tags`] }}
-                        </p>
-                    </div>
-                    <div v-if="value.tag.tags.length > 1" class="mb-4">
-                        <div class="mt-1">
-                            <fieldset>
-                                <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                                    <div v-for="(filter, filterIndex) in descriptor.FilterTags" :key="filter.value"
-                                        class="flex items-center">
-                                        <input :id="filter.value" name="notification-method" type="radio"
-                                            :value="filter.value"
-                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                            v-model="value.tag.state" />
-                                        <label :for="filter.value"
-                                            class="ml-3 block text-xs font-medium leading-6 text-gray-900">{{ filter.label
-                                            }}</label>
-                                    </div>
-                                    <div class="flex items-center mr-4 mb-2 py-[4px] px-2.5">
-                                        <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}.tag.state`])"
-                                            icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500"
-                                            aria-hidden="true" />
-                                        <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
-                                            class="h-5 w-5 text-green-500" aria-hidden="true" />
-                                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third"
-                                            class="h-5 w-5 animate-spin" />
-                                    </div>
-                                </div>
-                                <p v-if="get(form, ['errors', `${fieldName}.tag.state`])" class="mt-2 text-sm text-red-600"
-                                    :id="`${fieldName}-error`">
-                                    {{ form.errors[`${fieldName}.tag.state`] }}
-                                </p>
-                            </fieldset>
-                        </div>
-                    </div>
-
-                </DisclosurePanel>
-            </Disclosure>
-               <!-- end tags  -->
-                  <!-- last contact  -->
-            <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true" v-if="options.use.includes('contact')">
-                <DisclosureButton
-                    class="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span>{{trans('Last contacted')}}</span>
-                    <div class="flex gap-2">
-                        <VTooltip>
-                            <font-awesome-icon :icon="['far', 'info-circle']" />
-
-                            <template #popper>
-                                {{trans('filter recipients based on the last mailshot sent to them')}}
-                            </template>
-                        </VTooltip>
-                        <!--      <font-awesome-icon :icon="['fas', 'chevron-circle-left']" :class="open ? '-rotate-90 transform' : ''" class="h-4 w-4 text-purple-500"/> -->
-                    </div>
-                </DisclosureButton>
-                <DisclosurePanel class="px-4 pt-2 pb-2 text-sm text-gray-500">
-                    <div>
-                        <Multiselect placeholder="Select contact" :allowEmpty="false" :options="descriptor.contact"
-                            valueProp="value" trackBy="label" label="label" v-model="value.last_contact.state"
-                            :can-clear="false"></Multiselect>
-                        <p v-if="get(form, ['errors', `${fieldName}.last_contact.state`])" class="mt-2 text-sm text-red-600"
-                            :id="`${fieldName}-error`">
-                            {{ form.errors[`${fieldName}.last_contact.state`] }}
-                        </p>
-                    </div>
-
-                    <div v-if="value.last_contact.state" class="flex flex-col gap-y-2 mt-4">
-                        <div class="flex gap-x-2">
-                            <div class="w-20">
-                                <PureInput type="number" :minValue="1" :caret="false" placeholder="range"
-                                    v-model="value.last_contact.data.quantity" />
-                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.quantity`])"
-                                    class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                    {{ form.errors[`${fieldName}.last_contact.data.quantity`] }}
-                                </p>
-                            </div>
-                            <div class="w-full">
-                                <Multiselect :options="['day', 'week', 'month']" placeholder="Pick a range"
-                                    v-model="value.last_contact.data.unit" :can-clear="false" />
-                                <p v-if="get(form, ['errors', `${fieldName}.last_contact.data.unit`])"
-                                    class="mt-2 text-sm text-red-600" :id="`${fieldName}-error`">
-                                    {{ form.errors[`${fieldName}.last_contact.data.unit`] }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </DisclosurePanel>
-            </Disclosure>
-              <!-- end last contact  -->
+            </div>
         </div>
+
+        <div class="w-[80%] bg-gray-50 p-4 rounded-md border border-gray-300">
+
+            <!--  if value is null -->
+            <div v-if="Object.keys(value).length === 0 && value.constructor === Object"
+                class="flex justify-center items-center">
+                <div class="text-center">
+                    <font-awesome-icon class="h-16" :icon="['fal', 'box-open']" />
+                    <div class="mt-1 text-xs">You don't have any filter data</div>
+                </div>
+            </div>
+            <!-- end  if value is null -->
+
+
+
+            <div v-for="[key, item] in Object.entries(value)" :key="key">
+                <Disclosure as="div" class="mt-2" v-slot="{ open }" :defaultOpen="true">
+                    <DisclosureButton
+                        class="flex w-full justify-between  bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
+                        <div>
+                            <font-awesome-icon class="h-[10px] pr-2 py-[2px]"
+                                :icon="open ? ['fas', 'chevron-down'] : ['fas', 'chevron-right']" />
+                            <span>{{ trans(schemaForm.find(section => section.name === key).label) }}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <VTooltip>
+                                <font-awesome-icon :icon="['far', 'info-circle']" />
+                                <template #popper>
+                                    {{ trans(schemaForm.find(section => section.name === key).information) }}
+                                </template>
+                            </VTooltip>
+                        </div>
+                    </DisclosureButton>
+                    <DisclosurePanel class="px-4 pt-3 pb-2 text-sm text-gray-500 bg-white border-gray-300 border border-t-0">
+
+                            <component :is="getComponent(key)" :value="value" :fieldName="key">
+                            </component>
+
+                    </DisclosurePanel>
+                </Disclosure>
+            </div>
+
+
+
+        </div>
+
+    </div>
 </template>
 
 <style lang="scss">
@@ -251,10 +160,6 @@ onMounted(() => {
 .multiselect.is-active {
     @apply shadow-none
 }
-
-// .multiselect-tag {
-//     @apply bg-gradient-to-r from-lime-300 to-lime-200 hover:bg-lime-400 ring-1 ring-lime-500 text-lime-600
-// }
 
 .multiselect-tags {
     @apply m-0.5

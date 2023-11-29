@@ -1,12 +1,19 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Fri, 24 Nov 2023 17:31:58 Malaysia Time, Kuala Lumpur, Malaysia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang='ts'>
 import { ref, watch, onMounted } from 'vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import ProspectQueries from '@/Components/Forms/Fields/ProspectQueries.vue'
-import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilderV2.vue'
+import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 import { trans } from "laravel-vue-i18n";
+import {useLocaleStore} from "@/Stores/locale";
 
 const props = defineProps<{
     form: {
@@ -37,43 +44,48 @@ const recipientsCount = ref(0)
 const categories = [
     {
         name: 'query',
-        fieldName: "recipients",
-        label: 'Query',
+        fieldName: props.fieldName,
+        label: trans('Query'),
         component: ProspectQueries,
         options : props.options["query"]
     },
     {
-        name: 'custom',
-        fieldName: ["recipients", 'recipient_builder_data', 'custom'],
-        label: 'Custom',
+        name: 'custom_prospects_query',
+        fieldName: [props.fieldName, 'recipient_builder_data', 'custom_prospects_query'],
+        label: trans('Custom'),
         component: ProspectQueryBuilder,
         options : {
-            use : ["tag","last_contact"],
-            ...props.options["custom"]
-            
+            use : ["tags", "prospect_last_contacted"],
+            ...props.options["custom_prospects_query"]
+
         }
     },
     {
         name: 'prospects',
-        fieldName: ["recipients", 'recipient_builder_data', 'prospects'],
-        label: 'Prospects',
+        fieldName: [ props.fieldName, 'recipient_builder_data', 'prospects'],
+        label: trans('Prospects'),
         component: ProspectSelect,
         options : props.options["prospects"]
     },
 ]
+const locale = useLocaleStore();
 
 
-const getTagsOptions = async () => {
+const getEstimateRecipients = async () => {
         try {
-            const formData = props.form.data(); // Assuming props.form.data() retrieves the form data
-
-            const response = await axios.post(
+            const formData = props.form.data();
+            const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
-                formData // Sending form data as part of the POST request
+                {
+                    params: {
+                        ...formData
+                    }
+                }
             );
+            //if(response.data.type==='query'){
+            //    props.form[props.fieldName].recipient_builder_data.query = response.data.count //todo
 
-            // Assuming recipientsCount is a variable or element to store the response data
-            recipientsCount.value = response.data; // Set the received data to recipientsCount
+            recipientsCount.value = response.data ;
 
         } catch (error) {
             console.error(error); // Log the error for debugging purposes
@@ -92,16 +104,29 @@ const changeTab=(tabIndex : number)=>{
     selectedIndex.value = tabIndex
 }
 
-watch(props.form.recipients,getTagsOptions, {deep: true})
+watch(props.form[props.fieldName],getEstimateRecipients, {deep: true})
 
+const getParams = () => {
+    const pathname = location.search
+    const urlParams = new URLSearchParams(pathname);
+    const paramsObject = {};
+    for (const [key, value] of urlParams) {
+        paramsObject[key] = value;
+    }
+    return paramsObject
+}
 
 onMounted(() => {
-    const pathname = location.search
-    if (pathname) {
+    const pathname = getParams()
+    if (pathname.tags) {
         props.form[props.fieldName].recipient_builder_type = "custom"
         selectedIndex.value = 1
+    }else{
+     const index = categories.findIndex((item)=>item.name ==  props.form[props.fieldName].recipient_builder_type) 
+     if(index != -1)  selectedIndex.value = index
     }
 })
+
 
 </script>
 
@@ -121,8 +146,14 @@ onMounted(() => {
                     </button>
                 </Tab>
                 <div style="margin-left: auto;">
-                    <button class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                      Total recipients :  {{ recipientsCount }}
+                    <button  v-if="recipientsCount.type == 'prospects'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                      {{trans('Total recipients')}}:  {{ recipientsCount.count }}
+                    </button>
+                    <button  v-if="recipientsCount.type == 'custom_prospects_query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:   {{ recipientsCount.count }}
+                    </button>
+                    <button  v-if="recipientsCount.type == 'query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
+                        {{trans('Total recipients')}}:  {{ recipientsCount.count }}
                     </button>
                 </div>
             </TabList>

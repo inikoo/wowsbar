@@ -7,7 +7,7 @@
 
 namespace App\Actions\Leads\Prospect\Queries\UI;
 
-use App\Actions\Helpers\Query\BuildQuery;
+use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
@@ -74,13 +74,12 @@ class ShowProspectQuery extends InertiaAction
                 'tags' => TagResource::collection(Tag::all()),
 
                 ShowProspectTabsEnum::PROSPECTS->value => $this->tab == ShowProspectTabsEnum::PROSPECTS->value ?
-                    fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())
-                    : Inertia::lazy(fn () => ProspectsResource::collection(BuildQuery::run($query)->paginate())),
+                    fn () => ProspectsResource::collection(GetQueryEloquentQueryBuilder::run($query)->paginate())
+                    : Inertia::lazy(fn () => ProspectsResource::collection(GetQueryEloquentQueryBuilder::run($query)->paginate())),
             ]
         )->table(IndexProspects::make()->tableStructure(parent: $this->parent, prefix: ShowProspectTabsEnum::PROSPECTS->value));
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         $headCrumb = function (array $routeParameters = []) {

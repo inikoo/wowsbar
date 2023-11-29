@@ -26,7 +26,7 @@ class MailshotSendEmailChunk
         $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
 
         if(app()->environment('production')) {
-            $sender=$mailshot->scope->sender_email_address;
+            $sender=$mailshot->parent->sender_email_address;
         } else {
             $sender=config('mail.devel.sender_email_address');
 

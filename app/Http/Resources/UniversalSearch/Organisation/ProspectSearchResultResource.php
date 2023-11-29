@@ -28,7 +28,7 @@ class ProspectSearchResultResource extends JsonResource
             'tags'         => $prospect->tags()->pluck('name'),
             'route'        => [
                 'name'       => 'org.crm.shop.prospects.show',
-                'parameters' => [$prospect->scope->slug, $prospect->slug]
+                'parameters' => [$prospect->parent->slug, $prospect->slug]
             ],
             'state'        => $prospect->state,
             'state_icon'   => $prospect->state->stateIcon()[$prospect->state->value],

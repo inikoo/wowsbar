@@ -52,6 +52,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $company_name
  * @property string|null $contact_name
  * @property string|null $email
+ * @property string|null $sender_email_address
+ * @property string|null $sender_email_address_valid_at
  * @property string|null $phone
  * @property string|null $identity_document_type
  * @property string|null $identity_document_number
@@ -243,7 +245,7 @@ class Shop extends Model implements Auditable
 
     public function scopedProspects(): MorphMany
     {
-        return $this->morphMany(Prospect::class, 'scope');
+        return $this->morphMany(Prospect::class, 'parent');
     }
 
     public function orders(): HasMany
@@ -325,11 +327,11 @@ class Shop extends Model implements Auditable
 
     public function mailshots(): MorphMany
     {
-        return $this->morphMany(Mailshot::class, 'scope');
+        return $this->morphMany(Mailshot::class, 'parent');
     }
 
     public function emailTemplates(): MorphMany
     {
-        return $this->morphMany(EmailTemplate::class, 'scope');
+        return $this->morphMany(EmailTemplate::class, 'parent');
     }
 }

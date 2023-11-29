@@ -7,21 +7,15 @@
 
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
-use App\Actions\Helpers\Query\BuildQuery;
-use App\Actions\Traits\WithCheckCanSendEmail;
+use App\Actions\Mail\Mailshot\GetEstimatedNumberRecipients;
 use App\Events\MailshotPusherEvent;
-use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class MailshotHydrateEstimatedEmails
 {
     use AsAction;
-    use WithCheckCanSendEmail;
-
-
 
     private Mailshot $mailshot;
 
@@ -38,65 +32,22 @@ class MailshotHydrateEstimatedEmails
 
     public function handle(Mailshot $mailshot): void
     {
-
-
-        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
-
-        $queryBuilder = BuildQuery::run($query);
-
-        $counter = 0;
-        $queryBuilder->chunk(
-            1000,
-            function ($recipients) use ($mailshot, &$counter) {
-                foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
-                        continue;
-                    }
-                    $counter++;
-                }
-
-
-            }
+        $estimatedNumberRecipients = GetEstimatedNumberRecipients::run(
+            $mailshot->parent,
+            $mailshot->recipients_recipe
         );
-
-        $estimatedNumberRecipients =$this->getNumberEstimatedRecipients($mailshot->recipients_recipe);
 
 
         $mailshot->mailshotStats()->update(
             [
-                'number_estimated_dispatched_emails'       => $estimatedNumberRecipients,
-                'estimated_dispatched_emails_calculated_at'=> now()
+                'number_estimated_dispatched_emails'        => $estimatedNumberRecipients,
+                'estimated_dispatched_emails_calculated_at' => now()
             ]
         );
 
-        if(config('mail.broadcast_dispatch_emails_stats')) {
+        if (config('mail.broadcast_dispatch_emails_stats')) {
             MailshotPusherEvent::dispatch($mailshot);
         }
-    }
-
-    public function getNumberEstimatedRecipients(array $recipientsRecipe): int
-    {
-        $query = Query::find(Arr::get($recipientsRecipe, 'query_id'));
-
-        $queryBuilder = BuildQuery::run($query);
-
-        $counter = 0;
-        $queryBuilder->chunk(
-            1000,
-            function ($recipients) use (&$counter) {
-                foreach ($recipients as $recipient) {
-                    if (!$this->canSend($recipient)) {
-                        continue;
-                    }
-                    $counter++;
-                }
-
-
-            }
-        );
-
-        return $counter;
-
     }
 
 

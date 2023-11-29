@@ -15,6 +15,7 @@ import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
 import {faStop, faPlay} from '@fas/'
+import Edit from "@/Components/Edit.vue";
 
 library.add(faRoad, faTerminal, faUserCircle, faSpellCheck,  faStop, faPlay)
 const props = defineProps<{
@@ -25,6 +26,7 @@ const props = defineProps<{
     },
     title: string
     mailshots?: object
+    settings?: object
 }>()
 
 
@@ -35,6 +37,7 @@ const component = computed(() => {
 
     const components = {
         mailshots: TableProspectsMailshots,
+        settings: Edit
     };
     return components[currentTab.value];
 
@@ -46,5 +49,5 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :key="currentTab" :tab="currentTab"  :data="props[currentTab]"></component>
+    <component :is="component" :key="currentTab" :tab="currentTab"  :data="props[currentTab]" :formData="props[currentTab].formData"></component>
 </template>

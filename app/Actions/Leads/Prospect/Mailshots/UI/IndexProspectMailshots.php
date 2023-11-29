@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Mail\Mailshot\UI\EditMailshotSettings;
 use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
@@ -56,7 +57,7 @@ class IndexProspectMailshots extends InertiaAction
             ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
 
         if (class_basename($parent) == 'Shop') {
-            $queryBuilder->where('scope_id', $parent->id);
+            $queryBuilder->where('parent_id', $parent->id);
         }
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
@@ -156,7 +157,7 @@ class IndexProspectMailshots extends InertiaAction
                     'subNavigation'    => $subNavigation,
                     'actions'          =>
                         [
-                            [
+                            $this->parent->sender_email_address_valid_at ? [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('New mailshot'),
@@ -164,7 +165,7 @@ class IndexProspectMailshots extends InertiaAction
                                     'name'       => 'org.crm.shop.prospects.mailshots.create',
                                     'parameters' => array_values($this->originalParameters)
                                 ]
-                            ]
+                            ] : null
                         ]
 
 
@@ -174,6 +175,10 @@ class IndexProspectMailshots extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => ProspectsMailshotsTabsEnum::navigation(),
                 ],
+
+                ProspectsMailshotsTabsEnum::SETTINGS->value => $this->tab == ProspectsMailshotsTabsEnum::SETTINGS->value ?
+                    fn () => EditMailshotSettings::run($this->parent, $request)
+                    : Inertia::lazy(fn () => EditMailshotSettings::run($this->parent, $request)),
 
                 ProspectsMailshotsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsMailshotsTabsEnum::MAILSHOTS->value ?
                     fn () => MailshotsResource::collection($mailshots)

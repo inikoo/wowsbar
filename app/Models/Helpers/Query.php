@@ -16,13 +16,15 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Helpers\Query
  *
  * @property int $id
- * @property string $scope_type
- * @property int $scope_id
+ * @property string $parent_type
+ * @property int $parent_id
  * @property string $slug
  * @property string $name
  * @property string $model_type
+ * @property array $informatics
  * @property array $constrains
  * @property array $compiled_constrains
+ * @property bool $has_arguments
  * @property bool $is_seeded
  * @property int|null $number_items
  * @property string|null $counted_at
@@ -30,6 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property string|null $delete_comment
+ * @property-read Model|\Eloquent $parent
  * @method static \Illuminate\Database\Eloquent\Builder|Query newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Query query()
@@ -39,13 +42,15 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereHasArguments($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereInformatics($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereIsSeeded($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereModelType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereNumberItems($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Query whereScopeType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Query whereParentType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Query whereUpdatedAt($value)
  * @mixin \Eloquent
@@ -57,6 +62,9 @@ class Query extends Model
     protected $casts = [
         'constrains'          => 'array',
         'compiled_constrains' => 'array',
+        'informatics'         => 'array',
+        'is_seeded'           => 'boolean',
+        'has_arguments'       => 'boolean'
     ];
 
     protected $attributes = [
@@ -81,6 +89,11 @@ class Query extends Model
     }
 
     public function scope(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function parent(): MorphTo
     {
         return $this->morphTo();
     }

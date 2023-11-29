@@ -2,13 +2,13 @@
 import PureInput from '@/Components/Pure/PureInput.vue'
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
-
+import { trans } from "laravel-vue-i18n";
 const props = withDefaults(defineProps<{
     value: any
     fieldName: any
 }>(), {})
 
-const availableOptions = ['day', 'week', 'month']
+
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const availableOptions = ['day', 'week', 'month']
                 :class="[value[fieldName].state ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
         </Switch>
         <SwitchLabel as="span" class="ml-3 text-sm">
-            <span class="font-medium text-gray-900">{{ value[fieldName].state ? 'Last contact' : 'Never' }}</span>
+            <span class="font-medium text-gray-900">{{ value[fieldName].state ? trans('Last contact') : trans('Never') }}</span>
         </SwitchLabel>
     </SwitchGroup>
 
@@ -28,15 +28,13 @@ const availableOptions = ['day', 'week', 'month']
         <div class="flex gap-x-2">
             <div class="w-20">
                 <PureInput type="number" :minValue="1" :caret="false" placeholder="range"
-                    v-model="value[fieldName].data.quantity" />
+                    v-model="value[fieldName].argument.quantity" />
             </div>
             <div class="w-full">
-                <PureMultiselect  v-model="value[fieldName].data.unit"  :options="['day', 'week', 'month']" required />
+                <PureMultiselect  v-model="value[fieldName].argument.unit"  :options="['day', 'week', 'month']" required />
             </div>
         </div>
     </div>
 </template>
 
-<style>
-</style>
 

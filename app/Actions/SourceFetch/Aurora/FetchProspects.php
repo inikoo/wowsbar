@@ -41,7 +41,6 @@ class FetchProspects extends FetchAction
                 }
 
             } else {
-                // print_r($prospectData['prospect']);
                 data_set($prospectData['prospect'], 'data.bulk_import', [
                     'id'   => $this->fetch->id,
                     'type' => 'Fetch'

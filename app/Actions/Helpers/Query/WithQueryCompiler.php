@@ -15,6 +15,7 @@ trait WithQueryCompiler
 {
     private array $arguments = [];
     private array $joins     = [];
+    private bool $returnZero = false;
 
     /**
      * @throws \Exception
@@ -22,52 +23,130 @@ trait WithQueryCompiler
     public function compileConstrains(array $constrains): array
     {
         $compiledConstrains = [];
-
         foreach ($constrains as $type => $constrain) {
             if ($compiledConstrain = $this->compileConstrain($type, $constrain)) {
                 $compiledConstrains[] = $compiledConstrain;
             }
         }
+
         return [
-            'constrains' => $compiledConstrains,
-            'arguments'  => $this->arguments,
-            'joins'      => $this->joins
+            'constrains'  => $compiledConstrains,
+            'arguments'   => $this->arguments,
+            'joins'       => $this->joins,
+            'returnZero'  => $this->returnZero
         ];
     }
 
 
-    public function compileConstrain(string $type, array $constrain): ?array
+    public function compileConstrain(string $type, array $constrainData): ?array
     {
         try {
             $compiledConstrain = match ($type) {
-                'with' => [
+                'can_contact_by' => $this->canContactBy($constrainData),
+                'with'           => [
                     'type'       => 'with',
-                    'parameters' => $constrain['fields']
+                    'parameters' => $constrainData['fields']
                 ],
 
-                'tag' => [
-                    'type'       => 'tag',
-                    'parameters' => [
-                        'tag'   => $constrain['parameters']['tag'],
-                        'logic' => $constrain['parameters']['state'] ?? 'any'
-                    ]
-                ],
+                'tags' => $this->compileTagConstrain($constrainData),
 
-                'prospect_last_contacted' => $this->prospectLastContactedConstrain($constrain),
+                'prospect_last_contacted' => $this->prospectLastContactedConstrain($constrainData),
 
-                default => throw new Exception('Unknown constrain type: '.$constrain['type'])
+                default => throw new Exception('Unknown constrain type: '.Arr::get($constrainData, 'type', 'Type not set'))
             };
-        } catch (Exception) {
+        } catch (Exception $e) {
             $compiledConstrain = null;
         }
+
 
         return $compiledConstrain;
     }
 
+    public function compileTagConstrain(array $constrainData): array
+    {
+        if (count(Arr::get($constrainData, 'tag_ids', [])) == 0) {
+            $this->returnZero = true;
+        }
+
+
+        $this->joins[] = [
+            'type'     => 'left',
+            'table'    => 'taggables',
+            'first'    => 'prospects.id',
+            'operator' => '=',
+            'second'   => 'taggables.taggable_id',
+
+            'where' => [
+                'type'       => 'where',
+                'parameters' => [
+                    'taggables.taggable_type',
+                    '=',
+                    'Prospect'
+                ]
+            ]
+        ];
+
+        if (Arr::get($constrainData, 'logic', 'all')) {
+            return [
+                'type'       => 'whereIn',
+                'parameters' => [
+                    'taggables.tag_id',
+                    $constrainData['tag_ids']
+                ]
+            ];
+        } else {
+            $parameters = [];
+            foreach ($constrainData['tag_ids'] as $tag_id) {
+                $parameters[] = [
+                    'type'       => 'orWhere',
+                    'parameters' => [
+                        'taggables.tag_id',
+                        '=',
+                        $tag_id
+                    ]
+                ];
+            }
+
+            return [
+                'type'       => 'group',
+                'parameters' => $parameters
+            ];
+        }
+    }
+
+
+    public function canContactBy(array $constrainData): ?array
+    {
+        $compiledConstrains = [];
+        foreach (Arr::get($constrainData, 'fields', []) as $field) {
+            if (in_array($field, ['email', 'phone', 'address'])) {
+                $compiledConstrains[] = [
+                    'type'       => Arr::get($constrainData, 'logic', 'any') == 'any'
+                        ?
+                        count($compiledConstrains) > 0 ? 'orWhere' : 'where'
+                        :
+                        'where',
+                    'parameters' => [
+                        'can_contact_by_'.$field,
+                        '=',
+                        true
+                    ]
+                ];
+            }
+        }
+
+        return match (count($compiledConstrains)) {
+            0       => null,
+            1       => $compiledConstrains[0],
+            default => [
+                'type'       => 'group',
+                'parameters' => $compiledConstrains
+            ]
+        };
+    }
+
     public function prospectLastContactedConstrain(array $constrain): array
     {
-
-
         if (Arr::get($constrain, 'state')) {
             $this->arguments['__date__'] = [
                 'type'  => 'dateSubtraction',
@@ -94,7 +173,7 @@ trait WithQueryCompiler
                         'parameters' => [
                             [
                                 'type'       => 'where',
-                                'parameters' => ['state', '=', ProspectStateEnum::CONTACTED],
+                                'parameters' => ['state', '=', ProspectStateEnum::CONTACTED->value],
                             ],
                             [
                                 'type'       => 'where',
@@ -121,5 +200,6 @@ trait WithQueryCompiler
             ];
         }
     }
+
 
 }

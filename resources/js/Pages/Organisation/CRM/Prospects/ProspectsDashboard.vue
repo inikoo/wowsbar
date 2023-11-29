@@ -12,12 +12,13 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
 import {Doughnut} from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze} from '@fal/'
+import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faExclamationCircle,faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze} from '@fal/'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useLocaleStore} from "@/Stores/locale";
 import { capitalize } from '@/Composables/capitalize'
 
-library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze)
+library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle,faExclamationCircle, faSignIn,
+    faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze)
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors)
 
@@ -132,7 +133,7 @@ const options = {
             <!-- Box: Customers -->
             <div v-for="doughnut, doughnutKey in data.prospectStats" class="px-4 py-5 sm:p-6 rounded-lg bg-white shadow">
                 <dt class="text-base font-medium text-gray-400 capitalize">{{ doughnutKey }}</dt>
-                <dd class="mt-2 flex justify-between">
+                <dd class="mt-2 flex justify-between gap-x-2">
                     <div class="flex flex-col gap-x-2 gap-y-3 leading-none items-baseline text-2xl font-semibold text-org-500">
                         <!-- In Total -->
                         <div class="flex gap-x-2 items-end">
@@ -143,15 +144,15 @@ const options = {
                         </div>
 
                         <!-- Statistic -->
-                        <div class="text-sm text-gray-500 border-l-4 border-org-100 pl-2">
-                            <span v-for="dCase in doughnut.cases" class="flex gap-x-2 items-center font-normal" v-tooltip="capitalize(dCase.icon.tooltip)">
+                        <div class="text-sm text-gray-500 flex gap-x-5 gap-y-1 items-center flex-wrap">
+                            <div v-for="dCase in doughnut.cases" class="flex gap-x-0.5 items-center font-normal" v-tooltip="capitalize(dCase.icon.tooltip)">
                                 <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' fixed-width :title="dCase.icon.tooltip" aria-hidden='true'/>
                                 <span class="font-semibold">
                                     <CountUp :end-val="dCase.count" :duration="1" :options="{
                                         formattingFn: (number) => locale.number(number)
                                     }" />
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
 

@@ -21,7 +21,7 @@ export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime)
     return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] }) // October 13th, 2023
 }
 
-// Relative time range
+// Relative time range (10 days ago)
 export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
     

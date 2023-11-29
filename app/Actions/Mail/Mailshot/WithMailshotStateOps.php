@@ -17,7 +17,7 @@ trait WithMailshotStateOps
     public function htmlResponse(Mailshot $mailshot): RedirectResponse
     {
         /** @var Shop $scope */
-        $scope = $mailshot->scope;
+        $scope = $mailshot->parent;
 
         return redirect()->route(
             'org.crm.shop.prospects.mailshots.show',

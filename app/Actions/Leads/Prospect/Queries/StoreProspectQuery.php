@@ -56,19 +56,19 @@ class StoreProspectQuery
                         $query['tag']['state'] => $query['tag']['tags']
                     ],
                 ],
-                'arguments' => $query['last_contact']['state'] ? [
+                'arguments' => $query['prospect_last_contacted']['state'] ? [
                     '__date__' => [
                         'type'  => 'dateSubtraction',
                         'value' => [
-                            'unit'     => $query['last_contact']['data']['unit'],
-                            'quantity' => $query['last_contact']['data']['quantity']
+                            'unit'     => $query['prospect_last_contacted']['argument']['unit'],
+                            'quantity' => $query['prospect_last_contacted']['argument']['quantity']
                         ]
                     ]
                 ] : []
             ],
         ];
 
-        if($query['last_contact']['state']) {
+        if($query['prospect_last_contacted']['state']) {
             $lastContacted = [
                 'last_contacted_at',
                 '<=',
@@ -78,9 +78,9 @@ class StoreProspectQuery
         }
 
         foreach ($data as $queryData) {
-            $queryData['is_seeded']  = true;
-            $queryData['scope_type'] = 'Shop';
-            $queryData['scope_id']   = $shop->id;
+            $queryData['is_seeded']   = true;
+            $queryData['parent_type'] = 'Shop';
+            $queryData['parent_id']   = $shop->id;
 
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::run($query, $queryData);
@@ -137,7 +137,7 @@ class StoreProspectQuery
     public function htmlResponse(Query $query): RedirectResponse
     {
         return Redirect::route('org.crm.shop.prospects.lists.index', [
-            $query->scope->slug
+            $query->parent->slug
         ]);
     }
 }

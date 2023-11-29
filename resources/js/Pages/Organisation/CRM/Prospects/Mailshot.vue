@@ -20,6 +20,7 @@ import {faStop, faPlay} from '@fas/'
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
+import EditModel from "@/Pages/Organisation/EditModel.vue";
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, faSpellCheck)
 
@@ -33,7 +34,7 @@ const props = defineProps<{
     changelog?: object,
     showcase?: object,
     email?: object
-    recipients?: object,
+    recipients?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -46,7 +47,7 @@ const component = computed(() => {
         email: EmailPreview,
         details: ModelDetails,
         changelog: TableHistories,
-        recipients: TableDispatchedEmails,
+        recipients: TableDispatchedEmails
     };
     return components[currentTab.value];
 
@@ -61,7 +62,9 @@ const component = computed(() => {
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <KeepAlive>
-        <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
+        <Transition name="slide-to-right" mode="out-in">
+            <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
+        </Transition>
     </KeepAlive>
 </template>
 

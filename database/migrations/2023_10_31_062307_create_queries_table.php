@@ -16,19 +16,20 @@ return new class () extends Migration {
     {
         Schema::create('queries', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('scope_type')->index();
-            $table->unsignedInteger('scope_id')->index();
+            $table->string('parent_type')->index();
+            $table->unsignedInteger('parent_id')->index();
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('name')->index()->collation('und_ns');
             $table->string('model_type')->index();
             $table->jsonb('constrains');
             $table->jsonb('compiled_constrains');
+            $table->boolean('has_arguments')->index()->default(false);
             $table->boolean('is_seeded')->index()->default(false);
             $table->unsignedInteger('number_items')->nullable();
             $table->dateTimeTz('counted_at')->nullable();
             $table->timestampsTz();
             $this->softDeletes($table);
-            $table->index(['scope_type','scope_id']);
+            $table->index(['parent_type','parent_id']);
         });
     }
 

@@ -33,13 +33,14 @@ class ProspectQuerySeeder
                 'name'       => 'Prospects not contacted',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with'                    => [
-                        'fields' => ['email'],
-                        'logic'  => 'all'
-                    ],
+                    'can_contact_by' =>
+                        [
+                            'logic'  => 'all',
+                            'fields' => ['email']
+                        ],
                     'prospect_last_contacted' => [
-                        'state' => false,
-                        'data'  => []
+                        'state'     => false,
+                        'argument'  => []
                     ]
 
                 ],
@@ -49,12 +50,14 @@ class ProspectQuerySeeder
                 'name'       => 'Prospects last contacted (within interval)',
                 'model_type' => class_basename(Prospect::class),
                 'constrains' => [
-                    'with'                    => [
-                        'fields' => ['email']
-                    ],
+                    'can_contact_by'          =>
+                        [
+                            'logic'  => 'any',
+                            'fields' => ['email']
+                        ],
                     'prospect_last_contacted' => [
-                        'state' => true,
-                        'data'  => [
+                        'state'     => true,
+                        'argument'  => [
                             'unit'     => 'week',
                             'quantity' => 1
                         ]
@@ -65,10 +68,10 @@ class ProspectQuerySeeder
         ];
 
         foreach ($data as $queryData) {
-            $queryData['is_seeded']  = true;
-            $queryData['scope_type'] = 'Shop';
-            $queryData['scope_id']   = $shop->id;
-            $queryData['model_type'] = 'Prospect';
+            $queryData['is_seeded']   = true;
+            $queryData['parent_type'] = 'Shop';
+            $queryData['parent_id']   = $shop->id;
+            $queryData['model_type']  = 'Prospect';
 
             if ($query = Query::where('slug', $queryData['slug'])->where('is_seeded', true)->first()) {
                 UpdateQuery::make()->action($query, $queryData);

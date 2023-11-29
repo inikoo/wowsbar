@@ -1,11 +1,11 @@
 import { trans } from "laravel-vue-i18n";
 export default {
-    QueryLists: [
+    queryLists: [
         { label:  trans("Email") , value: "email" },
         { label: trans("Phone") , value: "phone" },
         { label: trans("Address") , value: "address" },
     ],
-    FilterTags: [
+    logic: [
         { label:  trans("All") , value: "all" },
         { label:  trans("Any"), value: "any" },
     ],
@@ -17,29 +17,31 @@ export default {
 
     schemaForm: [
         {
-            label: "Propspect by",
-            name: "propspect_by",
-            information : "filter deliveries based on the prospect",
+            label:  trans("Prospect Can Contact By"),
+            name: "prospect_can_contact_by",
+            information : trans("filter deliveries based on the prospect"),
             value : {
-                by : []
+                fields : [],
+                logic : 'all'
             },
         },
         {
-            label: "Tags",
-            name: "tag",
-            information : "Filter by SEO tags",
+            label: trans("Tags"),
+            name: "tags",
+            information :  trans("Filter by SEO tags"),
             value : {
-                tags : [],
-                state : 'all'
+                tag_ids : [],
+                logic : 'all'
             },
         },
         {
-            label: "Last contacted",
-            name: "last_contact",
-            information : "filter recipients based on the last mailshot sent to them",
+            label:  trans("Prospect Last Contacted"),
+
+            name: "prospect_last_contacted",
+            information : trans("filter recipients based on the last mailshot sent to them"),
             value : {
                 state : false,
-                data: {
+                argument: {
                     unit: "week",
                     quantity: 1,
                 },

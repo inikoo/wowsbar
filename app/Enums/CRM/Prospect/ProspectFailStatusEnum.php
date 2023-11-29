@@ -20,6 +20,8 @@ enum ProspectFailStatusEnum: string
 
     case UNSUBSCRIBED = 'unsubscribed';
 
+    case HARD_BOUNCED = 'hard-bounced';
+
     case INVALID = 'invalid';
 
     public static function labels(): array
@@ -29,6 +31,7 @@ enum ProspectFailStatusEnum: string
             'not-interested' => __('Not interested'),
             'unsubscribed'   => __('Unsubscribed'),
             'invalid'        => __('Invalid'),
+            'hard-bounced'   => __('Hard Bounced'),
         ];
     }
 
@@ -65,6 +68,13 @@ enum ProspectFailStatusEnum: string
                 'class'   => 'text-red-300'
             ],
 
+            'hard-bounced' => [
+
+                'tooltip' => __('Hard Bounced'),
+                'icon'    => 'fal fa-exclamation-circle',
+                'class'   => 'text-red-700'
+            ],
+
 
         ];
     }
@@ -78,6 +88,8 @@ enum ProspectFailStatusEnum: string
             'not-interested' => $stats->number_prospects_fail_status_not_interested,
             'unsubscribed'   => $stats->number_prospects_fail_status_unsubscribed,
             'invalid'        => $stats->number_prospects_fail_status_invalid,
+            'hard-bounced'   => $stats->number_prospects_fail_status_hard_bounced,
+
         ];
     }
 

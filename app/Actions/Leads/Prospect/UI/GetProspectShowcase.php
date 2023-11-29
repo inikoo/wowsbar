@@ -26,12 +26,17 @@ class GetProspectShowcase
         foreach ($prospect->audits()->orderby('id')->get() as $value) {
             if($value->event == 'created') {
                 $feeds[$value->created_at->toISOString()] = [
-                    'label'   => 'Prospect ' . $value->event,
-                    'comment' => $value->comments
+                    'label'       => 'Prospect ' . $value->event,
+                    'description' => null,
+                    'comment'     => $value->comments
                 ];
             } else {
                 $feeds[$value->updated_at->toISOString()] = [
-                    'label'   => 'The ' . natural_language_join(array_keys($value->new_values)) . ' has been updated',
+                    'label'       => 'The ' . Str::of(natural_language_join(array_keys($value->new_values)))
+                            ->replace('_', ' ')->lower() . ' has been updated',
+                    'description' => collect($value->old_values)->map((function ($item, $key) use ($value) {
+                        return 'From ' . ($item == '' ? 'null' : $item) . ' to ' . $value->new_values[$key];
+                    }))->implode(', ') . '.',
                     'comment' => $value->comments
                 ];
             }

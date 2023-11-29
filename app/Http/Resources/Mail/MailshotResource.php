@@ -22,7 +22,7 @@ class MailshotResource extends JsonResource
         $mailshot = $this;
 
         $timelines    = [];
-        $timelineData = ['schedule_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
+        $timelineData = ['scheduled_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
 
         foreach ($timelineData as $timeline) {
             $timelineKey = Str::replace('_at', '', $timeline);

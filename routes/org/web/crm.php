@@ -10,6 +10,9 @@ use App\Actions\CRM\Appointment\UI\CreateAppointment;
 use App\Actions\CRM\Appointment\UI\EditAppointment;
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\CRM\Appointment\UI\ShowAppointment;
+use App\Actions\CRM\Customer\Mailshots\UI\CreateCustomersMailshot;
+use App\Actions\CRM\Customer\Mailshots\UI\IndexCustomerMailshots;
+use App\Actions\CRM\Customer\Newsletters\UI\IndexCustomerNewsletters;
 use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
 use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
@@ -98,6 +101,25 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
         });
 
+        Route::prefix('mailshots')->as('mailshots.')->group(function () {
+            Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexCustomerMailshots::class, 'inShop'])->name('index');
+
+            // TODO Need to create the customers actions
+            Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateCustomersMailshot::class, 'inShop'])->name('create');
+            Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
+            Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
+            Route::get('{mailshot}/workshop', ['icon' => 'fa-envelope', 'label' => 'workshop mailshot'])->uses(ShowProspectMailshotWorkshop::class)->name('workshop');
+            Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
+            Route::get('{mailshot}/recipients/{dispatchedEmail:id}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('show.recipients.show');
+        });
+
+        Route::prefix('newsletters')->as('newsletters.')->group(function () {
+            Route::get('', ['icon' => 'fa-envelope', 'label' => 'newsletters'])->uses([IndexCustomerNewsletters::class, 'inShop'])->name('index');
+
+            // TODO Need to create the customers actions
+            Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create newsletter'])->uses([CreateCustomersMailshot::class, 'inShop'])->name('create');
+        });
+
         Route::prefix('{customer}')->group(function () {
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses([ShowCustomer::class, 'inShop'])->name('show');
             Route::get('/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inShop'])->name('edit');
@@ -138,7 +160,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
-            Route::post('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
+            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
