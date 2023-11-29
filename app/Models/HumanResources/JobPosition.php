@@ -67,6 +67,8 @@ class JobPosition extends Model implements Auditable
         'data' => '{}',
     ];
 
+    protected $guarded = [];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -80,8 +82,6 @@ class JobPosition extends Model implements Auditable
     {
         return 'slug';
     }
-
-    protected $guarded = [];
 
     public function generateTags(): array
     {

@@ -55,7 +55,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_gender_male
@@ -117,7 +116,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsGenderOther($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateFail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateNoContacted($value)

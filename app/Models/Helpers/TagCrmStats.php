@@ -27,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects_gender_other
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -38,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects_fail_status_no_applicable
  * @property int $number_prospects_fail_status_not_interested
  * @property int $number_prospects_fail_status_unsubscribed
+ * @property int $number_prospects_fail_status_hard_bounced
  * @property int $number_prospects_fail_status_invalid
  * @property int $number_prospects_success_status_no_applicable
  * @property int $number_prospects_success_status_registered
@@ -64,6 +64,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsContactedStateOpen($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsContactedStateSoftBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsDontContactMe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsFailStatusHardBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsFailStatusInvalid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsFailStatusNoApplicable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsFailStatusNotInterested($value)
@@ -71,7 +72,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsGenderOther($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateFail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagCrmStats whereNumberProspectsStateNoContacted($value)

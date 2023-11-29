@@ -66,6 +66,7 @@ class GetEstimatedNumberRecipients
         $counter = 0;
 
         foreach ($prospectIDs as $prospectID) {
+            dd($prospectID);
             $prospect = Prospect::find($prospectID);
             if (!$this->canContactByEmail($prospect)) {
                 continue;
