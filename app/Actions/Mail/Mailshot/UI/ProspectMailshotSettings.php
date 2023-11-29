@@ -68,7 +68,7 @@ class ProspectMailshotSettings extends InertiaAction
             'blueprint' => $sections,
             'args'      => [
                 'updateRoute' => [
-                    'name'       => 'org.models.shop.update',
+                    'name'       => 'org.models.shop.prospect-mailshots.settings.update',
                     'parameters' => $shop->id
                 ],
             ]

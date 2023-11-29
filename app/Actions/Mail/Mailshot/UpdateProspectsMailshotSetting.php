@@ -14,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateShopMailshotSetting
+class UpdateProspectsMailshotSetting
 {
     use WithActionUpdate;
     use AwsClient;
@@ -23,7 +23,7 @@ class UpdateShopMailshotSetting
 
     public function handle(Shop $shop, array $modelData): JsonResponse|Shop
     {
-        if(Arr::get($modelData, 'title') or Arr::get($modelData, 'description')) {
+        if (Arr::get($modelData, 'title') or Arr::get($modelData, 'description')) {
             $modelData = Arr::except($modelData, ['title', 'description']);
 
             $shop = $this->update($shop, $modelData, ['data', 'settings']);
@@ -44,9 +44,9 @@ class UpdateShopMailshotSetting
     public function rules(): array
     {
         return [
-            'title'                     => ['sometimes', 'required', 'string', 'max:255'],
-            'description'               => ['sometimes', 'required', 'string', 'max:255'],
-            'sender_email_address'      => ['sometimes', 'nullable', 'email']
+            'title'                          => ['sometimes', 'required', 'string', 'max:255'],
+            'description'                    => ['sometimes', 'required', 'string', 'max:255'],
+            'prospects_sender_email_address' => ['sometimes', 'nullable', 'email']
         ];
     }
 
@@ -55,20 +55,9 @@ class UpdateShopMailshotSetting
         $this->fillFromRequest($request);
         $modelData = $this->validateAttributes();
 
-        foreach ($this->validateAttributes() as $key => $value) {
-            data_set(
-                $modelData,
-                match ($key) {
-                    'title'       => 'settings.mailshot.unsubscribe.title',
-                    'description' => 'settings.mailshot.unsubscribe.description',
-                    default       => $key
-                },
-                $value
-            );
-        }
 
         return $this->handle(
-            shop:$shop,
+            shop: $shop,
             modelData: $modelData
         );
     }
