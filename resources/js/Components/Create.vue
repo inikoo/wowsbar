@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExclamationCircle, faCheckCircle, faAsterisk } from '@fas/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import Input from '@/Components/Forms/Fields/Input.vue'
+import SenderEmail from '@/Components/Forms/Fields/SenderEmail.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
 import Date from '@/Components/Forms/Fields/Date.vue'
@@ -68,6 +69,7 @@ const getComponent = (componentName: string) => {
         'jobPosition': JobPosition,
         'prospectQueryBuilder': ProspectQueryBuilder,
         'prospectRecipients': prospectRecipients,
+        'senderEmail': SenderEmail,
     };
     return components[componentName] ?? null;
 

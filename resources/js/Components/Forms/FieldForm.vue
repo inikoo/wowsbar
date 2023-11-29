@@ -13,6 +13,7 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 
 import Input from '@/Components/Forms/Fields/Input.vue'
+import SenderEmail from '@/Components/Forms/Fields/SenderEmail.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
 import Date from '@/Components/Forms/Fields/Date.vue'
 import Theme from '@/Components/Forms/Fields/Theme.vue'
@@ -94,6 +95,7 @@ const components = {
     'jobPosition': JobPosition,
     'prospect_query': ProspectsQuery,
     'ProspectRecipients': ProspectRecipients,
+    'senderEmail': SenderEmail,
 };
 
 const getComponent = (componentName) => {
