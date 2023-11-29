@@ -67,7 +67,13 @@ const categories = [
         component: ProspectSelect,
         options : props.options["prospects"]
     },
-]
+].filter((item) => {
+    // Filter out 'query' category if props.options.data.length is 0
+    if (props.options.query.data.length === 0 && item.name === 'query') {
+        return false; // Exclude 'query' category
+    }
+    return true; // Include other categories
+});
 const locale = useLocaleStore();
 
 
@@ -152,6 +158,7 @@ onMounted(() => {
                     <button  v-if="recipientsCount.type == 'custom_prospects_query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
                         {{trans('Total recipients')}}:   {{ recipientsCount.count }}
                     </button>
+                    
                     <button  v-if="recipientsCount.type == 'query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
                         {{trans('Total recipients')}}:  {{ recipientsCount.count }}
                     </button>
