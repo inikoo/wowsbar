@@ -19,106 +19,11 @@ class ProspectMailshotSettings extends InertiaAction
 {
     use WithProspectMailshotNavigation;
 
-    public function handle(Shop $shop, ActionRequest $request): array
+    public function handle(Shop $shop, ?string $section = null): array
     {
-        $sections['unsubscribe'] = [
-            'label'  => __('Mailshot unsubscribe'),
-            'icon'   => 'fal fa-sliders-h',
-            'fields' => [
-                'title' => [
-                    'type'     => 'input',
-                    'label'    => __('title'),
-                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
-                    'required' => true,
-                ],
-                'description' => [
-                    'type'     => 'input',
-                    'label'    => __('description'),
-                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
-                    'required' => true,
-                ],
-            ]
-        ];
-
         $sections['sender_email'] = [
-            'label'  => __('Sender Email'),
+            'label'  => __('Sender email'),
             'icon'   => 'fal fa-envelope',
-            'fields' => [
-                'sender_email_address' => [
-                    'type'     => 'input',
-                    'label'    => __('sender email address'),
-                    'value'    => $shop->sender_email_address ?? '',
-                    'required' => true,
-                    'verification' => [
-                        'route' => [
-                            'name'       => 'org.models.shop.mailshots.settings.email-verification.resend',
-                            'parameters' => $shop->id
-                        ]
-                    ]
-                ],
-            ]
-        ];
-
-        $currentSection = 'unsubscribe';
-        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
-            $currentSection = $request->get('section');
-        }
-
-        return [
-            'formData' => [
-                'current'   => $currentSection,
-                'blueprint' => $sections,
-                'args'      => [
-                    'updateRoute' => [
-                        'name'       => 'org.models.shop.mailshots.settings.update',
-                        'parameters' => $shop->id
-                    ],
-                ]
-            ],
-        ];
-    }
-
-    public function authorize(ActionRequest $request): bool
-    {
-        $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
-
-        return $request->user()->hasPermissionTo("crm.prospects.edit");
-    }
-
-    public function asController(Shop $shop, ActionRequest $request): Shop
-    {
-        $this->initialisation($request);
-
-        return $this->handle($shop);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function htmlResponse(Shop $shop, ActionRequest $request): Response
-    {
-        $sections['unsubscribe'] = [
-            'label'  => __('Mailshot unsubscribe'),
-            'icon'   => 'fal fa-sliders-h',
-            'fields' => [
-                'title' => [
-                    'type'     => 'input',
-                    'label'    => __('title'),
-                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
-                    'required' => true,
-                ],
-                'description' => [
-                    'type'     => 'input',
-                    'label'    => __('description'),
-                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
-                    'required' => true,
-                ],
-            ]
-        ];
-
-        $sections['sender_email'] = [
-            'label'  => __('Delete'),
-            'icon'   => 'fal fa-trash-alt',
             'fields' => [
                 'sender_email_address' => [
                     'type'     => 'input',
@@ -129,31 +34,78 @@ class ProspectMailshotSettings extends InertiaAction
             ]
         ];
 
-        $currentSection = 'unsubscribe';
-        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
-            $currentSection = $request->get('section');
+        $sections['unsubscribe'] = [
+            'label'  => __('Mailshot unsubscribe'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'title'       => [
+                    'type'     => 'input',
+                    'label'    => __('title'),
+                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
+                    'required' => true,
+                ],
+                'description' => [
+                    'type'     => 'input',
+                    'label'    => __('description'),
+                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
+                    'required' => true,
+                ],
+            ]
+        ];
+
+
+        $currentSection = 'sender_email';
+        if ($section and Arr::has($sections, $section)) {
+            $currentSection = $section;
         }
 
+        return [
+            'current'   => $currentSection,
+            'blueprint' => $sections,
+            'args'      => [
+                'updateRoute' => [
+                    'name'       => 'org.models.shop.update',
+                    'parameters' => $shop->id
+                ],
+            ]
+        ];
+    }
+
+    public function authorize(ActionRequest $request): bool
+    {
+        $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
+
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
+    }
+
+    public function asController(Shop $shop, ActionRequest $request): array
+    {
+        $this->initialisation($request);
+
+        return $this->handle($shop, $request->get('section'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function htmlResponse(array $formData, ActionRequest $request): Response
+    {
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __("Edit mailshot"),
+                'title'       => __("Prospect Mailshot Settings"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation' => [
-                    'previous' => $this->getPrevious($shop, $request),
-                    'next'     => $this->getNext($shop, $request),
-                ],
+
                 'pageHead' => [
-                    'title' => $shop->subject,
-                    'icon'  => [
-                        'tooltip' => __('mailshot'),
-                        'icon'    => 'fal fa-sign'
+                    'title'   => __("Prospect Mailshot Settings"),
+                    'icon'    => [
+                        'tooltip' => __('Settings'),
+                        'icon'    => 'fal fa-slider-h'
                     ],
-                    'iconRight' => $shop->state->stateIcon()[$shop->state->value],
-                    'actions'   => [
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
@@ -165,16 +117,7 @@ class ProspectMailshotSettings extends InertiaAction
                         ]
                     ],
                 ],
-                'formData' => [
-                    'current'   => $currentSection,
-                    'blueprint' => $sections,
-                    'args'      => [
-                        'updateRoute' => [
-                            'name'       => 'org.models.mailshot.update',
-                            'parameters' => $shop->id
-                        ],
-                    ]
-                ],
+                'formData' => $formData,
 
             ]
         );
@@ -186,7 +129,7 @@ class ProspectMailshotSettings extends InertiaAction
         return ShowProspectMailshot::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
-            suffix: '(' . __('editing') . ')'
+            suffix: '('.__('settings').')'
         );
     }
 

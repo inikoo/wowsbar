@@ -19,8 +19,8 @@ class Kernel extends ConsoleKernel
         }
 
         // $schedule->command('banner:analytics')->daily();
-         $schedule->command('mailshots:scheduled')->everyMinute();
-         $schedule->command('aws:email-verify')->everyMinute();
+        $schedule->command('mailshots:scheduled')->everyMinute();
+        $schedule->command('aws:email-verify')->everyMinute();
     }
 
 

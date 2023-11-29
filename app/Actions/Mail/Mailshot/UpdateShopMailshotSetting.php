@@ -7,8 +7,6 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Actions\Helpers\AwsEmail\GetListIdentityEmailVerification;
-use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Market\Shop;

@@ -10,7 +10,6 @@ namespace App\Actions\Helpers\AwsEmail;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Market\Shop;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
 class GetEmailVerified
@@ -30,7 +29,7 @@ class GetEmailVerified
             if (!blank($result)) {
                 match ($result[$shop->sender_email_address]['VerificationStatus']) {
                     'Success' => $shop->update(['sender_email_address_valid_at' => now()]),
-                    default => $shop->update(['sender_email_address_valid_at' => null]),
+                    default   => $shop->update(['sender_email_address_valid_at' => null]),
                 };
             }
         }));

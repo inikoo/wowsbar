@@ -143,7 +143,6 @@ class IndexProspectMailshots extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $mailshots, ActionRequest $request): Response
     {
         $subNavigation = $this->getSubNavigation($request);
-
         return Inertia::render(
             'CRM/Prospects/Mailshots',
             [
@@ -177,8 +176,8 @@ class IndexProspectMailshots extends InertiaAction
                 ],
 
                 ProspectsMailshotsTabsEnum::SETTINGS->value => $this->tab == ProspectsMailshotsTabsEnum::SETTINGS->value ?
-                    fn () => ProspectMailshotSettings::run($this->parent, $request)
-                    : Inertia::lazy(fn () => ProspectMailshotSettings::run($this->parent, $request)),
+                    fn () => ProspectMailshotSettings::run($this->parent)
+                    : Inertia::lazy(fn () => ProspectMailshotSettings::run($this->parent)),
 
                 ProspectsMailshotsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsMailshotsTabsEnum::MAILSHOTS->value ?
                     fn () => MailshotsResource::collection($mailshots)

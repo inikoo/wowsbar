@@ -10,7 +10,6 @@ namespace App\Actions\Helpers\AwsEmail;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Market\Shop;
-use Aws\Result;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,7 +24,7 @@ class SendIdentityEmailVerification
     public function handle(Shop $shop, array $modelData): JsonResponse
     {
         $message = __('The email is validated.');
-        $email = Arr::get($modelData, 'sender_email_address');
+        $email   = Arr::get($modelData, 'sender_email_address');
 
         $checkVerified = GetEmailVerified::make()->checkVerified($email);
         data_set($modelData, 'sender_email_address', $email);
