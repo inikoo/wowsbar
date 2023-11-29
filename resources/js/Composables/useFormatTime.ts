@@ -9,6 +9,15 @@ interface OptionsTime {
     localeCode?: string
 }
 
+interface Countdown {
+    years?: string
+    months?: string
+    days?: string
+    hours?: string
+    minutes?: string
+    seconds?: string
+}
+
 export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
@@ -32,13 +41,15 @@ export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTim
 }
 
 // Time countdown
-export const useTimeCountdown = (dateIso: string, options?: {}) => {
+export const useTimeCountdown: any = (dateIso: string, options?: { human?: boolean, zero?: boolean }) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
     const countdown = intervalToDuration({
         start: new Date(),
         end: new Date(dateIso)
     })
+    
+    if(options?.human) return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
 
-    return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
+    return countdown
 }
