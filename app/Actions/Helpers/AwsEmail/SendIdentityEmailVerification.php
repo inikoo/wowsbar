@@ -22,18 +22,18 @@ class SendIdentityEmailVerification
 
     public function handle(SenderEmail $senderEmail): SenderEmail
     {
-
         $email = $senderEmail->email_address;
 
 
         $state = CheckSenderEmailVerification::run($email);
 
         if (in_array($state, [SenderEmailStateEnum::VERIFIED, SenderEmailStateEnum::PENDING])) {
-            if($senderEmail->verified_at === null) {
+            if ($senderEmail->verified_at === null) {
                 data_set($modelData, 'verified_at', now());
             }
 
             data_set($modelData, 'state', $state);
+
             return $this->update($senderEmail, $modelData);
         }
 
@@ -68,13 +68,7 @@ class SendIdentityEmailVerification
     {
         return [
             'state'   => $senderEmail->state,
-            'message' => match ($senderEmail->state) {
-                SenderEmailStateEnum::FAIL                          => __('Verification mail expired, please try to verify again.'),
-                SenderEmailStateEnum::VERIFICATION_NOT_SUBMITTED    => __('The email is not submitted for verification.'),
-                SenderEmailStateEnum::VERIFICATION_SUBMISSION_ERROR => __('There was an error sending the verification email.'),
-                SenderEmailStateEnum::VERIFIED                      => __('The email is validated 🎉.'),
-                SenderEmailStateEnum::PENDING                       => __('We\'ve sent you verification to your email, please check your email.'),
-            }
+            'message' => $senderEmail->state->message()[$senderEmail->state->value]
         ];
     }
 
