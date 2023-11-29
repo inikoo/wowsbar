@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { computed, ref, reactive } from 'vue'
+import { computed, ref, Ref, reactive, onMounted } from 'vue';
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
@@ -16,8 +16,18 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaperPlane, faDungeon, faSkull } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
+import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime';
 import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
 library.add(faPaperPlane, faDungeon, faSkull)
+
+interface DateScheduled {
+    years: number
+    months: number
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+}
 
 const props = defineProps<{
     data: {
@@ -67,7 +77,7 @@ const props = defineProps<{
 const dataStatistic = reactive([
     {
         name: 'recipient',
-        value: props.data.stats.number_dispatched_emails,
+        value: <any>props.data.stats.number_dispatched_emails,
         label: trans('Recipients'),
         component: <any>null
     },
@@ -94,6 +104,7 @@ const dataStatistic = reactive([
                 tooltip: trans('Soft bounce')
             }
         ],
+        value: 0,
         component: null
     },
     {
@@ -129,19 +140,6 @@ const dataStatistic = reactive([
     },
 ])
 
-const stepsOptions = {
-    // recipient_stored_at: props.data.recipient_stored_at,
-    schedule_at: props.data.schedule_at,
-    ready_at: props.data.ready_at,
-    sent_at: props.data.sent_at,
-    cancelled_at: props.data.cancelled_at,
-    stopped_at: props.data.stopped_at,
-    // date: props.data.date,
-    created_at: props.data.created_at,
-    updated_at: props.data.updated_at,
-}
-
-
 // Pusher: subscribe
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
@@ -161,66 +159,53 @@ channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
 })
 
 
-// To convert data to wanted data
-const compSortSteps = computed(() => {
-    const outputData: any = {};
+const countdown: Ref<DateScheduled> = ref(useTimeCountdown(props.data.schedule_at, { zero: true }))
 
-    for (const key in stepsOptions) {
-        const value = stepsOptions[key];
-        if (value) {
-            if (!(value in outputData)) {
-                outputData[value] = [];
-            }
-            outputData[value].push(
-                key.replace(/_/g, ' ')
-            )
-        }
-    }
-
-    const entries = Object.entries(outputData).map(([key, value]) => ({ key: new Date(key), value }));
-
-    // Sort entries based on Date objects
-    entries.sort((a, b) => a.key - b.key);
-
-    const sortedData = entries.reduce((acc, { key, value }) => {
-        const isoString = key.toISOString();
-
-        if (acc.hasOwnProperty(isoString)) {
-            // If key already exists, append values to the existing array
-            acc[isoString] = acc[isoString].concat(value);
-        } else {
-            // If key does not exist, create a new array with the values
-            acc[isoString] = value;
-        }
-
-        return acc;
-    }, {});
-
-    return sortedData
+onMounted(() => {
+    setInterval(() => {
+        countdown.value = useTimeCountdown(props.data.schedule_at, { zero: true })
+    }, 1000)
 })
-
 </script>
 
 
 <template>
-    <div class="">
+    <div class="relative">
         <LabelEstimated :emailsEstimated="3" />
+
         <div class="py-3 mx-auto px-5 w-full">
-            <!-- <Timeline v-if="data.state === 'sent'" :options="data.timeline" /> -->
-            <Timeline :options="data.timeline" />
-            <!-- <div class="bg-white min-w-fit w-64 shadow mt-3 px-4 py-5 sm:px-5 sm:pt-5 sm:pb-4 rounded-lg">
-                <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
-                <dd class="mt-3 flex items-baseline justify-between md:block lg:flex">
-                    <div class="flex items-baseline text-3xl font-semibold text-org-600 tabular-nums">
-                        <CountUp :endVal="`${dataStatistic[0].value}`" :scrollSpyOnce="true" :duration="1.2" />
+            <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" />
+            
+            <!-- Component: Countdown Scheduled -->
+            <div v-if="data.state == 'scheduled'" v-tooltip="useFormatTime(data.schedule_at, {formatTime: 'hms'})" class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
+                <div class="bg-org-500 text-white text-xs text-center py-2 tracking-wider">
+                    Mailshot will be send in:
+                </div>
+                <div class="text-org-700 grid grid-cols-4 divide-x divide-gray-200 tabular-nums">
+                    <div class="flex flex-col justify-center items-center gap-y-1.5 text-xl pt-3 pb-2 px-4">
+                        <div class="font-semibold leading-4">{{ countdown.days + (countdown.months*30) + (countdown.years*365) }}</div>
+                        <div class="text-gray-400 text-xs leading-none">{{ trans('Days') }}</div>
                     </div>
-                </dd>
-            </div> -->
+                    <div class="flex flex-col justify-center items-center gap-y-1.5 text-xl pt-3 pb-2 px-4">
+                        <div class="font-semibold leading-4">{{ (countdown.hours).toString().padStart(2, '0') }}</div>
+                        <div class="text-gray-400 text-xs leading-none">{{ trans('Hours') }}</div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center gap-y-1.5 text-xl pt-3 pb-2 px-4">
+                        <div class="font-semibold leading-4">{{ (countdown.minutes).toString().padStart(2, '0') }}</div>
+                        <div class="text-gray-400 text-xs leading-none">{{ trans('Minutes') }}</div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center gap-y-1.5 text-xl pt-3 pb-2 px-4">
+                        <div class="font-semibold leading-4">{{ (countdown.seconds).toString().padStart(2, '0') }}</div>
+                        <div class="text-gray-400 text-xs leading-none">{{ trans('Seconds') }}</div>
+                    </div>
+                </div>
+            </div>
             
             <Stats
                 v-if="data.state == 'in-process' || data.state == 'ready'"
                 :stats="[{ name: 'recipient', stat: dataStatistic[0].value }]"
             />
+
             <dl v-else class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 gap-[1px] overflow-hidden rounded-lg bg-gray-200 shadow">
                 <template v-for="(statistic, index) in dataStatistic">
                     <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
@@ -235,7 +220,7 @@ const compSortSteps = computed(() => {
                                         <span>{{ subValue.value }}</span>
                                     </div>
                                 </div>
-                                <CountUp @init="(el) => statistic.component = el" v-else :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
+                                <CountUp v-else @init="(el) => statistic.component = el" :endVal="statistic.value" :scrollSpyOnce="true" :duration="1.2" />
                             </div>
                         </dd>
                     </div>
