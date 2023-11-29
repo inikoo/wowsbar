@@ -89,9 +89,9 @@ const updateFormValue = (newValue) => {
         <!-- Counter: Letters and Words -->
         <div v-if="props.options?.counter"
             class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
-            <p class="">Letters: {{ form[fieldName].length }}</p>
+            <p class="">Letters: {{ form[fieldName]?.length ?? 0}}</p>
             <p class="">
-                Words: {{ form[fieldName].trim().split(/\s+/).filter(Boolean).length }}
+                Words: {{ form[fieldName]?.trim().split(/\s+/).filter(Boolean).length ?? 0 }}
             </p>
         </div>
     </div>

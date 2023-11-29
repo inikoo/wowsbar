@@ -99,7 +99,7 @@ class IndexCustomerMailshots extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no mailshots'),
+                        'title'       => __('No Mailshots'),
                         'description' => $this->canEdit ? __('Get started by creating a new mailshots.') : null,
                         'count'       => 0,
                         'action'      => $this->canEdit ? [
