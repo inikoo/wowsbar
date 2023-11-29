@@ -4,7 +4,6 @@ function getMergeTagData(grapesjsEditor) {
   grapesjsEditor.setCustomRte({
     enable: async function (el, rte) {
       console.log('✔️ RTE enabled');
-      console.log('fd',rte)
       if (rte) {
         console.log(rte)
         el.contentEditable = true;
@@ -15,6 +14,9 @@ function getMergeTagData(grapesjsEditor) {
   
         rte = await rte;
         rte.ui.view.toolbar.element.style.display = 'block';
+        rteToolbar.style.setProperty('top', '80px', 'important');
+        console.log('1',rteToolbar)
+       
         return rte;
       }
   
@@ -24,12 +26,15 @@ function getMergeTagData(grapesjsEditor) {
       [].forEach.call(rteToolbar.children, (child) => {
         child.style.display = 'none';
       });
+
+      rteToolbar.style.setProperty('top', '80px', 'important');
+      console.log('2',rteToolbar)
   
+    
       // Init CkEditors
       rte = await InlineEditor.create(el, {
         language: 'en-au',
-  
-        fontSize: {
+        /* fontSize: {
           options: [
             9,
             11,
@@ -49,7 +54,7 @@ function getMergeTagData(grapesjsEditor) {
             72,
             90,
           ],
-        },
+        }, */
         fontFamily: {
           options: [
             'Arial',
@@ -64,20 +69,19 @@ function getMergeTagData(grapesjsEditor) {
             'Yu Gothic',
           ],
         },
-  
-        toolbar: [
-          'bold',
-          'italic',
-          'underline',
-          'link',
-          'bulletedList',
-          'numberedList',
-          'fontcolor',
-          'fontSize',
-          'alignment',
-          'fontfamily',
-        ],
-      }).catch(console.error);
+        toolbar: {
+            items: [
+                'undo', 'redo',
+                '|', 'heading',
+                '|', 'FontFamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript',
+                '|', 'link', 'blockQuote',
+                '|', 'alignment:left', 'alignment:right', 'alignment:center', 'alignment:justify',
+                '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+            ],
+            shouldNotGroupWhenFull: true
+        }
+    }).catch(console.error);
   
       if (rte) {
         // // Prevent blur when some of CKEditor's element is clicked
@@ -108,7 +112,9 @@ function getMergeTagData(grapesjsEditor) {
         });
       });
 
-
+      rteToolbar.style.setProperty('top', '80px', 'important');
+      console.log('3',rteToolbar)
+  
   
       return rte;
     },

@@ -7,11 +7,7 @@ import axios from "axios"
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 import { notify } from "@kyvg/vue3-notification"
 import grapesJSMJML from 'grapesjs-mjml'
-import CkeEditor from 'grapesjs-plugin-ckeditor'
-import { ComboboxLabel } from "@headlessui/vue";
 import RTE from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/Rte/Rte.ts'
-import Tag from '@/Components/Tag.vue'
-import ClassicEditor from 'grapesjs-plugin-ckeditor5';
 
 const emits = defineEmits(['onSaveToServer']);
 const props = withDefaults(defineProps<{
@@ -122,7 +118,7 @@ onMounted(() => {
         showOffsets: false,
         fromElement: false,
         noticeOnUnload: false,
-        plugins: [grapesJSMJML,RTE],
+        plugins: [grapesJSMJML, RTE ],
         pluginsOpts: {
             [grapesJSMJML]: {
                 blocks: ['mj-1-column', 'mj-2-columns', 'mj-3-columns', 'mj-text', 'mj-button', 'mj-image', 'mj-divider', 'mj-social-group',
@@ -488,7 +484,6 @@ onMounted(() => {
     background-color: red !important;
     text-decoration: none !important;
 }
-
 
 
 </style>
