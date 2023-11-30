@@ -14,6 +14,7 @@ use App\Actions\CRM\Customer\Mailshots\UI\CreateCustomersMailshot;
 use App\Actions\CRM\Customer\Mailshots\UI\IndexCustomerMailshots;
 use App\Actions\CRM\Customer\Newsletters\UI\IndexCustomerNewsletters;
 use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
+use App\Actions\CRM\Customer\Surveys\UI\IndexCustomerSurveys;
 use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
@@ -99,6 +100,10 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('tags')->as('tags.')->group(function () {
             Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer tags'])->uses([IndexCustomerTags::class, 'inShop'])->name('index');
             Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
+        });
+
+        Route::prefix('surveys')->as('surveys.')->group(function () {
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer surveys'])->uses([IndexCustomerSurveys::class, 'inShop'])->name('index');
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {

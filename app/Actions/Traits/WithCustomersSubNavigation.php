@@ -66,7 +66,7 @@ trait WithCustomersSubNavigation
 
         $meta[] = [
             'href'     => [
-                'name'       => 'org.crm.shop.customers.tags.index',
+                'name'       => 'org.crm.shop.customers.surveys.index',
                 'parameters' => $request->route()->originalParameters()
             ],
             'number'   => $this->parent->crmStats->number_surveys,
