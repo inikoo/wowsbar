@@ -28,7 +28,7 @@ const props = defineProps<{
         }[]
     },
     tab?: string
-    senderEmail: SenderEmail
+    senderEmail?: SenderEmail
 }>()
 
 const reactivePropsData = { ...props.data }
@@ -64,7 +64,7 @@ reactivePropsData.data.forEach((item) => {
 </script>
 
 <template>
-    <LabelMailshotVerification v-if="senderEmail.state != 'verified'" :message="senderEmail.message" />
+    <LabelMailshotVerification v-if="senderEmail?.state != 'verified' || !senderEmail" :message="senderEmail?.message" />
 
     <Table :resource="data" :name="tab">
         <template #cell(date)="{ item: mailshot }">

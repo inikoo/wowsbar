@@ -28,7 +28,7 @@ const props = defineProps<{
         copyButton: boolean
         maxLength?: number
         options: {
-            senderEmail: SenderEmail
+            senderEmail?: SenderEmail
         }
     }
 }>()
@@ -113,13 +113,13 @@ const resendEmail = async () => {
         </div>
 
         <!-- Label: Warning -->
-        <div v-if="fieldData.options.senderEmail.email_address == value" class="mt-2 text-xs flex gap-x-1 items-center"
-            :class="fieldData.options.senderEmail.state == 'verified' ? 'text-lime-500' : 'text-slate-500 '"
+        <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-center"
+            :class="fieldData.options.senderEmail?.state == 'verified' ? 'text-lime-500' : 'text-slate-500 '"
         >
             <FontAwesomeIcon icon='fal fa-info-circle' class='h-5 opacity-70' aria-hidden='true' />
             <div>
-                <span>{{ fieldData.options.senderEmail.message }}</span>
-                <div v-if="fieldData.options.senderEmail.state != 'verified'">
+                <span>{{ fieldData.options.senderEmail?.message }}</span>
+                <div v-if="fieldData.options.senderEmail?.state != 'verified'">
                     <div v-if="!resendInterval" @click="resendEmail" class="w-fit underline hover:text-amber-500 cursor-pointer">Resend email</div>
                     <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }} seconds.</div>
                 </div>

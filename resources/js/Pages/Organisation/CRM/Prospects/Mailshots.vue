@@ -28,7 +28,7 @@ const props = defineProps<{
     title: string
     mailshots?: object
     settings?: object
-    senderEmail: SenderEmail
+    senderEmail?: SenderEmail
 }>()
 
 
