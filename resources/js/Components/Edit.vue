@@ -83,6 +83,7 @@ const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
+const fieldGroupAnimateSection = ref()
 
 const updateViewportWidth = () => {
     isMobile.value = window.innerWidth <= 768
@@ -97,7 +98,16 @@ onMounted(() => {
     updateViewportWidth()
     window.addEventListener('resize', updateViewportWidth)
 
-    route().v().query?.section ? currentTab.value = getLodash(route().v().query, 'section') : ''  // To auto open the navigation as the 'section' in url
+    // Animate the selected section
+    route().v().query?.section ? (
+        currentTab.value = getLodash(route().v().query, 'section'),
+        setTimeout(() => {
+            fieldGroupAnimateSection.value = ['bg-yellow-500/20']
+            setTimeout(() => {
+                fieldGroupAnimateSection.value = []
+            }, 600)
+        }, 100)
+    ) : ''
 
     // To indicate active state that on viewport
     buttonRefs.value.forEach((element: any, index: number) => {
@@ -171,7 +181,7 @@ onBeforeUnmount(() => {
                         </div>
                         
                         <!-- Looping Field -->
-                        <div class="mt-2 pt-4 space-y-5">
+                        <div class="my-2 pt-4 space-y-5 transition-all duration-1000 ease-in-out" :class="fieldGroupAnimateSection">
                             <dd v-for="(fieldData, fieldName, index) in sectionData.fields" :key="index" class="py-2">
                                 <!-- Field -->
                                 <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
