@@ -14,7 +14,8 @@ function getMergeTagData(grapesjsEditor) {
   
         rte = await rte;
         rte.ui.view.toolbar.element.style.display = 'block';
-        rteToolbar.style.setProperty('top', '80px', 'important');
+        rteToolbar.style.top = '80px';
+
         console.log('1',rteToolbar)
        
         return rte;
@@ -27,14 +28,15 @@ function getMergeTagData(grapesjsEditor) {
         child.style.display = 'none';
       });
 
-      rteToolbar.style.setProperty('top', '80px', 'important');
+      rteToolbar.style.top = '80px';
+
       console.log('2',rteToolbar)
   
     
       // Init CkEditors
       rte = await InlineEditor.create(el, {
         language: 'en-au',
-        /* fontSize: {
+        fontSize: {
           options: [
             9,
             11,
@@ -54,7 +56,7 @@ function getMergeTagData(grapesjsEditor) {
             72,
             90,
           ],
-        }, */
+        },
         fontFamily: {
           options: [
             'Arial',
@@ -112,7 +114,8 @@ function getMergeTagData(grapesjsEditor) {
         });
       });
 
-      rteToolbar.style.setProperty('top', '80px', 'important');
+      rteToolbar.style.top = '80px';
+
       console.log('3',rteToolbar)
   
   

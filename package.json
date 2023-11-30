@@ -105,6 +105,7 @@
         "vue-color-kit": "^1.0.6",
         "vue-countup-v3": "^1.4.0",
         "vue-cropperjs": "^5.0.0",
+        "vue-email-editor": "^2.0.0",
         "vue-json-viewer": "^3.0.4",
         "vue-picture-cropper": "^0.6.1",
         "vue-resizable": "^2.1.7",

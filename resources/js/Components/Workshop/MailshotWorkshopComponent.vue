@@ -6,7 +6,7 @@
 
   <script setup lang="ts">
   import { ref } from "vue"
-  import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/MJML.vue'
+  import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/Unlayer.vue'
   import { cloneDeep } from 'lodash'
 
   const props = defineProps<{
