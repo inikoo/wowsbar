@@ -83,7 +83,9 @@ const component = computed(() => {
     </PageHeading>
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="tags.data"></component>
+    <KeepAlive>
+        <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="tags.data"></component>
+    </KeepAlive>
 
     <!-- Modal: after click 'upload' button -->
     <UploadExcel

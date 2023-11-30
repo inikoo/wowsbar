@@ -13,8 +13,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <!-- <pre>{{ actions }}</pre> -->
-    <!-- Button Group () -->
+    <!-- Button Group -->
     <div v-if="action.type === 'buttonGroup' && action.buttonGroup?.length" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
         <slot v-for="(button, index) in action.buttonGroup" :name="'button' + index">
             <Link
@@ -35,10 +34,8 @@ const props = defineProps<{
         :as="action.route?.method ? 'button' : undefined"
         :data="action.route?.method !== 'get' ? dataToSubmit : null"
     >
-    <!-- {{ actions }} -->
         <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" :key="`${action.label}${action.style}`" :tooltip="action.tooltip" />
     </Link>
 
-    <!-- <slot v-if="button.type === 'modal'" name="modal" :data="{...props }"/> -->
 
 </template>
