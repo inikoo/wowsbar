@@ -156,7 +156,7 @@ class IndexProspectMailshots extends InertiaAction
                     'subNavigation'    => $subNavigation,
                     'actions'          =>
                         [
-                            ($this->parent->prospects_sender_email_id and $this->parent->prospects_sender_email->state==SenderEmailStateEnum::VERIFIED) ? [
+                            ($this->parent->prospects_sender_email_id and $this->parent->prospectsSenderEmail->state==SenderEmailStateEnum::VERIFIED) ? [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('New mailshot'),
@@ -172,7 +172,7 @@ class IndexProspectMailshots extends InertiaAction
 
                 'senderEmail'=>
                     $this->parent->prospects_sender_email_id ?
-                        SenderEmailResource::make($this->parent->prospects_sender_email)->getArray() : null,
+                        SenderEmailResource::make($this->parent->prospectsSenderEmail)->getArray() : null,
 
 
                 'tabs' => [

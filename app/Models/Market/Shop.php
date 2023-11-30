@@ -111,11 +111,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
- * @property-read SenderEmail|null $prospects_sender_email
- * @property-read SenderEmail|null $sender_email
+ * @property-read SenderEmail|null $prospectsSenderEmail
+ * @property-read SenderEmail|null $senderEmail
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
  * @property-read int|null $serial_references_count
  * @property-read \App\Models\Market\ShopStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Survey> $surveys
+ * @property-read int|null $surveys_count
  * @property-read Timezone $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read Website|null $website
@@ -341,12 +343,12 @@ class Shop extends Model implements Auditable
         return $this->morphMany(EmailTemplate::class, 'parent');
     }
 
-    public function prospects_sender_email(): BelongsTo
+    public function prospectsSenderEmail(): BelongsTo
     {
         return $this->belongsTo(SenderEmail::class, 'prospects_sender_email_id');
     }
 
-    public function sender_email(): BelongsTo
+    public function senderEmail(): BelongsTo
     {
         return $this->belongsTo(SenderEmail::class, 'sender_email_id');
     }
