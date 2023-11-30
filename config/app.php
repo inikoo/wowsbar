@@ -198,7 +198,6 @@ return [
     ])->toArray(),
 
     'domain'                 => env('APP_DOMAIN'),
-    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
     'delivery_domain'        => env('DELIVERY_DOMAIN', 'delivery.wowsbar.test'),
     'delivery_url'           => env('DELIVERY_URL', 'http://delivery.wowsbar.test'),
 
