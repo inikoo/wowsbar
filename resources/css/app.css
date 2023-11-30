@@ -32,6 +32,11 @@
     @apply border border-red-500 
 }
 
+.zxcqwe {
+    /* For debug element */
+    @apply border border-green-500 
+}
+
 .asdzxc {
     /* For debug element */
     @apply ring-2 ring-offset-2 ring-red-500 
