@@ -90,8 +90,8 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
 
         return [
-            'contact_name'    => ['required', 'nullable', 'string', 'max:255'],
-            'company_name'    => ['required', 'nullable', 'string', 'max:255'],
+            'contact_name'    => ['nullable', 'nullable', 'string', 'max:255'],
+            'company_name'    => ['nullable', 'nullable', 'string', 'max:255'],
             'email'           => [
                 'present','nullable',
                 'email',

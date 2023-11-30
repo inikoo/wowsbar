@@ -156,7 +156,7 @@ class StoreProspect
             'phone'             => [
                 'required_without:email',
                 'nullable',
-                // 'phone:AUTO',
+                'phone:AUTO',
                 new IUnique(
                     table: 'prospects',
                     extraConditions: $extraConditions
