@@ -31,6 +31,7 @@ if(props.options!==undefined && props.options.type ){
                 :readonly="fieldData.readonly"
                 :inputName="fieldName"
                 :counter="fieldData.counter"
+                @update:modelValue="form.clearErrors()"
             >
 
             </PureTextarea>
