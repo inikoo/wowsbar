@@ -111,6 +111,7 @@ const changeTab=(tabIndex : number)=>{
 }
 
 watch(props.form[props.fieldName],getEstimateRecipients, {deep: true})
+watch(props.options,getEstimateRecipients, {deep: true})
 
 const getParams = () => {
     const pathname = location.search
