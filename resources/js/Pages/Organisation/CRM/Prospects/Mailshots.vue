@@ -16,6 +16,7 @@ import PageHeading from "@/Components/Headings/PageHeading.vue";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
 import {faStop, faPlay} from '@fas/'
 import Edit from "@/Components/Edit.vue";
+import { SenderEmail } from '@/types/SenderEmail'
 
 library.add(faRoad, faTerminal, faUserCircle, faSpellCheck,  faStop, faPlay)
 const props = defineProps<{
@@ -27,6 +28,7 @@ const props = defineProps<{
     title: string
     mailshots?: object
     settings?: object
+    senderEmail: SenderEmail
 }>()
 
 
@@ -49,5 +51,5 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]" :formData="{...props[currentTab]}"></component>
+    <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]" :formData="{...props[currentTab]}" :senderEmail="senderEmail"></component>
 </template>

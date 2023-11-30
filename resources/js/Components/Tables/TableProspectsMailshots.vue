@@ -12,6 +12,8 @@ import { trans } from "laravel-vue-i18n"
 import Icon from "@/Components/Icon.vue"
 import { useLocaleStore } from "@/Stores/locale"
 import { useFormatTime } from '@/Composables/useFormatTime'
+import LabelMailshotVerification from "@/Components/Mailshots/LabelMailshotVerification.vue"
+import { SenderEmail } from '@/types/SenderEmail'
 
 const props = defineProps<{
     data: {
@@ -26,6 +28,7 @@ const props = defineProps<{
         }[]
     },
     tab?: string
+    senderEmail: SenderEmail
 }>()
 
 const reactivePropsData = { ...props.data }
@@ -61,6 +64,8 @@ reactivePropsData.data.forEach((item) => {
 </script>
 
 <template>
+    <LabelMailshotVerification v-if="senderEmail.state != 'verified'" :message="senderEmail.message" />
+
     <Table :resource="data" :name="tab">
         <template #cell(date)="{ item: mailshot }">
             <span class="whitespace-nowrap text-gray-500">{{ useFormatTime(mailshot.sent_at, { formatTime: 'hms' }) }}</span>
