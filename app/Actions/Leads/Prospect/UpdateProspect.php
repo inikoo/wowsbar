@@ -103,7 +103,7 @@ class UpdateProspect
             'phone'             => [
                 'sometimes',
                 'nullable',
-                'phone:AUTO',
+                // 'phone:AUTO',
                 new IUnique(
                     table: 'prospects',
                     extraConditions: $extraConditions
