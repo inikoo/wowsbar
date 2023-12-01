@@ -12,7 +12,7 @@
                 "anchor": null,
                 "fontSize": "14px",
                 "hideable": true,
-                "deletable": true,
+                "deletable": false,
                 "draggable": true,
                 "linkStyle": {
                     "inherit": true,
@@ -129,10 +129,10 @@
                             "columns": false,
                             "padding": "0px",
                             "hideable": true,
-                            "deletable": true,
+                            "deletable": false,
                             "draggable": true,
-                            "selectable": true,
-                            "duplicatable": true,
+                            "selectable": false,
+                            "duplicatable": false,
                             "backgroundColor": null,
                             "backgroundImage": {
                                 "url": null,
@@ -170,8 +170,8 @@
                                             "anchor": null,
                                             "fontSize": "14px",
                                             "hideable": true,
-                                            "deletable": true,
-                                            "draggable": true,
+                                            "deletable": false,
+                                            "draggable": false,
                                             "linkStyle": {
                                                 "inherit": true,
                                                 "linkColor": "#0000ee",
@@ -181,7 +181,7 @@
                                             },
                                             "textAlign": "center",
                                             "lineHeight": "140%",
-                                            "selectable": true,
+                                            "selectable": false,
                                             "duplicatable": true,
                                             "containerPadding": "10px",
                                             "displayCondition": null
