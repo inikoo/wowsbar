@@ -245,40 +245,41 @@ const CommonBlueprint = ref([
                 type: "radio",
                 label: trans("Font Size"),
                 value: ["common", "centralStage", "style", "fontSize"],
-                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                defaultValue: { fontTitle: "text-[25px] md:text-[32px] lg:text-[44px]", fontSubtitle: "text-[12px] md:text-[15px] lg:text-[20px]" },
                 options: [
-                    {
+                    { 
                         label: "Extra Small",
                         value: {
-                            fontTitle: "text-[13px] lg:text-[21px]",
-                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                            fontTitle: "text-[13px] md:text-[17px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] md:text-[10px] lg:text-[12px]"
                         }
                     },
                     {
                         label: "Small",
                         value: {
-                            fontTitle: "text-[18px] lg:text-[32px]",
-                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                            fontTitle: "text-[18px] md:text-[24px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] md:text-[12px] lg:text-[15px]"
                         }
                     },
                     {
                         label: "Normal",
                         value: {
-                            fontTitle: "text-[25px] lg:text-[44px]",
-                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                            fontTitle: "text-[25px] md:text-[32px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] md:text-[15px] lg:text-[20px]"
                         }
                     },
                     {
-                        label: "Large", value: {
-                            fontTitle: "text-[30px] lg:text-[60px]",
-                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        label: "Large",
+                        value: {
+                            fontTitle: "text-[30px] md:text-[43px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] md:text-[19px] lg:text-[25px]"
                         }
                     },
                     {
                         label: "Extra Large",
                         value: {
-                            fontTitle: "text-[40px] lg:text-[70px]",
-                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                            fontTitle: "text-[40px] md:text-[52px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] md:text-[24px] lg:text-[30px]"
                         },
                     },
                 ],
@@ -426,38 +427,41 @@ const ComponentsBlueprint = ref([
                 type: "radio",
                 label: trans("Font Size"),
                 value: ["layout", "centralStage", "style", "fontSize"],
-                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                defaultValue: { fontTitle: "text-[25px] md:text-[32px] lg:text-[44px]", fontSubtitle: "text-[12px] md:text-[15px] lg:text-[20px]" },
                 options: [
-                    { label: "Extra Small", value: {
-                            fontTitle: "text-[13px] lg:text-[21px]",
-                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                    { 
+                        label: "Extra Small",
+                        value: {
+                            fontTitle: "text-[13px] md:text-[17px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] md:text-[10px] lg:text-[12px]"
                         }
                     },
                     {
                         label: "Small",
                         value: {
-                            fontTitle: "text-[18px] lg:text-[32px]",
-                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                            fontTitle: "text-[18px] md:text-[24px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] md:text-[12px] lg:text-[15px]"
                         }
                     },
                     {
                         label: "Normal",
                         value: {
-                            fontTitle: "text-[25px] lg:text-[44px]",
-                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                            fontTitle: "text-[25px] md:text-[32px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] md:text-[15px] lg:text-[20px]"
                         }
                     },
                     {
-                        label: "Large", value: {
-                            fontTitle: "text-[30px] lg:text-[60px]",
-                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        label: "Large",
+                        value: {
+                            fontTitle: "text-[30px] md:text-[43px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] md:text-[19px] lg:text-[25px]"
                         }
                     },
                     {
                         label: "Extra Large",
                         value: {
-                            fontTitle: "text-[40px] lg:text-[70px]",
-                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                            fontTitle: "text-[40px] md:text-[52px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] md:text-[24px] lg:text-[30px]"
                         },
                     },
                 ],
