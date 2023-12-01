@@ -11,6 +11,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Imports\WithImport;
 use App\Models\Helpers\Upload;
 use App\Models\Market\Shop;
+use App\Rules\Phone;
 use Exception;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -102,7 +103,7 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'phone'           => [
                 'present',
                 'nullable',
-                // 'phone:AUTO',
+                new Phone(),
             ],
             'contact_website' => ['nullable'],
             'tags'            => ['nullable', 'array'],

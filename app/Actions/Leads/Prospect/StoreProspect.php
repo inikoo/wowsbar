@@ -24,6 +24,7 @@ use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
+use App\Rules\Phone;
 use App\Rules\ValidAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -156,7 +157,7 @@ class StoreProspect
             'phone'             => [
                 'required_without:email',
                 'nullable',
-//                'phone:AUTO',
+                new Phone(),
                 new IUnique(
                     table: 'prospects',
                     extraConditions: $extraConditions
