@@ -10,12 +10,10 @@ namespace App\Actions\CRM\Customer\Surveys\UI;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\SurveysTabsEnum;
 use App\Http\Resources\CRM\SurveysResource;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Tag\CrmTagResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -28,7 +26,6 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Tags\Tag;
 
 class IndexCustomerSurveys extends InertiaAction
 {

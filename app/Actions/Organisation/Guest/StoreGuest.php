@@ -90,7 +90,7 @@ class StoreGuest
     {
         return [
             'type'           => ['required', Rule::in(GuestTypeEnum::values())],
-            'alias'          => ['required', 'iunique:employees', 'string', 'max:12'],
+            'alias'          => ['required', 'iunique:guests', 'string', 'max:12'],
             'username'       => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
             'company_name'   => ['nullable', 'string', 'max:255'],
             'contact_name'   => ['required', 'string', 'max:255'],
@@ -106,9 +106,7 @@ class StoreGuest
     public function asController(ActionRequest $request): Guest
     {
         $request->validate();
-
         $modelData = $request->validated();
-
 
         return $this->handle(Arr::except($modelData, ['username']));
     }
@@ -129,7 +127,6 @@ class StoreGuest
     public function asCommand(Command $command): int
     {
         $this->trusted = true;
-
 
         $fields = [
             'type'         => $command->argument('type'),
