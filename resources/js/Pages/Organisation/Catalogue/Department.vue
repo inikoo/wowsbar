@@ -12,7 +12,7 @@ import {
     faFolder, faMoneyBillWave, faRoad
 } from '@fal/';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
@@ -28,7 +28,7 @@ library.add(
     faRoad
 );
 
-const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
+const ModelChangelog = defineAsyncComponent(() => import('@/Components/ModelChangelog.vue'))
 
 const props = defineProps<{
     title: string,

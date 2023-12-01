@@ -22,7 +22,7 @@ import Pusher from 'pusher-js'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
