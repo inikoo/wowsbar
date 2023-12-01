@@ -38,6 +38,14 @@ const optionType = [
                 placeholder: "Holiday sales up to 80% all items."
             },
             {
+                name: 'linkOfText',
+                type: 'input',
+                label: trans('Link'),
+                value: null,
+                defaultValue : 'https://',
+                placeholder: "www.example.com"
+            },
+            {
                 name: 'width',
                 type: 'number',
                 label: trans('width'),
@@ -58,7 +66,7 @@ const optionType = [
                 label: trans("Font Size"),
                 value: null,
                 defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
-                    options: [
+                options: [
                     { label: "Extra Small", value: {
                             fontTitle: "text-[13px] lg:text-[21px]",
                             fontSubtitle: "text-[8px] lg:text-[12px]"

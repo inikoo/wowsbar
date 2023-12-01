@@ -152,6 +152,166 @@ const changeVisibility = (slide: any) => {
     }
 };
 
+const CommonBlueprint = ref([
+    {
+        title: "Duration",
+        icon: ["fal", "stopwatch"],
+        fields: [
+            {
+                name: "delay",
+                type: "range",
+                label: trans("Duration"),
+                value: null,
+                timeRange: {
+                    min: "2.5",
+                    max: "15",
+                    step: "0.5",
+                    range: ["2.5", "5", "7.5", "10", "12.5", "15"],
+                },
+            },
+        ],
+    },
+    {
+        title: "corners",
+        icon: ["fal", "fa-expand-arrows"],
+        fields: [
+            {
+                name: ["common", "corners"],
+                type: "corners",
+                label: null,
+                value: null,
+                optionType: ["cornerText", "linkButton", "slideControls", "ribbon", 'clear'],
+            },
+        ],
+    },
+    {
+        title: "central stage",
+        icon: ["fal", "fa-align-center"],
+        fields: [
+            {
+                name: ["common", "centralStage", "title"],
+                type: "text",
+                label: trans("Title"),
+                value: ["common", "centralStage", "title"],
+                placeholder: "Enter title of the slide"
+            },
+            {
+                name: ["common", "centralStage", "subtitle"],
+                type: "text",
+                label: trans("subtitle"),
+                value: ["common", "centralStage", "subtitle"],
+                placeholder: "Enter subtitle of the slide"
+            },
+            {
+                name: ["common", "centralStage", "linkOfText"],
+                type: "text",
+                label: trans("Hyperlink"),
+                defaultValue : '',
+                value: ["common", "centralStage", "linkOfText"],
+                placeholder: "www.example.com"
+            },
+            {
+                name: ["common", "centralStage", "style", "fontFamily"],
+                type: "selectFont",
+                label: trans("Font Family"),
+                value: ["common", "centralStage", "style", "fontFamily"],
+            },
+            {
+                name: ["common", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                defaultValue : "center",
+                value: ["common", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
+            },
+            {
+                name: ["common", "centralStage", "style", "fontSize"],
+                type: "radio",
+                label: trans("Font Size"),
+                value: ["common", "centralStage", "style", "fontSize"],
+                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                options: [
+                    {
+                        label: "Extra Small",
+                        value: {
+                            fontTitle: "text-[13px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                        }
+                    },
+                    {
+                        label: "Small",
+                        value: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                        }
+                    },
+                    {
+                        label: "Normal",
+                        value: {
+                            fontTitle: "text-[25px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                        }
+                    },
+                    {
+                        label: "Large", value: {
+                            fontTitle: "text-[30px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        }
+                    },
+                    {
+                        label: "Extra Large",
+                        value: {
+                            fontTitle: "text-[40px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                        },
+                    },
+                ],
+            },
+            {
+                name: ["common", "centralStage", "style", "color"],
+                type: "colorpicker",
+                label: trans("Text Color"),
+                value: ["common", "centralStage", "style", "color"],
+                icon: 'far fa-text'
+            },
+            {
+                name: ["common", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["common", "centralStage", "style", "TextShadow"],
+            },
+            // {
+            //     name: ["common", "centralStage", "style", "textGradient"],
+            //     type: "gradientColor",
+            //     label: trans("Text gradient"),
+            //     value: ["common", "centralStage", "style", "textGradient"],
+            // },
+            // {
+            //     name: ["common", "centralStage", "style", "textShadow"],
+            //     type: "TextShadow",
+            //     label: trans("Text Shadow"),
+            //     value: ["common", "centralStage", "style", "textShadow"],
+            // },
+        ],
+    },
+])
+
 const ComponentsBlueprint = ref([
     {
         title: "Background & Link",
@@ -169,12 +329,11 @@ const ComponentsBlueprint = ref([
                 type: "text",
                 label: trans("Link"),
                 value: ["layout", "link"],
-                // defaultValue : 'https://',
                 placeholder: "https://www.example.com",
-                rules:{
-                    pattern : '^(http|https)://',
-                    message : 'please input https:// or http://'
-                }
+                // rules:{
+                //     pattern : '^(http|https)://',
+                //     message : 'please input https:// or http://'
+                // }
             },
         ],
     },
@@ -209,6 +368,14 @@ const ComponentsBlueprint = ref([
                 defaultValue : '',
                 value: ["layout", "centralStage", "subtitle"],
                 placeholder: "Holiday sales up to 80% all items."
+            },
+            {
+                name: ["layout", "centralStage", "linkOfText"],
+                type: "text",
+                label: trans("Hyperlink"),
+                defaultValue : '',
+                value: ["layout", "centralStage", "linkOfText"],
+                placeholder: "www.example.com"
             },
             {
                 name: ["layout", "centralStage", "style", "fontFamily"],
@@ -322,158 +489,6 @@ const ComponentsBlueprint = ref([
     //         },
     //     ],
     // },
-]);
-
-const CommonBlueprint = ref([
-    {
-        title: "Duration",
-        icon: ["fal", "stopwatch"],
-        fields: [
-            {
-                name: "delay",
-                type: "range",
-                label: trans("Duration"),
-                value: null,
-                timeRange: {
-                    min: "2.5",
-                    max: "15",
-                    step: "0.5",
-                    range: ["2.5", "5", "7.5", "10", "12.5", "15"],
-                },
-            },
-        ],
-    },
-    {
-        title: "corners",
-        icon: ["fal", "fa-expand-arrows"],
-        fields: [
-            {
-                name: ["common", "corners"],
-                type: "corners",
-                label: null,
-                value: null,
-                optionType: ["cornerText", "linkButton", "slideControls", "ribbon", 'clear'],
-            },
-        ],
-    },
-    {
-        title: "central stage",
-        icon: ["fal", "fa-align-center"],
-        fields: [
-            {
-                name: ["common", "centralStage", "title"],
-                type: "text",
-                label: trans("Title"),
-                value: ["common", "centralStage", "title"],
-                placeholder: "Enter title of the slide"
-            },
-            {
-                name: ["common", "centralStage", "subtitle"],
-                type: "text",
-                label: trans("subtitle"),
-                value: ["common", "centralStage", "subtitle"],
-                placeholder: "Enter subtitle of the slide"
-            },
-            {
-                name: ["common", "centralStage", "style", "fontFamily"],
-                type: "selectFont",
-                label: trans("Font Family"),
-                value: ["common", "centralStage", "style", "fontFamily"],
-            },
-            {
-                name: ["common", "centralStage", "textAlign"],
-                type: "textAlign",
-                label: trans("Text Align"),
-                defaultValue : "center",
-                value: ["common", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
-            },
-            {
-                name: ["common", "centralStage", "style", "fontSize"],
-                type: "radio",
-                label: trans("Font Size"),
-                value: ["common", "centralStage", "style", "fontSize"],
-                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
-                options: [
-                    {
-                        label: "Extra Small",
-                        value: {
-                            fontTitle: "text-[13px] lg:text-[21px]",
-                            fontSubtitle: "text-[8px] lg:text-[12px]"
-                        }
-                    },
-                    {
-                        label: "Small",
-                        value: {
-                            fontTitle: "text-[18px] lg:text-[32px]",
-                            fontSubtitle: "text-[10px] lg:text-[15px]"
-                        }
-                    },
-                    {
-                        label: "Normal",
-                        value: {
-                            fontTitle: "text-[25px] lg:text-[44px]",
-                            fontSubtitle: "text-[12px] lg:text-[20px]"
-                        }
-                    },
-                    {
-                        label: "Large", value: {
-                            fontTitle: "text-[30px] lg:text-[60px]",
-                            fontSubtitle: "text-[15px] lg:text-[25px]"
-                        }
-                    },
-                    {
-                        label: "Extra Large",
-                        value: {
-                            fontTitle: "text-[40px] lg:text-[70px]",
-                            fontSubtitle: "text-[20px] lg:text-[30px]"
-                        },
-                    },
-                ],
-            },
-            {
-                name: ["common", "centralStage", "style", "color"],
-                type: "colorpicker",
-                label: trans("Text Color"),
-                value: ["common", "centralStage", "style", "color"],
-                icon: 'far fa-text'
-            },
-            {
-                name: ["common", "centralStage", "style", "textShadow"],
-                type: "toogle",
-                label: trans("Text Shadow"),
-                value: ["common", "centralStage", "style", "TextShadow"],
-            },
-            // {
-            //     name: ["common", "centralStage", "style", "textGradient"],
-            //     type: "gradientColor",
-            //     label: trans("Text gradient"),
-            //     value: ["common", "centralStage", "style", "textGradient"],
-            // },
-            // {
-            //     name: ["common", "centralStage", "style", "textShadow"],
-            //     type: "TextShadow",
-            //     label: trans("Text Shadow"),
-            //     value: ["common", "centralStage", "style", "textShadow"],
-            // },
-        ],
-    },
 ]);
 
 

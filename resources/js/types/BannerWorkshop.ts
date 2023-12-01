@@ -37,6 +37,7 @@ export interface CentralStageData {
     subtitle?: string
     textAlign?: string
     title?: string
+    linkOfText?: string
 }
 
 // Slide Data

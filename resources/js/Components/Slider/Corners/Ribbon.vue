@@ -33,8 +33,7 @@ const positionRibbon = computed(() => {
     }
 
     return classes
-});
-console.log('aaaa', props)
+})
 </script>
 
 <template>

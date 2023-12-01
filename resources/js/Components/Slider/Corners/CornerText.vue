@@ -5,10 +5,12 @@
   -->
 
 <script setup lang="ts">
+// import { CornerData } from '@/types/BannerWorkshop'
 
 const props = defineProps<{
     data?: {
         title?: string
+        linkOfText?: string
         subtitle?: string
         fontSize?: {
             fontSubtitle?: string
@@ -24,6 +26,8 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div v-if="data?.title" class="pb-1.5 text-gray-100 drop-shadow-md leading-none truncate " :class="data?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]' " :style="`color: ${data?.color};`">{{ data?.title }}</div>
-    <div v-if="data?.subtitle" class="pb-1.5 text-gray-300 drop-shadow text-base italic tracking-widest truncate " :class="data?.fontSize?.fontSubtitle" :style="`color: ${data?.color};`">{{ data?.subtitle }}</div>
+    <component :is="data?.linkOfText ? 'a' : 'div'" v-if="data?.title || data?.subtitle" :href="`https://${data?.linkOfText}`" target="_top">
+        <div v-if="data?.title" class="pb-1.5 text-gray-100 drop-shadow-md leading-none truncate " :class="data?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]' " :style="`color: ${data?.color};`">{{ data?.title }}</div>
+        <div v-if="data?.subtitle" class="pb-1.5 text-gray-300 drop-shadow text-base italic tracking-widest truncate " :class="data?.fontSize?.fontSubtitle" :style="`color: ${data?.color};`">{{ data?.subtitle }}</div>
+    </component>
 </template>
