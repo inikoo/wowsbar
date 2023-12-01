@@ -48,7 +48,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_customer_users_status_inactive
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -59,6 +58,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_fail_status_no_applicable
  * @property int $number_prospects_fail_status_not_interested
  * @property int $number_prospects_fail_status_unsubscribed
+ * @property int $number_prospects_fail_status_hard_bounced
  * @property int $number_prospects_fail_status_invalid
  * @property int $number_prospects_success_status_no_applicable
  * @property int $number_prospects_success_status_registered
@@ -105,6 +105,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateOpen($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateSoftBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsDontContactMe($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusHardBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusInvalid($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusNoApplicable($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusNotInterested($value)
@@ -112,7 +113,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderMale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderOther($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateContacted($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateFail($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)

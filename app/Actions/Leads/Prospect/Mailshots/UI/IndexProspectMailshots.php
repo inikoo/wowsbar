@@ -9,15 +9,16 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Actions\Mail\Mailshot\UI\EditMailshotSettings;
+use App\Actions\Mail\Mailshot\UI\ProspectMailshotSettings;
 use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;
+use App\Http\Resources\Mail\SenderEmailResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;
@@ -30,16 +31,16 @@ class IndexProspectMailshots extends InertiaAction
 {
     use WithProspectsSubNavigation;
 
-    private Shop|Organisation $parent;
+    private Shop $parent;
 
     protected function getElementGroups(): array
     {
         return [];
     }
 
-    public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Shop $shop, $prefix = null): LengthAwarePaginator
     {
-        $this->parent = $parent;
+        $this->parent = $shop;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -56,9 +57,8 @@ class IndexProspectMailshots extends InertiaAction
             ->leftJoin('mailshot_stats', 'mailshot_stats.mailshot_id', 'mailshots.id')
             ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
 
-        if (class_basename($parent) == 'Shop') {
-            $queryBuilder->where('parent_id', $parent->id);
-        }
+        $queryBuilder->where('parent_id', $shop->id);
+
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -100,7 +100,7 @@ class IndexProspectMailshots extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no mailshots'),
+                        'title'       => __('No Mailshots'),
                         'description' => $this->canEdit ? __('Get started by creating a new mailshots.') : null,
                         'count'       => 0,
                         'action'      => $this->canEdit ? [
@@ -143,7 +143,6 @@ class IndexProspectMailshots extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $mailshots, ActionRequest $request): Response
     {
         $subNavigation = $this->getSubNavigation($request);
-
         return Inertia::render(
             'CRM/Prospects/Mailshots',
             [
@@ -157,7 +156,7 @@ class IndexProspectMailshots extends InertiaAction
                     'subNavigation'    => $subNavigation,
                     'actions'          =>
                         [
-                            $this->parent->sender_email_address_valid_at ? [
+                            ($this->parent->prospects_sender_email_id and $this->parent->prospectsSenderEmail->state==SenderEmailStateEnum::VERIFIED) ? [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('New mailshot'),
@@ -171,14 +170,19 @@ class IndexProspectMailshots extends InertiaAction
 
                 ],
 
+                'senderEmail'=>
+                    $this->parent->prospects_sender_email_id ?
+                        SenderEmailResource::make($this->parent->prospectsSenderEmail)->getArray() : null,
+
+
                 'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => ProspectsMailshotsTabsEnum::navigation(),
                 ],
 
                 ProspectsMailshotsTabsEnum::SETTINGS->value => $this->tab == ProspectsMailshotsTabsEnum::SETTINGS->value ?
-                    fn () => EditMailshotSettings::run($this->parent, $request)
-                    : Inertia::lazy(fn () => EditMailshotSettings::run($this->parent, $request)),
+                    fn () => ProspectMailshotSettings::run($this->parent)
+                    : Inertia::lazy(fn () => ProspectMailshotSettings::run($this->parent)),
 
                 ProspectsMailshotsTabsEnum::MAILSHOTS->value => $this->tab == ProspectsMailshotsTabsEnum::MAILSHOTS->value ?
                     fn () => MailshotsResource::collection($mailshots)
@@ -189,12 +193,7 @@ class IndexProspectMailshots extends InertiaAction
         )->table($this->tableStructure(prefix: ProspectsMailshotsTabsEnum::MAILSHOTS->value));
     }
 
-    public function asController(ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request)->withTab(ProspectsMailshotsTabsEnum::values());
 
-        return $this->handle(organisation());
-    }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {

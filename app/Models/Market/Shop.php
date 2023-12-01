@@ -25,8 +25,10 @@ use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
+use App\Models\Mail\SenderEmail;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Models\Survey;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\Website;
@@ -52,8 +54,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $company_name
  * @property string|null $contact_name
  * @property string|null $email
- * @property string|null $sender_email_address
- * @property string|null $sender_email_address_valid_at
  * @property string|null $phone
  * @property string|null $identity_document_type
  * @property string|null $identity_document_number
@@ -74,6 +74,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property int|null $sender_email_id
+ * @property int|null $prospects_sender_email_id
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
  * @property-read int|null $appointment_count
@@ -109,9 +111,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
+ * @property-read SenderEmail|null $prospectsSenderEmail
+ * @property-read SenderEmail|null $senderEmail
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
  * @property-read int|null $serial_references_count
  * @property-read \App\Models\Market\ShopStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Survey> $surveys
+ * @property-read int|null $surveys_count
  * @property-read Timezone $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read Website|null $website
@@ -141,6 +147,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereOpenAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereProspectsSenderEmailId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSenderEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereState($value)
@@ -333,5 +341,20 @@ class Shop extends Model implements Auditable
     public function emailTemplates(): MorphMany
     {
         return $this->morphMany(EmailTemplate::class, 'parent');
+    }
+
+    public function prospectsSenderEmail(): BelongsTo
+    {
+        return $this->belongsTo(SenderEmail::class, 'prospects_sender_email_id');
+    }
+
+    public function senderEmail(): BelongsTo
+    {
+        return $this->belongsTo(SenderEmail::class, 'sender_email_id');
+    }
+
+    public function surveys(): HasMany
+    {
+        return $this->hasMany(Survey::class);
     }
 }

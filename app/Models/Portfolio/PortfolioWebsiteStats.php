@@ -35,7 +35,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_bounced
  * @property int $number_prospects_state_fail
  * @property int $number_prospects_state_success
  * @property int $number_prospects_contacted_state_no_applicable
@@ -46,6 +45,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_fail_status_no_applicable
  * @property int $number_prospects_fail_status_not_interested
  * @property int $number_prospects_fail_status_unsubscribed
+ * @property int $number_prospects_fail_status_hard_bounced
  * @property int $number_prospects_fail_status_invalid
  * @property int $number_prospects_success_status_no_applicable
  * @property int $number_prospects_success_status_registered
@@ -75,6 +75,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateOpen($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateSoftBounced($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsDontContactMe($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusHardBounced($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusInvalid($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusNoApplicable($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusNotInterested($value)
@@ -82,7 +83,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderMale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderOther($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateBounced($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateContacted($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateFail($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNoContacted($value)

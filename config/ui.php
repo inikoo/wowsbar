@@ -5,12 +5,8 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-
 return [
-
     'table'=> [
-        'records_per_page'=> 100
-
+        'records_per_page'=> 25
     ]
-
 ];

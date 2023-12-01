@@ -9,10 +9,8 @@ namespace App\Actions\Helpers\AwsEmail;
 
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Market\Shop;
-use Aws\Result;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Arr;
+use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
+use App\Models\Mail\SenderEmail;
 use Lorisleiva\Actions\ActionRequest;
 
 class SendIdentityEmailVerification
@@ -22,29 +20,38 @@ class SendIdentityEmailVerification
 
     private bool $asAction = false;
 
-    public function handle(Shop $shop, array $modelData): JsonResponse
+    public function handle(SenderEmail $senderEmail): SenderEmail
     {
-        $identities = GetListIdentityEmailVerification::run($modelData);
+        $email = $senderEmail->email_address;
 
-        data_set($modelData, 'sender_email_address', Arr::get($modelData, 'sender_email_address'));
 
-        if (!in_array(Arr::get($modelData, 'sender_email_address'), ($identities))) {
-            $result = $this->getSesClient()->verifyEmailIdentity([
-                'EmailAddress' => Arr::get($modelData, 'sender_email_address'),
-            ]);
+        $state = CheckSenderEmailVerification::run($email);
 
-            if ($result['@metadata']['statusCode'] != 200) {
-                return response()->json(__('There was an error sending the verification email.'));
+        if (in_array($state, [SenderEmailStateEnum::VERIFIED, SenderEmailStateEnum::PENDING])) {
+            if ($senderEmail->verified_at === null) {
+                data_set($modelData, 'verified_at', now());
             }
 
-            data_set($modelData, 'sender_email_address_valid_at', null);
+            data_set($modelData, 'state', $state);
 
-            return response()->json(__('The email is not registered, we\'ve sent you verification to your email, please check your email.'));
+            return $this->update($senderEmail, $modelData);
         }
 
-        $this->update($shop, $modelData);
+        $result = $this->getSesClient()->verifyEmailIdentity([
+            'EmailAddress' => $email,
+        ]);
 
-        return response()->json(__('The email is validated.'));
+        if ($result['@metadata']['statusCode'] != 200) {
+            $state = SenderEmailStateEnum::VERIFICATION_SUBMISSION_ERROR;
+        } else {
+            $state = SenderEmailStateEnum::PENDING;
+            data_set($modelData, 'last_verification_submitted_at', now());
+        }
+
+
+        data_set($modelData, 'state', $state);
+
+        return $this->update($senderEmail, $modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -56,20 +63,19 @@ class SendIdentityEmailVerification
         return $request->user()->hasPermissionTo("shops.edit");
     }
 
-    public function rules(): array
+
+    public function jsonResponse(SenderEmail $senderEmail): array
     {
         return [
-            'sender_email_address' => ['required', 'string', 'email']
+            'state'   => $senderEmail->state,
+            'message' => $senderEmail->state->message()[$senderEmail->state->value]
         ];
     }
 
-    public function asController(Shop $shop, ActionRequest $request): JsonResponse
+    public function asController(SenderEmail $senderEmail, ActionRequest $request): SenderEmail
     {
-        $this->fillFromRequest($request);
+        $this->validateAttributes();
 
-        return $this->handle(
-            $shop,
-            modelData: $this->validateAttributes()
-        );
+        return $this->handle($senderEmail);
     }
 }

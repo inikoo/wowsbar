@@ -14,6 +14,7 @@ use App\Actions\CRM\Customer\Mailshots\UI\CreateCustomersMailshot;
 use App\Actions\CRM\Customer\Mailshots\UI\IndexCustomerMailshots;
 use App\Actions\CRM\Customer\Newsletters\UI\IndexCustomerNewsletters;
 use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
+use App\Actions\CRM\Customer\Surveys\UI\IndexCustomerSurveys;
 use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
@@ -44,6 +45,7 @@ use App\Actions\Mail\DispatchedEmail\UI\ShowDispatchedEmail;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
 use App\Actions\Mail\Mailshot\EstimateRecipientsCreatingMailshot;
+use App\Actions\Mail\Mailshot\GetQueryNumberItems;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
@@ -99,6 +101,10 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::prefix('tags')->as('tags.')->group(function () {
             Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer tags'])->uses([IndexCustomerTags::class, 'inShop'])->name('index');
             Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
+        });
+
+        Route::prefix('surveys')->as('surveys.')->group(function () {
+            Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer surveys'])->uses([IndexCustomerSurveys::class, 'inShop'])->name('index');
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
@@ -161,6 +167,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
             Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
+            Route::get('query/{query}/number-items', GetQueryNumberItems::class)->name('query.number-items');
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');

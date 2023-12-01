@@ -11,8 +11,6 @@ import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { get as getLodash } from 'lodash'
 import { capitalize } from "@/Composables/capitalize"
 import { useLayoutStore } from '@/Stores/layout'
-
-// import {jumpToElement} from "@/Composables/jumpToElement"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
@@ -81,10 +79,11 @@ const props = defineProps<{
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData.current ?? Object.keys(props.formData.blueprint)[0])  // if formData.current not exist, take first navigation
+const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
+const fieldGroupAnimateSection = ref()
 
 const updateViewportWidth = () => {
     isMobile.value = window.innerWidth <= 768
@@ -99,7 +98,16 @@ onMounted(() => {
     updateViewportWidth()
     window.addEventListener('resize', updateViewportWidth)
 
-    route().v().query ? currentTab == getLodash(route().v().query, 'section') : ''  // To auto open the navigation as the 'section' in url
+    // Animate the selected section
+    route().v().query?.section ? (
+        currentTab.value = getLodash(route().v().query, 'section'),
+        setTimeout(() => {
+            fieldGroupAnimateSection.value = ['bg-yellow-500/20']
+            setTimeout(() => {
+                fieldGroupAnimateSection.value = []
+            }, 600)
+        }, 100)
+    ) : ''
 
     // To indicate active state that on viewport
     buttonRefs.value.forEach((element: any, index: number) => {
@@ -158,9 +166,10 @@ onBeforeUnmount(() => {
 
             <!-- Content of forms -->
             <div class="px-4 sm:px-6 md:px-4 col-span-9">
-                <div v-for="(sectionData, sectionIdx ) in formData.blueprint" :key="sectionIdx" >
+                <template v-for="(sectionData, sectionIdx ) in formData.blueprint" :key="sectionIdx">
                     <div v-show="sectionIdx === currentTab" >
                         <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`"/>
+                
                         <!-- Title -->
                         <div class="flex items-center gap-x-2" ref="buttonRefs">
                             <h3 v-if="sectionData.title" class="text-lg leading-6 font-medium text-gray-700 capitalize">
@@ -170,27 +179,19 @@ onBeforeUnmount(() => {
                                 {{ sectionData.subtitle }}
                             </p>
                         </div>
-
-                        <div class="mt-2 pt-4 sm:pt-5 space-y-1">
-                            <div v-for="(fieldData, fieldName, index) in sectionData.fields" :key="index" class="divide-y divide-green-200">
-                                <dl class="divide-y divide-green-200  ">
-                                    <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4">
-
-                                        <!-- Field -->
-                                        <dd class="sm:col-span-3">
-                                            <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                                <div class="relative flex-grow">
-                                                    <Action v-if="fieldData.type==='action'" :action="fieldData.action" :dataToSubmit="fieldData.action?.data" />
-                                                    <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" />
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
+                        
+                        <!-- Looping Field -->
+                        <div class="my-2 pt-4 space-y-5 transition-all duration-1000 ease-in-out" :class="fieldGroupAnimateSection">
+                            <dd v-for="(fieldData, fieldName, index) in sectionData.fields" :key="index" class="py-2">
+                                <!-- Field -->
+                                <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
+                                    <Action v-if="fieldData.type==='action'" :action="fieldData.action" :dataToSubmit="fieldData.action?.data" />
+                                    <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" />
+                                </div>
+                            </dd>
                         </div>
                     </div>
-                </div>
+                </template>
 
                 <!-- For button Authorize Google -->
                 <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint?.[currentTab]?.button" :id="formData.title">

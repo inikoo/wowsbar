@@ -8,7 +8,12 @@ import { useLocaleStore } from '@/Stores/locale'
 </script>
 
 <template>
-    <div class="px-5 py-1  w-full border-b mb-1">
-        {{ trans('Estimated recipients') }}: <span class="font-semibold">{{ useLocaleStore().number(emailsEstimated) }}</span>
+    <div class="px-5 py-1 w-full border-b flex justify-between">
+        <slot>
+            <div class="text-gray-500">
+                {{ trans('Estimated recipients') }}:
+                <span class="font-semibold text-gray-700">{{ useLocaleStore().number(emailsEstimated) }}</span>
+            </div>
+        </slot>
     </div>
 </template>
