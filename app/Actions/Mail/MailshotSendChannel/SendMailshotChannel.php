@@ -32,8 +32,8 @@ class SendMailshotChannel
     {
         $mailshot      = $mailshotSendChannel->mailshot;
         $layout        = $mailshot->layout;
-        $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
-
+        // $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        $emailHtmlBody = $layout['html']['html'];
 
 
 

@@ -30,8 +30,8 @@ class SendMailshotTest
     public function handle(Mailshot $mailshot, array $modelData): Collection
     {
         $layout        = $mailshot->layout;
-        $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
-
+//        $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        $emailHtmlBody = $layout['html']['html'];
 
         $dispatchedEmails = [];
         foreach (Arr::get($modelData, 'emails', []) as $email) {
