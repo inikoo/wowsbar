@@ -32,10 +32,6 @@ const props = withDefaults(defineProps<{
     capitalize: true
 })
 
-interface Icon {
-    icon: string[] | string
-}
-
 library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft)
 
 let styleClass = ''

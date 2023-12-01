@@ -28,7 +28,7 @@ import prospectRecipients from '@/Components/Forms/Fields/ProspectRecipients.vue
 import ProspectQueryBuilder from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 
 import { ref, onMounted } from 'vue'
-import Textarea from "@/Components/Forms/Fields/Textarea.vue";
+import Textarea from "@/Components/Forms/Fields/Textarea.vue"
 
 
 library.add(faExclamationCircle, faAsterisk, faCheckCircle)
@@ -49,9 +49,6 @@ const props = defineProps<{
     appName: string
 }>()
 
-
-
-
 const getComponent = (componentName: string) => {
     const components: any = {
         'input': Input,
@@ -70,10 +67,9 @@ const getComponent = (componentName: string) => {
         'prospectQueryBuilder': ProspectQueryBuilder,
         'prospectRecipients': prospectRecipients,
         'senderEmail': SenderEmail,
-    };
-    return components[componentName] ?? null;
-
-};
+    }
+    return components[componentName] ?? null
+}
 
 let fields: any = {};
 Object.entries(props.formData.blueprint).forEach(([, val]) => {
@@ -88,34 +84,34 @@ const handleFormSubmit = () => {
     form.post(route(
         props.formData.route.name,
         props.formData.route.parameters
-    ));
-};
+    ))
+}
 
 const buttonRefs = ref([])
 const tabActive: any = ref({})
 
 const handleIntersection = (index: number) => (entries: any) => {
-    const [entry] = entries;
-    tabActive.value[`${index}`] = entry.isIntersecting;
+    const [entry] = entries
+    tabActive.value[`${index}`] = entry.isIntersecting
 }
 
 onMounted(() => {
     // To indicate active state that on viewport
     buttonRefs.value.forEach((element: any, index) => {
-        const observer = new IntersectionObserver(handleIntersection(index));
-        observer.observe(element);
+        const observer = new IntersectionObserver(handleIntersection(index))
+        observer.observe(element)
 
         // Clean up the observer when the component is unmounted
         element.cleanupObserver = () => {
-            observer.disconnect();
-        };
-    });
+            observer.disconnect()
+        }
+    })
 
     // Clean up all the observers when the component is unmounted
     return () => {
-        buttonRefs.value.forEach((button: any) => button.cleanupObserver());
-    };
-});
+        buttonRefs.value.forEach((button: any) => button.cleanupObserver())
+    }
+})
 
 </script>
 
