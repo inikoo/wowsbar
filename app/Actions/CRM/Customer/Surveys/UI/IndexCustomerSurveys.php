@@ -13,6 +13,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\SurveysTabsEnum;
+use App\Http\Resources\CRM\SurveysResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Tag\CrmTagResource;
 use App\InertiaTable\InertiaTable;
@@ -103,9 +104,7 @@ class IndexCustomerSurveys extends InertiaAction
                         'count'       => 0
                     ]
                 )
-                ->column(key: 'label', label: __('label'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'number_prospects', label: __('prospects'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'actions', label: __('actions'), canBeHidden: false);
+                ->column(key: 'label', label: __('label'), canBeHidden: false, sortable: true, searchable: true);
         };
     }
 
@@ -115,7 +114,7 @@ class IndexCustomerSurveys extends InertiaAction
         $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
-            'CRM/Prospects/Tags',
+            'CRM/Customers/Surveys',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -140,8 +139,8 @@ class IndexCustomerSurveys extends InertiaAction
                     ],
 
                 SurveysTabsEnum::SURVEYS->value => $this->tab == SurveysTabsEnum::SURVEYS->value ?
-                    fn () => CrmTagResource::collection($tags)
-                    : Inertia::lazy(fn () => CrmTagResource::collection($tags)),
+                    fn () => SurveysResource::collection($tags)
+                    : Inertia::lazy(fn () => SurveysResource::collection($tags)),
 
                 SurveysTabsEnum::HISTORY->value => $this->tab == SurveysTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: SurveysTabsEnum::HISTORY->value))
