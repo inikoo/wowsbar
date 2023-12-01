@@ -60,6 +60,16 @@ onMounted(async () => {
 
     const opt = {
         id: editorId,
+        displayMode: 'email',
+        user: {
+            id: 1,
+            signature: 'XXX',
+            name: 'John Doe', // optional
+            email: 'aryarajasa0@gmail.com'
+        },
+        features: {
+            sendTestEmail: true
+        },
         mergeTags: [
             { name: "Email", value: "{{email}}" },
             { name: "First Name", value: "{{first_name}}" },
