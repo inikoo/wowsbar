@@ -76,6 +76,30 @@ onMounted(async () => {
             divider: {
                 enabled: true
             },
+        },
+        fonts: {
+            showDefaultFonts: true,
+            customFonts: [
+                {
+                    label: "Comic Sans",
+                    value: "'Comic Sans MS', cursive, sans-serif"
+                },
+                {
+                    label: "Lobster Two",
+                    value: "'Lobster Two',cursive",
+                    url: "https://fonts.googleapis.com/css?family=Lobster+Two:400,700"
+                },
+                {
+                    label: "Roboto",
+                    value: "Roboto",
+                    url: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100&display=swap"
+                },
+                {
+                    label: "Montserrat",
+                    value: "Montserrat",
+                    url: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap" 
+                }
+            ]
         }
         // other options for the editor can be added here if needed
     };
