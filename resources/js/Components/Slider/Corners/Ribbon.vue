@@ -10,14 +10,14 @@ const props = defineProps<{
         }
         ribbon_color?: string
         text_color?: string
+        position: string
     }
-    swiperRef?: Element
-    position: string
+    // swiperRef?: Element
 }>()
 
 const positionRibbon = computed(() => {
     let classes
-    switch (props.position) {
+    switch (props.data?.position) {
         case 'topRight':
             classes = 'corner-ribbon-top';
             break;
@@ -34,6 +34,7 @@ const positionRibbon = computed(() => {
 
     return classes
 });
+console.log('aaaa', props)
 </script>
 
 <template>

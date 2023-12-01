@@ -51,7 +51,7 @@ else if (props.style == 'secondary' || props.style == 'edit') {
     if(layout.systemName == 'org') {
         styleClass = 'bg-org-400 bg-gradient-to-r from-org-400 to-org-600 text-white hover:bg-none'
     } else {
-        styleClass = 'bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 text-white hover:bg-none'
+        styleClass = 'border border-gray-300 text-gray-600 bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-none'
     }
 } 
 else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-200/70'

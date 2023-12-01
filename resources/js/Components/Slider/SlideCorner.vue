@@ -76,7 +76,7 @@ const getComponent = (componentName: any) => {
 <template>
     <div :class="positionClasses" class="absolute" :style="`width : ${get(corner,['data','width'])}%`">
         <!-- {{ positionClasses }} -->
-        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="swiperRef" :position="position" />
+        <component :is="getComponent(corner.type)" :data="{...corner.data, position}" :swiperRef="swiperRef" />
     </div>
 </template>
 
