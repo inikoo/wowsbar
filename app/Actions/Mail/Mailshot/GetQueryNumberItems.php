@@ -3,6 +3,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Models\Helpers\Query;
+use App\Models\Market\Shop;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -33,7 +34,7 @@ class GetQueryNumberItems
     /**
      * @throws \Exception
      */
-    public function asController(Query $query, ActionRequest $request): array
+    public function asController(Shop $shop, Query $query, ActionRequest $request): array
     {
         $count = $this->handle($query);
 

@@ -17,20 +17,12 @@ import { useLocaleStore } from "@/Stores/locale";
 import Popover from '@/Components/Utils/Popover.vue'
 import { get, startCase } from 'lodash'
 import Tag from "@/Components/Tag.vue"
+import { ref } from "vue"
+import { notify } from "@kyvg/vue3-notification"
+import axios from "axios"
 
 library.add(faPaperPlane, faEnvelope, faPhone, faHouse)
 const props = defineProps<{
-    // form: {
-    //     [key: string]: {
-    //         recipient_builder_type: string
-    //         recipient_builder_data: {
-    //             query: object
-    //         }
-    //     }
-    // }
-    // fieldName: string
-    // tabName: string  // 'query', 'custom', 'select'
-    // fieldData: any
     option: {
         data: {
             id: number
@@ -40,18 +32,45 @@ const props = defineProps<{
     }
 }>()
 
-const emits = defineEmits<{
-    (e: 'onUpdate'): void
-}>()
-const locale = useLocaleStore()
+const emits = defineEmits();
 
-const findIcon = (data) =>{
-    if(data == 'email') return 'fal fa-envelope'
-    if(data == 'phone') return 'fal fa-phone'
-    if(data == 'address') return 'fal fa-house'
+const value = ref({
+    quantity: get(props.option, ["constrains", "prospect_last_contacted", "data", "quantity"], 1),
+    unit: get(props.option, ["constrains", "prospect_last_contacted", "data", "unit"], 'week')
+})
+
+const findIcon = (data) => {
+    if (data == 'email') return 'fal fa-envelope'
+    if (data == 'phone') return 'fal fa-phone'
+    if (data == 'address') return 'fal fa-house'
 }
 
-const dataset = ['email','phone','address']
+
+const onChangeLastContact = async (closed) => {
+    try {
+        const response = await axios.get(
+            route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
+            {params: { ...value.value }}
+        );
+       onSuccessful(response.data)
+
+    } catch (error) {
+        notify({
+            title: "Failed",
+            text: "Failed to update data, please try again",
+            type: "error"
+        });
+    }
+}
+
+const onSuccessful=(response)=>{
+    const newData = {...props.option}
+    newData.constrains.prospect_last_contacted.data.quantity = value.value.quantity
+    newData.constrains.prospect_last_contacted.data.unit = value.value.unit
+    props.option.number_items = response.count
+    emits("update:option", newData); 
+}
+
 </script>
 
 <template>
@@ -66,17 +85,17 @@ const dataset = ['email','phone','address']
                         </div>
                     </template>
                     <template #content="{ close: closed }">
-                    <div class="flex gap-2">
-                        <div v-for="(item, index) in option.constrains.can_contact_by.fields" >
-                            <Tag :theme="index + 1" size="sm">
-                                <template #label>
-                                    <FontAwesomeIcon :icon="findIcon(item)" class='' aria-hidden='true' />
-                                    {{ startCase(item) }}
-                                </template>
+                        <div class="flex gap-2">
+                            <div v-for="(item, index) in option.constrains.can_contact_by.fields">
+                                <Tag :theme="index + 1" size="sm">
+                                    <template #label>
+                                        <FontAwesomeIcon :icon="findIcon(item)" class='' aria-hidden='true' />
+                                        {{ startCase(item) }}
+                                    </template>
 
-                            </Tag>
+                                </Tag>
+                            </div>
                         </div>
-                    </div>
 
                     </template>
                 </Popover>
@@ -98,19 +117,18 @@ const dataset = ['email','phone','address']
                         <div class="text-center text-base font-semibold">Interval</div>
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput v-model.number="option.constrains.prospect_last_contacted.data.quantity" type="number"
-                                    :minValue="1" :caret="false" placeholder="days" required />
+                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="false"
+                                    placeholder="days" required />
                             </div>
                             <div class="w-40">
-                                <PureMultiselect v-model="option.constrains.prospect_last_contacted.data.unit"
-                                    :options="['day', 'week', 'month']" required />
+                                <PureMultiselect v-model="value.unit" :options="['day', 'week', 'month']" required />
                             </div>
                         </div>
                         <div class="mt-2 text-gray-500 italic flex justify-between">
                             <p>Last contacted <span class="font-bold">
                                     {{ option.constrains.prospect_last_contacted?.data?.quantity }}
                                     {{ option.constrains.prospect_last_contacted.data.unit }}</span></p>
-                            <Button label="cancel" size="xxs" @click="closed()" style="secondary" />
+                            <Button label="OK" size="xxs" @click="onChangeLastContact(closed)"  />
                         </div>
                     </div>
                 </template>
