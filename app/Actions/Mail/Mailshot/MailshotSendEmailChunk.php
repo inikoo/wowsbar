@@ -23,7 +23,8 @@ class MailshotSendEmailChunk
 
 
         $layout        = $mailshot->layout;
-        $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        // $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        $emailHtmlBody = $layout['html']['html'];
 
         if(app()->environment('production')) {
             $sender=$mailshot->parent->sender_email_address;
