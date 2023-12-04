@@ -9,7 +9,13 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } 
 const props = defineProps<{
     modelValue: any
     mode?: string
-    options: any
+    options: {
+        value: string
+        name?: string
+        title?: string
+        description?: string
+        label?: string
+    }[]
     by?: string
 }>()
 
@@ -82,12 +88,17 @@ const emits = defineEmits<{
 
                 <!-- Radio: Default -->
                 <div v-else v-for="(option, index) in options"
-                    :key="option.label + index" class="inline-flex gap-x-2.5 items-center">
-                    <input :value="modelValue" @input="(event: any) => emits('update:modelValue', event.target.value)" :id="option.label + index" :key="option.label + index"
-                        name="radioDefault" type="radio" :checked="option.value == modelValue"
-                        class="h-4 w-4 border-gray-300 text-orange-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer"
+                    :key="option.value + index" class="inline-flex gap-x-2.5 items-center">
+                    <input
+                        :value="option.value"
+                        @input="(event: any) => emits('update:modelValue', event.target.value)"
+                        :id="option.value + index"
+                        :key="option.value + index"
+                        :checked="option.value == modelValue"
+                        name="radioDefault" type="radio"
+                        class="h-4 w-4 border-gray-300 text-gray-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer"
                     />
-                    <label :for="option.label + index" class="flex items-center gap-x-1.5 cursor-pointer">
+                    <label :for="option.value + index" class="flex items-center gap-x-1.5 cursor-pointer">
                         <p class="text-sm font-medium leading-6 text-gray-700 capitalize">
                             {{ option.value }}
                         </p>
