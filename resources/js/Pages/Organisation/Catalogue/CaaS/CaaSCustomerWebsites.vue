@@ -15,7 +15,7 @@ import { faFile as fasFile, faFileDownload } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableCustomerWebsites from "@/Components/Tables/TableCustomerWebsites.vue";
 

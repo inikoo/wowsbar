@@ -10,11 +10,10 @@ namespace App\Actions\CRM\Customer\Surveys\UI;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\SurveysTabsEnum;
+use App\Http\Resources\CRM\SurveysResource;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Tag\CrmTagResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -27,7 +26,6 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Tags\Tag;
 
 class IndexCustomerSurveys extends InertiaAction
 {
@@ -78,7 +76,7 @@ class IndexCustomerSurveys extends InertiaAction
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $query
-            ->allowedSorts(['label', 'number_prospects'])
+            ->allowedSorts(['name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -90,7 +88,7 @@ class IndexCustomerSurveys extends InertiaAction
             if ($prefix) {
                 $table
                     ->name($prefix)
-                    ->pageName($prefix.'Page');
+                    ->pageName($prefix . 'Page');
             }
 
             $table
@@ -98,14 +96,12 @@ class IndexCustomerSurveys extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('You dont have any surveys'),
+                        'title' => __('You dont have any surveys'),
                         'description' => null,
-                        'count'       => 0
+                        'count' => 0
                     ]
                 )
-                ->column(key: 'label', label: __('label'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'number_prospects', label: __('prospects'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'actions', label: __('actions'), canBeHidden: false);
+                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true);
         };
     }
 
@@ -115,37 +111,42 @@ class IndexCustomerSurveys extends InertiaAction
         $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
-            'CRM/Prospects/Tags',
+            'CRM/Customers/Surveys',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters(),
                 ),
-                'title'       => __('customer surveys'),
-                'pageHead'    => [
-                    'title'              => __('surveys'),
-                    'subNavigation'      => $subNavigation,
+                'title' => __('customer surveys'),
+                'pageHead' => [
+                    'title' => __('surveys'),
+                    'subNavigation' => $subNavigation,
+                    'actions' => [
+                        $this->canEdit ? [
+                            'type'    => 'button',
+                            'style'   => 'create',
+                            'tooltip' => __('new surveys'),
+                            'label'   => __('surveys'),
+                            'route'   => [
+                                'name'       => 'org.crm.shop.customers.surveys.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : []
+                    ],
                 ],
 
                 'tabs' => [
-                    'current'    => $this->tab,
+                    'current' => $this->tab,
                     'navigation' => SurveysTabsEnum::navigation(),
                 ],
 
-                    'create_mailshot' => [
-                        'route' => [
-                            'name'       => 'org.crm.shop.prospects.mailshots.create',
-                            'parameters' => array_values($this->originalParameters)
-                        ]
-                    ],
-
                 SurveysTabsEnum::SURVEYS->value => $this->tab == SurveysTabsEnum::SURVEYS->value ?
-                    fn () => CrmTagResource::collection($tags)
-                    : Inertia::lazy(fn () => CrmTagResource::collection($tags)),
+                    fn() => SurveysResource::collection($tags)
+                    : Inertia::lazy(fn() => SurveysResource::collection($tags)),
 
                 SurveysTabsEnum::HISTORY->value => $this->tab == SurveysTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: SurveysTabsEnum::HISTORY->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: SurveysTabsEnum::HISTORY->value))),
+                    fn() => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: SurveysTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run(model: Prospect::class, prefix: SurveysTabsEnum::HISTORY->value))),
 
 
             ]
@@ -164,14 +165,14 @@ class IndexCustomerSurveys extends InertiaAction
                 ),
                 [
                     [
-                        'type'   => 'simple',
+                        'type' => 'simple',
                         'simple' => [
                             'route' => [
-                                'name'       => 'org.crm.shop.customers.surveys.index',
+                                'name' => 'org.crm.shop.customers.surveys.index',
                                 'parameters' => $routeParameters
                             ],
                             'label' => __('surveys'),
-                            'icon'  => 'fal fa-bars',
+                            'icon' => 'fal fa-bars',
                         ],
                         'suffix' => $suffix
 

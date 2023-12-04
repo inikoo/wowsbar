@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Survey
@@ -15,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $data
  * @property string|null $deleted_at
  * @property string|null $delete_comment
+ * @property \App\Models\Market\Shop $shop
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Survey newModelQuery()
@@ -34,4 +39,28 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     use HasFactory;
+    use HasSlug;
+
+    protected $guarded = [];
+
+    protected $casts = [
+        'data' => 'array'
+    ];
+
+    protected $attributes = [
+        'data' => '{}'
+    ];
+
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->doNotGenerateSlugsOnUpdate()
+            ->saveSlugsTo('slug');
+    }
 }

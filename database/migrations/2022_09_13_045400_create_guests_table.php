@@ -26,7 +26,7 @@ return new class () extends Migration {
             $table = $this->contactFields(table: $table, withPersonalDetails: true);
             $table->jsonb('data');
             $table->timestampsTz();
-            $table=$this->softDeletes($table);
+            $this->softDeletes($table);
         });
         //DB::statement('CREATE INDEX ON guests USING gin (remove_accents(contact_name) gin_trgm_ops) ');
         DB::statement("CREATE INDEX ON employees (lower('alias')) ");

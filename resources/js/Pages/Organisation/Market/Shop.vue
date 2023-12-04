@@ -24,7 +24,7 @@ import { computed, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
 import TableDepartments from "@/Components/Tables/TableDepartments.vue";
 import TableProducts from "@/Components/Tables/TableProducts.vue";
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import ShopShowcase from "@/Components/Showcases/ShopShowcase.vue";
 

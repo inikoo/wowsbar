@@ -9,6 +9,8 @@ namespace App\Actions\CRM\Customer\Surveys;
 
 use App\Models\Market\Shop;
 use App\Models\Survey;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -48,6 +50,13 @@ class StoreSurvey
         $request->validate();
 
         return $this->handle($shop, $request->validated());
+    }
+
+    public function htmlResponse(Survey $survey): RedirectResponse
+    {
+        return Redirect::route('org.crm.shop.customers.surveys.index', [
+            $survey->shop->slug,
+        ]);
     }
 
     public function action(Shop $shop, $objectData): Survey

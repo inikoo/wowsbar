@@ -13,7 +13,7 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 library.add(faSign)

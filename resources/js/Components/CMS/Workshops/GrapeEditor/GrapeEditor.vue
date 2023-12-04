@@ -9,6 +9,7 @@ import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks
 import axios from "axios"
 import gradient from 'grapesjs-style-gradient';
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
+import RTE from '@/Components/CMS/Workshops/GrapeEditor/CustomLayout/Rte/Rte.ts'
 
 
 const emits = defineEmits(['onSaveToServer']);
@@ -83,7 +84,7 @@ const Load = async (data) => {
     }
 }
 
-const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins]
+const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins, RTE ] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins, RTE]
 
 
 onMounted(() => {

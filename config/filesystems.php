@@ -53,7 +53,6 @@ return [
             'root'   => storage_path('app/media'),
             'throw'  => false,
         ],
-
         'r2' => [
             'driver'   => 's3',
             'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
@@ -62,7 +61,6 @@ return [
             'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
             'bucket'   => env('CLOUDFLARE_R2_BUCKET_NAME'),
         ],
-
         'media-r2' => [
             'driver'   => 's3',
             'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
@@ -96,7 +94,6 @@ return [
     */
 
     'links' => [
-        //public_path('storage') => storage_path('app/public'),
         public_path('images') => resource_path('images/'),
 
     ],

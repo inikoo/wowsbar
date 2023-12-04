@@ -10,7 +10,7 @@ import { capitalize } from "@/Composables/capitalize"
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import ModelDetails from "@/Components/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableWebpages from "@/Components/Tables/TableWebpages.vue";
 
