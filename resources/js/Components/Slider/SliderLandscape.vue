@@ -22,6 +22,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 const props = defineProps<{
     production?: boolean
@@ -72,10 +73,13 @@ watch(componentEdited, (newVal) => {
                     delay: data.delay,
                     disableOnInteraction: false,
                 }"
-                :pagination="{
+                :pagination="data.navigation?.bulletNav ? {  // Render Navigation (bullet)
                     clickable: true,
-                }"
-                :navigation="false"
+                    renderBullet: (index, className) => {
+                        return `<span class='${className}'></span>`
+                    },
+                } : false"
+                :navigation="data.navigation?.arrowNav"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
@@ -126,6 +130,16 @@ watch(componentEdited, (newVal) => {
 .swiper-slide img {
     @apply w-full h-full;
     object-fit: cover;
+}
+
+// Banner: Pagination
+.swiper-pagination-bullet {
+    @apply h-3 w-3 bg-blue-700/20 opacity-100 text-slate-700 text-center
+}
+
+// Banner: Pagination active
+.swiper-pagination-bullet-active {
+    @apply bg-sky-500 text-white scale-110
 }
 
 </style>

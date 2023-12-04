@@ -20,6 +20,7 @@ import TextAlign from './Fields/TextAlign.vue'
 import SelectFont from './Fields/SelectFont.vue'
 import Toogle from '@/Components/Forms/Fields/Primitive/PrimitiveToggle.vue'
 import GradientColor from './Fields/GradientColor.vue'
+import BannerNavigation from '@/Components/Workshop/Fields/BannerNavigation.vue'
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
@@ -41,6 +42,7 @@ const getComponent = (componentName: string) => {
         'selectFont': SelectFont,
         'toogle':Toogle,
         'gradientColor' : GradientColor,
+        'bannerNavigation' : BannerNavigation,
     };
     return components[componentName]
 };
@@ -83,7 +85,7 @@ const setCurrent = (key) => {
 
         <!-- Content of forms -->
         <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
-            <div class="flex flex-col w-full ">
+            <div class="flex flex-col w-full gap-y-3">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index"
                     class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->

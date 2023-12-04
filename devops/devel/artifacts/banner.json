@@ -4,16 +4,20 @@
     "blueprint": {
         "delay": 5000,
         "common": {
-            "corners": {
-                "bottomLeft": {
-                    "type": "slideControls"
-                }
-            },
+            // "corners": {
+            //     "bottomLeft": {
+            //         "type": "slideControls"
+            //     }
+            // },
             "centralStage": {
                 "title": null,
                 "subtitle": null,
                 "text": null
             }
+        },
+        "navigation": {
+            "bulletNav": true,
+            "arrowNav": true
         },
         "images": [
             {

@@ -80,7 +80,7 @@ defineExpose({
 
         <!-- Content of forms -->
         <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full gap-y-1">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->
                     <dt v-if="fieldData.name != 'image_source' && fieldData.label" class="text-sm font-medium text-gray-500 capitalize">
