@@ -106,13 +106,13 @@ const compHandleBannerLessSlide = computed(() => {
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
-            :pagination="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet' ? {  // Render Navigation (bullet)
+            :pagination="!data.navigation || (data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet') ? {  // Render Navigation (bullet)
                 clickable: true,
                 renderBullet: (index, className) => {
                     return `<span class='${className}'></span>`
                 },
             } : false"
-            :navigation="data.navigation?.sideNav?.value"
+            :navigation="!data.navigation || data.navigation?.sideNav?.value"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id"
                 class="h-full overflow-hidden aspect-square">
