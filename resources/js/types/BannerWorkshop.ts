@@ -81,8 +81,14 @@ export interface CommonData {
 }
 
 export interface BannerNavigation {
-    bulletNav?: boolean
-    arrowNav?: boolean
+    sideNav?: {
+        value: boolean
+        type: string
+    }
+    bottomNav?: {
+        value: boolean
+        type: string
+    }
 }
 
 // Full Banner Data

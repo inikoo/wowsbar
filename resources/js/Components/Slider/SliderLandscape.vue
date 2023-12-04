@@ -23,6 +23,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import SlideControls from '@/Components/Slider/Corners/SlideControls.vue'
 
 const props = defineProps<{
     production?: boolean
@@ -73,13 +74,13 @@ watch(componentEdited, (newVal) => {
                     delay: data.delay,
                     disableOnInteraction: false,
                 }"
-                :pagination="data.navigation?.bulletNav ? {  // Render Navigation (bullet)
+                :pagination="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet' ? {  // Render Navigation (bullet)
                     clickable: true,
                     renderBullet: (index, className) => {
                         return `<span class='${className}'></span>`
                     },
                 } : false"
-                :navigation="data.navigation?.arrowNav"
+                :navigation="data.navigation?.sideNav?.value"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
@@ -105,6 +106,10 @@ watch(componentEdited, (newVal) => {
                     <CentralStage v-if="component?.layout?.centralStage?.title?.length > 0 || component?.layout?.centralStage?.subtitle?.length > 0" :data="component?.layout?.centralStage" />
                     <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 </SwiperSlide>
+                
+                <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'button'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
+                    <SlideControls :swiperRef="swiperRef" />
+                </div>
             </Swiper>
 
             <!-- Reserved Corner: Button Controls -->

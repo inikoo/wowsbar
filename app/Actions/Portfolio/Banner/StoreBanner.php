@@ -49,8 +49,14 @@ class StoreBanner
         $layout = [
             "delay"      => 5000,
             "navigation" => [
-                "bulletNav" => true,
-                "arrowNav" => true
+                "bottomNav" => [
+                    "value"     => true,
+                    "type"      => "bullet"
+                ],
+                "sideNav" => [
+                    "value"     => true,
+                    "type"      => "arrow"
+                ]
             ],
             "common"     => [
                 // "corners"      => [
