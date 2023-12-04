@@ -31,20 +31,6 @@ import {faSpinnerThird} from '@fad/'
 
 library.add(faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird);
 
-interface Action {
-    type: string,
-    style: string
-    label: string
-    icon: string
-    route: {
-        name: string
-        parameters: {
-            banner: string
-        }
-    }
-    method: string
-}
-
 const props = defineProps<{
     title: string
     pageHead: any
@@ -274,5 +260,4 @@ onBeforeUnmount(() => {
             />
         </div>
     </section>
-
 </template>

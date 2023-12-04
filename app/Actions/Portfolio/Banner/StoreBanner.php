@@ -48,12 +48,22 @@ class StoreBanner
 
         $layout = [
             "delay"      => 5000,
-            "common"     => [
-                "corners"      => [
-                    "bottomLeft" => [
-                        "type" => "slideControls"
-                    ]
+            "navigation" => [
+                "bottomNav" => [
+                    "value"     => true,
+                    "type"      => "bullet"
                 ],
+                "sideNav" => [
+                    "value"     => true,
+                    "type"      => "arrow"
+                ]
+            ],
+            "common"     => [
+                // "corners"      => [
+                //     "bottomLeft" => [
+                //         "type" => "slideControls"
+                //     ]
+                // ],
                 "centralStage" => [
                     "title"    => null,
                     "subtitle" => null,

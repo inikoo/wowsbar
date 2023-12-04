@@ -142,11 +142,11 @@ const optionType = [
             },
         ]
     },
-    {
-        label: 'Slide Controls',
-        value: "slideControls",
-        fields: [],
-    },
+    // {
+    //     label: 'Slide Controls',
+    //     value: "slideControls",
+    //     fields: [],
+    // },
     {
         label: 'Ribbon',
         value: "ribbon",

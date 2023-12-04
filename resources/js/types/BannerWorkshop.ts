@@ -80,10 +80,22 @@ export interface CommonData {
     user?: string
 }
 
+export interface BannerNavigation {
+    sideNav?: {
+        value: boolean
+        type: string
+    }
+    bottomNav?: {
+        value: boolean
+        type: string
+    }
+}
+
 // Full Banner Data
 export interface BannerWorkshop {
     common: CommonData
     components: SlideWorkshopData[]
     delay: number
     type: string
+    navigation?: BannerNavigation
 }

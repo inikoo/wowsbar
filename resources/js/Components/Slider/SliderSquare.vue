@@ -24,6 +24,8 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import SlideControls from '@/Components/Slider/Corners/SlideControls.vue'
 
 
 const props = defineProps<{
@@ -104,8 +106,14 @@ const compHandleBannerLessSlide = computed(() => {
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
-            :pagination="{ clickable: true, }"
-            :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
+            :pagination="!data.navigation || (data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet') ? {  // Render Navigation (bullet)
+                clickable: true,
+                renderBullet: (index, className) => {
+                    return `<span class='${className}'></span>`
+                },
+            } : false"
+            :navigation="!data.navigation || data.navigation?.sideNav?.value"
+            :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id"
                 class="h-full overflow-hidden aspect-square">
 
@@ -147,6 +155,10 @@ const compHandleBannerLessSlide = computed(() => {
                     v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0"
                     :data="data.common?.centralStage" />
             </SwiperSlide>
+            
+            <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'button'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
+                <SlideControls :swiperRef="swiperRef" />
+            </div>
         </Swiper>
 
         <!-- Reserved Corner: Button Controls -->
@@ -173,4 +185,15 @@ const compHandleBannerLessSlide = computed(() => {
     @apply w-full h-full;
     object-fit: cover;
 }
+
+// Banner: Pagination
+.swiper-pagination-bullet {
+    @apply h-3 w-3 bg-blue-700/20 opacity-100 text-slate-700 text-center
+}
+
+// Banner: Pagination active
+.swiper-pagination-bullet-active {
+    @apply bg-sky-500 text-white scale-110
+}
+
 </style>

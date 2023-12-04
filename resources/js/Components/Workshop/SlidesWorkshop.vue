@@ -13,7 +13,7 @@ import {
     faAlignJustify,
     faCog,
     faImage,
-    faLock,
+    faLock, faTools,
 } from '@fal/'
 // import {  } from '@far/'
 import { faEye, faEyeSlash } from '@fas/'
@@ -35,7 +35,7 @@ import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWo
 import { routeType } from '@/types/route'
 import { notify } from "@kyvg/vue3-notification"
 
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock, faClone)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock, faTools, faClone)
 
 
 const props = defineProps<{
@@ -153,9 +153,27 @@ const changeVisibility = (slide: any) => {
 };
 
 const CommonBlueprint = ref([
+    // {
+    //     title: "Duration",
+    //     icon: ["fal", "stopwatch"],
+    //     fields: [
+    //         {
+    //             name: "delay",
+    //             type: "range",
+    //             label: trans("Duration"),
+    //             value: null,
+    //             timeRange: {
+    //                 min: "2.5",
+    //                 max: "15",
+    //                 step: "0.5",
+    //                 range: ["2.5", "5", "7.5", "10", "12.5", "15"],
+    //             },
+    //         },
+    //     ],
+    // },
     {
-        title: "Duration",
-        icon: ["fal", "stopwatch"],
+        title: "Controls",
+        icon: "fal fa-tools",
         fields: [
             {
                 name: "delay",
@@ -169,6 +187,16 @@ const CommonBlueprint = ref([
                     range: ["2.5", "5", "7.5", "10", "12.5", "15"],
                 },
             },
+            {
+                name: "navigation",  // data name in object workshop
+                type: "bannerNavigation",  // type input
+                label: trans("Navigation"),
+                value: null,
+                options: [
+                    { label: 'Side Navigation (arrow)', name: 'sideNav' },
+                    { label: 'Bottom Navigation (bullet or button)', name: 'bottomNav' }
+                ]
+            },
         ],
     },
     {
@@ -180,7 +208,8 @@ const CommonBlueprint = ref([
                 type: "corners",
                 label: null,
                 value: null,
-                optionType: ["cornerText", "linkButton", "slideControls", "ribbon", 'clear'],
+                // optionType: ["cornerText", "linkButton", "slideControls", "ribbon", 'clear'],
+                optionType: ["cornerText", "linkButton", "ribbon", 'clear'],
             },
         ],
     },
