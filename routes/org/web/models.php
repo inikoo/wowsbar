@@ -20,6 +20,7 @@ use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Appointment\UpdateAppointment;
 use App\Actions\CRM\Customer\DeleteCustomer;
 use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\CRM\Customer\Surveys\StoreSurvey;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
@@ -140,6 +141,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
+        Route::post('surveys', [StoreSurvey::class, 'inShop'])->name('surveys.store');
 
         Route::patch('prospect-mailshots/settings', UpdateProspectsMailshotSetting::class)->name('prospect-mailshots.settings.update');
         Route::post('prospect-mailshots/settings/email/resend', SendIdentityEmailVerification::class)->name('prospect-mailshots.settings.email-verification.resend');
