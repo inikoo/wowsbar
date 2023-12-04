@@ -234,7 +234,10 @@ class IndexProspects extends InertiaAction
                         'name'       => 'org.models.shop.prospects.upload',
                         'parameters' => $this->parent->id
                     ],
-
+                    'history' => [
+                        'name'       => 'org.crm.prospects.uploads.history',
+                        'parameters' => []
+                    ],
                 ],
 
                 'tabs' => [
