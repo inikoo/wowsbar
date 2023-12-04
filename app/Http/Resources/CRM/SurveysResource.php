@@ -11,17 +11,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property int $id
- * @property string $tag_slug
- * @property string $question
- * @property integer $number_prospects
+ * @property string $slug
+ * @property string $name
  */
 class SurveysResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
-            'id'               => $this->id,
-            'label'            => $this->question,
+            'id'   => $this->id,
+            'name' => $this->name,
         ];
     }
 }

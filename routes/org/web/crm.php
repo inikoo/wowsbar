@@ -14,6 +14,7 @@ use App\Actions\CRM\Customer\Mailshots\UI\CreateCustomersMailshot;
 use App\Actions\CRM\Customer\Mailshots\UI\IndexCustomerMailshots;
 use App\Actions\CRM\Customer\Newsletters\UI\IndexCustomerNewsletters;
 use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
+use App\Actions\CRM\Customer\Surveys\UI\CreateCustomerSurvey;
 use App\Actions\CRM\Customer\Surveys\UI\IndexCustomerSurveys;
 use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
@@ -25,6 +26,8 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
+use App\Actions\Helpers\Uploads\DownloadUploads;
+use App\Actions\Helpers\Uploads\HistoryUploads;
 use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
@@ -65,6 +68,8 @@ Route::get('/dashboard', ['icon' => 'fa-envelope', 'label' => 'show crm dashboar
 Route::get('customers', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses(IndexCustomers::class)->name('customers.index');
 Route::get('customers/create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses(CreateCustomer::class)->name('customers.create');
 
+Route::get('{upload}/uploads/download', ['icon' => 'fa-envelope', 'label' => 'download uploads'])->uses(DownloadUploads::class)->name('uploads.download');
+
 Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses(ShowCustomer::class)->name('show');
     Route::get('edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inOrganisation'])->name('edit');
@@ -81,6 +86,8 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
 
     Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses(ShowProspect::class)->name('show');
     Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'crm dashboard'])->uses(RemoveProspect::class)->name('remove');
+
+    Route::get('/histories/uploads', ['icon' => 'fa-envelope', 'label' => 'history upload prospect'])->uses([HistoryUploads::class, 'inProspect'])->name('uploads.history');
 });
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
@@ -105,6 +112,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
         Route::prefix('surveys')->as('surveys.')->group(function () {
             Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer surveys'])->uses([IndexCustomerSurveys::class, 'inShop'])->name('index');
+            Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create customer surveys'])->uses([CreateCustomerSurvey::class, 'inShop'])->name('create');
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
