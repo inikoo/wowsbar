@@ -8,7 +8,6 @@
 namespace App\Http\Resources\Helpers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 /**
  *
@@ -36,7 +35,7 @@ class UploadsResource extends JsonResource
             'number_fails'   => $upload->number_fails,
             'path'           => $upload->path,
             'download_route' => [
-                'name' => 'org.crm.uploads.download',
+                'name'       => 'org.crm.uploads.download',
                 'parameters' => $upload->id,
             ],
         ];

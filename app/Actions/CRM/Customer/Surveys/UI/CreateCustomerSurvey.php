@@ -7,11 +7,7 @@
 
 namespace App\Actions\CRM\Customer\Surveys\UI;
 
-use App\Actions\Assets\Country\UI\GetAddressData;
-use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\InertiaAction;
-use App\Http\Resources\Helpers\AddressFormFieldsResource;
-use App\Models\Helpers\Address;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
@@ -44,7 +40,7 @@ class CreateCustomerSurvey extends InertiaAction
                             'route' => [
                                 'name'       => match ($request->route()->getName()) {
                                     'shops.show.customers.surveys.create' => 'org.shops.customers.surveys.index',
-                                    default                       => preg_replace('/create$/', 'index', $request->route()->getName())
+                                    default                               => preg_replace('/create$/', 'index', $request->route()->getName())
                                 },
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],

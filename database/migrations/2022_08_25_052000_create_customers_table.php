@@ -8,7 +8,6 @@
 use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
-use App\Stubs\Migrations\HasAssets;
 use App\Stubs\Migrations\HasContact;
 use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasContact;
-    use HasAssets;
     use HasSoftDeletes;
     public function up(): void
     {

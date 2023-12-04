@@ -69,8 +69,6 @@ class Login
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
 
-
-
         $language = $organisationUser->language;
         if ($language) {
             app()->setLocale($language);
