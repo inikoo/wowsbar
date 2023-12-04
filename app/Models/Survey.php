@@ -51,6 +51,11 @@ class Survey extends Model
         'data' => '{}'
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);

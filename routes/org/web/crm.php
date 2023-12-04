@@ -16,6 +16,7 @@ use App\Actions\CRM\Customer\Newsletters\UI\IndexCustomerNewsletters;
 use App\Actions\CRM\Customer\Queries\UI\IndexCustomerQueries;
 use App\Actions\CRM\Customer\Surveys\UI\CreateCustomerSurvey;
 use App\Actions\CRM\Customer\Surveys\UI\IndexCustomerSurveys;
+use App\Actions\CRM\Customer\Surveys\UI\ShowCustomerSurvey;
 use App\Actions\CRM\Customer\Tags\UI\IndexCustomerTags;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
@@ -112,6 +113,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
         Route::prefix('surveys')->as('surveys.')->group(function () {
             Route::get('/', ['icon' => 'fa-envelope', 'label' => 'customer surveys'])->uses([IndexCustomerSurveys::class, 'inShop'])->name('index');
+            Route::get('/{survey}', ['icon' => 'fa-envelope', 'label' => 'show customer surveys'])->uses([ShowCustomerSurvey::class, 'inShop'])->name('show');
             Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create customer surveys'])->uses([CreateCustomerSurvey::class, 'inShop'])->name('create');
         });
 

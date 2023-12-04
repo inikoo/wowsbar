@@ -38,10 +38,10 @@ function surveyRoute(survey: object) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-<!--        <template #cell(name)="{ item: survey }">-->
-<!--            <Link :href="surveyRoute(survey)">-->
-<!--                {{ survey["name"] }}-->
-<!--            </Link>-->
-<!--        </template>-->
+        <template #cell(name)="{ item: survey }">
+            <Link :href="surveyRoute(survey)">
+                {{ survey["name"] }}
+            </Link>
+        </template>
     </Table>
 </template>
