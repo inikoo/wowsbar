@@ -21,17 +21,16 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
-function tagRoute(tag: object) {
+function surveyRoute(survey: object) {
     switch (route().current()) {
-        case 'org.crm.shop.prospects.tags.index':
-        case 'org.crm.shop.customers.tags.index':
+        case 'org.crm.shop.customers.surveys.index':
             return route(
-                'org.crm.shop.prospects.tags.show',
-                [route().params.shop, tag.tag_slug]);
+                'org.crm.shop.customers.surveys.show',
+                [route().params.shop, survey.slug]);
         default:
             return route(
-                'org.crm.tags.show',
-                [tag.tag_slug]);
+                'org.crm.surveys.show',
+                [survey.slug]);
     }
 }
 
@@ -39,18 +38,10 @@ function tagRoute(tag: object) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(label)="{ item: tag }">
-            <Link :href="tagRoute(tag)">
-                {{ tag["label"] }}
-            </Link>
-        </template>
-
-        <template #cell(actions)="{ item : tag }">
-            <Link :href="route(create_mailshot.route.name,create_mailshot.route.parameters)" :data="{ tags : tag.id }">
-                <Button label="New Mailshot" :style="'secondary'" size="xs" />
-            </Link>
-        </template>
+<!--        <template #cell(name)="{ item: survey }">-->
+<!--            <Link :href="surveyRoute(survey)">-->
+<!--                {{ survey["name"] }}-->
+<!--            </Link>-->
+<!--        </template>-->
     </Table>
 </template>
-
-
