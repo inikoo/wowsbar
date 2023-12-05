@@ -43,6 +43,10 @@ const props = defineProps<{
         channel: string
         event: string
     }
+    uploadRoutes: {
+        upload: routeType
+        history: routeType
+    }
     dashboard?: object
     prospects?: object
     mailshots?: object
@@ -90,9 +94,10 @@ const component = computed(() => {
     <!-- Modal: after click 'upload' button -->
     <UploadExcel
         description="Adding prospect"
-        :routesModalUpload="{
+        :routes="{
             upload: props.pageHead.actions[0].buttons[0].route,
-            download: uploads.templates.routes
+            download: uploads.templates.routes,
+            history: props.uploadRoutes.history
         }"
         :dataModal="dataModal"
         :dataPusher="{

@@ -149,7 +149,7 @@ class IndexProspects extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no prospects'),
+                        'title'       => __('No Prospects'),
                         'description' => null,
                         'count'       => $parent->crmStats->number_prospects
                     ]
