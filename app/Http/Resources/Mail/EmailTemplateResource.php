@@ -25,7 +25,7 @@ class EmailTemplateResource extends JsonResource
         return [
             'slug'  => $emailTemplate->slug,
             'title' => $emailTemplate->title,
-            'scope' => $emailTemplate->scope
+            'compiled' => $emailTemplate->compiled
         ];
     }
 }

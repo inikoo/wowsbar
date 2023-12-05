@@ -30,11 +30,11 @@ function emailTemplateRoute(emailTemplate) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(title)="{ item: emailTemplate }">
-            <Link :href="emailTemplateRoute(emailTemplate)">
-                {{ emailTemplate['title'] }}
-            </Link>
-        </template>
+<!--        <template #cell(title)="{ item: emailTemplate }">-->
+<!--            <Link :href="emailTemplateRoute(emailTemplate)">-->
+<!--                {{ emailTemplate['title'] }}-->
+<!--            </Link>-->
+<!--        </template>-->
     </Table>
 </template>
 
