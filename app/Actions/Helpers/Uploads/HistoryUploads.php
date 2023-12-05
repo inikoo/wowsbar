@@ -34,6 +34,6 @@ class HistoryUploads
 
     public function inProspect(): array|Collection
     {
-        return $this->handle(Prospect::class);
+        return $this->handle(class_basename(Prospect::class));
     }
 }

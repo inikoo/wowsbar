@@ -21,7 +21,7 @@ class DownloadUploads
 
     public function handle(Upload $upload): BinaryFileResponse
     {
-        return response()->download($upload->path . '/' . $upload->filename, $upload->filename);
+        return response()->download(storage_path('app/'.$upload->path . '/' . $upload->filename));
     }
 
     public function asController(Upload $upload): BinaryFileResponse

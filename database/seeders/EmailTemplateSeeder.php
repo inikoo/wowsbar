@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Mail\EmailTemplate;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class EmailTemplateSeeder extends Seeder
 {
@@ -12,14 +13,24 @@ class EmailTemplateSeeder extends Seeder
      */
     public function run(): void
     {
-        // TODO: The layout goes here
+        $path = resource_path('views/mailshots/layouts/christmas');
+        $files = File::files($path);
 
-        EmailTemplate::create([
-            'title'       => 'Hello',
-            'parent_type' => 'Organisation',
-            'parent_id'   => 1,
-            'data'        => '{}',
-            'compiled'    => '{}',
-        ]);
+        foreach ($files as $file) {
+            $fileName = $file->getFilename();
+            $fileExt  = $file->getExtension();
+
+            if ($fileExt === 'json') {
+                $title = str_replace('.json', '', $fileName);
+
+                EmailTemplate::create([
+                    'title'       => $title,
+                    'parent_type' => 'Organisation',
+                    'parent_id'   => 1,
+                    'data'        => '{}',
+                    'compiled'    => json_decode(file_get_contents($path . '/' . $fileName), true)['html'],
+                ]);
+            }
+        }
     }
 }
