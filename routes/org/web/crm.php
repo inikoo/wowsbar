@@ -122,7 +122,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
             // TODO Need to create the customers actions
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateCustomersMailshot::class, 'inShop'])->name('create');
-            Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('show');
+            Route::get('{tag}', ['icon' => 'fa-envelope', 'label' => 'show customer tag'])->uses([ShowProspectTag::class, 'inShop'])->name('tags.show');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');
             Route::get('{mailshot}/workshop', ['icon' => 'fa-envelope', 'label' => 'workshop mailshot'])->uses(ShowProspectMailshotWorkshop::class)->name('workshop');
             Route::get('{mailshot}', ['icon' => 'fa-envelope', 'label' => 'show mailshot'])->uses(ShowProspectMailshot::class)->name('show');
