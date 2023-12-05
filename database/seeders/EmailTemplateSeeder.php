@@ -28,7 +28,7 @@ class EmailTemplateSeeder extends Seeder
                     'parent_type' => 'Organisation',
                     'parent_id'   => 1,
                     'data'        => '{}',
-                    'compiled'    => json_decode(file_get_contents($path . '/' . $fileName), true)['html'],
+                    'compiled'    => json_decode(file_get_contents($path . '/' . $fileName), true),
                 ]);
             }
         }

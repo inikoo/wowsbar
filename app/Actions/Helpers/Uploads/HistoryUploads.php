@@ -24,7 +24,7 @@ class HistoryUploads
 
     public function handle(string $class): array|Collection
     {
-        return Upload::whereType($class)->limit(4)->get();
+        return Upload::whereType($class)->orderBy('id', 'DESC')->limit(4)->get();
     }
 
     public function jsonResponse(Collection $collection): JsonResource
