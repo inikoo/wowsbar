@@ -74,8 +74,6 @@ class Media extends BaseMedia
 {
     use IsMedia;
 
-
-
     public function getRouteKeyName(): string
     {
         return 'slug';

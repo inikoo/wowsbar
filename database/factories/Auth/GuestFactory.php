@@ -13,10 +13,13 @@ class GuestFactory extends Factory
 {
     public function definition(): array
     {
+
+        $alias=fake()->lexify('????????');
+
         return [
-            'alias'        => 'hello',
+            'alias'        => $alias,
             'contact_name' => fake()->name,
-            'username'     => fake()->userName,
+            'username'     => $alias,
             'email'        => fake()->email,
             'password'     => 'password',
         ];
