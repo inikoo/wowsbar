@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, defineExpose, ref } from "vue";
 import { loadScript, getNextEditorId, useUnlayer } from "./script-loader";
 import axios from "axios"
 
@@ -9,12 +9,13 @@ const props = withDefaults(defineProps<{
     imagesUploadRoute?: Object
 }>(), {});
 
-
+const emits = defineEmits(['onSaveToServer']);
 const { isLoaded, isLoading } = useUnlayer();
 // get last editor id
 const editorId = getNextEditorId();
 // variable untuk menyimpan instance editor
 let editor = null;
+const editorRef = ref(null);
 
 
 // on mount load editor unlayer
@@ -28,9 +29,7 @@ const Store = async (update, data) => {
             ),
             { data: update, pagesHtml: { ...data } },
         )
-        /*  emits('onSaveToServer', response?.data?.isDirty) */
-
-
+         emits('onSaveToServer', response?.data?.isDirty)
     } catch (error) {
         console.log(error)
     }
@@ -51,6 +50,10 @@ const Load = async () => {
     } catch (error) {
         console.log(error)
     }
+}
+
+const setToNewTemplate=(template)=>{
+    editor.loadDesign(template)
 }
 
 
@@ -141,7 +144,6 @@ onMounted(async () => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
-            console.log(response.data)
             for (const image of response.data.data) {
                 done({ progress: 100, url: image.source.original })
             }
@@ -163,7 +165,16 @@ onMounted(async () => {
         preheaderText: "Hello World"
     });
 
+    editorRef.value = editor
+
 });
+
+
+defineExpose({
+    editor : editor, 
+    setToNewTemplate : setToNewTemplate
+})
+
 
 
 </script>

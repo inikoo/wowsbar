@@ -9,7 +9,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue'
+/* import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue' */
 import { ref } from "vue"
 import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck } from '@fal/'
 import { faFlask } from '@fad/'
@@ -228,10 +228,10 @@ const onSuccess = (response,closedPopover) => {
         </template>
     </PageHeading>
 
-    <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" />
+    <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
     <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
-        :loadRoute="loadRoute" />
+        :loadRoute="loadRoute" :mailshot="mailshot"/>
 </template>
 
 <style lang="scss">
