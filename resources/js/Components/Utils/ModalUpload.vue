@@ -5,22 +5,24 @@ import { trans } from 'laravel-vue-i18n'
 import Modal from '@/Components/Utils/Modal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFile as falFile } from '@fal/'
-import { faFileDownload } from '@fas/'
+import { faFileDownload, faDownload } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import axios from 'axios'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import { toRefs } from 'vue'
 import { routeType } from '@/types/route'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 
-library.add(falFile, faFileDownload)
+library.add(falFile, faFileDownload, faDownload)
 
 const props = defineProps<{
     modelValue: boolean
     routes: {
         upload: routeType
-        history?: routeType
         download?: routeType
+        history?: routeType
     }
+    recentlyUploaded: {}[]
     // isUploaded: boolean
 }>()
 
@@ -52,24 +54,19 @@ const onUploadFile = async (fileUploaded: any) => {
     isLoadingUpload.value = false
 }
 
-const compVModel = computed(() => {
-    // to Watch purpose
-    return props.modelValue
-})
-
 // Fetch data history when Modal is opened
-watch(compVModel, async () => {
-    isLoadingHistory.value = true
-    if (props.routes?.history?.name) {
-        // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch again
+watch(() => props.modelValue, async (newVal) => {
+    if (props.routes.history?.name) {
+        isLoadingHistory.value = true
+        if(newVal && !dataHistory.value.length) {  // to prevent fetch every modal appear
             try {
-                const data = await axios.get(route(props.routes.history?.name, props.routes.history?.parameters))
+                const data = await axios.get(route(props.routes.history.name, props.routes.history.parameters))
                 dataHistory.value = data.data.data
             } catch (error: any) {
                 dataHistory.value = []
                 console.error(error.message)
             }
-        // }
+        }
     } else {
         dataHistory.value = []
     }
@@ -80,6 +77,7 @@ watch(compVModel, async () => {
 
 <template>
     <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)">
+        <!-- <pre>{{  [...dataHistory, ...recentlyUploaded] }}</pre> -->
         <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">Upload your new website</div>
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
@@ -127,10 +125,17 @@ watch(compVModel, async () => {
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="dataHistory.length && routes?.history">
-                        <div v-for="(history, index) in dataHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
-                            <p class="text-lg text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
-                            <span class="text-gray-600 text-xs leading-none">{{ history.original_filename }}</span>
-                            <span class="text-gray-400 text-xxs">{{ useFormatTime(history.uploaded_at) }}</span>
+                        <div v-for="(history, index) in [...dataHistory, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
+                            <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
+                                <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
+                            </a>
+                            <p class="text-lg leading-none text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
+                            <div class="flex gap-x-2">
+                                <span class="text-lime-500 text-xxs">{{ history.number_success }} success,</span>
+                                <span class="text-red-500 text-xxs">{{ history.number_fails }} fails</span>
+                            </div>
+                            <!-- <span class="text-gray-600 text-xs leading-none truncate">{{ history.filename }}</span> -->
+                            <span class="text-gray-400 text-xxs mt-2">{{ useFormatTime(history.uploaded_at ?? history.created_at, { formatTime: 'hms'}) }}</span>
                         </div>
                     </template>
                     <div v-else class="text-gray-500 text-xs">

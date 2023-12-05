@@ -3,15 +3,13 @@ import Pusher from 'pusher-js'
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
 import { ref, computed } from 'vue'
+import { routeType } from '@/types/route'
 
 const props = defineProps<{
-    routesModalUpload: {
-        upload: {
-            name: string
-        }
-        download?: {
-            name: string
-        }
+    routes: {
+        upload: routeType
+        download?: routeType
+        history?: routeType
     }
     dataModal: {
         isModalOpen: boolean
@@ -50,7 +48,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 })
 const channel = pusher.subscribe(props.dataPusher.channel)
 channel.bind(props.dataPusher.event, (data: any) => {
-    console.log('xxx', data)
+    // console.log('xxx', data)
     dataPusher.value = data
 })
 
@@ -59,15 +57,27 @@ const compProgressBar = computed(() => {
     return dataPusher.value?.data.number_rows ? (dataPusher.value?.data.number_success+dataPusher.value?.data.number_fails)/dataPusher.value?.data.number_rows * 100 : 0
 })
 
+// To manipulation data
+const recentlyUploaded = ref<{}[]>([])
+
+// Reset data from Pusher binding
+const resetData = () => {
+    setTimeout(() => {
+        dataPusher.value.data = { number_rows: 0, number_success: 0, number_fails: 0 }  // Can lead to isShowProgress to false
+    }, 6000)
+}
 </script>
 
 <template>
     <!-- Modal: Upload -->
-    <ModalUpload
-        v-model="dataModal.isModalOpen"
-        :routes="routesModalUpload"
-        @isShowProgress="isShowProgress = true"
-    />
+    <KeepAlive>
+        <ModalUpload
+            v-model="dataModal.isModalOpen"
+            :routes="routes"
+            :recentlyUploaded="recentlyUploaded"
+            @isShowProgress="isShowProgress = true"
+        />
+    </KeepAlive>
 
     <ProgressBar
         :progressData="{
@@ -80,7 +90,7 @@ const compProgressBar = computed(() => {
         }"
         :description="description"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
-        @resetData="dataPusher.data = { number_rows: 0, number_success: 0, number_fails: 0 }"
+        @onFinish="(recentlyUploaded.push(dataPusher.data), resetData())"
     />
 
 </template>

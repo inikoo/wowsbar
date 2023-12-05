@@ -21,19 +21,22 @@ const props = defineProps<{
 
 const emits = defineEmits<{
     (e: 'updateShowProgress', newValue: boolean): void
-    (e: 'resetData'): void
+    (e: 'onFinish'): void
 }>()
 
 // Watch the progress, if 100% then close popup in 3 seconds
 watch(() => props.progressData.progressPercentage, () => {
     props.progressData.progressPercentage > 0
-        ? props.progressData.progressPercentage < 100
-            ? emits('updateShowProgress', true)  // If progress below 100%
-            : setTimeout(  // If progress 100% (finished)
-                () => {
-                    emits('updateShowProgress', false),
-                    setTimeout(() => emits('resetData'), 500)  // Reset data on finish
-                }, 4000)
+        ? (
+            emits('updateShowProgress', true),
+            props.progressData.progressPercentage == 100
+            ? ( setTimeout(  // If progress 100% (finished)
+                    () => { 
+                        emits('updateShowProgress', false)
+                    }, 4000),
+                emits('onFinish') )  // Reset data on finish
+            : ''
+        )
         : emits('updateShowProgress', false)  // If equal 0 (progress is not running yet)
 }, { immediate: true })
 
