@@ -52,7 +52,7 @@ const onChangeLastContact = async (closed) => {
             route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
             {params: { ...value.value }}
         );
-       onSuccessful(response.data)
+       onSuccessful(response.data,closed)
 
     } catch (error) {
         notify({
@@ -63,12 +63,13 @@ const onChangeLastContact = async (closed) => {
     }
 }
 
-const onSuccessful=(response)=>{
+const onSuccessful=(response,closed)=>{
     const newData = {...props.option}
     newData.constrains.prospect_last_contacted.data.quantity = value.value.quantity
     newData.constrains.prospect_last_contacted.data.unit = value.value.unit
     props.option.number_items = response.count
     emits("update:option", newData); 
+    closed()
 }
 
 </script>
