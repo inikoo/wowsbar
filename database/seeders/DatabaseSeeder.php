@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             TimezoneSeeder::class,
             LanguageSeeder::class,
             PaymentServiceProviderSeeder::class,
-            MailroomSeeder::class
+            MailroomSeeder::class,
+            EmailTemplateSeeder::class
         ]);
     }
 }

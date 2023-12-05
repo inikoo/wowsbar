@@ -39,8 +39,6 @@ class IndexEmailTemplates extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(EmailTemplate::class);
 
-        $queryBuilder->with('scope');
-
         return $queryBuilder
             ->defaultSort('title')
             ->allowedSorts(['title', 'id'])
@@ -135,7 +133,7 @@ class IndexEmailTemplates extends InertiaAction
                         ] : false
                     ]
                 ],
-                'data'        => GuestResource::collection($emailTemplates),
+                'data'        => EmailTemplateResource::collection($emailTemplates),
             ]
         )->table($this->tableStructure());
     }

@@ -7,7 +7,6 @@
 
 namespace App\Actions\CRM\Customer\Surveys\UI;
 
-use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
 use App\Enums\UI\Organisation\SurveysTabsEnum;
@@ -132,7 +131,7 @@ class ShowCustomerSurvey extends InertiaAction
 
     public function getPrevious(Survey $survey, ActionRequest $request): ?array
     {
-        $query = Survey::where('slug', '<', $survey->slug);
+        $query    = Survey::where('slug', '<', $survey->slug);
         $previous = $query->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request);
@@ -141,7 +140,7 @@ class ShowCustomerSurvey extends InertiaAction
     public function getNext(Survey $survey, ActionRequest $request): ?array
     {
         $query = Survey::where('slug', '>', $survey->slug);
-        $next = $query->orderBy('slug')->first();
+        $next  = $query->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request);
     }

@@ -1,0 +1,575 @@
+{
+    "image": "ChristmasMegaDiscount.jpg",
+    "name": "Christmas Mega Discount",
+    "html": {
+        "design": {
+            "body": {
+                "id": "m9uetlptjy",
+                "rows": [
+                    {
+                        "id": "bnjymysU1i",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "rmHTiNOqLO",
+                                "contents": [
+                                    {
+                                        "id": "uRuGXxxf4C",
+                                        "type": "divider",
+                                        "values": {
+                                            "width": "100%",
+                                            "border": {
+                                                "borderTopWidth": "0px",
+                                                "borderTopStyle": "solid",
+                                                "borderTopColor": "#BBB"
+                                            },
+                                            "textAlign": "center",
+                                            "containerPadding": "5px",
+                                            "anchor": "",
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_divider_6",
+                                                "htmlClassNames": "u_content_divider"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true,
+                                            "hideMobile": false
+                                        }
+                                    }
+                                ],
+                                "values": {
+                                    "_meta": {
+                                        "htmlID": "u_column_16",
+                                        "htmlClassNames": "u_column"
+                                    },
+                                    "border": {},
+                                    "padding": "0px",
+                                    "backgroundColor": ""
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "",
+                            "backgroundImage": {
+                                "url": "",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_13",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true,
+                            "hideMobile": false,
+                            "noStackMobile": false
+                        }
+                    },
+                    {
+                        "id": "KeWejwACeH",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "BIqIDQxG04",
+                                "contents": [
+                                    {
+                                        "id": "o9DwnFBLRy",
+                                        "type": "image",
+                                        "values": {
+                                            "containerPadding": "220px 5px 5px",
+                                            "anchor": "",
+                                            "src": {
+                                                "url": "https://cdn.templates.unlayer.com/assets/1669372502614-Asset%201.png",
+                                                "width": 348,
+                                                "height": 1393,
+                                                "autoWidth": false,
+                                                "maxWidth": ""
+                                            },
+                                            "textAlign": "center",
+                                            "altText": "",
+                                            "action": {
+                                                "name": "web",
+                                                "values": {
+                                                    "href": "",
+                                                    "target": ""
+                                                },
+                                                "attrs": {
+                                                    "href": "{{href}}",
+                                                    "target": "{{target}}"
+                                                }
+                                            },
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_image_1",
+                                                "htmlClassNames": "u_content_image"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true
+                                        }
+                                    }
+                                ],
+                                "values": {
+                                    "backgroundColor": "transparent",
+                                    "padding": "0px",
+                                    "border": {},
+                                    "borderRadius": "0px",
+                                    "_meta": {
+                                        "htmlID": "u_column_1",
+                                        "htmlClassNames": "u_column"
+                                    }
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "",
+                            "backgroundImage": {
+                                "url": "https://cdn.templates.unlayer.com/assets/1669378424775-gif2.gif",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "width": 600,
+                                "height": 600,
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_1",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true
+                        }
+                    },
+                    {
+                        "id": "4PuGhOYA41",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "egV0chgNLV",
+                                "contents": [
+                                    {
+                                        "id": "khaAqkhFrL",
+                                        "type": "image",
+                                        "values": {
+                                            "containerPadding": "",
+                                            "anchor": "",
+                                            "src": {
+                                                "url": "https://cdn.templates.unlayer.com/assets/1669377842474-Asset%203.png",
+                                                "width": 295.8,
+                                                "height": 1393,
+                                                "autoWidth": false,
+                                                "maxWidth": ""
+                                            },
+                                            "textAlign": "center",
+                                            "altText": "",
+                                            "action": {
+                                                "name": "web",
+                                                "values": {
+                                                    "href": "",
+                                                    "target": ""
+                                                },
+                                                "attrs": {
+                                                    "href": "{{href}}",
+                                                    "target": "{{target}}"
+                                                }
+                                            },
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_image_1",
+                                                "htmlClassNames": "u_content_image"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true
+                                        }
+                                    }
+                                ],
+                                "values": {
+                                    "backgroundColor": "#f3f3f3",
+                                    "padding": "0px",
+                                    "border": {},
+                                    "borderRadius": "0px",
+                                    "_meta": {
+                                        "htmlID": "u_column_1",
+                                        "htmlClassNames": "u_column"
+                                    }
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "",
+                            "backgroundImage": {
+                                "url": "",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_1",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true
+                        }
+                    },
+                    {
+                        "id": "EuLpZnr9I5",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "kmk8qux6b3",
+                                "contents": [
+                                    {
+                                        "id": "tchG1oyXqu",
+                                        "type": "text",
+                                        "values": {
+                                            "containerPadding": "30px",
+                                            "anchor": "",
+                                            "fontSize": "14px",
+                                            "color": "#000000",
+                                            "textAlign": "center",
+                                            "lineHeight": "140%",
+                                            "linkStyle": {
+                                                "inherit": true,
+                                                "linkColor": "#00e",
+                                                "linkHoverColor": "#00e",
+                                                "linkUnderline": true,
+                                                "linkHoverUnderline": true
+                                            },
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_text_2",
+                                                "htmlClassNames": "u_content_text"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true,
+                                            "hideMobile": false,
+                                            "text": "<p style=\"font-size: 14px; line-height: 140%;\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. </p>"
+                                        },
+                                        "hasDeprecatedFontControls": true
+                                    }
+                                ],
+                                "values": {
+                                    "_meta": {
+                                        "htmlID": "u_column_7",
+                                        "htmlClassNames": "u_column"
+                                    },
+                                    "border": {},
+                                    "padding": "0px",
+                                    "backgroundColor": "#f3f3f3"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "#fff",
+                            "backgroundImage": {
+                                "url": "",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_5",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true,
+                            "hideMobile": false,
+                            "noStackMobile": false
+                        }
+                    },
+                    {
+                        "id": "1jqdJI56kU",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "PXhrzccwQh",
+                                "contents": [
+                                    {
+                                        "id": "sJ11972jbI",
+                                        "type": "button",
+                                        "values": {
+                                            "containerPadding": "10px",
+                                            "anchor": "",
+                                            "href": {
+                                                "name": "web",
+                                                "values": {
+                                                    "href": "",
+                                                    "target": "_blank"
+                                                }
+                                            },
+                                            "buttonColors": {
+                                                "color": "#FFF",
+                                                "backgroundColor": "#d1534d",
+                                                "hoverColor": "#FFF",
+                                                "hoverBackgroundColor": "#3AAEE0"
+                                            },
+                                            "size": {
+                                                "autoWidth": false,
+                                                "width": "35%"
+                                            },
+                                            "fontSize": "14px",
+                                            "textAlign": "center",
+                                            "lineHeight": "120%",
+                                            "padding": "5px 60px",
+                                            "border": {},
+                                            "borderRadius": "4px",
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_button_5",
+                                                "htmlClassNames": "u_content_button"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true,
+                                            "text": "<span class=\"v-padding\" style=\"display:block;padding:10px 20px;line-height:120%;\"><strong><span style=\"font-size: 14px; line-height: 16.8px;\">Join Now</span></strong></span>",
+                                            "calculatedWidth": 121,
+                                            "calculatedHeight": 37
+                                        },
+                                        "hasDeprecatedFontControls": true
+                                    }
+                                ],
+                                "values": {
+                                    "_meta": {
+                                        "htmlID": "u_column_15",
+                                        "htmlClassNames": "u_column"
+                                    },
+                                    "border": {},
+                                    "padding": "0px",
+                                    "backgroundColor": "#f3f3f3"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "#fff",
+                            "backgroundImage": {
+                                "url": "",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_12",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true,
+                            "hideMobile": false,
+                            "noStackMobile": false
+                        }
+                    },
+                    {
+                        "id": "uUQzYGqj6i",
+                        "cells": [1],
+                        "columns": [
+                            {
+                                "id": "NTPyEIkMG0",
+                                "contents": [
+                                    {
+                                        "id": "5g85jdaoK8",
+                                        "type": "text",
+                                        "values": {
+                                            "containerPadding": "30px",
+                                            "anchor": "",
+                                            "fontSize": "14px",
+                                            "color": "#fff",
+                                            "textAlign": "center",
+                                            "lineHeight": "140%",
+                                            "linkStyle": {
+                                                "inherit": true,
+                                                "linkColor": "#00e",
+                                                "linkHoverColor": "#00e",
+                                                "linkUnderline": true,
+                                                "linkHoverUnderline": true
+                                            },
+                                            "hideDesktop": false,
+                                            "displayCondition": null,
+                                            "_meta": {
+                                                "htmlID": "u_content_text_2",
+                                                "htmlClassNames": "u_content_text"
+                                            },
+                                            "selectable": true,
+                                            "draggable": true,
+                                            "duplicatable": true,
+                                            "deletable": true,
+                                            "hideable": true,
+                                            "hideMobile": false,
+                                            "text": "<p style=\"font-size: 14px; line-height: 140%;\"> </p>\n<p style=\"line-height: 140%;\"> If you have any queries or need assistance, please email our customer success team at customer.success@unlayer.com or visit our FAQs. We also have real people who can help answer your account related questions during our operating hours. As a registered user of Unlayer.com, you have the option to unsubscribe from these emails here. 2261 Market Street #4667 San Francisco, CA 94114 All rights reserved.</p>\n<p style=\"font-size: 14px; line-height: 140%;\"> </p>"
+                                        },
+                                        "hasDeprecatedFontControls": true
+                                    }
+                                ],
+                                "values": {
+                                    "_meta": {
+                                        "htmlID": "u_column_7",
+                                        "htmlClassNames": "u_column"
+                                    },
+                                    "border": {},
+                                    "padding": "0px",
+                                    "backgroundColor": "#d1534d"
+                                }
+                            }
+                        ],
+                        "values": {
+                            "displayCondition": null,
+                            "columns": false,
+                            "backgroundColor": "",
+                            "columnsBackgroundColor": "#fff",
+                            "backgroundImage": {
+                                "url": "",
+                                "fullWidth": true,
+                                "repeat": "no-repeat",
+                                "size": "custom",
+                                "position": "top-center",
+                                "customPosition": ["50%", "0%"]
+                            },
+                            "padding": "0px",
+                            "anchor": "",
+                            "hideDesktop": false,
+                            "_meta": {
+                                "htmlID": "u_row_5",
+                                "htmlClassNames": "u_row"
+                            },
+                            "selectable": true,
+                            "draggable": true,
+                            "duplicatable": true,
+                            "deletable": true,
+                            "hideable": true,
+                            "hideMobile": false,
+                            "noStackMobile": false
+                        }
+                    }
+                ],
+                "headers": [],
+                "footers": [],
+                "values": {
+                    "popupPosition": "center",
+                    "popupWidth": "600px",
+                    "popupHeight": "auto",
+                    "borderRadius": "10px",
+                    "contentAlign": "center",
+                    "contentVerticalAlign": "center",
+                    "contentWidth": "600px",
+                    "fontFamily": {
+                        "label": "Montserrat",
+                        "value": "'Montserrat',sans-serif",
+                        "url": "https://fonts.googleapis.com/css?family=Montserrat:400,700",
+                        "defaultFont": true
+                    },
+                    "textColor": "#000",
+                    "popupBackgroundColor": "#FFFFFF",
+                    "popupBackgroundImage": {
+                        "url": "",
+                        "fullWidth": true,
+                        "repeat": "no-repeat",
+                        "size": "cover",
+                        "position": "center"
+                    },
+                    "popupOverlay_backgroundColor": "rgba(0, 0, 0, 0.1)",
+                    "popupCloseButton_position": "top-right",
+                    "popupCloseButton_backgroundColor": "#DDDDDD",
+                    "popupCloseButton_iconColor": "#000000",
+                    "popupCloseButton_borderRadius": "0px",
+                    "popupCloseButton_margin": "0px",
+                    "popupCloseButton_action": {
+                        "name": "close_popup",
+                        "attrs": {
+                            "onClick": "document.querySelector('.u-popup-container').style.display = 'none';"
+                        }
+                    },
+                    "backgroundColor": "#fff",
+                    "backgroundImage": {
+                        "url": "",
+                        "fullWidth": true,
+                        "repeat": "no-repeat",
+                        "size": "custom",
+                        "position": "top-center",
+                        "customPosition": ["50%", "0%"]
+                    },
+                    "preheaderText": "",
+                    "linkStyle": {
+                        "body": true,
+                        "linkColor": "#00e",
+                        "linkHoverColor": "#00e",
+                        "linkUnderline": true,
+                        "linkHoverUnderline": true
+                    },
+                    "_meta": { "htmlID": "u_body", "htmlClassNames": "u_body" }
+                }
+            },
+            "schemaVersion": 16
+        }
+    }
+}

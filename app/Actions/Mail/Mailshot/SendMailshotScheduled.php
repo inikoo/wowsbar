@@ -24,11 +24,15 @@ class SendMailshotScheduled
     {
         $mailshots = Mailshot::query()
             ->where('state', MailshotStateEnum::SCHEDULED)
-            ->where('schedule_at', now())
+            ->whereNotNull('ready_at')
             ->get();
 
+
         foreach ($mailshots as $mailshot) {
-            ProcessSendMailshot::dispatch($mailshot);
+            if($mailshot->ready_at->format('Y-m-d H:i') == now()->format('Y-m-d H:i')) {
+                echo "Sending " . $mailshot->subject . " mailshots\n";
+                ProcessSendMailshot::dispatch($mailshot);
+            }
         }
     }
 
