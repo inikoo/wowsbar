@@ -13,13 +13,8 @@ import { ref } from "vue"
 import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faCheckCircle, faStopwatch, faSpellCheck } from '@fal'
 import { faCaretDown, faPaperPlane } from '@fas'
 import MailshotWorkshopComponent from "@/Components/Workshop/MailshotWorkshopComponent.vue";
-import axios from 'axios'
-import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
-import Popover from '@/Components/Utils/Popover.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import Modal from '@/Components/Utils/Modal.vue';
-import { DatePicker  } from 'v-calendar';
 import 'v-calendar/style.css';
 import { Link } from "@inertiajs/vue3"
 import { routeType } from '@/types/route'
@@ -39,6 +34,7 @@ const props = defineProps<{
     updateRoute: routeType
     publishRoute: routeType
     loadRoute: routeType
+    mailshot : Object
 
 }>()
 
