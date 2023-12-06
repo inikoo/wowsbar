@@ -85,7 +85,7 @@ onMounted(() => {
     <div v-if="templates.length > 0" class="grid grid-cols-3 gap-4">
         <div v-for="template in templates" :key="template.slug" class="relative w-96 h-96">
             <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-                <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/Christmas/${template.compiled.image}`"
+                <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/${template.compiled.image}`"
                     :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
             <div
