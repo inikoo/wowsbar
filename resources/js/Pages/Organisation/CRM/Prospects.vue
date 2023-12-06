@@ -93,6 +93,7 @@ const component = computed(() => {
 
     <!-- Modal: after click 'upload' button -->
     <UploadExcel
+        :propName="'prospects'"
         description="Adding prospect"
         :routes="{
             upload: props.pageHead.actions[0].buttons[0].route,

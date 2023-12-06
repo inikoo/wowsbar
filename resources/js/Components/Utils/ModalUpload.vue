@@ -124,7 +124,7 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="dataHistory.length && routes?.history">
+                    <template v-if="[...dataHistory, ...recentlyUploaded].length">
                         <div v-for="(history, index) in [...dataHistory, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
                             <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
                                 <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
