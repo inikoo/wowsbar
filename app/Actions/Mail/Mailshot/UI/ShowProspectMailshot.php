@@ -258,7 +258,8 @@ class ShowProspectMailshot extends InertiaAction
         return [
             'sender'    => $mailshot->sender(),
             'subject'   => $mailshot->subject,
-            'emailBody' => Mjml::new()->minify()->toHtml($layout['html'][0]['html'])
+            /* 'emailBody' => Mjml::new()->minify()->toHtml($layout['html'][0]['html']) */
+            'emailBody' => $layout['html']['html'],
         ];
     }
 
