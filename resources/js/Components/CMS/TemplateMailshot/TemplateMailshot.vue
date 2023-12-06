@@ -10,6 +10,12 @@ import axios from 'axios';
 import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import { trans } from 'laravel-vue-i18n'
+import Tag from '@/Components/Tag.vue';
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faThLarge, faTreeChristmas, faGlassCheers, faBat } from '@fas/'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faThLarge, faTreeChristmas ,faGlassCheers,  faBat)
 
 const props = defineProps<{
     title: string,
@@ -44,9 +50,16 @@ const getTemplates = async () => {
     }
 }
 
-const selectTemplate=(template)=>{
-    emits("changeTemplate", template); 
+const selectTemplate = (template) => {
+    emits("changeTemplate", template);
 }
+
+const categories = [
+    { label: 'All Template', value: null , icon : 'fas fa-th-large'},
+    { label: 'Christmas', value: 'christmas' ,icon : 'fas fa-tree-christmas'},
+    { label: 'New Year', value: 'newyear' ,icon : 'fas fa-glass-cheers'},
+    { label: 'Haloween', value: 'haloween' , icon : 'fas fa-bat'},
+]
 
 onMounted(() => {
     getTemplates()
@@ -56,22 +69,37 @@ onMounted(() => {
   
   
 <template layout="OrgApp">
+    <div class="text-center text-2xl font-bold mb-4">Available Templates</div>
+
+    <div class="flex flex-wrap justify-center items-center gap-4 m-4">
+        <div v-for="category in categories" :key="category.value">
+            <Tag :label="category.label">
+                <template #label>
+                    <FontAwesomeIcon :icon="category.icon" class='' aria-hidden='true' />
+                    {{ category.label }}
+                </template>
+            </Tag>
+        </div>
+    </div>
+
+
     <div class="grid grid-cols-3 gap-4">
-        <div v-for="template in templates" :key="template.slug" class="relative">
-            <div class="relative pb-[100%]">
-                <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/Christmas/${template.compiled.image}`" 
+        <div v-for="template in templates" :key="template.slug" class="relative w-96 h-96">
+            <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
+                <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/Christmas/${template.compiled.image}`"
                     :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
-                <!-- <div class="text-white text-center">{{ template.title }}</div> -->
+            <div
+                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
                 <div class="text-white text-center">
-                <Button :label="trans('Use Template')" @click="selectTemplate(template)"/>
+                    <Button :label="trans('Use Template')" @click="selectTemplate(template)" />
                 </div>
             </div>
-            <span class="flex justify-center p-2 text-bold">{{ template.compiled.name }}</span>
+            <span class="flex justify-center p-2 font-bold">{{ template.compiled.name }}</span>
         </div>
     </div>
 </template>
+
 
 
 
