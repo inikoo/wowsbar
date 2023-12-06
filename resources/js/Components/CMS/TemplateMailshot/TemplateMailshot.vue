@@ -11,11 +11,12 @@ import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import { trans } from 'laravel-vue-i18n'
 import Tag from '@/Components/Tag.vue';
+import EmptyState from '@/Components/Utils/EmptyState.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faThLarge, faTreeChristmas, faGlassCheers, faBat } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faThLarge, faTreeChristmas ,faGlassCheers,  faBat)
+library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat)
 
 const props = defineProps<{
     title: string,
@@ -39,7 +40,7 @@ const getTemplates = async () => {
         const response = await axios.get(
             route('org.json.email.templates')
         )
-        templates.value = response.data
+        templates.value = Object.values(response.data)
     } catch (error) {
         console.log(error)
         notify({
@@ -55,10 +56,10 @@ const selectTemplate = (template) => {
 }
 
 const categories = [
-    { label: 'All Template', value: null , icon : 'fas fa-th-large'},
-    { label: 'Christmas', value: 'christmas' ,icon : 'fas fa-tree-christmas'},
-    { label: 'New Year', value: 'newyear' ,icon : 'fas fa-glass-cheers'},
-    { label: 'Haloween', value: 'haloween' , icon : 'fas fa-bat'},
+    { label: trans('All Template'), value: null, icon: 'fas fa-th-large' },
+    { label: trans('Christmas'), value: 'christmas', icon: 'fas fa-tree-christmas' },
+    { label: trans('New Year'), value: 'newyear', icon: 'fas fa-glass-cheers' },
+    { label: trans('Haloween'), value: 'haloween', icon: 'fas fa-bat' },
 ]
 
 onMounted(() => {
@@ -70,7 +71,6 @@ onMounted(() => {
   
 <template layout="OrgApp">
     <div class="text-center text-2xl font-bold mb-4">Available Templates</div>
-
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
         <div v-for="category in categories" :key="category.value">
             <Tag :label="category.label">
@@ -82,8 +82,7 @@ onMounted(() => {
         </div>
     </div>
 
-
-    <div class="grid grid-cols-3 gap-4">
+    <div v-if="templates.length > 0" class="grid grid-cols-3 gap-4">
         <div v-for="template in templates" :key="template.slug" class="relative w-96 h-96">
             <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
                 <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/Christmas/${template.compiled.image}`"
@@ -97,6 +96,12 @@ onMounted(() => {
             </div>
             <span class="flex justify-center p-2 font-bold">{{ template.compiled.name }}</span>
         </div>
+    </div>
+    <div v-else class="p-4">
+        <EmptyState :data="{
+            title: trans('You haven\'t uploaded any templates.'),
+            description: trans(''),
+        }" />
     </div>
 </template>
 
