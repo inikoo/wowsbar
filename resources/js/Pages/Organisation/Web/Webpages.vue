@@ -11,7 +11,7 @@ import TableWebpages from "@/Components/Tables/TableWebpages.vue";
 import { capitalize } from "@/Composables/capitalize"
 import {
 faShapes,faSortAmountDownAlt
-} from '@fal/'
+} from '@fal'
 import {library} from "@fortawesome/fontawesome-svg-core";
 library.add(
     faShapes,faSortAmountDownAlt

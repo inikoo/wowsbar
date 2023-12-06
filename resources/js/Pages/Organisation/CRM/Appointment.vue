@@ -16,7 +16,7 @@ import {
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
     faTags,faCube,faCodeBranch
-} from '@fal/';
+} from '@fal';
 import ModelDetails from "@/Components/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";

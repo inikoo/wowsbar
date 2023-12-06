@@ -9,12 +9,12 @@ import { Head } from '@inertiajs/vue3';
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { computed, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
-import { faRoad, faTerminal, faUserCircle,faSpellCheck } from '@fal/'
+import { faRoad, faTerminal, faUserCircle,faSpellCheck } from '@fal'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
-import {faStop, faPlay} from '@fas/'
+import {faStop, faPlay} from '@fas'
 import Edit from "@/Components/Edit.vue";
 import { SenderEmail } from '@/types/SenderEmail'
 

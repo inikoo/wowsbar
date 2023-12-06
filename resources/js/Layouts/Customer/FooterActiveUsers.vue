@@ -9,7 +9,7 @@ import { trans } from 'laravel-vue-i18n'
 import { ref, computed } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
-// import { faBriefcase} from '@fal/';
+// import { faBriefcase} from '@fal';
 // import { library } from "@fortawesome/fontawesome-svg-core";
 // import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { getDataFirebase } from '@/Composables/firebase'

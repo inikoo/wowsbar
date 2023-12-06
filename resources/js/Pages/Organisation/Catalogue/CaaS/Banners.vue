@@ -12,7 +12,7 @@ import { ref,computed } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe,faImage } from '@fal/'
+import { faGlobe,faImage } from '@fal'
 import TableBanners from "@/Components/Tables/TableCaaSBanners.vue"
 import TableHistories from "@/Components/Tables/TableHistories.vue"
 

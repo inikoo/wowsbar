@@ -13,8 +13,8 @@ import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEyeSlash } from '@fas/'
-import { faExternalLink, faExclamationTriangle } from '@far/'
+import { faEyeSlash } from '@fas'
+import { faExternalLink, faExclamationTriangle } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
 

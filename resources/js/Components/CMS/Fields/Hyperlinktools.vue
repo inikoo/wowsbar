@@ -8,7 +8,7 @@ import {
     faCircle as fasCircle,
     faMap as fasMap,
     faUser as fasUser,
-} from '@fas/';
+} from '@fas';
 import {
     faEnvelope as falEnvelope,
     faPhone as falPhone,
@@ -16,7 +16,7 @@ import {
     faCircle as falCircle,
     faMap as falMap,
     faUser as falUser,
-} from '@fal/';
+} from '@fal';
 import {
     faEnvelope as farEnvelope,
     faPhone as farPhone,
@@ -24,7 +24,7 @@ import {
     faCircle as farCircle,
     faMap as farMap,
     faUser as farUser,
-} from '@far/';
+} from '@far';
 import {
     faEnvelope as fadEnvelope,
     faPhone as fadPhone,
@@ -32,7 +32,7 @@ import {
     faCircle as fadCircle,
     faMap as fadMap,
     faUser as fadUser,
-} from '@fad/';
+} from '@fad';
 import {
     faTiktok,
     faFacebook,

@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTrashAlt } from '@fas/'
+import { faTrashAlt } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTrashAlt)
 </script>

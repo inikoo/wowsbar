@@ -2,7 +2,7 @@
 import { ref } from "vue"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas/'
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import Popover from "@/Components/Utils/Popover.vue"
 import { Link } from "@inertiajs/vue3"

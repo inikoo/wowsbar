@@ -19,8 +19,8 @@ import Password from '@/Components/Forms/Fields/Password.vue'
 import { notify } from '@kyvg/vue3-notification'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft } from '@fal/'
-import { faSpinnerThird } from '@fad/'
+import { faArrowLeft } from '@fal'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowLeft, faSpinnerThird)
 

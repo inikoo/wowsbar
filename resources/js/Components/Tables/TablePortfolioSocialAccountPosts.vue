@@ -16,7 +16,7 @@ import {
     faTiktok,
     faTwitter, faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import {faMicrophoneStand} from '@fal/'
+import {faMicrophoneStand} from '@fal'
 import {useFormatTime} from "@/Composables/useFormatTime";
 import {Link} from "@inertiajs/vue3";
 

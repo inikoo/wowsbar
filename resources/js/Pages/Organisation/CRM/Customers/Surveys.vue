@@ -9,7 +9,7 @@ import { Head } from '@inertiajs/vue3';
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { computed, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
-import { faTags, faCodeBranch} from '@fal/'
+import { faTags, faCodeBranch} from '@fal'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";

@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faRectangleWide} from '@fal/'
+import {faRectangleWide} from '@fal'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TableUploadedImages from "@/Components/Tables/TableUploadedImages.vue";
 library.add(faRectangleWide)

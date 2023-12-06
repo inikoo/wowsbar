@@ -15,7 +15,7 @@ import TableCustomerHistories from '@/Components/Tables/TableCustomerHistories.v
 import PortfolioDashboard from "@/Components/Dashboard/PortfolioDashboard.vue";
 import {
     faTransporter2
-} from '@fal/'
+} from '@fal'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TablePayments from "@/Components/Tables/TablePayments.vue";
 

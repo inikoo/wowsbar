@@ -8,7 +8,7 @@ import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import { notify } from "@kyvg/vue3-notification"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowRight } from '@far/'
+import { faArrowRight } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowRight)
 

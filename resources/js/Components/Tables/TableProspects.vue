@@ -18,7 +18,7 @@ import CopyButton from '@/Components/Utils/CopyButton.vue'
 import Tag from '@/Components/Tag.vue'
 import Icon from "@/Components/Icon.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice} from '@fal/'
+import {faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice} from '@fal'
 
 library.add(faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice)
 

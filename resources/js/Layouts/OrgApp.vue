@@ -32,8 +32,8 @@ import {
     faChevronDown,
     faGlobe,
     faLanguage, faUsers, faNetworkWired, faCalendar, faStopwatch, faBuilding, faHandshake
-} from '@fal/'
-import { faSearch, faBell } from "@far/"
+} from '@fal'
+import { faSearch, faBell } from "@far"
 
 
 library.add(

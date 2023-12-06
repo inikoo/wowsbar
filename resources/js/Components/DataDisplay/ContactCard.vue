@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe } from '@fal/'
+import { faUser, faCalendarAlt, faEnvelope, faPhone, faGlobe } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
 import { useFormatTime } from '@/Composables/useFormatTime';

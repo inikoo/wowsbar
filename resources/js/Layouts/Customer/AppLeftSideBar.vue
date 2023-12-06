@@ -15,11 +15,11 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faBrowser, faSign, faUserCog, faTachometerAlt,
     faTransporter, faAd, faThumbsUp, faEnvelope, faCreditCard
-} from '@fal/'
+} from '@fal'
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
-import {faChevronLeft} from '@far/'
-import {faCircle} from '@fas/'
+import {faChevronLeft} from '@far'
+import {faCircle} from '@fas'
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 

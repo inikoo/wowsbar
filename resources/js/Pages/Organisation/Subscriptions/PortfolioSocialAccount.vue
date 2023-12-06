@@ -15,7 +15,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 
-import {faRectangleWide, faGlobe, faMoneyBill, faLayerGroup} from '@fal/'
+import {faRectangleWide, faGlobe, faMoneyBill, faLayerGroup} from '@fal'
 import {
     faFacebook,
     faInstagram,
@@ -24,7 +24,7 @@ import {
     faTiktok,
     faTwitter, faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import { faMicrophoneStand } from '@fal/'
+import { faMicrophoneStand } from '@fal'
 import TablePortfolioSocialAccountPosts from "@/Components/Tables/TablePortfolioSocialAccountPosts.vue";
 import TablePortfolioSocialAccountAds from "@/Components/Tables/TablePortfolioSocialAccountAds.vue";
 

@@ -5,7 +5,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faPhotoVideo } from '@fal/'
+import { faImage, faPhotoVideo } from '@fal'
 library.add(faImage, faPhotoVideo)
 
 const props = defineProps<{

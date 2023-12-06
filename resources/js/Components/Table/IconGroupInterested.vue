@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheckCircle, faTimesCircle } from '@fal/'
-import { faCircle } from '@far/'
+import { faCheckCircle, faTimesCircle } from '@fal'
+import { faCircle } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheckCircle as fasCheckCircle } from '@fas/'
+import { faCheckCircle as fasCheckCircle } from '@fas'
 library.add(faCheckCircle, faTimesCircle, faCircle, fasCheckCircle)
 
 const props = defineProps<{

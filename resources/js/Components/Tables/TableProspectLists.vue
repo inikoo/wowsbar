@@ -11,7 +11,7 @@ import { useLocaleStore } from "@/Stores/locale"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEnvelope, faAsterisk } from '@fal/'
+import { faEnvelope, faAsterisk } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import PureInput from '@/Components/Pure/PureInput.vue'

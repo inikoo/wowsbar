@@ -8,9 +8,9 @@ import PureMultiselect from '@//Components/Pure/PureMultiselect.vue'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faGlobe } from '@fal/'
-import { faCheckCircle } from '@fas/'
-import { faSpinnerThird } from '@fad/'
+import { faGlobe } from '@fal'
+import { faCheckCircle } from '@fas'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add(faCheckCircle, faSpinnerThird, faGlobe)

@@ -17,7 +17,7 @@ import {
     faRocketLaunch,
     faClock,
     faVideo,
-} from '@far/';
+} from '@far';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faRocketLaunch, faClock, faVideo);

@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
     
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUpload } from '@fas/'
+import { faUpload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUpload)
 

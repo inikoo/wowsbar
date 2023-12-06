@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import { faSave as fadSave } from '@fad/'
+import { faSave as fadSave } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faDownload } from '@fal/'
-import { faArrowLeft } from '@far/'
-import { faPlus, faSave, faUpload } from '@fas/'
+import { faDownload } from '@fal'
+import { faArrowLeft } from '@far'
+import { faPlus, faSave, faUpload } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { useLayoutStore } from '@/Stores/layout'
 

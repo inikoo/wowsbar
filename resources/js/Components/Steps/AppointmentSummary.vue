@@ -7,8 +7,8 @@ import CopyButton from '@/Components/Utils/CopyButton.vue'
 import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faClock, faCalendarAlt, faMapMarkerAlt, faLink, faUser } from '@fal/'
-import { faArrowAltRight, faPaperPlane } from '@fas/'
+import { faClock, faCalendarAlt, faMapMarkerAlt, faLink, faUser } from '@fal'
+import { faArrowAltRight, faPaperPlane } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faClock, faCalendarAlt, faMapMarkerAlt, faLink, faUser, faArrowAltRight, faPaperPlane)
 

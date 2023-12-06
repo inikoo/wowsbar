@@ -5,7 +5,7 @@ import HyperLink from '@/Components/CMS/Fields/Hyperlink.vue'
 import SubMenu from "../SubMenu.vue"
 import { get } from 'lodash'
 import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";
-import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas/';
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas';
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(faUser, faHeart, faShoppingCart, faSignOut)

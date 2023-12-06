@@ -24,7 +24,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {
     faAnalytics, faBrowser,
     faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock
-} from '@fal/';
+} from '@fal';
 
 library.add(
     faChartLine,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faBold, faUnderline, faStrikethrough, faItalic } from '@fas/';
+import { faBold, faUnderline, faStrikethrough, faItalic } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { get, set, unset } from 'lodash'
 library.add(faBold, faUnderline, faStrikethrough, faItalic)

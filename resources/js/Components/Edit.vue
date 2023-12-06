@@ -35,7 +35,7 @@ import {
     faLanguage,
     faAddressBook,
     faTrashAlt
-} from '@fal/'
+} from '@fal'
 
 library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
     faWindowClose)

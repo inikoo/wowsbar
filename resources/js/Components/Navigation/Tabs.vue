@@ -11,7 +11,7 @@ import { trans } from 'laravel-vue-i18n'
 import { useLayoutStore } from '@/Stores/layout'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faInfoCircle, faTachometerAlt } from '@fas/'
+import { faInfoCircle, faTachometerAlt } from '@fas'
 import {
     faAd,
     faBullseye,
@@ -21,7 +21,7 @@ import {
     faRoad,
     faTransporter, faShoppingCart,
     faWallet, faSign, faUserCircle, faText
-} from '@fal/'
+} from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { trans } from 'laravel-vue-i18n'
-import { faYinYang } from '@fal/';
+import { faYinYang } from '@fal';
 import { capitalize } from "@/Composables/capitalize"
 
 library.add(faYinYang);

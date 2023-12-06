@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { Head } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheckCircle } from '@fas/'
+import { faCheckCircle } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheckCircle)
 

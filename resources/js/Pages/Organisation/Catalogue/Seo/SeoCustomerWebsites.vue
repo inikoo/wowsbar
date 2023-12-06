@@ -9,8 +9,8 @@ import { ref, computed } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
-import { faUpload, faFile as falFile, faTimes } from '@fal/'
-import { faFile as fasFile, faFileDownload } from '@fas/'
+import { faUpload, faFile as falFile, faTimes } from '@fal'
+import { faFile as fasFile, faFileDownload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";

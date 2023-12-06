@@ -8,8 +8,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faExclamationCircle, faCheckCircle, faEye, faEyeSlash } from '@fas/'
-import { faSpinnerThird } from '@fad/'
+import { faExclamationCircle, faCheckCircle, faEye, faEyeSlash } from '@fas'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 library.add(faExclamationCircle, faCheckCircle, faEye, faEyeSlash, faSpinnerThird)

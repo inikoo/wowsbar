@@ -41,9 +41,9 @@ import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQuer
 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSave as fadSave, } from '@fad/'
-import { faSave as falSave, faInfoCircle } from '@fal/'
-import { faAsterisk, faQuestion } from '@fas/'
+import { faSave as fadSave, } from '@fad'
+import { faSave as falSave, faInfoCircle } from '@fal'
+import { faAsterisk, faQuestion } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(fadSave, faQuestion, falSave, faInfoCircle, faAsterisk)
 

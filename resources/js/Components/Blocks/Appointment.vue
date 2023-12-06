@@ -9,7 +9,7 @@ import Steps from '@/Components/Utils/Steps.vue'
 import AppointmentSummary from '@/Components/Steps/AppointmentSummary.vue'
 import SelectAppointmentDate from '@/Components/Steps/SelectAppointmentDate.vue'
 
-import { faArrowAltRight } from '@fas/'
+import { faArrowAltRight } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowAltRight)
 

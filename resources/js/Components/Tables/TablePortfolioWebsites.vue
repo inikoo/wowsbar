@@ -11,7 +11,7 @@ import Table from '@/Components/Table/Table.vue'
 import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import {Website} from "@/types/website"
-import {faCheckCircle as fasCheckCircle} from '@fas/'
+import {faCheckCircle as fasCheckCircle} from '@fas'
 import {library} from '@fortawesome/fontawesome-svg-core'
 
 library.add(fasCheckCircle)

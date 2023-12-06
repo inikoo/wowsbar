@@ -13,7 +13,7 @@ import {trans} from "laravel-vue-i18n";
 import Pusher from 'pusher-js'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaperPlane, faDungeon, faSkull } from '@fal/'
+import { faPaperPlane, faDungeon, faSkull } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
 import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime';

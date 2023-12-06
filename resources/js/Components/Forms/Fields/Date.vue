@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import PureDatePicker from '@/Components/Pure/PureDatePicker.vue'
 
-import { faExclamationCircle, faCheckCircle } from '@fas/'
+import { faExclamationCircle, faCheckCircle } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 library.add(faExclamationCircle, faCheckCircle)

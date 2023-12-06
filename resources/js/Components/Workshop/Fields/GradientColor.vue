@@ -4,7 +4,7 @@ import 'vue-color-kit/dist/vue-color-kit.css'
 import { useBannerBackgroundColor } from "@/Composables/useCommonList"
 import { set, get } from "lodash";
 import { ref, watch, toRefs } from "vue";
-import { faPaintBrushAlt, faText } from '@far/'
+import { faPaintBrushAlt, faText } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt, faText)
 

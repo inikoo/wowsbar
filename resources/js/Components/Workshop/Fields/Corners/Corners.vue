@@ -2,8 +2,8 @@
 import { trans } from "laravel-vue-i18n";
 import { ref, computed, watch, reactive } from "vue";
 import { get, cloneDeep, set, isNull } from "lodash";
-import { faLock } from "@fas/";
-import { faTimes } from "@fal/";
+import { faLock } from "@fas";
+import { faTimes } from "@fal";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CornersType from "./CornersType.vue";

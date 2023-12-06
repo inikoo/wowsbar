@@ -14,7 +14,7 @@ import { trans } from 'laravel-vue-i18n'
 import Password from '@/Components/Forms/Fields/Password.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinnerThird } from '@fad/'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird)
 

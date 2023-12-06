@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCookieBite } from '@fas/'
-import { faTimes } from '@fal/'
+import { faCookieBite } from '@fas'
+import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { ref, Ref, computed } from 'vue'
 library.add(faCookieBite, faTimes)

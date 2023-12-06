@@ -23,7 +23,7 @@ import TableHistories from "@/Components/Tables/TableHistories.vue"
 import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDashboard.vue"
 
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faSeedling,faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags,faThumbsDown, faLaugh, faChair} from '@fal/'
+import {faSeedling,faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags,faThumbsDown, faLaugh, faChair} from '@fal'
 import TableProspectLists from "@/Components/Tables/TableProspectLists.vue";
 
 library.add(faSeedling,faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faThumbsDown, faLaugh, faChair)

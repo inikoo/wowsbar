@@ -1,7 +1,7 @@
 <script setup>
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import { faExclamationCircle ,faCheckCircle} from '@fas/';
+import { faExclamationCircle ,faCheckCircle} from '@fas';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import PureTextarea from '@/Components/Pure/PureTextarea.vue';
 library.add(faExclamationCircle,faCheckCircle);
