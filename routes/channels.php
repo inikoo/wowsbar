@@ -8,6 +8,10 @@
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('uploads.org.{uploadID}', function (OrganisationUser $user, int $uploadID) {
+Broadcast::channel('org.personal.{userID}', function (OrganisationUser $user, int $userID) {
+    return $userID===$user->id;
+});
+
+Broadcast::channel('org.general', function (OrganisationUser $user, int $userID) {
     return true;
 });

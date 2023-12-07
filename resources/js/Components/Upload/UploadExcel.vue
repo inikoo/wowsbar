@@ -1,6 +1,5 @@
 <script setup lang='ts'>
-import Pusher from 'pusher-js'
-import Echo from 'laravel-echo'
+
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
 import { ref, computed, onMounted } from 'vue';
@@ -38,14 +37,6 @@ const dataPusher = ref({
 })
 
 const isShowProgress = ref(false)
-
-// Method 1:
-window.Echo.private(`uploads.org.1`)
-.listen('Prospect', (e) => {
-    console.log(e);
-});
-
-
 
 
 // Progress bar for adding file

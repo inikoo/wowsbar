@@ -3,11 +3,19 @@ import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
+import {useEchoOrgPersonal} from '@/Stores/echo-org-personal.js';
 
 
 export const initialiseOrgApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
+    const echoPersonal = useEchoOrgPersonal()
+    const echoGeneral = useEchoOrgGeneral()
+
+    echoGeneral.subscribe()
+    if (usePage().props.auth.user) {
+        echoPersonal.subscribe(usePage().props.auth.user.id)
+    }
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)
@@ -39,7 +47,7 @@ export const initialiseOrgApp = () => {
         if (usePage().props.auth.user.avatar_thumbnail) {
             layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
         }
-        
+
         // Set logo app
         if (usePage().props.app) {
             layout.app = usePage().props.app
@@ -50,13 +58,13 @@ export const initialiseOrgApp = () => {
         layout.currentRouteParameters = route().params
         layout.currentRoute = route().current()
 
-            let moduleName = layout.currentRoute.split(".")
-            layout.currentModule = moduleName[1]
+        let moduleName = layout.currentRoute.split(".")
+        layout.currentModule = moduleName[1]
 
 
         layout.booted = true
 
-        
+
     })
     return layout
 }

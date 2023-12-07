@@ -18,10 +18,12 @@ class LoggedOrganisationUserResource extends JsonResource
     public function toArray($request): array
     {
         /** @var OrganisationUser $user */
-        $user=$this;
+        $user = $this;
+
         return [
-            'username'           => $user->username,
-            'avatar_thumbnail'   => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
+            'id'               => $user->id,
+            'username'         => $user->username,
+            'avatar_thumbnail' => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
         ];
     }
 }

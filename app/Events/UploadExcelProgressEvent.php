@@ -7,10 +7,10 @@
 
 namespace App\Events;
 
-use App\Http\Resources\Helpers\UploadsResource;
+use App\Http\Resources\Helpers\UploadProgressResource;
 use App\Models\Helpers\Upload;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -23,26 +23,27 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
 
 
     public Upload $data;
+
     public function __construct(Upload $upload)
     {
-        $this->data   = $upload;
+        $this->data = $upload;
     }
 
 
     public function broadcastOn(): array
     {
         return [
-            new Channel('uploads.org.' . $this->data->id)
+            new PrivateChannel('org.personal.'.$this->data->organisation_user_id)
         ];
     }
 
     public function broadcastWith(): array
     {
-        return UploadsResource::make($this->data)->getArray();
+        return UploadProgressResource::make($this->data)->getArray();
     }
 
     public function broadcastAs(): string
     {
-        return $this->data->type;
+        return 'action-progress';
     }
 }
