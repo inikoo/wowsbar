@@ -8,6 +8,7 @@ import { defineStore } from "pinia";
 
 export const useEchoOrgPersonal = defineStore("echo-org-personal", {
     state: () => ({
+        currentProgressBar: null,
         progressBars: {
             data: {
                 number_success: 0,
@@ -23,6 +24,8 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
+                    const index=eventData.action_type+'-'+eventData.action_id;
+
                     this.progressBars = eventData
                     //save event data in state.progressBars
                     // as an object  key->[e.action_type+'_'+e.action_id]= value -> e
