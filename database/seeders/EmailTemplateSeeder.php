@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\EmailTemplateCategory;
-use App\Models\Mail\EmailTemplate;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;

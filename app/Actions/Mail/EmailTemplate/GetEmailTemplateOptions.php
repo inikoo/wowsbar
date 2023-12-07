@@ -9,6 +9,7 @@ namespace App\Actions\Mail\EmailTemplate;
 
 use App\Actions\InertiaAction;
 use App\Http\Resources\Mail\EmailTemplateResource;
+use App\Models\EmailTemplateCategory;
 use App\Models\Mail\EmailTemplate;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -22,7 +23,11 @@ class GetEmailTemplateOptions extends InertiaAction
         $selectOptions = [];
 
         /** @var \App\Models\Mail\EmailTemplate $emailTemplates */
-        $emailTemplates = EmailTemplate::all();
+        if($request->get('category') == null) {
+            $emailTemplates = EmailTemplate::all();
+        } else {
+            $emailTemplates = EmailTemplateCategory::where('name', 'ILIKE', '%'.$request->get('category').'%')->first()->templates;
+        }
 
         foreach ($emailTemplates as $template) {
             $selectOptions[$template->id] = new EmailTemplateResource($template);
