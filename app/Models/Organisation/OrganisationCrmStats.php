@@ -38,32 +38,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $number_prospects
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
  * @property int $number_customer_users
  * @property int $number_customer_users_status_active
  * @property int $number_customer_users_status_inactive
- * @property int $number_prospects_state_no_contacted
- * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_fail
- * @property int $number_prospects_state_success
- * @property int $number_prospects_contacted_state_no_applicable
- * @property int $number_prospects_contacted_state_soft_bounced
- * @property int $number_prospects_contacted_state_never_open
- * @property int $number_prospects_contacted_state_open
- * @property int $number_prospects_contacted_state_clicked
- * @property int $number_prospects_fail_status_no_applicable
- * @property int $number_prospects_fail_status_not_interested
- * @property int $number_prospects_fail_status_unsubscribed
- * @property int $number_prospects_fail_status_hard_bounced
- * @property int $number_prospects_fail_status_invalid
- * @property int $number_prospects_success_status_no_applicable
- * @property int $number_prospects_success_status_registered
- * @property int $number_prospects_success_status_invoiced
- * @property int $number_prospects_dont_contact_me
- * @property int $number_tags
- * @property int $number_surveys
  * @property-read \App\Models\Organisation\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newQuery()
@@ -94,29 +80,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberOrdersStateSettled($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberOrdersStateSubmitted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspects($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContactedStateClicked($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContactedStateNeverOpen($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContactedStateNoApplicable($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContactedStateOpen($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsContactedStateSoftBounced($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsDontContactMe($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsFailStatusHardBounced($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsFailStatusInvalid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsFailStatusNoApplicable($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsFailStatusNotInterested($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsFailStatusUnsubscribed($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateContacted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateFail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateInvoiced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNoContacted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateSuccess($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsSuccessStatusInvoiced($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsSuccessStatusNoApplicable($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsSuccessStatusRegistered($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberSurveys($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNotInterested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateRegistered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereUpdatedAt($value)
  * @mixin \Eloquent

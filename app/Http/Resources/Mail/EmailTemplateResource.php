@@ -23,8 +23,8 @@ class EmailTemplateResource extends JsonResource
         $emailTemplate = $this;
 
         return [
-            'slug'  => $emailTemplate->slug,
-            'title' => $emailTemplate->title,
+            'slug'     => $emailTemplate->slug,
+            'title'    => $emailTemplate->title,
             'compiled' => $emailTemplate->compiled
         ];
     }

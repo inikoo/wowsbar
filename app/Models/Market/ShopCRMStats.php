@@ -40,40 +40,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $number_prospects
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
  * @property int $number_customer_users
  * @property int $number_customer_users_status_active
  * @property int $number_customer_users_status_inactive
- * @property int $number_prospects_state_no_contacted
- * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_fail
- * @property int $number_prospects_state_success
- * @property int $number_prospects_contacted_state_no_applicable
- * @property int $number_prospects_contacted_state_soft_bounced
- * @property int $number_prospects_contacted_state_never_open
- * @property int $number_prospects_contacted_state_open
- * @property int $number_prospects_contacted_state_clicked
- * @property int $number_prospects_fail_status_no_applicable
- * @property int $number_prospects_fail_status_not_interested
- * @property int $number_prospects_fail_status_unsubscribed
- * @property int $number_prospects_fail_status_hard_bounced
- * @property int $number_prospects_fail_status_invalid
- * @property int $number_prospects_success_status_no_applicable
- * @property int $number_prospects_success_status_registered
- * @property int $number_prospects_success_status_invoiced
- * @property int $number_prospects_dont_contact_me
- * @property int $number_prospect_queries
- * @property int $number_customer_queries
- * @property int $number_surveys
  * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
  * @method static Builder|ShopCRMStats query()
  * @method static Builder|ShopCRMStats whereCreatedAt($value)
  * @method static Builder|ShopCRMStats whereId($value)
- * @method static Builder|ShopCRMStats whereNumberCustomerQueries($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsers($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusActive($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerUsersStatusInactive($value)
@@ -97,30 +81,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberOrdersStatePacked($value)
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSettled($value)
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSubmitted($value)
- * @method static Builder|ShopCRMStats whereNumberProspectQueries($value)
  * @method static Builder|ShopCRMStats whereNumberProspects($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateClicked($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateNeverOpen($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateNoApplicable($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateOpen($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsContactedStateSoftBounced($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsDontContactMe($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusHardBounced($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusInvalid($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusNoApplicable($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusNotInterested($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsFailStatusUnsubscribed($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderMale($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsGenderOther($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsStateBounced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateContacted($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateFail($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsStateInvoiced($value)
  * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateSuccess($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsSuccessStatusInvoiced($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsSuccessStatusNoApplicable($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsSuccessStatusRegistered($value)
- * @method static Builder|ShopCRMStats whereNumberSurveys($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsStateNotInterested($value)
+ * @method static Builder|ShopCRMStats whereNumberProspectsStateRegistered($value)
  * @method static Builder|ShopCRMStats whereShopId($value)
  * @method static Builder|ShopCRMStats whereUpdatedAt($value)
  * @mixin Eloquent

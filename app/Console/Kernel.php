@@ -22,9 +22,9 @@ class Kernel extends ConsoleKernel
             $schedule->command('telescope:prune')->daily();
         }
 
-         $schedule->call(function () {
-             FetchBannerAnalytics::dispatch();
-         })->daily();
+        $schedule->call(function () {
+            FetchBannerAnalytics::dispatch();
+        })->daily();
         $schedule->call(function () {
             SendMailshotScheduled::dispatch();
         })->everyMinute();

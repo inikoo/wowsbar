@@ -16,12 +16,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $name
  * @property int $shop_id
- * @property mixed $data
+ * @property array $data
  * @property string|null $deleted_at
  * @property string|null $delete_comment
- * @property \App\Models\Market\Shop $shop
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|Survey newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Survey newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Survey query()

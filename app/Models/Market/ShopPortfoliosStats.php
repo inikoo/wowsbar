@@ -55,8 +55,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_fail
- * @property int $number_prospects_state_success
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
@@ -109,10 +111,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsGenderMale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateBounced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateContacted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateFail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateInvoiced($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateNoContacted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateSuccess($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateNotInterested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberProspectsStateRegistered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereUpdatedAt($value)
  * @mixin \Eloquent

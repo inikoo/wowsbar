@@ -9,7 +9,6 @@ namespace App\Actions\Mail\EmailTemplate;
 
 use App\Actions\InertiaAction;
 use App\Http\Resources\Mail\EmailTemplateResource;
-use App\Models\Leads\Prospect;
 use App\Models\Mail\EmailTemplate;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
