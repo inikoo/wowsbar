@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { faPlay, faPause, faChevronRight, faChevronLeft } from '@fas/'
+import { faPlay, faPause, faChevronRight, faChevronLeft } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { ref } from 'vue'

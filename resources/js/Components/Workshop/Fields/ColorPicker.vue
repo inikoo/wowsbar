@@ -7,7 +7,7 @@ import { set, get } from 'lodash'
 import { ref, watch } from 'vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaintBrushAlt, faText } from '@far/'
+import { faPaintBrushAlt, faText } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt, faText)
 

@@ -6,7 +6,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { ref } from 'vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaintBrushAlt } from '@far/'
+import { faPaintBrushAlt } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt)
 

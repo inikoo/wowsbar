@@ -15,9 +15,9 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 import EmailPreview from "@/Components/Email/EmailPreview.vue";
-import {faStop, faPlay, faPaperPlane as fasPaperPlane} from '@fas/'
+import {faStop, faPlay, faPaperPlane as fasPaperPlane} from '@fas'
 
-import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal/'
+import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
 

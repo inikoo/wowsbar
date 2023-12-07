@@ -12,7 +12,7 @@ import { capitalize } from "@/Composables/capitalize"
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
     faNetworkWired,faCalendar,faStopwatch,faBuilding
-} from '@fal/';
+} from '@fal';
 
 library.add(
     faNetworkWired,faCalendar,faStopwatch,faBuilding

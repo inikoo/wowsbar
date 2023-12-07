@@ -14,8 +14,8 @@ import { cloneDeep } from 'lodash'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSign, faGlobe } from '@fal/'
-import { faLink } from '@far/'
+import { faSign, faGlobe } from '@fal'
+import { faLink } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useCopyText } from '@/Composables/useCopyText'
 

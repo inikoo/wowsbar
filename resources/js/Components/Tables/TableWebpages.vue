@@ -12,7 +12,7 @@ import { Webpage } from "@/types/webpage";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faSignIn, faHome, faNewspaper, faBrowser, faUfoBeam
-} from '@fal/'
+} from '@fal'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { capitalize } from "@/Composables/capitalize"
 library.add(

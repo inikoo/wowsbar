@@ -11,8 +11,8 @@ import "swiper/css/navigation"
 import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinnerThird } from '@fad/'
-import { faExclamation } from '@fas/'
+import { faSpinnerThird } from '@fad'
+import { faExclamation } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExclamation, faSpinnerThird)
 

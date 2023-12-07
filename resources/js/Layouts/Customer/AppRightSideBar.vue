@@ -9,7 +9,7 @@ import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTimes } from '@fal/'
+import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes)
 

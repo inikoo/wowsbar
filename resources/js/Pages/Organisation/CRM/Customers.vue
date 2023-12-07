@@ -14,7 +14,7 @@ import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faTachometerAlt, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faNewspaper, faPollPeople} from '@fal/'
+import {faTachometerAlt, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faNewspaper, faPollPeople} from '@fal'
 import CustomersDashboard from "@/Pages/Organisation/CRM/Customers/CustomersDashboard.vue";
 
 library.add(faTachometerAlt, faCodeBranch, faMailBulk, faNewspaper, faStore, faClock, faInfo, faTags, faPollPeople)

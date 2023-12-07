@@ -11,7 +11,7 @@ import { capitalize } from "@/Composables/capitalize"
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
     faNetworkWired,faCalendar,faStopwatch,faBuilding
-} from '@fal/';
+} from '@fal';
 import TablePortfolioSocialAccounts from "@/Components/Tables/TablePortfolioSocialAccounts.vue";
 
 library.add(

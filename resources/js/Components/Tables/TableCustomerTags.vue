@@ -9,7 +9,7 @@ import Table from '@/Components/Table/Table.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { useLocaleStore } from "@/Stores/locale"
 import { Link } from '@inertiajs/vue3'
-import { faEnvelope, faAsterisk } from '@fal/'
+import { faEnvelope, faAsterisk } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faEnvelope, faAsterisk)
 

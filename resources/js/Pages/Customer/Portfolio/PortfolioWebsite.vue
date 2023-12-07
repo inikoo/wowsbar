@@ -17,7 +17,7 @@ import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.v
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 import FirstBannerWidget from "@/Components/EmptyState/FirstBannerWidget.vue";
 
-import {faSign, faGlobe} from '@fal/'
+import {faSign, faGlobe} from '@fal'
 
 library.add(faSign, faGlobe)
 

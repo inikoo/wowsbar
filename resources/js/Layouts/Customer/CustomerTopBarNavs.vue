@@ -15,7 +15,7 @@ import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
     faSign,faChartNetwork,faThumbsUp
 
-} from '@fal/'
+} from '@fal'
 import { useLayoutStore } from "@/Stores/layout"
 
 

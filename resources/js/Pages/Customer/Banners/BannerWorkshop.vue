@@ -24,10 +24,10 @@ import { Banner } from '@/types/banner'
 import { routeType } from '@/types/route'
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
-import {faUser, faUserFriends} from '@fal/'
-import {faRocketLaunch} from '@far/'
-import {faAsterisk} from '@fas/'
-import {faSpinnerThird} from '@fad/'
+import {faUser, faUserFriends} from '@fal'
+import {faRocketLaunch} from '@far'
+import {faAsterisk} from '@fas'
+import {faSpinnerThird} from '@fad'
 
 library.add(faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird);
 

@@ -14,10 +14,10 @@ import {
     faCog,
     faImage,
     faLock, faTools,
-} from '@fal/'
-// import {  } from '@far/'
-import { faEye, faEyeSlash } from '@fas/'
-import { faClone } from '@fad/'
+} from '@fal'
+// import {  } from '@far'
+import { faEye, faEyeSlash } from '@fas'
+import { faClone } from '@fad'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
 import { ulid } from "ulid"

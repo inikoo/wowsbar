@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { faTags} from '@fal/';
+import { faTags} from '@fal';
 import { capitalize } from "@/Composables/capitalize"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue';

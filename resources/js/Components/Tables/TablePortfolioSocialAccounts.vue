@@ -17,7 +17,7 @@ import {
     faTiktok,
     faTwitter, faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import { faMicrophoneStand } from '@fal/'
+import { faMicrophoneStand } from '@fal'
 
 library.add(faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 

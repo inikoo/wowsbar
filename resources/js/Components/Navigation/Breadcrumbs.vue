@@ -11,9 +11,9 @@ import {Link, router} from "@inertiajs/vue3"
 import {Menu, MenuButton, MenuItems, MenuItem} from "@headlessui/vue"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
-import {faChevronRight} from '@far/'
-import {faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight} from '@fas/'
-import {faChartNetwork, faInboxOut} from '@fal/'
+import {faChevronRight} from '@far'
+import {faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight} from '@fas'
+import {faChartNetwork, faInboxOut} from '@fal'
 
 import {capitalize} from "@/Composables/capitalize"
 import {useLayoutStore} from "@/Stores/layout"

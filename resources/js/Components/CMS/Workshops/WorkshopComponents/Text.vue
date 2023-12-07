@@ -20,8 +20,8 @@ import TextAlign from '@tiptap/extension-text-align'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faAlignLeft, faAlignCenter, faAlignRight } from '@fal/'
-import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip } from '@far/'
+import { faAlignLeft, faAlignCenter, faAlignRight } from '@fal'
+import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip } from '@far'
 import { ulid } from "ulid"
 library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip, faAlignLeft, faAlignCenter, faAlignRight)
 

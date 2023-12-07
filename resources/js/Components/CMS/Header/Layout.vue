@@ -7,7 +7,7 @@ import Search from "@/Components/CMS/Utils/Search.vue";
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@fas/';
+import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@fas';
 import Input from "../Fields/Input.vue"
 library.add(faHandPointer, faText, faSearch, faImage)
 const props = defineProps<{

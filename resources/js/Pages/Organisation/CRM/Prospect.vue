@@ -16,7 +16,7 @@ import {
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
     faTags,faCube,faCodeBranch,faThumbsDown, faLaugh, faChair
-} from '@fal/';
+} from '@fal';
 
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";

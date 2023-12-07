@@ -13,9 +13,9 @@ import { computed, ref, Ref, reactive } from "vue"
 import { trans } from 'laravel-vue-i18n'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faImagePolaroid, faCloudUpload, faTimes } from '@fal/'
-import { faArrowRight } from '@far/'
-import { faSpinnerThird } from '@fad/'
+import { faImagePolaroid, faCloudUpload, faTimes } from '@fal'
+import { faArrowRight } from '@far'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { useTabChange } from "@/Composables/tab-change"

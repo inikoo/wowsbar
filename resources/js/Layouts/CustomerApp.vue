@@ -25,8 +25,8 @@ import {
     faTachometerAltFast,
     faUser,
     faLanguage
-} from '@fal/'
-import { faSearch, faBell } from '@far/'
+} from '@fal'
+import { faSearch, faBell } from '@far'
 
 
 library.add(

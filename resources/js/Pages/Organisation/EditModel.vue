@@ -11,7 +11,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
 import {library} from '@fortawesome/fontawesome-svg-core';
 
-import {faGlobe, faUserPlus, faSignalStream, faTools, faDoNotEnter} from '@fal/';
+import {faGlobe, faUserPlus, faSignalStream, faTools, faDoNotEnter} from '@fal';
 
 library.add(faGlobe, faUserPlus, faSignalStream, faTools, faDoNotEnter)
 

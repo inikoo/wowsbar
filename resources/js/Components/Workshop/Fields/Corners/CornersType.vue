@@ -7,8 +7,8 @@ import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
-import { faLock } from '@fas/'
-import { faTimes } from '@fal/'
+import { faLock } from '@fas'
+import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faLock, faTimes)

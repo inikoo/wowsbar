@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { faUserCircle , faUsdCircle} from '@fal/';
+import { faUserCircle , faUsdCircle} from '@fal';
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";

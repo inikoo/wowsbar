@@ -8,8 +8,8 @@
 import { Link } from "@inertiajs/vue3"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCactus, faIslandTropical, faSkullCow, faFish } from '@fal/'
-import { faPlus } from '@far/'
+import { faCactus, faIslandTropical, faSkullCow, faFish } from '@fal'
+import { faPlus } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPlus, faCactus, faIslandTropical, faSkullCow, faFish)
 import { trans } from 'laravel-vue-i18n'
@@ -53,7 +53,7 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
             <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
         </div>
 
-        <h3 class="font-logo text-lg font-bold text-gray-600">{{ data?.title ?? trans('No records found') }}</h3>
+        <h3 class="font-logo text-lg font-bold text-gray-600 capitalize">{{ data?.title ?? trans('No records found') }}</h3>
         <p v-if="data?.description" class="text-sm text-gray-500 inline-block">{{ data?.description }}</p>
         <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="mt-4 block">
             <Button size="xs" :style="data?.action.style" :icon="data?.action.icon" :label="data?.action.tooltip" />

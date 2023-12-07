@@ -4,6 +4,7 @@ import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
 import { ref, computed } from 'vue'
 import { routeType } from '@/types/route'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps<{
     routes: {
@@ -19,6 +20,7 @@ const props = defineProps<{
         event: string
     }
     description?: string
+    propName?: string
 }>()
 
 const emits = defineEmits<{
@@ -52,19 +54,26 @@ channel.bind(props.dataPusher.event, (data: any) => {
     dataPusher.value = data
 })
 
-// Progress bar for adding website
+// Progress bar for adding file
 const compProgressBar = computed(() => {
     return dataPusher.value?.data.number_rows ? (dataPusher.value?.data.number_success+dataPusher.value?.data.number_fails)/dataPusher.value?.data.number_rows * 100 : 0
 })
 
-// To manipulation data
+// To manipulation data history file upload
 const recentlyUploaded = ref<{}[]>([])
 
-// Reset data from Pusher binding
-const resetData = () => {
+// On finish uploading
+const onFinish = () => {
+    recentlyUploaded.value.push(dataPusher.value.data)
     setTimeout(() => {
+    // Reset data from Pusher binding
         dataPusher.value.data = { number_rows: 0, number_success: 0, number_fails: 0 }  // Can lead to isShowProgress to false
     }, 6000)
+    if(props.propName) {
+        router.reload({
+            only: [props.propName],  // only reload the props prospects so the table is updated
+        })
+    }
 }
 </script>
 
@@ -90,7 +99,7 @@ const resetData = () => {
         }"
         :description="description"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
-        @onFinish="(recentlyUploaded.push(dataPusher.data), resetData())"
+        @onFinish="onFinish"
     />
 
 </template>

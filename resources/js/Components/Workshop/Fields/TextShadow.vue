@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faUpload } from '@fas/'
+import { faUpload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import Input from '@/Components/Forms/Fields/Input.vue';
 library.add(faUpload)

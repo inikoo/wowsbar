@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheck } from '@fal/'
+import { faCheck } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheck)
 

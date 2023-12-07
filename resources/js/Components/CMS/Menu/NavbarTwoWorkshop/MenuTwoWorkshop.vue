@@ -4,7 +4,7 @@ import { ref } from "vue";
 import draggable from "vuedraggable";
 import HyperLink from "@/Components/CMS/Fields/Hyperlink.vue";
 import SubMenu from "../SubMenu.vue";
-import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas/';
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { get } from "lodash";
 import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";

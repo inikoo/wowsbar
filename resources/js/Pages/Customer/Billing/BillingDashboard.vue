@@ -14,7 +14,7 @@ import {useTabChange} from '@/Composables/tab-change.js';
 import TableCustomerHistories from '@/Components/Tables/TableCustomerHistories.vue';
 import PortfolioDashboard from "@/Components/Dashboard/PortfolioDashboard.vue";
 import {faTransporter2
-} from '@fal/'
+} from '@fal'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TablePayments from "@/Components/Tables/TablePayments.vue";
 

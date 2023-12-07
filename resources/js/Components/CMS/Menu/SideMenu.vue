@@ -9,7 +9,7 @@ import { ref, watch, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
-import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup } from '@fas/';
+import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup } from '@fas';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from 'ulid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'

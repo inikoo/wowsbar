@@ -15,7 +15,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 
-import {faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faPaperPlane} from '@fal/'
+import {faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faPaperPlane} from '@fal'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableSnapshots from "@/Components/Tables/TableSnapshots.vue";
 

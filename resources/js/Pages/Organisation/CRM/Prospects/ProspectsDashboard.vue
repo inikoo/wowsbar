@@ -12,7 +12,7 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
 import {Pie} from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faExclamationCircle,faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze} from '@fal/'
+import {faSeedling,faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faExclamationCircle,faSignIn, faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze} from '@fal'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useLocaleStore} from "@/Stores/locale";
 import { capitalize } from '@/Composables/capitalize'

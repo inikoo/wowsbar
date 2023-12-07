@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import { faLink, faEdit, faTrash } from '@fas/'
+import { faLink, faEdit, faTrash } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import Popover from '@/Components/Utils/Popover.vue'

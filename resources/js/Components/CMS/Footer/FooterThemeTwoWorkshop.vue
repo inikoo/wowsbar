@@ -19,7 +19,7 @@ import TextArea from "../Fields/TextArea.vue"
 import HyperLink from "../Fields/Hyperlink.vue"
 import IconPicker from "../Fields/IconPicker/IconPicker.vue"
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
-import { faEnvelope, faPhone } from '@fas/';
+import { faEnvelope, faPhone } from '@fas';
 import { get } from 'lodash'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from '@fortawesome/fontawesome-svg-core'

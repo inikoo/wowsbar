@@ -19,7 +19,7 @@
   import { getDbRef } from '@/Composables/firebase'
   import { set, onValue, get } from "firebase/database"
   import { notify } from "@kyvg/vue3-notification"
-  import { faSpinnerThird } from '@fad/'
+  import { faSpinnerThird } from '@fad'
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
   import { library } from "@fortawesome/fontawesome-svg-core"
   import PageHeading from "@/Components/Headings/PageHeading.vue";

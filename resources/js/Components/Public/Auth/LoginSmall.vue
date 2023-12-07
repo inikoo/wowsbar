@@ -15,8 +15,8 @@ import axios from 'axios'
 import { usePage } from '@inertiajs/vue3'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft } from '@fal/'
-import { faSpinnerThird } from '@fad/'
+import { faArrowLeft } from '@fal'
+import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { notify } from '@kyvg/vue3-notification';
 library.add(faArrowLeft, faSpinnerThird)

@@ -5,12 +5,13 @@
  */
 
 import { router } from "@inertiajs/vue3"
+import { Ref } from 'vue'
 
-export function useTabChange(tabSlug, currentTab) {
+export function useTabChange(tabSlug: string, currentTab: Ref<string>) {
     router.reload(
         {
             data: { tab: tabSlug },
-            only: [tabSlug],
+            only: [tabSlug],  // only reload the props with dynamic name tabSlug
             onSuccess: () => {
                 currentTab.value = tabSlug;
             },

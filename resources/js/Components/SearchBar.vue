@@ -24,8 +24,8 @@ import Button from '@/Components/Elements/Buttons/Button.vue';
 
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinnerThird } from '@fad/'
-import { faSeedling } from '@fal/'
+import { faSpinnerThird } from '@fad'
+import { faSeedling } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tag from '@/Components/Tag.vue';
 library.add(faSpinnerThird, faSeedling)

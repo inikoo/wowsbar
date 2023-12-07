@@ -3,7 +3,7 @@ import { trans } from 'laravel-vue-i18n'
 import { ref, reactive } from 'vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faChevronDown, faCheckSquare, faSquare } from '@far/'
+import { faChevronDown, faCheckSquare, faSquare } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { onMounted } from 'vue'
 library.add(faChevronDown, faCheckSquare, faSquare)
@@ -85,11 +85,11 @@ onMounted(() => {
             <p class="inline font-semibold leading-none capitalize">{{ title.title ? (title.title) : '' }}</p>
         </div>
 
-        <div class="flex w-fit items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
+        <div class="w-fit flex gap-x-1 lg:gap-x-0 items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
             <!-- List of element (checkbox) -->
-            <div class="grid grid-rows-2 xl:grid-rows-1 grid-flow-col w-fit flex-wrap justify-end divide-x divide-gray-300 ">
+            <div class="rounded overflow-hidden grid grid-rows-2 xl:grid-rows-1 grid-flow-col w-fit flex-wrap justify-end gap-0.5 ">
                 <div v-for="(value, element, index) of props.elements[selectedGroup]?.elements" :key="element"
-                    class="flex items-center gap-x-1 px-3 py-2.5 cursor-pointer select-none hover:bg-gray-200/75"
+                    class="bg-white hover:bg-gray-200/60 flex items-center gap-x-1 px-3 py-2.5 cursor-pointer select-none"
                     @click="onClickCheckbox(element, selectedGroup)"
                     @dblclick="onDoubleClickCheckbox(element, selectedGroup)"
                     role="filter"
@@ -98,7 +98,7 @@ onMounted(() => {
                     <FontAwesomeIcon v-if="selectedElement[selectedGroup]?.includes(element)" icon="far fa-check-square" aria-hidden="true" />
                     <FontAwesomeIcon v-else icon="far fa-square" aria-hidden="true" />
                     <div :class="[ isChecked ? 'text-gray-600' : 'text-gray-400',
-                            'grid justify-center grid-flow-col items-center capitalize hover:text-gray-600']">
+                        'grid justify-center grid-flow-col items-center capitalize hover:text-gray-600']">
                         {{ value[0] }} ({{ value[1] }})
                     </div>
                 </div>
