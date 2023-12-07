@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Tenancy\Tenant;
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('uploads.{tenantId}', function (Tenant $tenant, int $tenantId) {
-    return $tenant->id === $tenantId;
+Broadcast::channel('uploads.org.{uploadId}', function (User $user, int $uploadId) {
+    return $user->id === $uploadId;
 });
