@@ -50,13 +50,13 @@ watch(() => props.progressData.progressPercentage, () => {
             
             <!-- Progress Bar -->
             <div class="overflow-hidden rounded-full bg-gray-200 w-64 flex justify-start">
-                <div class="h-2 bg-lime-400 transition-all duration-100 ease-in-out" :style="`width: ${(progressData.countSuccess/progressData.countTotal)*100}%`" />
+                <div class="h-2 bg-lime-600 transition-all duration-100 ease-in-out" :style="`width: ${(progressData.countSuccess/progressData.countTotal)*100}%`" />
                 <div class="h-2 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(progressData.countFails/progressData.countTotal)*100}%`" />
             </div>
 
             <!-- Result count -->
             <div class="flex w-full justify-around">
-                <div class="text-lime-400">Success: {{ progressData.countSuccess }}</div>
+                <div class="text-lime-600">Success: {{ progressData.countSuccess }}</div>
                 <div class="text-red-500">Fails: {{ progressData.countFails }}</div>
             </div>
         </div>
