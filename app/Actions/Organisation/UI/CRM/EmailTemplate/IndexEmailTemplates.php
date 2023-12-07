@@ -10,7 +10,6 @@ namespace App\Actions\Organisation\UI\CRM\EmailTemplate;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\Mail\EmailTemplateResource;
-use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Mail\EmailTemplate;
 use Closure;

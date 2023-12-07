@@ -28,7 +28,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot
@@ -45,7 +44,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
  * @mixin \Eloquent
