@@ -18,17 +18,17 @@ class EmailTemplateSeeder extends Seeder
             resource_path('views/mailshots/layouts/halloween'),
             resource_path('views/mailshots/layouts/newYear'),
         ];
-    
+
         foreach ($paths as $path) {
             $files = File::files($path);
-    
+
             foreach ($files as $file) {
                 $fileName = $file->getFilename();
                 $fileExt  = $file->getExtension();
-    
+
                 if ($fileExt === 'json') {
                     $title = str_replace('.json', '', $fileName);
-    
+
                     EmailTemplate::create([
                         'title'       => $title,
                         'parent_type' => 'Organisation',

@@ -14,7 +14,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class   CreateCustomerSurvey extends InertiaAction
+class CreateCustomerSurvey extends InertiaAction
 {
     public function handle(Organisation|Shop $parent, ActionRequest $request): Response
     {
