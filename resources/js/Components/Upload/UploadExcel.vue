@@ -85,6 +85,7 @@ const onFinish = () => {
             :routes="routes"
             :recentlyUploaded="recentlyUploaded"
             @isShowProgress="isShowProgress = true"
+            :propName="propName"
         />
     </KeepAlive>
 

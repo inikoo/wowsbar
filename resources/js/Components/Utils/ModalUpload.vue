@@ -23,6 +23,7 @@ const props = defineProps<{
         history?: routeType
     }
     recentlyUploaded: {}[]
+    propName : string
     // isUploaded: boolean
 }>()
 
@@ -78,7 +79,22 @@ watch(() => props.modelValue, async (newVal) => {
 <template>
     <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)">
         <!-- <pre>{{  [...dataHistory, ...recentlyUploaded] }}</pre> -->
-        <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">Upload your new website</div>
+        <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">
+            <div>
+                <div>{{ trans(`Upload your new ${propName}`) }}</div>
+                    <div class="flex justify-center">
+                        <a v-if="routes?.download?.name" :href="route(routes?.download?.name, routes?.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit">
+                            <span class="text-xs text-gray-400 group-hover:text-gray-600">
+                                <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
+                                {{ trans(`Download template .xlsx`) }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+        </div>
+
+
+        
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
@@ -112,17 +128,11 @@ watch(() => props.modelValue, async (newVal) => {
                         <p class="text-gray-500">Uploading..</p>
                     </div>
                 </div>
-
-                <!-- Download template -->
-                <a v-if="routes?.download?.name" :href="route(routes?.download?.name, routes?.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
-                    <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
-                    Download template .xlsx
-                </a>
             </div>
 
             <!-- Table History -->
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
-                <div class="text-sm text-gray-600">Recent uploaded website:</div>
+                <div class="text-sm text-gray-600"> {{ trans(`Recent uploaded  ${propName} :`)}} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="[...dataHistory, ...recentlyUploaded].length">
                         <div v-for="(history, index) in [...dataHistory, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
@@ -139,7 +149,7 @@ watch(() => props.modelValue, async (newVal) => {
                         </div>
                     </template>
                     <div v-else class="text-gray-500 text-xs">
-                        No history found.
+                        {{ trans("No previous uploads") }}
                     </div>
                 </div>
                 <div v-else class="flex flex-wrap gap-x-2 gap-y-2">
