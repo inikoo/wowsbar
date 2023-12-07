@@ -133,6 +133,15 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
 
+        'broadcast'  => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+           'auth:broadcasting'
+        ],
 
     ];
 

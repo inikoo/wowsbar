@@ -112,6 +112,7 @@ return [
             'debugbar.**',
             'horizon.**',
             'telescope.**',
+            'broadcasting/auth'
         ],
     ],
 

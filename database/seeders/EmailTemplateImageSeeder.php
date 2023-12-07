@@ -17,7 +17,7 @@ class EmailTemplateImageSeeder extends Seeder
     {
         foreach (glob(resource_path('art/templates_mailshot/*')) as $filename) {
             $_filename = Str::after($filename, resource_path('art/templates_mailshot'));
-            $scope = 'templates_mailshot';
+            $scope     = 'templates_mailshot';
             $imageName = $_filename;
             StoreStockImage::run(
                 collection: 'templates_mailshot',

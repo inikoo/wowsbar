@@ -11,6 +11,7 @@ namespace App\Providers;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,14 +24,21 @@ class AuthServiceProvider extends ServiceProvider
         //
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     */
+
     public function boot(): void
     {
 
-        Auth::viaRequest('websockets-auth', function ($request) {
-            return OrganisationUser::first();
+        Auth::viaRequest('websockets-auth', function () {
+
+            $id=Session::get('login_org_'.sha1('Illuminate\Auth\SessionGuard'));
+            if (!is_null($id)) {
+                return OrganisationUser::find($id);
+            }
+            //... todo: try other guards
+
+            return false;
+
+
 
 
         });

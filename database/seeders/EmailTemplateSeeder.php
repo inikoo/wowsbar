@@ -15,7 +15,7 @@ class EmailTemplateSeeder extends Seeder
      */
     public function run(): void
     {
-        $path = database_path('seeders/datasets/emailTemplate.json');
+        $path              = database_path('seeders/datasets/emailTemplate.json');
         $emailTemplateJson = json_decode(file_get_contents($path), true);
 
         foreach (Arr::get($emailTemplateJson, 'categories') as $emailTemplate) {
@@ -25,17 +25,17 @@ class EmailTemplateSeeder extends Seeder
 
             foreach (Arr::get($emailTemplate, 'templates') as $template) {
                 $filePath = database_path('seeders/datasets/email-templates/' . Str::slug($category->name) . '/' . Arr::get($template, 'content'));
-                $fileExt = File::extension($filePath);
+                $fileExt  = File::extension($filePath);
 
                 if ($fileExt === 'json') {
                     $title = Arr::get($template, 'name');
 
                     $category->templates()->create([
-                        'title' => $title,
+                        'title'       => $title,
                         'parent_type' => 'Organisation',
-                        'parent_id' => 1,
-                        'data' => '{}',
-                        'compiled' => json_decode(file_get_contents($filePath), true),
+                        'parent_id'   => 1,
+                        'data'        => '{}',
+                        'compiled'    => json_decode(file_get_contents($filePath), true),
                     ]);
 
                 }
