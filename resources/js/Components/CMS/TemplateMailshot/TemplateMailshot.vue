@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted , watch } from 'vue'
 import axios from 'axios';
 import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
@@ -39,7 +39,7 @@ const getTemplates = async () => {
     loadingState.value = true
     try {
         const response = await axios.get(
-            route('org.json.email.templates')
+            route('org.json.email.templates',{category : activeCategory.value}),
         )
         templates.value = Object.values(response.data)
     } catch (error) {
@@ -62,6 +62,10 @@ const categories = [
     { label: trans('New Year'), value: 'newyear', icon: 'fas fa-glass-cheers' },
     { label: trans('Haloween'), value: 'haloween', icon: 'fas fa-bat' },
 ]
+
+watch(activeCategory, () => {
+    getTemplates()
+})
 
 onMounted(() => {
     getTemplates()

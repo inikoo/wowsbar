@@ -141,7 +141,7 @@ watch(() => props.modelValue, async (newVal) => {
                             </a>
                             <p class="text-lg leading-none text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
                             <div class="flex gap-x-2">
-                                <span class="text-lime-500 text-xxs">{{ history.number_success }} success,</span>
+                                <span class="text-lime-600 text-xxs">{{ history.number_success }} success,</span>
                                 <span class="text-red-500 text-xxs">{{ history.number_fails }} fails</span>
                             </div>
                             <!-- <span class="text-gray-600 text-xs leading-none truncate">{{ history.filename }}</span> -->
