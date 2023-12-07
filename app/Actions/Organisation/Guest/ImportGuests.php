@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\Guest;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\Auth\GuestImport;
@@ -22,10 +23,20 @@ class ImportGuests
     {
         $upload = StoreUploads::run($file, Guest::class);
 
-        return $this->init(
-            $upload,
-            new GuestImport($upload)
-        );
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new GuestImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new GuestImport($upload)
+            );
+        }
+
+        return $upload;
+
 
     }
 

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Catalogue\Product;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\Catalogue\ProductImport;
@@ -22,10 +23,20 @@ class ImportProducts
     {
         $upload = StoreUploads::run($file, Product::class);
 
-        return $this->init(
-            $upload,
-            new ProductImport($upload)
-        );
+
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new ProductImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new ProductImport($upload)
+            );
+        }
+
+        return $upload;
     }
 
 

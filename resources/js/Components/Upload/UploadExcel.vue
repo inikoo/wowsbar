@@ -1,8 +1,9 @@
 <script setup lang='ts'>
 import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue';
 import { routeType } from '@/types/route'
 import { router } from '@inertiajs/vue3'
 
@@ -38,21 +39,28 @@ const dataPusher = ref({
 
 const isShowProgress = ref(false)
 
-// Pusher: subscribe
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1',
-    wsHost: import.meta.env.VITE_PUSHER_HOST,
-    wsPort: 6001,
-    wssPort: 6001,
-    forceTLS: false,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss']
-})
-const channel = pusher.subscribe(props.dataPusher.channel)
-channel.bind(props.dataPusher.event, (data: any) => {
-    // console.log('xxx', data)
-    dataPusher.value = data
-})
+// Method 1:
+window.Echo.private(`uploads.org.1`)
+.listen('Prospect', (e) => {
+    console.log(e.order.name);
+});
+
+// Method 2:
+window.Echo.join(`uploads.org.1`)
+    .here((users) => {
+        // ...
+    })
+    .joining((user) => {
+        console.log('dddddddddddd');
+    })
+    .leaving((user) => {
+        console.log('dddddddddddd');
+    })
+    .error((error) => {
+        console.error(error);
+    });
+
+
 
 // Progress bar for adding file
 const compProgressBar = computed(() => {

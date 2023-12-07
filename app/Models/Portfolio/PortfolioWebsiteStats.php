@@ -28,17 +28,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_banners_snapshots_state_live
  * @property int $number_banners_snapshots_state_historic
  * @property int $number_prospects
- * @property int $number_prospects_state_no_contacted
- * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_not_interested
- * @property int $number_prospects_state_registered
- * @property int $number_prospects_state_invoiced
- * @property int $number_prospects_state_bounced
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_fail
+ * @property int $number_prospects_state_success
+ * @property int $number_prospects_contacted_state_no_applicable
+ * @property int $number_prospects_contacted_state_soft_bounced
+ * @property int $number_prospects_contacted_state_never_open
+ * @property int $number_prospects_contacted_state_open
+ * @property int $number_prospects_contacted_state_clicked
+ * @property int $number_prospects_fail_status_no_applicable
+ * @property int $number_prospects_fail_status_not_interested
+ * @property int $number_prospects_fail_status_unsubscribed
+ * @property int $number_prospects_fail_status_hard_bounced
+ * @property int $number_prospects_fail_status_invalid
+ * @property int $number_prospects_success_status_no_applicable
+ * @property int $number_prospects_success_status_registered
+ * @property int $number_prospects_success_status_invoiced
+ * @property int $number_prospects_dont_contact_me
  * @property-read \App\Models\Portfolio\PortfolioWebsite $website
  * @method static Builder|PortfolioWebsiteStats newModelQuery()
  * @method static Builder|PortfolioWebsiteStats newQuery()
@@ -57,15 +69,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeSquare($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberHistoricSnapshots($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspects($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateClicked($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateNeverOpen($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateNoApplicable($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateOpen($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateSoftBounced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsDontContactMe($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusHardBounced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusInvalid($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusNoApplicable($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusNotInterested($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsFailStatusUnsubscribed($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderFemale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderMale($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderOther($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateBounced($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateContacted($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateInvoiced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateFail($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNoContacted($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNotInterested($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateRegistered($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateSuccess($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsSuccessStatusInvoiced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsSuccessStatusNoApplicable($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsSuccessStatusRegistered($value)
  * @method static Builder|PortfolioWebsiteStats wherePortfolioWebsiteId($value)
  * @method static Builder|PortfolioWebsiteStats whereUpdatedAt($value)
  * @mixin \Eloquent

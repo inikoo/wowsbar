@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Customer;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\CRM\CustomerImport;
@@ -22,11 +23,19 @@ class ImportCustomers
     {
         $upload = StoreUploads::run($file, Customer::class);
 
-        return $this->init(
-            $upload,
-            new CustomerImport($upload)
-        );
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new CustomerImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new CustomerImport($upload)
+            );
+        }
 
+        return $upload;
     }
 
 

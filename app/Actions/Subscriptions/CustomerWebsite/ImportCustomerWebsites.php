@@ -7,6 +7,7 @@
 
 namespace App\Actions\Subscriptions\CustomerWebsite;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\Portfolios\CustomerWebsiteImport;
@@ -22,10 +23,20 @@ class ImportCustomerWebsites
     {
         $upload = StoreUploads::run($file, CustomerWebsite::class);
 
-        return $this->init(
-            $upload,
-            new CustomerWebsiteImport($upload)
-        );
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new CustomerWebsiteImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new CustomerWebsiteImport($upload)
+            );
+        }
+
+        return $upload;
+
 
     }
 

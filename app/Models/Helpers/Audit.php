@@ -29,6 +29,8 @@ namespace App\Models\Helpers;
  * @property string|null $user_agent
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $bulk_type
+ * @property int|null $bulk_id
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $auditable
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $user
  * @method static \Illuminate\Database\Eloquent\Builder|Audit newModelQuery()
@@ -36,6 +38,8 @@ namespace App\Models\Helpers;
  * @method static \Illuminate\Database\Eloquent\Builder|Audit query()
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereAuditableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereAuditableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audit whereBulkId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audit whereBulkType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereComments($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereCustomerId($value)

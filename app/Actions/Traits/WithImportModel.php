@@ -14,25 +14,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Maatwebsite\Excel\Facades\Excel;
 
 trait WithImportModel
 {
     use AsAction;
     use WithAttributes;
 
-    public function init(Upload $upload, $import): Upload
-    {
-
-        Excel::import(
-            $import,
-            storage_path('app/' . $upload->getFullPath())
-        );
-
-        $upload->refresh();
-        return $upload;
-
-    }
+    private bool $isSync = false;
 
     public function rumImport($file, $command): Upload
     {
@@ -42,6 +30,7 @@ trait WithImportModel
 
     public function asCommand(Command $command): int
     {
+        $this->isSync=true;
         $filename    = $command->argument('filename');
         $newFileName = now()->timestamp . ".xlsx";
 

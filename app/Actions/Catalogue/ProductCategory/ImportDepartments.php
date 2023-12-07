@@ -7,6 +7,7 @@
 
 namespace App\Actions\Catalogue\ProductCategory;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\Catalogue\DepartmentImport;
@@ -22,10 +23,20 @@ class ImportDepartments
     {
         $upload = StoreUploads::run($file, ProductCategory::class);
 
-        return $this->init(
-            $upload,
-            new DepartmentImport($upload)
-        );
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new DepartmentImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new DepartmentImport($upload)
+            );
+        }
+
+        return $upload;
+
     }
 
 
