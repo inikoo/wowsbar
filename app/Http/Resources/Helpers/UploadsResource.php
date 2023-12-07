@@ -20,6 +20,7 @@ class UploadsResource extends JsonResource
         $upload = $this;
 
         return [
+            'id'             => $upload->id,
             'type'           => $upload->type,
             'uploaded_at'    => $upload->uploaded_at,
             'filename'       => $upload->filename,
