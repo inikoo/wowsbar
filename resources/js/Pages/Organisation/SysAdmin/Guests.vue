@@ -46,6 +46,7 @@ const dataModal = reactive({
 
     <!-- Modal: after click 'upload' button -->
     <UploadExcel
+        :propName="title"
         :routesModalUpload="{
             upload: props.pageHead.actions[0].buttons[0].route,
             download: uploads?.templates?.routes

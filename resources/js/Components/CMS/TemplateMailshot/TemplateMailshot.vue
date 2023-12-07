@@ -33,6 +33,7 @@ const props = defineProps<{
 const emits = defineEmits();
 const loadingState = ref(false)
 const templates = ref([])
+const activeCategory = ref(null)
 
 const getTemplates = async () => {
     loadingState.value = true
@@ -73,7 +74,7 @@ onMounted(() => {
     <div class="text-center text-2xl font-bold mb-4">Available Templates</div>
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
         <div v-for="category in categories" :key="category.value">
-            <Tag :label="category.label">
+            <Tag :label="category.label" :theme="category.value == activeCategory ? 5 : 0" @click="()=> activeCategory = category.value">
                 <template #label>
                     <FontAwesomeIcon :icon="category.icon" class='' aria-hidden='true' />
                     {{ category.label }}

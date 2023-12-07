@@ -56,7 +56,7 @@ class IndexCustomerNewsletters extends InertiaAction
             ->where('type', MailshotTypeEnum::NEWSLETTER);
 
         if (class_basename($parent) == 'Shop') {
-            $queryBuilder->where('scope_id', $parent->id);
+            $queryBuilder->where('parent_id', $parent->id);
         }
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
