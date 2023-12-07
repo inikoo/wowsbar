@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 07 Dec 2023 14:50:36 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Providers;
 
@@ -12,7 +17,8 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Broadcast::routes();
+
+        Broadcast::routes(['middleware' => ['auth:broadcasting']]);
 
         require base_path('routes/channels.php');
     }
