@@ -16,8 +16,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *
  * @property int $id
  * @property int $mailshot_id
+ * @property int $dispatched_email_id
  * @property string $recipient_type
  * @property int $recipient_id
+ * @property int $channel
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Mail\DispatchedEmail $dispatchedEmail
@@ -26,7 +28,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient query()
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereChannel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereDispatchedEmailId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereMailshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MailshotRecipient whereRecipientId($value)

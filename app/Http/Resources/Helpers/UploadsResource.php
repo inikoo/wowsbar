@@ -7,23 +7,16 @@
 
 namespace App\Http\Resources\Helpers;
 
+use App\Http\Resources\HasSelfCall;
+use App\Models\Helpers\Upload;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- *
- * @property string $slug
- * @property string $name
- * @property string $model_type
- * @property mixed $constrains
- * @property mixed $arguments
- * @property boolean $is_seeded
- *
- */
 class UploadsResource extends JsonResource
 {
+    use HasSelfCall;
     public function toArray($request): array
     {
-        /** @var \App\Models\Helpers\Upload $upload */
+        /** @var Upload $upload */
         $upload = $this;
 
         return [
@@ -35,7 +28,7 @@ class UploadsResource extends JsonResource
             'number_fails'   => $upload->number_fails,
             'path'           => $upload->path,
             'download_route' => [
-                'name'       => 'org.crm.uploads.download',
+                'name'       => 'org.uploads.download',
                 'parameters' => $upload->id,
             ],
         ];

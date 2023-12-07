@@ -7,6 +7,7 @@
 
 namespace App\Actions\HumanResources\Employee;
 
+use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\HumanResources\EmployeeImport;
@@ -22,10 +23,20 @@ class ImportEmployees
     {
         $upload = StoreUploads::run($file, Employee::class);
 
-        return $this->init(
-            $upload,
-            new EmployeeImport($upload)
-        );
+        if ($this->isSync) {
+            $upload = ImportUpload::run(
+                $upload,
+                new EmployeeImport($upload)
+            );
+        } else {
+            ImportUpload::dispatch(
+                $upload,
+                new EmployeeImport($upload)
+            );
+        }
+
+        return $upload;
+
 
     }
 

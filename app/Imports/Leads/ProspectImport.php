@@ -101,7 +101,6 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
             ],
             'phone'           => [
-                'present',
                 'nullable',
                 new Phone(),
             ],
