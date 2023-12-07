@@ -1,9 +1,16 @@
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Fri, 08 Dec 2023 02:51:39 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
 import {useEchoOrgPersonal} from '@/Stores/echo-org-personal.js';
+import {useEchoOrgGeneral} from '@/Stores/echo-org-general.js';
 
 
 export const initialiseOrgApp = () => {
@@ -14,6 +21,7 @@ export const initialiseOrgApp = () => {
 
     echoGeneral.subscribe()
     if (usePage().props.auth.user) {
+
         echoPersonal.subscribe(usePage().props.auth.user.id)
     }
 

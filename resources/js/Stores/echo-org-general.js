@@ -7,7 +7,7 @@
 import {defineStore} from 'pinia';
 
 export const useEchoOrgGeneral = defineStore(
-    'echo-action-progress',
+    'echo-org-general',
     {
 
         state  : () => ({
@@ -19,7 +19,6 @@ export const useEchoOrgGeneral = defineStore(
                 window.Echo.private('org.general')
                 .listen('.prospects-dashboards', (e) => {
                     console.log(e);
-
                 });
 
             }

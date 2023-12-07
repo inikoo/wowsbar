@@ -7,7 +7,7 @@
 import {defineStore} from 'pinia';
 
 export const useEchoOrgPersonal = defineStore(
-    'echo-action-progress',
+    'echo-org-personal',
     {
 
         state  : () => ({
@@ -16,6 +16,7 @@ export const useEchoOrgPersonal = defineStore(
         actions: {
 
             subscribe(userID){
+                console.log('org.personal.'+userID)
                 window.Echo.private('org.personal.'+userID)
                 .listen('.action-progress', (e) => {
                     console.log(e);

@@ -12,6 +12,6 @@ Broadcast::channel('org.personal.{userID}', function (OrganisationUser $user, in
     return $userID===$user->id;
 });
 
-Broadcast::channel('org.general', function (OrganisationUser $user, int $userID) {
+Broadcast::channel('org.general', function (OrganisationUser $user) {
     return true;
 });
