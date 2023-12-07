@@ -42,23 +42,9 @@ const isShowProgress = ref(false)
 // Method 1:
 window.Echo.private(`uploads.org.1`)
 .listen('Prospect', (e) => {
-    console.log(e.order.name);
+    console.log(e);
 });
 
-// Method 2:
-window.Echo.join(`uploads.org.1`)
-    .here((users) => {
-        // ...
-    })
-    .joining((user) => {
-        console.log('dddddddddddd');
-    })
-    .leaving((user) => {
-        console.log('dddddddddddd');
-    })
-    .error((error) => {
-        console.error(error);
-    });
 
 
 
