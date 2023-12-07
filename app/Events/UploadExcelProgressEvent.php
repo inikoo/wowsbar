@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 07 Dec 2023 14:06:46 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Events;
 
@@ -15,9 +20,7 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     use InteractsWithSockets;
     use SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
+
     public Upload $data;
     public function __construct(Upload $upload)
     {
@@ -28,7 +31,7 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('uploads.org.' . $this->data->organisation_user_id)
+            new Channel('uploads.org.' . $this->data->id)
         ];
     }
 
