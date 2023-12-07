@@ -58,6 +58,9 @@ return [
             'driver'   => 'session',
             'provider' => 'org_users',
         ],
+      'broadcasting' => [
+          'driver' => 'websockets-auth',
+      ],
     ],
 
     /*

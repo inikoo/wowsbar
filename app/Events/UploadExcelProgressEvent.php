@@ -7,6 +7,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Helpers\UploadsResource;
 use App\Models\Helpers\Upload;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -33,6 +34,11 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
         return [
             new Channel('uploads.org.' . $this->data->id)
         ];
+    }
+
+    public function broadcastWith(): array
+    {
+        return UploadsResource::make($this->data)->getArray();
     }
 
     public function broadcastAs(): string
