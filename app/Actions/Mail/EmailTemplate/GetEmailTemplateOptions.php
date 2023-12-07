@@ -26,7 +26,8 @@ class GetEmailTemplateOptions extends InertiaAction
         if($request->get('category') == null) {
             $emailTemplates = EmailTemplate::all();
         } else {
-            $emailTemplates = EmailTemplateCategory::where('name', 'ILIKE', '%'.$request->get('category').'%')->first()->templates;
+            $emailTemplates = EmailTemplateCategory::where('name', 'LIKE', '%'.$request->get('category').'%')->first();
+            $emailTemplates = $emailTemplates->templates;
         }
 
         foreach ($emailTemplates as $template) {

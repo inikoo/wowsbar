@@ -58,9 +58,9 @@ const selectTemplate = (template) => {
 
 const categories = [
     { label: trans('All Template'), value: null, icon: 'fas fa-th-large' },
-    { label: trans('Christmas'), value: 'christmas', icon: 'fas fa-tree-christmas' },
-    { label: trans('New Year'), value: 'newyear', icon: 'fas fa-glass-cheers' },
-    { label: trans('Haloween'), value: 'haloween', icon: 'fas fa-bat' },
+    { label: trans('Christmas'), value: 'Christmas', icon: 'fas fa-tree-christmas' },
+    { label: trans('New Year'), value: 'New Year', icon: 'fas fa-glass-cheers' },
+    { label: trans('Halloween'), value: 'Halloween', icon: 'fas fa-bat' },
 ]
 
 watch(activeCategory, () => {
@@ -72,8 +72,8 @@ onMounted(() => {
 })
 
 </script>
-  
-  
+
+
 <template layout="OrgApp">
     <div class="text-center text-2xl font-bold mb-4">Available Templates</div>
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
@@ -113,4 +113,3 @@ onMounted(() => {
 
 
 
-  
