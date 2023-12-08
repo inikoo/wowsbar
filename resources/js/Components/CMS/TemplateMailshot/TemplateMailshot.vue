@@ -75,10 +75,10 @@ onMounted(() => {
 
 </script>
 
-
 <template layout="OrgApp">
     <div class="text-center text-2xl font-bold mb-4">{{ trans("Available Templates") }}</div>
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
+        <!-- Categories with tags -->
         <div v-for="category in categories" :key="category.value">
             <Tag :label="category.label" :theme="category.value == activeCategory ? 5 : 0" @click="()=> activeCategory = category.value">
                 <template #label>
@@ -89,14 +89,14 @@ onMounted(() => {
         </div>
     </div>
 
-    <div v-if="templates.length > 0" class="grid grid-cols-3 gap-4">
-        <div v-for="template in templates" :key="template.slug" class="relative w-96 h-96">
+    <!-- Responsive grid layout for templates -->
+    <div v-if="templates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div v-for="template in templates" :key="template.slug" class="relative w-full">
             <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-             <Image :src="template.image"
-                    :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
+                <Image :src="template.image"
+                       :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
-            <div
-                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
                 <div class="text-white text-center">
                     <Button :label="trans('Use Template')" @click="selectTemplate(template)" />
                 </div>
@@ -104,13 +104,16 @@ onMounted(() => {
             <span class="flex justify-center p-2 font-bold">{{ template.compiled.name }}</span>
         </div>
     </div>
-    <div v-else class="p-4">
+
+    <!-- Handling case when no templates are available -->
+   <div v-else class="p-4">
         <EmptyState :data="{
             title: trans('You haven\'t uploaded any templates.'),
             description: trans(''),
         }" />
-    </div>
+    </div> 
 </template>
+
 
 
 
