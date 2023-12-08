@@ -25,6 +25,7 @@ class SendIdentityEmailVerification
 
     public function handle(SenderEmail $senderEmail): SenderEmail
     {
+
         $email = $senderEmail->email_address;
 
 
