@@ -84,7 +84,7 @@ const resendEmail = async (email: string) => {
                 email: email
             }
         )
-            
+
         // const interval = setInterval(() => {
         //     resendInterval.value = useSecondCountdown(data.data.last_verification_submitted_at, 60)
         //     if(!resendInterval.value) clearInterval(interval)
@@ -136,8 +136,10 @@ const resendEmail = async (email: string) => {
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
-                    <div v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
-                    <FontAwesomeIcon v-else icon='fad fa-spinner-third' class='ml-2 animate-spin' aria-hidden='true' />
+                    <div>
+                    <span v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</span>
+                    <FontAwesomeIcon v-else icon='fad fa-spinner-third' class=' block ml-2 animate-spin' aria-hidden='true' />
+                    </div>
                     <!-- <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }}</div> -->
                 <!-- </div> -->
             </div>
