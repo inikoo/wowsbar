@@ -11,6 +11,7 @@ use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
 use Arr;
+use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
@@ -24,39 +25,43 @@ class CheckSenderEmailVerification
 
     public function handle(string $email): SenderEmailStateEnum
     {
-        $result = $this->getSesClient()->getIdentityVerificationAttributes(
-            [
-                'Identities' => [
-                    $email,
-                    explode('@', $email)[1]
+        try {
+            $result = $this->getSesClient()->getIdentityVerificationAttributes(
+                [
+                    'Identities' => [
+                        $email,
+                        explode('@', $email)[1]
+                    ]
                 ]
-            ]
-        );
+            );
 
-        $result = Arr::get($result, 'VerificationAttributes', []);
-        if (count($result) === 0) {
-            return SenderEmailStateEnum::VERIFICATION_NOT_SUBMITTED;
-        }
+            $result = Arr::get($result, 'VerificationAttributes', []);
+            if (count($result) === 0) {
+                return SenderEmailStateEnum::VERIFICATION_NOT_SUBMITTED;
+            }
 
-        foreach ($result as $identity => $data) {
-            if ($identity === $email) {
+            foreach ($result as $identity => $data) {
+                if ($identity === $email) {
+                    if ($data['VerificationStatus'] === 'Success') {
+                        return SenderEmailStateEnum::VERIFIED;
+                    } elseif ($data['VerificationStatus'] === 'Pending') {
+                        return SenderEmailStateEnum::PENDING;
+                    }
+
+                    return SenderEmailStateEnum::FAIL;
+                }
+            }
+
+            // verify the domain
+            foreach ($result as $data) {
                 if ($data['VerificationStatus'] === 'Success') {
                     return SenderEmailStateEnum::VERIFIED;
                 } elseif ($data['VerificationStatus'] === 'Pending') {
                     return SenderEmailStateEnum::PENDING;
                 }
-
-                return SenderEmailStateEnum::FAIL;
             }
-        }
-
-        // verify the domain
-        foreach ($result as $data) {
-            if ($data['VerificationStatus'] === 'Success') {
-                return SenderEmailStateEnum::VERIFIED;
-            } elseif ($data['VerificationStatus'] === 'Pending') {
-                return SenderEmailStateEnum::PENDING;
-            }
+        } catch (Exception) {
+            return SenderEmailStateEnum::FAIL;
         }
 
         return SenderEmailStateEnum::FAIL;

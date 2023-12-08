@@ -2,9 +2,10 @@
 
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { routeType } from '@/types/route'
 import { router } from '@inertiajs/vue3'
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
 const props = defineProps<{
     routes: {
@@ -27,21 +28,12 @@ const emits = defineEmits<{
     (e: 'onCloseModal', value: boolean): void
 }>()
 
-// Declare null data to avoid undefined
-const dataPusher = ref({
-    data: {
-        number_rows: 0,
-        number_success: 0,
-        number_fails: 0
-    }
-})
-
 const isShowProgress = ref(false)
 
 
 // Progress bar for adding file
 const compProgressBar = computed(() => {
-    return dataPusher.value?.data.number_rows ? (dataPusher.value?.data.number_success+dataPusher.value?.data.number_fails)/dataPusher.value?.data.number_rows * 100 : 0
+    return useEchoOrgPersonal().progressBars.total ? useEchoOrgPersonal().progressBars.done/useEchoOrgPersonal().progressBars.total * 100 : 0
 })
 
 // To manipulation data history file upload
@@ -49,10 +41,16 @@ const recentlyUploaded = ref<{}[]>([])
 
 // On finish uploading
 const onFinish = () => {
-    recentlyUploaded.value.push(dataPusher.value.data)
+    recentlyUploaded.value.push(useEchoOrgPersonal().progressBars)  // Add recent uploaded file to history list
     setTimeout(() => {
-    // Reset data from Pusher binding
-        dataPusher.value.data = { number_rows: 0, number_success: 0, number_fails: 0 }  // Can lead to isShowProgress to false
+        // Reset data from Pusher binding
+        useEchoOrgPersonal().progressBars = { data: {
+                number_success: 0,
+                number_fails: 0
+            },
+            done: 0,
+            total: 0
+        }  // Reset value, Can lead to isShowProgress to false
     }, 6000)
     if(props.propName) {
         router.reload({
@@ -60,6 +58,7 @@ const onFinish = () => {
         })
     }
 }
+
 </script>
 
 <template>
@@ -79,9 +78,9 @@ const onFinish = () => {
             progressName: 'employees',
             isShowProgress: isShowProgress,
             progressPercentage: compProgressBar,
-            countSuccess: dataPusher.data.number_success,
-            countFails: dataPusher.data.number_fails,
-            countTotal: dataPusher.data.number_rows
+            countSuccess: useEchoOrgPersonal().progressBars.data.number_success,
+            countFails: useEchoOrgPersonal().progressBars.data.number_fails,
+            countTotal: useEchoOrgPersonal().progressBars.total
         }"
         :description="description"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
