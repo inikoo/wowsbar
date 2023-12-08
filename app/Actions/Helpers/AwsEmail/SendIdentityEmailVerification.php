@@ -25,7 +25,6 @@ class SendIdentityEmailVerification
 
     public function handle(SenderEmail $senderEmail): SenderEmail
     {
-        return SenderEmailStateEnum::ERROR;
 
         $email = $senderEmail->email_address;
 

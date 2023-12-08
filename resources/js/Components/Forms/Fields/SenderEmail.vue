@@ -18,7 +18,7 @@ import { ref, watch, defineEmits } from "vue"
 import { SenderEmail } from '@/types/SenderEmail'
 import {trans} from "laravel-vue-i18n"
 import axios from 'axios'
-import { useSecondCountdown } from "@/Composables/useFormatTime"
+
 
 const props = defineProps<{
     form: any
@@ -72,11 +72,8 @@ const updateFormValue = (newValue) => {
     emits("update:form", target)
 }
 
-// After resend email verification
-const resendInterval = ref(0)
 const resendEmail = async (email: string) => {
     isLoading.value = true
-    // Method here
     try {
         const data = await axios.post(
             route(props.options.resendEmailRoute.name, props.options.resendEmailRoute.parameters),
@@ -84,11 +81,6 @@ const resendEmail = async (email: string) => {
                 email: email
             }
         )
-
-        // const interval = setInterval(() => {
-        //     resendInterval.value = useSecondCountdown(data.data.last_verification_submitted_at, 60)
-        //     if(!resendInterval.value) clearInterval(interval)
-        // }, 1000)
     } catch (error) {
         console.log(error)
     }
@@ -136,10 +128,10 @@ const resendEmail = async (email: string) => {
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
-                    <div>
+                    <span class="ml-1">
                     <span v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</span>
-                    <FontAwesomeIcon v-else icon='fad fa-spinner-third' class=' block ml-2 animate-spin' aria-hidden='true' />
-                    </div>
+                    <FontAwesomeIcon v-else icon='fad fa-spinner-third' class=' animate-spin' aria-hidden='true' />
+                    </span>
                     <!-- <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }}</div> -->
                 <!-- </div> -->
             </div>
