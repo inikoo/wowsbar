@@ -11,21 +11,57 @@ import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
-
+import { router } from '@inertiajs/vue3'
 
 export const initialiseOrgApp = () => {    
+    
+    router.on('navigate', (event) => {
+        // console.log('====================')
+        // axios.post(route('org.models.live-users.update'))
+        //     .then(response => {
+        //         console.log('Event broadcasted successfully');
+        //     })
+        //     .catch(error => {
+        //         console.error('Error broadcasting event:', error);
+        //     });
+
+        // console.log(event.detail.page.props.title)
+    })
+
+    // let channel = window.Echo.join(`org.live.users`)
+    // console.log(channel)
+
+    // channel.listenForWhisper('typing', function (e) {
+    //     console.log(e,'ttt');
+    // }).listen('.broadcast-name', function (e) {
+    //     console.log(e, 'yyy');
+    // });
+
+    // setInterval(() => {
+    //     try {
+    //         channel.whisper('typing', {
+    //             user: 'wwwww', 
+    //             typing: true})
+    //     } catch (error) {
+    //         console.log('rewrewrew', error)
+    //     }
+    // }, 1000)
+
     window.Echo.join(`org.live.users`)
     .here((users) => {
-        console.log('hello here!!', users)
+        console.log('everyone here: ', users)
     })
     .joining((user) => {
-        console.log(user, 'is joining');
+        console.log(user, 'is joining from other web');
     })
     .leaving((user) => {
         console.log(user.name);
     })
     .error((error) => {
-        console.error(error);
+        console.log('error', error)
+    })
+    .listen('.xdxdxd', (aa) => {
+        console.log('aa', aa)
     })
 
     
