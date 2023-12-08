@@ -62,7 +62,8 @@ class ReSendIdentityEmailVerification
     {
         return [
             'state'   => $senderEmail->state,
-            'message' => $senderEmail->state->message()[$senderEmail->state->value]
+            'message' => $senderEmail->state->message()[$senderEmail->state->value],
+            'last_verification_submitted_at'   => $senderEmail->last_verification_submitted_at,
         ];
     }
 

@@ -1,4 +1,4 @@
-import { format, formatDuration, intervalToDuration } from 'date-fns'
+import { format, formatDuration, intervalToDuration, addSeconds, formatDistanceToNowStrict, isPast } from 'date-fns'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { zhCN, enUS, fr, de, id, ja, sk, es } from 'date-fns/locale'
 
@@ -51,5 +51,15 @@ export const useTimeCountdown: any = (dateIso: string, options?: { human?: boole
 
     if(options?.human) return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
 
-    return countdown
+    return countdown  // { "years": 0, "months": 0, "days": 0, "hours": 0, "minutes": 51, "seconds": 0 } 
+}
+
+
+// Time countdown
+export const useSecondCountdown: any = (dateIso: string | Date, duration: number, options?: { human?: boolean, zero?: boolean }) => {
+    if (!dateIso) return false  // If the provided data date is null
+
+    const newDate = addSeconds(new Date(dateIso), duration)
+    if(isPast(newDate)) return false
+    return formatDistanceToNowStrict(newDate)  // 23 seconds
 }

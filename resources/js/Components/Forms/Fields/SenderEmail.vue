@@ -16,7 +16,9 @@ import { set, get } from "lodash"
 library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle)
 import { ref, watch, defineEmits } from "vue"
 import { SenderEmail } from '@/types/SenderEmail'
-import {trans} from "laravel-vue-i18n";
+import {trans} from "laravel-vue-i18n"
+import axios from 'axios'
+import { useSecondCountdown } from "@/Composables/useFormatTime"
 
 const props = defineProps<{
     form: any
@@ -71,14 +73,23 @@ const updateFormValue = (newValue) => {
 
 // After resend email verification
 const resendInterval = ref(0)
-const resendEmail = async () => {
+const resendEmail = async (email: string) => {
     // Method here
-    resendInterval.value = 60
-    const interval = setInterval(() => {
-        resendInterval.value--
-        if(resendInterval.value == 0) clearInterval(interval)
-    }, 1000)
+    try {
+        const data = await axios.post(
+            route(props.options.resendEmailRoute.name, props.options.resendEmailRoute.parameters),
+            {
+                email: email
+            }
+        )
 
+        // const interval = setInterval(() => {
+        //     resendInterval.value = useSecondCountdown(data.data.last_verification_submitted_at, 60)
+        //     if(!resendInterval.value) clearInterval(interval)
+        // }, 1000)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 </script>
@@ -120,10 +131,11 @@ const resendEmail = async () => {
             <FontAwesomeIcon icon='fal fa-info-circle' class='h-5 opacity-70' aria-hidden='true' />
             <div>
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
-                <div v-if="fieldData.options.senderEmail?.state != 'verified'">
-                    <div v-if="!resendInterval" @click="resendEmail" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
-                    <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }} seconds.</div>
-                </div>
+                <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
+                    <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
+                    <div @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
+                    <!-- <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }}</div> -->
+                <!-- </div> -->
             </div>
         </div>
     </div>
