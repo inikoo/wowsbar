@@ -19,8 +19,8 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
         },
     }),
     actions: {
-        subscribe(userID) {
-            console.log("org.personal." + userID);
+        subscribe(userID) {    
+            // console.log("org.personal." + userID);
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
