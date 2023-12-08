@@ -16,7 +16,7 @@ use Aws\Ses\Exception\SesException;
 use Lorisleiva\Actions\ActionRequest;
 use Throwable;
 
-class SendIdentityEmailVerification
+class ReSendIdentityEmailVerification
 {
     use WithActionUpdate;
     use AwsClient;
@@ -26,19 +26,6 @@ class SendIdentityEmailVerification
     public function handle(SenderEmail $senderEmail): SenderEmail
     {
         $email = $senderEmail->email_address;
-
-
-        $state = CheckSenderEmailVerification::run($email);
-
-        if (in_array($state, [SenderEmailStateEnum::VERIFIED, SenderEmailStateEnum::PENDING])) {
-            if ($senderEmail->verified_at === null) {
-                data_set($modelData, 'verified_at', now());
-            }
-
-            data_set($modelData, 'state', $state);
-
-            return $this->update($senderEmail, $modelData);
-        }
 
         try {
             $result = $this->getSesClient()->verifyEmailIdentity([
