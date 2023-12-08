@@ -11,7 +11,9 @@ use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
 use App\Models\Mail\SenderEmail;
+use Aws\Ses\Exception\SesException;
 use Lorisleiva\Actions\ActionRequest;
+use Throwable;
 
 class SendIdentityEmailVerification
 {
@@ -37,15 +39,19 @@ class SendIdentityEmailVerification
             return $this->update($senderEmail, $modelData);
         }
 
-        $result = $this->getSesClient()->verifyEmailIdentity([
-            'EmailAddress' => $email,
-        ]);
+        try {
+            $result = $this->getSesClient()->verifyEmailIdentity([
+                'EmailAddress' => $email,
+            ]);
 
-        if ($result['@metadata']['statusCode'] != 200) {
-            $state = SenderEmailStateEnum::VERIFICATION_SUBMISSION_ERROR;
-        } else {
-            $state = SenderEmailStateEnum::PENDING;
-            data_set($modelData, 'last_verification_submitted_at', now());
+            if ($result['@metadata']['statusCode'] != 200) {
+                $state = SenderEmailStateEnum::VERIFICATION_SUBMISSION_ERROR;
+            } else {
+                $state = SenderEmailStateEnum::PENDING;
+                data_set($modelData, 'last_verification_submitted_at', now());
+            }
+        } catch (SesException|Throwable) {
+            $state = SenderEmailStateEnum::ERROR;
         }
 
 

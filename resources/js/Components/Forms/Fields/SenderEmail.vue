@@ -16,6 +16,7 @@ import { set, get } from "lodash"
 library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle)
 import { ref, watch, defineEmits } from "vue"
 import { SenderEmail } from '@/types/SenderEmail'
+import {trans} from "laravel-vue-i18n";
 
 const props = defineProps<{
     form: any
@@ -120,7 +121,7 @@ const resendEmail = async () => {
             <div>
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <div v-if="fieldData.options.senderEmail?.state != 'verified'">
-                    <div v-if="!resendInterval" @click="resendEmail" class="w-fit underline hover:text-amber-500 cursor-pointer">Resend email</div>
+                    <div v-if="!resendInterval" @click="resendEmail" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
                     <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }} seconds.</div>
                 </div>
             </div>

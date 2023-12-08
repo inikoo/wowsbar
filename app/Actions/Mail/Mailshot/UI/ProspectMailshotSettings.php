@@ -32,6 +32,11 @@ class ProspectMailshotSettings extends InertiaAction
                     'value'    => $shop->prospectsSenderEmail?->email_address,
                     'required' => true,
                     'options'  => [
+                        'resendEmailRoute'=> [
+                            'name'      => 'org.models.shop.prospect-mailshots.settings.email-verification.resend',
+                            'parameters'=> $shop->id
+                        ],
+
                         'senderEmail'=>
                             $shop->prospects_sender_email_id ?
                                 SenderEmailResource::make($shop->prospectsSenderEmail)->getArray() : null,
