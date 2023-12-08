@@ -126,7 +126,7 @@ const getParams = () => {
 onMounted(() => {
     const pathname = getParams()
     if (pathname.tags) {
-        props.form[props.fieldName].recipient_builder_type = "custom"
+        props.form[props.fieldName].recipient_builder_type = "custom_prospects_query"
         selectedIndex.value = 1
     }else{
      const index = categories.findIndex((item)=>item.name ==  props.form[props.fieldName].recipient_builder_type)

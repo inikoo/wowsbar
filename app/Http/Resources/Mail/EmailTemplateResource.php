@@ -7,7 +7,9 @@
 
 namespace App\Http\Resources\Mail;
 
+use App\Http\Resources\Gallery\ImageResource;
 use App\Http\Resources\HasSelfCall;
+use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -22,10 +24,13 @@ class EmailTemplateResource extends JsonResource
         /** @var \App\Models\Mail\EmailTemplate $emailTemplate */
         $emailTemplate = $this;
 
+        $image = Media::whereCollectionName('collection_name')->whereId(explode('.', '', $emailTemplate->compiled['image'])[0])->first();
+
         return [
             'slug'     => $emailTemplate->slug,
             'title'    => $emailTemplate->title,
-            'compiled' => $emailTemplate->compiled
+            'compiled' => $emailTemplate->compiled,
+            'image'    => new ImageResource($image)
         ];
     }
 }

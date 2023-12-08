@@ -15,7 +15,7 @@ class EmailTemplateSeeder extends Seeder
      */
     public function run(): void
     {
-        $path              = database_path('seeders/datasets/emailTemplate.json');
+        $path              = database_path('seeders/datasets/email-templates/emailTemplate.json');
         $emailTemplateJson = json_decode(file_get_contents($path), true);
 
         foreach (Arr::get($emailTemplateJson, 'categories') as $emailTemplate) {
