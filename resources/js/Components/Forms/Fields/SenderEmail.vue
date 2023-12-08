@@ -54,6 +54,7 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 const value = ref(setFormValue(props.form, props.fieldName))
+const isLoading = ref(false)
 
 watch(value, (newValue) => {
     // Update the form field value when the value ref changes
@@ -74,6 +75,7 @@ const updateFormValue = (newValue) => {
 // After resend email verification
 const resendInterval = ref(0)
 const resendEmail = async (email: string) => {
+    isLoading.value = true
     // Method here
     try {
         const data = await axios.post(
@@ -82,7 +84,7 @@ const resendEmail = async (email: string) => {
                 email: email
             }
         )
-
+            
         // const interval = setInterval(() => {
         //     resendInterval.value = useSecondCountdown(data.data.last_verification_submitted_at, 60)
         //     if(!resendInterval.value) clearInterval(interval)
@@ -90,6 +92,7 @@ const resendEmail = async (email: string) => {
     } catch (error) {
         console.log(error)
     }
+    isLoading.value = false
 }
 
 </script>
@@ -133,7 +136,8 @@ const resendEmail = async (email: string) => {
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
-                    <div @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
+                    <div v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div>
+                    <FontAwesomeIcon v-else icon='fad fa-spinner-third' class='ml-2 animate-spin' aria-hidden='true' />
                     <!-- <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }}</div> -->
                 <!-- </div> -->
             </div>
