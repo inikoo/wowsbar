@@ -12,10 +12,12 @@ import Button from '@/Components/Elements/Buttons/Button.vue';
 import { trans } from 'laravel-vue-i18n'
 import Tag from '@/Components/Tag.vue';
 import EmptyState from '@/Components/Utils/EmptyState.vue'
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faThLarge, faTreeChristmas, faGlassCheers, faBat } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { get } from 'lodash'
+import Image from '@/Components/Image.vue'
+
 library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat)
 
 const props = defineProps<{
@@ -90,7 +92,7 @@ onMounted(() => {
     <div v-if="templates.length > 0" class="grid grid-cols-3 gap-4">
         <div v-for="template in templates" :key="template.slug" class="relative w-96 h-96">
             <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-                <img :src="`http://127.0.0.1:5173/resources/art/TemplatesMailshot/${template.compiled.image}`"
+             <Image :src="template.image"
                     :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
             <div
