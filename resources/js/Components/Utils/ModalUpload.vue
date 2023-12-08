@@ -132,7 +132,7 @@ watch(() => props.modelValue, async (newVal) => {
 
             <!-- Table History -->
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
-                <div class="text-sm text-gray-600"> {{ trans(`Recent uploaded  ${propName} :`)}} </div>
+                <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="[...dataHistory, ...recentlyUploaded].length">
                         <div v-for="(history, index) in [...dataHistory, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
