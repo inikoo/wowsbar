@@ -742,7 +742,7 @@ watch(name, () => {
 
                     <!-- Pagination -->
                     <slot name="pagination" :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
-                        v-if="compResourceMeta.total > 15" :per-page-options="queryBuilderProps.perPageOptions"
+                        :per-page-options="queryBuilderProps.perPageOptions"
                         :on-per-page-change="onPerPageChange">
                         <Pagination :on-click="visit" :has-data="hasData" :meta="compResourceMeta" :exportLinks="queryBuilderProps.exportLinks"
                             :per-page-options="queryBuilderProps.perPageOptions" :on-per-page-change="onPerPageChange" />

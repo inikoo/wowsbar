@@ -24,9 +24,9 @@ const props = withDefaults(defineProps<{
     color?: String;
     colorSuggestions?: Boolean
     stylePanel?: any
-    mode?: String
+    mode?: string
 }>(), {
-    colorSuggestions: true,
+    colorSuggestions: () => true,
     mode: 'color',
     fieldData: {
         icon: 'far fa-paint-brush'

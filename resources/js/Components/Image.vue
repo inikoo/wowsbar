@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
     alt?: string,
     class?: string
 }>(), {
-    src: {
+    src: () => {
         original: fallbackPath
     }
 })

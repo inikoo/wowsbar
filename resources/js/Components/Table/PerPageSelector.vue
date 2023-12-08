@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<{
 }>(), {
     dusk: '',
     value: 15,
-    options: [10, 50, 100, 500, 1000],
+    options: () => [10, 50, 100, 500, 1000],
 })
 
 const perPageOptions = computed(() => {
