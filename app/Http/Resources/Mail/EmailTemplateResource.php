@@ -24,13 +24,11 @@ class EmailTemplateResource extends JsonResource
         /** @var \App\Models\Mail\EmailTemplate $emailTemplate */
         $emailTemplate = $this;
 
-        $image = Media::whereCollectionName('collection_name')->whereId(explode('.', '', $emailTemplate->compiled['image'])[0])->first();
-
         return [
             'slug'     => $emailTemplate->slug,
             'title'    => $emailTemplate->title,
             'compiled' => $emailTemplate->compiled,
-            'image'    => new ImageResource($image)
+            'image'    => new ImageResource($emailTemplate->screenshot)
         ];
     }
 }

@@ -9,11 +9,14 @@ namespace App\Models\Mail;
 
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
+use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -32,6 +35,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot
+ * @property-read \App\Models\Media\Media|null $screenshot
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
@@ -50,10 +54,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class EmailTemplate extends Model
+class EmailTemplate extends Model implements HasMedia
 {
     use HasFactory;
     use HasSlug;
+    use InteractsWithMedia;
 
     protected $guarded = [];
 
@@ -94,6 +99,11 @@ class EmailTemplate extends Model
     public function liveSnapshot(): BelongsTo
     {
         return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
+    public function screenshot(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'screenshot_id');
     }
 
     public function deployments(): MorphMany

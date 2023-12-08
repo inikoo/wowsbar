@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Mail\EmailTemplate\AttachImageToEmailTemplate;
 use App\Models\EmailTemplateCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EmailTemplateSeeder extends Seeder
 {
@@ -24,13 +26,15 @@ class EmailTemplateSeeder extends Seeder
             ]);
 
             foreach (Arr::get($emailTemplate, 'templates') as $template) {
-                $filePath = database_path('seeders/datasets/email-templates/' . Str::slug($category->name) . '/' . Arr::get($template, 'content'));
+                $basePath = 'seeders/datasets/email-templates/' . Str::slug($category->name) . '/' . explode('.', Arr::get($template, 'content'))[0];
+
+                $filePath = database_path($basePath . '/' . Arr::get($template, 'content'));
                 $fileExt  = File::extension($filePath);
 
                 if ($fileExt === 'json') {
                     $title = Arr::get($template, 'name');
 
-                    $category->templates()->create([
+                    $emailTemplate = $category->templates()->create([
                         'title'       => $title,
                         'parent_type' => 'Organisation',
                         'parent_id'   => 1,
@@ -38,6 +42,18 @@ class EmailTemplateSeeder extends Seeder
                         'compiled'    => json_decode(file_get_contents($filePath), true),
                     ]);
 
+                    $imagesPath = database_path($basePath . '/images');
+                    foreach (File::files($imagesPath) as $image) {
+                        AttachImageToEmailTemplate::run($emailTemplate, 'email_templates', $image->getPathname(), $image->getFilename());
+                    }
+
+                    $checksum = md5_file($imagesPath . '/' . Arr::get($template, 'image'));
+                    /** @var Media $media */
+                    $media = $emailTemplate->media()->where('collection_name', 'email_templates')->where('checksum', $checksum)->first();
+
+                    $emailTemplate->update([
+                        'screenshot_id' =>  $media->id
+                    ]);
                 }
             }
         }

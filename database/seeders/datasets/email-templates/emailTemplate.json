@@ -26,7 +26,7 @@
           {
             "name": "Sweet Treat",
             "content": "SweetTreat.json",
-            "image": "SweetTreat.jpg"
+            "image": "SweetTreat.png"
           }
         ]
       },
@@ -67,4 +67,3 @@
       }
     ]
   }
-  
