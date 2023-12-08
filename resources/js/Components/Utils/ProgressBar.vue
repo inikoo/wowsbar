@@ -37,19 +37,19 @@ watch(() => props.progressData.progressPercentage, () => {
                 emits('onFinish') )  // Reset data on finish
             : ''
         )
-        : emits('updateShowProgress', false)  // If equal 0 (progress is not running yet)
+        : emits('updateShowProgress', false)  // If equal 0 (means progress is not running yet)
 }, { immediate: true })
 
 </script>
 
 <template>
-    <div :class="progressData.isShowProgress ? 'bottom-16' : '-bottom-16'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1 tabular-nums">
+    <div :class="progressData.isShowProgress ? 'bottom-16' : '-bottom-20'" class="backdrop-blur-sm bg-white/60 ring-1 ring-gray-300 rounded-md px-4 py-2 z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1 tabular-nums">
         <div class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
             <div v-if="progressData.progressPercentage >= 100">Finished!!🥳</div>
             <div v-else>{{ description ?? trans('Adding')}} ({{ progressData.countSuccess + progressData.countFails }}/<span class="font-semibold inline">{{ progressData.countTotal }}</span>)</div>
             
             <!-- Progress Bar -->
-            <div class="overflow-hidden rounded-full bg-gray-200 w-64 flex justify-start">
+            <div class="overflow-hidden rounded-full bg-white w-64 flex justify-start">
                 <div class="h-2 bg-lime-600 transition-all duration-100 ease-in-out" :style="`width: ${(progressData.countSuccess/progressData.countTotal)*100}%`" />
                 <div class="h-2 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(progressData.countFails/progressData.countTotal)*100}%`" />
             </div>
@@ -61,7 +61,7 @@ watch(() => props.progressData.progressPercentage, () => {
             </div>
         </div>
 
-        <div @click="emits('updateShowProgress', false)" class="px-2 py-1 cursor-pointer text-gray-400 hover:text-gray-600">
+        <div @click="emits('updateShowProgress', false)" class="absolute top-0 right-1 px-2 py-1 cursor-pointer text-gray-500 hover:text-gray-600">
             <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
         </div>
     </div>

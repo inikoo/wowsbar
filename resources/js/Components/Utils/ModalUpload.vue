@@ -23,7 +23,7 @@ const props = defineProps<{
         history?: routeType
     }
     recentlyUploaded: {}[]
-    propName : string
+    propName?: string
     // isUploaded: boolean
 }>()
 
@@ -32,7 +32,7 @@ const emits = defineEmits(['update:modelValue', 'isShowProgress'])
 // const { isUploaded } = toRefs(props)
 
 const isLoadingUpload = ref(false)
-const dataHistory: any = ref([])
+const dataHistoryFileUpload: any = ref([])
 const isLoadingHistory = ref(false)
 
 // Running when file is uploaded
@@ -59,17 +59,17 @@ const onUploadFile = async (fileUploaded: any) => {
 watch(() => props.modelValue, async (newVal) => {
     if (props.routes.history?.name) {
         isLoadingHistory.value = true
-        if(newVal && !dataHistory.value.length) {  // to prevent fetch every modal appear
+        if(newVal && !dataHistoryFileUpload.value.length) {  // to prevent fetch every modal appear
             try {
                 const data = await axios.get(route(props.routes.history.name, props.routes.history.parameters))
-                dataHistory.value = data.data.data
+                dataHistoryFileUpload.value = data.data.data
             } catch (error: any) {
-                dataHistory.value = []
+                dataHistoryFileUpload.value = []
                 console.error(error.message)
             }
         }
     } else {
-        dataHistory.value = []
+        dataHistoryFileUpload.value = []
     }
     isLoadingHistory.value = false
 })
@@ -78,7 +78,7 @@ watch(() => props.modelValue, async (newVal) => {
 
 <template>
     <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)">
-        <!-- <pre>{{  [...dataHistory, ...recentlyUploaded] }}</pre> -->
+        <!-- <pre>{{  [...dataHistoryFileUpload, ...recentlyUploaded] }}</pre> -->
         <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">
             <div>
                 <div>{{ trans(`Upload your new ${propName}`) }}</div>
@@ -134,18 +134,18 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600"> {{ trans(`Recent uploaded  ${propName} :`)}} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="[...dataHistory, ...recentlyUploaded].length">
-                        <div v-for="(history, index) in [...dataHistory, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
-                            <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
+                    <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">
+                        <div v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
+                            <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
                                 <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
-                            </a>
-                            <p class="text-lg leading-none text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
+                            </a> -->
+                            <p class="text-lg leading-none text-gray-700 font-semibold">{{ history.number_rows ?? history.total }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
                             <div class="flex gap-x-2">
-                                <span class="text-lime-600 text-xxs">{{ history.number_success }} success,</span>
-                                <span class="text-red-500 text-xxs">{{ history.number_fails }} fails</span>
+                                <span class="text-lime-600 text-xxs">{{ history.number_success ?? history.data.number_success }} success,</span>
+                                <span class="text-red-500 text-xxs">{{ history.number_fails ?? history.data.number_fails }} fails</span>
                             </div>
                             <!-- <span class="text-gray-600 text-xs leading-none truncate">{{ history.filename }}</span> -->
-                            <span class="text-gray-400 text-xxs mt-2">{{ useFormatTime(history.uploaded_at ?? history.created_at, { formatTime: 'hms'}) }}</span>
+                            <span class="text-gray-400 text-xxs mt-2">{{ useFormatTime(history.uploaded_at ?? history.start_at, { formatTime: 'hms'}) }}</span>
                         </div>
                     </template>
                     <div v-else class="text-gray-500 text-xs">
