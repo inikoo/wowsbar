@@ -9,11 +9,26 @@ import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
-import {useEchoOrgPersonal} from '@/Stores/echo-org-personal.js';
-import {useEchoOrgGeneral} from '@/Stores/echo-org-general.js';
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
+import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
 
 
-export const initialiseOrgApp = () => {
+export const initialiseOrgApp = () => {    
+    window.Echo.join(`org.live.users`)
+    .here((users) => {
+        console.log('hello here!!', users)
+    })
+    .joining((user) => {
+        console.log(user, 'is joining');
+    })
+    .leaving((user) => {
+        console.log(user.name);
+    })
+    .error((error) => {
+        console.error(error);
+    })
+
+    
     const layout = useLayoutStore()
     const locale = useLocaleStore()
     const echoPersonal = useEchoOrgPersonal()
