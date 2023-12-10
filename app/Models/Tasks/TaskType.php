@@ -2,7 +2,7 @@
 
 namespace App\Models\Tasks;
 
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

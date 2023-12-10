@@ -16,7 +16,7 @@ use App\Http\Resources\HumanResources\EmployeesResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\JobPosition;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\JoinClause;

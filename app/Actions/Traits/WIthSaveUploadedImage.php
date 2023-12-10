@@ -10,7 +10,7 @@ namespace App\Actions\Traits;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Web\Website;
 
 trait WIthSaveUploadedImage

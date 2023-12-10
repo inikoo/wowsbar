@@ -34,7 +34,7 @@ php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation and guests"
 php artisan org:create wowsbar Wowsbar ID GBP
-php artisan org:create-guest 'Mr Aiku' aiku external_administrator -e aiku@inikoo.com
+php artisan guest:create 'Mr Aiku' aiku external_administrator -e aiku@inikoo.com
 php artisan guest:import -g wowsbar/data-sets/guests
 
 echo "🌱 create shop/website"

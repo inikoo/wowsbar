@@ -16,7 +16,7 @@ class OrganisationAppResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var \App\Models\Organisation\Organisation $organisation */
+        /** @var \App\Models\SysAdmin\Organisation $organisation */
         $organisation = $this;
 
         return [

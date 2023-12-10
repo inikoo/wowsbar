@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Organisation\Profile;
 
-use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatarFromImage;
+use App\Actions\SysAdmin\OrganisationUser\UI\SetOrganisationUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Http\UploadedFile;

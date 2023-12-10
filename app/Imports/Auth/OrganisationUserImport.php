@@ -3,7 +3,7 @@
 namespace App\Imports\Auth;
 
 use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
-use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
+use App\Actions\SysAdmin\OrganisationUser\StoreOrganisationUser;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Helpers\Upload;
 use App\Models\Helpers\UploadRecord;

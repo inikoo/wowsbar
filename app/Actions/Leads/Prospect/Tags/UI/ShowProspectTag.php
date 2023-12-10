@@ -18,7 +18,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

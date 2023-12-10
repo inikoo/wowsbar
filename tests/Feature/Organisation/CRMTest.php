@@ -11,7 +11,7 @@ use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
 use App\Models\CRM\CustomerStats;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 
 use function Pest\Laravel\{actingAs};
 

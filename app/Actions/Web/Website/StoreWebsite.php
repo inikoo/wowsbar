@@ -8,7 +8,7 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWebsites;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWebsites;
 use App\Actions\Web\Website\Hydrators\WebsiteHydrateUniversalSearch;
 use App\Models\Market\Shop;
 use App\Models\Web\Website;

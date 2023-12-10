@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Web\Website\UI\ShowWebsite;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
 use Closure;
@@ -26,7 +26,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexWebpages extends InertiaAction
 {
     /**
-     * @var \App\Models\Organisation\Organisation|\App\Models\Web\Webpage|\App\Models\Web\Website
+     * @var \App\Models\SysAdmin\Organisation|\App\Models\Web\Webpage|\App\Models\Web\Website
      */
     private Webpage|Website|Organisation $parent;
 

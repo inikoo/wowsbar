@@ -9,7 +9,7 @@ namespace App\Actions\Mail\MailshotRecipient\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Mail\Mailshot\GetRecipients;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Mail\Mailshot;

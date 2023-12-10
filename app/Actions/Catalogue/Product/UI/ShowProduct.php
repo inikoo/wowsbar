@@ -15,7 +15,7 @@ use App\Enums\UI\Organisation\ProductTabsEnum;
 use App\Http\Resources\Catalogue\ProductResource;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;

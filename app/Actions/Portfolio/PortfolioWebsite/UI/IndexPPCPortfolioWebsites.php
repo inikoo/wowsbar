@@ -15,7 +15,7 @@ use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

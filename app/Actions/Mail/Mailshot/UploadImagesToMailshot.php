@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Actions\Organisation\Organisation\AttachImageToOrganisation;
+use App\Actions\SysAdmin\Organisation\AttachImageToOrganisation;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Mail\Mailshot;

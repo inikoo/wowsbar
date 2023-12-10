@@ -9,7 +9,7 @@ namespace App\Enums\CRM\Prospect;
 
 use App\Enums\EnumHelperTrait;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 
 enum ProspectContactedStateEnum: string
 {

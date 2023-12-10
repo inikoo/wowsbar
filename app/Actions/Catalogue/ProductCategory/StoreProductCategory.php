@@ -9,9 +9,9 @@ namespace App\Actions\Catalogue\ProductCategory;
 
 use App\Actions\Catalogue\ProductCategory\Hydrators\ProductCategoryHydrateUniversalSearch;
 
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateDepartments;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateDepartments;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryTypeEnum;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Catalogue\ProductCategory;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;

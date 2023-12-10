@@ -17,7 +17,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Survey;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

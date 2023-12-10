@@ -19,7 +19,7 @@ use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;

@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 11 Dec 2023 01:50:37 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 return [
 
@@ -35,12 +40,16 @@ return [
             'root'   => storage_path('app'),
             'throw'  => false,
         ],
+        'art' => [
+            'driver' => 'local',
+            'root'   => resource_path('art'),
+            'throw'  => true,
+        ],
         'datasets' => [
             'driver' => 'local',
             'root'   => database_path('seeders/datasets'),
             'throw'  => false,
         ],
-
         'public' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),

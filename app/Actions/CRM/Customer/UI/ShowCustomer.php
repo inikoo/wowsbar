@@ -11,7 +11,7 @@ use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;

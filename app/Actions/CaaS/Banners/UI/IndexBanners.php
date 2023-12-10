@@ -15,7 +15,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannersResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;

@@ -11,7 +11,7 @@ use App\Actions\Auth\CustomerUser\Hydrators\CustomerUserHydrateUniversalSearch;
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerUsers;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerUsers;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Actions\Web\Website\Hydrators\WebsiteHydrateCustomerUsers;
 use App\Http\Resources\Auth\CustomerUserResource;

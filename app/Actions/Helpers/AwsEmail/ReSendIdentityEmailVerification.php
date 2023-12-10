@@ -61,8 +61,8 @@ class ReSendIdentityEmailVerification
     public function jsonResponse(SenderEmail $senderEmail): array
     {
         return [
-            'state'   => $senderEmail->state,
-            'message' => $senderEmail->state->message()[$senderEmail->state->value],
+            'state'                            => $senderEmail->state,
+            'message'                          => $senderEmail->state->message()[$senderEmail->state->value],
             'last_verification_submitted_at'   => $senderEmail->last_verification_submitted_at,
         ];
     }

@@ -7,9 +7,10 @@
 
 
 use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\Helpers\Avatars\GetDiceBearAvatar;
 use App\Actions\Market\Shop\StoreShop;
-use App\Actions\Organisation\Guest\StoreGuest;
-use App\Actions\Organisation\Organisation\StoreOrganisation;
+use App\Actions\SysAdmin\Guest\StoreGuest;
+use App\Actions\SysAdmin\Organisation\StoreOrganisation;
 use App\Actions\Web\Website\StoreWebsite;
 use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
@@ -17,7 +18,7 @@ use App\Models\Auth\Guest;
 use App\Models\Auth\OrganisationUser;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
@@ -60,6 +61,10 @@ function createCustomer(): array
 
 function createShop(): array
 {
+    GetDiceBearAvatar::mock()
+        ->shouldReceive('handle')
+        ->andReturn(Storage::disk('art')->get('avatars/shapes.svg'));
+
     try {
         $organisation    = organisation();
         $shop            =Shop::first();

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -103,6 +104,7 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     use HasHistory;
     use HasUniversalSearch;
     use HasSlug;
+    use SoftDeletes;
 
 
     protected string $guard_name = 'org';

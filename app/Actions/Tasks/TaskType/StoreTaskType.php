@@ -7,8 +7,8 @@
 
 namespace App\Actions\Tasks\TaskType;
 
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateTaskTypes;
-use App\Models\Organisation\Division;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateTaskTypes;
+use App\Models\SysAdmin\Division;
 use App\Models\Tasks\TaskType;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

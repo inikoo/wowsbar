@@ -12,7 +12,7 @@ use App\Actions\Traits\WithElasticsearch;
 use App\Enums\UI\Organisation\SurveysTabsEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Survey;
 use Inertia\Inertia;
 use Inertia\Response;

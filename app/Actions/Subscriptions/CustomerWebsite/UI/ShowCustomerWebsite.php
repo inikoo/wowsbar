@@ -18,7 +18,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;

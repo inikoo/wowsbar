@@ -8,7 +8,7 @@
 namespace Database\Seeders;
 
 use App\Actions\Tasks\TaskType\StoreTaskType;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Tasks\TaskType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;

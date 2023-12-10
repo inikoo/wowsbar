@@ -5,8 +5,8 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Models\Organisation\Organisation;
+use App\Actions\SysAdmin\Organisation\StoreOrganisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Facades\Artisan;
 
 beforeAll(function () {

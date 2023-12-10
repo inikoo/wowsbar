@@ -9,9 +9,9 @@ namespace App\Actions\Portfolio\PortfolioDivision;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
 use Illuminate\Validation\Rule;

@@ -6,7 +6,7 @@
  */
 
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 
 if (!function_exists('organisation')) {
     function organisation(): Organisation

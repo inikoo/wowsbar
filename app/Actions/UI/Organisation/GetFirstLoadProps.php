@@ -14,7 +14,7 @@ use App\Http\Resources\Organisation\OrganisationResource;
 use App\Http\Resources\UI\OrganisationAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\OrganisationUser;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;

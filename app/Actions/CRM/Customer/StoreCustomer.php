@@ -11,7 +11,7 @@ use App\Actions\Auth\User\StoreUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\Helpers\SerialReference\GetSerialReference;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomers;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;

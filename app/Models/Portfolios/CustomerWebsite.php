@@ -41,7 +41,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Customer $customer
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Division> $divisions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SysAdmin\Division> $divisions
  * @property-read int|null $divisions_count
  * @property-read PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch

@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Tasks\ShowTasksDashboard;
 use App\Http\Resources\Tasks\TaskTypeResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Inertia\Inertia;

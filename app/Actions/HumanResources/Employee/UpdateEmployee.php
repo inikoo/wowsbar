@@ -9,8 +9,8 @@ namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\HumanResources\SyncJobPosition;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
-use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateEmployees;
+use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUser;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Http\Resources\HumanResources\EmployeeResource;

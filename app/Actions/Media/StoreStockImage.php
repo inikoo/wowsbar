@@ -8,7 +8,7 @@
 namespace App\Actions\Media;
 
 use App\Models\Media\Media;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreStockImage

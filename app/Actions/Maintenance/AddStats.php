@@ -9,7 +9,7 @@ namespace App\Actions\Maintenance;
 
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
 class AddStats

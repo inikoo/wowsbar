@@ -52,7 +52,7 @@ class EmailTemplateSeeder extends Seeder
                     $media = $emailTemplate->media()->where('collection_name', 'email_templates')->where('checksum', $checksum)->first();
 
                     $emailTemplate->update([
-                        'screenshot_id' =>  $media->id
+                        'screenshot_id' => $media->id
                     ]);
                 }
             }

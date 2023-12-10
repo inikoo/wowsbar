@@ -9,7 +9,7 @@ namespace App\Enums\HumanResources\Employee;
 
 use App\Enums\EnumHelperTrait;
 use App\Models\HumanResources\JobPosition;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 
 enum EmployeeStateEnum: string
 {

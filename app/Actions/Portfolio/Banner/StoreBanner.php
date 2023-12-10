@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateBanners;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateBanners;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;

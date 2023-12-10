@@ -9,7 +9,7 @@ namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WithProspectsSubNavigation;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
@@ -18,7 +18,7 @@ use App\Http\Resources\CRM\ProspectResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

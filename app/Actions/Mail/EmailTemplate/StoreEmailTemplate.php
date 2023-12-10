@@ -10,7 +10,7 @@ namespace App\Actions\Mail\EmailTemplate;
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

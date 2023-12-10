@@ -8,7 +8,7 @@
 namespace App\Enums\Organisation\Web\Webpage;
 
 use App\Enums\EnumHelperTrait;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
 

@@ -8,14 +8,14 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\CustomersTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

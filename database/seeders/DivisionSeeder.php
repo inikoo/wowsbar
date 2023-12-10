@@ -7,9 +7,9 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Organisation\Division\StoreDivision;
+use App\Actions\SysAdmin\Division\StoreDivision;
 use App\Enums\Divisions\DivisionEnum;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 

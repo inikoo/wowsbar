@@ -17,7 +17,7 @@ use App\Http\Resources\Mail\EmailTemplateResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;

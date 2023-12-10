@@ -10,7 +10,7 @@ namespace App\Actions\Leads\Prospect;
 use App\Actions\Helpers\Query\HydrateModelTypeQueries;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;

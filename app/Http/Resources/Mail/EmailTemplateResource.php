@@ -9,7 +9,6 @@ namespace App\Http\Resources\Mail;
 
 use App\Http\Resources\Gallery\ImageResource;
 use App\Http\Resources\HasSelfCall;
-use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

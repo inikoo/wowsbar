@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Organisation\OrganisationUser\Login;
-use App\Actions\Organisation\OrganisationUser\UI\ShowResetOrganisationUserPassword;
-use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUserPassword;
+use App\Actions\SysAdmin\OrganisationUser\Login;
+use App\Actions\SysAdmin\OrganisationUser\UI\ShowResetOrganisationUserPassword;
+use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUserPassword;
 use App\Actions\UI\Common\Auth\Logout;
 use App\Actions\UI\Common\Auth\ShowLogin;
 use Illuminate\Support\Facades\Route;

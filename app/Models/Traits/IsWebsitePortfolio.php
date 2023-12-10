@@ -8,7 +8,7 @@
 namespace App\Models\Traits;
 
 use App\Actions\Utils\Abbreviate;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\BannerPortfolioWebsite;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

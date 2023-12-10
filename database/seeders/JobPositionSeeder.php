@@ -21,6 +21,7 @@ class JobPositionSeeder extends Seeder
         $jobPositions = collect(config("blueprint.job_positions.positions"));
 
 
+
         foreach ($jobPositions as $jobPositionData) {
             $jobPosition = JobPosition::where('code', $jobPositionData['code'])->first();
             if ($jobPosition) {

@@ -7,16 +7,16 @@
 
 
 use App\Actions\Auth\User\ExportUsers;
-use App\Actions\Organisation\Guest\ExportGuest;
-use App\Actions\Organisation\Guest\UI\CreateGuest;
-use App\Actions\Organisation\Guest\UI\EditGuest;
-use App\Actions\Organisation\Guest\UI\IndexGuest;
-use App\Actions\Organisation\Guest\UI\RemoveGuest;
-use App\Actions\Organisation\Guest\UI\ShowGuest;
-use App\Actions\Organisation\Organisation\UI\EditOrganisation;
-use App\Actions\Organisation\OrganisationUser\UI\EditOrganisationUser;
-use App\Actions\Organisation\OrganisationUser\UI\IndexOrganisationUsers;
-use App\Actions\Organisation\OrganisationUser\UI\ShowOrganisationUser;
+use App\Actions\SysAdmin\Guest\ExportGuest;
+use App\Actions\SysAdmin\Guest\UI\CreateGuest;
+use App\Actions\SysAdmin\Guest\UI\EditGuest;
+use App\Actions\SysAdmin\Guest\UI\IndexGuest;
+use App\Actions\SysAdmin\Guest\UI\RemoveGuest;
+use App\Actions\SysAdmin\Guest\UI\ShowGuest;
+use App\Actions\SysAdmin\Organisation\UI\EditOrganisation;
+use App\Actions\SysAdmin\OrganisationUser\UI\EditOrganisationUser;
+use App\Actions\SysAdmin\OrganisationUser\UI\IndexOrganisationUsers;
+use App\Actions\SysAdmin\OrganisationUser\UI\ShowOrganisationUser;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 

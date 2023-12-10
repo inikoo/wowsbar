@@ -9,7 +9,7 @@ namespace App\Actions\CRM\Customer;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;

@@ -9,7 +9,7 @@ namespace App\Actions\Helpers\SerialReference;
 
 use App\Models\Helpers\SerialReference;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 

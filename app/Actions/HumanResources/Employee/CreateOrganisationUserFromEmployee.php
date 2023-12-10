@@ -7,7 +7,7 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
+use App\Actions\SysAdmin\OrganisationUser\StoreOrganisationUser;
 use App\Models\Auth\OrganisationUser;
 use App\Models\HumanResources\Employee;
 use Illuminate\Console\Command;

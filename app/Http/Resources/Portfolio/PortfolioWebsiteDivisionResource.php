@@ -13,7 +13,7 @@ class PortfolioWebsiteDivisionResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Organisation\Division $division */
+        /** @var \App\Models\SysAdmin\Division $division */
         $division = $this;
 
         return [

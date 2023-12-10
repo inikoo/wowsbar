@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\DispatchedEmail\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\InertiaTable\InertiaTable;

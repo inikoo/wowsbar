@@ -7,7 +7,7 @@
 
 namespace App\Actions\Traits;
 
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use Illuminate\Support\Facades\Cache;
 
 trait WithDivision

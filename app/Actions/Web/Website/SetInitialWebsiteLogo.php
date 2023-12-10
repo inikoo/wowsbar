@@ -7,6 +7,8 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Helpers\Avatars\GetDiceBearAvatar;
+use App\Enums\Helpers\Avatars\DiceBearStylesEnum;
 use App\Models\Media\Media;
 use App\Models\Web\Website;
 use Exception;
@@ -23,10 +25,10 @@ class SetInitialWebsiteLogo
 
     public function handle(Website $website): ?Website
     {
+        $seed = $website->name;
         try {
             /** @var Media $media */
-
-            $media = $website->addMediaFromUrl("https://api.dicebear.com/7.x/initials/svg?backgroundType=gradientLinear&seed=".$website->name)
+            $media = $website->addMediaFromString(GetDiceBearAvatar::run(DiceBearStylesEnum::INITIALS, $seed))
                 ->preservingOriginal()
                 ->usingName($website->slug."-logo")
                 ->usingFileName($website->slug."-logo.sgv")
@@ -44,7 +46,6 @@ class SetInitialWebsiteLogo
 
         return $website;
     }
-
 
 
 }

@@ -14,7 +14,7 @@ use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
 use Closure;

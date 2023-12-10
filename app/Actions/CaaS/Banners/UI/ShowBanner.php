@@ -16,7 +16,7 @@ use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Str;

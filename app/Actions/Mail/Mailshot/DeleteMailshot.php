@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use Illuminate\Http\RedirectResponse;

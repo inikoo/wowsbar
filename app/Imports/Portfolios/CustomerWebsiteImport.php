@@ -12,7 +12,7 @@ use App\Actions\Subscriptions\CustomerWebsite\StoreCustomerWebsite;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Imports\WithImport;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Division;
+use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Illuminate\Support\Arr;

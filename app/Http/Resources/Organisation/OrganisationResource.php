@@ -8,7 +8,7 @@
 namespace App\Http\Resources\Organisation;
 
 use App\Http\Resources\HasSelfCall;
-use App\Models\Organisation\Organisation;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrganisationResource extends JsonResource

@@ -8,7 +8,7 @@
 namespace App\Actions\Market\Shop;
 
 use App\Actions\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Market\Shop;

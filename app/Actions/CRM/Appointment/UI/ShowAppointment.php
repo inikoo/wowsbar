@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\Appointment\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\AppointmentTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Models\CRM\Appointment;

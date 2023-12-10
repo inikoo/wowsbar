@@ -2,7 +2,7 @@
 
 namespace App\Imports\Auth;
 
-use App\Actions\Organisation\Guest\StoreGuest;
+use App\Actions\SysAdmin\Guest\StoreGuest;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Imports\WithImport;
 use Exception;
