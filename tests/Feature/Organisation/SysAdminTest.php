@@ -135,6 +135,7 @@ test('create guest', function () {
     $guessData = array_merge(
         Guest::factory()->definition(),
         [
+            'password'  => 'secret-password',
             'positions' => ['admin'],
             'type'      => GuestTypeEnum::EXTERNAL_EMPLOYEE->value
         ]
@@ -186,6 +187,39 @@ test('create another guest', function () {
     return $guest;
 });
 
+test('can show app login', function () {
+    $response = get(route('org.login'));
+
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page->component('Auth/Login');
+    });
+});
+
+test('can not login with wrong credentials', function (Guest $guest) {
+    $response = $this->post(route('org.login.store'), [
+        'username' => $guest->organisationUser->username,
+        'password' => 'wrong password',
+    ]);
+
+    $response->assertRedirect('http://'.config('app.domain'));
+    $response->assertSessionHasErrors('username');
+
+    $organisationUser = $guest->organisationUser;
+    $organisationUser->refresh();
+    expect($organisationUser->stats->number_failed_logins)->toBe(1);
+})->depends('create guest');
+
+test('can login', function (Guest $guest) {
+    $response = $this->post(route('org.login.store'), [
+        'username' => $guest->organisationUser->username,
+        'password' => 'secret-password',
+    ]);
+    $response->assertRedirect(route('org.dashboard.show'));
+
+    $organisationUser = $guest->organisationUser;
+    $organisationUser->refresh();
+    expect($organisationUser->stats->number_logins)->toBe(1);
+})->depends('create guest');
 
 test('can show sysadmin dashboard', function (Guest $guest) {
     actingAs($guest->organisationUser, 'org');
