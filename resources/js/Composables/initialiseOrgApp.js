@@ -4,81 +4,52 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-import { useLayoutStore } from "@/Stores/layout"
-import { useLocaleStore } from "@/Stores/locale"
-import { usePage } from "@inertiajs/vue3"
+
+import { usePage, router } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
+
+import { useLayoutStore } from "@/Stores/layout"
+import { useLocaleStore } from "@/Stores/locale"
+import { orgActiveUsers } from '@/Stores/active-users'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
-import { router } from '@inertiajs/vue3'
 
-export const initialiseOrgApp = () => {    
-    
-    router.on('navigate', (event) => {
-        // console.log('====================')
-        // axios.post(route('org.models.live-users.update'))
-        //     .then(response => {
-        //         console.log('Event broadcasted successfully');
-        //     })
-        //     .catch(error => {
-        //         console.error('Error broadcasting event:', error);
-        //     });
 
-        // console.log(event.detail.page.props.title)
-    })
-
-    // let channel = window.Echo.join(`org.live.users`)
-    // console.log(channel)
-
-    // channel.listenForWhisper('typing', function (e) {
-    //     console.log(e,'ttt');
-    // }).listen('.broadcast-name', function (e) {
-    //     console.log(e, 'yyy');
-    // });
-
-    // setInterval(() => {
-    //     try {
-    //         channel.whisper('typing', {
-    //             user: 'wwwww', 
-    //             typing: true})
-    //     } catch (error) {
-    //         console.log('rewrewrew', error)
-    //     }
-    // }, 1000)
-
-    window.Echo.join(`org.live.users`)
-    .here((users) => {
-        console.log('everyone here: ', users)
-    })
-    .joining((user) => {
-        console.log(user, 'is joining from other web');
-    })
-    .leaving((user) => {
-        console.log(user.name);
-    })
-    .error((error) => {
-        console.log('error', error)
-    })
-    .listen('.xdxdxd', (aa) => {
-        console.log('aa', aa)
-    })
-
-    
+export const initialiseOrgApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
     const echoPersonal = useEchoOrgPersonal()
     const echoGeneral = useEchoOrgGeneral()
 
+    // If user change tab then broadcast to others
+    router.on('navigate', (event) => {
+        console.log(event.detail.page.props.title)
+        axios.post(
+            route('org.models.live-users.update'),
+            {
+                'active_page': event.detail.page.props.title
+            }
+        )
+        .catch(error => {
+            console.error('Error broadcasting.');
+        });
+
+    })
+
+    orgActiveUsers().subscribe();
+
+
+
     echoGeneral.subscribe()
     if (usePage().props.auth.user) {
-
         echoPersonal.subscribe(usePage().props.auth.user.id)
     }
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)
     }
+
     watchEffect(() => {
         // Set data of Navigation
         if (usePage().props.layout) {

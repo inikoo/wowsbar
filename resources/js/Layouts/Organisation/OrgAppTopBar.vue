@@ -11,6 +11,8 @@ import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 import { get } from 'lodash'
+import { orgActiveUsers } from '@/Stores/active-users'
+
 
 import {
     Menu,
@@ -44,9 +46,9 @@ onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
 })
 const logoutAuth = () => {
-    // Sign out from app and Firebase
     router.post(route(props.urlPrefix + 'logout'))
-    useSignOutFirebase()
+    orgActiveUsers().unsubscribe()  // Unsubscribe from Laravel Echo
+
 }
 
 </script>
