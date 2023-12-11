@@ -18,15 +18,8 @@ Broadcast::channel('org.general', function (OrganisationUser $organisationUser) 
 
 Broadcast::channel('org.live.users', function (OrganisationUser $organisationUser) {
     return [
-        'id'    => $organisationUser->id,
-        'alias' => $organisationUser->slug,
-        'name'  => $organisationUser->contact_name,
-        'last_active' => now(),
-        'route' => [
-            'icon'      => Arr::get(request()->route()->action, 'icon'),
-            'label'     => Arr::get(request()->route()->action, 'label'),
-            'name'      => request()->route()->getName(),
-            'arguments' => request()->route()->originalParameters(),
-        ],
+        'id'          => $organisationUser->id,
+        'alias'       => $organisationUser->slug,
+        'name'        => $organisationUser->contact_name,
     ];
 });

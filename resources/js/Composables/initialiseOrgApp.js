@@ -24,7 +24,6 @@ export const initialiseOrgApp = () => {
 
     // If user change tab then broadcast to others
     router.on('navigate', (event) => {
-        console.log(event.detail.page.props.title)
         axios.post(
             route('org.models.live-users.update'),
             {

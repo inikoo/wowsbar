@@ -47,8 +47,8 @@ const layout = useLayoutStore()
 
                 >
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
-                    <span class="font-semibold text-gray-700 capitalize">{{ dataUser.alias }}</span> -
-                    <span class="capitalize">{{ dataUser.active_page }}</span>
+                    <span class="font-semibold ">{{ dataUser.alias }}</span> -
+                    <span>{{ dataUser.active_page }}</span>
                     <!-- <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>
                     <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-800">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span> -->
                     <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->

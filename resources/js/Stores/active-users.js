@@ -32,20 +32,22 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
                 this.activeUsers[user.id]=user;
             })
             .leaving((user) => {
-                console.log('Someone is leave: ', user)
+                console.log('Someone leaved: ', user)
                 // If another user leave
                // this.activeUsers.find(activeUser => activeUser.id === user.id).last_active = new Date()
                 delete this.activeUsers[user.id];
-                window.Echo.leave('org.live.users')
+
             })
             .error((error) => {
                 console.log('error', error)
             })
             .listen('.changePage', (data) => {
-                console.log('Another user is change the page')
+                console.log('Another user is change the page '+data.user.name+' ('+data.user.id+')')
                 // Listen from another user who change the page
-                //this.activeUsers.find(activeUser => activeUser.id === data.user.id).active_page = data.data.active_page
-                //this.activeUsers.find(activeUser => activeUser.id === data.user.id).last_active = null
+
+                this.activeUsers[data.user.id].active_page = data.data.active_page
+
+
             })
 
 
