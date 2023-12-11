@@ -25,10 +25,12 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
             .joining((user) => {
                 // If another user join from another place
                 //this.activeUsers.find(activeUser => activeUser.id === user.id).last_active = null
+                this.activeUsers[user.id]=user;
             })
             .leaving((user) => {
                 // If another user leave
                // this.activeUsers.find(activeUser => activeUser.id === user.id).last_active = new Date()
+                delete this.activeUsers[user.id];
             })
             .error((error) => {
                 console.log('error', error)
