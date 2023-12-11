@@ -12,6 +12,7 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import { toRefs } from 'vue'
 import { routeType } from '@/types/route'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { Link } from "@inertiajs/vue3"
 
 library.add(falFile, faFileDownload, faDownload)
 
@@ -135,7 +136,8 @@ watch(() => props.modelValue, async (newVal) => {
                 <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">
-                        <div v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index" class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start">
+                    <Link v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index"  :href="route(history.view_route['name'], history.view_route['parameters'])">
+                        <div  class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start cursor-pointer">
                             <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
                                 <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
                             </a> -->
@@ -147,6 +149,7 @@ watch(() => props.modelValue, async (newVal) => {
                             <!-- <span class="text-gray-600 text-xs leading-none truncate">{{ history.filename }}</span> -->
                             <span class="text-gray-400 text-xxs mt-2">{{ useFormatTime(history.uploaded_at ?? history.start_at, { formatTime: 'hms'}) }}</span>
                         </div>
+                    </Link>
                     </template>
                     <div v-else class="text-gray-500 text-xs">
                         {{ trans("No previous uploads") }}
