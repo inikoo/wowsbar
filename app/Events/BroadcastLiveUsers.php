@@ -18,21 +18,26 @@ class BroadcastLiveUsers implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public array $data;
+    public mixed $user;
+
+    public function __construct(array $data, $user)
     {
-        //
+        $this->data = $data;
+        $this->user = $user;
     }
 
     public function broadcastWith(): array
     {
         return [
-            'message' => 'Hello World!',
+            'data' => $this->data,
+            'user' => $this->user,
         ];
     }
 
     public function broadcastAs(): string
     {
-        return 'xdxdxd';
+        return 'changePage';
     }
 
     /**

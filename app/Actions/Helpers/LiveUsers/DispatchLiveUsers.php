@@ -17,13 +17,15 @@ class DispatchLiveUsers
     use AsAction;
     use AsCommand;
 
-    public function handle(): void
+    public function handle(ActionRequest $request): void
     {
-        broadcast(new BroadcastLiveUsers())->toOthers();
+        $organisationUser = $request->user();
+
+        broadcast(new BroadcastLiveUsers($request->all(), $organisationUser))->toOthers();
     }
 
     public function asController(ActionRequest $request): void
     {
-        $this->handle();
+        $this->handle($request);
     }
 }

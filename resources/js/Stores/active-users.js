@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useEchoOrgPersonal = defineStore("echo-org-personal", {
+export const orgActiveUsers = defineStore("orgActiveUsers", {
     state: () => ({
         activeUsers: [
             {

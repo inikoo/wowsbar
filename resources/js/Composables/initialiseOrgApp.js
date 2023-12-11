@@ -4,61 +4,71 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-import { useLayoutStore } from "@/Stores/layout"
-import { useLocaleStore } from "@/Stores/locale"
-import { usePage } from "@inertiajs/vue3"
+
+import { usePage, router } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
+
+import { useLayoutStore } from "@/Stores/layout"
+import { useLocaleStore } from "@/Stores/locale"
+import { orgActiveUsers } from '@/Stores/active-users'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
-import { router } from '@inertiajs/vue3'
+
 
 export const initialiseOrgApp = () => {    
+    const layout = useLayoutStore()
+    const locale = useLocaleStore()
+    const echoPersonal = useEchoOrgPersonal()
+    const echoGeneral = useEchoOrgGeneral()
     
+    // If user change tab then broadcast to others
     router.on('navigate', (event) => {
-        // console.log('====================')
-        axios.post(route('org.models.live-users.update'))
-            .then(response => {
-                console.log('xx');
-            })
-            .catch(error => {
-                console.error('Error broadcasting event:', error);
-            });
+        console.log(event.detail.page.props.title)
+        axios.post(
+            route('org.models.live-users.update'),
+            {
+                'active_page': event.detail.page.props.title
+            }    
+        )
+        .catch(error => {
+            console.error('Error broadcasting.');
+        });
 
     })
 
     window.Echo.join(`org.live.users`)
     .here((users) => {
-        console.log('everyone here: ', users)
+        // on first load then store to pinia
+        orgActiveUsers().activeUsers = users
     })
     .joining((user) => {
-        console.log(user, 'is joining from other web');
+        // If another user join from another place
+        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == user.id).last_active = null
     })
     .leaving((user) => {
-        console.log(user.name, 'is leaving');
+        // If another user leave
+        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == user.id).last_active = new Date()
     })
     .error((error) => {
         console.log('error', error)
     })
-    .listen('.xdxdxd', (aa) => {
-        console.log('aa', aa)
+    .listen('.changePage', (data) => {
+        // Listen from another user who change the page
+        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == data.user.id).active_page = data.data.active_page
+        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == data.user.id).last_active = null
     })
 
-    
-    const layout = useLayoutStore()
-    const locale = useLocaleStore()
-    const echoPersonal = useEchoOrgPersonal()
-    const echoGeneral = useEchoOrgGeneral()
 
     echoGeneral.subscribe()
     if (usePage().props.auth.user) {
-
         echoPersonal.subscribe(usePage().props.auth.user.id)
     }
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)
     }
+
     watchEffect(() => {
         // Set data of Navigation
         if (usePage().props.layout) {
