@@ -42,10 +42,11 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
                 console.log('error', error)
             })
             .listen('.changePage', (data) => {
-                console.log('Another user is change the page '+data.user.name+' ('+data.user.id+')')
+
+                console.log('Another user '+data.user_alias+'  is change the page '+data.active_page)
                 // Listen from another user who change the page
 
-                this.activeUsers[data.user.id].active_page = data.data.active_page
+                this.activeUsers[data.user_id].active_page = data.active_page
 
 
             })
