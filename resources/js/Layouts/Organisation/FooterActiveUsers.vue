@@ -6,16 +6,11 @@
 
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import { ref } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { faBriefcase} from '@fal';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { getDataFirebase } from '@/Composables/firebase'
-import { watchEffect } from 'vue'
 import { orgActiveUsers } from '@/Stores/active-users'
-// import moment from "moment";
 
 library.add(faBriefcase);
 
@@ -24,32 +19,10 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-    (e: 'isTabActive'): void
+    (e: 'isTabActive', value: string | boolean): void
 }>()
 
 const layout = useLayoutStore()
-
-const dbPath = 'org/active_users'
-
-const activeUsersData = ref(getDataFirebase(dbPath))
-const activeUserData = ref()
-const activeUserDataLength = ref()
-
-watchEffect(() => {
-    activeUserData.value = activeUsersData.value
-    activeUserDataLength.value = activeUserData.value ? Object.keys(activeUserData.value).length : 0
-    layout.rightSidebar.activeUsers.users = activeUserData.value
-    layout.rightSidebar.activeUsers.count = activeUserDataLength.value
-})
-
-function getAwayStatus(lastActive)
-{
-    // lastActive = moment(lastActive);
-    // let now = moment();
-
-    // return Boolean(now.diff(lastActive));
-    return 'moment jsss'
-}
 
 </script>
 
@@ -70,12 +43,12 @@ function getAwayStatus(lastActive)
         </div>
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-if="activeUserDataLength" v-for="(dataUser, index) in orgActiveUsers().activeUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
+                <div v-for="(dataUser, index) in orgActiveUsers().activeUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
 
                 >
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
-                    <span class="font-semibold text-gray-700 capitalize">{{ dataUser.alias }}</span> -
-                    <span class="capitalize">{{ dataUser.active_page }}</span>
+                    <span class="font-semibold ">{{ dataUser.alias }}</span> -
+                    <span>{{ dataUser.active_page }}</span>
                     <!-- <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>
                     <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-800">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span> -->
                     <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->

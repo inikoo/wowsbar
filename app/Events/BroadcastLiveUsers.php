@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -30,8 +29,9 @@ class BroadcastLiveUsers implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'data' => $this->data,
-            'user' => $this->user,
+            'active_page' => $this->data['active_page'],
+            'user_id'     => $this->user->id,
+            'user_alias'  => $this->user->alias,
         ];
     }
 

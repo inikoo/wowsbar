@@ -17,7 +17,6 @@ use App\Http\Middleware\HandleCustomerInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
 use App\Http\Middleware\LogCustomerUserRequestMiddleware;
-use App\Http\Middleware\LogLiveOrganisationUsersMiddleware;
 use App\Http\Middleware\LogLiveUsersMiddleware;
 use App\Http\Middleware\LogOrganisationUserRequestMiddleware;
 use App\Http\Middleware\OrgAuthenticate;
@@ -89,7 +88,6 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleOrgInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogLiveOrganisationUsersMiddleware::class,
             LogOrganisationUserRequestMiddleware::class
         ],
         'public'   => [
