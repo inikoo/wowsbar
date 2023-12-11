@@ -35,6 +35,10 @@ pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation and guests"
 php artisan org:create wowsbar Wowsbar ID GBP
 php artisan guest:create 'Mr Aiku' aiku external_administrator -e aiku@inikoo.com
+php artisan guest:create 'Mr Artha' artha external_administrator -e artha@inikoo.com
+php artisan guest:create 'Mr Vika' vika external_administrator -e vika@inikoo.com
+php artisan guest:create 'Mr Arya' arya external_administrator -e arya@inikoo.com
+
 php artisan guest:import -g wowsbar/data-sets/guests
 
 echo "🌱 create shop/website"
