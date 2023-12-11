@@ -21,7 +21,9 @@ class DispatchLiveUsers
     {
         $organisationUser = $request->user();
 
-        broadcast(new BroadcastLiveUsers($request->all(), $organisationUser));
+        StoreLiveUsers::run($request->all());
+
+        broadcast(new BroadcastLiveUsers($request->all(), $organisationUser))->toOthers();
     }
 
     public function asController(ActionRequest $request): void
