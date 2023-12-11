@@ -7,27 +7,25 @@
 
 namespace App\Actions\Helpers\LiveUsers;
 
-use App\Events\BroadcastLiveUsers;
+use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
-class DispatchLiveUsers
+class StoreLiveUsers
 {
     use AsAction;
     use AsCommand;
 
-    public function handle(ActionRequest $request): void
+    public function handle(array $data): bool
     {
-        $organisationUser = $request->user();
+        $currentLiveUsers = IndexLiveUsers::run();
 
-        StoreLiveUsers::run($request->all());
-
-        broadcast(new BroadcastLiveUsers($request->all(), $organisationUser))->toOthers();
+        return Cache::put('live_users', array_merge($currentLiveUsers, [$data]));
     }
 
-    public function asController(ActionRequest $request): void
+    public function asController(ActionRequest $request): bool
     {
-        $this->handle($request);
+        return $this->handle($request->all());
     }
 }
