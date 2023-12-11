@@ -22,7 +22,6 @@ class StoreLiveUsers
         $currentLiveUsers = IndexLiveUsers::run();
 
         data_set($data, 'last_active', now());
-        data_set($data, 'user', $user);
 
         return Cache::put('live_users', array_merge($currentLiveUsers, [$data]));
     }
