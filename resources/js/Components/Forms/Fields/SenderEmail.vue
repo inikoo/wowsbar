@@ -9,11 +9,11 @@
 import PureInput from "@/Components/Pure/PureInput.vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExclamationCircle, faCheckCircle } from '@fas'
-import { faCopy, faInfoCircle } from '@fal'
+import { faCopy, faInfoCircle, faCheckCircle as  falCheckCircle } from '@fal'
 import { faSpinnerThird } from '@fad'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { set, get } from "lodash"
-library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle)
+library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle, falCheckCircle)
 import { ref, watch, defineEmits } from "vue"
 import { SenderEmail } from '@/types/SenderEmail'
 import {trans} from "laravel-vue-i18n"
@@ -87,6 +87,8 @@ const resendEmail = async (email: string) => {
     isLoading.value = false
 }
 
+console.log('juihuh',props)
+
 </script>
 
 
@@ -121,14 +123,14 @@ const resendEmail = async (email: string) => {
 
         <!-- Label: Warning -->
         <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-center"
-            :class="fieldData.options.senderEmail?.state == 'verified' ? 'text-lime-500' : 'text-slate-500 '"
+            :class="fieldData.options.senderEmail?.state == 'verified '"
         >
-            <FontAwesomeIcon icon='fal fa-info-circle' class='h-5 opacity-70' aria-hidden='true' />
+            <FontAwesomeIcon icon="fal fa-check-circle" class='h-5 opacity-70' aria-hidden='true' />
             <div>
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
-                    <span class="ml-1">
+                    <span class="ml-1" v-if="fieldData.options.senderEmail?.message  !== 'The email is validated 🎉.'">
                     <span v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</span>
                     <FontAwesomeIcon v-else icon='fad fa-spinner-third' class=' animate-spin' aria-hidden='true' />
                     </span>

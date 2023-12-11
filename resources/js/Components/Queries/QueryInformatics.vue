@@ -17,7 +17,7 @@ import { useLocaleStore } from "@/Stores/locale";
 import Popover from '@/Components/Utils/Popover.vue'
 import { get, startCase } from 'lodash'
 import Tag from "@/Components/Tag.vue"
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 
@@ -33,7 +33,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits();
-
+const formMessage = ref('');
 const value = ref({
     quantity: get(props.option, ["constrains", "prospect_last_contacted", "data", "quantity"], 1),
     unit: get(props.option, ["constrains", "prospect_last_contacted", "data", "unit"], 'week')
@@ -47,6 +47,7 @@ const findIcon = (data) => {
 
 
 const onChangeLastContact = async (closed) => {
+    if(value.value.quantity && value.value.quantity > 0)
     try {
         const response = await axios.get(
             route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
@@ -60,7 +61,7 @@ const onChangeLastContact = async (closed) => {
             text: "Failed to update data, please try again",
             type: "error"
         });
-    }
+    }else formMessage.value = 'Please input the correct value'
 }
 
 const onSuccessful=(response,closed)=>{
@@ -72,6 +73,12 @@ const onSuccessful=(response,closed)=>{
     closed()
 }
 
+
+const changeQuantity=(value)=>{
+    console.log(value.target.value)
+    if(!value.target.value || value.target.value <= 0) formMessage.value = 'input valid days'
+    else formMessage.value = ''
+}
 </script>
 
 <template>
@@ -102,9 +109,9 @@ const onSuccessful=(response,closed)=>{
                 </Popover>
             </div>
         </div>
-        <p v-if="!option.has_arguments" class="text-gray-500">(Not contacted yet)</p>
+        <p v-if="!option.has_arguments" class="text-gray-500">{{trans('(Not contacted yet)')}}</p>
         <p v-else class="text-gray-500 whitespace-nowrap">
-            (Last contacted at:
+            {{trans('(Last contacted at:')}}
         <div class="relative inline-flex">
             <Popover :width="'w-full'" position="right-[-60px]" ref="_popover">
                 <template #button>
@@ -115,18 +122,19 @@ const onSuccessful=(response,closed)=>{
                 </template>
                 <template #content="{ close: closed }">
                     <div class="flex flex-col">
-                        <div class="text-center text-base font-semibold">Interval</div>
+                        <div class="text-center text-base font-semibold">{{trans("Interval")}}</div>
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="false"
+                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="true" @input="changeQuantity"
                                     placeholder="days" required />
                             </div>
                             <div class="w-40">
                                 <PureMultiselect v-model="value.unit" :options="['day', 'week', 'month']" required />
                             </div>
                         </div>
+                        <div class="text-red-500 text-xs py-2">{{ formMessage }}</div>
                         <div class="mt-2 text-gray-500 italic flex justify-between">
-                            <p>Last contacted <span class="font-bold">
+                            <p> {{trans('Last contacted :')}} <span class="font-bold">
                                     {{ option.constrains.prospect_last_contacted?.data?.quantity }}
                                     {{ option.constrains.prospect_last_contacted.data.unit }}</span></p>
                             <Button label="OK" size="xxs" @click="onChangeLastContact(closed)"  />

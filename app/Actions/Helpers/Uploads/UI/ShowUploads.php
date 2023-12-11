@@ -14,6 +14,8 @@ use App\Models\Helpers\Upload;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Closure;
+use App\InertiaTable\InertiaTable;
 
 class ShowUploads extends InertiaAction
 {
@@ -41,17 +43,37 @@ class ShowUploads extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('images'),
+                'title'    => __('Uploads'),
                 'pageHead' => [
-                    'title'     => __('images'),
+                    'title'     => __('Uploads'),
                     'iconRight' => [
                         'title' => __('image'),
                         'icon'  => 'fal fa-images'
                     ],
                 ],
-                'data' => new UploadsResource($upload)
+                'data' => $upload->records,
             ]
-        );
+        )->table($this->tableStructure());
+    }
+
+    public function tableStructure($prefix=null): Closure
+    {
+        return function (InertiaTable $table) use ($prefix) {
+            if ($prefix) {
+                $table
+                    ->name($prefix)
+                    ->pageName($prefix.'Page');
+            }
+            $table
+                ->withGlobalSearch()
+                ->column(key: 'status', label: __('Status'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'row_number', label: __('Row Number'), canBeHidden: false, sortable: true)
+                ->column(key: 'fail_column', label: __('Fail Column'), canBeHidden: false, sortable: true)
+                ->column(key: 'errors', label: __('Errors'), canBeHidden: false, sortable: true)
+                ->column(key: 'created_at', label: __('Created At'), canBeHidden: false, sortable: true)
+                ->column(key: 'updated_at', label: __('Updated At'), canBeHidden: false, sortable: true)
+                ->defaultSort('created_at');
+        };
     }
 
     /** @noinspection PhpUnusedParameterInspection */
