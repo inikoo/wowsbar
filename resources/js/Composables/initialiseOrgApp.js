@@ -16,12 +16,12 @@ import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
 
 
-export const initialiseOrgApp = () => {    
+export const initialiseOrgApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
     const echoPersonal = useEchoOrgPersonal()
     const echoGeneral = useEchoOrgGeneral()
-    
+
     // If user change tab then broadcast to others
     router.on('navigate', (event) => {
         console.log(event.detail.page.props.title)
@@ -29,7 +29,7 @@ export const initialiseOrgApp = () => {
             route('org.models.live-users.update'),
             {
                 'active_page': event.detail.page.props.title
-            }    
+            }
         )
         .catch(error => {
             console.error('Error broadcasting.');
@@ -37,27 +37,8 @@ export const initialiseOrgApp = () => {
 
     })
 
-    window.Echo.join(`org.live.users`)
-    .here((users) => {
-        // on first load then store to pinia
-        orgActiveUsers().activeUsers = users
-    })
-    .joining((user) => {
-        // If another user join from another place
-        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == user.id).last_active = null
-    })
-    .leaving((user) => {
-        // If another user leave
-        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == user.id).last_active = new Date()
-    })
-    .error((error) => {
-        console.log('error', error)
-    })
-    .listen('.changePage', (data) => {
-        // Listen from another user who change the page
-        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == data.user.id).active_page = data.data.active_page
-        orgActiveUsers().activeUsers.find(activeUser => activeUser.id == data.user.id).last_active = null
-    })
+    orgActiveUsers().subscribe();
+
 
 
     echoGeneral.subscribe()
