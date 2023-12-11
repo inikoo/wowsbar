@@ -206,7 +206,6 @@ return [
         'customers'   => env('CUSTOMER_USER_REQUEST_LOG', true),
     ],
     'live_list'=> [
-        'organisation'=> env('ORGANISATION_USER_LIVE_LIST', true),
         'customers'   => env('CUSTOMER_USER_LIVE_LIST', true),
     ],
 
