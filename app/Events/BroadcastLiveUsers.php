@@ -2,8 +2,10 @@
 
 namespace App\Events;
 
+
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -17,15 +19,19 @@ class BroadcastLiveUsers implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public array $data;
+    public mixed $user;
+    public function __construct(array $data, $user)
     {
-        //
+        $this->data = $data;
+        $this->user = $user;
     }
 
     public function broadcastWith(): array
     {
         return [
-            'message' => 'Hello World!',
+            'data' => $this->data,
+            'user' => $this->user
         ];
     }
 
@@ -42,7 +48,7 @@ class BroadcastLiveUsers implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('org.live.users'),
+            new PresenceChannel('org.live.users'),
         ];
     }
 }

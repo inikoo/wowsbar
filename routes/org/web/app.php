@@ -83,6 +83,9 @@ Route::middleware(["org-web"])->group(function () {
             Route::prefix("json")
                 ->name("json.")
                 ->group(__DIR__ . "/json.php");
+            Route::prefix("uploads")
+                ->name("uploads.")
+                ->group(__DIR__ . "/uploads.php");
         });
     });
 

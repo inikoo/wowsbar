@@ -286,7 +286,18 @@ class IndexProspects extends InertiaAction
                 )
             )
             ->table(IndexProspectMailshots::make()->tableStructure(prefix: ProspectsTabsEnum::MAILSHOTS->value))
-            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value));
+            ->table(IndexHistory::make()->tableStructure(prefix: ProspectsTabsEnum::HISTORY->value, modelOperations: [
+                'createLink' => [
+                    [
+                        'route' => [
+                            'name'       => 'org.crm.shop.prospects.lists.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('Upload'),
+                        'style' => 'primary'
+                    ],
+                ]
+            ]));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

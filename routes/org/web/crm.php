@@ -69,8 +69,6 @@ Route::get('/dashboard', ['icon' => 'fa-envelope', 'label' => 'show crm dashboar
 Route::get('customers', ['icon' => 'fa-envelope', 'label' => 'customers'])->uses(IndexCustomers::class)->name('customers.index');
 Route::get('customers/create', ['icon' => 'fa-envelope', 'label' => 'create customer'])->uses(CreateCustomer::class)->name('customers.create');
 
-Route::get('{upload}/uploads/download', ['icon' => 'fa-envelope', 'label' => 'download uploads'])->uses(DownloadUploads::class)->name('uploads.download');
-
 Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('', ['icon' => 'fa-envelope', 'label' => 'show customer'])->uses(ShowCustomer::class)->name('show');
     Route::get('edit', ['icon' => 'fa-envelope', 'label' => 'edit customer'])->uses([EditCustomer::class, 'inOrganisation'])->name('edit');
