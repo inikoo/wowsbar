@@ -5,20 +5,20 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Helpers\LiveUsers;
+namespace App\Actions\Helpers\LiveOrganisationUsersCurrentPage;
 
 use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
-class IndexLiveUsers
+class IndexLiveOrganisationUsersCurrentPage
 {
     use AsAction;
     use AsCommand;
 
     public function handle(): array
     {
-        return Cache::get('live_users', []);
+        return Cache::get('live_organisation_users', []);
     }
 
     public function asController(): array

@@ -10,7 +10,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { faBriefcase} from '@fal';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { orgActiveUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users'
 
 library.add(faBriefcase);
 
@@ -38,12 +38,12 @@ const layout = useLayoutStore()
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
         <div class="relative text-xs flex items-center gap-x-1">
-            <div class="ring-1 h-2 aspect-square rounded-full" :class="[orgActiveUsers().count> 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-            <span class="">{{ trans('Active users') }} ({{ orgActiveUsers().count ?? 0 }})</span>
+            <div class="ring-1 h-2 aspect-square rounded-full" :class="[liveOrganisationUsers().count> 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
+            <span class="">{{ trans('Active users') }} ({{ liveOrganisationUsers().count ?? 0 }})</span>
         </div>
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-for="(dataUser, index) in orgActiveUsers().activeUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
+                <div v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default"
 
                 >
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->

@@ -9,7 +9,6 @@ namespace App\Actions\Helpers\Uploads\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Http\Resources\Helpers\UploadsResource;
 use App\Models\Helpers\Upload;
 use Inertia\Inertia;
 use Inertia\Response;

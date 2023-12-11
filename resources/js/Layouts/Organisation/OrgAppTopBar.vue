@@ -10,7 +10,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { get } from 'lodash'
-import { orgActiveUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users'
 
 
 import {
@@ -46,7 +46,7 @@ onMounted(() => {
 })
 const logoutAuth = () => {
     router.post(route(props.urlPrefix + 'logout'))
-    orgActiveUsers().unsubscribe()  // Unsubscribe from Laravel Echo
+    liveOrganisationUsers().unsubscribe()  // Unsubscribe from Laravel Echo
 }
 
 </script>

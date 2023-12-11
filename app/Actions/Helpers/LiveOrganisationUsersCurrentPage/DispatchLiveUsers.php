@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Helpers\LiveUsers;
+namespace App\Actions\Helpers\LiveOrganisationUsersCurrentPage;
 
 use App\Events\BroadcastLiveUsers;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,7 +21,7 @@ class DispatchLiveUsers
     {
         $organisationUser = $request->user();
 
-        StoreLiveUsers::run($request->all());
+        StoreOrganisationLiveUsersCurrentPage::run($request->all());
 
         broadcast(new BroadcastLiveUsers($request->all(), $organisationUser))->toOthers();
     }

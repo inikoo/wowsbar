@@ -11,7 +11,7 @@ import { watchEffect } from "vue"
 
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
-import { orgActiveUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
 
@@ -23,26 +23,30 @@ export const initialiseOrgApp = () => {
     const echoGeneral = useEchoOrgGeneral()
 
     // If user change tab then broadcast to others
-    router.on('navigate', (event) => {
-        axios.post(
-            route('org.models.live-users.update'),
-            {
-                'active_page': event.detail.page.props.title
-            }
-        )
-        .catch(error => {
-            console.error('Error broadcasting.');
-        });
 
-    })
 
-    orgActiveUsers().subscribe();
+    liveOrganisationUsers().subscribe();
 
 
 
     echoGeneral.subscribe()
     if (usePage().props.auth.user) {
         echoPersonal.subscribe(usePage().props.auth.user.id)
+
+        router.on('navigate', (event) => {
+            axios.post(
+                route('org.models.live-organisation-users-current-page.store',
+                      usePage().props.auth.user.id  ),
+                {
+                    'label': event.detail.page.props.title
+                }
+            )
+            .catch(error => {
+                console.error('Error broadcasting.'+error);
+            });
+
+        })
+
     }
 
     if (usePage().props.localeData) {
