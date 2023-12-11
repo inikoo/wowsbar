@@ -16,20 +16,17 @@ trait WithLogo
     public function getArt(): array
     {
         /** @var Media $logo */
-        $logo=organisation()->getMedia('logo')->first();
+        $logo = organisation()->getMedia('logo')->first();
         /** @var Media $logoWhite */
-        $logoWhite=organisation()->getMedia('logo_white')->first();
+        $logoWhite = organisation()->getMedia('logo_white')->first();
 
         return [
-            'logo' => GetPictureSources::run(
+            'logo'        => $logo ? GetPictureSources::run(
                 (new Image())->make($logo->getImgProxyFilename())->resize(0, 64)
-            ),
-            'footer_logo' => GetPictureSources::run(
+            ) : null,
+            'footer_logo' => $logoWhite ? GetPictureSources::run(
                 (new Image())->make($logoWhite->getImgProxyFilename())->resize(0, 16)
-            ),
+            ) : null,
         ];
-
-
-
     }
 }
