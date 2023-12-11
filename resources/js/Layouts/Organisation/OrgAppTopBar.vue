@@ -45,7 +45,6 @@ onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
 })
 const logoutAuth = () => {
-    // Sign out from app and Firebase
     router.post(route(props.urlPrefix + 'logout'))
     orgActiveUsers().unsubscribe()  // Unsubscribe from Laravel Echo
 }

@@ -32,6 +32,10 @@ class UploadsResource extends JsonResource
                 'name'       => 'org.uploads.download',
                 'parameters' => $upload->id,
             ],
+            'view_route' => [
+                'name'       => 'org.uploads.show',
+                'parameters' => $upload->id,
+            ],
         ];
     }
 }
