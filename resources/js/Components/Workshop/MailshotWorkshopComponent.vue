@@ -18,9 +18,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import Modal from '@/Components/Utils/Modal.vue'
 import TemplateMailshot from '@/Components/CMS/TemplateMailshot/TemplateMailshot.vue'
+import axios from 'axios'
+import { notify } from "@kyvg/vue3-notification"
 
 
-library.add( faThLarge )
+library.add(faThLarge)
 const props = defineProps<{
     title: string
     updateRoute: object,
@@ -33,7 +35,6 @@ const editor = import.meta.env.VITE_MAILSHOT_EDITOR
 const openTemplates = ref(false)
 const editorRef = ref(null)
 
-const isDataDirty = ref(cloneDeep(props.isDirty))
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -44,13 +45,33 @@ const getComponent = (componentName: string) => {
 
 };
 
-const changeTemplate=(template)=>{
-    console.log('inii',editorRef.value)
-    if(editorRef.value.setToNewTemplate) editorRef.value.setToNewTemplate(JSON.parse(JSON.stringify(template.compiled.html.design)))
+const changeTemplate = (template) => {
+    console.log(template)
+    if (editorRef.value.setToNewTemplate) editorRef.value.setToNewTemplate(JSON.parse(JSON.stringify(template.compiled.html.design)))
     openTemplates.value = false
 }
 
-console.log('inii',editorRef)
+const StoreTemplate = async (template) => {
+    try {
+        const response = await axios.post(
+            route(
+                props.updateRoute.name,
+                props.updateRoute.parameters
+            ),
+            { data: ['first template'] , pagesHtml: template.compiled.html },
+        )
+        props.mailshot.is_layout_blank = false
+    } catch (error) {
+        console.log(error)
+        notify({
+        title: "Failed",
+        text: 'failed to get template',
+        type: "error"
+    });
+    }
+}
+
+
 
 </script>
   
@@ -63,24 +84,28 @@ console.log('inii',editorRef)
                     <span class="font-semibold text-gray-700">{{
                         useLocaleStore().number(mailshot.stats.number_estimated_dispatched_emails) }}</span>
                 </div>
-                <div class="text-gray-500 w-1/2 flex justify-end">
-                    <Button icon="fas fa-th-large" label="Template" :style="'tertiary'" size="xs" @click="openTemplates = true"/>
+                <div v-if="!mailshot.is_layout_blank"  class="text-gray-500 w-1/2 flex justify-end">
+                    <Button icon="fas fa-th-large" label="Template" :style="'tertiary'" size="xs"
+                        @click="openTemplates = true" />
                 </div>
             </div>
         </template>
     </LabelEstimated>
-    <component :is="getComponent(editor)" @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer"
-        :useBasic="true" :plugins="[]" :updateRoute="updateRoute" :loadRoute="loadRoute"
-        :imagesUploadRoute="imagesUploadRoute" ref="editorRef">
+
+    <component v-if="!mailshot.is_layout_blank" :is="getComponent(editor)"
+        @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true" :plugins="[]"
+        :updateRoute="updateRoute" :loadRoute="loadRoute" :imagesUploadRoute="imagesUploadRoute" ref="editorRef">
     </component>
 
+    <div v-else class="p-5">
+        <TemplateMailshot @changeTemplate="StoreTemplate" />
+    </div>
 
     <Modal :isOpen="openTemplates" @onClose="openTemplates = false">
         <div class="overflow-y-auto">
-            <TemplateMailshot @changeTemplate="changeTemplate"/>
+            <TemplateMailshot @changeTemplate="changeTemplate" />
         </div>
     </Modal>
-
 </template>
   
   

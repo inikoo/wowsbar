@@ -36,7 +36,7 @@ const emits = defineEmits<{
 
 const showPassword = ref(props.type)  // default is type = "text"
 const handleEyeIcon = () => {
-    showPassword.value = showPassword.value == 'text' ? 'password' : props.type
+    showPassword.value = showPassword.value == 'text' ? 'password' : 'text'
 }
 
 const clearValue=()=>{

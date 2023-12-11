@@ -87,10 +87,7 @@ const resendEmail = async (email: string) => {
     isLoading.value = false
 }
 
-console.log('juihuh',props)
-
 </script>
-
 
 <template>
     <!-- <pre>{{ fieldData.options.senderEmail }}</pre> -->
@@ -122,18 +119,18 @@ console.log('juihuh',props)
         </div>
 
         <!-- Label: Warning -->
-        <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-center"
+        <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-start"
             :class="fieldData.options.senderEmail?.state == 'verified '"
         >
-            <FontAwesomeIcon icon="fal fa-check-circle" class='h-5 opacity-70' aria-hidden='true' />
-            <div>
+            <FontAwesomeIcon icon="fal fa-check-circle" fixed-width class='h-4 opacity-70 text-lime-600' aria-hidden='true' />
+            <div class="text-gray-500">
                 <span>{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
-                    <span class="ml-1" v-if="fieldData.options.senderEmail?.message  !== 'The email is validated 🎉.'">
-                    <span v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</span>
+                <span class="ml-1" v-if="fieldData.options.senderEmail?.message  !== 'The email is validated 🎉.'">
+                    <span v-if="!isLoading" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{ trans('Resend email') }}</span>
                     <FontAwesomeIcon v-else icon='fad fa-spinner-third' class=' animate-spin' aria-hidden='true' />
-                    </span>
+                </span>
                     <!-- <div v-else class="tabular-nums w-fit">Wait for {{ resendInterval }}</div> -->
                 <!-- </div> -->
             </div>

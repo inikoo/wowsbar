@@ -11,6 +11,7 @@ use App\Models\Auth\OrganisationUser;
 use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
+use App\Events\BroadcastLiveUsers;
 
 class StoreOrganisationLiveUsersCurrentPage
 {
@@ -28,6 +29,12 @@ class StoreOrganisationLiveUsersCurrentPage
         ];
 
         return Cache::put('live_organisation_users', $liveUsers);
+
+        // $cache = Cache::put('live_organisation_users', $liveUsers);
+
+        // broadcast(new BroadcastLiveUsers($liveUsers, $organisationUser))->toOthers();
+
+        // return $cache;
     }
 
 
