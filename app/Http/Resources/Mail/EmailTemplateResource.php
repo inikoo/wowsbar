@@ -7,13 +7,11 @@
 
 namespace App\Http\Resources\Mail;
 
-use App\Http\Resources\Gallery\ImageResource;
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\HasSelfCall;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @property mixed $live_snapshot_id
- */
 class EmailTemplateResource extends JsonResource
 {
     use HasSelfCall;
@@ -23,11 +21,20 @@ class EmailTemplateResource extends JsonResource
         /** @var \App\Models\Mail\EmailTemplate $emailTemplate */
         $emailTemplate = $this;
 
+        $image          = null;
+        $imageThumbnail = null;
+        if ($emailTemplate->screenshot) {
+            $image          = (new Image())->make($emailTemplate->screenshot->getImgProxyFilename());
+            $imageThumbnail = (new Image())->make($emailTemplate->screenshot->getImgProxyFilename())->resize(0, 200);
+        }
+
         return [
-            'slug'     => $emailTemplate->slug,
-            'title'    => $emailTemplate->title,
-            'compiled' => $emailTemplate->compiled,
-            'image'    => new ImageResource($emailTemplate->screenshot)
+            'slug'            => $emailTemplate->slug,
+            'title'           => $emailTemplate->title,
+            'compiled'        => $emailTemplate->compiled,
+            'image'           => $image ? GetPictureSources::run($image) : null,
+            'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
+
         ];
     }
 }

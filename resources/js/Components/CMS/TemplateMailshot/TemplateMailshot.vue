@@ -15,7 +15,6 @@ import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faThLarge, faTreeChristmas, faGlassCheers, faBat } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { get } from 'lodash'
 import Image from '@/Components/Image.vue'
 
 library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat)
@@ -54,6 +53,8 @@ const getTemplates = async () => {
     }
 }
 
+
+
 const selectTemplate = (template) => {
     emits("changeTemplate", template);
 }
@@ -75,7 +76,8 @@ onMounted(() => {
 
 </script>
 
-<template layout="OrgApp">
+<template >
+
     <div class="text-center text-2xl font-bold mb-4">{{ trans("Available Templates") }}</div>
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
         <!-- Categories with tags -->
@@ -93,7 +95,8 @@ onMounted(() => {
     <div v-if="templates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <div v-for="template in templates" :key="template.slug" class="relative w-full">
             <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-                <Image :src="template.image"
+
+                <Image  :src="template.image_thumbnail"
                        :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
             <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
@@ -111,7 +114,7 @@ onMounted(() => {
             title: trans('You haven\'t uploaded any templates.'),
             description: trans(''),
         }" />
-    </div> 
+    </div>
 </template>
 
 

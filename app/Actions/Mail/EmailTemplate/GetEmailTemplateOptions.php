@@ -31,8 +31,9 @@ class GetEmailTemplateOptions extends InertiaAction
         }
 
         foreach ($emailTemplates as $template) {
-            $selectOptions[$template->id] = new EmailTemplateResource($template);
+            $selectOptions[$template->id] = EmailTemplateResource::make($template)->getArray();   //new EmailTemplateResource($template);
         }
+
 
         return $selectOptions;
     }
