@@ -8,6 +8,9 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
         count: (state) => Object.keys(state.activeUsers).length
     },
     actions: {
+        unsubscribe () {
+            window.Echo.leave(org.live.users)
+        },
         subscribe() {
 
             window.Echo.join(`org.live.users`)
@@ -31,6 +34,7 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
                 // If another user leave
                // this.activeUsers.find(activeUser => activeUser.id === user.id).last_active = new Date()
                 delete this.activeUsers[user.id];
+                window.Echo.leave('org.live.users') 
             })
             .error((error) => {
                 console.log('error', error)
