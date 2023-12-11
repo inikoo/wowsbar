@@ -25,6 +25,7 @@ use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\Helpers\AwsEmail\ReSendIdentityEmailVerification;
+use App\Actions\Helpers\LiveUsers\DeleteLiveUsers;
 use App\Actions\Helpers\LiveUsers\DispatchLiveUsers;
 use App\Actions\Helpers\LiveUsers\IndexLiveUsers;
 use App\Actions\Helpers\Tag\StoreTag;
@@ -95,7 +96,7 @@ Route::post('/employee/', StoreEmployee::class)->name('employee.store');
 Route::delete('/employee/{employee:id}', DeleteEmployee::class)->name('employee.delete');
 
 Route::post('live-users', DispatchLiveUsers::class)->name('live-users.update');
-Route::delete('live-users', DispatchLiveUsers::class)->name('live-users.delete');
+Route::delete('live-users', DeleteLiveUsers::class)->name('live-users.delete');
 Route::get('live-users', IndexLiveUsers::class)->name('live-users.index');
 
 
