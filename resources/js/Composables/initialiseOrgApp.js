@@ -17,35 +17,15 @@ export const initialiseOrgApp = () => {
     
     router.on('navigate', (event) => {
         // console.log('====================')
-        // axios.post(route('org.models.live-users.update'))
-        //     .then(response => {
-        //         console.log('Event broadcasted successfully');
-        //     })
-        //     .catch(error => {
-        //         console.error('Error broadcasting event:', error);
-        //     });
+        axios.post(route('org.models.live-users.update'))
+            .then(response => {
+                console.log('xx');
+            })
+            .catch(error => {
+                console.error('Error broadcasting event:', error);
+            });
 
-        // console.log(event.detail.page.props.title)
     })
-
-    // let channel = window.Echo.join(`org.live.users`)
-    // console.log(channel)
-
-    // channel.listenForWhisper('typing', function (e) {
-    //     console.log(e,'ttt');
-    // }).listen('.broadcast-name', function (e) {
-    //     console.log(e, 'yyy');
-    // });
-
-    // setInterval(() => {
-    //     try {
-    //         channel.whisper('typing', {
-    //             user: 'wwwww', 
-    //             typing: true})
-    //     } catch (error) {
-    //         console.log('rewrewrew', error)
-    //     }
-    // }, 1000)
 
     window.Echo.join(`org.live.users`)
     .here((users) => {
@@ -55,7 +35,7 @@ export const initialiseOrgApp = () => {
         console.log(user, 'is joining from other web');
     })
     .leaving((user) => {
-        console.log(user.name);
+        console.log(user.name, 'is leaving');
     })
     .error((error) => {
         console.log('error', error)

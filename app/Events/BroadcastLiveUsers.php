@@ -7,6 +7,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PresenceChannel;
 
 class BroadcastLiveUsers implements ShouldBroadcast
 {
@@ -42,7 +43,7 @@ class BroadcastLiveUsers implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('org.live.users'),
+            new PresenceChannel('org.live.users'),
         ];
     }
 }
