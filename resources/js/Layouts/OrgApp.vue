@@ -16,7 +16,6 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
 import { useLayoutStore } from "@/Stores/layout"
-import { useAuthFirebase } from "@/Composables/firebaseAuth"
 import Notification from '@/Components/Utils/Notification.vue'
 
 import {
@@ -63,9 +62,6 @@ library.add(
 const sidebarOpen = ref(false)
 const layout = initialiseOrgApp()
 
-if (usePage().props.firebaseAuthToken) {
-    useAuthFirebase(usePage().props.firebaseAuthToken)
-}
 
 const layoutState = useLayoutStore()
 

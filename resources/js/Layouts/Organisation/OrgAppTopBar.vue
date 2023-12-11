@@ -9,7 +9,6 @@ import {Link, router, usePage} from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
-import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 import { get } from 'lodash'
 import { orgActiveUsers } from '@/Stores/active-users'
 
@@ -49,7 +48,6 @@ const logoutAuth = () => {
     // Sign out from app and Firebase
     router.post(route(props.urlPrefix + 'logout'))
     orgActiveUsers().unsubscribe()  // Unsubscribe from Laravel Echo
-    useSignOutFirebase()
 }
 
 </script>
