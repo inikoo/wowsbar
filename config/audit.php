@@ -55,7 +55,8 @@ return [
         'shop_id'          => \App\AuditResolvers\AuditShopResolver::class,
         'website_id'       => \App\AuditResolvers\AuditWebsiteResolver::class,
         'bulk_id'          => \App\AuditResolvers\AuditBulkIdResolver::class,
-        'bulk_type'        => \App\AuditResolvers\AuditBulkTypeResolver::class
+        'bulk_type'        => \App\AuditResolvers\AuditBulkTypeResolver::class,
+        'created_at'       => \App\AuditResolvers\AuditCreatedAtResolver::class,
     ],
 
     /*

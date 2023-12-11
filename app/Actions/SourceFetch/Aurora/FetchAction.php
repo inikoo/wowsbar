@@ -39,6 +39,8 @@ class FetchAction
     protected int $number_no_changes;
     protected int $number_errors;
 
+    protected bool $pretend = false;
+
     protected Fetch $fetch;
 
     public function __construct()
@@ -94,6 +96,9 @@ class FetchAction
     {
         $this->hydrateDelay = 120;
 
+        if($command->option('pretend')) {
+            $this->pretend = true;
+        }
 
         if ($command->getName() == 'fetch:prospects' and $command->option('shop')) {
             $this->auShop = $command->option('shop');
@@ -118,26 +123,37 @@ class FetchAction
             $this->reset();
         }
 
-        $this->fetch = StoreFetch::run(
-            [
-                'type' => $this->getFetchType($command),
-                'data' => [
-                    'command'   => $command->getName(),
-                    'arguments' => $command->arguments(),
-                    'options'   => $command->options(),
+        if($this->pretend) {
+            $command->info('Pretend mode');
+        } else {
+            $command->info('');
+        }
+        if(!$this->pretend) {
+            $this->fetch = StoreFetch::run(
+                [
+                    'type' => $this->getFetchType($command),
+                    'data' => [
+                        'command'   => $command->getName(),
+                        'arguments' => $command->arguments(),
+                        'options'   => $command->options(),
+                    ]
                 ]
-            ]
-        );
+            );
+        }
 
 
-        $command->info('');
 
         if ($command->option('source_id')) {
-            UpdateFetch::run($this->fetch, ['number_items' => 1]);
+            if(!$this->pretend) {
+                UpdateFetch::run($this->fetch, ['number_items' => 1]);
+            }
+
             $this->handle($source, $command->option('source_id'));
         } else {
             $numberItems = $this->count() ?? 0;
-            UpdateFetch::run($this->fetch, ['number_items' => $numberItems]);
+            if(!$this->pretend) {
+                UpdateFetch::run($this->fetch, ['number_items' => $numberItems]);
+            }
             if (!$command->option('quiet') and !$command->getOutput()->isDebug()) {
                 $info = '✊ '.$command->getName();
                 if ($this->auShop) {
@@ -159,8 +175,9 @@ class FetchAction
         if ($command->getName() == 'fetch:prospects') {
             HydrateModelTypeQueries::run('Prospect');
         }
-        UpdateFetch::run($this->fetch, ['finished_at' => now()]);
-
+        if(!$this->pretend) {
+            UpdateFetch::run($this->fetch, ['finished_at' => now()]);
+        }
         return 0;
     }
 
