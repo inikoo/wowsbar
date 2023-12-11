@@ -17,17 +17,20 @@ class StoreLiveUsers
     use AsAction;
     use AsCommand;
 
-    public function handle(array $data): bool
+    public function handle($user, array $data): bool
     {
         $currentLiveUsers = IndexLiveUsers::run();
+
         data_set($data, 'last_active', now());
-        data_set($data, 'user', $currentLiveUsers);
+        data_set($data, 'user', $user);
 
         return Cache::put('live_users', array_merge($currentLiveUsers, [$data]));
     }
 
     public function asController(ActionRequest $request): bool
     {
-        return $this->handle($request->all());
+        $organisationUser = $request->user();
+
+        return $this->handle($organisationUser, $request->all());
     }
 }
