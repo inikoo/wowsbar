@@ -27,7 +27,6 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
             })
             .joining((user) => {
                 // If another user join from another place
-                //this.activeUsers.find(activeUser => activeUser.id === user.id).last_active = null
                 this.activeUsers[user.id]=user;
             })
             .leaving((user) => {
@@ -41,8 +40,8 @@ export const orgActiveUsers = defineStore("orgActiveUsers", {
             })
             .listen('.changePage', (data) => {
                 // Listen from another user who change the page
-                this.activeUsers.find(activeUser => activeUser.id === data.user.id).active_page = data.data.active_page
-                this.activeUsers.find(activeUser => activeUser.id === data.user.id).last_active = null
+                //this.activeUsers.find(activeUser => activeUser.id === data.user.id).active_page = data.data.active_page
+                //this.activeUsers.find(activeUser => activeUser.id === data.user.id).last_active = null
             })
 
 
