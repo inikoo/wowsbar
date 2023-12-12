@@ -29,6 +29,8 @@ const props = defineProps<{
     }
 }>()
 
+console.log(props.options);
+
 const emits = defineEmits<{
     (e: 'onUpdate'): void
 }>()

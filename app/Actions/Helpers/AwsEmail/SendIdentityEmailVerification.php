@@ -28,11 +28,11 @@ class SendIdentityEmailVerification
 
         $email = $senderEmail->email_address;
 
-
-        $state = CheckSenderEmailVerification::run($email);
+        $state = GetEmailSesVerificationState::run($email);
 
         if (in_array($state, [SenderEmailStateEnum::VERIFIED, SenderEmailStateEnum::PENDING])) {
-            if ($senderEmail->verified_at === null) {
+
+            if ($state==SenderEmailStateEnum::VERIFIED and $senderEmail->verified_at === null) {
                 data_set($modelData, 'verified_at', now());
             }
 

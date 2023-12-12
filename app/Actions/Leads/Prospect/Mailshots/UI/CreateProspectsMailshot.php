@@ -55,6 +55,8 @@ class CreateProspectsMailshot extends InertiaAction
 
         $tags = explode(',', $request->get('tags'));
 
+
+
         $fields[] = [
             'title'  => '',
             'fields' => [

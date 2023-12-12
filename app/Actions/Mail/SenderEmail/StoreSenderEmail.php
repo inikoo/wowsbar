@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\SenderEmail;
 
-use App\Actions\Helpers\AwsEmail\CheckSenderEmailVerification;
+use App\Actions\Helpers\AwsEmail\GetEmailSesVerificationState;
 use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Models\Mail\SenderEmail;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -29,7 +29,7 @@ class StoreSenderEmail
         data_set(
             $modelData,
             'state',
-            CheckSenderEmailVerification::run($modelData['email_address'])
+            GetEmailSesVerificationState::run($modelData['email_address'])
         );
 
         $senderEmail= SenderEmail::create($modelData);

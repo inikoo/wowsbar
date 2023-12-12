@@ -24,7 +24,7 @@ use App\Actions\CRM\Customer\Surveys\StoreSurvey;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
-use App\Actions\Helpers\AwsEmail\ReSendIdentityEmailVerification;
+use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
 use App\Actions\Helpers\LiveOrganisationUsersCurrentPage\DeleteLiveUsers;
 use App\Actions\Helpers\LiveOrganisationUsersCurrentPage\IndexLiveOrganisationUsersCurrentPage;
 use App\Actions\Helpers\LiveOrganisationUsersCurrentPage\StoreOrganisationLiveUsersCurrentPage;
@@ -151,7 +151,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('surveys', [StoreSurvey::class, 'inShop'])->name('surveys.store');
 
         Route::patch('prospect-mailshots/settings', UpdateProspectsMailshotSetting::class)->name('prospect-mailshots.settings.update');
-        Route::post('prospect-mailshots/settings/email/resend', [ReSendIdentityEmailVerification::class, 'inShop'])->name('prospect-mailshots.settings.email-verification.resend');
+        Route::post('prospect-mailshots/settings/email/resend', [SendIdentityEmailVerification::class, 'inShop'])->name('prospect-mailshots.settings.email-verification.resend');
     });
 });
 
