@@ -87,7 +87,7 @@ const onCancel = () => {
     date.value = new Date()
 }
 
-// console.log(props)
+console.log('aaa',props)
 </script>
 
 
