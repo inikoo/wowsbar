@@ -24,13 +24,14 @@ class ImportGuests
         $upload = StoreUploads::run($file, Guest::class);
 
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new GuestImport($upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new GuestImport($upload)
             );
         }

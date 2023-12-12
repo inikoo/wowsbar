@@ -24,13 +24,14 @@ class ImportCustomers
         $upload = StoreUploads::run($file, Customer::class);
 
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new CustomerImport($upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new CustomerImport($upload)
             );
         }

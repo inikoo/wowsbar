@@ -7,8 +7,8 @@
 
 namespace App\Actions\Helpers\Uploads;
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\Helpers\Upload;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -21,13 +21,14 @@ class StoreUploads
 
     private bool $asAction = false;
 
-    public function handle($file, $class): Model
+    public function handle($file, $class): Upload
     {
-        /** @var \App\Models\Auth\OrganisationUser $orgUser */
+        /** @var OrganisationUser $orgUser */
         $orgUser  = request()->user();
         $filename = $file->hashName();
         $type     = class_basename($class);
-        $path     = 'org/' . Str::lower($type);
+        $path     = 'excel-uploads/org/' . Str::lower($type);
+
         Storage::disk('excel-uploads')->put($path, $file);
 
         return Upload::create([

@@ -23,19 +23,6 @@ task('deploy:set-release', function () {
 });
 
 set('shared_dirs', ['storage','private']);
-set('writable_dirs', [
-    'bootstrap/cache',
-    'storage',
-    'storage/app',
-    'storage/app/public',
-    'storage/app/org',
-    'storage/framework',
-    'storage/framework/cache',
-    'storage/framework/cache/data',
-    'storage/framework/sessions',
-    'storage/framework/views',
-    'storage/logs',
-]);
 
 desc('Deploys your project');
 task('deploy', [

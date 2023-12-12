@@ -67,13 +67,7 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function prepareForValidation($data)
     {
 
-        //        if (Arr::get($data, 'contact_website')) {
-        //
-        //            if(!preg_match('/^https?:\/\//', '')) {
-        //                $data['contact_website'] = 'https://'.$data['contact_website'];
-        //
-        //            }
-        //        }
+
 
         $tags = explode(',', Arr::get($data, 'tags'));
 

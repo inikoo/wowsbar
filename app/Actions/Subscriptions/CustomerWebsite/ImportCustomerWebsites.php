@@ -24,13 +24,14 @@ class ImportCustomerWebsites
         $upload = StoreUploads::run($file, CustomerWebsite::class);
 
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new CustomerWebsiteImport($upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new CustomerWebsiteImport($upload)
             );
         }

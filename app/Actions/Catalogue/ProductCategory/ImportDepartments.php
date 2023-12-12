@@ -24,13 +24,14 @@ class ImportDepartments
         $upload = StoreUploads::run($file, ProductCategory::class);
 
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new DepartmentImport($upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new DepartmentImport($upload)
             );
         }

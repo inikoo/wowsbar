@@ -94,7 +94,7 @@ return [
                 'secret'   => env('CLOUDFLARE_R2_SECRET_KEY'),
                 'region'   => env('CLOUDFLARE_R2_REGION', 'auto'),
                 'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
-                'bucket'   => env('CLOUDFLARE_R2_EXCEL_UPLOADS_BUCKET_NAME'),
+                'bucket'   => env('CLOUDFLARE_R2_BUCKET_NAME'),
             ],
             default => [
                 'driver' => 'local',

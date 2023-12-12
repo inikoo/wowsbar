@@ -7,7 +7,7 @@
 
 namespace App\Actions\Helpers\Uploads;
 
-use App\Models\Helpers\Upload;
+use Illuminate\Http\UploadedFile;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,16 +15,14 @@ class ImportUpload
 {
     use AsAction;
 
-    public function handle(Upload $upload, $import): Upload
+    public function handle(UploadedFile $file, $import): void
     {
 
         Excel::import(
             $import,
-            storage_path('app/' . $upload->getFullPath())
+            $file->path()
         );
 
-        $upload->refresh();
-        return $upload;
 
     }
 

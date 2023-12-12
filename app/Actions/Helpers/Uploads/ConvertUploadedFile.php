@@ -19,13 +19,13 @@ class ConvertUploadedFile
 
     public function handle(string $filename): UploadedFile
     {
-        $finfo    = new finfo(FILEINFO_MIME_TYPE);
+        $fInfo    = new finfo(FILEINFO_MIME_TYPE);
         $fullPath = base_path($filename);
 
         return new UploadedFile(
             $fullPath,
             $filename,
-            $finfo->file($fullPath),
+            $fInfo->file($fullPath),
             filesize($fullPath),
             0
         );

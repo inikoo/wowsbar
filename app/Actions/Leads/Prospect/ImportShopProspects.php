@@ -25,15 +25,15 @@ class ImportShopProspects
     {
         $upload = StoreUploads::run($file, Prospect::class);
 
-
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new ProspectImport($scope, $upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new ProspectImport($scope, $upload)
             );
         }

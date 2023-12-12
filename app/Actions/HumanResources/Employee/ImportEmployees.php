@@ -21,16 +21,19 @@ class ImportEmployees
 
     public function handle($file): Upload
     {
+
+
         $upload = StoreUploads::run($file, Employee::class);
 
         if ($this->isSync) {
-            $upload = ImportUpload::run(
-                $upload,
+            ImportUpload::run(
+                $file,
                 new EmployeeImport($upload)
             );
+            $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $upload,
+                $file,
                 new EmployeeImport($upload)
             );
         }
