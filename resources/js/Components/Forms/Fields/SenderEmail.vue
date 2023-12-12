@@ -9,15 +9,16 @@
 import PureInput from "@/Components/Pure/PureInput.vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExclamationCircle, faCheckCircle } from '@fas'
-import { faCopy, faInfoCircle, faCheckCircle as  falCheckCircle } from '@fal'
+import { faCopy, faInfoCircle, faCheckCircle as  falCheckCircle, faTimesCircle, faExclamationCircle as falExclamationCircle } from '@fal'
 import { faSpinnerThird } from '@fad'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { set, get } from "lodash"
-library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle, falCheckCircle)
+library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy, faInfoCircle, falCheckCircle, faTimesCircle, falExclamationCircle)
 import { ref, watch, defineEmits } from "vue"
 import { SenderEmail } from '@/types/SenderEmail'
 import {trans} from "laravel-vue-i18n"
 import axios from 'axios'
+import { router } from "@inertiajs/vue3"
 
 
 const props = defineProps<{
@@ -31,7 +32,7 @@ const props = defineProps<{
         copyButton: boolean
         maxLength?: number
         options: {
-            senderEmail?: SenderEmail
+            senderEmail: SenderEmail
         }
     }
 }>()
@@ -81,6 +82,12 @@ const resendEmail = async (email: string) => {
                 email: email
             }
         )
+        
+        // Manipulation data source from response to props
+        props.fieldData.options.senderEmail.state = data.data.state
+        props.fieldData.options.senderEmail.message = data.data.message
+        props.fieldData.options.senderEmail.last_verification_submitted_at = data.data.last_verification_submitted_at
+
     } catch (error) {
         console.log(error)
     }
@@ -122,9 +129,17 @@ const resendEmail = async (email: string) => {
         <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-start"
             :class="fieldData.options.senderEmail?.state == 'verified '"
         >
-            <FontAwesomeIcon icon="fal fa-check-circle" fixed-width class='h-4 opacity-70 text-lime-600' aria-hidden='true' />
+            <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'verified'" icon="fal fa-check-circle" fixed-width class='h-4 opacity-70 text-lime-600' aria-hidden='true' />
+            <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'fail' || fieldData.options.senderEmail.state == 'error' || fieldData.options.senderEmail.state == 'verification-submission-error'" icon="fal fa-times-circle" fixed-width class='h-4 text-red-500' aria-hidden='true' />
+            <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'pending' || fieldData.options.senderEmail.state == 'verification-not-submitted'" icon="fal fa-exclamation-circle" fixed-width class='h-4 text-gray-500' aria-hidden='true' />
             <div class="text-gray-500">
-                <span>{{ fieldData.options.senderEmail?.message }}</span>
+                <span
+                    :class="[
+                        {'text-red-500': fieldData.options.senderEmail.state == 'fail' || fieldData.options.senderEmail.state == 'error' || fieldData.options.senderEmail.state == 'verification-submission-error'},
+                        {'text-lime-500': fieldData.options.senderEmail.state == 'verified' },
+                        
+                    ]"
+                >{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->
                     <!-- <div v-if="!resendInterval" @click="resendEmail(value)" class="w-fit underline hover:text-amber-500 cursor-pointer">{{trans('Resend email')}}</div> -->
                 <span class="ml-1" v-if="fieldData.options.senderEmail?.message  !== 'The email is validated 🎉.'">

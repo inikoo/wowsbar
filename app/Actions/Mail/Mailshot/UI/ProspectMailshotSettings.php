@@ -55,12 +55,14 @@ class ProspectMailshotSettings extends InertiaAction
                     'label'    => __('title'),
                     'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
                     'required' => true,
+                    'value'    => ''
                 ],
                 'description' => [
                     'type'     => 'textarea',
                     'label'    => __('description'),
                     'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
                     'required' => true,
+                    'value'    => ''
                 ],
             ]
         ];
