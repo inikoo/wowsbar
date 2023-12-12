@@ -54,7 +54,8 @@ class MailshotResource extends JsonResource
             'date'                => $mailshot->date,
             'created_at'          => $mailshot->created_at,
             'updated_at'          => $mailshot->updated_at,
-            'timeline'            => $sortedTimeline
+            'timeline'            => $sortedTimeline,
+            'is_layout_blank'     => blank($mailshot->layout),
         ];
     }
 }
