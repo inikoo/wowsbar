@@ -47,8 +47,7 @@ use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Mail\DispatchedEmail\UI\ShowDispatchedEmail;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateWorkshop;
-use App\Actions\Mail\Mailshot\EstimateRecipientsCreatingMailshot;
-use App\Actions\Mail\Mailshot\GetQueryNumberItems;
+use App\Actions\Mail\Mailshot\GetEstimateRecipientsWhileCreatingMailshot;
 use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
 use App\Actions\Mail\Mailshot\UI\ShowProspectMailshotWorkshop;
@@ -173,8 +172,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         });
 
         Route::prefix('mailshots')->as('mailshots.')->group(function () {
-            Route::get('estimated-recipients', EstimateRecipientsCreatingMailshot::class)->name('estimated-recipients');
-            Route::get('query/{query}/number-items', GetQueryNumberItems::class)->name('query.number-items');
+            Route::get('estimated-recipients', GetEstimateRecipientsWhileCreatingMailshot::class)->name('estimated-recipients');
             Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailshots'])->uses([IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', ['icon' => 'fa-envelope', 'label' => 'create mailshot'])->uses([CreateProspectsMailshot::class, 'inShop'])->name('create');
             Route::get('{mailshot}/edit', ['icon' => 'fa-envelope', 'label' => 'edit mailshot'])->uses(EditProspectMailshot::class)->name('edit');

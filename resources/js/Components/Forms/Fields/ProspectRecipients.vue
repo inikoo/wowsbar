@@ -88,20 +88,16 @@ const getEstimateRecipients = async () => {
                     }
                 }
             );
+
             //if(response.data.type==='query'){
             //    props.form[props.fieldName].recipient_builder_data.query = response.data.count //todo
+
 
             recipientsCount.value = response.data ;
 
         } catch (error) {
             console.error(error); // Log the error for debugging purposes
 
-            // Notify user about the failure
-            notify({
-                title: "Failed",
-                text: "Failed to count recipients",
-                type: "error"
-            });
         }
 }
 
@@ -138,6 +134,8 @@ onMounted(() => {
 </script>
 
 <template>
+
+
     <div class="w-full px-2 sm:px-0">
         <TabGroup manual @change="changeTab"  :selectedIndex="selectedIndex">
             <TabList class="flex space-x-8 ">

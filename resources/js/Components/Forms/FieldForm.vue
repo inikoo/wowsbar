@@ -182,14 +182,14 @@ const checkVerification = async () => {
                         </button>
 
                         <!-- Verification: Button -->
-                        <div v-else>
+                        <span v-else>
                             <FontAwesomeIcon v-if="isVerificationLoading" icon='fad fa-spinner-third' class='animate-spin h-8 text-gray-500 hover:text-gray-600 cursor-pointer' aria-hidden='true' />
                             <FontAwesomeIcon v-else @click="isVerificationDirty ? checkVerification() : ''"
                                 icon='fas fa-question'
                                 class='h-8'
                                 :class="isVerificationDirty ? 'text-gray-500 hover:text-gray-600 cursor-pointer' : 'text-gray-300'"
                                 aria-hidden='true' />
-                        </div>
+                        </span>
                     </span>
                 </div>
             </dd>

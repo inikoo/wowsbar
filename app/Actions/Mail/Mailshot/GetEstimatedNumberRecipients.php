@@ -31,7 +31,7 @@ class GetEstimatedNumberRecipients
             'query'                  => $this->getEstimatedNumberRecipientsQuery(Arr::get($recipientsData, 'recipient_builder_data.query')),
             'prospects'              => $this->getEstimatedNumberRecipientsProspects(Arr::get($recipientsData, 'recipient_builder_data.prospects')),
             'custom_prospects_query' => $this->getEstimatedNumberRecipientsCustomProspectsQuery($parent, Arr::get($recipientsData, 'recipient_builder_data.custom_prospects_query')),
-            default                  => 11
+            default                  => 0
         };
     }
 

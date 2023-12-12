@@ -8,7 +8,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class EstimateRecipientsCreatingMailshot
+class GetEstimateRecipientsWhileCreatingMailshot
 {
     use AsAction;
     use WithAttributes;
@@ -43,6 +43,8 @@ class EstimateRecipientsCreatingMailshot
      */
     public function asController(Shop $shop, ActionRequest $request): array
     {
+
+
         $this->fillFromRequest($request);
 
         $recipientsData = $this->postProcessRecipients(Arr::get($this->validateAttributes(), 'recipients_recipe'));
