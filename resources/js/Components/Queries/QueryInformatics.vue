@@ -75,7 +75,6 @@ const onSuccessful=(response,closed)=>{
 
 
 const changeQuantity=(value)=>{
-    console.log(value.target.value)
     if(!value.target.value || value.target.value <= 0) formMessage.value = 'input valid days'
     else formMessage.value = ''
 }
@@ -116,7 +115,7 @@ const changeQuantity=(value)=>{
             <Popover :width="'w-full'" position="right-[-60px]" ref="_popover">
                 <template #button>
                     <div class="font-bold specialUnderlineOrg py-1 focus:outline-none focus:ring-0">
-                        {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'quantity'], 0) }}
+                        {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'quantity'], 1) }}
                         {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'unit'], 'week') }}
                     </div>
                 </template>

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class FetchProspects extends FetchAction
 {
-    public string $commandSignature = 'fetch:prospects {au_database} {--S|shop= : Aurora Store Key} {--s|source_id=} {--N|only_new : Fetch only new} {--r|reset}';
+    public string $commandSignature = 'fetch:prospects {au_database} {--S|shop= : Aurora Store Key} {--s|source_id=} {--N|only_new : Fetch only new} {--r|reset} {--pretend}';
 
 
     public function handle(SourceService $source, int $sourceId): ?Prospect
@@ -27,6 +27,11 @@ class FetchProspects extends FetchAction
         $shop = Shop::first();
 
         if ($prospectData = $source->fetchProspect($sourceId)) {
+
+            if($this->pretend) {
+                print_r($prospectData);
+                return null;
+            }
 
             if ($prospect = Prospect::withTrashed()->whereJsonContains('data->source->source_id', Arr::get($prospectData, 'prospect.data.source.source_id'))->first()) {
 
@@ -43,7 +48,7 @@ class FetchProspects extends FetchAction
             } else {
                 data_set($prospectData['prospect'], 'data.bulk_import', [
                     'id'   => $this->fetch->id,
-                    'type' => 'Fetch'
+                    'type' => 'Fetch',
                 ]);
 
                 $prospect = StoreProspect::make()->action($shop, $prospectData['prospect']);
