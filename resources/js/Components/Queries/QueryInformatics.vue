@@ -134,8 +134,8 @@ const changeQuantity=(value)=>{
                         <div class="text-red-500 text-xs py-2">{{ formMessage }}</div>
                         <div class="mt-2 text-gray-500 italic flex justify-between">
                             <p> {{trans('Last contacted :')}} <span class="font-bold">
-                                    {{ option.constrains.prospect_last_contacted?.data?.quantity }}
-                                    {{ option.constrains.prospect_last_contacted.data.unit }}</span></p>
+                                    {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'quantity']) }}
+                                    {{  get(option, ['constrains', 'prospect_last_contacted', 'data', 'unit']) }}</span></p>
                             <Button label="OK" size="xxs" @click="onChangeLastContact(closed)"  />
                         </div>
                     </div>
