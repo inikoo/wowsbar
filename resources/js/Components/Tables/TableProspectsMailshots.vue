@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import Pusher from 'pusher-js'
+// import Pusher from 'pusher-js'
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import { trans } from "laravel-vue-i18n"
@@ -29,6 +29,7 @@ const props = defineProps<{
     },
     tab?: string
     senderEmail?: SenderEmail
+    formData: {}  // declare to clear warning
 }>()
 
 const reactivePropsData = { ...props.data }
@@ -45,21 +46,21 @@ function mailshotRoute(mailshot: { slug: string }) {
 }
 
 // Pusher: subscribe
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
-})
-const channel = pusher.subscribe('hydrate.sent.emails')
-reactivePropsData.data.forEach((item) => {
-    channel.bind(`mailshot.${item.slug}`, (data: any) => {
-        // After received data from Pusher, set value to data in table
-        item.number_delivered = data.mailshot.stats.number_delivered_emails
-        item.percentage_bounced = (((data.mailshot.stats.number_hard_bounced_emails + data.mailshot.stats.number_soft_bounced_emails) / data.mailshot.stats.number_dispatched_emails) * 100).toFixed(1) + '%'
-        item.percentage_opened = (data.mailshot.stats.number_opened_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
-        item.percentage_clicked = (data.mailshot.stats.number_clicked_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
-        item.percentage_unsubscribe = (data.mailshot.stats.number_unsubscribed_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
-        item.percentage_spam = (data.mailshot.stats.number_spam_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
-    })
-})
+// const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+//     cluster: 'ap1'
+// })
+// const channel = pusher.subscribe('hydrate.sent.emails')
+// reactivePropsData.data.forEach((item) => {
+//     channel.bind(`mailshot.${item.slug}`, (data: any) => {
+//         // After received data from Pusher, set value to data in table
+//         item.number_delivered = data.mailshot.stats.number_delivered_emails
+//         item.percentage_bounced = (((data.mailshot.stats.number_hard_bounced_emails + data.mailshot.stats.number_soft_bounced_emails) / data.mailshot.stats.number_dispatched_emails) * 100).toFixed(1) + '%'
+//         item.percentage_opened = (data.mailshot.stats.number_opened_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
+//         item.percentage_clicked = (data.mailshot.stats.number_clicked_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
+//         item.percentage_unsubscribe = (data.mailshot.stats.number_unsubscribed_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
+//         item.percentage_spam = (data.mailshot.stats.number_spam_emails / data.mailshot.stats.number_dispatched_emails * 100).toFixed(1) + '%'
+//     })
+// })
 
 </script>
 

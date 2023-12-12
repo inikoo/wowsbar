@@ -44,7 +44,7 @@ const Load = async () => {
             ),
         )
         if (response) {
-            console.log(response)
+            // console.log(response)
             return response.data.html.design
         }
     } catch (error) {
