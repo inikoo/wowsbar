@@ -5,6 +5,7 @@
  */
 
 import {defineStore} from 'pinia';
+import {notify} from '@kyvg/vue3-notification';
 
 export const useEchoOrgGeneral = defineStore(
     'echo-org-general',
@@ -15,13 +16,22 @@ export const useEchoOrgGeneral = defineStore(
         }),
         actions: {
 
-            subscribe(){
-                window.Echo.private('org.general')
-                .listen('.prospects-dashboards', (e) => {
-                    console.log(e);
-                });
+            subscribe() {
+                console.log('subscribe');
+                window.Echo.private('org.general').
+                    listen('.prospects-dashboards', (e) => {
+                        console.log(e);
+                    }).
+                    listen('.notification', (e) => {
+                        notify({
+                                   title: e.data.title,
+                                   text : e.data.text,
+                                   type : 'info',
+                               });
 
-            }
+                    });
+
+            },
         },
 
     });
