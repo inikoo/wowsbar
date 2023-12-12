@@ -13,7 +13,7 @@ import ModalUpload from "@/Components/Utils/ModalUpload.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import Button from "@/Components/Elements/Buttons/Button.vue";
 import {computed, ref, watch} from "vue";
-import Pusher from "pusher-js";
+// import Pusher from "pusher-js";
 
 const props = defineProps <{
     pageHead: any
@@ -32,15 +32,15 @@ const dataPusher = ref({
 })
 
 // Pusher: subscribe
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
-})
-const channel = pusher.subscribe('uploads.org')
-channel.bind('Product', (data: any) => {
-    dataPusher.value = data
-    // console.log("==============")
-    // console.log(data)
-})
+// const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+//     cluster: 'ap1'
+// })
+// const channel = pusher.subscribe('uploads.org')
+// channel.bind('Product', (data: any) => {
+//     dataPusher.value = data
+//     // console.log("==============")
+//     // console.log(data)
+// })
 
 // Progress bar for adding website
 const compProgressBar = computed(() => {
