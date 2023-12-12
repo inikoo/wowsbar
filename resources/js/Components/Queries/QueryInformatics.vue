@@ -78,7 +78,6 @@ const onChangeLastContact = async (closed) => {
 
 const onSuccessful = (response, closed) => {
     const newData = { ...props.option }
-    console.log(newData)
     newData.constrains.prospect_last_contacted.argument.quantity = value.value.quantity
     newData.constrains.prospect_last_contacted.argument.unit = value.value.unit
     props.option.number_items = response.count
@@ -94,7 +93,6 @@ const changeQuantity = (value) => {
 
 
 watch(value.value, (newValue) => {
-    console.log('sdf', value)
     if (!props.saveButton) {
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
@@ -161,15 +159,18 @@ watch(value.value, (newValue) => {
                                 <PureMultiselect v-model="value.unit" :options="['day', 'week', 'month']" required />
                             </div>
                         </div>
-                        <div class="text-red-500 text-xs py-2">{{ formMessage }}</div>
+                        <div v-if="formMessage" class="text-red-500 text-xs py-2">{{ formMessage }}</div>
 
                         <div class="mt-2 text-gray-500 italic flex justify-between">
                             <p> {{ trans('Last contacted :') }} <span class="font-bold">
                                     {{ get(value, ['quantity']) }}
                                     {{ get(value, ['unit']) }}</span>
                             </p>
-                            <FontAwesomeIcon v-if="loading && !saveButton" icon='fad fa-spinner-third' class=' animate-spin'
-                                aria-hidden='true' />
+                            <div v-if="loading && !saveButton" class="flex">
+                                <FontAwesomeIcon  icon='fad fa-spinner-third' class='animate-spin mx-2' aria-hidden='true' />
+                                <span>saving...</span>
+                            </div>
+                            
                             <Button v-if="saveButton" label="Save" size="xxs" @click="onChangeLastContact(closed)"
                                 :disabled="loading ? true : false" :loading="loading" />
                         </div>
