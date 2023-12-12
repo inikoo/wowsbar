@@ -7,10 +7,9 @@
 
 namespace App\Console;
 
-use App\Actions\Helpers\AwsEmail\CheckSenderEmailVerification;
+use App\Actions\Helpers\AwsEmail\CheckPendingSenderEmails;
 use App\Actions\Mail\Mailshot\SendMailshotScheduled;
 use App\Actions\Portfolio\Banner\FetchBannerAnalytics;
-use App\Models\Mail\SenderEmail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -29,9 +28,7 @@ class Kernel extends ConsoleKernel
             SendMailshotScheduled::dispatch();
         })->everyMinute();
         $schedule->call(function () {
-            SenderEmail::whereNull('verified_at')->get()->each(function (SenderEmail $senderEmail) {
-                CheckSenderEmailVerification::dispatch($senderEmail);
-            });
+            CheckPendingSenderEmails::dispatch();
         })->everyMinute();
     }
 
