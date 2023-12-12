@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, onMounted , watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import axios from 'axios';
 import { notify } from "@kyvg/vue3-notification"
 import Button from '@/Components/Elements/Buttons/Button.vue';
@@ -13,11 +13,12 @@ import { trans } from 'laravel-vue-i18n'
 import Tag from '@/Components/Tag.vue';
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faThLarge, faTreeChristmas, faGlassCheers, faBat } from '@fas/'
+import { faThLarge, faTreeChristmas, faGlassCheers, faBat, faPlus } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Image from '@/Components/Image.vue'
+import { get } from 'lodash'
 
-library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat)
+library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat, faPlus)
 
 const props = defineProps<{
     title: string,
@@ -40,7 +41,7 @@ const getTemplates = async () => {
     loadingState.value = true
     try {
         const response = await axios.get(
-            route('org.json.email.templates',{category : activeCategory.value}),
+            route('org.json.email.templates', { category: activeCategory.value }),
         )
         templates.value = Object.values(response.data)
     } catch (error) {
@@ -77,12 +78,12 @@ onMounted(() => {
 </script>
 
 <template >
-
     <div class="text-center text-2xl font-bold mb-4">{{ trans("Available Templates") }}</div>
     <div class="flex flex-wrap justify-center items-center gap-4 m-4">
         <!-- Categories with tags -->
         <div v-for="category in categories" :key="category.value">
-            <Tag :label="category.label" :theme="category.value == activeCategory ? 5 : 0" @click="()=> activeCategory = category.value">
+            <Tag :label="category.label" :theme="category.value == activeCategory ? 5 : 0"
+                @click="() => activeCategory = category.value">
                 <template #label>
                     <FontAwesomeIcon :icon="category.icon" class='' aria-hidden='true' />
                     {{ category.label }}
@@ -92,24 +93,36 @@ onMounted(() => {
     </div>
 
     <!-- Responsive grid layout for templates -->
-    <div v-if="templates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    <div v-if="templates.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <div v-for="template in templates" :key="template.slug" class="relative w-full">
-            <div class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-
-                <Image  :src="template.image_thumbnail"
-                       :alt="template.title" class="absolute inset-0 w-full h-full object-cover rounded-lg" />
+            <div v-if="template.slug != 'blank'"
+                class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
+                <Image :src="template.image_thumbnail" :alt="template.title"
+                    class="absolute inset-0 w-full h-full object-cover rounded-lg" />
             </div>
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
+
+            <div v-else
+                class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden flex justify-center items-center">
+                <div class="absolute inset-0 w-full h-full object-cover rounded-lg flex justify-center items-center">
+                    <font-awesome-icon :icon="['fas', 'plus']" class="text-4xl text-gray-500" />
+                </div>
+            </div>
+
+            <div
+                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
                 <div class="text-white text-center">
                     <Button :label="trans('Use Template')" @click="selectTemplate(template)" />
                 </div>
             </div>
-            <span class="flex justify-center p-2 font-bold">{{ template.compiled.name }}</span>
+            <span class="flex justify-center p-2 font-bold text-center">{{ template.slug != 'blank' ?
+                get(template, ['compiled', 'name']) : 'Blank Template' }}</span>
         </div>
+
     </div>
 
     <!-- Handling case when no templates are available -->
-   <div v-else class="p-4">
+    <div v-else class="p-4">
         <EmptyState :data="{
             title: trans('You haven\'t uploaded any templates.'),
             description: trans(''),
