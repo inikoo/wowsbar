@@ -53,7 +53,7 @@ function listRoute(prospect_list) {
 
         <!-- Cell: Description -->
         <template #cell(description)="{ item: prospect_list }">
-        <QueryInformatics :option="prospect_list" />
+        <QueryInformatics :option="prospect_list" :saveButton="true" />
         </template>
 
         <!-- {{ prospect_list.arguments }} -->

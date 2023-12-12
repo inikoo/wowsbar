@@ -6,23 +6,25 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaperPlane } from '@fas'
+import { faPaperPlane, faTimes } from '@fas'
 import { faEnvelope, faPhone, faHouse } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from "laravel-vue-i18n";
-import { useLocaleStore } from "@/Stores/locale";
 import Popover from '@/Components/Utils/Popover.vue'
 import { get, startCase } from 'lodash'
 import Tag from "@/Components/Tag.vue"
 import { ref, watch } from "vue"
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
+import { faSpinnerThird } from '@fad'
 
-library.add(faPaperPlane, faEnvelope, faPhone, faHouse)
-const props = defineProps<{
+library.add(faPaperPlane, faEnvelope, faPhone, faHouse, faSpinnerThird, faTimes)
+
+const props = withDefaults(defineProps<{
+    saveButton?: boolean
     option: {
         argument: {
             id: number
@@ -30,9 +32,15 @@ const props = defineProps<{
             number_items: number
         }[]
     }
-}>()
+}>(), {
+    saveButton: false
+})
+
 const emits = defineEmits();
 const formMessage = ref('');
+const loading = ref(false);
+let timeoutId: any
+
 const value = ref({
     quantity: get(props.option, ["constrains", "prospect_last_contacted", "argument", "quantity"], 1),
     unit: get(props.option, ["constrains", "prospect_last_contacted", "argument", "unit"], 'week')
@@ -46,37 +54,57 @@ const findIcon = (data) => {
 
 
 const onChangeLastContact = async (closed) => {
-    if(value.value.quantity && value.value.quantity > 0)
-    try {
-        const response = await axios.get(
-            route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
-            {params: { ...value.value }}
-        );
-       onSuccessful(response.data,closed)
+    if (value.value.quantity && value.value.quantity > 0) {
+        loading.value = true
+        try {
 
-    } catch (error) {
-        notify({
-            title: "Failed",
-            text: "Failed to update data, please try again",
-            type: "error"
-        });
-    }else formMessage.value = 'Please input the correct value'
+            const response = await axios.get(
+                route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
+                { params: { ...value.value } }
+            );
+            onSuccessful(response.data, closed)
+
+        } catch (error) {
+            console.log(error)
+            notify({
+                title: "Failed",
+                text: "Failed to update data, please try again",
+                type: "error"
+            });
+        }
+    } else formMessage.value = 'Please input the correct value'
+    loading.value = false
 }
 
-const onSuccessful=(response,closed)=>{
-    const newData = {...props.option}
+const onSuccessful = (response, closed) => {
+    const newData = { ...props.option }
+    console.log(newData)
     newData.constrains.prospect_last_contacted.argument.quantity = value.value.quantity
     newData.constrains.prospect_last_contacted.argument.unit = value.value.unit
     props.option.number_items = response.count
-    emits("update:option", newData); 
-    closed()
+    emits("update:option", newData);
+    if (closed) closed()
 }
 
 
-const changeQuantity=(value)=>{
-    if(!value.target.value || value.target.value <= 0) formMessage.value = 'input valid days'
+const changeQuantity = (value) => {
+    if (!value.target.value || value.target.value <= 0) formMessage.value = 'input valid days'
     else formMessage.value = ''
 }
+
+
+watch(value.value, (newValue) => {
+    console.log('sdf', value)
+    if (!props.saveButton) {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            onChangeLastContact()
+        }, 1000)
+    }
+})
+
+
+
 </script>
 
 <template>
@@ -107,9 +135,9 @@ const changeQuantity=(value)=>{
                 </Popover>
             </div>
         </div>
-        <p v-if="!option.has_arguments" class="text-gray-500">{{trans('(Not contacted yet)')}}</p>
+        <p v-if="!option.has_arguments" class="text-gray-500">{{ trans('(Not contacted yet)') }}</p>
         <p v-else class="text-gray-500 whitespace-nowrap">
-            {{trans('(Last contacted at:')}}
+            {{ trans('(Last contacted at:') }}
         <div class="relative inline-flex">
             <Popover :width="'w-full'" position="right-[-60px]" ref="_popover">
                 <template #button>
@@ -120,22 +148,30 @@ const changeQuantity=(value)=>{
                 </template>
                 <template #content="{ close: closed }">
                     <div class="flex flex-col">
-                        <div class="text-center text-base font-semibold">{{trans("Interval")}}</div>
+                        <div class="text-center font-semibold absolute top-1 right-2 text-xs cursor-pointer" @click="closed()">
+                            <font-awesome-icon :icon="['fas', 'times']" />
+                        </div>
+                        <div class="text-center text-base font-semibold">{{ trans("Interval") }}</div>
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="true" @input="changeQuantity"
-                                    placeholder="days" required />
+                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="true"
+                                    @input="changeQuantity" placeholder="days" required />
                             </div>
                             <div class="w-40">
                                 <PureMultiselect v-model="value.unit" :options="['day', 'week', 'month']" required />
                             </div>
                         </div>
                         <div class="text-red-500 text-xs py-2">{{ formMessage }}</div>
+
                         <div class="mt-2 text-gray-500 italic flex justify-between">
-                            <p> {{trans('Last contacted :')}} <span class="font-bold">
-                                    {{ get(option, ['constrains', 'prospect_last_contacted', 'argument', 'quantity']) }}
-                                    {{  get(option, ['constrains', 'prospect_last_contacted', 'argument', 'unit']) }}</span></p>
-                            <Button label="OK" size="xxs" @click="onChangeLastContact(closed)"  />
+                            <p> {{ trans('Last contacted :') }} <span class="font-bold">
+                                    {{ get(value, ['quantity']) }}
+                                    {{ get(value, ['unit']) }}</span>
+                            </p>
+                            <FontAwesomeIcon v-if="loading && !saveButton" icon='fad fa-spinner-third' class=' animate-spin'
+                                aria-hidden='true' />
+                            <Button v-if="saveButton" label="Save" size="xxs" @click="onChangeLastContact(closed)"
+                                :disabled="loading ? true : false" :loading="loading" />
                         </div>
                     </div>
                 </template>

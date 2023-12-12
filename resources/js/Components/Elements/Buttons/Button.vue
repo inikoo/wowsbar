@@ -13,6 +13,7 @@ import { faArrowLeft } from '@far'
 import { faPlus, faSave, faUpload } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { useLayoutStore } from '@/Stores/layout'
+import { faSpinnerThird } from '@fad'
 
 const layout = useLayoutStore()
 
@@ -26,13 +27,15 @@ const props = withDefaults(defineProps<{
     'full'?: boolean
     capitalize?: boolean
     tooltip?: string
+    loading?:boolean
 }>(), {
     style: 'primary',
     size: 'm',
-    capitalize: true
+    capitalize: true,
+    loading:false
 })
 
-library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft)
+library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft, faSpinnerThird)
 
 let styleClass = ''
 let sizeClass = ''
@@ -156,6 +159,9 @@ const getActionIcon = (icon: any) => {
         v-tooltip="tooltip ?? undefined"    
     >
         <slot>
+            <slot name="loading">
+                <FontAwesomeIcon v-if="loading" icon='fad fa-spinner-third' class='animate-spin' fixed-width  aria-hidden="true"/>
+            </slot>
             <slot name="icon">
                 <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" fixed-width class="" aria-hidden="true"/>
             </slot>
