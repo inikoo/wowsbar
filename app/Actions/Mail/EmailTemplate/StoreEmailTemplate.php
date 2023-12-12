@@ -24,14 +24,15 @@ class StoreEmailTemplate
     private bool $asAction = false;
 
     private Organisation|Shop $parent;
-    private string $scope;
+
     private array $queryRules;
 
     public function handle(Organisation|Shop $parent, array $modelData): EmailTemplate
     {
         $emailTemplate = $parent->emailTemplates()->create($modelData);
 
-        StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
+
+        //StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
 
         return $emailTemplate;
     }
@@ -48,10 +49,14 @@ class StoreEmailTemplate
     public function rules(): array
     {
         return [
-            'title'    => ['required', 'string', 'max:255'],
-            'data'     => ['required', 'string'],
+            'name'     => ['required', 'string', 'max:255'],
             'compiled' => ['required', 'string']
         ];
+    }
+
+    public function action(Organisation|Shop $parent, $modelData): EmailTemplate
+    {
+        return $this->handle($parent, $modelData);
     }
 
     public function jsonResponse(EmailTemplate $emailTemplate): string
@@ -59,7 +64,7 @@ class StoreEmailTemplate
         return route(
             'org.crm.shop.mailroom.templates.workshop',
             [
-                $emailTemplate->scope->slug,
+                $emailTemplate->parent->slug,
                 $emailTemplate->slug
             ]
         );
@@ -70,7 +75,7 @@ class StoreEmailTemplate
         return redirect()->route(
             'org.crm.shop.mailroom.templates.workshop',
             [
-                $emailTemplate->scope->slug,
+                $emailTemplate->parent->slug,
                 $emailTemplate->slug
             ]
         );

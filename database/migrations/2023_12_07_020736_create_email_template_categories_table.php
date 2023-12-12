@@ -14,7 +14,12 @@ return new class () extends Migration {
     {
         Schema::create('email_template_categories', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('name')->collation('und_ns_ci');
+            $table->string('icon')->nullable();
+            $table->boolean('is_seeded')->default(false);
+            $table->unsignedSmallInteger('number_of_seeded_templates')->default(0);
+            $table->unsignedSmallInteger('number_of_templates')->default(0);
             $table->timestampsTz();
         });
     }

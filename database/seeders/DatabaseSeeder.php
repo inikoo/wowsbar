@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             PaymentServiceProviderSeeder::class,
             MailroomSeeder::class,
-            EmailTemplateSeeder::class
+           // EmailTemplateSeeder::class
         ]);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace App\Models\Mail;
 
+use App\Actions\Utils\Abbreviate;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Media\Media;
@@ -24,7 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Mail\EmailTemplate
  *
  * @property int $id
- * @property string $title
+ * @property string $name
  * @property string $parent_type
  * @property int $parent_id
  * @property array $data
@@ -32,11 +33,17 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $slug
+ * @property int|null $screenshot_id
+ * @property bool $is_seeded
+ * @property bool $is_transactional
+ * @property string $type
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot
- * @property-read \App\Models\Media\Media|null $screenshot
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
  * @property-read Model|\Eloquent $parent
+ * @property-read Media|null $screenshot
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read Snapshot|null $unpublishedSnapshot
@@ -47,10 +54,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereIsSeeded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereIsTransactional($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereScreenshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -62,17 +73,28 @@ class EmailTemplate extends Model implements HasMedia
 
     protected $guarded = [];
 
-
     protected $casts = [
+        'data'     => 'array',
         'compiled' => 'array',
-        'data'     => 'array'
+    ];
+
+    protected $attributes = [
+        'data'     => '{}',
+        'compiled' => '{}',
     ];
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
+            ->generateSlugsFrom(function () {
+                if(mb_strlen($this->name)>=8) {
+                    return Abbreviate::run($this->name);
+                } else {
+                    return  $this->name;
+                }
+            })
             ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(12)
             ->doNotGenerateSlugsOnUpdate();
     }
 

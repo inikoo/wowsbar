@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Blank",
+        "icon": "fal fa-file"
+    },
+    {
+        "name": "Christmas",
+        "icon": "fal fa-tree-christmas"
+    },
+    {
+        "name": "Halloween",
+        "icon": "fal fa-pumpkin"
+    },
+    {
+        "name": "New Year",
+        "icon": "fal fa-glass-cheers"
+    }
+]
+

@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::morphMap(
             [
-                'Organisation'           => 'App\Models\Organisation\Organisation',
+                'Organisation'           => 'App\Models\SysAdmin\Organisation',
                 'User'                   => 'App\Models\Auth\User',
                 'PortfolioWebsite'       => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'                 => 'App\Models\Portfolio\Banner',
@@ -65,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
                 'PortfolioSocialAccount' => 'App\Models\Portfolio\PortfolioSocialAccount',
                 'CustomerSocialAccount'  => 'App\Models\Portfolios\CustomerSocialAccount',
                 'Fetch'                  => 'App\Models\Helpers\Fetch',
+                'EmailTemplate'          => 'App\Models\Mail\EmailTemplate',
 
             ]
         );

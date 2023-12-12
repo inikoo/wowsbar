@@ -47,7 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $avatar_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -69,6 +69,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Database\Factories\Auth\OrganisationUserFactory factory($count = null, $state = [])
  * @method static Builder|OrganisationUser newModelQuery()
  * @method static Builder|OrganisationUser newQuery()
+ * @method static Builder|OrganisationUser onlyTrashed()
  * @method static Builder|OrganisationUser permission($permissions)
  * @method static Builder|OrganisationUser query()
  * @method static Builder|OrganisationUser role($roles, $guard = null)
@@ -92,6 +93,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|OrganisationUser whereStatus($value)
  * @method static Builder|OrganisationUser whereUpdatedAt($value)
  * @method static Builder|OrganisationUser whereUsername($value)
+ * @method static Builder|OrganisationUser withTrashed()
+ * @method static Builder|OrganisationUser withoutTrashed()
  * @mixin \Eloquent
  */
 class OrganisationUser extends Authenticatable implements HasMedia, Auditable

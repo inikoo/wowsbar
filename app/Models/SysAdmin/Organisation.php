@@ -12,6 +12,7 @@ use App\Models\Assets\Currency;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Market\Shop;
 use App\Models\Traits\HasLogo;
 use App\Models\Web\Website;
@@ -45,6 +46,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
  * @property-read int|null $departments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, EmailTemplate> $emailTemplates
+ * @property-read int|null $email_templates_count
  * @property-read \App\Models\SysAdmin\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \App\Models\Media\Media|null $logo
  * @property-read \App\Models\SysAdmin\OrganisationMailStats|null $mailStats
@@ -166,6 +169,11 @@ class Organisation extends Model implements HasMedia
     public function products(): MorphMany
     {
         return $this->morphMany(Product::class, 'parent');
+    }
+
+    public function emailTemplates(): MorphMany
+    {
+        return $this->morphMany(EmailTemplate::class, 'parent');
     }
 
 }

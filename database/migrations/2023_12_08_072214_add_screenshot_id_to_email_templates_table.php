@@ -15,6 +15,10 @@ return new class () extends Migration {
         Schema::table('email_templates', function (Blueprint $table) {
             $table->unsignedInteger('screenshot_id')->nullable();
             $table->foreign('screenshot_id')->references('id')->on('media');
+            $table->boolean('is_seeded')->index()->default(false);
+            $table->boolean('is_transactional')->index()->default(false);
+            $table->string('type')->index();
+            $table->renameColumn('title', 'name');
         });
     }
 
@@ -24,6 +28,10 @@ return new class () extends Migration {
         Schema::table('email_templates', function (Blueprint $table) {
             $table->dropForeign(['screenshot_id']);
             $table->dropColumn('screenshot_id');
+            $table->dropColumn('is_seeded');
+            $table->dropColumn('type');
+            $table->dropColumn('is_transactional');
+            $table->renameColumn('name', 'title');
         });
     }
 };
