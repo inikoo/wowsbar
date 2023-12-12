@@ -18,7 +18,7 @@ import { faFile as fasFile, faFileDownload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
-import Pusher from 'pusher-js'
+// import Pusher from 'pusher-js'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
@@ -65,14 +65,14 @@ const isProgressDone = ref(false)
 
 
 // Pusher: subscribe
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
-})
-const channel = pusher.subscribe('uploads.aiku')
-channel.bind('WebsiteUpload', (data: any) => {
-    dataPusher.value = data
+// const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+//     cluster: 'ap1'
+// })
+// const channel = pusher.subscribe('uploads.aiku')
+// channel.bind('WebsiteUpload', (data: any) => {
+//     dataPusher.value = data
 
-})
+// })
 
 // On upload file website
 const onUpload = async (fileUploaded: any) => {

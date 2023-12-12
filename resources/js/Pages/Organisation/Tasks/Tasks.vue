@@ -18,7 +18,6 @@ import { faFile as fasFile, faFileDownload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
-import Pusher from 'pusher-js'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";

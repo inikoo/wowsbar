@@ -10,7 +10,7 @@ import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
 import {trans} from "laravel-vue-i18n";
-import Pusher from 'pusher-js'
+// import Pusher from 'pusher-js'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaperPlane, faDungeon, faSkull } from '@fal'
@@ -141,22 +141,22 @@ const dataStatistic = reactive([
 ])
 
 // Pusher: subscribe
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
-})
-const channel = pusher.subscribe('hydrate.sent.emails')
-channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
-    // reactiveProps.value = {...data.mailshot}
-    dataStatistic[0].component.update(data.mailshot.stats.number_dispatched_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_rejected_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_hard_bounced_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_soft_bounced_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_delivered_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_opened_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_clicked_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_spam_emails)
-    dataStatistic[0].component.update(data.mailshot.stats.number_unsubscribed_emails)
-})
+// const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+//     cluster: 'ap1'
+// })
+// const channel = pusher.subscribe('hydrate.sent.emails')
+// channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
+//     // reactiveProps.value = {...data.mailshot}
+//     dataStatistic[0].component.update(data.mailshot.stats.number_dispatched_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_rejected_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_hard_bounced_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_soft_bounced_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_delivered_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_opened_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_clicked_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_spam_emails)
+//     dataStatistic[0].component.update(data.mailshot.stats.number_unsubscribed_emails)
+// })
 
 
 const countdown: Ref<DateScheduled> = ref(useTimeCountdown(props.data.schedule_at, { zero: true }))
