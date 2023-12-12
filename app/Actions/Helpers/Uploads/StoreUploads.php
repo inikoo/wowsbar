@@ -28,7 +28,7 @@ class StoreUploads
         $filename = $file->hashName();
         $type     = class_basename($class);
         $path     = 'org/' . Str::lower($type);
-        Storage::disk('local')->put($path, $file);
+        Storage::disk('excel-uploads')->put($path, $file);
 
         return Upload::create([
             'organisation_user_id' => $orgUser?->id,

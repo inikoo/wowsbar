@@ -43,13 +43,13 @@ trait WithImportModel
             }
 
             $content = $googleDisk->get($filename);
-            Storage::disk('local')->put("tmp/$newFileName", $content);
+            Storage::disk('excel-uploads')->put("tmp/$newFileName", $content);
             $filename = "storage/app/tmp/" . $newFileName;
         }
 
         $file   = ConvertUploadedFile::run($filename);
         $upload = $this->rumImport($file, $command);
-        Storage::disk('local')->delete("tmp/" . $newFileName);
+        Storage::disk('excel-uploads')->delete("tmp/" . $newFileName);
 
         $command->table(
             ['', 'Success', 'Fail'],
