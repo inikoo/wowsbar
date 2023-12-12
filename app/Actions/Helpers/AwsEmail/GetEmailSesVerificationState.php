@@ -15,13 +15,13 @@ use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
-class CheckSenderEmailVerification
+class GetEmailSesVerificationState
 {
     use WithActionUpdate;
     use AwsClient;
     use AsCommand;
 
-    public string $commandSignature = 'aws:check-sender-email-verification {email}}';
+    public string $commandSignature = 'aws:get-email-verification {email}}';
 
     public function handle(string $email): SenderEmailStateEnum
     {

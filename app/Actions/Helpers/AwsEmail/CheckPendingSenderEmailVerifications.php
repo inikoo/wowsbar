@@ -24,11 +24,28 @@ class CheckPendingSenderEmailVerifications
     {
 
         SenderEmail::where('state', SenderEmailStateEnum::PENDING)->get()->each(function (SenderEmail $senderEmail) {
-            CheckSenderEmailVerification::dispatch($senderEmail);
+            $email = $senderEmail->email_address;
+
+            $state = GetEmailSesVerificationState::run($email);
+
+            if($state==SenderEmailStateEnum::PENDING || $state==SenderEmailStateEnum::ERROR) {
+                return;
+            }
+
+            data_set($modelData, 'state', $state);
+
+            if ($state == SenderEmailStateEnum::VERIFIED) {
+                if ($senderEmail->verified_at === null) {
+                    data_set($modelData, 'verified_at', now());
+                }
+            }
+
+            $senderEmail->update($modelData);
+
         });
     }
 
-    public string $commandSignature = 'aws:check-pending-sender-email-verifications}';
+    public string $commandSignature = 'aws:check-pending-sender-email-verifications';
 
 
     public function asCommand(): int
