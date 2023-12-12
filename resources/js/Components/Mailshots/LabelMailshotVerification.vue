@@ -26,6 +26,6 @@ const routeSetting = route(
     <div class="px-5 pt-1.5 pb-1 w-full border-b border-yellow-500/20 bg-yellow-500/10 flex items-center gap-x-2 text-gray-500 text-sm">
         <FontAwesomeIcon icon='fal fa-exclamation-triangle' class='h-4 text-gray-500' aria-hidden='true' />
         <div class="">{{ message ?? trans('Please set your Sender Email before start sending Mailshots.')}}</div>
-        👉 <Link v-if="!message" :href="routeSetting" class="underline hover:text-gray-600 cursor-pointer font-semibold">{{ trans('Setting') }}</Link>
+        👉 <Link v-if="!message" :href="routeSetting" class="underline hover:text-gray-600 cursor-pointer font-semibold">{{ trans('Go to settings') }}</Link>
     </div>
 </template>

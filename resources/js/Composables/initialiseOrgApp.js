@@ -22,47 +22,46 @@ export const initialiseOrgApp = () => {
     const echoPersonal = useEchoOrgPersonal()
     const echoGeneral = useEchoOrgGeneral()
 
-    // If user change tab then broadcast to others
-
-
+    // Subscribe, sees join, sees leaving, listen to Websockets
     liveOrganisationUsers().subscribe();
 
-
-
     echoGeneral.subscribe()
+
     if (usePage().props.auth.user) {
         echoPersonal.subscribe(usePage().props.auth.user.id)
 
         router.on('navigate', (event) => {
-            axios.post(
-                route('org.models.live-organisation-users-current-page.store',
-                      usePage().props.auth.user.id  ),
-                {
-                    'label': event.detail.page.props.title
-                }
-            )
-            .catch(error => {
-                console.error('Error broadcasting.'+error);
-            });
-
+            // console.log(usePage().props.auth.user?.id)
+            if(usePage().props.auth.user?.id) {
+                // console.log("===== ada auth id =====")
+                axios.post(
+                    route('org.models.live-organisation-users-current-page.store',
+                        usePage().props.auth.user?.id  ),
+                    {
+                        'label': event.detail.page.props.title
+                    }
+                )
+                .then((response) => {
+                    // console.log("Broadcast sukses", response)
+                })
+                .catch(error => {
+                    console.error('Error broadcasting.'+error);
+                });
+            }
         })
-
     }
 
-    if (usePage().props.localeData) {
-        loadLanguageAsync(usePage().props.localeData.language.code)
-    }
 
     watchEffect(() => {
         // Set data of Navigation
         if (usePage().props.layout) {
             layout.navigation = usePage().props.layout.navigation ?? null
-            layout.secondaryNavigation =
-                usePage().props.layout.secondaryNavigation ?? null
+            layout.secondaryNavigation = usePage().props.layout.secondaryNavigation ?? null
         }
 
         // Set data of Locale (Language)
         if (usePage().props.localeData) {
+            loadLanguageAsync(usePage().props.localeData.language.code)
             locale.language = usePage().props.localeData.language
             locale.languageOptions = usePage().props.localeData.languageOptions
         }

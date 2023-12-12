@@ -7,10 +7,9 @@
 
 namespace App\Console;
 
-use App\Actions\Helpers\AwsEmail\CheckSenderEmailVerification;
+use App\Actions\Helpers\AwsEmail\CheckPendingSenderEmailVerifications;
 use App\Actions\Mail\Mailshot\SendMailshotScheduled;
 use App\Actions\Portfolio\Banner\FetchBannerAnalytics;
-use App\Models\Mail\SenderEmail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -22,17 +21,19 @@ class Kernel extends ConsoleKernel
             $schedule->command('telescope:prune')->daily();
         }
 
-        $schedule->call(function () {
-            FetchBannerAnalytics::dispatch();
-        })->daily();
-        $schedule->call(function () {
-            SendMailshotScheduled::dispatch();
-        })->everyMinute();
-        $schedule->call(function () {
-            SenderEmail::whereNull('verified_at')->get()->each(function (SenderEmail $senderEmail) {
-                CheckSenderEmailVerification::dispatch($senderEmail);
-            });
-        })->everyMinute();
+        $schedule->job(FetchBannerAnalytics::makeJob())
+            ->name(FetchBannerAnalytics::class)
+            ->daily();
+        $schedule->job(SendMailshotScheduled::makeJob())
+            ->name(SendMailshotScheduled::class)
+            ->everyMinute();
+
+        $schedule->job(CheckPendingSenderEmailVerifications::makeJob())
+            ->name(CheckPendingSenderEmailVerifications::class)
+            ->everyMinute();
+
+
+
     }
 
 
