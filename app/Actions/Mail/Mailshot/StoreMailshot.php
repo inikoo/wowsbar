@@ -45,11 +45,12 @@ class StoreMailshot
         $this->parent = $parent;
 
         data_set($modelData, 'date', now());
-        data_set(
-            $modelData,
-            'layout',
-            json_decode(file_get_contents(resource_path('views/mailshots/layouts/default.json')), true)
-        );
+        //        data_set(
+        //            $modelData,
+        //            'layout',
+        //[]
+        ////            json_decode(file_get_contents(resource_path('views/mailshots/layouts/default.json')), true)
+        //        );
 
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);

@@ -1,5 +1,15 @@
 {
     "categories": [
+        {
+            "name": "Default",
+            "templates": [
+                {
+                    "name": "Blank",
+                    "content": "default.json",
+                    "image": ""
+                }
+            ]
+        },
       {
         "name": "Christmas",
         "templates": [

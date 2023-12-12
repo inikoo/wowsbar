@@ -108,7 +108,6 @@ const onError = (error) => {
 }
 
 const onSuccess = (response,closedPopover) => {
-    console.log(response)
     if (response.data.data[0].state !== "error") {
         let newLocalStorage = localStorageData.value
         if (newLocalStorage) {
@@ -145,6 +144,7 @@ const onSuccess = (response,closedPopover) => {
     }
     if(closedPopover)closedPopover()
 };
+
 </script>
 
 

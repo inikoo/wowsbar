@@ -43,17 +43,19 @@ class EmailTemplateSeeder extends Seeder
                     ]);
 
                     $imagesPath = database_path($basePath . '/images');
-                    foreach (File::files($imagesPath) as $image) {
-                        AttachImageToEmailTemplate::run($emailTemplate, 'email_templates', $image->getPathname(), $image->getFilename());
+                    if (File::exists($imagesPath)) {
+                        foreach (File::files($imagesPath) as $image) {
+                            AttachImageToEmailTemplate::run($emailTemplate, 'email_templates', $image->getPathname(), $image->getFilename());
+                        }
+
+                        $checksum = md5_file($imagesPath . '/' . Arr::get($template, 'image'));
+                        /** @var Media $media */
+                        $media = $emailTemplate->media()->where('collection_name', 'email_templates')->where('checksum', $checksum)->first();
+
+                        $emailTemplate->update([
+                            'screenshot_id' => $media->id
+                        ]);
                     }
-
-                    $checksum = md5_file($imagesPath . '/' . Arr::get($template, 'image'));
-                    /** @var Media $media */
-                    $media = $emailTemplate->media()->where('collection_name', 'email_templates')->where('checksum', $checksum)->first();
-
-                    $emailTemplate->update([
-                        'screenshot_id' => $media->id
-                    ]);
                 }
             }
         }
