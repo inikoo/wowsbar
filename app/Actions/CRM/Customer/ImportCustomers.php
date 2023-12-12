@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\CRM\CustomerImport;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Upload;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportCustomers
 {
@@ -31,19 +30,12 @@ class ImportCustomers
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new CustomerImport($upload)
             );
         }
 
         return $upload;
-    }
-
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
     }
 
     public string $commandSignature = 'customer:import {--g|g_drive} {filename}';

@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\Catalogue\DepartmentImport;
 use App\Models\Catalogue\ProductCategory;
 use App\Models\Helpers\Upload;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportDepartments
 {
@@ -31,20 +30,13 @@ class ImportDepartments
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new DepartmentImport($upload)
             );
         }
 
         return $upload;
 
-    }
-
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
     }
 
     public string $commandSignature = 'department:import {--g|g_drive} {filename}';

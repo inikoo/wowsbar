@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Uploads;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,15 +16,16 @@ class ImportUpload
 {
     use AsAction;
 
-    public function handle(UploadedFile $file, $import): void
+    public function handle(UploadedFile|string $file, $import): void
     {
-
         Excel::import(
             $import,
-            $file->path()
+            is_string($file) ? $file : $file->path()
         );
 
-
+        if(is_string($file)) {
+            Storage::delete($file);
+        }
     }
 
 }

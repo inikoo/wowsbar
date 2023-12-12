@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\Catalogue\ProductImport;
 use App\Models\Catalogue\Product;
 use App\Models\Helpers\Upload;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportProducts
 {
@@ -31,7 +30,7 @@ class ImportProducts
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new ProductImport($upload)
             );
         }
@@ -39,12 +38,6 @@ class ImportProducts
         return $upload;
     }
 
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
-    }
 
     public string $commandSignature = 'product:import {--g|g_drive} {filename}';
 

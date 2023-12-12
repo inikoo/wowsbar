@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\Portfolios\CustomerWebsiteImport;
 use App\Models\Helpers\Upload;
 use App\Models\Portfolios\CustomerWebsite;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportCustomerWebsites
 {
@@ -31,22 +30,15 @@ class ImportCustomerWebsites
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new CustomerWebsiteImport($upload)
             );
         }
 
         return $upload;
 
-
     }
 
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
-    }
 
     public string $commandSignature = 'customer-website:import {--g|g_drive} {filename}';
 

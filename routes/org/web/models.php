@@ -138,7 +138,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
     Route::prefix('{shop:id}')->group(function () {
         Route::post('website/', StoreWebsite::class)->name('website.store');
         Route::post('customer/', [StoreCustomer::class, 'inShop'])->name('customer.store');
-        Route::post('prospect/upload', ImportShopProspects::class)->name('prospects.upload');
+        Route::post('prospect/upload', [ImportShopProspects::class, 'inShop'])->name('prospects.upload');
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');

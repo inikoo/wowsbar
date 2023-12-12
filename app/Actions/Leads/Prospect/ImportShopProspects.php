@@ -15,6 +15,7 @@ use App\Imports\Leads\ProspectImport;
 use App\Models\Helpers\Upload;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 
 class ImportShopProspects
@@ -33,7 +34,7 @@ class ImportShopProspects
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new ProspectImport($scope, $upload)
             );
         }
@@ -43,9 +44,10 @@ class ImportShopProspects
     }
 
 
-    public function asController(Shop $shop, ActionRequest $request): Upload
+    public function inShop(Shop $shop, ActionRequest $request): Upload
     {
         $file = $request->file('file');
+        Storage::disk('local')->put($this->tmpPath, $file);
         return $this->handle($shop, $file);
     }
 

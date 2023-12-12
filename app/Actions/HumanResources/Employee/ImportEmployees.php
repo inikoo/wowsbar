@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\HumanResources\EmployeeImport;
 use App\Models\Helpers\Upload;
 use App\Models\HumanResources\Employee;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportEmployees
 {
@@ -21,8 +20,6 @@ class ImportEmployees
 
     public function handle($file): Upload
     {
-
-
         $upload = StoreUploads::run($file, Employee::class);
 
         if ($this->isSync) {
@@ -33,7 +30,7 @@ class ImportEmployees
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new EmployeeImport($upload)
             );
         }
@@ -41,12 +38,6 @@ class ImportEmployees
         return $upload;
 
 
-    }
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
     }
 
     public string $commandSignature = 'employee:import {--g|g_drive} {filename}';

@@ -13,7 +13,6 @@ use App\Actions\Traits\WithImportModel;
 use App\Imports\Auth\GuestImport;
 use App\Models\Auth\Guest;
 use App\Models\Helpers\Upload;
-use Lorisleiva\Actions\ActionRequest;
 
 class ImportGuests
 {
@@ -31,7 +30,7 @@ class ImportGuests
             $upload->refresh();
         } else {
             ImportUpload::dispatch(
-                $file,
+                $this->tmpPath.$upload->filename,
                 new GuestImport($upload)
             );
         }
@@ -39,12 +38,6 @@ class ImportGuests
         return $upload;
 
 
-    }
-
-    public function asController(ActionRequest $request): void
-    {
-        $file = $request->file('file');
-        $this->handle($file);
     }
 
     public string $commandSignature = 'guest:import {--g|g_drive} {filename}';

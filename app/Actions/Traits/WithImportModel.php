@@ -12,6 +12,7 @@ use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -19,6 +20,7 @@ trait WithImportModel
 {
     use AsAction;
     use WithAttributes;
+    private string $tmpPath='tmp/uploads/';
 
     private bool $isSync = false;
 
@@ -26,6 +28,13 @@ trait WithImportModel
     {
         return $this->handle($file);
 
+    }
+
+    public function asController(ActionRequest $request): void
+    {
+        $file = $request->file('file');
+        Storage::disk('local')->put($this->tmpPath, $file);
+        $this->handle($file);
     }
 
     public function asCommand(Command $command): int
