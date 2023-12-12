@@ -5,8 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { useLocaleStore } from "@/Stores/locale"
+// import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
+import { liveOrganisationUsers } from '@/Stores/active-users'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
@@ -25,7 +26,6 @@ type UserOnline = {
         username: string
     }
 }
-const locale = useLocaleStore()
 const layout = useLayoutStore()
 
 </script>
@@ -41,25 +41,18 @@ const layout = useLayoutStore()
                         <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
                     </div>
                 </div>
-                <div v-for="(user, index) in layout.rightSidebar.activeUsers.users" class="pl-2.5 pr-1.5 flex justify-start items-center py-1 gap-x-2.5 cursor-default">
+
+                <!-- Looping: user list -->
+                <div v-for="(user, index) in liveOrganisationUsers().liveOrganisationUsers" class="pl-2.5 pr-1.5 flex justify-start items-center py-1 gap-x-2.5 cursor-default">
                     <p class="text-gray-600 flex items-center gap-y-0.5 gap-x-1">
-                        <span class="text-gray-700 leading-none">{{ user.id }}</span>
+                        <span class="text-gray-700 leading-none capitalize font-semibold">{{ user?.name }}</span>
                         <span class="leading-none">-</span>
-                        <span class="text-gray-500 whitespace-normal leading-none text-[10px]">{{ user.route?.name ?? 'away' }}</span>
+                        <span class="text-gray-500 whitespace-normal leading-none text-[10px] capitalize">{{ user?.current_page?.label ?? 'Unknown' }}</span>
                     </p>
                 </div>
             </li>
-            <!-- Language -->
-            <!-- <li class="text-white space-y-1" v-if="layout.rightSidebar.language" key="2">
-                <div class="pl-2.5 pr-1.5 py-1 bg-orange-500 flex items-center leading-none">
-                    <div>Language</div>
-                </div>
-                <div class="text-gray-600 pl-2.5 pr-1.5">
-                    <span class="uppercase font-semibold">({{ locale.language.code }})</span>
-                    {{ locale.language.name }}
-                </div>
-            </li> -->
         </TransitionGroup>
 
+        <!-- Add new here -->
     </div>
 </template>
