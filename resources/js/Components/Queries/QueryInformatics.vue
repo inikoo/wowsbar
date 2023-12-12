@@ -24,19 +24,18 @@ import axios from "axios"
 library.add(faPaperPlane, faEnvelope, faPhone, faHouse)
 const props = defineProps<{
     option: {
-        data: {
+        argument: {
             id: number
             name: string
             number_items: number
         }[]
     }
 }>()
-
 const emits = defineEmits();
 const formMessage = ref('');
 const value = ref({
-    quantity: get(props.option, ["constrains", "prospect_last_contacted", "data", "quantity"], 1),
-    unit: get(props.option, ["constrains", "prospect_last_contacted", "data", "unit"], 'week')
+    quantity: get(props.option, ["constrains", "prospect_last_contacted", "argument", "quantity"], 1),
+    unit: get(props.option, ["constrains", "prospect_last_contacted", "argument", "unit"], 'week')
 })
 
 const findIcon = (data) => {
@@ -66,8 +65,8 @@ const onChangeLastContact = async (closed) => {
 
 const onSuccessful=(response,closed)=>{
     const newData = {...props.option}
-    newData.constrains.prospect_last_contacted.data.quantity = value.value.quantity
-    newData.constrains.prospect_last_contacted.data.unit = value.value.unit
+    newData.constrains.prospect_last_contacted.argument.quantity = value.value.quantity
+    newData.constrains.prospect_last_contacted.argument.unit = value.value.unit
     props.option.number_items = response.count
     emits("update:option", newData); 
     closed()
@@ -115,8 +114,8 @@ const changeQuantity=(value)=>{
             <Popover :width="'w-full'" position="right-[-60px]" ref="_popover">
                 <template #button>
                     <div class="font-bold specialUnderlineOrg py-1 focus:outline-none focus:ring-0">
-                        {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'quantity'], 1) }}
-                        {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'unit'], 'week') }}
+                        {{ get(option, ['constrains', 'prospect_last_contacted', 'argument', 'quantity'], 1) }}
+                        {{ get(option, ['constrains', 'prospect_last_contacted', 'argument', 'unit'], 'week') }}
                     </div>
                 </template>
                 <template #content="{ close: closed }">
@@ -134,8 +133,8 @@ const changeQuantity=(value)=>{
                         <div class="text-red-500 text-xs py-2">{{ formMessage }}</div>
                         <div class="mt-2 text-gray-500 italic flex justify-between">
                             <p> {{trans('Last contacted :')}} <span class="font-bold">
-                                    {{ get(option, ['constrains', 'prospect_last_contacted', 'data', 'quantity']) }}
-                                    {{  get(option, ['constrains', 'prospect_last_contacted', 'data', 'unit']) }}</span></p>
+                                    {{ get(option, ['constrains', 'prospect_last_contacted', 'argument', 'quantity']) }}
+                                    {{  get(option, ['constrains', 'prospect_last_contacted', 'argument', 'unit']) }}</span></p>
                             <Button label="OK" size="xxs" @click="onChangeLastContact(closed)"  />
                         </div>
                     </div>
