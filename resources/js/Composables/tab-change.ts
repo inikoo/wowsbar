@@ -8,6 +8,11 @@ import { router } from "@inertiajs/vue3"
 import { Ref } from 'vue'
 
 export function useTabChange(tabSlug: string, currentTab: Ref<string>) {
+
+    console.log(tabSlug, currentTab.value)
+    if (tabSlug === currentTab.value) {
+        return;
+    }
     router.reload(
         {
             data: { tab: tabSlug },
