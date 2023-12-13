@@ -39,7 +39,8 @@ const props = defineProps<{
 }>()
 
 const selectedIndex = ref(0)
-const recipientsCount = ref(0)
+const recipientsCount = ref({type:"query",count:0})
+const emits = defineEmits();
 
 const categories = [
     {
@@ -74,30 +75,20 @@ const categories = [
     }
     return true; // Include other categories
 });
-const locale = useLocaleStore();
 
 
-const getEstimateRecipients = async () => {
+const getEstimateRecipients = async (value) => {
         try {
-            const formData = props.form.data();
             const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
                 {
-                    params: {
-                        ...formData
-                    }
+                    params: { ...value }
                 }
             );
-
-            //if(response.data.type==='query'){
-            //    props.form[props.fieldName].recipient_builder_data.query = response.data.count //todo
-
-
-            recipientsCount.value = response.data ;
+            return response.data ;
 
         } catch (error) {
-            console.error(error); // Log the error for debugging purposes
-
+            console.error(error);
         }
 }
 
@@ -106,8 +97,14 @@ const changeTab=(tabIndex : number)=>{
     selectedIndex.value = tabIndex
 }
 
-watch(props.form[props.fieldName],getEstimateRecipients, {deep: true})
-watch(props.options,getEstimateRecipients, {deep: true})
+watch(props.form[props.fieldName], async () => {
+    try {
+        const estimate = await getEstimateRecipients(props.form.data());
+        recipientsCount.value = estimate;
+    } catch (error) {
+        console.error(error);
+    }
+}, { deep: true });
 
 const getParams = () => {
     const pathname = location.search
@@ -117,6 +114,20 @@ const getParams = () => {
         paramsObject[key] = value;
     }
     return paramsObject
+}
+
+const changeWeeksValue= async (value,index)=> {
+    try {
+        const data = {...props.form.data()}
+        data.recipients_recipe.recipient_builder_data.query.constrains.prospect_last_contacted.argument = value
+        const estimate = await getEstimateRecipients(data);
+        console.log(data,props.options.query.data[index].id)
+        if(props.options.query.data[index].id == data.recipients_recipe.recipient_builder_data.query.id) { emits("update:form", {...props.form, ...data}) }
+        props.options.query.data[index].constrains.prospect_last_contacted.argument = value
+        props.options.query.data[index].number_items = estimate.count
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 onMounted(() => {
@@ -129,7 +140,6 @@ onMounted(() => {
      if(index != -1)  selectedIndex.value = index
     }
 })
-
 
 </script>
 
@@ -167,12 +177,14 @@ onMounted(() => {
             <TabPanels class="mt-2">
                 <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
                     class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none">
-                    <component :is="category.component"
+                    <component 
+                        :is="category.component"
                         :form="form"
                         :fieldName="category.fieldName"
                         :tabName="category.name"
                         :fieldData="fieldData"
                         :options="category.options"
+                        :changeWeeksValue="changeWeeksValue"
                     />
                 </TabPanel>
             </TabPanels>
