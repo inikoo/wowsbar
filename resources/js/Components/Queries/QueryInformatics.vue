@@ -25,6 +25,7 @@ library.add(faPaperPlane, faEnvelope, faPhone, faHouse, faSpinnerThird, faTimes)
 
 const props = withDefaults(defineProps<{
     saveButton?: boolean
+    changeWeeksValue?:Function
     option: {
         argument: {
             id: number
@@ -57,7 +58,6 @@ const onChangeLastContact = async (closed) => {
     if (value.value.quantity && value.value.quantity > 0) {
         loading.value = true
         try {
-
             const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.query.number-items', { ...route().params, query: props.option.slug }),
                 { params: { ...value.value } }
@@ -96,8 +96,9 @@ watch(value.value, (newValue) => {
     if (!props.saveButton) {
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
-            onChangeLastContact()
-        }, 1000)
+            if(props.changeWeeksValue) props.changeWeeksValue(value.value)
+            else  onChangeLastContact()
+        }, 1200)
     }
 })
 
@@ -171,7 +172,7 @@ watch(value.value, (newValue) => {
                                 <span>saving...</span>
                             </div>
                             
-                            <Button v-if="saveButton" label="Save" size="xxs" @click="onChangeLastContact(closed)"
+                            <Button v-if="saveButton" label="Save" size="xxs" @click="props.onChangeValue ? props.changeWeeksValue(value.value) : onChangeLastContact(closed)"
                                 :disabled="loading ? true : false" :loading="loading" />
                         </div>
                     </div>

@@ -128,7 +128,7 @@
                             "anchor": null,
                             "columns": false,
                             "padding": "0px",
-                            "hideable": true,
+                            "hideable": false,
                             "deletable": false,
                             "draggable": true,
                             "selectable": false,
@@ -169,7 +169,7 @@
                                             },
                                             "anchor": null,
                                             "fontSize": "14px",
-                                            "hideable": true,
+                                            "hideable": false,
                                             "deletable": false,
                                             "draggable": false,
                                             "linkStyle": {
