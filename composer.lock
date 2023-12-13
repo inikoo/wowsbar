@@ -120,16 +120,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.293.8",
+            "version": "3.293.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "abb250f6ac8798fa1547eff6f9bda526a90efa15"
+                "reference": "1fa17dba47021586de511d10944637da8ea4cc43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/abb250f6ac8798fa1547eff6f9bda526a90efa15",
-                "reference": "abb250f6ac8798fa1547eff6f9bda526a90efa15",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1fa17dba47021586de511d10944637da8ea4cc43",
+                "reference": "1fa17dba47021586de511d10944637da8ea4cc43",
                 "shasum": ""
             },
             "require": {
@@ -209,9 +209,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.293.8"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.293.9"
             },
-            "time": "2023-12-11T19:15:29+00:00"
+            "time": "2023-12-12T19:08:53+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -4159,16 +4159,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.35.0",
+            "version": "v10.37.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "91ec2d92d2f6007e9084fe06438b99c91845da69"
+                "reference": "d97b5263ccd2f3950fd93f45b1b957259d76d0db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/91ec2d92d2f6007e9084fe06438b99c91845da69",
-                "reference": "91ec2d92d2f6007e9084fe06438b99c91845da69",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d97b5263ccd2f3950fd93f45b1b957259d76d0db",
+                "reference": "d97b5263ccd2f3950fd93f45b1b957259d76d0db",
                 "shasum": ""
             },
             "require": {
@@ -4357,7 +4357,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-12-05T14:50:33+00:00"
+            "time": "2023-12-13T14:12:36+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -16235,16 +16235,16 @@
         },
         {
             "name": "laravel/breeze",
-            "version": "v1.26.2",
+            "version": "v1.26.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/breeze.git",
-                "reference": "60f339c38098bc5adbf8614bf5d89b77647a06c5"
+                "reference": "a09d3664b5154377e2b0ebdf54fcae3d331e176d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/breeze/zipball/60f339c38098bc5adbf8614bf5d89b77647a06c5",
-                "reference": "60f339c38098bc5adbf8614bf5d89b77647a06c5",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/a09d3664b5154377e2b0ebdf54fcae3d331e176d",
+                "reference": "a09d3664b5154377e2b0ebdf54fcae3d331e176d",
                 "shasum": ""
             },
             "require": {
@@ -16293,7 +16293,7 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-            "time": "2023-11-24T14:41:28+00:00"
+            "time": "2023-12-06T18:27:17+00:00"
         },
         {
             "name": "laravel/pint",
@@ -16428,16 +16428,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.17.2",
+            "version": "v4.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "64da53ee46b99ef328458eaed32202b51e325a11"
+                "reference": "17a420d0121b03ea90648dd4484b62abe6d3e261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/64da53ee46b99ef328458eaed32202b51e325a11",
-                "reference": "64da53ee46b99ef328458eaed32202b51e325a11",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/17a420d0121b03ea90648dd4484b62abe6d3e261",
+                "reference": "17a420d0121b03ea90648dd4484b62abe6d3e261",
                 "shasum": ""
             },
             "require": {
@@ -16493,9 +16493,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.17.2"
+                "source": "https://github.com/laravel/telescope/tree/v4.17.3"
             },
-            "time": "2023-11-01T14:01:06+00:00"
+            "time": "2023-12-11T22:00:12+00:00"
         },
         {
             "name": "mockery/mockery",
