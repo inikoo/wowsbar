@@ -29,7 +29,7 @@ const props = defineProps<{
     // isUploaded: boolean
 }>()
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'isShowProgress'])
 
 // const { isUploaded } = toRefs(props)
 

@@ -39,14 +39,6 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
         },
         isShowProgress: false
     }),
-    subscribe: {
-        progressBars(newValue) {
-            console.log('pppppppp', newValue)
-            if (Object.keys(progressBars).length === 0) {
-                this.isShowProgress = false
-            }
-        },
-    },
     actions: {
         subscribe(userID) {
             window.Echo.private("org.personal." + userID).listen(
@@ -74,7 +66,6 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
                         }, 4000)
                     }
 
-                    console.log(this.progressBars.Upload, eventData.action_id)
                 }
             );
         },

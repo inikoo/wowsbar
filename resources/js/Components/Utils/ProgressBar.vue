@@ -44,23 +44,25 @@ const emits = defineEmits<{
     <div :class="useEchoOrgPersonal().isShowProgress ? 'bottom-16' : '-bottom-24'"
         class="backdrop-blur-sm bg-white/60 ring-1 ring-gray-300 rounded-md px-4 py-2 z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-6 tabular-nums">
         <template v-if="useEchoOrgPersonal().progressBars.Upload">
-            <div v-for="upload in useEchoOrgPersonal().progressBars.Upload" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
-                <template v-if="upload.total">
-                    <div v-if="upload.done >= upload.total">Finished!!🥳</div>
-                    <div v-else>{{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)</div>
-            
-                    <!-- Progress Bar -->
-                    <div class="overflow-hidden rounded-full bg-gray-100 ring-1 ring-gray-300 w-64 flex justify-start">
-                        <div class="h-2 bg-lime-600 transition-all duration-100 ease-in-out" :style="`width: ${(upload.data.number_success/upload.total)*100}%`" />
-                        <div class="h-2 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(upload.data.number_fails/upload.total)*100}%`" />
-                    </div>
-                    <!-- Result count -->
-                    <div class="flex w-full justify-around">
-                        <div class="text-lime-600">Success: {{ upload.data.number_success }}</div>
-                        <div class="text-red-500">Fails: {{ upload.data.number_fails }}</div>
-                    </div>
-                </template>
-            </div>
+            <TransitionGroup name="progressbar">
+                <div v-for="(upload, index) in useEchoOrgPersonal().progressBars.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
+                    <template v-if="upload.total">
+                        <div v-if="upload.done >= upload.total">Finished!!🥳</div>
+                        <div v-else>{{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)</div>
+                
+                        <!-- Progress Bar -->
+                        <div class="overflow-hidden rounded-full bg-gray-100 ring-1 ring-gray-300 w-64 flex justify-start">
+                            <div class="h-2 bg-lime-600 transition-all duration-100 ease-in-out" :style="`width: ${(upload.data.number_success/upload.total)*100}%`" />
+                            <div class="h-2 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(upload.data.number_fails/upload.total)*100}%`" />
+                        </div>
+                        <!-- Result count -->
+                        <div class="flex w-full justify-around">
+                            <div class="text-lime-600">Success: {{ upload.data.number_success }}</div>
+                            <div class="text-red-500">Fails: {{ upload.data.number_fails }}</div>
+                        </div>
+                    </template>
+                </div>
+            </TransitionGroup>
         </template>
         <div v-else class="w-64 flex justify-center flex-col items-center gap-y-2 py-1">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
@@ -73,3 +75,23 @@ const emits = defineEmits<{
         </div>
     </div>
 </template>
+
+<style scoped>
+.progressbar-move, /* apply transition to moving elements */
+.progressbar-enter-active,
+.progressbar-leave-active {
+    transition: all 0.5s ease;
+}
+
+.progressbar-enter-from,
+.progressbar-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.progressbar-leave-active {
+    position: absolute;
+}
+</style>

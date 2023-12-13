@@ -42,16 +42,16 @@ const recentlyUploaded = ref<{}[]>([])
 // On finish uploading
 const onFinish = () => {
     recentlyUploaded.value.push(useEchoOrgPersonal().progressBars)  // Add recent uploaded file to history list
-    setTimeout(() => {
-        // Reset data from Pusher binding
-        useEchoOrgPersonal().progressBars = { data: {
-                number_success: 0,
-                number_fails: 0
-            },
-            done: 0,
-            total: 0
-        }  // Reset value, Can lead to isShowProgress to false
-    }, 6000)
+    // setTimeout(() => {
+    //     // Reset data from Pusher binding
+    //     useEchoOrgPersonal().progressBars = { data: {
+    //             number_success: 0,
+    //             number_fails: 0
+    //         },
+    //         done: 0,
+    //         total: 0
+    //     }  // Reset value, Can lead to isShowProgress to false
+    // }, 6000)
     if(props.propName) {
         router.reload({
             only: [props.propName],  // only reload the props prospects so the table is updated
