@@ -21,7 +21,7 @@ class GetProspectsDashboard
 
     public function handle(Shop $parent, ActionRequest $request): array
     {
-        $routeParameters = $request->route()->originalParameters();
+
 
 
         $stats = [];
@@ -32,14 +32,13 @@ class GetProspectsDashboard
             'count' => $parent->crmStats->number_prospects
         ];
         foreach (ProspectStateEnum::cases() as $case) {
-            $stats['prospects']['cases'][] = [
+            $stats['prospects']['cases'][$case->value] = [
                 'value' => $case->value,
                 'icon'  => ProspectStateEnum::stateIcon()[$case->value],
                 'count' => ProspectStateEnum::count($parent)[$case->value],
                 'label' => ProspectStateEnum::labels()[$case->value]
             ];
         }
-
 
         $stats['contacted'] = [
             'label' => __('Contacted'),
@@ -49,7 +48,7 @@ class GetProspectsDashboard
             if($case==ProspectContactedStateEnum::NA) {
                 continue;
             }
-            $stats['contacted']['cases'][] = [
+            $stats['contacted']['cases'][$case->value] = [
                 'value' => $case->value,
                 'icon'  => ProspectContactedStateEnum::stateIcon()[$case->value],
                 'count' => ProspectContactedStateEnum::count($parent)[$case->value],
@@ -65,7 +64,7 @@ class GetProspectsDashboard
             if($case==ProspectFailStatusEnum::NA) {
                 continue;
             }
-            $stats['fail']['cases'][] = [
+            $stats['fail']['cases'][$case->value] = [
                 'value' => $case->value,
                 'icon'  => ProspectFailStatusEnum::statusIcon()[$case->value],
                 'count' => ProspectFailStatusEnum::count($parent)[$case->value],
@@ -81,7 +80,7 @@ class GetProspectsDashboard
             if($case==ProspectSuccessStatusEnum::NA) {
                 continue;
             }
-            $stats['success']['cases'][] = [
+            $stats['success']['cases'][$case->value] = [
                 'value' => $case->value,
                 'icon'  => ProspectSuccessStatusEnum::statusIcon()[$case->value],
                 'count' => ProspectSuccessStatusEnum::count($parent)[$case->value],
@@ -93,36 +92,6 @@ class GetProspectsDashboard
 
         return [
             'prospectStats' => $stats,
-
-
-            'crmStats' => $parent->crmStats,
-
-            'stats' => [
-
-                [
-                    'name' => __('prospects'),
-                    'stat' => $parent->crmStats->number_prospects,
-                    'href' => match (class_basename($parent)) {
-                        'Shop' =>
-                        [
-                            'name'       => 'org.crm.shop.prospects.index',
-                            'parameters' =>
-                                array_merge(
-                                    $routeParameters,
-                                    [
-                                        '_query' => [
-                                            'tab' => 'prospects'
-                                        ]
-                                    ]
-                                )
-                        ],
-                        default => [
-                            'name' => 'org.crm.prospects.index'
-                        ]
-                    }
-                ]
-            ]
-
         ];
     }
 
