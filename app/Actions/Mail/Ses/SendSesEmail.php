@@ -76,6 +76,7 @@ class SendSesEmail
             'Headers' => [
                 'List-Unsubscribe'      => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
                 'List-Unsubscribe-Post' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
+                'ConfigurationSet'      => env('AWS_SES_CONFIGURATION_SET')
             ],
         ];
 
