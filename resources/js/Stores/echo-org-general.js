@@ -19,9 +19,6 @@ export const useEchoOrgGeneral = defineStore(
             subscribe() {
                 console.log('subscribe');
                 window.Echo.private('org.general').
-                    listen('.prospects-dashboards', (e) => {
-                        console.log(e);
-                    }).
                     listen('.notification', (e) => {
                         notify({
                                    title: e.data.title,

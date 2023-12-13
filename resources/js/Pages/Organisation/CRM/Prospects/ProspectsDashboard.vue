@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 
-import CountUp from 'vue-countup-v3'
+
 import {Chart as ChartJS, ArcElement, Tooltip, Legend, Colors} from 'chart.js'
 import {Pie} from 'vue-chartjs'
 import {trans} from "laravel-vue-i18n";
@@ -54,15 +54,45 @@ const options = {
 }
 
 
-window.Echo.private('org.general').listen('.prospects-dashboard', (e) => {
-    console.log(e)
+window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
+
+    // console.log(e)
+    if (e.data.counts !== undefined) {
+        Object.keys(e.data.counts).forEach(key => {
+            props.data.prospectStats[key].count = e.data.counts[key]
+            if (key !== 'prospects') {
+                props.data.prospectStats['prospects'].cases[key].count = e.data.counts[key]
+            }
+        });
+    }
+
+    if (e.data.contacted !== undefined) {
+        Object.keys(e.data.contacted).forEach(key => {
+            props.data.prospectStats.contacted.cases[key].count = e.data.contacted[key]
+        });
+    }
+    if (e.data.fail !==  undefined) {
+        Object.keys(e.data.fail).forEach(key => {
+            props.data.prospectStats.fail.cases[key].count = e.data.fail[key]
+        });
+    }
+    if (e.data.success !== undefined) {
+        Object.keys(e.data.success).forEach(key => {
+            props.data.prospectStats.success.cases[key].count = e.data.success[key]
+        });
+    }
+
+    // props.data.prospectStats['contacted'].count=33333
+
 })
 
+console.log(props.data.prospectStats.contacted)
 
 </script>
 
 
 <template>
+
     <div class="px-6">
         <dl class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-3">
 
@@ -72,9 +102,7 @@ window.Echo.private('org.general').listen('.prospects-dashboard', (e) => {
                     <div class="flex flex-col gap-x-2 gap-y-3 leading-none items-baseline text-2xl font-semibold text-org-500">
                         <!-- In Total -->
                         <div class="flex gap-x-2 items-end">
-                            <CountUp :start-val="prospectState.count/2" :end-val="prospectState.count ?? 0" :duration="1.5" :options="{
-                                formattingFn: (number) => locale.number(number)
-                            }"/>
+                            {{ locale.number(prospectState.count) }}
                             <span class="text-sm font-medium leading-4 text-gray-500 ">{{ trans('in total') }}</span>
                         </div>
 
@@ -83,9 +111,8 @@ window.Echo.private('org.general').listen('.prospects-dashboard', (e) => {
                             <div v-for="dCase in prospectState.cases" class="flex gap-x-0.5 items-center font-normal" v-tooltip="capitalize(dCase.icon.tooltip)">
                                 <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' fixed-width :title="dCase.icon.tooltip" aria-hidden='true'/>
                                 <span class="font-semibold">
-                                    <CountUp :end-val="dCase.count" :duration="1" :options="{
-                                        formattingFn: (number) => locale.number(number)
-                                    }"/>
+                                    {{ locale.number(dCase.count) }}
+
                                 </span>
                             </div>
                         </div>

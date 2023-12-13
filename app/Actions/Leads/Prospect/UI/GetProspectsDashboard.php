@@ -12,18 +12,14 @@ use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
 use App\Models\Market\Shop;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetProspectsDashboard
 {
     use AsObject;
 
-    public function handle(Shop $parent, ActionRequest $request): array
+    public function handle(Shop $parent): array
     {
-
-
-
         $stats = [];
 
 
@@ -45,7 +41,7 @@ class GetProspectsDashboard
             'count' => $parent->crmStats->number_prospects_state_contacted
         ];
         foreach (ProspectContactedStateEnum::cases() as $case) {
-            if($case==ProspectContactedStateEnum::NA) {
+            if ($case == ProspectContactedStateEnum::NA) {
                 continue;
             }
             $stats['contacted']['cases'][$case->value] = [
@@ -61,7 +57,7 @@ class GetProspectsDashboard
             'count' => $parent->crmStats->number_prospects_state_fail
         ];
         foreach (ProspectFailStatusEnum::cases() as $case) {
-            if($case==ProspectFailStatusEnum::NA) {
+            if ($case == ProspectFailStatusEnum::NA) {
                 continue;
             }
             $stats['fail']['cases'][$case->value] = [
@@ -77,7 +73,7 @@ class GetProspectsDashboard
             'count' => $parent->crmStats->number_prospects_state_success
         ];
         foreach (ProspectSuccessStatusEnum::cases() as $case) {
-            if($case==ProspectSuccessStatusEnum::NA) {
+            if ($case == ProspectSuccessStatusEnum::NA) {
                 continue;
             }
             $stats['success']['cases'][$case->value] = [
@@ -87,7 +83,6 @@ class GetProspectsDashboard
                 'label' => ProspectSuccessStatusEnum::labels()[$case->value]
             ];
         }
-
 
 
         return [

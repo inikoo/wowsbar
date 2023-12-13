@@ -12,6 +12,7 @@ use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
+use App\Events\BroadcastProspectsDashboard;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
@@ -92,7 +93,9 @@ class ShopHydrateProspects
             )
         );
 
+        $crmStats = $shop->crmStats;
+        $crmStats->update($stats);
+        BroadcastProspectsDashboard::dispatch($crmStats->getChanges());
 
-        $shop->crmStats()->update($stats);
     }
 }
