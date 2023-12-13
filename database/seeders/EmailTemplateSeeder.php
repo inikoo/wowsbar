@@ -44,6 +44,9 @@ class EmailTemplateSeeder extends Seeder
                 );
             }
 
+            $emailTemplate->categories()->attach(
+                EmailTemplateCategory::whereIn('name', Arr::get($template, 'categories'))->pluck('id'));
+
             $imagesPath = database_path($basePath . '/images');
 
             if (File::exists($imagesPath)) {
