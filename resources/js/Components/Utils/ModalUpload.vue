@@ -13,6 +13,7 @@ import { toRefs } from 'vue'
 import { routeType } from '@/types/route'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { Link } from "@inertiajs/vue3"
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
 library.add(falFile, faFileDownload, faDownload)
 
@@ -49,7 +50,8 @@ const onUploadFile = async (fileUploaded: any) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        emits('isShowProgress', true)
+        useEchoOrgPersonal().isShowProgress = true
+        // emits('isShowProgress', true)
     } catch (error: any) {
         console.error(error.message)
     }
