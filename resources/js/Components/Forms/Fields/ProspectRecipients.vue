@@ -125,7 +125,7 @@ const changeWeeksValue= async (value,index)=> {
         const data = {...props.form.data()}
         data.recipients_recipe.recipient_builder_data.query.constrains.prospect_last_contacted.argument = value
         const estimate = await getEstimateRecipients(data);
-       
+        if(props.options.query.data[index].id == data.recipients_recipe.recipient_builder_data.query.id) { emits("update:form", {...props.form, ...data}) }
         props.options.query.data[index].constrains.prospect_last_contacted.argument = value
         props.options.query.data[index].number_items = estimate.count
     } catch (error) {
