@@ -90,9 +90,8 @@ class JobPosition extends Model implements Auditable
         ];
     }
 
-    protected $auditExclude = [
-        'share_work_time',
-        'number_employees'
+    protected array $auditInclude = [
+        'name',
     ];
 
     public function roles(): BelongsToMany

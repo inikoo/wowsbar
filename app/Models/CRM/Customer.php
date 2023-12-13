@@ -179,7 +179,9 @@ class Customer extends Model implements HasMedia, Auditable
     }
 
     protected array $auditExclude = [
-        'id','slug',
+        'id',
+        'data',
+        'slug',
         'reference',
         'website_id',
         'location'
