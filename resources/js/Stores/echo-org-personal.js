@@ -6,30 +6,75 @@
 
 import { defineStore } from "pinia";
 
+// interface ProgressBar {
+//     [key: string]: {
+//         [key: string]: {
+//             action_id: number
+//             action_type: string
+//             data: {
+//                 number_fails: number
+//                 number_success: number
+//             },
+//             done: number
+//             total: number
+//         }
+//     }
+// }
+
 export const useEchoOrgPersonal = defineStore("echo-org-personal", {
     state: () => ({
-        currentProgressBar: null,
         progressBars: {
-            data: {
-                number_success: 0,
-                number_fails: 0
-            },
-            done: 0,
-            total: 0
+            // Upload: {
+            //     1: {
+            //         action_id: 0,
+            //         action_type: '',
+            //         data: {
+            //             number_fails: 0,
+            //             number_success: 0
+            //         },
+            //         done: 0,
+            //         total: 0
+            //     }
+            // }
         },
+        isShowProgress: false
     }),
+    subscribe: {
+        progressBars(newValue) {
+            console.log('pppppppp', newValue)
+            if (Object.keys(progressBars).length === 0) {
+                this.isShowProgress = false
+            }
+        },
+    },
     actions: {
-        subscribe(userID) {    
-            // console.log("org.personal." + userID);
+        subscribe(userID) {
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
-                    const index=eventData.action_type+'-'+eventData.action_id;
+                    const index = eventData.action_type+'-'+eventData.action_id;
 
-                    this.progressBars = eventData
-                    //save event data in state.progressBars
-                    // as an object  key->[e.action_type+'_'+e.action_id]= value -> e
-                    // then use this store to display progress data
+                    // Update the state
+                    this.$patch({
+                        progressBars: {
+                            [eventData.action_type]: {
+                                [eventData.action_id]: eventData
+                            }
+                        }
+                    })
+
+                    // Delete data in 4 seconds if already reach 100%
+                    if(eventData.done >= eventData.total){
+                        setTimeout(() => {
+                            delete this.progressBars[eventData.action_type][eventData.action_id]
+
+                            // If no more progress, then hide the bar
+                            const uploadCount = Object.values(this.progressBars[eventData.action_type])
+                            if(!uploadCount.length) this.isShowProgress = false 
+                        }, 4000)
+                    }
+
+                    console.log(this.progressBars.Upload, eventData.action_id)
                 }
             );
         },

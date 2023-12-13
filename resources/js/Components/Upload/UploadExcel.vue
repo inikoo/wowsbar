@@ -32,9 +32,9 @@ const isShowProgress = ref(false)
 
 
 // Progress bar for adding file
-const compProgressBar = computed(() => {
-    return useEchoOrgPersonal().progressBars.total ? useEchoOrgPersonal().progressBars.done/useEchoOrgPersonal().progressBars.total * 100 : 0
-})
+// const compProgressBar = computed(() => {
+//     return useEchoOrgPersonal().progressBars.total ? useEchoOrgPersonal().progressBars.done/useEchoOrgPersonal().progressBars.total * 100 : 0
+// })
 
 // To manipulation data history file upload
 const recentlyUploaded = ref<{}[]>([])
@@ -68,19 +68,13 @@ const onFinish = () => {
             v-model="dataModal.isModalOpen"
             :routes="routes"
             :recentlyUploaded="recentlyUploaded"
-            @isShowProgress="isShowProgress = true"
             :propName="propName"
         />
     </KeepAlive>
 
     <ProgressBar
         :progressData="{
-            progressName: 'employees',
-            isShowProgress: isShowProgress,
-            progressPercentage: compProgressBar,
-            countSuccess: useEchoOrgPersonal().progressBars.data.number_success,
-            countFails: useEchoOrgPersonal().progressBars.data.number_fails,
-            countTotal: useEchoOrgPersonal().progressBars.total
+            progressName: 'employees'
         }"
         :description="description"
         @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"

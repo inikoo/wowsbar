@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
+import { ref, Ref, computed } from 'vue';
 import FooterTabActiveUsers from '@/Layouts/Organisation/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import { usePage } from "@inertiajs/vue3"
@@ -15,11 +15,18 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n"
 import { useLayoutStore } from '@/Stores/layout'
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
 library.add(faDiscord)
 
 const isTabActive: Ref<boolean | string> = ref(false)
-const logoSrc = usePage().props.art?.footer_logo ?? {}
+
+// Retrieve the latest upload progress
+const compLatestProgress = computed(() => {
+    if(!useEchoOrgPersonal().progressBars.Upload) return null
+    const highestKey = Math.max(...(Object.keys(useEchoOrgPersonal().progressBars.Upload ?? [])))
+    return useEchoOrgPersonal().progressBars.Upload[highestKey];
+})
 
 </script>
 
@@ -47,9 +54,18 @@ const logoSrc = usePage().props.art?.footer_logo ?? {}
             </div>
 
             <!-- Right: Tab Section -->
-            <div class="flex items-end flex-row-reverse text-sm">
+            <div class="flex items-center flex-row-reverse text-sm">
                 <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
                 <FooterLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                
+                <!-- Progress Upload -->
+                <div v-if="compLatestProgress" class="flex justify-center items-center gap-x-2 text-gray-600 mx-4">
+                    <div class="text-xs leading-none">{{ `${compLatestProgress.action_type} ${compLatestProgress.data.type}` }}</div>
+                    <div class="overflow-hidden rounded-full bg-white w-48 flex justify-start shadow ring-1 ring-gray-300">
+                        <div class="h-1.5 bg-lime-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_success/compLatestProgress.total)*100}%`" />
+                        <div class="h-1.5 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_fails/compLatestProgress.total)*100}%`" />
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
