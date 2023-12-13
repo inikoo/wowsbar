@@ -9,6 +9,7 @@ namespace App\Actions\Helpers\Uploads\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Http\Resources\Helpers\UploadRecordsResource;
 use App\Models\Helpers\Upload;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -49,10 +50,22 @@ class ShowUploads extends InertiaAction
                         'title' => __('image'),
                         'icon'  => 'fal fa-images'
                     ],
+                    'actions' => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'tertiary',
+                            'label' => __('download'),
+                            'icon'  => 'fal fa-download',
+                            'route' => [
+                                'name'       => 'org.uploads.download',
+                                'parameters' => $upload->id,
+                            ],
+                        ],
+                    ]
                 ],
-                'data' => $upload->records,
+                'data' => UploadRecordsResource::collection($upload->records),
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(prefix: 'upload_histories'));
     }
 
     public function tableStructure($prefix=null): Closure

@@ -19,14 +19,13 @@
       }
       data?:object
 
-  
+
   }>()
 
   </script>
-  
+
   <template layout="OrgApp">
       <Head :title="capitalize(title)" />
       <PageHeading :data="pageHead"></PageHeading>
-      <TableUploads :tab="currentTab" :data="data"></TableUploads>
+      <TableUploads :tab="'upload_histories'" :data="data"></TableUploads>
   </template>
-  
