@@ -13,6 +13,7 @@ use App\Actions\Mail\EmailAddress\Traits\AwsClient;
 use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
 use Aws\Exception\AwsException;
+use Aws\Result;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -51,43 +52,14 @@ class SendSesEmail
             return $dispatchedEmail;
         }
 
-
-        $message = [
-            'Message' => [
-                'Subject' => [
-                    'Data' => $subject,
-                ]
-            ]
-        ];
-
-        $message['Message']['Body']['Html'] = [
-            'Data' => $emailHtmlBody
-        ];
-
-
-        $emailData = [
-            'Source'      => $sender,
-            'Destination' => [
-                'ToAddresses' => [
-                    $dispatchedEmail->email->address
-                ]
-            ],
-            'Message' => $message['Message'],
-            'Headers' => [
-                'List-Unsubscribe'      => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
-                'List-Unsubscribe-Post' => route('public.webhooks.mailshot.unsubscribe', $dispatchedEmail->ulid),
-                'ConfigurationSet'      => env('AWS_SES_CONFIGURATION_SET')
-            ],
-        ];
-
+        $emailData = $this->getEmailData($subject, $sender, $dispatchedEmail->email->address, $emailHtmlBody, $dispatchedEmail->ulid);
 
         $numberAttempts = 12;
         $attempt        = 0;
 
         do {
             try {
-                $result = $this->getSesClient()->sendRawEmail($this->getRawEmail($emailData));
-
+                $result = $this->sendEmail($emailData);
 
                 UpdateDispatchedEmail::run(
                     $dispatchedEmail,
@@ -136,6 +108,41 @@ class SendSesEmail
 
 
         return $dispatchedEmail;
+    }
+
+    public function sendEmail($emailData): Result
+    {
+        return $this->getSesClient()->sendRawEmail($this->getRawEmail($emailData));
+    }
+
+    public function getEmailData($subject, $sender, $to, $emailHtmlBody, $ulid = null): array
+    {
+        $message = [
+            'Message' => [
+                'Subject' => [
+                    'Data' => $subject,
+                ]
+            ]
+        ];
+
+        $message['Message']['Body']['Html'] = [
+            'Data' => $emailHtmlBody
+        ];
+
+        return [
+            'Source'      => $sender,
+            'Destination' => [
+                'ToAddresses' => [
+                    $to
+                ]
+            ],
+            'Message' => $message['Message'],
+            'Headers' => [
+                'List-Unsubscribe'      => $ulid ? route('public.webhooks.mailshot.unsubscribe', $ulid) : null,
+                'List-Unsubscribe-Post' => $ulid ? route('public.webhooks.mailshot.unsubscribe', $ulid) : null,
+                'ConfigurationSet'      => env('AWS_SES_CONFIGURATION_SET')
+            ],
+        ];
     }
 
     public function getRawEmail(array $emailData): array

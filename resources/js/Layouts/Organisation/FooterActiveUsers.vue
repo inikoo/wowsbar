@@ -37,10 +37,13 @@ const layout = useLayoutStore()
         ]"
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
+        <!-- Tab -->
         <div class="relative text-xs flex items-center gap-x-1">
             <div class="ring-1 h-2 aspect-square rounded-full" :class="[liveOrganisationUsers().count> 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
             <span class="">{{ trans('Active users') }} ({{ liveOrganisationUsers().count ?? 0 }})</span>
         </div>
+
+        <!-- Content -->
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
                 <div v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default">

@@ -13,7 +13,6 @@ import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 import { trans } from "laravel-vue-i18n";
-import {useLocaleStore} from "@/Stores/locale";
 
 const props = defineProps<{
     form: {
@@ -89,6 +88,11 @@ const getEstimateRecipients = async (value) => {
 
         } catch (error) {
             console.error(error);
+            notify({
+                title: "Failed",
+                text: "Failed to count estimated recipients",
+                type: "error"
+            });
         }
 }
 
@@ -121,7 +125,6 @@ const changeWeeksValue= async (value,index)=> {
         const data = {...props.form.data()}
         data.recipients_recipe.recipient_builder_data.query.constrains.prospect_last_contacted.argument = value
         const estimate = await getEstimateRecipients(data);
-        console.log(data,props.options.query.data[index].id)
         if(props.options.query.data[index].id == data.recipients_recipe.recipient_builder_data.query.id) { emits("update:form", {...props.form, ...data}) }
         props.options.query.data[index].constrains.prospect_last_contacted.argument = value
         props.options.query.data[index].number_items = estimate.count

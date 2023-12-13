@@ -13,6 +13,7 @@ import { toRefs } from 'vue'
 import { routeType } from '@/types/route'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { Link } from "@inertiajs/vue3"
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
 library.add(falFile, faFileDownload, faDownload)
 
@@ -49,7 +50,8 @@ const onUploadFile = async (fileUploaded: any) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        emits('isShowProgress', true)
+        useEchoOrgPersonal().isShowProgress = true
+        // emits('isShowProgress', true)
     } catch (error: any) {
         console.error(error.message)
     }
@@ -95,7 +97,7 @@ watch(() => props.modelValue, async (newVal) => {
         </div>
 
 
-        
+
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
@@ -135,7 +137,7 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">
+                    <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">{{ }}
                     <Link v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index" :href="history.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
                         <div  class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start cursor-pointer">
                             <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
