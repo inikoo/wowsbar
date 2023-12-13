@@ -55,6 +55,7 @@ class StoreProductCategory
             'name'        => ['required', 'max:250', 'string'],
             'state'       => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
+            'data'        => ['sometimes', 'array'],
         ];
     }
 
@@ -73,7 +74,7 @@ class StoreProductCategory
             'name' => $command->argument('name')
         ]);
 
-        echo $command->argument('name') . " added \n";
+        echo $command->argument('name')." added \n";
 
         return 0;
     }

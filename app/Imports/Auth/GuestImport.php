@@ -40,6 +40,12 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
 
         try {
             $modelData = $row->only($fields)->all();
+
+            data_set($modelData, 'data.bulk_import', [
+                'id'   => $this->upload->id,
+                'type' => 'Upload',
+            ]);
+
             StoreGuest::make()->action($modelData);
             $this->setRecordAsCompleted($uploadRecord);
         } catch (Exception $e) {

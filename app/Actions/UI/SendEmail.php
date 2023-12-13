@@ -28,7 +28,7 @@ class SendEmail
         $recipient = $command->ask('Recipient Email');
         $subject   = $command->ask('Subject');
         $message   = $command->ask('Message');
-        $sender = organisation()->shops->first()->senderEmail->email_address ?? env('SENDER_EMAIL_ADDRESS');
+        $sender    = organisation()->shops->first()->senderEmail->email_address ?? env('SENDER_EMAIL_ADDRESS');
 
         $this->handle($subject, $sender, $recipient, $message);
 

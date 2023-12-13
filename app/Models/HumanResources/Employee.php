@@ -51,7 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $emergency_contact
  * @property array|null $salary
  * @property array|null $working_hours
- * @property string $week_working_hours
+ * @property float $week_working_hours
  * @property array $data
  * @property array $job_position_scopes
  * @property array $errors

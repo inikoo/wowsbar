@@ -102,6 +102,7 @@ class StoreCustomer
             'contact_website'          => ['nullable', 'active_url'],
             'timezone_id'              => ['nullable', 'exists:timezones,id'],
             'language_id'              => ['nullable', 'exists:languages,id'],
+            'data'                     => ['sometimes', 'array'],
             'password'                 =>
                 [
                     'sometimes',

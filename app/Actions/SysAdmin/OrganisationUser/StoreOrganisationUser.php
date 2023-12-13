@@ -57,7 +57,8 @@ class StoreOrganisationUser
             'password'        => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'email'           => ['sometimes', 'nullable', 'email', 'unique:organisation_users,email'],
             'contact_name'    => ['required', 'string', 'max:255'],
-            'reset_password'  => ['sometimes', 'boolean']
+            'reset_password'  => ['sometimes', 'boolean'],
+            'data'            => ['sometimes', 'array'],
 
         ];
     }

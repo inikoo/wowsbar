@@ -55,6 +55,13 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             data_set($modelData, 'work_email', null, overwrite: false);
             data_set($modelData, 'email', null, overwrite: false);
 
+            data_set($modelData, 'data.bulk_import', [
+                'id'   => $this->upload->id,
+                'type' => 'Upload',
+            ]);
+
+
+
             StoreEmployee::make()->action(
                 $parent,
                 $modelData

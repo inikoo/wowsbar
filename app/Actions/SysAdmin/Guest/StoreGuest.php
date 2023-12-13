@@ -48,15 +48,24 @@ class StoreGuest
         );
         OrganisationHydrateGuests::dispatch();
         GuestHydrateUniversalSearch::dispatch($guest);
+
+        $organisationUserData=[
+            'username'       => Arr::get($modelData, 'username'),
+            'password'       => Arr::get($modelData, 'password'),
+            'contact_name'   => $guest->contact_name,
+            'email'          => $guest->email,
+            'reset_password' => Arr::get($modelData, 'reset_password', false),
+        ];
+
+        if (Arr::get($guest->data, 'bulk_import')) {
+            $organisationUserData['data'] = [
+                'bulk_import' => Arr::get($guest->data, 'bulk_import')
+            ];
+        }
+
         StoreOrganisationUser::make()->action(
             $guest,
-            [
-                'username'       => Arr::get($modelData, 'username'),
-                'password'       => Arr::get($modelData, 'password'),
-                'contact_name'   => $guest->contact_name,
-                'email'          => $guest->email,
-                'reset_password' => Arr::get($modelData, 'reset_password', false),
-            ]
+            $organisationUserData
         );
 
         $jobPositions = [];
@@ -98,7 +107,8 @@ class StoreGuest
             'email'          => ['nullable', 'email'],
             'positions.*'    => ['exists:job_positions,slug'],
             'password'       => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'reset_password' => ['sometimes', 'boolean']
+            'reset_password' => ['sometimes', 'boolean'],
+            'data'           => ['sometimes', 'array'],
 
         ];
     }

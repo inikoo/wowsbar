@@ -93,7 +93,8 @@ class StoreUser
             'email'          => 'required|iunique:users|email|max:255',
             'is_root'        => ['sometimes', 'required', 'boolean'],
             'roles'          => ['sometimes', 'required', 'array'],
-            'reset_password' => ['sometimes', 'boolean']
+            'reset_password' => ['sometimes', 'boolean'],
+            'data'           => ['sometimes', 'array'],
         ];
     }
 

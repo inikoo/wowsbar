@@ -38,6 +38,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool $is_seeded
  * @property bool $is_transactional
  * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\EmailTemplateCategory> $categories
+ * @property-read int|null $categories_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot

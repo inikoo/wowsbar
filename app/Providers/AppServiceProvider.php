@@ -66,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
                 'CustomerSocialAccount'  => 'App\Models\Portfolios\CustomerSocialAccount',
                 'Fetch'                  => 'App\Models\Helpers\Fetch',
                 'EmailTemplate'          => 'App\Models\Mail\EmailTemplate',
+                'Upload'                 => 'App\Models\Helpers\Upload',
 
             ]
         );

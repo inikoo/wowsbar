@@ -47,10 +47,18 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
             );
 
 
+        $modelData = $row->only($fields)->all();
+
+        data_set($modelData, 'data.bulk_import', [
+            'id'   => $this->upload->id,
+            'type' => 'Upload',
+        ]);
+
+
         try {
             StoreProduct::make()->action(
                 $parent,
-                $row->only($fields)->all()
+                $modelData
             );
             $this->setRecordAsCompleted($uploadRecord);
         } catch (Exception $e) {

@@ -74,8 +74,7 @@ class StoreOrganisation
             'country_id'  => ['required', 'exists:countries,id'],
             'language_id' => ['required', 'exists:languages,id'],
             'timezone_id' => ['required', 'exists:timezones,id'],
-
-
+            'data'        => ['sometimes', 'array'],
         ];
     }
 

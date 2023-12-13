@@ -44,13 +44,14 @@ class StoreProduct
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
-            'unit'        => ['required', 'string'],
-            'price'       => ['required', 'numeric'],
-            'name'        => ['required', 'max:250', 'string'],
-            'type'        => ['required', Rule::in(ProductTypeEnum::values())],
-            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
-            'description' => ['sometimes', 'required', 'max:1500']
+            'code'           => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
+            'unit'           => ['required', 'string'],
+            'price'          => ['required', 'numeric'],
+            'name'           => ['required', 'max:250', 'string'],
+            'type'           => ['required', Rule::in(ProductTypeEnum::values())],
+            'state'          => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
+            'description'    => ['sometimes', 'required', 'max:1500'],
+            'data'           => ['sometimes', 'array'],
         ];
     }
 

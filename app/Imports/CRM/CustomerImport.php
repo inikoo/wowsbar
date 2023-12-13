@@ -45,10 +45,17 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             );
 
 
+        $modelData = $row->only($fields)->all();
+
+        data_set($modelData, 'data.bulk_import', [
+            'id'   => $this->upload->id,
+            'type' => 'Upload',
+        ]);
+
         try {
             $customer = StoreCustomer::make()->action(
                 $shop,
-                $row->only($fields)->all()
+                $modelData
             );
 
             if (Arr::get($row, 'password') and Arr::get($row, 'email')) {
@@ -59,6 +66,12 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                         [
                             'contact_name' => $customer->contact_name,
                             'is_root'      => true,
+                            'data'         => [
+                                'bulk_import' => [
+                                    'id'   => $this->upload->id,
+                                    'type' => 'Upload',
+                                ]
+                            ]
 
                         ]
                     )
@@ -85,7 +98,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'website'        => ['nullable'],
             'password'       => ['sometimes', 'string', 'min:8', 'max:64'],
             'reset_password' => ['sometimes', 'boolean'],
-
+            'data'           => ['sometimes', 'array'],
         ];
     }
 }

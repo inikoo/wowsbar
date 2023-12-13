@@ -171,6 +171,7 @@ class StoreProspect
                     extraConditions: $extraConditions
                 ),
             ],
+
         ];
     }
 

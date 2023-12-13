@@ -21,13 +21,19 @@ class DepartmentImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
 
     public function storeModel($row, $uploadRecord): void
     {
-
-        $fields =$this->getFieldsFromRules();
+        $fields = $this->getFieldsFromRules();
         $parent = organisation();
         try {
+            $modelData = $row->only($fields)->all();
+
+            data_set($modelData, 'data.bulk_import', [
+                'id'   => $this->upload->id,
+                'type' => 'Upload',
+            ]);
+
             StoreProductCategory::make()->action(
                 $parent,
-                $row->only($fields)->all()
+                $modelData
             );
             $this->setRecordAsCompleted($uploadRecord);
         } catch (Exception $e) {
@@ -39,8 +45,8 @@ class DepartmentImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
     public function rules(): array
     {
         return [
-            'code'       => ['required', 'iunique:product_categories', 'between:2,9', 'alpha_dash'],
-            'name'       => ['required', 'max:250', 'string'],
+            'code' => ['required', 'iunique:product_categories', 'between:2,9', 'alpha_dash'],
+            'name' => ['required', 'max:250', 'string'],
         ];
     }
 }

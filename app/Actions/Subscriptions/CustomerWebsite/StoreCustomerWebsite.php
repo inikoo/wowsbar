@@ -105,7 +105,8 @@ class StoreCustomerWebsite
                     ]
                 ),
             ],
-            'name' => ['required', 'string', 'max:128']
+            'name'           => ['required', 'string', 'max:128'],
+            'data'           => ['sometimes', 'array'],
         ];
     }
 

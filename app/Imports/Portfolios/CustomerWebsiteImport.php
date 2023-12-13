@@ -45,18 +45,23 @@ class CustomerWebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFail
                 ]
             );
 
+        $modelData = $row->only($fields)->all();
+
+        data_set($modelData, 'data.bulk_import', [
+            'id'   => $this->upload->id,
+            'type' => 'Upload',
+        ]);
 
         try {
             $customerWebsite = StoreCustomerWebsite::make()->action(
                 $customer,
-                $row->only($fields)->all()
+                $modelData
             );
 
 
             foreach (Division::all()->pluck('slug')->all() as $division) {
                 if ($row->has($division)) {
-
-                    $portfolioWebsite=PortfolioWebsite::find($customerWebsite->id);
+                    $portfolioWebsite = PortfolioWebsite::find($customerWebsite->id);
                     SyncDivisionPortfolioWebsite::run(
                         $portfolioWebsite,
                         [
@@ -64,7 +69,6 @@ class CustomerWebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFail
                             'interest' => $row->get($division)
                         ]
                     );
-
                 }
             }
 

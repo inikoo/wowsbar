@@ -52,19 +52,27 @@ class StoreEmployee
 
 
         if (Arr::get($credentials, 'username')) {
+            $organisationUserData = [
+                'username'       => Arr::get($credentials, 'username'),
+                'password'       => Arr::get(
+                    $credentials,
+                    'password',
+                    (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
+                ),
+                'contact_name'   => $employee->contact_name,
+                'email'          => $employee->work_email,
+                'reset_password' => Arr::get($credentials, 'reset_password', false),
+            ];
+
+            if (Arr::get($employee->data, 'bulk_import')) {
+                $organisationUserData['data'] = [
+                    'bulk_import' => Arr::get($employee->data, 'bulk_import')
+                ];
+            }
+
             StoreOrganisationUser::make()->action(
                 $employee,
-                [
-                    'username'       => Arr::get($credentials, 'username'),
-                    'password'       => Arr::get(
-                        $credentials,
-                        'password',
-                        (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
-                    ),
-                    'contact_name'   => $employee->contact_name,
-                    'email'          => $employee->work_email,
-                    'reset_password' => Arr::get($credentials, 'reset_password', false),
-                ]
+                $organisationUserData
             );
         }
 
@@ -85,8 +93,9 @@ class StoreEmployee
         return $employee;
     }
 
-    public function authorize(ActionRequest $request): bool
-    {
+    public function authorize(
+        ActionRequest $request
+    ): bool {
         if ($this->asAction) {
             return true;
         }
@@ -95,8 +104,10 @@ class StoreEmployee
     }
 
 
-    public function action(Organisation|Workplace $parent, $objectData): Employee
-    {
+    public function action(
+        Organisation|Workplace $parent,
+        $objectData
+    ): Employee {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
@@ -104,8 +115,9 @@ class StoreEmployee
         return $this->handle($parent, $validatedData);
     }
 
-    public function prepareForValidation(ActionRequest $request): void
-    {
+    public function prepareForValidation(
+        ActionRequest $request
+    ): void {
         if ($request->get('username')) {
             $request->merge(['some' => 'additional data']);
         }
@@ -127,19 +139,22 @@ class StoreEmployee
             'email'               => ['present', 'nullable', 'email'],
             'username'            => ['nullable', new AlphaDashDot(), 'iunique:organisation_users'],
             'password'            => ['exclude_if:username,null', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'reset_password'      => ['sometimes', 'boolean']
+            'reset_password'      => ['sometimes', 'boolean'],
+            'data'                => ['sometimes', 'array'],
         ];
     }
 
-    public function asController(ActionRequest $request): Employee
-    {
+    public function asController(
+        ActionRequest $request
+    ): Employee {
         $request->validate();
 
         return $this->handle(organisation(), $request->validated());
     }
 
-    public function htmlResponse(Employee $employee): RedirectResponse
-    {
+    public function htmlResponse(
+        Employee $employee
+    ): RedirectResponse {
         return Redirect::route('org.hr.employees.show', $employee->slug);
     }
 }

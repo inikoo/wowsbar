@@ -51,6 +51,11 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             data_set($modelData, 'phone', null, overwrite: false);
             data_set($modelData, 'contact_website', null, overwrite: false);
 
+            data_set($modelData, 'data.bulk_import', [
+                'id'   => $this->upload->id,
+                'type' => 'Upload',
+            ]);
+
             StoreProspect::make()->action(
                 $this->scope,
                 $modelData
