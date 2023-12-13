@@ -14,6 +14,7 @@ use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\HasMedia;
@@ -131,5 +132,10 @@ class EmailTemplate extends Model implements HasMedia
     public function deployments(): MorphMany
     {
         return $this->morphMany(Deployment::class, 'model');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(EmailTemplateCategory::class, 'email_template_pivot_email_categories');
     }
 }

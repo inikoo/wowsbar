@@ -51,6 +51,7 @@ export const initialiseOrgApp = () => {
         })
     }
 
+    loadLanguageAsync(usePage().props.localeData.language.code)
 
     watchEffect(() => {
         // Set data of Navigation
@@ -61,7 +62,6 @@ export const initialiseOrgApp = () => {
 
         // Set data of Locale (Language)
         if (usePage().props.localeData) {
-            loadLanguageAsync(usePage().props.localeData.language.code)
             locale.language = usePage().props.localeData.language
             locale.languageOptions = usePage().props.localeData.languageOptions
         }
