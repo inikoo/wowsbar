@@ -26,7 +26,6 @@ use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\Upda
 use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UpdatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
-use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
@@ -76,7 +75,7 @@ Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 //Route::patch('/system-settings', UpdateSystemSettings::class)->name('system-settings.update');
 Route::post('/generator', ImageGenerator::class)->name('image.generate');
 
-Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)->name('websites.upload');
+
 
 
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');

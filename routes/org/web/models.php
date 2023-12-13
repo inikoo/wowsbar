@@ -69,7 +69,6 @@ use App\Actions\SysAdmin\Guest\UpdateGuest;
 use App\Actions\SysAdmin\Organisation\UpdateOrganisation;
 use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUser;
 use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
-use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UpdateCustomerWebsite;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
@@ -196,7 +195,6 @@ Route::delete('/workplace/{workplace:id}', DeleteWorkplace::class)->name('workpl
 
 Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::patch('', UpdateCustomer::class)->name('update');
-    Route::post('websites/upload', ImportPortfolioWebsite::class)->name('website.upload');
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
     Route::post('users', StoreOrgCustomerUser::class)->name('customer-user.store');
     Route::delete('', DeleteCustomer::class)->name('delete');
