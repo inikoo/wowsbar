@@ -57,6 +57,9 @@ class SendMailshotChannel
                 return;
             }
 
+            /** @var \App\Models\Market\Shop $shop */
+            $shop          =$mailshot->parent;
+            $unsubscribeUrl=$shop->website->domain.route('webhooks.unsubscribe', ['ulid' => $recipient->dispatchedEmail->ulid]);
 
             $html = $emailHtmlBody;
             if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
@@ -64,8 +67,7 @@ class SendMailshotChannel
                     $placeholder = Str::kebab(trim($placeholder));
                     if ($placeholder == 'unsubscribe') {
                         $placeholder = sprintf(
-                            "<a href=\"%s\">%s</a>",
-                            $mailshot->parent->website->domain.'/webhooks/unsubscribe/'.$recipient->dispatchedEmail->ulid,
+                            "<a href=\"$unsubscribeUrl\">%s</a>",
                             __('Unsubscribe')
                         );
                     }
@@ -80,7 +82,7 @@ class SendMailshotChannel
                 emailHtmlBody: $html,
                 dispatchedEmail: $recipient->dispatchedEmail,
                 sender: $mailshot->sender(),
-                withUnsubscribe:true
+                withUnsubscribe:$unsubscribeUrl
             );
         }
 

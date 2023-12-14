@@ -27,7 +27,7 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender, bool $withUnsubscribe = false): DispatchedEmail
+    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender, bool $unsubscribeUrl = false): DispatchedEmail
     {
         if ($dispatchedEmail->state != DispatchedEmailStateEnum::READY) {
             return $dispatchedEmail;
@@ -57,7 +57,7 @@ class SendSesEmail
             $sender,
             $dispatchedEmail->email->address,
             $emailHtmlBody,
-            $withUnsubscribe ? $dispatchedEmail->ulid : null
+            $unsubscribeUrl
         );
 
         $numberAttempts = 12;
@@ -137,7 +137,7 @@ class SendSesEmail
         return $this->getSesClient()->sendRawEmail($this->getRawEmail($emailData));
     }
 
-    public function getEmailData($subject, $sender, $to, $emailHtmlBody, $ulidForUnsubscription = null): array
+    public function getEmailData($subject, $sender, $to, $emailHtmlBody, $unsubscribeUrl = null): array
     {
         $message = [
             'Message' => [
@@ -153,9 +153,8 @@ class SendSesEmail
 
 
         $headers = [];
-        if ($ulidForUnsubscription) {
-            data_set($headers, 'List-Unsubscribe', route('public.webhooks.mailshot.unsubscribe', $ulidForUnsubscription));
-            data_set($headers, 'List-Unsubscribe-Post', route('public.webhooks.mailshot.unsubscribe', $ulidForUnsubscription));
+        if ($unsubscribeUrl) {
+            data_set($headers, 'List-Unsubscribe', $unsubscribeUrl);
         }
         if (config('services.ses.configuration_set')) {
             data_set($headers, 'ConfigurationSet', config('services.ses.configuration_set'));
