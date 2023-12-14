@@ -32,8 +32,8 @@ const layout = useLayoutStore()
     <div class="relative h-full flex z-50 select-none justify-center items-center px-8 gap-x-1 cursor-pointer text-gray-800"
         :class="[
             isTabActive == 'activeUsers'
-                ? layout.systemName === 'org' ? 'bg-gray-200 text-gray-700' : 'text-gray-300'
-                : 'hover:bg-gray-200'
+                ? layout.systemName === 'org' ? 'bg-white text-gray-700' : 'text-gray-300'
+                : layout.systemName === 'org' ? '' : 'text-gray-300 hover:bg-gray-600',
         ]"
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
@@ -44,18 +44,20 @@ const layout = useLayoutStore()
         </div>
 
         <!-- Content -->
-        <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
-            <template #default>
-                <div v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default">
-                    <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
-                    <span class="capitalize font-semibold">{{ dataUser?.name }}</span>
-                    <span v-if="dataUser.current_page?.label" class="capitalize">- {{ dataUser?.current_page?.label }}</span>
-                    <span v-else class="capitalize text-gray-500 italic">- Unknown</span>
-                    <!-- <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>
-                    <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-800">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span> -->
-                    <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
-                </div>
-            </template>
-        </FooterTab>
+        <Transition name="slide-to-up">
+            <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
+                <template #default>
+                    <div v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default">
+                        <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
+                        <span class="capitalize font-semibold">{{ dataUser?.name }}</span>
+                        <span v-if="dataUser.current_page?.label" class="capitalize">- {{ dataUser?.current_page?.label }}</span>
+                        <span v-else class="capitalize text-gray-500 italic">- Unknown</span>
+                        <!-- <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>
+                        <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-800">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span> -->
+                        <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
+                    </div>
+                </template>
+            </FooterTab>
+        </Transition>
     </div>
 </template>

@@ -15,7 +15,8 @@ export const useLocaleStore = defineStore('locale', {
             original_name: null
         },
         languageOptions:{
-
+            id: '',
+            name: ''
         }
     }),
 
