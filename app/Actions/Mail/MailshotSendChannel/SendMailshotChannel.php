@@ -20,7 +20,6 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Spatie\Mjml\Mjml;
 
 class SendMailshotChannel
 {
@@ -30,11 +29,10 @@ class SendMailshotChannel
 
     public function handle(MailshotSendChannel $mailshotSendChannel): void
     {
-        $mailshot      = $mailshotSendChannel->mailshot;
-        $layout        = $mailshot->layout;
+        $mailshot = $mailshotSendChannel->mailshot;
+        $layout   = $mailshot->layout;
         // $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
         $emailHtmlBody = $layout['html']['html'];
-
 
 
         UpdateMailshotSendChannel::run(
@@ -47,14 +45,12 @@ class SendMailshotChannel
 
 
         foreach ($mailshot->recipients()->where('channel', $mailshotSendChannel->id)->get() as $recipient) {
-
             $mailshot->refresh();
-            if($mailshot->state==MailshotStateEnum::STOPPED) {
-
+            if ($mailshot->state == MailshotStateEnum::STOPPED) {
                 UpdateMailshotSendChannel::run(
                     $mailshotSendChannel,
                     [
-                        'state'            => MailshotSendChannelStateEnum::STOPPED
+                        'state' => MailshotSendChannelStateEnum::STOPPED
                     ]
                 );
 
@@ -62,15 +58,14 @@ class SendMailshotChannel
             }
 
 
-            $html=$emailHtmlBody;
+            $html = $emailHtmlBody;
             if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
                 foreach ($matches[1] as $i => $placeholder) {
-
                     $placeholder = Str::kebab(trim($placeholder));
-                    if($placeholder=='unsubscribe') {
+                    if ($placeholder == 'unsubscribe') {
                         $placeholder = sprintf(
                             "<a href=\"%s\">%s</a>",
-                            $mailshot->parent->website->domain . '/webhooks/unsubscribe/' . $recipient->dispatchedEmail->ulid,
+                            $mailshot->parent->website->domain.'/webhooks/unsubscribe/'.$recipient->dispatchedEmail->ulid,
                             __('Unsubscribe')
                         );
                     }
@@ -84,9 +79,9 @@ class SendMailshotChannel
                 subject: $mailshot->subject,
                 emailHtmlBody: $html,
                 dispatchedEmail: $recipient->dispatchedEmail,
-                sender: $mailshot->sender()
+                sender: $mailshot->sender(),
+                withUnsubscribe:true
             );
-
         }
 
 
@@ -101,7 +96,6 @@ class SendMailshotChannel
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SENT);
         MailshotHydrateDispatchedEmailsState::run($mailshot);
         UpdateMailshotSentState::run($mailshot);
-
     }
 
     public string $commandSignature = 'mailshot:send-channel {mailshot} {?channel}';

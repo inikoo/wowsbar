@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 14 Dec 2023 02:32:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 return [
 
@@ -26,10 +31,10 @@ return [
     ],
 
     'ses' => [
-        'key'     => env('AWS_ACCESS_KEY_ID'),
-        'secret'  => env('AWS_SECRET_ACCESS_KEY'),
-        'region'  => env('AWS_DEFAULT_REGION', 'us-east-1'),
-        'sendSes' => env('AWS_SES_CONFIGURATION_SET')
+        'key'               => env('AWS_ACCESS_KEY_ID'),
+        'secret'            => env('AWS_SECRET_ACCESS_KEY'),
+        'region'            => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'configuration_set' => env('AWS_SES_CONFIGURATION_SET')
     ],
 
 ];

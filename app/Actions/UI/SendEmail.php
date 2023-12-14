@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 12 Dec 2023 22:22:36 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 14 Dec 2023 02:29:15 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -21,16 +21,16 @@ class SendEmail
         $sendEmail->sendEmail($sendEmail->getEmailData($subject, $sender, $recipient, $message));
     }
 
-    public string $commandSignature = 'send:email';
+    public string $commandSignature = 'send:email {email}' ;
 
     public function asCommand(Command $command): int
     {
-        $recipient = $command->ask('Recipient Email');
+
         $subject   = $command->ask('Subject');
         $message   = $command->ask('Message');
         $sender    = organisation()->shops->first()->senderEmail->email_address ?? env('SENDER_EMAIL_ADDRESS');
 
-        $this->handle($subject, $sender, $recipient, $message);
+        $this->handle($subject, $sender, $command->argument('email'), $message);
 
         return 0;
     }

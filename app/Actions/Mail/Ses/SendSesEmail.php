@@ -17,6 +17,7 @@ use Aws\Result;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class SendSesEmail
@@ -26,14 +27,13 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender): DispatchedEmail
+    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender, bool $withUnsubscribe = false): DispatchedEmail
     {
         if ($dispatchedEmail->state != DispatchedEmailStateEnum::READY) {
             return $dispatchedEmail;
         }
 
         if (!app()->isProduction() and (!config('mail.devel.send_ses_emails') and !$dispatchedEmail->is_test)) {
-
             UpdateDispatchedEmail::run(
                 $dispatchedEmail,
                 [
@@ -41,7 +41,7 @@ class SendSesEmail
                     'is_sent'             => true,
                     'sent_at'             => now(),
                     'date'                => now(),
-                    'provider_message_id' => 'devel-' . Str::uuid()
+                    'provider_message_id' => 'devel-'.Str::uuid()
                 ]
             );
 
@@ -52,7 +52,13 @@ class SendSesEmail
             return $dispatchedEmail;
         }
 
-        $emailData = $this->getEmailData($subject, $sender, $dispatchedEmail->email->address, $emailHtmlBody, $dispatchedEmail->ulid);
+        $emailData = $this->getEmailData(
+            $subject,
+            $sender,
+            $dispatchedEmail->email->address,
+            $emailHtmlBody,
+            $withUnsubscribe ? $dispatchedEmail->ulid : null
+        );
 
         $numberAttempts = 12;
         $attempt        = 0;
@@ -75,14 +81,12 @@ class SendSesEmail
                 if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
                     UpdateProspectEmailSent::run($dispatchedEmail->recipient);
                 }
-
             } catch (AwsException $e) {
                 if ($e->getAwsErrorCode() == 'Throttling' and $attempt < $numberAttempts - 1) {
                     $attempt++;
                     usleep(rand(200, 300) + pow(2, $attempt));
                     continue;
                 } else {
-
                     UpdateDispatchedEmail::run(
                         $dispatchedEmail,
                         [
@@ -101,6 +105,21 @@ class SendSesEmail
 
                     break;
                 }
+            } catch (Exception $e) {
+                UpdateDispatchedEmail::run(
+                    $dispatchedEmail,
+                    [
+                        'state'       => DispatchedEmailStateEnum::ERROR,
+                        'is_error'    => true,
+                        'date'        => now(),
+                        'data->error' =>
+                            [
+                                'msg'     => $e->getMessage(),
+                            ],
+                    ]
+                );
+
+                break;
             }
 
             break;
@@ -110,12 +129,15 @@ class SendSesEmail
         return $dispatchedEmail;
     }
 
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function sendEmail($emailData): Result
     {
         return $this->getSesClient()->sendRawEmail($this->getRawEmail($emailData));
     }
 
-    public function getEmailData($subject, $sender, $to, $emailHtmlBody, $ulid = null): array
+    public function getEmailData($subject, $sender, $to, $emailHtmlBody, $ulidForUnsubscription = null): array
     {
         $message = [
             'Message' => [
@@ -129,6 +151,17 @@ class SendSesEmail
             'Data' => $emailHtmlBody
         ];
 
+
+        $headers = [];
+        if ($ulidForUnsubscription) {
+            data_set($headers, 'List-Unsubscribe', route('public.webhooks.mailshot.unsubscribe', $ulidForUnsubscription));
+            data_set($headers, 'List-Unsubscribe-Post', route('public.webhooks.mailshot.unsubscribe', $ulidForUnsubscription));
+        }
+        if (config('services.ses.configuration_set')) {
+            data_set($headers, 'ConfigurationSet', config('services.ses.configuration_set'));
+        }
+
+
         return [
             'Source'      => $sender,
             'Destination' => [
@@ -136,15 +169,14 @@ class SendSesEmail
                     $to
                 ]
             ],
-            'Message' => $message['Message'],
-            'Headers' => [
-                'List-Unsubscribe'      => $ulid ? route('public.webhooks.mailshot.unsubscribe', $ulid) : null,
-                'List-Unsubscribe-Post' => $ulid ? route('public.webhooks.mailshot.unsubscribe', $ulid) : null,
-                'ConfigurationSet'      => env('AWS_SES_CONFIGURATION_SET')
-            ],
+            'Message'     => $message['Message'],
+            'Headers'     => $headers
         ];
     }
 
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function getRawEmail(array $emailData): array
     {
         $mail = new PHPMailer();
