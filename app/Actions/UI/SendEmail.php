@@ -7,7 +7,11 @@
 
 namespace App\Actions\UI;
 
+use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Ses\SendSesEmail;
+use App\Enums\Mail\Outbox\OutboxTypeEnum;
+use App\Models\Mail\Email;
+use App\Models\Mail\Outbox;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Console\Command;
 
@@ -17,22 +21,41 @@ class SendEmail
 
     public function handle(string $subject, string $sender, string $recipient, string $message): void
     {
-        $sendEmail = SendSesEmail::make();
-        $sendEmail->sendEmail($sendEmail->getEmailData($subject, $sender, $recipient, $message));
+        $email           = Email::firstOrCreate(['address' => $recipient]);
+        $dispatchedEmail = StoreDispatchedEmail::run($email, null, [
+            'is_test'   => true,
+            'outbox_id' => Outbox::where('type', OutboxTypeEnum::TEST)->pluck('id')->first()
+        ]);
+
+        SendSesEmail::run($subject, $message, $dispatchedEmail, $sender);
     }
 
     public string $commandSignature = 'send:email {email}' ;
 
     public function asCommand(Command $command): int
     {
+        $senderEmail = organisation()->shops->first()->prospectsSenderEmail()->whereNotNull('email_address')->first();
+
+        if (!$senderEmail) {
+            $command->error('Sender email not set');
+            return 1;
+        }
+
+        $senderEmailValidAt = organisation()->shops->first()->prospectsSenderEmail()->whereNotNull('verified_at')->first();
+
+        if(!$senderEmailValidAt){
+            $command->error('Sender email not verified');
+            return 1;
+        }
 
         $subject   = $command->ask('Subject');
         $message   = $command->ask('Message');
-        $sender    = organisation()->shops->first()->senderEmail->email_address ?? env('SENDER_EMAIL_ADDRESS');
+        $recipients = explode(',', $command->argument('email'));
 
-        $this->handle($subject, $sender, $command->argument('email'), $message);
+        foreach ($recipients as $recipient) {
+            $this->handle($subject, $senderEmail, $recipient, $message);
+        }
 
         return 0;
     }
-
 }

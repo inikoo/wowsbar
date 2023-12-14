@@ -22,7 +22,7 @@ class StoreDispatchedEmail
     public function handle(Email $email, ?Mailshot $mailshot, array $modelData=[]): DispatchedEmail
     {
 
-        data_set($modelData, 'outbox_id', $mailshot->outbox_id, overwrite: false);
+        data_set($modelData, 'outbox_id', $mailshot?->outbox_id, overwrite: false);
 
         /** @var DispatchedEmail $dispatchedEmail */
         $dispatchedEmail = DispatchedEmail::create(
@@ -40,6 +40,4 @@ class StoreDispatchedEmail
 
         return $dispatchedEmail;
     }
-
-
 }
