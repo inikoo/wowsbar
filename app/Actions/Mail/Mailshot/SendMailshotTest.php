@@ -8,7 +8,6 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
-use App\Actions\Mail\Ses\SendSesEmail;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Models\Mail\Email;
@@ -16,21 +15,20 @@ use App\Models\Mail\Mailshot;
 use App\Models\Mail\Outbox;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
-use Spatie\Mjml\Mjml;
 
 class SendMailshotTest
 {
     use AsCommand;
     use AsAction;
+    use WithSendMailshot;
 
     public function handle(Mailshot $mailshot, array $modelData): Collection
     {
         $layout        = $mailshot->layout;
-        //        $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+
         $emailHtmlBody = $layout['html']['html'];
 
         $dispatchedEmails = [];
@@ -43,28 +41,20 @@ class SendMailshotTest
             ]);
             $dispatchedEmail->refresh();
 
-            $html = $emailHtmlBody;
-            if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
-                foreach ($matches[1] as $i => $placeholder) {
-                    $placeholder = Str::kebab(trim($placeholder));
-                    if ($placeholder == 'unsubscribe') {
-                        $placeholder = sprintf(
-                            "<a href=\"%s\">%s</a>",
-                            $mailshot->parent->website->domain.'/webhooks/unsubscribe/'.$dispatchedEmail->ulid,
-                            __('Unsubscribe')
-                        );
-                    }
+            /** @var \App\Models\Market\Shop $shop */
+            $shop          =$mailshot->parent;
+            $unsubscribeUrl=$shop->website->domain.route('webhooks.unsubscribe', ['ulid' => $dispatchedEmail->ulid]);
 
-                    $html = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
-                }
-            }
 
-            $dispatchedEmails[] = SendSesEmail::run(
-                $mailshot->subject,
-                $html,
+            $dispatchedEmails[] = $this->sendEmailWithUnsubscribe(
                 $dispatchedEmail,
-                $mailshot->sender()
+                $mailshot->sender(),
+                $mailshot->subject,
+                $emailHtmlBody,
+                $unsubscribeUrl,
             );
+
+
         }
 
         return collect($dispatchedEmails);
