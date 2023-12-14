@@ -2,9 +2,17 @@
 import { trans } from 'laravel-vue-i18n'
 import { useLocaleStore } from '@/Stores/locale'
 
-    const props = defineProps<{
-        emailsEstimated: number
-    }>()
+const props = defineProps<{
+    emailsEstimated: number
+    idMailshot: number
+}>()
+
+window.Echo.private('org.general')
+.listen(`.mailshot.${props.idMailshot}`, (e) => {
+    console.log('qqqqqqq', e)
+})
+
+
 </script>
 
 <template>
