@@ -57,6 +57,7 @@ use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
 use App\Actions\Mail\Mailshot\StoreMailshot;
+use App\Actions\Mail\Mailshot\UpdateMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
 use App\Actions\Mail\Mailshot\UpdateProspectsMailshotSetting;
 use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
@@ -142,6 +143,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
         Route::post('prospect-mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');
+        Route::patch('prospect-mailshots/{mailshot:id}', [UpdateMailshot::class, 'shopProspects'])->name('prospect-mailshot.update');
 
         Route::post('prospect-queries', [StoreProspectQuery::class, 'inShop'])->name('prospect-query.store');
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
