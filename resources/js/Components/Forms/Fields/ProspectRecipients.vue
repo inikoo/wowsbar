@@ -81,7 +81,7 @@ const getEstimateRecipients = async (value) => {
             const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
                 {
-                    params: { ...value.recipients_recipe }
+                    params: { recipients_recipe : {...value.recipients_recipe} }
                 }
             );
             return response.data ;
@@ -123,7 +123,7 @@ const getParams = () => {
 const changeWeeksValue= async (value,index)=> {
     try {
         const data = {...props.form.data()}
-        data.recipients_recipe.recipient_builder_data.query.constrains.prospect_last_contacted.argument = value
+        data.recipients_recipe.recipient_builder_data.query.data.prospect_last_contacted.argument = value
         const estimate = await getEstimateRecipients(data);
         if(props.options.query.data[index].id == data.recipients_recipe.recipient_builder_data.query.id) { emits("update:form", {...props.form, ...data}) }
         props.options.query.data[index].constrains.prospect_last_contacted.argument = value
