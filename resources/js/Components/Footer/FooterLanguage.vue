@@ -38,8 +38,8 @@ defineEmits<{
     <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer"
         :class="[
             isTabActive == 'language'
-                ? layout.systemName === 'org' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 text-gray-300'
-                : layout.systemName === 'org' ? 'hover:bg-gray-300' : 'text-gray-300 hover:bg-gray-600',
+                ? layout.systemName === 'org' ? 'bg-white text-gray-700' : 'bg-gray-700 text-gray-300'
+                : layout.systemName === 'org' ? '' : 'text-gray-300 hover:bg-gray-600',
             ,
         ]"
     >
@@ -50,25 +50,27 @@ defineEmits<{
         </div>
         <div class="absolute inset-0 bg-transparent" @click="isTabActive == 'language' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'language')" />
 
-        <FooterTab v-if="isTabActive === 'language'" :tabName="`language`">
-            <template #default>
-                <!-- <div v-if="Object.keys(locale.languageOptions).length > 0" v-for="(option, index) in locale.languageOptions"
-                    :class="[ locale.language.id == index ? 'bg-gray-400 text-gray-100' : 'text-gray-100 hover:bg-gray-500', 'grid py-1.5']"
-                    @click="locale.language = option, loadLanguageAsync(option.code)"
-                >
-                    {{ option.name }}
-                </div> -->
-                <form v-if="Object.keys(locale.languageOptions).length > 0"
-                    @submit.prevent="form.patch(route('models.profile.update'))"
-                    v-for="(option, index) in locale.languageOptions"
-                    :class="[ option.id == locale.language.id ? 'bg-gray-400' : 'hover:bg-gray-300 hover:text-gray-700 ', 'grid ']"
-                >
-                    <button @click="form.language_id = option.id, locale.language = option, loadLanguageAsync(locale.language.code)" type="submit" class="py-1.5">
+        <Transition name="slide-to-up">
+            <FooterTab v-if="isTabActive === 'language'" :tabName="`language`" :pinTab="false">
+                <template #default>
+                    <!-- <div v-if="Object.keys(locale.languageOptions).length > 0" v-for="(option, index) in locale.languageOptions"
+                        :class="[ locale.language.id == index ? 'bg-gray-400 text-gray-100' : 'text-gray-100 hover:bg-gray-500', 'grid py-1.5']"
+                        @click="locale.language = option, loadLanguageAsync(option.code)"
+                    >
                         {{ option.name }}
-                    </button>
-                </form>
-                <div v-else class="grid pt-2.5 pb-1.5">{{ trans('Nothing to show here') }}</div>
-            </template>
-        </FooterTab>
+                    </div> -->
+                    <form v-if="Object.keys(locale.languageOptions).length > 0"
+                        @submit.prevent="form.patch(route('models.profile.update'))"
+                        v-for="(option, index) in locale.languageOptions"
+                        :class="[ option.id == locale.language.id ? 'bg-gray-400' : 'hover:bg-gray-300 hover:text-gray-700 ', 'grid ']"
+                    >
+                        <button @click="form.language_id = option.id, locale.language = option, loadLanguageAsync(locale.language.code)" type="submit" class="py-1.5">
+                            {{ option.name }}
+                        </button>
+                    </form>
+                    <div v-else class="grid pt-2.5 pb-1.5">{{ trans('Nothing to show here') }}</div>
+                </template>
+            </FooterTab>
+        </Transition>
     </div>
 </template>

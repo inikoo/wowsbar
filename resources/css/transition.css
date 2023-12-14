@@ -41,6 +41,20 @@
     opacity: 0;
 }
 
+/* Transition name="slide-to-up" */
+/* Used in: Popup on FooterTab */
+.slide-to-up-enter-active {
+    transition: all 0.1s ease-out;
+}
+.slide-to-up-leave-active {
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-to-up-enter-from, .slide-to-up-leave-to {
+    transform: translateY(100%);
+    scale: 0.1;
+    opacity: 0;
+}
+
 /* Transition for <li> vertical */
 .list-move,
 .list-enter-active,

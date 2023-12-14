@@ -31,7 +31,7 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="bg-slate-100 text-xs h-full border-l border-gray-200 space-y-4">
+    <div class="bg-gray-100 text-xs h-full border-l border-gray-200 space-y-4">
         <TransitionGroup name="list" tag="ul">
             <!-- Online Users -->
             <li v-if="layout.rightSidebar.activeUsers.show" class="px-2 py-2" key="1">
