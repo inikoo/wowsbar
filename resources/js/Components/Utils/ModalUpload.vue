@@ -4,7 +4,7 @@ import { trans } from 'laravel-vue-i18n'
 
 import Modal from '@/Components/Utils/Modal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faFile as falFile } from '@fal'
+import { faFile as falFile, faTimes } from '@fal'
 import { faFileDownload, faDownload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import axios from 'axios'
@@ -15,7 +15,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import { Link } from "@inertiajs/vue3"
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
-library.add(falFile, faFileDownload, faDownload)
+library.add(falFile, faTimes, faFileDownload, faDownload)
 
 const props = defineProps<{
     modelValue: boolean
@@ -80,8 +80,12 @@ watch(() => props.modelValue, async (newVal) => {
 </script>
 
 <template>
-    <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)">
-        <!-- <pre>{{  [...dataHistoryFileUpload, ...recentlyUploaded] }}</pre> -->
+    <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)" :closeButton="true">
+        <!-- <div @click="emits('update:modelValue', false)" class="group px-2 absolute right-6 top-4 cursor-pointer">
+            <FontAwesomeIcon icon='fal fa-times' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
+        </div> -->
+
+        <!-- Title -->
         <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">
             <div>
                 <div>{{ trans(`Upload your new ${propName}`) }}</div>
@@ -95,8 +99,6 @@ watch(() => props.modelValue, async (newVal) => {
                     </div>
                 </div>
         </div>
-
-
 
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
@@ -139,7 +141,7 @@ watch(() => props.modelValue, async (newVal) => {
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">{{ }}
                     <Link v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index" :href="history.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
-                        <div  class="relative w-36 bg-gray-50 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start cursor-pointer">
+                        <div class="relative w-36 bg-white hover:bg-gray-100 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start cursor-pointer">
                             <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
                                 <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
                             </a> -->

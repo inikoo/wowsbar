@@ -43,7 +43,7 @@ const emits = defineEmits<{
 <template>
     <div :class="useEchoOrgPersonal().isShowProgress ? 'bottom-16' : '-bottom-24'"
         class="backdrop-blur-sm bg-white/60 ring-1 ring-gray-300 rounded-md px-4 py-2 z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-6 tabular-nums">
-        <template v-if="useEchoOrgPersonal().progressBars.Upload">
+        <template v-if="Object.keys(useEchoOrgPersonal().progressBars.Upload ?? {}).length > 0">
             <TransitionGroup name="progressbar">
                 <div v-for="(upload, index) in useEchoOrgPersonal().progressBars.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
                     <template v-if="upload.total">
@@ -86,7 +86,7 @@ const emits = defineEmits<{
 .progressbar-enter-from,
 .progressbar-leave-to {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.1);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving

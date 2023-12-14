@@ -4,28 +4,28 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-  <script setup lang="ts">
-  import {Head} from '@inertiajs/vue3';
-  import PageHeading from "@/Components/Headings/PageHeading.vue";
-  import { capitalize } from "@/Composables/capitalize"
-  import TableUploads from "@/Components/Tables/TableUploads.vue";
+<script setup lang="ts">
+import { Head } from '@inertiajs/vue3'
+import PageHeading from "@/Components/Headings/PageHeading.vue"
+import { capitalize } from "@/Composables/capitalize"
+import TableUploads from "@/Components/Tables/TableUploads.vue"
 
-  const props = defineProps<{
-      title: string,
-      pageHead: object,
-      tabs: {
-          current: string;
-          navigation: object;
-      }
-      data?:object
+import { faImages } from '@fal'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faImages)
+
+const props = defineProps<{
+    title: string
+    pageHead: object
+    data?: object
 
 
-  }>()
+}>()
 
-  </script>
+</script>
 
-  <template layout="OrgApp">
-      <Head :title="capitalize(title)" />
-      <PageHeading :data="pageHead"></PageHeading>
-      <TableUploads :tab="'upload_histories'" :data="data"></TableUploads>
-  </template>
+<template layout="OrgApp">
+    <Head :title="capitalize(title)" />
+    <PageHeading :data="pageHead"></PageHeading>
+    <TableUploads :tab="'upload_histories'" :data="data"></TableUploads>
+</template>
