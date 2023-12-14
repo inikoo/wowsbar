@@ -15,6 +15,7 @@ import {faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTrian
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {useLocaleStore} from "@/Stores/locale";
 import {capitalize} from '@/Composables/capitalize'
+import { onUnmounted, onMounted } from 'vue';
 
 library.add(faSeedling, faChair, faThumbsDown, faLaugh, faUnlink, faExclamationTriangle, faExclamationCircle, faSignIn,
     faDungeon, faEye, faEyeSlash, faMousePointer, faSnooze)
@@ -54,36 +55,43 @@ const options = {
 }
 
 
-window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
+onMounted(() => {
+    window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
+        console.log('On mounted', e)
+        // console.log(e)
+        if (e.data.counts !== undefined) {
+            Object.keys(e.data.counts).forEach(key => {
+                props.data.prospectStats[key].count = e.data.counts[key]
+                if (key !== 'prospects') {
+                    props.data.prospectStats['prospects'].cases[key].count = e.data.counts[key]
+                }
+            });
+        }
+    
+        if (e.data.contacted !== undefined) {
+            Object.keys(e.data.contacted).forEach(key => {
+                props.data.prospectStats.contacted.cases[key].count = e.data.contacted[key]
+            });
+        }
+        if (e.data.fail !==  undefined) {
+            Object.keys(e.data.fail).forEach(key => {
+                props.data.prospectStats.fail.cases[key].count = e.data.fail[key]
+            });
+        }
+        if (e.data.success !== undefined) {
+            Object.keys(e.data.success).forEach(key => {
+                props.data.prospectStats.success.cases[key].count = e.data.success[key]
+            });
+        }
+    
+        // props.data.prospectStats['contacted'].count=33333
+    
+    })
+})
 
-    // console.log(e)
-    if (e.data.counts !== undefined) {
-        Object.keys(e.data.counts).forEach(key => {
-            props.data.prospectStats[key].count = e.data.counts[key]
-            if (key !== 'prospects') {
-                props.data.prospectStats['prospects'].cases[key].count = e.data.counts[key]
-            }
-        });
-    }
-
-    if (e.data.contacted !== undefined) {
-        Object.keys(e.data.contacted).forEach(key => {
-            props.data.prospectStats.contacted.cases[key].count = e.data.contacted[key]
-        });
-    }
-    if (e.data.fail !==  undefined) {
-        Object.keys(e.data.fail).forEach(key => {
-            props.data.prospectStats.fail.cases[key].count = e.data.fail[key]
-        });
-    }
-    if (e.data.success !== undefined) {
-        Object.keys(e.data.success).forEach(key => {
-            props.data.prospectStats.success.cases[key].count = e.data.success[key]
-        });
-    }
-
-    // props.data.prospectStats['contacted'].count=33333
-
+onUnmounted(() => {
+    Echo.private(`org.general`)
+    .stopListening('.prospects.dashboard')
 })
 
 

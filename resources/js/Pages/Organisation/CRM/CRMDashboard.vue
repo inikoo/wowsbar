@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
+import { onMounted, onUnmounted } from 'vue';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import Stats from "@/Components/DataDisplay/Stats.vue";
@@ -16,6 +17,20 @@ const props = defineProps<{
     pageHead: any,
     stats: object,
 }>()
+
+onMounted(() => {
+    window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
+        if (e.data.counts.prospects !==  undefined) {
+            props.stats.prospects.stat = e.data.counts.prospects
+        }
+    
+    })
+})
+
+onUnmounted(() => {
+    Echo.private(`org.general`)
+    .stopListening('.prospects.dashboard')
+})
 </script>
 
 

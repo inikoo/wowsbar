@@ -63,7 +63,7 @@ class ShowCRMDashboard
                     ],
                 ],
                 'stats'       => [
-                    [
+                    'customers' => [
                         'name' => __('customers'),
                         'stat' => $parent->crmStats->number_customers,
 
@@ -79,7 +79,7 @@ class ShowCRMDashboard
                         }
 
                     ],
-                    [
+                    'prospects' => [
                         'name' => __('prospects'),
                         'stat' => $parent->crmStats->number_prospects,
                         'href' => match ($routeName) {
