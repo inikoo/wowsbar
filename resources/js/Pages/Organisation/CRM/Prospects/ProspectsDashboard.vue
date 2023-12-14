@@ -86,7 +86,6 @@ window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
 
 })
 
-console.log(props.data.prospectStats.contacted)
 
 </script>
 
