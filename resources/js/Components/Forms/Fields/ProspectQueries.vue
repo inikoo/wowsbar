@@ -46,7 +46,7 @@ onMounted(() => {
             }
         }
         if(index != -1)
-        props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, constrains : props.options.data[index].constrains }
+        props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, data : props.options.data[index].constrains }
     }
 
 })
@@ -82,7 +82,7 @@ onMounted(() => {
                         <div v-if="option.number_items > 0">
                             <label :for="'radioProspects' + option.id"
                                 class="bg-transparent absolute inset-0 cursor-pointer" />
-                            <input v-model="form[fieldName].recipient_builder_data.query" :value="{ id: option.id , constrains : option.constrains }"
+                            <input v-model="form[fieldName].recipient_builder_data.query" :value="{ id: option.id , data : option.constrains }"
                                 type="radio" :id="'radioProspects' + option.id" name="radioProspects"
                                 class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
                         </div>
