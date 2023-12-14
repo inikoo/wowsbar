@@ -27,9 +27,8 @@ class GetEstimatedNumberRecipients
      */
     public function handle(Shop $parent, array $recipientsData): int
     {
-
         return match (Arr::get($recipientsData, 'recipient_builder_type')) {
-            'query'                  => $this->getEstimatedNumberRecipientsQuery(
+            'query' => $this->getEstimatedNumberRecipientsQuery(
                 $parent,
                 Arr::get($recipientsData, 'recipient_builder_data.query')
             ),
@@ -38,7 +37,7 @@ class GetEstimatedNumberRecipients
                 $parent,
                 Arr::get($recipientsData, 'recipient_builder_data.custom_prospects_query')
             ),
-            default                  => 0
+            default => 0
         };
     }
 
@@ -47,17 +46,12 @@ class GetEstimatedNumberRecipients
      */
     private function getEstimatedNumberRecipientsQuery($parent, $queryData): int
     {
-
-
         $counter = 0;
 
         $query = Query::find(Arr::get($queryData, 'id'));
 
         if ($query) {
-            if($query->has_arguments) {
-
-
-
+            if ($query->has_arguments) {
                 return $this->getEstimatedNumberRecipientsCustomProspectsQuery(
                     $parent,
                     Arr::get($queryData, 'data')
@@ -76,9 +70,6 @@ class GetEstimatedNumberRecipients
                     }
                 );
             }
-
-
-
         }
 
         return $counter;
@@ -105,20 +96,17 @@ class GetEstimatedNumberRecipients
      */
     private function getEstimatedNumberRecipientsCustomProspectsQuery($parent, $queryData): int
     {
-
-
-
         $counter = 0;
 
         if (count($queryData) == 0) {
             return $counter;
         }
 
+
         $compiledQueryData = $this->compileConstrains($queryData);
 
 
-        $queryBuilder      = GetQueryEloquentQueryBuilder::make()->buildQuery(Prospect::class, $parent, $compiledQueryData);
-
+        $queryBuilder = GetQueryEloquentQueryBuilder::make()->buildQuery(Prospect::class, $parent, $compiledQueryData);
 
 
         $queryBuilder->chunk(

@@ -25,7 +25,6 @@ use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\Mjml\Mjml;
 
 class ShowProspectMailshot extends InertiaAction
 {
@@ -258,7 +257,6 @@ class ShowProspectMailshot extends InertiaAction
         return [
             'sender'    => $mailshot->sender(),
             'subject'   => $mailshot->subject,
-            /* 'emailBody' => Mjml::new()->minify()->toHtml($layout['html'][0]['html']) */
             'emailBody' => $layout['html']['html'],
         ];
     }

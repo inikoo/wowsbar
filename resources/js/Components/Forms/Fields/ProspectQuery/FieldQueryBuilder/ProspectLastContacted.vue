@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
                 :class="[value[fieldName].state ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
         </Switch>
         <SwitchLabel as="span" class="ml-3 text-sm">
-            <span class="font-medium text-gray-900">{{ value[fieldName].state ? trans('Last contact') : trans('Never') }}</span>
+            <span class="font-medium text-gray-900">{{ value[fieldName].state ? trans('Last contact') : trans('Prospects that never been contacted') }}</span>
         </SwitchLabel>
     </SwitchGroup>
 

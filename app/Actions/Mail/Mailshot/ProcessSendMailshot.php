@@ -2,7 +2,6 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
@@ -12,12 +11,10 @@ use App\Actions\Mail\MailshotSendChannel\StoreMailshotSendChannel;
 use App\Actions\Mail\MailshotSendChannel\UpdateMailshotSendChannel;
 use App\Actions\Traits\WithCheckCanContactByEmail;
 use App\Helpers\ArrayWIthProbabilities;
-use App\Models\Helpers\Query;
 use App\Models\Mail\Email;
 use App\Models\Mail\Mailshot;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProcessSendMailshot
@@ -29,9 +26,9 @@ class ProcessSendMailshot
 
     public function handle(Mailshot $mailshot): void
     {
-        $query = Query::find(Arr::get($mailshot->recipients_recipe, 'query_id'));
 
-        $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
+
+        $queryBuilder = GetMailshotRecipientsQueryBuilder::run($mailshot);
 
         $counter = 1;
         $limit   = app()->isProduction() ? null : config('mail.devel.max_mailshot_recipients');
