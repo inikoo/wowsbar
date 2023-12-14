@@ -1,3 +1,9 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Thu, 14 Dec 2023 23:09:14 Malaysia Time, Kuala Lumpur, Malaysia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang='ts'>
 import { Head } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -6,15 +12,18 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheckCircle)
 
 const props = defineProps<{
+    dispatchedEmail: object
     message: {
         title: string
         description: string
         caution: string
     }
 }>()
+// TODO create a MASSIVE button [Confirm unsubscribe]   and call by POST  route(org.unsubscribe.mailshot.update,dispatchedEmail.ulid)
+// if dispatchedEmail.is_test is tru just disabke the button
 </script>
 
-<template layout="Public">
+<template >
     <Head title="Unsubscribe Emails"/>
     <div class="py-16 sm:py-20">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 text-gray-600 ">

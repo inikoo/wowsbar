@@ -10,6 +10,7 @@ namespace App\Models\Mail;
 use App\Actions\Utils\Abbreviate;
 use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
+use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -144,7 +145,9 @@ class Mailshot extends Model
     public function sender()
     {
         if (app()->environment('production')) {
-            $sender = $this->parent->sender_email_address;
+            /** @var Shop $parent */
+            $parent = $this->parent;
+            $sender = $parent->prospectsSenderEmail->email_address;
         } else {
             $sender = config('mail.devel.sender_email_address');
         }

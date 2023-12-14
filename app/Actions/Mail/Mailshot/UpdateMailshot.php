@@ -8,13 +8,8 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\MailshotTypeEnum;
-use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\Mail\Mailshot;
-use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
-use Illuminate\Support\Arr;
-use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateMailshot

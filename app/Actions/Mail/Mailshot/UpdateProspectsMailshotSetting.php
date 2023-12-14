@@ -25,6 +25,8 @@ class UpdateProspectsMailshotSetting
 
     public function handle(Shop $shop, array $modelData): JsonResponse|Shop
     {
+
+
         if ($senderEmailAddress = Arr::get($modelData, 'prospects_sender_email_address')) {
             Arr::forget($modelData, 'prospects_sender_email_address');
 
@@ -71,6 +73,7 @@ class UpdateProspectsMailshotSetting
 
     public function asController(Shop $shop, ActionRequest $request): JsonResponse|Shop
     {
+
         $this->fillFromRequest($request);
         $modelData = $this->validateAttributes();
 

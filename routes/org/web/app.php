@@ -90,5 +90,9 @@ Route::middleware(["org-web"])->group(function () {
     });
 
 
+    Route::prefix("unsubscribe")
+        ->name("unsubscribe.")
+        ->group(__DIR__ . "/unsubscribe.php");
+
     require __DIR__ . "/auth.php";
 });
