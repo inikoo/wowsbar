@@ -3,7 +3,6 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Models\Market\Shop;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -33,7 +32,8 @@ class GetEstimateRecipientsWhileCreatingMailshot
     public function rules(): array
     {
         return [
-            'recipients_recipe' => ['required', 'array']
+            'recipient_builder_type' => ['required', 'string', 'in:query,prospects,custom_prospects_query'],
+            'recipient_builder_data' => ['required', 'array']
         ];
     }
 
@@ -46,8 +46,8 @@ class GetEstimateRecipientsWhileCreatingMailshot
 
 
         $this->fillFromRequest($request);
-
-        $recipientsData = $this->postProcessRecipients(Arr::get($this->validateAttributes(), 'recipients_recipe'));
+        $validateAttributes = $this->validateAttributes();
+        $recipientsData     = $this->postProcessRecipients($validateAttributes);
 
         $count = $this->handle(
             $shop,

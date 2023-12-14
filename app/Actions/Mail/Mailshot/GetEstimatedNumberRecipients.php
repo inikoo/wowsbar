@@ -27,35 +27,58 @@ class GetEstimatedNumberRecipients
      */
     public function handle(Shop $parent, array $recipientsData): int
     {
+
         return match (Arr::get($recipientsData, 'recipient_builder_type')) {
-            'query'                  => $this->getEstimatedNumberRecipientsQuery(Arr::get($recipientsData, 'recipient_builder_data.query')),
+            'query'                  => $this->getEstimatedNumberRecipientsQuery(
+                $parent,
+                Arr::get($recipientsData, 'recipient_builder_data.query')
+            ),
             'prospects'              => $this->getEstimatedNumberRecipientsProspects(Arr::get($recipientsData, 'recipient_builder_data.prospects')),
-            'custom_prospects_query' => $this->getEstimatedNumberRecipientsCustomProspectsQuery($parent, Arr::get($recipientsData, 'recipient_builder_data.custom_prospects_query')),
+            'custom_prospects_query' => $this->getEstimatedNumberRecipientsCustomProspectsQuery(
+                $parent,
+                Arr::get($recipientsData, 'recipient_builder_data.custom_prospects_query')
+            ),
             default                  => 0
         };
     }
 
-    private function getEstimatedNumberRecipientsQuery($queryData): int
+    /**
+     * @throws \Exception
+     */
+    private function getEstimatedNumberRecipientsQuery($parent, $queryData): int
     {
+
 
         $counter = 0;
 
         $query = Query::find(Arr::get($queryData, 'id'));
+
         if ($query) {
-            $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
+            if($query->has_arguments) {
 
 
-            $queryBuilder->chunk(
-                1000,
-                function ($recipients) use (&$counter) {
-                    foreach ($recipients as $recipient) {
-                        if (!$this->canContactByEmail($recipient)) {
-                            continue;
+
+                return $this->getEstimatedNumberRecipientsCustomProspectsQuery(
+                    $parent,
+                    Arr::get($queryData, 'data')
+                );
+            } else {
+                $queryBuilder = GetQueryEloquentQueryBuilder::run($query);
+                $queryBuilder->chunk(
+                    1000,
+                    function ($recipients) use (&$counter) {
+                        foreach ($recipients as $recipient) {
+                            if (!$this->canContactByEmail($recipient)) {
+                                continue;
+                            }
+                            $counter++;
                         }
-                        $counter++;
                     }
-                }
-            );
+                );
+            }
+
+
+
         }
 
         return $counter;
@@ -82,6 +105,9 @@ class GetEstimatedNumberRecipients
      */
     private function getEstimatedNumberRecipientsCustomProspectsQuery($parent, $queryData): int
     {
+
+
+
         $counter = 0;
 
         if (count($queryData) == 0) {
@@ -89,7 +115,12 @@ class GetEstimatedNumberRecipients
         }
 
         $compiledQueryData = $this->compileConstrains($queryData);
+
+
         $queryBuilder      = GetQueryEloquentQueryBuilder::make()->buildQuery(Prospect::class, $parent, $compiledQueryData);
+
+
+
         $queryBuilder->chunk(
             1000,
             function ($recipients) use (&$counter) {

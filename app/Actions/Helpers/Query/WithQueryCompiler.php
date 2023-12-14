@@ -150,10 +150,7 @@ trait WithQueryCompiler
         if (Arr::get($constrain, 'state')) {
             $this->arguments['__date__'] = [
                 'type'  => 'dateSubtraction',
-                'value' => [
-                    'unit'     => 'week',
-                    'quantity' => 1
-                ]
+                'value' => $constrain['argument']
 
             ];
 
