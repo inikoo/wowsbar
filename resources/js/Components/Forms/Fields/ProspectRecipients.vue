@@ -81,7 +81,7 @@ const getEstimateRecipients = async (value) => {
             const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
                 {
-                    params: { recipients_recipe : {...value.recipients_recipe} }
+                    params: { ...value.recipients_recipe }
                 }
             );
             return response.data ;

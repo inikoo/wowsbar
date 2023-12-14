@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { computed, ref, Ref, reactive, onMounted } from 'vue';
+import { computed, ref, Ref, reactive, onMounted, onUnmounted } from 'vue';
 import { useLocaleStore } from '@/Stores/locale.js';
 import Timeline from '@/Components/Utils/Timeline.vue'
 import CountUp from 'vue-countup-v3';
@@ -31,6 +31,7 @@ interface DateScheduled {
 
 const props = defineProps<{
     data: {
+        id: number
         slug: string
         subject: string
         state: string
@@ -72,6 +73,28 @@ const props = defineProps<{
     }
     tab?: string
 }>()
+
+onMounted(() => {
+    window.Echo.private('org.general')
+    .listen(`.mailshot.${props.data.id}`, (e: any) => {
+        console.log(e)
+        // ============ Change here ==============
+        // dataStatistic[0].component.update('number_dispatched_emails')
+        // dataStatistic[0].component.update('number_rejected_emails')
+        // dataStatistic[0].component.update('number_hard_bounced_emails')
+        // dataStatistic[0].component.update('number_soft_bounced_emails')
+        // dataStatistic[0].component.update('number_delivered_emails')
+        // dataStatistic[0].component.update('number_opened_emails')
+        // dataStatistic[0].component.update('number_clicked_emails')
+        // dataStatistic[0].component.update('number_spam_emails')
+        // dataStatistic[0].component.update('number_unsubscribed_emails')
+    })
+})
+
+onUnmounted(() => {
+    Echo.private(`org.general`)
+    .stopListening(`.mailshot.${props.data.id}`)
+})
 
 // List data of statistic
 const dataStatistic = reactive([
@@ -171,7 +194,7 @@ onMounted(() => {
 
 <template>
     <div class="relative">
-        <LabelEstimated :emailsEstimated="3" />
+        <LabelEstimated :emailsEstimated="3" :idMailshot="data.id" />
 
         <div class="py-3 mx-auto px-5 w-full">
             <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" />

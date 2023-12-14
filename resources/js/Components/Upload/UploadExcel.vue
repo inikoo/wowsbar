@@ -36,12 +36,9 @@ const isShowProgress = ref(false)
 //     return useEchoOrgPersonal().progressBars.total ? useEchoOrgPersonal().progressBars.done/useEchoOrgPersonal().progressBars.total * 100 : 0
 // })
 
-// To manipulation data history file upload
-const recentlyUploaded = ref<{}[]>([])
 
 // On finish uploading
 const onFinish = () => {
-    recentlyUploaded.value.push(useEchoOrgPersonal().progressBars)  // Add recent uploaded file to history list
     // setTimeout(() => {
     //     // Reset data from Pusher binding
     //     useEchoOrgPersonal().progressBars = { data: {
@@ -67,7 +64,6 @@ const onFinish = () => {
         <ModalUpload
             v-model="dataModal.isModalOpen"
             :routes="routes"
-            :recentlyUploaded="recentlyUploaded"
             :propName="propName"
         />
     </KeepAlive>

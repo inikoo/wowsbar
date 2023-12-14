@@ -24,7 +24,6 @@ const props = defineProps<{
         download?: routeType
         history?: routeType
     }
-    recentlyUploaded: {}[]
     propName?: string
     // isUploaded: boolean
 }>()
@@ -139,8 +138,8 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="[...dataHistoryFileUpload, ...recentlyUploaded].length">{{ }}
-                    <Link v-for="(history, index) in [...dataHistoryFileUpload, ...recentlyUploaded]" :key="index" :href="history.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
+                    <template v-if="[...dataHistoryFileUpload, ...useEchoOrgPersonal().recentlyUploaded].length">{{ }}
+                    <Link v-for="(history, index) in [...dataHistoryFileUpload, ...useEchoOrgPersonal().recentlyUploaded]" :key="index" :href="history?.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
                         <div class="relative w-36 bg-white hover:bg-gray-100 ring-1 ring-gray-300 border-t-[3px] border-gray-500 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start cursor-pointer">
                             <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
                                 <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>

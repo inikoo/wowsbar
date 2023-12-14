@@ -39,6 +39,7 @@ class MailshotResource extends JsonResource
         })->toArray();
 
         return [
+            'id'                  => $mailshot->id,
             'slug'                => $mailshot->slug,
             'subject'             => $mailshot->subject,
             'state'               => $mailshot->state,

@@ -76,7 +76,7 @@ const StoreTemplate = async (template) => {
 </script>
   
 <template>
-    <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails">
+    <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" :idMailshot="mailshot.id">
         <template #content>
             <div class="flex w-full">
                 <div class="text-gray-500 w-1/2">
