@@ -54,7 +54,7 @@ trait WithQueryCompiler
 
                 default => throw new Exception('Unknown constrain type: '.Arr::get($constrainData, 'type', 'Type not set'))
             };
-        } catch (Exception $e) {
+        } catch (Exception) {
             $compiledConstrain = null;
         }
 
