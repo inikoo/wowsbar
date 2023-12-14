@@ -51,7 +51,7 @@ export const initialiseOrgApp = () => {
         })
     }
 
-    loadLanguageAsync(usePage().props.localeData.language.code)
+    loadLanguageAsync(usePage().props.localeData?.language?.code)
 
     watchEffect(() => {
         // Set data of Navigation

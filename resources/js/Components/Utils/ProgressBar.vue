@@ -4,10 +4,10 @@ import { watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTimes } from '@fal'
+import { faTimes, faFrown, faMeh } from '@fal'
 import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faTimes, faSpinnerThird)
+library.add(faTimes, faFrown, faMeh, faSpinnerThird)
 
 const props = defineProps<{
     progressData:{
@@ -47,7 +47,27 @@ const emits = defineEmits<{
             <TransitionGroup name="progressbar">
                 <div v-for="(upload, index) in useEchoOrgPersonal().progressBars.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
                     <template v-if="upload.total">
-                        <div v-if="upload.done >= upload.total">Finished!!🥳</div>
+                        <div v-if="upload.done >= upload.total">
+                            <!-- Label: All failed -->
+                            <span v-if="upload.done == upload.data.number_fails" class="text-red-600">
+                                Oops Award: All Fails, No Bravos
+                                <FontAwesomeIcon icon='fal fa-frown' class='' aria-hidden='true' />
+                            </span>
+
+                            <!-- Label: All success -->
+                            <span v-else-if="upload.done == upload.data.number_success" class="text-red-600">
+                                Success Streak: Nailed it, brushed off oopsies🥳
+                            </span>
+
+                            <!-- Label: Fails is bigger -->
+                            <span v-else-if="upload.data.number_success < upload.data.number_fails" class="text-gray-500">
+                                Oops, more fails than victories!
+                                <FontAwesomeIcon icon='fal fa-meh' class='' aria-hidden='true' />
+                            </span>
+
+                            <!-- Label: Success is bigger -->
+                            <span v-else class="text-lime-600">Yeah, success roars😎</span>
+                        </div>
                         <div v-else>{{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)</div>
                 
                         <!-- Progress Bar -->
@@ -64,7 +84,7 @@ const emits = defineEmits<{
                 </div>
             </TransitionGroup>
         </template>
-        <div v-else class="w-64 flex justify-center flex-col items-center gap-y-2 py-1">
+        <div v-else class="w-64 flex justify-center flex-col items-center gap-y-2 py-1 text-gray-500">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
             <div class="text-sm">Calculating data..</div>
         </div>
