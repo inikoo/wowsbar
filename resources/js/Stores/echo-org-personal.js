@@ -37,14 +37,15 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
             //     }
             // }
         },
-        isShowProgress: false
+        isShowProgress: false,
+        recentlyUploaded: []
     }),
     actions: {
         subscribe(userID) {
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
-                    const index = eventData.action_type+'-'+eventData.action_id;
+                    // const index = eventData.action_type+'-'+eventData.action_id;
 
                     // Update the state
                     this.$patch({
@@ -55,8 +56,15 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
                         }
                     })
 
-                    // Delete data in 4 seconds if already reach 100%
+                    // To show the progress bars
+                    if(!this.isShowProgress) this.isShowProgress = true
+
+                    // If already reach 100%
                     if(eventData.done >= eventData.total){
+                        // Add data to recentlyUploaded, to show in history
+                        this.recentlyUploaded.push(this.progressBars[eventData.action_type][eventData.action_id])
+                        
+                        // Delete data in 4 seconds after finish
                         setTimeout(() => {
                             delete this.progressBars[eventData.action_type][eventData.action_id]
 
@@ -65,7 +73,6 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
                             if(!uploadCount.length) this.isShowProgress = false 
                         }, 4000)
                     }
-
                 }
             );
         },
