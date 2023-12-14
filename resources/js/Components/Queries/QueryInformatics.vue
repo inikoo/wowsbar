@@ -53,7 +53,7 @@ const findIcon = (data) => {
     if (data == 'address') return 'fal fa-house'
 }
 
-
+/* 
 const onChangeLastContact = async (closed) => {
     if (value.value.quantity && value.value.quantity > 0) {
         loading.value = true
@@ -83,7 +83,17 @@ const onSuccessful = (response, closed) => {
     props.option.number_items = response.count
     emits("update:option", newData);
     if (closed) closed()
+} */
+
+const onChangeLastContact = async (closed) => {
+    const newData = { ...props.option }
+    newData.constrains.prospect_last_contacted.argument.quantity = value.value.quantity
+    newData.constrains.prospect_last_contacted.argument.unit = value.value.unit
+   /*  props.option.number_items = response.count */
+    emits("update:option", newData);
+    if (closed) closed()
 }
+
 
 
 const changeQuantity = (value) => {
