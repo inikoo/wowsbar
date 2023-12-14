@@ -7,9 +7,11 @@
 
 namespace App\Models\Helpers;
 
+use App\Models\Traits\HasHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * App\Models\ExcelUpload
@@ -45,11 +47,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Upload whereUploadedAt($value)
  * @mixin \Eloquent
  */
-class Upload extends Model
+class Upload extends Model implements Auditable
 {
     use HasFactory;
+    use HasHistory;
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'imports'
+        ];
+    }
+
+    protected array $auditInclude = [
+        'original_filename',
+    ];
 
     public function getFullPath(): string
     {
