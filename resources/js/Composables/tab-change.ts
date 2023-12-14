@@ -9,10 +9,11 @@ import { Ref } from 'vue'
 
 export function useTabChange(tabSlug: string, currentTab: Ref<string>) {
 
-    console.log(tabSlug, currentTab.value)
+    // console.log(tabSlug, currentTab.value)
     if (tabSlug === currentTab.value) {
-        return;
+        return
     }
+
     router.reload(
         {
             data: { tab: tabSlug },

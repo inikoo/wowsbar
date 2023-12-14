@@ -8,14 +8,10 @@ const props = defineProps<{
     idMailshot: number
 }>()
 
-// window.Echo.private('org.general')
-// .listen(`.mailshot.${props.idMailshot}`, (e) => {
-//     console.log('qqqqqqq', e)
-// })
-
 onMounted(() => {
     window.Echo.private('org.general')
-    .listen(`.mailshot.${props.idMailshot}`, (e) => {
+    .listen(`.mailshot.${props.idMailshot}`, (e: any) => {
+        console.log('wwwwwwwwwww')
         // if (e.data.counts.prospects !==  undefined) {
         //     props.stats.prospects.stat = e.data.counts.prospects
         // }
