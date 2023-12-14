@@ -14,18 +14,15 @@ use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\CRM\Customer;
-use App\Models\Helpers\Query;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Illuminate\Database\Query\Builder;
 
 class StoreMailshot
 {
@@ -45,12 +42,7 @@ class StoreMailshot
         $this->parent = $parent;
 
         data_set($modelData, 'date', now());
-        //        data_set(
-        //            $modelData,
-        //            'layout',
-        //[]
-        ////            json_decode(file_get_contents(resource_path('views/mailshots/layouts/default.json')), true)
-        //        );
+
 
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);
@@ -62,8 +54,7 @@ class StoreMailshot
             ShopHydrateMailshots::dispatch($mailshot->parent);
         }
 
-
-        MailshotHydrateEstimatedEmails::dispatch($mailshot);
+        MailshotHydrateEstimatedEmails::run($mailshot);
         OutboxHydrateMailshots::dispatch($mailshot->outbox);
 
         return $mailshot;
@@ -94,17 +85,7 @@ class StoreMailshot
             'subject'           => ['required', 'string', 'max:255'],
             'type'              => ['required', new Enum(MailshotTypeEnum::class)],
             'recipients_recipe' => ['required', 'array']
-            /*
-            'query_arguments' => ['sometimes', 'array'],
-            'query_id'        => [
-                'required',
-                Rule::exists('queries', 'id')->where(function (Builder $query) {
-                    return $query->where('model_type', $this->queryRules['model_type'])
-                        ->where('parent_type', $this->queryRules['parent_type'])
-                        ->where('parent_id', $this->queryRules['parent_id']);
-                }),
-            ]
-            */
+
         ];
     }
 
@@ -113,6 +94,7 @@ class StoreMailshot
      */
     public function shopProspects(Shop $shop, ActionRequest $request): Mailshot
     {
+
         $this->queryRules = [
             'model_type'  => 'Prospect',
             'parent_type' => 'Shop',

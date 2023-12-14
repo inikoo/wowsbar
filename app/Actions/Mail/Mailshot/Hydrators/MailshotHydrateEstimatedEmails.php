@@ -32,11 +32,11 @@ class MailshotHydrateEstimatedEmails
 
     public function handle(Mailshot $mailshot): void
     {
+
         $estimatedNumberRecipients = GetEstimatedNumberRecipients::run(
             $mailshot->parent,
             $mailshot->recipients_recipe
         );
-
 
         $mailshot->mailshotStats()->update(
             [
@@ -44,6 +44,7 @@ class MailshotHydrateEstimatedEmails
                 'estimated_dispatched_emails_calculated_at' => now()
             ]
         );
+
 
         if (config('mail.broadcast_dispatch_emails_stats')) {
             MailshotPusherEvent::dispatch($mailshot);
