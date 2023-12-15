@@ -21,7 +21,7 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowProspectMailshotWorkshop extends InertiaAction
 {
     use WithActionButtons;
-
+    public $shop;
 
     public function handle(Mailshot $mailshot): Mailshot
     {
@@ -42,7 +42,7 @@ class ShowProspectMailshotWorkshop extends InertiaAction
     public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
         $this->initialisation($request);
-
+        $this->shop = $shop;
         return $this->handle($mailshot);
     }
 
@@ -113,6 +113,13 @@ class ShowProspectMailshotWorkshop extends InertiaAction
                 'loadRoute'           => [
                     'name'       => 'org.models.mailshot.content.show',
                     'parameters' => $mailshot->id
+                ],
+                'updateDetailRoute'   => [
+                    'name'       => 'org.models.shop.prospect-mailshot.update',
+                    'parameters' => [
+                        'shop'     => $this->shop->id,
+                        'mailshot' => $mailshot->id
+                    ],
                 ],
 
             ]
