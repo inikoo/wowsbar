@@ -8,8 +8,10 @@
 namespace App\Models\Helpers;
 
 use App\Models\Traits\HasHistory;
+use App\Models\Auth\OrganisationUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -29,6 +31,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\UploadRecord> $records
+ * @property-read OrganisationUser $user
  * @property-read int|null $records_count
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newQuery()
@@ -73,5 +76,10 @@ class Upload extends Model implements Auditable
     public function records(): HasMany
     {
         return $this->hasMany(UploadRecord::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(OrganisationUser::class);
     }
 }
