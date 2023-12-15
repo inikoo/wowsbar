@@ -11,7 +11,6 @@ use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 

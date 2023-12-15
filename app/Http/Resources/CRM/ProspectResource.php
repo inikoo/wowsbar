@@ -26,19 +26,19 @@ class ProspectResource extends JsonResource
         $prospect = $this;
 
         return [
-            'slug'             => $prospect->slug,
-            'shop'             => new ShopResource($prospect->shop),
-            'name'             => $prospect->name,
-            'email'            => $prospect->email,
-            'phone'            => $prospect->phone,
-            'website'          => $prospect->contact_website,
-            'tags'             => $prospect->tags()->pluck('name'),
-            'created_at'       => $prospect->created_at,
-            'updated_at'       => $prospect->updated_at,
-            'state'            => $prospect->state,
-            'state_icon'       => $prospect->state->stateIcon()[$prospect->state->value],
-            'fail_status'      => $prospect->fail_status,
-            'fail_status_icon' => $prospect->fail_status->statusIcon()[$prospect->fail_status->value],
+            'slug'               => $prospect->slug,
+            'shop'               => new ShopResource($prospect->shop),
+            'name'               => $prospect->name,
+            'email'              => $prospect->email,
+            'phone'              => $prospect->phone,
+            'website'            => $prospect->contact_website,
+            'tags'               => $prospect->tags()->pluck('name'),
+            'created_at'         => $prospect->created_at,
+            'updated_at'         => $prospect->updated_at,
+            'state'              => $prospect->state,
+            'state_icon'         => $prospect->state->stateIcon()[$prospect->state->value],
+            'fail_status'        => $prospect->fail_status,
+            'fail_status_icon'   => $prospect->fail_status->statusIcon()[$prospect->fail_status->value],
             'dont_contact_me_at' => $prospect->dont_contact_me_at,
         ];
     }

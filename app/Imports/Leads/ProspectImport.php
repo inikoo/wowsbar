@@ -56,6 +56,7 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 'type' => 'Upload',
             ]);
 
+
             StoreProspect::make()->action(
                 $this->scope,
                 $modelData
@@ -72,12 +73,12 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function prepareForValidation($data)
     {
 
-
-
         $tags = explode(',', Arr::get($data, 'tags'));
 
         if($tags[0] != '') {
             $data['tags'] = $tags;
+        } else {
+            $data['tags'] = null;
         }
 
         return $data;
