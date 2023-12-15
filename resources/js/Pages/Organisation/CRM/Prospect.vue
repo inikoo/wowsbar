@@ -58,7 +58,7 @@ const props = defineProps<{
 }>()
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
-
+const loading = ref(false)
 const component = computed(() => {
 
     const components = {
@@ -71,13 +71,14 @@ const component = computed(() => {
 
 
 const setUnsubscribe = async (close) => {
+    loading.value = true
     try {
         const response = await axios.patch(
             route(
                 props.unsubscribe.route.name,
                 props.unsubscribe.route.parameters
             ),
-            {data:{}}
+            { data: {} }
         )
 
         notify({
@@ -86,15 +87,17 @@ const setUnsubscribe = async (close) => {
             type: "success"
         })
         close()
+        loading.value = false
         props.showcase.info.dont_contact_me_at = 'unsubscribe'
-       
+
     } catch (error) {
         console.log(error)
+        loading.value = false
         notify({
-        title: "Failed",
-        text: 'failed to set unsubscribe',
-        type: "error"
-    });
+            title: "Failed",
+            text: 'failed to set unsubscribe',
+            type: "error"
+        });
     }
 }
 
@@ -115,8 +118,8 @@ const setUnsubscribe = async (close) => {
                         <div class="p-2 w-64">
                             <p class="mb-2 text-gray-500 text-xs">{{trans('Are you sure you want to unsubscribe this prospect?')}}</p>
                             <div class="flex justify-end gap-2">
-                                <Button :style="'tertiary'" size="xs" @click="closed()">Cancel</Button>
-                                <Button size="xs" @click="setUnsubscribe(closed)">Ok</Button>
+                                <Button :style="'tertiary'" size="xs" @click="closed()" label="Cancel"></Button>
+                                <Button size="xs" @click="setUnsubscribe(closed)" :loading="loading" label="Ok"/>
                             </div>
                         </div>
                     </template>
