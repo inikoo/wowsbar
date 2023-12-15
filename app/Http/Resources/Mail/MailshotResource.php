@@ -33,7 +33,7 @@ class MailshotResource extends JsonResource
             $timelines[] = [
                 'label' => 'Mailshot ' . $timelineKey,
                 'icon' => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
-                'timestamp'  => $mailshot->{$timeline}?->toISOString()
+                'timestamp'  => $mailshot->{$timeline} ? $mailshot->{$timeline}->toISOString() : null
             ];
         }
 
