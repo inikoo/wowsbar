@@ -105,8 +105,7 @@ console.log(props)
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #other>
-            <!--  <Button :style="'delete'">Schedule</Button> -->
+        <!-- <template #other>
             <div>
                 <Popover :width="'w-full'" position="right-[20px]" ref="_popover">
                     <template #button>
@@ -125,9 +124,7 @@ console.log(props)
                     </template>
                 </Popover>
             </div>
-
-
-        </template>
+        </template> -->
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" />
     <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
