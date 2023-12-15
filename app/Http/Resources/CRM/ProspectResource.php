@@ -39,6 +39,7 @@ class ProspectResource extends JsonResource
             'state_icon'       => $prospect->state->stateIcon()[$prospect->state->value],
             'fail_status'      => $prospect->fail_status,
             'fail_status_icon' => $prospect->fail_status->statusIcon()[$prospect->fail_status->value],
+            'dont_contact_me_at' => $prospect->dont_contact_me_at,
         ];
     }
 }

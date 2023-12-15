@@ -1,14 +1,14 @@
 <template>
-    <nav
+    <nav v-if="!hasData || pagination.total < 1"
         class="bg-white px-4 py-3 flex items-center space-x-2 justify-between border-t border-gray-200 sm:px-4">
         <p v-if="!hasData || pagination.total < 1">
             {{ translations.no_results_found }}
         </p>
 
         <!-- Button: Download Table -->
-        <slot name="tableDownload" class="">
+        <!-- <slot name="tableDownload" class="">
             <TableDownload v-if="exportLinks" :exportLinks="exportLinks" />
-        </slot>
+        </slot> -->
 
         <template v-if="hasPagination && meta?.total > 15">
             <!-- simple and mobile -->

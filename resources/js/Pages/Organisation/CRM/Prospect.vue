@@ -26,7 +26,6 @@ import TableHistories from "@/Components/Tables/TableHistories.vue";
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import Popover from '@/Components/Utils/Popover.vue';
 import { trans } from 'laravel-vue-i18n'
-import { Link } from "@inertiajs/vue3"
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 
@@ -59,7 +58,7 @@ const props = defineProps<{
 }>()
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
-
+const loading = ref(false)
 const component = computed(() => {
 
     const components = {
@@ -72,14 +71,14 @@ const component = computed(() => {
 
 
 const setUnsubscribe = async (close) => {
-    console.log('masukk')
+    loading.value = true
     try {
         const response = await axios.patch(
             route(
                 props.unsubscribe.route.name,
                 props.unsubscribe.route.parameters
             ),
-            {data:{}}
+            { data: {} }
         )
 
         notify({
@@ -88,24 +87,26 @@ const setUnsubscribe = async (close) => {
             type: "success"
         })
         close()
-       
+        loading.value = false
+        props.showcase.info.dont_contact_me_at = 'unsubscribe'
+
     } catch (error) {
         console.log(error)
+        loading.value = false
         notify({
-        title: "Failed",
-        text: 'failed to set unsubscribe',
-        type: "error"
-    });
+            title: "Failed",
+            text: 'failed to set unsubscribe',
+            type: "error"
+        });
     }
 }
 
-console.log(props)
 </script>
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <!-- <template #other>
+        <template v-if="!showcase.info.dont_contact_me_at" #other>
             <div>
                 <Popover :width="'w-full'" position="right-[20px]" ref="_popover">
                     <template #button>
@@ -117,14 +118,14 @@ console.log(props)
                         <div class="p-2 w-64">
                             <p class="mb-2 text-gray-500 text-xs">{{trans('Are you sure you want to unsubscribe this prospect?')}}</p>
                             <div class="flex justify-end gap-2">
-                                <Button :style="'tertiary'" size="xs" @click="closed()">Cancel</Button>
-                                <Button size="xs" @click="setUnsubscribe(closed)">Ok</Button>
+                                <Button :style="'tertiary'" size="xs" @click="closed()" label="Cancel"></Button>
+                                <Button size="xs" @click="setUnsubscribe(closed)" :loading="loading" label="Ok"/>
                             </div>
                         </div>
                     </template>
                 </Popover>
             </div>
-        </template> -->
+        </template>
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" />
     <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
