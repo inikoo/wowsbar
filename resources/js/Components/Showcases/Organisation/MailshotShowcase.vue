@@ -194,7 +194,7 @@ onMounted(() => {
 
 <template>
     <div class="relative">
-        <LabelEstimated :emailsEstimated="3" :idMailshot="data.id" />
+        <LabelEstimated :emailsEstimated="data.stats.number_estimated_dispatched_emails" :idMailshot="data.id" />
 
         <div class="py-3 mx-auto px-5 w-full">
             <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" />

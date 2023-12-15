@@ -10,8 +10,8 @@ export default {
         { label:  trans("Any"), value: "any" },
     ],
     contact: [
-        { label: trans("Last Contact"), value: true },
         { label: trans("Never"), value: false },
+        { label: trans("Last Contact"), value: true },
     ],
 
 

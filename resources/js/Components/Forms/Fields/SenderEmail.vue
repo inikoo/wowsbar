@@ -104,13 +104,13 @@ const resendEmail = async (email: string) => {
                 :type="fieldData?.type ?? 'text'" :placeholder="fieldData?.placeholder" :maxlength="fieldData?.maxLength"
                 :copyButton="fieldData?.copyButton">
                 <!-- Icon: Error, Success, Loading -->
-                <template #stateIcon>
-                    <div class="mr-2 h-full flex items-center pointer-events-none">
+                <template #stateIcon v-if="get(form, ['errors', `${fieldName}`]) || form.recentlySuccessful || form.processing">
+                    <div class="h-full flex items-center pointer-events-none">
                         <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}`])" icon="fas fa-exclamation-circle"
-                            class="h-5 w-5 text-red-500" aria-hidden="true" />
+                            class="pr-2 h-5 w-5 text-red-500" aria-hidden="true" />
                         <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
-                            class="h-5 w-5 text-green-500" aria-hidden="true" />
-                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin" />
+                            class="pr-2 h-5 w-5 text-green-500" aria-hidden="true" />
+                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="pr-2 h-5 w-5 animate-spin" />
                     </div>
                 </template>
             </PureInput>
@@ -129,15 +129,13 @@ const resendEmail = async (email: string) => {
         <div v-if="fieldData.options.senderEmail?.email_address == value && fieldData.options.senderEmail" class="mt-2 text-xs flex gap-x-1 items-start"
             :class="fieldData.options.senderEmail?.state == 'verified '"
         >
-            <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'verified'" icon="fal fa-check-circle" fixed-width class='h-4 opacity-70 text-lime-600' aria-hidden='true' />
+            <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'verified'" icon="fal fa-check-circle" fixed-width class='h-4 opacity-70 text-gray-600' aria-hidden='true' />
             <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'fail' || fieldData.options.senderEmail.state == 'error' || fieldData.options.senderEmail.state == 'verification-submission-error'" icon="fal fa-times-circle" fixed-width class='h-4 text-red-500' aria-hidden='true' />
             <FontAwesomeIcon v-if="fieldData.options.senderEmail.state == 'pending' || fieldData.options.senderEmail.state == 'verification-not-submitted'" icon="fal fa-exclamation-circle" fixed-width class='h-4 text-gray-500' aria-hidden='true' />
             <div class="text-gray-500">
                 <span
                     :class="[
-                        {'text-red-500': fieldData.options.senderEmail.state == 'fail' || fieldData.options.senderEmail.state == 'error' || fieldData.options.senderEmail.state == 'verification-submission-error'},
-                        {'text-lime-500': fieldData.options.senderEmail.state == 'verified' },
-                        
+                        {'text-red-500': fieldData.options.senderEmail.state == 'fail' || fieldData.options.senderEmail.state == 'error' || fieldData.options.senderEmail.state == 'verification-submission-error'},                        
                     ]"
                 >{{ fieldData.options.senderEmail?.message }}</span>
                 <!-- <div v-if="fieldData.options.senderEmail?.state != 'verified'"> -->

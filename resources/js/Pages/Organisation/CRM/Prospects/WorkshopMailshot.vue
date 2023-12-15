@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 /* import LabelEstimated from '@/Components/Mailshots/LabelEstimated.vue' */
-import { ref } from "vue"
+import { ref, watch} from "vue"
 import { faSign, faGlobe, faPencil, faSeedling, faPaste, faLayerGroup, faSpellCheck } from '@fal'
 import { faFlask } from '@fad'
 import { faCaretDown, faPaperPlane, faCheckCircle, faStopwatch, faAsterisk } from '@fas'
@@ -42,6 +42,7 @@ const props = defineProps<{
     setAsScheduledRoute: routeType
     sendRoute: routeType
     sendTestRoute: routeType
+    updateDetailRoute : routeType
 }>()
 
 const OpenModal = ref(false)
@@ -151,7 +152,7 @@ const onSuccess = (response,closedPopover) => {
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #other="{ dataPageHead: head }">
+        <template  v-if="!mailshot.is_layout_blank" #other="{ dataPageHead: head }">
             <div class="relative">
                 <Popover :width="'w-full'" position="right-[-170px]" ref="_popover">
                     <template #button>
@@ -231,7 +232,7 @@ const onSuccess = (response,closedPopover) => {
     <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
     <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
-        :loadRoute="loadRoute" :mailshot="mailshot"/>
+        :loadRoute="loadRoute" :mailshot="mailshot" :updateDetailRoute='updateDetailRoute' :title="title"/>
 </template>
 
 <style lang="scss">
