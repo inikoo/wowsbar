@@ -10,6 +10,8 @@ namespace App\Actions\Leads\Prospect;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
+use App\Models\Market\Shop;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -39,5 +41,10 @@ class UpdateProspectEmailUnsubscribed
             $prospect,
             $dataToUpdate
         );
+    }
+
+    public function inShop(Shop $shop, Prospect $prospect): void
+    {
+        $this->handle($prospect, now());
     }
 }

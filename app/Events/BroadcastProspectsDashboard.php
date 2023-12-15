@@ -32,16 +32,19 @@ class BroadcastProspectsDashboard implements ShouldBroadcast
 
         if (Arr::has($changes, 'number_prospects')) {
             data_set($stats, 'counts.prospects', $changes['number_prospects']);
-        };
+        }
+        if (Arr::has($changes, 'number_prospects_state_no_contacted')) {
+            data_set($stats, 'counts.no-contacted', $changes['number_prospects_state_no_contacted']);
+        }
         if (Arr::has($changes, 'number_prospects_state_contacted')) {
             data_set($stats, 'counts.contacted', $changes['number_prospects_state_contacted']);
-        };
+        }
         if (Arr::has($changes, 'number_prospects_state_fail')) {
             data_set($stats, 'counts.fail', $changes['number_prospects_state_fail']);
-        };
+        }
         if (Arr::has($changes, 'number_prospects_state_success')) {
             data_set($stats, 'counts.success', $changes['number_prospects_state_success']);
-        };
+        }
 
 
         foreach (ProspectContactedStateEnum::cases() as $case) {
