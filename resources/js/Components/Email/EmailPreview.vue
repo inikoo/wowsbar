@@ -20,7 +20,7 @@ const props = defineProps<{
 <template>
     <div class="m-2 text-gray-600">
         <div class="bg-white border-1 rounded p-2 mb-1">{{ trans('From') }}: <span class="font-bold">{{ data.sender }}</span></div>
-        <div class="bg-white border-1 rounded p-2 mb-1">{{ data.subject }}</div>
+        <div class="bg-white border-1 rounded p-2 mb-1">{{ trans('Subject') }}: <span class="font-bold">{{ data.subject }}</span></div>
         <div class="bg-white border-1 rounded p-2" v-html="data.emailBody"></div>
     </div>
 </template>
