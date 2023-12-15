@@ -105,12 +105,12 @@ const resendEmail = async (email: string) => {
                 :copyButton="fieldData?.copyButton">
                 <!-- Icon: Error, Success, Loading -->
                 <template #stateIcon v-if="get(form, ['errors', `${fieldName}`]) || form.recentlySuccessful || form.processing">
-                    <div class="h-full flex items-center pointer-events-none">
+                    <div class="mr-2 h-full flex items-center pointer-events-none">
                         <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}`])" icon="fas fa-exclamation-circle"
-                            class="pr-2 h-5 w-5 text-red-500" aria-hidden="true" />
+                            class="h-5 w-5 text-red-500" aria-hidden="true" />
                         <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
-                            class="pr-2 h-5 w-5 text-green-500" aria-hidden="true" />
-                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="pr-2 h-5 w-5 animate-spin" />
+                            class="h-5 w-5 text-green-500" aria-hidden="true" />
+                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin" />
                     </div>
                 </template>
             </PureInput>

@@ -6,6 +6,7 @@ import { useLocaleStore } from '@/Stores/locale'
 const props = defineProps<{
     emailsEstimated: number
     idMailshot: number
+    state?: {}
 }>()
 
 onMounted(() => {
@@ -32,6 +33,8 @@ onUnmounted(() => {
                 {{ trans('Estimated recipients') }}:
                 <span class="font-semibold text-gray-700">{{ useLocaleStore().number(emailsEstimated) }}</span>
             </div>
+
+            <!-- Create progress bar here (if state === 'sending') -->
         </slot>
     </div>
 </template>

@@ -50,13 +50,13 @@ const emits = defineEmits<{
                         <div v-if="upload.done >= upload.total">
                             <!-- Label: All failed -->
                             <span v-if="upload.done == upload.data.number_fails" class="text-red-600">
-                                Oops Award: All Fails, No Bravos
+                                Oops Award: No Bravos
                                 <FontAwesomeIcon icon='fal fa-frown' class='' aria-hidden='true' />
                             </span>
 
                             <!-- Label: All success -->
-                            <span v-else-if="upload.done == upload.data.number_success" class="text-red-600">
-                                Success Streak: Nailed it, brushed off oopsies🥳
+                            <span v-else-if="upload.done == upload.data.number_success" class="text-gray-500">
+                                Success Streak: Nailed it🥳
                             </span>
 
                             <!-- Label: Fails is bigger -->

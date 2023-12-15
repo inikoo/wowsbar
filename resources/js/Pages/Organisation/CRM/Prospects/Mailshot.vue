@@ -20,6 +20,7 @@ import {faStop, faPlay, faPaperPlane as fasPaperPlane} from '@fas'
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
+import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faSpellCheck)
 
@@ -31,15 +32,19 @@ const props = defineProps<{
         navigation: object;
     }
     changelog?: object,
-    showcase?: {
-        state: string
+    showcase: {
+        stats: {
+            id: number
+            number_estimated_dispatched_emails: number
+        }
     },
     email?: object
     recipients?: object
+    [key: string]: any
 }>()
 
 let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
 
@@ -62,6 +67,8 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <LabelEstimated :emailsEstimated="showcase.stats.number_estimated_dispatched_emails" :idMailshot="showcase.stats.id" :state="showcase.state"/>
+
     <KeepAlive>
         <Transition name="slide-to-right" mode="out-in">
             <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
