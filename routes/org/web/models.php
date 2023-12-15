@@ -45,6 +45,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\Tags\DeleteTagsProspect;
 use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Leads\Prospect\UpdateProspectEmailUnsubscribed;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\DeleteMailshot;
@@ -141,6 +142,9 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect/upload', [ImportShopProspects::class, 'inShop'])->name('prospects.upload');
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
+
+        Route::patch('prospect/{prospect:id}', [UpdateProspectEmailUnsubscribed::class, 'inShop'])->name('prospect.unsubscribe.update');
+
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
         Route::post('prospect-mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');
 

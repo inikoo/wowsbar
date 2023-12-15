@@ -93,6 +93,16 @@ class ShowProspect extends InertiaAction
                     'navigation' => ProspectTabsEnum::navigation()
                 ],
 
+                'unsubscribe' => [
+                    'route' => [
+                        'name'       => 'org.models.shop.prospect.unsubscribe.update',
+                        'parameters' => [
+                            'shop'     => $prospect->shop->id,
+                            'prospect' => $prospect->id
+                        ]
+                    ]
+                ],
+
                 ProspectTabsEnum::SHOWCASE->value => $this->tab == ProspectTabsEnum::SHOWCASE->value ?
                     fn () => GetProspectShowcase::run($prospect)
                     : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
