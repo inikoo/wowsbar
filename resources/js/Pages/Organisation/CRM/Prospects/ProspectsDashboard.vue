@@ -58,16 +58,21 @@ const options = {
 onMounted(() => {
     window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
         console.log('On mounted', e)
-        // console.log(e)
+
+
+
         if (e.data.counts !== undefined) {
             Object.keys(e.data.counts).forEach(key => {
-                props.data.prospectStats[key].count = e.data.counts[key]
+                if (key !== 'no-contacted') {
+                    props.data.prospectStats[key].count = e.data.counts[key]
+                }
+
                 if (key !== 'prospects') {
                     props.data.prospectStats['prospects'].cases[key].count = e.data.counts[key]
                 }
             });
         }
-    
+
         if (e.data.contacted !== undefined) {
             Object.keys(e.data.contacted).forEach(key => {
                 props.data.prospectStats.contacted.cases[key].count = e.data.contacted[key]
@@ -83,9 +88,9 @@ onMounted(() => {
                 props.data.prospectStats.success.cases[key].count = e.data.success[key]
             });
         }
-    
-        // props.data.prospectStats['contacted'].count=33333
-    
+
+
+
     })
 })
 
@@ -94,6 +99,7 @@ onUnmounted(() => {
     .stopListening('.prospects.dashboard')
 })
 
+console.log(props.data.prospectStats)
 
 </script>
 
@@ -119,7 +125,6 @@ onUnmounted(() => {
                                 <FontAwesomeIcon :icon='dCase.icon.icon' :class='dCase.icon.class' fixed-width :title="dCase.icon.tooltip" aria-hidden='true'/>
                                 <span class="font-semibold">
                                     {{ locale.number(dCase.count) }}
-
                                 </span>
                             </div>
                         </div>
