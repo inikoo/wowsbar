@@ -57,8 +57,6 @@ const options = {
 
 onMounted(() => {
     window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
-        console.log('On mounted', e)
-
 
 
         if (e.data.counts !== undefined) {
@@ -99,7 +97,7 @@ onUnmounted(() => {
     .stopListening('.prospects.dashboard')
 })
 
-console.log(props.data.prospectStats)
+
 
 </script>
 

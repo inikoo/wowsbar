@@ -53,7 +53,7 @@ class ProcessSendMailshot
                     $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
 
                     if (!$recipientExists) {
-                        if (!app()->environment('production') and env('REWRITE_MAILSHOT_RECIPIENTS_EMAIL', true)) {
+                        if (!app()->environment('production') and config('mail.devel.mailshot_recipients_email', true)) {
                             $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 20];
                             $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
                             $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";

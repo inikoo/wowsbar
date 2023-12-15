@@ -22,16 +22,20 @@ class MailshotResource extends JsonResource
         $mailshot = $this;
 
         $timelines    = [];
-        $timelineData = ['scheduled_at', 'ready_at', 'sent_at', 'cancelled_at', 'stopped_at', 'created_at'];
+        $timelineData = ['created_at', 'scheduled_at', 'ready_at', 'start_sending_at', 'sent_at', 'cancelled_at', 'stopped_at'];
 
         foreach ($timelineData as $timeline) {
-            $timelineKey = Str::replace('_at', '', $timeline);
-            if (!blank($mailshot->{$timeline})) {
-                $timelines[$mailshot->{$timeline}->toISOString()] = [
-                    'label' => 'Mailshot ' . $timelineKey,
-                    'icon'  => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
-                ];
-            }
+            $timelineKey = match ($timeline) {
+                'start_sending_at' => Str::replace('_at', '', 'sending_at'),
+                default            => Str::replace('_at', '', $timeline),
+            };
+
+            $timelines[] = [
+                'label'      => 'Mailshot ' . $timelineKey,
+                'icon'       => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
+//                'timestamp'  => $mailshot->{$timeline} ? $mailshot->{$timeline}->toISOString() : null
+            'timestamp'  => null
+            ];
         }
 
         $sortedTimeline = collect($timelines)->sortBy(function ($value, $key) {

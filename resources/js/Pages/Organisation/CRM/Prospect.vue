@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {Head} from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -15,14 +15,20 @@ import {
     faGraduationCap,
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
-    faTags,faCube,faCodeBranch,faThumbsDown, faLaugh, faChair
+    faTags, faCube, faCodeBranch, faThumbsDown, faLaugh, faChair
 } from '@fal';
 
-import {useTabChange} from "@/Composables/tab-change";
-import {computed, defineAsyncComponent, ref} from "vue";
+import { useTabChange } from "@/Composables/tab-change";
+import { computed, defineAsyncComponent, ref } from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import ProspectShowcase from "@/Pages/Organisation/Prospects/ProspectShowcase.vue"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
+import Button from '@/Components/Elements/Buttons/Button.vue';
+import Popover from '@/Components/Utils/Popover.vue';
+import { trans } from 'laravel-vue-i18n'
+import { Link } from "@inertiajs/vue3"
+import axios from 'axios'
+import { notify } from "@kyvg/vue3-notification"
 
 library.add(
     faStickyNote,
@@ -47,8 +53,9 @@ const props = defineProps<{
         current: string;
         navigation: object;
     }
-    showcase?:object
+    showcase?: object
     history?: object
+    unsubscribe : object
 }>()
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
@@ -62,11 +69,63 @@ const component = computed(() => {
     return components[currentTab.value];
 
 });
+
+
+const setUnsubscribe = async (close) => {
+    console.log('masukk')
+    try {
+        const response = await axios.patch(
+            route(
+                props.unsubscribe.route.name,
+                props.unsubscribe.route.parameters
+            ),
+            {data:{}}
+        )
+
+        notify({
+            title: "Success!",
+            text: 'Successfuly to set unsubscribe.',
+            type: "success"
+        })
+        close()
+       
+    } catch (error) {
+        console.log(error)
+        notify({
+        title: "Failed",
+        text: 'failed to set unsubscribe',
+        type: "error"
+    });
+    }
+}
+
+console.log(props)
 </script>
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <PageHeading :data="pageHead">
+        <!-- <template #other>
+            <div>
+                <Popover :width="'w-full'" position="right-[20px]" ref="_popover">
+                    <template #button>
+                        <div class="relative">
+                            <Button :style="'tertiary'">Unsubscribe</Button>
+                        </div>
+                    </template>
+                    <template #content="{ close: closed }">
+                        <div class="p-2 w-64">
+                            <p class="mb-2 text-gray-500 text-xs">{{trans('Are you sure you want to unsubscribe this prospect?')}}</p>
+                            <div class="flex justify-end gap-2">
+                                <Button :style="'tertiary'" size="xs" @click="closed()">Cancel</Button>
+                                <Button size="xs" @click="setUnsubscribe(closed)">Ok</Button>
+                            </div>
+                        </div>
+                    </template>
+                </Popover>
+            </div>
+        </template> -->
+    </PageHeading>
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" />
     <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
