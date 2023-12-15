@@ -47,6 +47,7 @@ const props = defineProps<{
 
 const OpenModal = ref(false)
 const date = ref(new Date())
+const isSendTestLoading = ref(false)
 
 
 const getLocalStorage = () => {
@@ -79,6 +80,7 @@ const onCancel = () => {
 }
 
 const sendEmailtest = async (closedPopover) => {
+    isSendTestLoading.value = true
     try {
         const response = await axios.post(
             route(
@@ -92,6 +94,7 @@ const sendEmailtest = async (closedPopover) => {
     } catch (error) {
         onError(error)
     }
+    isSendTestLoading.value = false
 }
 
 const onError = (error) => {
@@ -157,8 +160,8 @@ const onSuccess = (response,closedPopover) => {
                 <Popover :width="'w-full'" position="right-[-170px]" ref="_popover">
                     <template #button>
                         <div class="relative" title="testing email">
-                            <Button class="rounded" :style="`secondary`">
-                                Send Test <font-awesome-icon :icon="['fad', 'flask']" aria-hidden='true' />
+                            <Button class="rounded" :style="`secondary`" label="Send Test" :iconRight="['fad', 'flask']">
+                                <!-- Send Test <font-awesome-icon :icon="" aria-hidden='true' /> -->
                             </Button>
                         </div>
                     </template>
@@ -168,8 +171,14 @@ const onSuccess = (response,closedPopover) => {
                                 <PureInput v-model="testEmail.emails" placeholder="Email" type="email" :clear="true"
                                     class="rounded-r-none ring-1 ring-transparent focus-within:ring-2 focus-within:ring-transparent" />
                                 <!-- Assuming sendEmailtest() is a method to send an email -->
-                                <Button @click="sendEmailtest(closed)" icon="fas fa-paper-plane" size="xl" class="py-3.5 border-0 border-l rounded-l-none "
-                                    :style="testEmail.emails.length ? 'primary' : 'disabled'" :key="testEmail.emails" />
+                                <Button @click="sendEmailtest(closed)" :loading="isSendTestLoading" :icon="isSendTestLoading ? '' : 'fas fa-paper-plane'" size="xl" class="py-3.5 border-0 border-l rounded-l-none "
+                                    :style="
+                                        testEmail.emails.length
+                                        ? isSendTestLoading
+                                            ? 'disabled'
+                                            : 'primary'
+                                        : 'disabled'"
+                                    :key="testEmail.emails + isSendTestLoading.toString()" />
                             </div>
                             <p v-if="testEmail.status == 'error'" class="text-xs italic text-red-500 mt-2">{{
                                 testEmail.errorMessage }}</p>
@@ -231,7 +240,7 @@ const onSuccess = (response,closedPopover) => {
 
     <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
-    <MailshotWorkshopComponent :useBasic="false" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
+    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
         :loadRoute="loadRoute" :mailshot="mailshot" :updateDetailRoute='updateDetailRoute' :title="title"/>
 </template>
 
