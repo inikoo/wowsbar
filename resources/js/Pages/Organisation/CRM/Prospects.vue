@@ -88,7 +88,7 @@ const component = computed(() => {
 
     <Tabs :current="currentTab" :navigation="tabs.navigation" @update:tab="handleTabUpdate"/>
     <KeepAlive>
-        <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="tags.data"></component>
+        <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="tags.data" class="isolate"></component>
     </KeepAlive>
 
     <!-- Modal: after click 'upload' button -->
