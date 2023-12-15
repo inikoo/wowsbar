@@ -82,8 +82,8 @@ class MailshotHydrateCumulativeDispatchedEmailsState
             ]
         );
 
-        if (config('mail.broadcast_dispatch_emails_stats')) {
-            MailshotPusherEvent::dispatch($mailshot);
-        }
+
+        MailshotPusherEvent::dispatch($mailshot);
+
     }
 }
