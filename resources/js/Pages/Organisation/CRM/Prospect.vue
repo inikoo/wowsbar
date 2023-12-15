@@ -26,7 +26,6 @@ import TableHistories from "@/Components/Tables/TableHistories.vue";
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import Popover from '@/Components/Utils/Popover.vue';
 import { trans } from 'laravel-vue-i18n'
-import { Link } from "@inertiajs/vue3"
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 
@@ -72,7 +71,6 @@ const component = computed(() => {
 
 
 const setUnsubscribe = async (close) => {
-    console.log('masukk')
     try {
         const response = await axios.patch(
             route(
@@ -88,6 +86,7 @@ const setUnsubscribe = async (close) => {
             type: "success"
         })
         close()
+        props.showcase.info.dont_contact_me_at = 'unsubscribe'
        
     } catch (error) {
         console.log(error)
@@ -99,13 +98,12 @@ const setUnsubscribe = async (close) => {
     }
 }
 
-console.log(props)
 </script>
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <!-- <template #other>
+        <template v-if="!showcase.info.dont_contact_me_at" #other>
             <div>
                 <Popover :width="'w-full'" position="right-[20px]" ref="_popover">
                     <template #button>
@@ -124,7 +122,7 @@ console.log(props)
                     </template>
                 </Popover>
             </div>
-        </template> -->
+        </template>
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" />
     <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
