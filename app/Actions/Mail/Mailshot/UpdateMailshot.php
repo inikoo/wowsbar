@@ -9,6 +9,8 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Mail\Mailshot;
+use App\Models\Market\Shop;
+use Lorisleiva\Actions\ActionRequest;
 
 class UpdateMailshot
 {
@@ -16,13 +18,25 @@ class UpdateMailshot
 
     public function handle(Mailshot $mailshot, array $modelData): Mailshot
     {
-
-
-        $mailshot = $this->update($mailshot, $modelData, ['data']);
-
-
-        return $mailshot;
+        return $this->update($mailshot, $modelData, ['data']);
     }
 
 
+    public function rules(): array
+    {
+        return [
+            'subject' => ['sometimes', 'string', 'max:255'],
+        ];
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function shopProspects(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
+    {
+        $this->fillFromRequest($request);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($mailshot, $validatedData);
+    }
 }

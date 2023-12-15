@@ -22,7 +22,7 @@ class GetQueryEloquentQueryBuilder
     /**
      * @throws \Exception
      */
-    public function handle(Query $query): QueryBuilder
+    public function handle(Query $query, ?array $customArguments = null): QueryBuilder
     {
         if ($query->model_type == 'Prospect') {
             $class = Prospect::class;
@@ -30,14 +30,20 @@ class GetQueryEloquentQueryBuilder
             throw new \Exception('Unknown model type: '.$query->model_type);
         }
 
-        return $this->buildQuery($class, $query->parent, $query->compiled_constrains);
+        return $this->buildQuery(
+            $class,
+            $query->parent,
+            $customArguments ?: $query->compiled_constrains
+        );
     }
 
 
     public function buildQuery($model, $parent, array $compiledConstrains): QueryBuilder
     {
+
+
         $queryBuilder = QueryBuilder::for($model);
-        if(Arr::get($compiledConstrains, 'returnZero', false)) {
+        if (Arr::get($compiledConstrains, 'returnZero', false)) {
             return $queryBuilder->whereRaw('0=1');
         }
 
@@ -46,8 +52,7 @@ class GetQueryEloquentQueryBuilder
             $queryBuilder->where('shop_id', $parent->id);
         }
 
-        foreach (Arr::get($compiledConstrains, 'joins', [])as $join) {
-
+        foreach (Arr::get($compiledConstrains, 'joins', []) as $join) {
             switch ($join['type']) {
                 case 'left':
                     $queryBuilder->leftJoin($join['table'], $join['first'], $join['operator'], $join['second']);
@@ -59,8 +64,9 @@ class GetQueryEloquentQueryBuilder
                     $queryBuilder->join($join['table'], $join['first'], $join['operator'], $join['second']);
                     break;
             }
-
         }
+
+
 
         foreach (Arr::get($compiledConstrains, 'constrains') as $constrainData) {
             $constrainType = $constrainData['type'];

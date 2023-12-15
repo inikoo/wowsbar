@@ -21,6 +21,11 @@ class EditProspectMailshot extends InertiaAction
 {
     use WithProspectMailshotNavigation;
 
+    /**
+     * @var \App\Models\Market\Shop
+     */
+    private Shop $shop;
+
     public function handle(Mailshot $mailshot): Mailshot
     {
         return $mailshot;
@@ -35,7 +40,7 @@ class EditProspectMailshot extends InertiaAction
 
     public function asController(Shop $shop, Mailshot $mailshot, ActionRequest $request): Mailshot
     {
-
+        $this->shop = $shop;
         $this->initialisation($request);
 
         return $this->handle($mailshot);
@@ -53,7 +58,7 @@ class EditProspectMailshot extends InertiaAction
             'label'  => __('Mailshot properties'),
             'icon'   => 'fal fa-sliders-h',
             'fields' => [
-                'name' => [
+                'subject' => [
                     'type'     => 'input',
                     'label'    => __('subject'),
                     'value'    => $mailshot->subject,
@@ -140,12 +145,14 @@ class EditProspectMailshot extends InertiaAction
                     'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'org.models.mailshot.update',
-                            'parameters' => $mailshot->id
+                            'name'       => 'org.models.shop.prospect-mailshot.update',
+                            'parameters' => [
+                                'shop'     => $this->shop->id,
+                                'mailshot' => $mailshot->id
+                            ],
                         ],
                     ]
                 ],
-
             ]
         );
     }

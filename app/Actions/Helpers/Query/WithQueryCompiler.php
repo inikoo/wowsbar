@@ -54,7 +54,7 @@ trait WithQueryCompiler
 
                 default => throw new Exception('Unknown constrain type: '.Arr::get($constrainData, 'type', 'Type not set'))
             };
-        } catch (Exception $e) {
+        } catch (Exception) {
             $compiledConstrain = null;
         }
 
@@ -147,7 +147,14 @@ trait WithQueryCompiler
 
     public function prospectLastContactedConstrain(array $constrain): array
     {
-        if (Arr::get($constrain, 'state')) {
+
+        $state=Arr::get($constrain, 'state');
+        if(is_string($state)) {
+            $state =$state=='true';
+        }
+
+
+        if ($state) {
             $this->arguments['__date__'] = [
                 'type'  => 'dateSubtraction',
                 'value' => $constrain['argument']

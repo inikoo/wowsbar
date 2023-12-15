@@ -38,6 +38,8 @@ class StoreDispatchedEmail
             OutboxHydrateEmails::dispatch($dispatchedEmail->outbox)->delay(60);
         }
 
+        $dispatchedEmail->refresh();
+
         return $dispatchedEmail;
     }
 }

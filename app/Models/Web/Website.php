@@ -249,7 +249,11 @@ class Website extends Model implements Auditable, HasMedia
     }
 
 
-
+    public function getUrl(): string
+    {
+        $scheme = app()->environment('production') ? 'https' : 'http';
+        return $scheme.'://'.$this->domain;
+    }
 
 
 }

@@ -27,7 +27,7 @@ trait WithSendMailshot
                 $placeholder = Str::kebab(trim($placeholder));
                 if ($placeholder == 'unsubscribe') {
                     $placeholder = sprintf(
-                        "<a href=\"$unsubscribeUrl\">%s</a>",
+                        "<a ses:no-track href=\"$unsubscribeUrl\">%s</a>",
                         __('Unsubscribe')
                     );
                 }
@@ -41,7 +41,7 @@ trait WithSendMailshot
             emailHtmlBody: $html,
             dispatchedEmail:$dispatchedEmail,
             sender:$sender,
-            withUnsubscribe:$unsubscribeUrl
+            unsubscribeUrl:$unsubscribeUrl
         );
     }
 }

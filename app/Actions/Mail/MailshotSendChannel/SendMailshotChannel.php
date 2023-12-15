@@ -57,9 +57,8 @@ class SendMailshotChannel
                 return;
             }
 
-            /** @var \App\Models\Market\Shop $shop */
-            $shop          =$mailshot->parent;
-            $unsubscribeUrl=$shop->website->domain.route('webhooks.unsubscribe', ['ulid' => $recipient->dispatchedEmail->ulid]);
+
+            $unsubscribeUrl = route('org.unsubscribe.mailshot.show', $recipient->dispatchedEmail->ulid);
 
 
             $this->sendEmailWithUnsubscribe(

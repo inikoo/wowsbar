@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\MailshotRecipient\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Mail\Mailshot\GetRecipients;
+use App\Actions\Mail\Mailshot\GetMailshotRecipientsQueryBuilder;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\InertiaTable\InertiaTable;
@@ -44,7 +44,7 @@ class IndexEstimatedRecipients extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder=GetRecipients::run($mailshot);
+        $queryBuilder=GetMailshotRecipientsQueryBuilder::run($mailshot);
 
 
         return $queryBuilder

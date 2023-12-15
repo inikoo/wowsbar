@@ -27,8 +27,9 @@ class SendSesEmail
 
     public mixed $message;
 
-    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender, bool $unsubscribeUrl = false): DispatchedEmail
+    public function handle(string $subject, string $emailHtmlBody, DispatchedEmail $dispatchedEmail, string $sender, string $unsubscribeUrl = null): DispatchedEmail
     {
+
         if ($dispatchedEmail->state != DispatchedEmailStateEnum::READY) {
             return $dispatchedEmail;
         }
@@ -60,6 +61,9 @@ class SendSesEmail
             $unsubscribeUrl
         );
 
+
+
+
         $numberAttempts = 12;
         $attempt        = 0;
 
@@ -78,9 +82,13 @@ class SendSesEmail
                     ]
                 );
 
-                if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
-                    UpdateProspectEmailSent::run($dispatchedEmail->recipient);
+                if($dispatchedEmail->recipient) {
+                    if ($dispatchedEmail->mailshotRecipient->recipient_type == 'Prospect') {
+                        UpdateProspectEmailSent::run($dispatchedEmail->recipient);
+                    }
                 }
+
+
             } catch (AwsException $e) {
                 if ($e->getAwsErrorCode() == 'Throttling' and $attempt < $numberAttempts - 1) {
                     $attempt++;
@@ -154,10 +162,8 @@ class SendSesEmail
 
         $headers = [];
         if ($unsubscribeUrl) {
-            data_set($headers, 'List-Unsubscribe', $unsubscribeUrl);
-        }
-        if (config('services.ses.configuration_set')) {
-            data_set($headers, 'ConfigurationSet', config('services.ses.configuration_set'));
+            data_set($headers, 'List-Unsubscribe', '<'.$unsubscribeUrl.'>');
+            data_set($headers, 'List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
         }
 
 
@@ -171,6 +177,7 @@ class SendSesEmail
             'Message'     => $message['Message'],
             'Headers'     => $headers
         ];
+
     }
 
     /**
@@ -178,6 +185,7 @@ class SendSesEmail
      */
     public function getRawEmail(array $emailData): array
     {
+
         $mail = new PHPMailer();
 
         $mail->addAddress($emailData['Destination']['ToAddresses'][0]);
@@ -190,17 +198,29 @@ class SendSesEmail
         $mail->Subject = $emailData['Message']['Subject']['Data'];
         $mail->CharSet = 'UTF-8';
 
-        $mail->Body = $emailData['Message']['Body']['Html']['Data'];
+        $mail->Body    = $emailData['Message']['Body']['Html']['Data'];
+        $mail->XMailer = null;
+
+
+
 
         $mail->preSend();
 
-        return [
+        $rawData=[
             'Source'       => $emailData['Source'],
             'Destinations' => $emailData['Destination']['ToAddresses'],
             'RawMessage'   => [
                 'Data' => $mail->getSentMIMEMessage(),
             ]
         ];
+
+        if (config('services.ses.configuration_set')) {
+            data_set($rawData, 'ConfigurationSetName', config('services.ses.configuration_set'));
+        }
+
+
+
+        return $rawData;
     }
 
 
