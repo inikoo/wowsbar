@@ -17,7 +17,6 @@ import { faPaperPlane, faDungeon, faSkull } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
 import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime';
-import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
 library.add(faPaperPlane, faDungeon, faSkull)
 
 interface DateScheduled {
@@ -194,10 +193,9 @@ onMounted(() => {
 
 <template>
     <div class="relative">
-        <LabelEstimated :emailsEstimated="data.stats.number_estimated_dispatched_emails" :idMailshot="data.id" />
 
         <div class="py-3 mx-auto px-5 w-full">
-            <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" />
+            <!-- <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" /> -->
 
             <!-- Component: Countdown Scheduled -->
             <div v-if="data.state == 'scheduled'" v-tooltip="useFormatTime(data.schedule_at, {formatTime: 'hms'})" class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
