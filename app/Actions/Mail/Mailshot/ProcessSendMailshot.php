@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 18 Dec 2023 09:24:16 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Actions\Mail\Mailshot;
 
@@ -24,66 +29,21 @@ class ProcessSendMailshot
 
     public string $jobQueue = 'default_long';
 
+    public function tags(): array
+    {
+        return ['send_mailshot'];
+    }
+
     public function handle(Mailshot $mailshot): void
     {
-
-
+        $counter      = 0;
         $queryBuilder = GetMailshotRecipientsQueryBuilder::run($mailshot);
 
-        $counter = 1;
-        $limit   = app()->isProduction() ? null : config('mail.devel.max_mailshot_recipients');
-
-        $queryBuilder->chunk(
-            250,
-            function ($recipients) use ($mailshot, &$counter, &$channel, $limit) {
-                $mailshotSendChannel = StoreMailshotSendChannel::run($mailshot);
+        $mailshotSendChannel = StoreMailshotSendChannel::run($mailshot);
+        foreach($queryBuilder->get() as $recipient) {
 
 
-                foreach ($recipients as $recipient) {
-                    if (!$this->canContactByEmail($recipient)) {
-                        continue;
-                    }
-
-                    if (!is_null($limit) and $counter > $limit) {
-                        SendMailshotChannel::dispatch($mailshotSendChannel);
-                        break;
-                    }
-
-
-                    $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
-
-                    if (!$recipientExists) {
-                        if (!app()->environment('production') and config('mail.devel.mailshot_recipients_email', true)) {
-                            $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 20];
-                            $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
-                            $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";
-                        } else {
-                            $emailAddress = $recipient->email;
-                        }
-
-                        $email = Email::firstOrCreate(['address' => $emailAddress]);
-
-                        $dispatchedEmail = StoreDispatchedEmail::run(
-                            email:$email,
-                            mailshot:$mailshot,
-                            modelData:[
-                                'recipient_type'=> $recipient->getMorphClass(),
-                                'recipient_id'  => $recipient->id
-
-                            ]
-                        );
-
-                        StoreMailshotRecipient::run(
-                            $mailshot,
-                            $dispatchedEmail,
-                            $recipient,
-                            [
-                                'channel' => $mailshotSendChannel->id,
-                            ]
-                        );
-                    }
-                    $counter++;
-                }
+            if($counter>=250) {
 
 
                 UpdateMailshotSendChannel::run(
@@ -92,11 +52,62 @@ class ProcessSendMailshot
                         'number_emails' => $mailshot->recipients()->where('channel', $mailshotSendChannel->id)->count()
                     ]
                 );
-
-
                 SendMailshotChannel::dispatch($mailshotSendChannel);
+                $mailshotSendChannel = StoreMailshotSendChannel::run($mailshot);
+                $counter             = 0;
             }
+
+
+            //   if (!$this->canContactByEmail($recipient)) {
+            //       continue;
+            //   }
+
+
+
+            $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
+            if (!$recipientExists) {
+                if (!app()->environment('production') and config('mail.devel.mailshot_recipients_email', true)) {
+                    $prefixes     = ['success' => 50, 'bounce' => 30, 'complaint' => 20];
+                    $prefix       = ArrayWIthProbabilities::make()->getRandomElement($prefixes);
+                    $emailAddress = "$prefix+$recipient->slug@simulator.amazonses.com";
+                } else {
+                    $emailAddress = $recipient->email;
+                }
+
+                $email = Email::firstOrCreate(['address' => $emailAddress]);
+
+                $dispatchedEmail = StoreDispatchedEmail::run(
+                    email: $email,
+                    mailshot: $mailshot,
+                    modelData: [
+                        'recipient_type' => $recipient->getMorphClass(),
+                        'recipient_id'   => $recipient->id
+
+                    ]
+                );
+
+                StoreMailshotRecipient::run(
+                    $mailshot,
+                    $dispatchedEmail,
+                    $recipient,
+                    [
+                        'channel'=> $mailshotSendChannel->id,
+                    ]
+                );
+            }
+
+            $counter++;
+
+        }
+
+        UpdateMailshotSendChannel::run(
+            $mailshotSendChannel,
+            [
+                'number_emails' => $mailshot->recipients()->where('channel', $mailshotSendChannel->id)->count()
+            ]
         );
+        SendMailshotChannel::dispatch($mailshotSendChannel);
+
 
 
         UpdateMailshot::run(
@@ -107,6 +118,9 @@ class ProcessSendMailshot
         );
         MailshotHydrateEmails::run($mailshot);
         MailshotHydrateDispatchedEmailsState::run($mailshot);
+
+
+
     }
 
 

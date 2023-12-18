@@ -35,6 +35,7 @@ class UpdateMailshotSentState
         }
 
         $countInProcess = $mailshot->channels()->whereNot('mailshot_send_channels.state', MailshotSendChannelStateEnum::SENT)->count();
+
         if ($countInProcess > 0) {
             return [
                 'error'=> true,

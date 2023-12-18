@@ -63,12 +63,24 @@ class StoreProspect
             data_set($modelData, 'shop_id', $parent->id);
         }
 
-        if ((!Arr::has($modelData, 'state')  or Arr::has($modelData, 'state')==ProspectStateEnum::NO_CONTACTED)
-            and Arr::get($modelData, 'email') != '') {
-            if (!filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
-                data_set($modelData, 'state', ProspectStateEnum::FAIL);
-                data_set($modelData, 'fail_status', ProspectFailStatusEnum::INVALID);
-            }
+
+
+
+
+
+        $isValidEmail=true;
+        if(Arr::get($modelData, 'email', '')!='' &&  !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
+            $isValidEmail=false;
+        }
+        data_set($modelData, 'is_valid_email', $isValidEmail);
+
+
+        if (!$isValidEmail  and !Arr::has($modelData, 'phone')(
+            !Arr::has($modelData, 'state')
+            or Arr::get($modelData, 'state')==ProspectStateEnum::NO_CONTACTED
+        )) {
+            data_set($modelData, 'state', ProspectStateEnum::FAIL);
+            data_set($modelData, 'fail_status', ProspectFailStatusEnum::INVALID);
         }
 
 
@@ -95,7 +107,7 @@ class StoreProspect
 
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(2));
 
-        if (count($tags)) {
+        if ($tags &&  count($tags)) {
             SyncTagsProspect::make()->action($prospect, ['tags' => $tags, 'type' => 'crm']);
         }
 
@@ -108,7 +120,7 @@ class StoreProspect
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.prospects.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function inShop(Shop $shop, ActionRequest $request): Prospect
@@ -142,7 +154,7 @@ class StoreProspect
             'address'           => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'      => ['nullable', 'string', 'max:255'],
             'company_name'      => ['nullable', 'string', 'max:255'],
-            'tags'              => ['sometimes', 'array'],
+            'tags'              => ['sometimes','nullable', 'array'],
             'tags.*'            => ['string'],
             'email'             => [
                 'required_without:phone',
@@ -165,11 +177,7 @@ class StoreProspect
             ],
             'contact_website'   => [
                 'nullable',
-                'url:http,https',
-                new IUnique(
-                    table: 'prospects',
-                    extraConditions: $extraConditions
-                ),
+                'url:http,https'
             ],
 
         ];

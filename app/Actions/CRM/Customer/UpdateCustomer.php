@@ -47,7 +47,7 @@ class UpdateCustomer
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("crm.customers.edit");
     }
 
     public function rules(): array

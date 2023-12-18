@@ -51,7 +51,7 @@ class UpdateTag
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.prospects.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array

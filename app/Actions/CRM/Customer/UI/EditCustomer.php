@@ -27,7 +27,7 @@ class EditCustomer extends InertiaAction
         $this->canEdit   = $request->user()->hasPermissionTo('crm.customers.edit');
         $this->canDelete = $request->user()->hasPermissionTo('supervisor.crm');
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("crm.customers.edit");
     }
 
     public function inOrganisation(Customer $customer, ActionRequest $request): Customer

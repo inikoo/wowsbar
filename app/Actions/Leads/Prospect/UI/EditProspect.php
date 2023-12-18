@@ -29,7 +29,7 @@ class EditProspect extends InertiaAction
     {
         $this->canEdit = $request->user()->hasPermissionTo('crm.customers.edit');
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
