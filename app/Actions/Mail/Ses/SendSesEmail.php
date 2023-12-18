@@ -50,6 +50,20 @@ class SendSesEmail
                 UpdateProspectEmailSent::run($dispatchedEmail->recipient);
             }
 
+
+
+            UpdateDispatchedEmail::run(
+                $dispatchedEmail,
+                [
+                    'state'        => DispatchedEmailStateEnum::DELIVERED,
+                    'date'         => now(),
+                    'delivered_at' => now(),
+                    'is_delivered' => true
+                ]
+            );
+
+
+
             return $dispatchedEmail;
         }
 
