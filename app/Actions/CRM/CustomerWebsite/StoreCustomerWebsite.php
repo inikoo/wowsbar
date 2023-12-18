@@ -1,23 +1,23 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 18 Dec 2023 20:31:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Subscriptions\CustomerWebsite;
+namespace App\Actions\CRM\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
+use App\Actions\CRM\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
-use App\Actions\Subscriptions\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Models\CRM\Customer;
-use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Models\SysAdmin\Division;
 use App\Rules\IUnique;
 use Exception;
 use Illuminate\Console\Command;

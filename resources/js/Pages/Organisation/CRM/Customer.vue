@@ -29,7 +29,7 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue"
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
+import TableCustomerWebsites from "@/Components/Tables/TableCustomerWebsites.vue"
 import { routeType } from '@/types/route'
 import TableAppointments from "@/Components/Tables/TableAppointments.vue";
 import TablePortfolioSocialAccounts from "@/Components/Tables/TablePortfolioSocialAccounts.vue";
@@ -58,7 +58,7 @@ const props = defineProps<{
         navigation: object
     }
     showcase?:object
-    portfolio?: object
+    websites?: object
     social_account?: object
     appointments?: object
     uploadRoutes: {
@@ -76,7 +76,7 @@ const components = {
     showcase: CustomerShowcase,
     details: ModelDetails,
     history: ModelChangelog,
-    portfolio: TablePortfolioWebsites,
+    websites: TableCustomerWebsites,
     appointments: TableAppointments,
     social_account: TablePortfolioSocialAccounts
 }
@@ -104,9 +104,6 @@ const webUserForm = useForm({
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <!--
-      Todo: modal forms for quick creation of models
-      -->
 
     <TransitionRoot as="template" :show="isOpen">
         <Dialog
@@ -179,5 +176,5 @@ const webUserForm = useForm({
         </Dialog>
     </TransitionRoot>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]" :uploadRoutes="uploadRoutes"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]" :uploadRoutes="uploadRoutes"></component>
 </template>

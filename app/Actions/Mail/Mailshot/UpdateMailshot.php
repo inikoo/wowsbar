@@ -41,7 +41,7 @@ class UpdateMailshot
     public function rules(): array
     {
         return [
-            'subject' => ['sometimes', 'string', 'max:255'],
+            'subject'           => ['sometimes', 'string', 'max:255'],
             'recipients_recipe' => ['required', 'array']
         ];
     }

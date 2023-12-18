@@ -1,23 +1,25 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 18 Dec 2023 20:31:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Subscriptions\CustomerWebsite\UI;
+namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
+use App\Actions\CRM\CustomerBanners\UI\IndexCustomerBanners;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Portfolio\BannersResource;
+use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Models\CRM\Customer;
-use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Market\Shop;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -138,13 +140,14 @@ class ShowCustomerWebsite extends InertiaAction
                             prefix: CustomerWebsiteTabsEnum::CHANGELOG->value
                         )
                     )),
-                /*
-                                CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
-                                    fn () => BannerResource::collection(IndexBanners::run($customerWebsite))
-                                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($customerWebsite)))
-                */
+
+                CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
+                    fn () => BannersResource::collection(IndexCustomerBanners::run($customerWebsite))
+                    : Inertia::lazy(fn () => BannersResource::collection(IndexCustomerBanners::run($customerWebsite)))
+
             ]
-        )->table(IndexHistory::make()->tableStructure(prefix: CustomerWebsiteTabsEnum::CHANGELOG->value));
+        )->table(IndexCustomerBanners::make()->tableStructure(parent: $customerWebsite, prefix: CustomerWebsiteTabsEnum::BANNERS->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: CustomerWebsiteTabsEnum::CHANGELOG->value));
     }
 
     public function jsonResponse(CustomerWebsite $customerWebsite): CustomerWebsiteResource

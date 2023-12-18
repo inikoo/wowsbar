@@ -1,22 +1,22 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 03 Oct 2023 14:53:46 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 18 Dec 2023 20:31:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Subscriptions\CustomerWebsite\UI;
+namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Catalogue\ShowGoogleAdsDashboard;
+use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\SysAdmin\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Models\SysAdmin\Division;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,13 +27,13 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexGoogleAdsCustomerWebsites extends InertiaAction
+class IndexCaasCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('catalogue.ppc.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.banners.edit');
 
-        return $request->user()->hasPermissionTo('catalogue.ppc.view');
+        return $request->user()->hasPermissionTo('catalogue.banners.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +46,11 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('ppc');
+        $divisionId = Cache::get('banners');
 
         if(!$divisionId) {
-            $divisionId = Division::firstWhere('slug', 'ppc')->id;
-            Cache::put('ppc', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'banners')->id;
+            Cache::put('banners', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -112,7 +112,7 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Catalogue/GoogleAds/GoogleAdsCustomerWebsites',
+            'Catalogue/CaaS/CaaSCustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -172,12 +172,12 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.ppc.websites.index' =>
+            'org.banners.websites.index' =>
             array_merge(
-                ShowGoogleAdsDashboard::make()->getBreadcrumbs(),
+                ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.ppc.websites.index',
+                        'name' => 'org.banners.websites.index',
                         null
                     ]
                 ),

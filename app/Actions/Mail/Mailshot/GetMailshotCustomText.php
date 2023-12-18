@@ -22,7 +22,7 @@ class GetMailshotCustomText
 
         return [
             [
-                'name' => 'Raul',
+                'name'  => 'Raul',
                 'value' => '{{name}}'
             ],
         ];
