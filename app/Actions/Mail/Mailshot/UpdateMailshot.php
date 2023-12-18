@@ -7,7 +7,12 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
+use App\Actions\Mail\Outbox\Hydrators\OutboxHydrateMailshots;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Lorisleiva\Actions\ActionRequest;
@@ -18,7 +23,18 @@ class UpdateMailshot
 
     public function handle(Mailshot $mailshot, array $modelData): Mailshot
     {
-        return $this->update($mailshot, $modelData, ['data']);
+        $mailshot = $this->update($mailshot, $modelData, ['data']);
+        $mailshot->refresh();
+
+        OrganisationHydrateMailshots::dispatch();
+        if ($mailshot->type == MailshotTypeEnum::PROSPECT_MAILSHOT) {
+            ShopHydrateMailshots::dispatch($mailshot->parent);
+        }
+
+        MailshotHydrateEstimatedEmails::run($mailshot);
+        OutboxHydrateMailshots::dispatch($mailshot->outbox);
+
+        return $mailshot;
     }
 
 
