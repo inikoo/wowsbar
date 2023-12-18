@@ -14,11 +14,12 @@ import {trans} from "laravel-vue-i18n"
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {faPaperPlane, faDungeon, faSkull} from '@fal'
+import {faSpinnerThird} from '@fad'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
 import {useTimeCountdown, useFormatTime} from '@/Composables/useFormatTime'
 
-library.add(faPaperPlane, faDungeon, faSkull)
+library.add(faPaperPlane, faDungeon, faSkull, faSpinnerThird)
 
 interface DateScheduled {
     years: number
@@ -76,120 +77,15 @@ const props = defineProps<{
 onMounted(() => {
     window.Echo.private('org.general')
         .listen(`.mailshot.${props.data.id}`, (e: any) => {
-
-
             props.data.sent_at = e.sent_at
-            props.data.stats=e.stats
-
-            console.log(props.data.stats)
-            // ============ Change here ==============
-            // dataStatistic[0].component.update('number_dispatched_emails')
-            // dataStatistic[0].component.update('number_rejected_emails')
-            // dataStatistic[0].component.update('number_hard_bounced_emails')
-            // dataStatistic[0].component.update('number_soft_bounced_emails')
-            // dataStatistic[0].component.update('number_delivered_emails')
-            // dataStatistic[0].component.update('number_opened_emails')
-            // dataStatistic[0].component.update('number_clicked_emails')
-            // dataStatistic[0].component.update('number_spam_emails')
-            // dataStatistic[0].component.update('number_unsubscribed_emails')
+            props.data.stats = e.stats  // Update data in box
         })
 })
 
 onUnmounted(() => {
-    Echo.private(`org.general`)
-        .stopListening(`.mailshot.${props.data.id}`)
+    window.Echo.private(`org.general`)
+    .stopListening(`.mailshot.${props.data.id}`)
 })
-
-
-
-const dataStatistic = reactive(
-    {
-        'recipients': {
-            name: 'recipients',
-            value: props.data.sent_at===null?props.data.stats.number_estimated_dispatched_emails:props.data.stats.number_dispatched_emails,
-            label: trans('Recipients'),
-            component: <any>null
-        },
-        'error': {
-            name: 'error',
-            label: trans('Errors'),
-            class: 'text-red-500',
-            value: props.data.stats.number_rejected_emails,
-            component: null
-        },
-        'bounced': {
-            name: 'bounced',
-            label: trans('bounced'),
-            type: 'multi',
-            list: [
-                {
-                    value: props.data.stats.number_hard_bounced_emails,
-                    icon: 'fal fa-skull',
-                    tooltip: trans('Hard bounce')
-                },
-                {
-                    value: props.data.stats.number_soft_bounced_emails,
-                    icon: 'fal fa-dungeon',
-                    tooltip: trans('Soft bounce')
-                }
-            ],
-            value: 0,
-            component: null
-        },
-        'delivered': {
-            name: 'delivered',
-            label: trans('delivered'),
-            value: props.data.stats.number_delivered_emails,
-            component: null
-        },
-
-        'opened': {
-            name: 'opened',
-            label: trans('opened'),
-            value: props.data.stats.number_opened_emails,
-            component: null
-        },
-        'clicked': {
-            name: 'clicked',
-            label: trans('clicked'),
-            value: props.data.stats.number_clicked_emails,
-            component: null
-        },
-        'spam': {
-            name: 'spam',
-            label: trans('spam'),
-            value: props.data.stats.number_spam_emails,
-            component: null
-        },
-        'unsubscribed': {
-            name: 'unsubscribed',
-            label: trans('unsubscribed'),
-            value: props.data.stats.number_unsubscribed_emails,
-            component: null
-        },
-
-    }
-)
-
-
-// Pusher: subscribe
-// const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-//     cluster: 'ap1'
-// })
-// const channel = pusher.subscribe('hydrate.sent.emails')
-// channel.bind(`mailshot.${props.data.slug}`, (data: any) => {
-//     // reactiveProps.value = {...data.mailshot}
-//     dataStatistic[0].component.update(data.mailshot.stats.number_dispatched_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_rejected_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_hard_bounced_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_soft_bounced_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_delivered_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_opened_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_clicked_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_spam_emails)
-//     dataStatistic[0].component.update(data.mailshot.stats.number_unsubscribed_emails)
-// })
-
 
 const countdown: Ref<DateScheduled> = ref(useTimeCountdown(props.data.schedule_at, {zero: true}))
 
@@ -202,7 +98,7 @@ onMounted(() => {
 const locale = useLocaleStore();
 
 
-console.log(props.data)
+// console.log(props.data)
 
 </script>
 
@@ -214,7 +110,7 @@ console.log(props.data)
 
             <!-- Component: Countdown Scheduled -->
             <div v-if="data.state == 'scheduled' && countdown" v-tooltip="useFormatTime(data.schedule_at, {formatTime: 'hms'})"
-                 class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
+                class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
                 <div class="bg-org-500 text-white text-xs text-center py-2 tracking-wider">
                     Mailshot will be send in:
                 </div>
@@ -239,29 +135,119 @@ console.log(props.data)
             </div>
 
 
-
+            <!-- Box -->
             <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 gap-[1px] overflow-hidden rounded-lg bg-gray-200 shadow">
-                <template v-for="(statistic, index) in dataStatistic">
-                    <div v-if="!(statistic.name == 'error' && statistic.value == 0)" :key="index" class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
-                        <!-- Title -->
-                        <dt class="text-gray-400 capitalize text-sm" :class="statistic.class">{{ statistic.label }}</dt>
-                        <!-- Value -->
-                        <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
-                            <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
-                                <div v-if="statistic.type == 'multi'" class="flex gap-x-6 flex-wrap">
-                                    <div v-for="subValue in statistic.list" v-tooltip="subValue.tooltip" class="flex flex-nowrap items-center gap-x-1.5">
-                                        <FontAwesomeIcon :icon='subValue.icon' class='text-base text-org-200' aria-hidden='true'/>
-                                        <span>{{ locale.number(subValue.value) }}</span>
-                                    </div>
+                <!-- Recipient -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
+                            </span>
+                            <FontAwesomeIcon v-if="!data.sent_at" icon='fad fa-spinner-third' class='h-4 animate-spin' aria-hidden='true' />
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Bounce -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Bounce</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <div class="flex gap-x-6 flex-wrap">
+                                <div v-tooltip="'Hard bounce'" class="flex flex-nowrap items-center gap-x-1.5">
+                                    <FontAwesomeIcon icon="fal fa-skull" class='text-base text-org-200' aria-hidden='true'/>
+                                    <span>{{ locale.number(data.stats.number_hard_bounced_emails) }}</span>
                                 </div>
-                                <span v-else>
-                                    {{ locale.number(statistic.value) }}
-                                </span>
-                                <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span>
+                                <div v-tooltip="'Soft bounce'" class="flex flex-nowrap items-center gap-x-1.5">
+                                    <FontAwesomeIcon icon="fal fa-dungeon" class='text-base text-org-200' aria-hidden='true'/>
+                                    <span>{{ locale.number(data.stats.number_soft_bounced_emails) }}</span>
+                                </div>
                             </div>
-                        </dd>
-                    </div>
-                </template>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Error -->
+                <div v-if="data.stats.number_rejected_emails" class="bg-red-50 border border-red-300 px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-red-400 capitalize text-sm">Error</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_rejected_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Delivered -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Delivered</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_delivered_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Opened -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Opened</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_opened_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Clicked -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Clicked</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_clicked_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Spam -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Spam</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_spam_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
+                <!-- Unsubscribed -->
+                <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
+                    <dt class="text-gray-400 capitalize text-sm">Unsubscribed</dt>
+                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span>
+                                {{ locale.number(data.stats.number_unsubscribed_emails) }}
+                            </span>
+                            <!-- <span v-if="index=='recipients' && data.sent_at===null  " class="ml-2">spiner </span> -->
+                        </div>
+                    </dd>
+                </div>
+
             </dl>
         </div>
     </div>

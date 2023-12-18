@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { onMounted, onUnmounted } from 'vue'
+// import { onMounted, onUnmounted } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { useLocaleStore } from '@/Stores/locale'
 
@@ -9,20 +9,20 @@ const props = defineProps<{
     state?: string
 }>()
 
-onMounted(() => {
-    window.Echo.private('org.general')
-    .listen(`.mailshot.${props.idMailshot}`, (e: any) => {
-        console.log('wwwwwwwwwww')
-        // if (e.data.counts.prospects !==  undefined) {
-        //     props.stats.prospects.stat = e.data.counts.prospects
-        // }
-    })
-})
+// onMounted(() => {
+//     window.Echo.private('org.general')
+//     .listen(`.mailshot.${props.idMailshot}`, (e: any) => {
+//         console.log('wwwwwwwwwww')
+//         // if (e.data.counts.prospects !==  undefined) {
+//         //     props.stats.prospects.stat = e.data.counts.prospects
+//         // }
+//     })
+// })
 
-onUnmounted(() => {
-    Echo.private(`org.general`)
-    .stopListening(`.mailshot.${props.idMailshot}`)
-})
+// onUnmounted(() => {
+//     Echo.private(`org.general`)
+//     .stopListening(`.mailshot.${props.idMailshot}`)
+// })
 
 </script>
 
