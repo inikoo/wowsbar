@@ -46,22 +46,22 @@ class MailshotResource extends JsonResource
             [
                 'label'      => 'Mailshot Created',
                 'icon'       => $mailshot->state->stateIcon()['in-process']['icon'],
-                'timestamp'  => $mailshot->created_at ? $mailshot->created_at->toISOString() : null
+                'timestamp'  => $mailshot->created_at ? $mailshot->created_at : null
             ],
             [
                 'label'      => 'Compose Newsletter',
                 'icon'       => $mailshot->state->stateIcon()['ready']['icon'],
-                'timestamp'  => $mailshot->ready_at ? $mailshot->ready_at->toISOString() : null
+                'timestamp'  => $mailshot->ready_at ? $mailshot->ready_at : ($mailshot->start_sending_at ? $mailshot->start_sending_at : null)
             ],
             [
                 'label'      => 'Start Send',
                 'icon'       => $mailshot->state->stateIcon()['sending']['icon'],
-                'timestamp'  => $mailshot->start_sending_at ? $mailshot->start_sending_at->toISOString() : null
+                'timestamp'  => $mailshot->start_sending_at ? $mailshot->start_sending_at : null
             ],
             [
                 'label'      => 'Sent',
                 'icon'       => $mailshot->state->stateIcon()['sent']['icon'],
-                'timestamp'  => $mailshot->sent_at ? $mailshot->sent_at->toISOString() : null
+                'timestamp'  => $mailshot->sent_at ? $mailshot->sent_at : null
             ]
         ];
 
