@@ -23,6 +23,7 @@ use App\Http\Resources\Mail\MailshotResource;
 use App\Http\Resources\Mail\MailshotStatResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -259,11 +260,12 @@ class ShowProspectMailshot extends InertiaAction
     private function getEmailPreview(Mailshot $mailshot): array
     {
         $layout = $mailshot->layout;
+        $html = Arr::get($layout, 'html');
 
         return [
             'sender'    => $mailshot->sender(),
             'subject'   => $mailshot->subject,
-            'emailBody' => $layout['html']['html'],
+            'emailBody' => Arr::get($html, 'html'),
         ];
     }
 
