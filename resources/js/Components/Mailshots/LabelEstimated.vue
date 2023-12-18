@@ -6,7 +6,7 @@ import { useLocaleStore } from '@/Stores/locale'
 const props = defineProps<{
     emailsEstimated: number
     idMailshot: number
-    state?: {}
+    state?: string
 }>()
 
 onMounted(() => {
