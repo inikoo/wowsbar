@@ -56,6 +56,16 @@ const setToNewTemplate=(template)=>{
     editor.loadDesign(template)
 }
 
+const getMergeTagData=()=>{
+    return axios.get(route('org.models.mailshot.custom.text'))
+        .then(response => response.data)
+        .catch(error => {
+            console.error(error);
+            return [];
+        });
+}
+
+
 
 onMounted(async () => {
     //loadeditor
@@ -67,12 +77,7 @@ onMounted(async () => {
         features: {
             sendTestEmail: true
         },
-        mergeTags: [
-            { name: "Email", value: "{{email}}" },
-            { name: "First Name", value: "{{first_name}}" },
-            { name: "Last Name", value: "{{last_name}}" },
-            { name: "Unsubscribe", value: "{{unsubscribe}}" }
-        ],
+        mergeTags: await getMergeTagData(),
         tools: {
             form: {
                 enabled: false
