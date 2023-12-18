@@ -49,6 +49,8 @@ const OpenModal = ref(false)
 const date = ref(new Date())
 const isSendTestLoading = ref(false)
 
+console.log(props.pageHead)
+
 
 const getLocalStorage = () => {
     let storage = localStorage.getItem("mailshotWorkshop")
@@ -240,7 +242,7 @@ const onSuccess = (response,closedPopover) => {
 
     <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
-    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute"
+    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :changeTitle="(value)=> pageHead.title = value"
         :loadRoute="loadRoute" :mailshot="mailshot" :updateDetailRoute='updateDetailRoute' :title="title"/>
 </template>
 

@@ -29,6 +29,7 @@ const props = defineProps<{
     imagesUploadRoute: Object;
     mailshot: object;
     updateDetailRoute: object;
+    changeTitle?:Function
 }>();
 const editSubject = ref(false);
 const editor = import.meta.env.VITE_MAILSHOT_EDITOR;
@@ -36,6 +37,7 @@ const openTemplates = ref(false);
 const editorRef = ref(null);
 const subject = ref(props.title)
 const emits = defineEmits();
+const subjectInput = ref(null)
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -72,13 +74,14 @@ const StoreTemplate = async (template) => {
 };
 
 
-/* const onEditSubject = async () => {
+const onEditSubject = async () => {
     try {
         const response = await axios.post(
             route(props.updateDetailRoute.name, props.updateDetailRoute.parameters),
             { subject: subject.value, _method: "patch" }
         );
         editSubject.value = false;
+        props.changeTitle(subject.value)
     } catch (error) {
         console.log(error);
         notify({
@@ -87,7 +90,8 @@ const StoreTemplate = async (template) => {
             type: "error",
         });
     }
-} */
+}
+
 </script>
 
 <template>
@@ -120,10 +124,10 @@ const StoreTemplate = async (template) => {
             </div>
         </template>
     </LabelEstimated>
-   <!--  <LabelEstimated
+    <LabelEstimated
         :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails"
         :idMailshot="mailshot.id"
-    >
+    >    
         <template #content>
             <div class="flex w-full">
                 <div class="text-gray-500 w-1/2">
@@ -146,7 +150,7 @@ const StoreTemplate = async (template) => {
                 </div>
             </div>
         </template>
-    </LabelEstimated> -->
+    </LabelEstimated>
 
     <component
         v-if="!mailshot.is_layout_blank"
