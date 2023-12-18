@@ -12,6 +12,7 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Actions\Traits\WithActionUpdate;
+use App\Actions\Traits\WithCheckCanContactByEmail;
 use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectSuccessStatusEnum;
@@ -27,6 +28,7 @@ class UpdateProspect
 {
     use WithActionUpdate;
     use WithProspectPrepareForValidation;
+    use WithCheckCanContactByEmail;
 
     private bool $asAction = false;
 
@@ -70,7 +72,7 @@ class UpdateProspect
             }
 
             $prospect->update([
-                'can_contact_by_email'=> $prospect->canContactProspectByEmail()
+                'can_contact_by_email'=> $this->canContactProspectByEmail($prospect)
             ]);
 
         }

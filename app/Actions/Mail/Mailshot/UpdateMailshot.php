@@ -26,6 +26,7 @@ class UpdateMailshot
     {
         return [
             'subject' => ['sometimes', 'string', 'max:255'],
+            'recipients_recipe' => ['required', 'array']
         ];
     }
 
