@@ -34,8 +34,10 @@ const q = ref('')
 const page = ref(1)
 const modelValue = ref([])
 const valueTable = ref([])
+const loading = ref(false)
 
 const getOptions = async () => {
+    loading.value = true
     try {
         const response = await axios.get(
             route('org.json.prospects', {
@@ -45,7 +47,9 @@ const getOptions = async () => {
             
         )
         onGetOptionsSuccess(response)
+        loading.value = false
     } catch (error) {
+        loading.value = false
         notify({
             title: "Failed",
             text: "Error while fetching prospects",
@@ -197,7 +201,7 @@ onUnmounted(() => {
         :searchable="true" 
         :caret="false" 
         :options="Options" 
-        noResultsText="No Result" 
+        :noResultsText="loading ? 'loading...' : 'No Result'" 
         @open="getOptions" 
         @search-change="SearchChange"
         @input="onMultiselectChange"
