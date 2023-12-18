@@ -133,7 +133,7 @@ const changeWeeksValue= async (value,index)=> {
     }
 }
 
-onMounted(() => {
+onMounted(async() => {
     const pathname = getParams()
     if (pathname.tags) {
         props.form[props.fieldName].recipient_builder_type = "custom_prospects_query"
@@ -142,6 +142,9 @@ onMounted(() => {
      const index = categories.findIndex((item)=>item.name ==  props.form[props.fieldName].recipient_builder_type)
      if(index != -1)  selectedIndex.value = index
     }
+
+    const estimate = await getEstimateRecipients(props.form.data());
+    recipientsCount.value = estimate;
 })
 
 </script>
