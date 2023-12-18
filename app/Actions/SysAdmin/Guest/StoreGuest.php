@@ -49,7 +49,7 @@ class StoreGuest
         OrganisationHydrateGuests::dispatch();
         GuestHydrateUniversalSearch::dispatch($guest);
 
-        $organisationUserData=[
+        $organisationUserData = [
             'username'       => Arr::get($modelData, 'username'),
             'password'       => Arr::get($modelData, 'password'),
             'contact_name'   => $guest->contact_name,
@@ -93,14 +93,18 @@ class StoreGuest
         if ($this->get('phone')) {
             $this->set('phone', preg_replace('/[^0-9+]/', '', $this->get('phone')));
         }
+
+        if ($this->get('username')) {
+            $this->set('alias', $this->get('username'));
+        }
     }
 
     public function rules(): array
     {
         return [
             'type'           => ['required', Rule::in(GuestTypeEnum::values())],
-            'alias'          => ['required', 'iunique:guests', 'string', 'max:12'],
-            'username'       => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
+            'alias'          => ['required', 'iunique:guests', 'string', 'max:36'],
+            'username'       => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users', 'max:36'],
             'company_name'   => ['nullable', 'string', 'max:255'],
             'contact_name'   => ['required', 'string', 'max:255'],
             'phone'          => ['nullable', 'phone:AUTO'],
@@ -115,10 +119,10 @@ class StoreGuest
 
     public function asController(ActionRequest $request): Guest
     {
-        $request->validate();
-        $modelData = $request->validated();
+        $this->fillFromRequest($request);
+        $this->set('type', GuestTypeEnum::CONTRACTOR->value);
 
-        return $this->handle(Arr::except($modelData, ['username']));
+        return $this->handle($this->validateAttributes());
     }
 
 

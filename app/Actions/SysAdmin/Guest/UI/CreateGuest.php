@@ -73,14 +73,16 @@ class CreateGuest extends InertiaAction
                             'title'  => __('Credentials'),
                             'fields' => [
                                 'username' => [
-                                    'type'  => 'input',
-                                    'label' => __('username'),
-                                    'value' => ''
+                                    'type'     => 'input',
+                                    'label'    => __('username'),
+                                    'value'    => '',
+                                    'required' => true
 
                                 ],
                                 'password' => [
-                                    'type'  => 'password',
-                                    'label' => __('password'),
+                                    'type'     => 'password',
+                                    'label'    => __('password'),
+                                    'required' => true,
 
                                 ],
 
@@ -94,7 +96,8 @@ class CreateGuest extends InertiaAction
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a job position'),
-                                    'value'       => []
+                                    'value'       => [],
+                                    'required'    => true,
                                 ],
                             ]
                         ],
