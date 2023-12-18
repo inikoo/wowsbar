@@ -27,7 +27,9 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
+use App\Actions\Helpers\Uploads\DownloadUploads;
 use App\Actions\Helpers\Uploads\HistoryUploads;
+use App\Actions\Helpers\Uploads\UI\ShowUploads;
 use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
@@ -184,6 +186,11 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect'])->uses([EditProspect::class, 'inShop'])->name('edit');
         Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'remove prospect'])->uses([RemoveProspect::class, 'inShop'])->name('remove');
+
+        Route::prefix('uploads')->as('uploads.')->group(function () {
+            Route::get('{upload}/download', ['icon' => 'fa-envelope', 'label' => 'download uploads'])->uses(DownloadUploads::class)->name('download');
+            Route::get('{upload}', [ShowUploads::class, 'inShop'])->name('show');
+        });
     });
 
 
