@@ -100,11 +100,13 @@ class EditProspect extends InertiaAction
                                     'label' => __('email'),
                                     'value' => $prospect->email
                                 ],
+                                /*
                                 'phone'           => [
                                     'type'  => 'phone',
                                     'label' => __('phone'),
                                     'value' => $prospect->phone
                                 ],
+                                */
                                 'contact_website' => [
                                     'type'      => 'inputWithAddOn',
                                     'label'     => __('website'),
