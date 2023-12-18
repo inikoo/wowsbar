@@ -29,9 +29,8 @@ class SendMailshotChannel
 
     public function handle(MailshotSendChannel $mailshotSendChannel): void
     {
-        $mailshot = $mailshotSendChannel->mailshot;
-        $layout   = $mailshot->layout;
-        // $emailHtmlBody = Mjml::new()->minify()->toHtml($layout['html'][0]['html']);
+        $mailshot      = $mailshotSendChannel->mailshot;
+        $layout        = $mailshot->layout;
         $emailHtmlBody = $layout['html']['html'];
 
 

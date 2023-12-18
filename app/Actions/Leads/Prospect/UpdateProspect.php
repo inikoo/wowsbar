@@ -48,11 +48,31 @@ class UpdateProspect
 
         $prospect = $this->update($prospect, $modelData, ['data']);
 
-        if ($prospect->wasChanged(['state', 'dont_contact_me', 'contacted_state', 'fail_status', 'success_status'])) {
+
+
+        if ($prospect->wasChanged(['state', 'dont_contact_me', 'contacted_state', 'fail_status', 'success_status','email'])) {
+
+            if ($prospect->wasChanged(['email'])) {
+                $isValidEmail=true;
+                if(Arr::get($modelData, 'email', '')!='' &&  !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
+                    $isValidEmail=false;
+                }
+                $prospect->update([
+                    'is_valid_email'=> $isValidEmail
+                ]);
+
+            }
+
+
             if ($prospect->parent_type == 'Shop') {
                 OrganisationHydrateProspects::dispatch();
                 ShopHydrateProspects::dispatch($prospect->parent);
             }
+
+            $prospect->update([
+                'can_contact_by_email'=> $prospect->canContactProspectByEmail()
+            ]);
+
         }
         ProspectHydrateUniversalSearch::dispatch($prospect);
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(5));

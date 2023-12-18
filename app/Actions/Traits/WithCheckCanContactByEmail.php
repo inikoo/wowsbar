@@ -33,6 +33,10 @@ trait WithCheckCanContactByEmail
     protected function canContactProspectByEmail(Prospect $prospect): bool
     {
 
+        if(!$prospect->email) {
+            return false;
+        }
+
         if (in_array($prospect->fail_status, [
             ProspectFailStatusEnum::HARD_BOUNCED,
             ProspectFailStatusEnum::INVALID,
