@@ -5,10 +5,10 @@
   -->
 
 <script setup lang="ts">
-import {Head} from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import {computed, ref} from "vue";
+import {computed, ref, onMounted, onUnmounted} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Components/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
@@ -21,12 +21,13 @@ import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
 import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
+import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faSpellCheck)
 
 const props = defineProps<{
     title: string,
-    pageHead: object,
+    pageHead: TSPageHeading
     tabs: {
         current: string;
         navigation: object;
@@ -37,6 +38,10 @@ const props = defineProps<{
             id: number
             number_estimated_dispatched_emails: number
         }
+        timeline: {
+            label: string
+            timestamp: string
+        }[]
     },
     recipients?: object
     email?: object
@@ -64,6 +69,22 @@ const component = computed(() => {
 
 });
 
+onMounted(() => {
+    window.Echo.private('org.general')
+        .listen(`.mailshot.${props.mailshot.id}`, (e: any) => {
+            if(e.state == 'sent'){
+                let timelineSent = props.showcase.timeline.find((item) => item.label == 'Sent')
+                timelineSent.timestamp = e.sent_at  // update the timline data
+                props.pageHead.actions = []  // clear the button 'Stop'
+            }
+
+        })
+})
+
+onUnmounted(() => {
+    window.Echo.private(`org.general`)
+    .stopListening(`.mailshot.${props.mailshot.id}`)
+})
 
 </script>
 
@@ -80,4 +101,3 @@ const component = computed(() => {
         </Transition>
     </KeepAlive>
 </template>
-
