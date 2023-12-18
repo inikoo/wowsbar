@@ -54,7 +54,7 @@ class UpdateGuest
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array

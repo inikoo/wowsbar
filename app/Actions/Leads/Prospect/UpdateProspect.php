@@ -66,7 +66,7 @@ class UpdateProspect
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array

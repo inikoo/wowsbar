@@ -108,7 +108,7 @@ class StoreProspect
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.prospects.edit");
+        return $request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function inShop(Shop $shop, ActionRequest $request): Prospect

@@ -38,7 +38,7 @@ class ShowCustomer extends InertiaAction
         $this->canEdit   = $request->user()->hasPermissionTo('crm.customers.edit');
         $this->canDelete = $request->user()->hasPermissionTo('crm.customers.edit');
 
-        return $request->user()->hasPermissionTo("shops.customers.view");
+        return $request->user()->hasPermissionTo("crm.customers.view");
     }
 
     public function asController(Customer $customer, ActionRequest $request): Customer
