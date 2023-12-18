@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Http\Resources\Helpers\UploadRecordsResource;
 use App\Models\Helpers\Upload;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -30,6 +31,11 @@ class ShowUploads extends InertiaAction
     }
 
     public function asController(Upload $upload): Upload
+    {
+        return $this->handle($upload);
+    }
+
+    public function inShop(Shop $shop, Upload $upload): Upload
     {
         return $this->handle($upload);
     }

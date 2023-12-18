@@ -34,7 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property MailshotTypeEnum $type
  * @property string $date
  * @property \Illuminate\Support\Carbon|null $ready_at
- * @property string|null $start_sending_at
+ * @property \Illuminate\Support\Carbon|null $start_sending_at
  * @property \Illuminate\Support\Carbon|null $sent_at
  * @property \Illuminate\Support\Carbon|null $cancelled_at
  * @property \Illuminate\Support\Carbon|null $stopped_at
