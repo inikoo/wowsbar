@@ -13,6 +13,7 @@ import ProspectSelect from '@/Components/Forms/Fields/ProspectsSelect.vue'
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 import { trans } from "laravel-vue-i18n";
+import { isNull } from 'lodash'
 
 const props = defineProps<{
     form: {
@@ -77,6 +78,7 @@ const categories = [
 
 
 const getEstimateRecipients = async (value) => {
+    if(!isNull(value.recipients_recipe.recipient_builder_data.query) || !isNull(value.recipients_recipe.recipient_builder_data.prospects) || !isNull(value.recipients_recipe.recipient_builder_data.custom_prospects_query) ){
         try {
             const response = await axios.get(
                 route('org.crm.shop.prospects.mailshots.estimated-recipients', route().params),
@@ -94,6 +96,8 @@ const getEstimateRecipients = async (value) => {
                 type: "error"
             });
         }
+    }
+    return  { type: value.recipients_recipe.recipient_builder_type, count:0 }
 }
 
 const changeTab=(tabIndex : number)=>{
@@ -121,8 +125,9 @@ const getParams = () => {
 }
 
 const changeWeeksValue= async (value,index)=> {
+    const data = {...props.form.data()}
+    if(!isNull(data.recipients_recipe.recipient_builder_data.query) || !isNull(data.recipients_recipe.recipient_builder_data.prospects) || !isNull(data.recipients_recipe.recipient_builder_data.custom_prospects_query) ){
     try {
-        const data = {...props.form.data()}
         data.recipients_recipe.recipient_builder_data.query.data.prospect_last_contacted.argument = value
         const estimate = await getEstimateRecipients(data);
         if(props.options.query.data[index].id == data.recipients_recipe.recipient_builder_data.query.id) { emits("update:form", {...props.form, ...data}) }
@@ -131,6 +136,7 @@ const changeWeeksValue= async (value,index)=> {
     } catch (error) {
         console.error(error);
     }
+}
 }
 
 onMounted(async() => {
