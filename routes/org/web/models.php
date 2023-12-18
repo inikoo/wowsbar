@@ -143,7 +143,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
 
-        Route::patch('prospect/{prospect:id}', [UpdateProspectEmailUnsubscribed::class, 'inShop'])->name('prospect.unsubscribe.update');
+        Route::patch('prospect/{prospect:id}/unsubscribe', [UpdateProspectEmailUnsubscribed::class, 'inShop'])->name('prospect.unsubscribe.update');
 
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
         Route::post('prospect-mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');

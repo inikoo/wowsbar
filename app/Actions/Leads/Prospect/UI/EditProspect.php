@@ -82,7 +82,7 @@ class EditProspect extends InertiaAction
 
                 'formData' => [
                     'blueprint' => [
-                        'contact_information' => [
+                        'properties' => [
                             'label'  => __('contact information'),
                             'fields' => [
                                 'contact_name'    => [
