@@ -20,6 +20,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Http\Resources\Mail\MailshotEstimatedRecipientsResource;
 use App\Http\Resources\Mail\MailshotResource;
+use App\Http\Resources\Mail\MailshotStatResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -168,7 +169,12 @@ class ShowProspectMailshot extends InertiaAction
                             'buttonGroup' => $iconActions
                         ],
                         ...$action
-                    ]
+                    ],
+                ],
+                'mailshot'      => [
+                    'id' => $mailshot->id,
+                    'state' => $mailshot->state,
+                    'emailEstimated' => MailshotStatResource::make($mailshot->mailshotStats)->number_estimated_dispatched_emails,
                 ],
                 'tabs'                            => [
                     'current'    => $this->tab,

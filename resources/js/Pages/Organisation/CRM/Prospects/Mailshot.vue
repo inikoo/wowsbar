@@ -38,9 +38,14 @@ const props = defineProps<{
             number_estimated_dispatched_emails: number
         }
     },
-    email?: object
     recipients?: object
-    [key: string]: any
+    email?: object
+    mailshot: {
+        id: number
+        state: string
+        emailEstimated: number
+    }
+    // [key: string]: any
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -67,7 +72,7 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <LabelEstimated :emailsEstimated="showcase.stats.number_estimated_dispatched_emails" :idMailshot="showcase.stats.id" :state="showcase.state"/>
+    <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state"/>
 
     <KeepAlive>
         <Transition name="slide-to-right" mode="out-in">

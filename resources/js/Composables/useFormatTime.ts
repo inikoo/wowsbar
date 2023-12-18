@@ -49,6 +49,8 @@ export const useTimeCountdown: any = (dateIso: string, options?: { human?: boole
         end: new Date(dateIso)
     })
 
+    if(isPast(new Date(dateIso))) return false  // If the provided date already passed then return false
+
     if(options?.human) return formatDuration(countdown, options)  // 5 days 23 hours 3 minutes 58 seconds
 
     return countdown  // { "years": 0, "months": 0, "days": 0, "hours": 0, "minutes": 51, "seconds": 0 } 
