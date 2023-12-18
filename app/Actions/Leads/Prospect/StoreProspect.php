@@ -64,21 +64,20 @@ class StoreProspect
         }
 
 
-
-
-
-
-        $isValidEmail=true;
-        if(Arr::get($modelData, 'email', '')!='' &&  !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
-            $isValidEmail=false;
+        $isValidEmail = true;
+        if (Arr::get($modelData, 'email', '') != '' && !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
+            $isValidEmail = false;
         }
         data_set($modelData, 'is_valid_email', $isValidEmail);
 
 
-        if (!$isValidEmail  and !Arr::has($modelData, 'phone')(
-            !Arr::has($modelData, 'state')
-            or Arr::get($modelData, 'state')==ProspectStateEnum::NO_CONTACTED
-        )) {
+        if (
+            !$isValidEmail and
+            !Arr::has($modelData, 'phone')
+            and (!Arr::has($modelData, 'state')
+                or Arr::get($modelData, 'state') == ProspectStateEnum::NO_CONTACTED
+            )
+        ) {
             data_set($modelData, 'state', ProspectStateEnum::FAIL);
             data_set($modelData, 'fail_status', ProspectFailStatusEnum::INVALID);
         }
@@ -107,7 +106,7 @@ class StoreProspect
 
         HydrateModelTypeQueries::dispatch('Prospect')->delay(now()->addSeconds(2));
 
-        if ($tags &&  count($tags)) {
+        if ($tags && count($tags)) {
             SyncTagsProspect::make()->action($prospect, ['tags' => $tags, 'type' => 'crm']);
         }
 
@@ -154,7 +153,7 @@ class StoreProspect
             'address'           => ['sometimes', 'nullable', new ValidAddress()],
             'contact_name'      => ['nullable', 'string', 'max:255'],
             'company_name'      => ['nullable', 'string', 'max:255'],
-            'tags'              => ['sometimes','nullable', 'array'],
+            'tags'              => ['sometimes', 'nullable', 'array'],
             'tags.*'            => ['string'],
             'email'             => [
                 'required_without:phone',
