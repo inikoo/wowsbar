@@ -5,18 +5,18 @@
   -->
 
 <script setup lang="ts">
-import { computed, ref, Ref, reactive, onMounted, onUnmounted } from 'vue';
-import { useLocaleStore } from '@/Stores/locale.js';
-import Timeline from '@/Components/Utils/Timeline.vue'
-import CountUp from 'vue-countup-v3';
-import {trans} from "laravel-vue-i18n";
+import { ref, Ref, reactive, onMounted, onUnmounted } from 'vue'
+import { useLocaleStore } from '@/Stores/locale.js'
+import TimelineWithPlaceholder from '@/Components/Utils/TimelineWithPlaceholder.vue'
+import CountUp from 'vue-countup-v3'
+import {trans} from "laravel-vue-i18n"
 // import Pusher from 'pusher-js'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaperPlane, faDungeon, faSkull } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
-import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime';
+import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime'
 library.add(faPaperPlane, faDungeon, faSkull)
 
 interface DateScheduled {
@@ -64,11 +64,10 @@ const props = defineProps<{
         created_at: string
         updated_at: string
         timeline: {
-            [key: string]: {
-                label: string
-                icon: string | string[]
-            }
-        }
+            label: string
+            icon: string | string[]
+            timestamp: string
+        }[]
     }
     tab?: string
 }>()
@@ -193,9 +192,8 @@ onMounted(() => {
 
 <template>
     <div class="relative">
-
         <div class="py-3 mx-auto px-5 w-full">
-            <!-- <Timeline v-if="data.state === 'sent' || data.state === 'sending' || data.state === 'stopped'" :options="data.timeline" /> -->
+            <TimelineWithPlaceholder :options="data.timeline" />
 
             <!-- Component: Countdown Scheduled -->
             <div v-if="data.state == 'scheduled' && countdown" v-tooltip="useFormatTime(data.schedule_at, {formatTime: 'hms'})" class="mx-auto bg-white overflow-hidden rounded-md border border-gray-200 w-fit divide-y divide-gray-200">
