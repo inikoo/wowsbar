@@ -90,7 +90,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    Echo.private(`org.general`)
+    window.Echo.private(`org.general`)
     .stopListening(`.mailshot.${props.data.id}`)
 })
 
