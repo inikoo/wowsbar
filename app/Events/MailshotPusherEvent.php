@@ -9,11 +9,10 @@ namespace App\Events;
 
 use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class MailshotPusherEvent implements ShouldBroadcast
@@ -26,8 +25,13 @@ class MailshotPusherEvent implements ShouldBroadcast
 
     public function __construct(Mailshot $mailshot)
     {
-        $this->data = 'hello';
+        $this->mailshot = $mailshot;
 
+    }
+
+    public function broadcastWith()
+    {
+        return MailshotResource::make($this->mailshot)->getArray();
     }
 
     public function broadcastOn(): array
@@ -39,7 +43,7 @@ class MailshotPusherEvent implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return 'prospects.dashboard';
+        return 'mailshot.'.$this->mailshot->id;
     }
 
 }

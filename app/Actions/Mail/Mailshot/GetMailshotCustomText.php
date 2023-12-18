@@ -22,17 +22,9 @@ class GetMailshotCustomText
 
         return [
             [
-                'label' => 'Email',
-                'value' => 'email'
+                'name' => 'Raul',
+                'value' => '{{name}}'
             ],
-            [
-                'label' => 'First Name',
-                'value' => 'first_name'
-            ],
-            [
-                'label' => 'Last Name',
-                'value' => 'last_name'
-            ]
         ];
     }
 
