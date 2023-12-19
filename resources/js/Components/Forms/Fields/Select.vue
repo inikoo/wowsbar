@@ -17,7 +17,7 @@ const props = defineProps<{
     fieldData?: {
         placeholder?: string
         required?: boolean
-        mode?: string
+        mode?: "multiple" | "single" | "tags"
 		searchable?: boolean
     }
 }>()
@@ -29,6 +29,7 @@ const props = defineProps<{
 		<div class="relative">
 			<Multiselect
 				v-model="form[fieldName]"
+                @change="form.errors[fieldName] = ''"
 				:class="{ 'pr-8': form.errors[fieldName] || form.recentlySuccessful }"
 				:options="props.options"
 				:placeholder="props.fieldData?.placeholder ?? 'Select your option'"
