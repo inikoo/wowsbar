@@ -8,14 +8,11 @@
 import {Head} from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import {computed, ref} from "vue";
+import { ref , computed} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
-import ModelDetails from "@/Components/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
-import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
-import TableBanners from "@/Components/Tables/TableBanners.vue";
-import FirstBannerWidget from "@/Components/EmptyState/FirstBannerWidget.vue";
+import CMS from '@/Components/CMS/cmsCustomer/CmsCustomer.vue'
 
 import {faSign, faGlobe,faObjectGroup} from '@fal'
 
@@ -37,15 +34,15 @@ const props = defineProps<{
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
+
+
 const component = computed(() => {
 
     const components = {
-        details: ModelDetails,
-        changelog: TableCustomerHistories,
-        banners: props.hasFirstBanner ? FirstBannerWidget : TableBanners
+        cms: CMS,
     };
+    console.log(components)
     return components[currentTab.value];
-
 });
 
 </script>
