@@ -7,7 +7,6 @@
 
 namespace App\Exports\Auth;
 
-use App\Enums\Organisation\Guest\GuestTypeEnum;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
@@ -15,22 +14,8 @@ class GuestsTemplateExport extends Factory implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
             ['Type', 'Username', 'Name', 'Positions', 'Alias', 'Password', 'Reset Password']
         ];
-
-        do {
-            $array[] = [
-                GuestTypeEnum::CONTRACTOR->value,
-                fake()->lexify,
-                fake()->name,
-                'admin',
-                fake()->lexify,
-                fake()->password,
-                true
-            ];
-        } while(count($array) <= 10);
-
-        return $array;
     }
 }
