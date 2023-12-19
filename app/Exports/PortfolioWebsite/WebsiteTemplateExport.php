@@ -7,25 +7,14 @@
 
 namespace App\Exports\PortfolioWebsite;
 
-use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class WebsiteTemplateExport extends Factory implements FromArray
+class WebsiteTemplateExport implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
             ['Code', 'Name', 'Domain']
         ];
-
-        do {
-            $array[] = [
-                fake()->lexify,
-                fake()->name,
-                fake()->domainName,
-            ];
-        } while(count($array) <= 5);
-
-        return $array;
     }
 }
