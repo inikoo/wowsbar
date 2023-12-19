@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 trait WithSendMailshot
 {
-    public function sendEmailWithUnsubscribe(
+    public function sendEmailWithMergeTags(
         DispatchedEmail $dispatchedEmail,
         string $sender,
         string $subject,

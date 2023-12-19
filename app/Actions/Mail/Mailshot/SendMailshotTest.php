@@ -44,7 +44,7 @@ class SendMailshotTest
 
             $unsubscribeUrl = route('org.unsubscribe.mailshot.show', $dispatchedEmail->ulid);
 
-            $dispatchedEmails[] = $this->sendEmailWithUnsubscribe(
+            $dispatchedEmails[] = $this->sendEmailWithMergeTags(
                 $dispatchedEmail,
                 $mailshot->sender(),
                 $mailshot->subject,

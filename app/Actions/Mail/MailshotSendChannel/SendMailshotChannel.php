@@ -60,7 +60,7 @@ class SendMailshotChannel
             $unsubscribeUrl = route('org.unsubscribe.mailshot.show', $recipient->dispatchedEmail->ulid);
 
 
-            $this->sendEmailWithUnsubscribe(
+            $this->sendEmailWithMergeTags(
                 $recipient->dispatchedEmail,
                 $mailshot->sender(),
                 $mailshot->subject,
