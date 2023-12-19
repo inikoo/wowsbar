@@ -14,21 +14,8 @@ class CustomerTemplateExport extends Factory implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
             ['Shop', 'Contact Name', 'Company Name', 'Email', 'Phone', 'Contact Website']
         ];
-
-        do {
-            $array[] = [
-                'awa',
-                fake()->name,
-                fake()->company,
-                fake()->email,
-                fake()->phoneNumber,
-                fake()->domainName
-            ];
-        } while(count($array) <= 5);
-
-        return $array;
     }
 }

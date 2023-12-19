@@ -18,11 +18,20 @@ class DownloadProspectsTemplate
     use AsAction;
     use WithAttributes;
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function handle(): BinaryFileResponse
     {
-        return Excel::download(new ProspectTemplateExport(), 'template.xlsx');
+
+        return Excel::download(new ProspectTemplateExport(), 'prospects_template.xlsx');
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function asController(): BinaryFileResponse
     {
         return $this->handle();

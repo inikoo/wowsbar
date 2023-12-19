@@ -106,7 +106,7 @@ watch(() => props.modelValue, async (newVal) => {
             <div>
                 <div>{{ trans(`Upload your new ${propName}`) }}</div>
                     <div class="flex justify-center">
-                        <a v-if="routes?.download?.name" :href="route(routes?.download?.name, routes?.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit">
+                        <a v-if="routes?.download?.name" :href="route(routes?.download?.name, routes?.download?.parameters)" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" download>
                             <span class="text-xs text-gray-400 group-hover:text-gray-600">
                                 <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                                 {{ trans(`Download template .xlsx`) }}
@@ -119,7 +119,7 @@ watch(() => props.modelValue, async (newVal) => {
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
-                <div 
+                <div
                     @drop="(e: any) => (e.preventDefault(), onUploadFile(e.dataTransfer.files[0]))"
                     @dragover.prevent
                     @dragenter.prevent
