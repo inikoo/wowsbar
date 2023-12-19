@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 
 import Modal from '@/Components/Utils/Modal.vue'
@@ -9,9 +9,7 @@ import { faFileDownload, faDownload } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import axios from 'axios'
 import { useFormatTime } from '@/Composables/useFormatTime'
-import { toRefs } from 'vue'
 import { routeType } from '@/types/route'
-import Button from '@/Components/Elements/Buttons/Button.vue'
 import { Link } from "@inertiajs/vue3"
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
@@ -35,15 +33,34 @@ const emits = defineEmits(['update:modelValue', 'isShowProgress'])
 const isLoadingUpload = ref(false)
 const dataHistoryFileUpload: any = ref([])
 const isLoadingHistory = ref(false)
+const isDraggedFile = ref(false)
+// let inDragZoneTime: any = null
 
-// Running when file is uploaded
-const onUploadFile = async (fileUploaded: any) => {
+// const isOnDropzone = (e) => {
+//     e.preventDefault()
+//     console.log("ondrop")
+//     isDraggedFile.value = true
+//     clearTimeout(inDragZoneTime)
+// }
+
+// const isNotOnDropzone = (e) => {
+//     e.preventDefault()
+//     console.log("not dropppp===")
+//     inDragZoneTime = setTimeout(() => {
+//         console.log('wwww')
+//         isDraggedFile.value = false
+//     }, 1100)
+// }
+
+// Running when file is uploaded or dropped
+const onUploadFile = async (fileUploaded: File) => {
+    isDraggedFile.value = false
     isLoadingUpload.value = true
     try {
         await axios.post(
             route(props.routes.upload.name, props.routes.upload.parameters),
             {
-                file: fileUploaded.target.files[0],
+                file: fileUploaded,
             },
             {
                 headers: { "Content-Type": "multipart/form-data" },
@@ -102,23 +119,31 @@ watch(() => props.modelValue, async (newVal) => {
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
-                <div class="relative flex items-center justify-center rounded-lg border border-dashed border-gray-700/25 px-6 h-48 bg-gray-400/10"
+                <div 
+                    @drop="(e: any) => (e.preventDefault(), onUploadFile(e.dataTransfer.files[0]))"
+                    @dragover.prevent
+                    @dragenter.prevent
+                    @dragleave.prevent
+                    class="relative flex items-center justify-center rounded-lg border border-dashed border-gray-700/25 px-6 h-48 bg-gray-400/10"
                     :class="{'hover:bg-gray-400/20': !isLoadingUpload}"
                 >
                     <!-- Section: Upload area -->
                     <div v-if="!isLoadingUpload">
                         <label for="fileInput"
                             class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
-                            <input type="file" name="file" id="fileInput" class="sr-only" @change="onUploadFile"
+                            <input type="file" name="file" id="fileInput" class="sr-only" @change="(e: any) => onUploadFile(e.target.files[0])"
                                 ref="fileInput" accept=".xlsx, .xls, .csv"/>
+                            <div v-if="isDraggedFile" class="text-2xl text-gray-500 h-full flex justify-center items-center">
+                                Drop your file here
+                            </div>
                         </label>
-                        <div class="text-center text-gray-500">
+                        <div v-if="!isDraggedFile" class="text-center text-gray-500">
                             <FontAwesomeIcon icon="fal fa-file" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                             <div class="mt-2 flex justify-center text-lg font-medium leading-6 ">
                                 <p class="pl-1">{{ trans("Upload file") }}</p>
                             </div>
                             <div class="flex w-fit mx-auto text-sm leading-6 ">
-                                <p class="">{{ trans("Click here") }}</p>
+                                <p class="">{{ trans("Click here or drag & drop on this zone") }}</p>
                             </div>
                             <p class="text-xs">
                                 {{ trans(".csv, .xls, .xlsx") }}
