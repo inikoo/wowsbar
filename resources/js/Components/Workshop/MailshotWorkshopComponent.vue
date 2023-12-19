@@ -143,8 +143,8 @@ defineExpose({
                     <span
                         v-if="!editSubject"
                         @click="editSubject = true"
-                        class="font-semibold text-gray-700"
-                        >{{ title }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm" /></span
+                        class="font-semibold text-gray-700 cursor-pointer"
+                        >{{ title }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm ml-2 cursor-pointer" /></span
                     >
                     <span v-else
                         ><input
