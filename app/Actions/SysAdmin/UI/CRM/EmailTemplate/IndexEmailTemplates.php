@@ -28,7 +28,7 @@ class IndexEmailTemplates extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('title', 'ILIKE', "$value%");
+                $query->whereWith('name', $value);
             });
         });
 
@@ -39,8 +39,8 @@ class IndexEmailTemplates extends InertiaAction
         $queryBuilder = QueryBuilder::for(EmailTemplate::class);
 
         return $queryBuilder
-            ->defaultSort('title')
-            ->allowedSorts(['title', 'id'])
+            ->defaultSort('name')
+            ->allowedSorts(['name', 'id'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -74,9 +74,8 @@ class IndexEmailTemplates extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'title', label: __('title'), canBeHidden: false, sortable: true, searchable: true)
-
-                ->defaultSort('title');
+                ->column(key: 'name', label: __('Name'), canBeHidden: false, sortable: true, searchable: true)
+                ->defaultSort('name');
         };
     }
 
@@ -106,8 +105,8 @@ class IndexEmailTemplates extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('email templates'),
                 'pageHead'    => [
-                    'title'  => __('email templates'),
-                    'actions'=> [
+                    'title'   => __('email templates'),
+                    'actions' => [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' => [
@@ -116,7 +115,7 @@ class IndexEmailTemplates extends InertiaAction
                                     'icon'  => ['fal', 'fa-upload'],
                                     'label' => 'upload',
                                     'route' => [
-                                        'name'       => 'org.models.guests.upload'
+                                        'name' => 'org.models.guests.upload'
                                     ],
                                 ],
                                 [
