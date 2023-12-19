@@ -46,7 +46,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "@headlessui/vue": "^1.7.14",
         "@heroicons/vue": "^2.0.18",
-        "@kyvg/vue3-notification": "^3.0.2",
+        "@kyvg/vue3-notification": "^3.1.2",
         "@popperjs/core": "^2.11.8",
         "@sentry/vue": "^7.77.0",
         "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
