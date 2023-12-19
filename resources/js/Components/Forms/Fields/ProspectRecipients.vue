@@ -145,8 +145,13 @@ onMounted(async() => {
         props.form[props.fieldName].recipient_builder_type = "custom_prospects_query"
         selectedIndex.value = 1
     }else{
+   /*  if (props.options.query.data.length === 0 && !categories.find((item)=>item.name == 'query')) props.form[props.fieldName].recipient_builder_type = "custom_prospects_query" */
      const index = categories.findIndex((item)=>item.name ==  props.form[props.fieldName].recipient_builder_type)
-     if(index != -1)  selectedIndex.value = index
+     if(index != -1) selectedIndex.value = index
+     else{
+        props.form[props.fieldName].recipient_builder_type = categories[0].name
+        selectedIndex.value = 0
+     }
     }
 
     const estimate = await getEstimateRecipients(props.form.data());
