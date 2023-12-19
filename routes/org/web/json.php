@@ -8,10 +8,12 @@
 use App\Actions\Helpers\Tag\GetTagOptions;
 use App\Actions\Leads\Prospect\GetProspectOptions;
 use App\Actions\Mail\EmailTemplate\GetEmailTemplateCompiledLayout;
-use App\Actions\Mail\EmailTemplate\GetEmailTemplateOptions;
+use App\Actions\Mail\EmailTemplate\GetEmailSeededTemplates;
 use Illuminate\Support\Facades\Route;
 
 Route::get('tags', GetTagOptions::class)->name('tags');
 Route::get('prospects', GetProspectOptions::class)->name('prospects');
-Route::get('email/templates', GetEmailTemplateOptions::class)->name('email_templates');
+Route::get('email/templates/seeded', GetEmailSeededTemplates::class)->name('email_templates.seeded');
+//Route::get('email/templates/seeded', GetEmailSeededTemplates::class)->name('email_templates.seeded');
+
 Route::get('email/templates/{emailTemplate:id}/compiled_layout', GetEmailTemplateCompiledLayout::class)->name('email_templates.show.compiled_layout');
