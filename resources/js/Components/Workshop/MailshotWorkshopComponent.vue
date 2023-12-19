@@ -84,6 +84,7 @@ const onEditSubject = async () => {
         props.changeTitle(subject.value)
     } catch (error) {
         console.log(error);
+        editSubject.value = false;
         notify({
             title: "Failed",
             text: "failed to update Subject",
@@ -136,7 +137,7 @@ const onEditSubject = async () => {
                         v-if="!editSubject"
                         @click="editSubject = true"
                         class="font-semibold text-gray-700"
-                        >{{ subject }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm" /></span
+                        >{{ title }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm" /></span
                     >
                     <span v-else
                         ><input

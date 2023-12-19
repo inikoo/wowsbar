@@ -242,7 +242,7 @@ const onSuccess = (response,closedPopover) => {
 
     <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
-    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :changeTitle="(value)=> pageHead.title = value"
+    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :changeTitle="(value)=> {pageHead.title = value, title = value}"
         :loadRoute="loadRoute" :mailshot="mailshot" :updateDetailRoute='updateDetailRoute' :title="title"/>
 </template>
 
