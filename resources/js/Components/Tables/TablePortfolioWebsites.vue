@@ -26,12 +26,8 @@ const props = defineProps<{
 const isModalOpen = ref(false)
 
 function websiteRoute(website: Website) {
-    console.log(route().current())
+
     switch (route().current()) {
-        case 'org.crm.shop.customers.show':
-            return route(
-                'org.crm.shop.customers.show.customer-websites.show',
-                [route().params.shop, route().params.customer, website.slug])
         default:
             return route(
                 'customer.portfolio.websites.show',
@@ -53,7 +49,7 @@ const selectedWebsite = ref({
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: website }">
-            <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
+            <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1 specialUnderlineCustomer">
                 {{ website['name'] }}
             </Link>
         </template>

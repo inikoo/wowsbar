@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Subscriptions\CustomerWebsite\UI\IndexSeoCustomerWebsites;
+use App\Actions\CRM\CustomerWebsite\UI\IndexSeoCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
 use Illuminate\Support\Facades\Route;
 

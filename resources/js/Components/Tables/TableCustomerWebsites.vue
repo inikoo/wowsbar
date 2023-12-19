@@ -11,20 +11,18 @@ import {Website} from "@/types/website";
 
 const props = defineProps<{
     data: object,
-    tab?:string
+    tab?: string
 }>()
 
 
 function websiteRoute(website: Website) {
 
     switch (route().current()) {
-        case  'org.subscriptions.shop.customer-websites.index':
+        case 'org.crm.shop.customers.show':
             return route(
-                'org.subscriptions.shop.customer-websites.show',
-                [
-                    route().params['shop'],
-                    website.slug
-                ]);
+                'org.crm.shop.customers.show.customer-websites.show',
+                [route().params.shop, route().params.customer, website.slug])
+
         case 'org.crm.shop.customers.show.customer-websites.index':
             return route(
                 'org.crm.shop.customers.show.customer-websites.show',
@@ -33,10 +31,7 @@ function websiteRoute(website: Website) {
                     route().params['customer'],
                     website.slug
                 ]);
-        case 'org.subscriptions.index':
-            return route(
-                'org.subscriptions.show',
-                [website.slug]);
+
     }
 }
 

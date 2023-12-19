@@ -17,7 +17,7 @@ enum CustomerTabsEnum: string
 
     case SHOWCASE = 'showcase';
 
-    case PORTFOLIO      = 'portfolio';
+    case WEBSITES       = 'websites';
     case SOCIAL_ACCOUNT = 'social_account';
     case ORDERS         = 'orders';
 
@@ -45,7 +45,7 @@ enum CustomerTabsEnum: string
                 'title' => __('users'),
                 'icon'  => 'fal fa-terminal',
             ],
-            CustomerTabsEnum::PORTFOLIO => [
+            CustomerTabsEnum::WEBSITES => [
                 'title' => __('portfolio websites'),
                 'icon'  => 'fal fa-briefcase',
             ],

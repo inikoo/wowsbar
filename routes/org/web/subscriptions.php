@@ -6,10 +6,10 @@
  */
 
 
-use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
-use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
-use App\Actions\Subscriptions\CustomerWebsite\UI\RemoveCustomerWebsite;
-use App\Actions\Subscriptions\CustomerWebsite\UI\ShowCustomerWebsite;
+use App\Actions\CRM\CustomerWebsite\UI\EditCustomerWebsite;
+use App\Actions\CRM\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\CRM\CustomerWebsite\UI\RemoveCustomerWebsite;
+use App\Actions\CRM\CustomerWebsite\UI\ShowCustomerWebsite;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +35,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
 /*
 Route::get('/{customerWebsite}/banners/create', [CreateBanner::class, 'inCustomerWebsite'])->name('show.banners.create');
-Route::get('/{customerWebsite}/banners', [IndexBanners::class, 'inCustomerWebsite'])->name('show.banners.index');
+Route::get('/{customerWebsite}/banners', [IndexCustomerBanners::class, 'inCustomerWebsite'])->name('show.banners.index');
 
 
 Route::get('/{customerWebsite}/banners/{banner}', [
@@ -53,7 +53,7 @@ Route::get('/{customerWebsite}/banners/{banner}/edit', [
 Route::get('/{customerWebsite}/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inCustomerWebsite'])->name('show.banners.workshop');
 Route::post('/{customerWebsite}/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBannerInCustomerWebsite'])->name('show.banners.workshop.images.store');
 Route::get('/{customerWebsite}/banners/{banner}/delete', [RemoveBanner::class, 'inCustomerWebsite'])->withTrashed()->name('show.banners.remove');
-Route::get('/banners', [IndexBanners::class, 'inCustomer'])->name('banners.index');
+Route::get('/banners', [IndexCustomerBanners::class, 'inCustomer'])->name('banners.index');
 
 Route::get('/{customerWebsite}/banners/{banner}/snapshots', [IndexSnapshots::class, 'inWebsite'])->name('snapshots.index');
 Route::get('/{customerWebsite}/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inWebsite'])->name('snapshots.show');

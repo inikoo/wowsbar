@@ -15,7 +15,7 @@ enum BannersPortfolioWebsiteTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE               = 'showcase';
+
     case BANNERS                = 'banners';
 
     case CHANGELOG            = 'changelog';
@@ -24,10 +24,7 @@ enum BannersPortfolioWebsiteTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            BannersPortfolioWebsiteTabsEnum::SHOWCASE => [
-                'title' => __('website'),
-                'icon'  => 'fas fa-info-circle',
-            ],
+
             BannersPortfolioWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
                 'icon'  => 'fal fa-sign',

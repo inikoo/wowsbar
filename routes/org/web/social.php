@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Subscriptions\CustomerWebsite\UI\IndexSocialCustomerWebsites;
+use App\Actions\CRM\CustomerWebsite\UI\IndexSocialCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowSocialDashboard;
 use Illuminate\Support\Facades\Route;
 

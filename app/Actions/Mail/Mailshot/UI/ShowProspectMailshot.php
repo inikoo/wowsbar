@@ -173,8 +173,8 @@ class ShowProspectMailshot extends InertiaAction
                     ],
                 ],
                 'mailshot'      => [
-                    'id' => $mailshot->id,
-                    'state' => $mailshot->state,
+                    'id'             => $mailshot->id,
+                    'state'          => $mailshot->state,
                     'emailEstimated' => MailshotStatResource::make($mailshot->mailshotStats)->number_estimated_dispatched_emails,
                 ],
                 'tabs'                            => [
@@ -260,7 +260,7 @@ class ShowProspectMailshot extends InertiaAction
     private function getEmailPreview(Mailshot $mailshot): array
     {
         $layout = $mailshot->layout;
-        $html = Arr::get($layout, 'html');
+        $html   = Arr::get($layout, 'html');
 
         return [
             'sender'    => $mailshot->sender(),

@@ -81,66 +81,6 @@ class GetLayout
 
         $websiteSubNav = [];
 
-        if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0) {
-            $websiteSubNav['prospects'] = [
-                'scope'   => 'prospects',
-                'icon'    => ['fal', 'fa-transporter'],
-                'label'   => __('Leads'),
-                'route'   => 'customer.prospects.dashboard',
-                'topMenu' => [
-                    'subSections' => [
-                        [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label' => __('websites'),
-                            'route' => [
-                                'name' => 'customer.prospects.websites.index',
-                            ]
-                        ],
-                    ],
-                ]
-            ];
-        }
-
-        if ($customerUser->hasPermissionTo('portfolio.seo.view') && $number_portfolio_websites > 0) {
-            $websiteSubNav['seo'] = [
-                'scope'   => 'seo',
-                'icon'    => ['fab', 'fa-google'],
-                'label'   => __('SEO'),
-                'route'   => 'customer.seo.dashboard',
-                'topMenu' => [
-                    'subSections' => [
-                        [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label' => __('websites'),
-                            'route' => [
-                                'name' => 'customer.seo.websites.index',
-                            ]
-                        ],
-                    ],
-                ]
-            ];
-        }
-
-        if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites > 0) {
-            $websiteSubNav['ppc'] = [
-                'scope'   => 'ppc',
-                'icon'    => ['fal', 'fa-ad'],
-                'label'   => __('Google Ads'),
-                'route'   => 'customer.ppc.dashboard',
-                'topMenu' => [
-                    'subSections' => [
-                        [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label' => __('websites'),
-                            'route' => [
-                                'name' => 'customer.ppc.websites.index',
-                            ]
-                        ],
-                    ],
-                ]
-            ];
-        }
-
         if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites > 0) {
 
             $websiteSubNav['banners'] = [
@@ -188,6 +128,69 @@ class GetLayout
 
             ];
         }
+
+
+        if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0 and false) {
+            $websiteSubNav['prospects'] = [
+                'scope'   => 'prospects',
+                'icon'    => ['fal', 'fa-transporter'],
+                'label'   => __('Leads'),
+                'route'   => 'customer.prospects.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
+                    ],
+                ]
+            ];
+        }
+
+        if ($customerUser->hasPermissionTo('portfolio.seo.view') && $number_portfolio_websites > 0 and false) {
+            $websiteSubNav['seo'] = [
+                'scope'   => 'seo',
+                'icon'    => ['fab', 'fa-google'],
+                'label'   => __('SEO'),
+                'route'   => 'customer.seo.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.seo.websites.index',
+                            ]
+                        ],
+                    ],
+                ]
+            ];
+        }
+
+        if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites > 0 and false) {
+            $websiteSubNav['ppc'] = [
+                'scope'   => 'ppc',
+                'icon'    => ['fal', 'fa-ad'],
+                'label'   => __('Google Ads'),
+                'route'   => 'customer.ppc.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.ppc.websites.index',
+                            ]
+                        ],
+                    ],
+                ]
+            ];
+        }
+
+
 
         // Websites
         if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {

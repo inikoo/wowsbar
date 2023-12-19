@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Mon, 18 Dec 2023 20:36:50 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CaaS\Banners\UI;
+namespace App\Actions\CRM\CustomerBanners\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
@@ -16,9 +16,9 @@ use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\SysAdmin\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;

@@ -61,9 +61,9 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
-        $customer = $request->get('customer');
-
-        $firstBanners = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
+        $customer      = $request->get('customer');
+        $subNavigation = $this->getSubNavigation($request);
+        $firstBanners  = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
 
         $inertia = Inertia::render(
             'Portfolio/PortfolioWebsite',
@@ -78,7 +78,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     'next'     => $this->getNext($portfolioWebsite, $request),
                 ],
                 'pageHead'       => [
-                    'title'       => '$portfolioWebsite->name',
+                    'title'       => $portfolioWebsite->name,
                     'icon'        => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
@@ -87,6 +87,7 @@ class ShowPortfolioWebsite extends InertiaAction
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
+                    'subNavigation'    => $subNavigation,
                 ],
                 'tabs'           => [
                     'current'    => $this->tab,
@@ -136,6 +137,58 @@ class ShowPortfolioWebsite extends InertiaAction
 
         return $inertia;
     }
+
+
+    public function getSubNavigation(ActionRequest $request): array
+    {
+        $meta = [];
+
+
+        $meta[] = [
+            'href'     => [
+                'name'       => 'customer.portfolio.websites.show',
+                'parameters' => array_merge(
+                    $request->route()->originalParameters(),
+                    [
+                        '_query' => [
+                            'tab' => 'prospects'
+                        ]
+                    ]
+                )
+            ],
+
+            'label'    => __('Website'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-globe',
+                'tooltip' => __('website')
+            ]
+        ];
+
+        $meta[] = [
+            'href'     => [
+                'name'       => 'customer.seo.dashboard',
+                'parameters' => array_merge(
+                    $request->route()->originalParameters(),
+                    [
+                        '_query' => [
+                            'tab' => 'prospects'
+                        ]
+                    ]
+                )
+            ],
+            'number'   => 3,
+            'label'    => __('Webpages'),
+            'leftIcon' => [
+                'icon'    => 'fal fa-browser',
+                'tooltip' => __('webpages')
+            ]
+        ];
+
+
+
+        return $meta;
+    }
+
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
     {

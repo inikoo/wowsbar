@@ -1,24 +1,24 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 18 Dec 2023 20:31:36 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Subscriptions\CustomerWebsite\UI;
+namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
+use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
-use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Market\Shop;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -139,12 +139,14 @@ class IndexCustomerWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'slug', label: __('code'), sortable: true);
 
-            if(class_basename($parent)!='Customer') {
+            if (class_basename($parent) != 'Customer') {
                 $table->column(key: 'customer_name', label: __('customer'), sortable: true);
             }
-            $table->column(key: 'name', label: __('name'), sortable: true)
-            ->column(key: 'url', label: __('url'), sortable: true)
-            ->defaultSort('slug');
+            $table
+                ->column(key: 'slug', label: __('Code'), sortable: true)
+                ->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'url', label: __('url'), sortable: true)
+                ->defaultSort('slug');
         };
     }
 
@@ -156,7 +158,7 @@ class IndexCustomerWebsites extends InertiaAction
 
         $title = __('customers websites');
 
-        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops>1) {
+        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops > 1) {
             $container = [
                 'icon'    => ['fal', 'fa-store-alt'],
                 'tooltip' => __('Shop'),
@@ -280,8 +282,8 @@ class IndexCustomerWebsites extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name'      => 'org.subscriptions.shop.customer-websites.index',
-                        'parameters'=> $routeParameters
+                        'name'       => 'org.subscriptions.shop.customer-websites.index',
+                        'parameters' => $routeParameters
                     ]
                 ),
             ),
