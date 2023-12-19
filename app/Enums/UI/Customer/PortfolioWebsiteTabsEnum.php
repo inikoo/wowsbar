@@ -16,25 +16,32 @@ enum PortfolioWebsiteTabsEnum: string
     use HasTabs;
 
     case SHOWCASE               = 'showcase';
+    case CMS                    = 'cms';
+    // case SEO                    = 'seo';
+    //case GOOGLE_ADS             = 'google_ads';
+    // case LEADS                  = 'leads';
+
+    case CHANGELOG              = 'changelog';
     case BANNERS                = 'banners';
-    case SEO                    = 'seo';
-    case GOOGLE_ADS             = 'google_ads';
-    case LEADS                  = 'leads';
-
-    case CHANGELOG            = 'changelog';
-
 
     public function blueprint(): array
     {
         return match ($this) {
             PortfolioWebsiteTabsEnum::SHOWCASE => [
-                'title' => __('website'),
-                'icon'  => 'fas fa-info-circle',
+                'title' => __('dashboard'),
+                'icon'  => 'fal fa-tachometer-alt',
             ],
             PortfolioWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
                 'icon'  => 'fal fa-sign',
+                'type'  => 'icon',
+                'align' => 'right',
             ],
+            PortfolioWebsiteTabsEnum::CMS => [
+                'title' => __('CMS'),
+                'icon'  => 'fal fa-object-group',
+            ],
+            /*
             PortfolioWebsiteTabsEnum::LEADS => [
                 'title' => __('leads'),
                 'icon'  => 'fal fa-transporter',
@@ -47,7 +54,7 @@ enum PortfolioWebsiteTabsEnum: string
                 'title' => __('google Ads'),
                 'icon'  => 'fal fa-bullseye',
             ],
-
+*/
             PortfolioWebsiteTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',

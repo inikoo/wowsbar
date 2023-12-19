@@ -48,9 +48,9 @@ const selectedWebsite = ref({
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(slug)="{ item: website }">
-            <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
-                {{ website['slug'] }}
+        <template #cell(name)="{ item: website }">
+            <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1 specialUnderlineCustomer">
+                {{ website['name'] }}
             </Link>
         </template>
 
