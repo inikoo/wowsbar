@@ -14,22 +14,8 @@ class ProspectTemplateExport extends Factory implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
             ['Code', 'Contact Name', 'Company Name', 'Email', 'Phone', 'Contact Website', 'Tags']
         ];
-
-        do {
-            $array[] = [
-                fake()->lexify,
-                fake()->name,
-                fake()->company,
-                fake()->email,
-                '+32123456' . rand(11, 99),
-                fake()->domainName,
-                'tags-1, tags-2, tags-3'
-            ];
-        } while(count($array) <= 5);
-
-        return $array;
     }
 }
