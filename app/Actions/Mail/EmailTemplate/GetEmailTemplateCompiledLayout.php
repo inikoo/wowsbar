@@ -29,7 +29,6 @@ class GetEmailTemplateCompiledLayout extends InertiaAction
 
     public function asController(EmailTemplate $emailTemplate): array
     {
-
         return $this->handle($emailTemplate);
     }
 

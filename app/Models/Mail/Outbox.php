@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -40,6 +41,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $source_id
  * @property-read Collection<int, \App\Models\Mail\DispatchedEmail> $dispatchedEmails
  * @property-read int|null $dispatched_emails_count
+ * @property-read Collection<int, \App\Models\Mail\EmailTemplate> $emailTemplates
+ * @property-read int|null $email_templates_count
  * @property-read Collection<int, \App\Models\Mail\Mailshot> $mailshots
  * @property-read int|null $mailshots_count
  * @property-read Shop|null $shop
@@ -122,6 +125,12 @@ class Outbox extends Model
     {
         return $this->hasMany(Mailshot::class);
     }
+
+    public function emailTemplates(): MorphMany
+    {
+        return $this->morphMany(EmailTemplate::class, 'parent');
+    }
+
 
     public function dispatchedEmails(): HasMany
     {

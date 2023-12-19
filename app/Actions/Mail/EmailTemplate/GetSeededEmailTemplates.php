@@ -14,7 +14,7 @@ use App\Models\Mail\EmailTemplateCategory;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
-class GetEmailSeededTemplates extends InertiaAction
+class GetSeededEmailTemplates extends InertiaAction
 {
     use AsObject;
 

@@ -30,9 +30,11 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $uploaded_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\UploadRecord> $records
- * @property-read OrganisationUser $user
  * @property-read int|null $records_count
+ * @property-read OrganisationUser $user
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Upload query()
