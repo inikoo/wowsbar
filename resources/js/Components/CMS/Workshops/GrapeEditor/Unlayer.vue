@@ -2,6 +2,7 @@
 import { onMounted, defineExpose, ref } from "vue";
 import { loadScript, getNextEditorId, useUnlayer } from "./script-loader";
 import axios from "axios"
+import { notify } from "@kyvg/vue3-notification";
 
 const props = withDefaults(defineProps<{
     updateRoute?: Object;
@@ -16,6 +17,7 @@ const editorId = getNextEditorId();
 // variable untuk menyimpan instance editor
 let editor = null;
 const editorRef = ref(null);
+const loadingReady = ref(true)
 
 
 // on mount load editor unlayer
@@ -49,6 +51,11 @@ const Load = async () => {
         }
     } catch (error) {
         console.log(error)
+        notify({
+            title: "Failed",
+            text: "failed to get data",
+            type: "error",
+        });
     }
 }
 
@@ -126,6 +133,11 @@ onMounted(async () => {
         })
     })
 
+    //onready
+    editor.addEventListener('editor:ready', function () {
+        loadingReady.value = false
+    });
+
     //loadData
     const load = await Load();
     editor.loadDesign(load);
@@ -171,8 +183,10 @@ onMounted(async () => {
 
 defineExpose({
     editor : editor, 
-    setToNewTemplate : setToNewTemplate
+    setToNewTemplate : setToNewTemplate,
+    ready : loadingReady
 })
+
 
 </script>
 

@@ -16,6 +16,8 @@ class ImportUpload
 {
     use AsAction;
 
+    public string $jobQueue = 'default_long';
+
     public function handle(UploadedFile|string $file, $import): void
     {
         Excel::import(

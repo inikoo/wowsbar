@@ -5,10 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref , defineExpose } from "vue";
 import GrapeEditor from "@/Components/CMS/Workshops/GrapeEditor/MJML.vue";
 import Unlayer from "@/Components/CMS/Workshops/GrapeEditor/Unlayer.vue";
-import { cloneDeep } from "lodash";
 import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
 import { trans } from "laravel-vue-i18n";
 import { useLocaleStore } from "@/Stores/locale";
@@ -20,8 +19,9 @@ import Modal from "@/Components/Utils/Modal.vue";
 import TemplateMailshot from "@/Components/CMS/TemplateMailshot/TemplateMailshot.vue";
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
+import { faSpinnerThird } from '@fad'
 
-library.add(faThLarge, faEdit);
+library.add(faThLarge, faEdit, faSpinnerThird);
 const props = defineProps<{
     title: string;
     updateRoute: object;
@@ -37,7 +37,7 @@ const openTemplates = ref(false);
 const editorRef = ref(null);
 const subject = ref(props.title)
 const emits = defineEmits();
-const subjectInput = ref(null)
+const loadingState = ref(false)
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -48,7 +48,6 @@ const getComponent = (componentName: string) => {
 };
 
 const changeTemplate = (template) => {
-    console.log(template);
     if (editorRef.value.setToNewTemplate)
         editorRef.value.setToNewTemplate(
             JSON.parse(JSON.stringify(template.compiled.html.design))
@@ -75,6 +74,7 @@ const StoreTemplate = async (template) => {
 
 
 const onEditSubject = async () => {
+    loadingState.value = true
     try {
         const response = await axios.post(
             route(props.updateDetailRoute.name, props.updateDetailRoute.parameters),
@@ -82,8 +82,11 @@ const onEditSubject = async () => {
         );
         editSubject.value = false;
         props.changeTitle(subject.value)
+        loadingState.value = false
     } catch (error) {
         console.log(error);
+        editSubject.value = false;
+        loadingState.value = false
         notify({
             title: "Failed",
             text: "failed to update Subject",
@@ -91,6 +94,11 @@ const onEditSubject = async () => {
         });
     }
 }
+
+defineExpose({
+    editor : editorRef, 
+})
+
 
 </script>
 
@@ -136,7 +144,7 @@ const onEditSubject = async () => {
                         v-if="!editSubject"
                         @click="editSubject = true"
                         class="font-semibold text-gray-700"
-                        >{{ subject }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm" /></span
+                        >{{ title }}  <font-awesome-icon :icon="['fas', 'edit']" class="text-gray-300 text-sm" /></span
                     >
                     <span v-else
                         ><input
@@ -146,7 +154,7 @@ const onEditSubject = async () => {
                             @blur="onEditSubject"
                             @keyup.enter="onEditSubject"
                             class="appearance-none bg-transparent border-none focus:outline-none focus:border-none p-0"
-                    /></span>
+                    /> <FontAwesomeIcon v-if="loadingState" icon='fad fa-spinner-third' aria-hidden="true" /></span>
                 </div>
             </div>
         </template>

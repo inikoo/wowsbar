@@ -48,8 +48,7 @@ const props = defineProps<{
 const OpenModal = ref(false)
 const date = ref(new Date())
 const isSendTestLoading = ref(false)
-
-console.log(props.pageHead)
+const editorRef = ref(null);
 
 
 const getLocalStorage = () => {
@@ -157,7 +156,7 @@ const onSuccess = (response,closedPopover) => {
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template  v-if="!mailshot.is_layout_blank" #other="{ dataPageHead: head }">
+        <template  v-if="!mailshot.is_layout_blank && !get(editorRef,['editor','ready'],false)" #other="{ dataPageHead: head }">
             <div class="relative">
                 <Popover :width="'w-full'" position="right-[-170px]" ref="_popover">
                     <template #button>
@@ -242,7 +241,7 @@ const onSuccess = (response,closedPopover) => {
 
     <!-- <LabelEstimated :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails" /> -->
 
-    <MailshotWorkshopComponent :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :changeTitle="(value)=> pageHead.title = value"
+    <MailshotWorkshopComponent  ref="editorRef" :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :changeTitle="(value)=> {pageHead.title = value, title = value}"
         :loadRoute="loadRoute" :mailshot="mailshot" :updateDetailRoute='updateDetailRoute' :title="title"/>
 </template>
 
