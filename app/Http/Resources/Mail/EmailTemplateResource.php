@@ -30,8 +30,7 @@ class EmailTemplateResource extends JsonResource
 
         return [
             'slug'            => $emailTemplate->slug,
-            'title'           => $emailTemplate->title,
-            'compiled'        => $emailTemplate->compiled,
+            'title'           => $emailTemplate->name,
             'image'           => $image ? GetPictureSources::run($image) : null,
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
 
