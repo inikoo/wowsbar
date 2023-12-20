@@ -52,7 +52,6 @@ use App\Actions\Mail\EmailTemplate\StoreEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\DeleteMailshot;
-use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\ResumeMailshot;
 use App\Actions\Mail\Mailshot\SendMailshot;
 use App\Actions\Mail\Mailshot\SendMailshotTest;
@@ -231,7 +230,6 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
 
-    Route::get('/custom/texts', GetMailshotCustomText::class)->name('custom.text');
 });
 
 Route::prefix('email-templates')->as('email-templates.')->group(function () {

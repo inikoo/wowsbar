@@ -14,8 +14,7 @@ trait WithProspectMailshotNavigation
 {
     public function getPrevious(Mailshot $mailshot, ActionRequest $request): ?array
     {
-        $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug')->first();
-
+        $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
@@ -23,7 +22,6 @@ trait WithProspectMailshotNavigation
     public function getNext(Mailshot $mailshot, ActionRequest $request): ?array
     {
         $next = Mailshot::where('slug', '>', $mailshot->slug)->orderBy('slug')->first();
-
 
         return $this->getNavigation($next, $request->route()->getName());
     }
