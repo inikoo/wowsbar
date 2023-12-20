@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -46,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, \App\Models\Mail\Mailshot> $mailshots
  * @property-read int|null $mailshots_count
  * @property-read Shop|null $shop
+ * @property-read \App\Models\Mail\EmailTemplate|null $template
  * @property-read \App\Models\Mail\OutboxStats|null $stats
  * @method static Builder|Outbox newModelQuery()
  * @method static Builder|Outbox newQuery()
