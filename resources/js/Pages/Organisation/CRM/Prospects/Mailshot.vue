@@ -124,7 +124,7 @@ onUnmounted(() => {
 <template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead" />
-    
+
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state">
         <template #rightSide>
