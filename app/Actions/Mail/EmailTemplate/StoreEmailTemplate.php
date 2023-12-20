@@ -59,18 +59,11 @@ class StoreEmailTemplate
         ];
     }
 
-    public function prepareForValidation(ActionRequest $request): void
-    {
-        $this->fill([
-            'compiled' => $this->mailshot->layout
-        ]);
-    }
-
     public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
     {
         $this->mailshot = $mailshot;
         $this->fillFromRequest($request);
-        $this->fill(['content', $mailshot->layout]);
+        $this->fill(['compiled', $mailshot->layout]);
         $validated=$this->validateAttributes();
 
 
