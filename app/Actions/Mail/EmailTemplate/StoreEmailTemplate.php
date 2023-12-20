@@ -56,7 +56,8 @@ class StoreEmailTemplate
     {
         return [
             'name'     => ['required', 'string', 'max:255'],
-            'compiled' => ['required', 'array']
+            'compiled' => ['required', 'array'],
+            'type'     => ['required'],
         ];
     }
 
