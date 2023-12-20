@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
     updateRoute?: Object;
     loadRoute?: Object;
     imagesUploadRoute?: Object
+    mailshot?: object
 }>(), {});
 
 const emits = defineEmits(['onSaveToServer']);
@@ -64,7 +65,7 @@ const setToNewTemplate=(template)=>{
 }
 
 const getMergeTagData=()=>{
-    return axios.get(route('org.models.mailshot.custom.text'))
+    return axios.get(route('org.json.mailshot.merge-tags', { id: props.mailshot.id }))
         .then(response => response.data)
         .catch(error => {
             console.error(error);

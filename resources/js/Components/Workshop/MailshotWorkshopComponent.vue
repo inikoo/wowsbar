@@ -172,6 +172,7 @@ defineExpose({
         :loadRoute="loadRoute"
         :imagesUploadRoute="imagesUploadRoute"
         ref="editorRef"
+        :mailshot="mailshot"
     >
     </component>
 
