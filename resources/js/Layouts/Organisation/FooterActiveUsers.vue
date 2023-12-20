@@ -10,7 +10,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { faBriefcase} from '@fal'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { liveOrganisationUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users-org'
 
 library.add(faBriefcase);
 

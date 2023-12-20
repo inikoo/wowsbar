@@ -7,7 +7,7 @@
 <script setup lang="ts">
 // import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
-import { liveOrganisationUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users-org'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'

@@ -1,4 +1,4 @@
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia';
 // import {usePage} from '@inertiajs/vue3';
 
 export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {

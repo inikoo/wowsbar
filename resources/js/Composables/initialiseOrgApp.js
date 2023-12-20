@@ -11,7 +11,7 @@ import { watchEffect } from "vue"
 
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
-import { liveOrganisationUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users-org'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal.js'
 import { useEchoOrgGeneral } from '@/Stores/echo-org-general.js'
 
@@ -35,8 +35,7 @@ export const initialiseOrgApp = () => {
             if(usePage().props.auth.user?.id) {
                 // console.log("===== ada auth id =====")
                 axios.post(
-                    route('org.models.live-organisation-users-current-page.store',
-                        usePage().props.auth.user?.id  ),
+                    route('org.models.live-organisation-users-current-page.store', usePage().props.auth.user?.id),
                     {
                         'label': event.detail.page.props.title
                     }
@@ -93,10 +92,8 @@ export const initialiseOrgApp = () => {
         let moduleName = layout.currentRoute.split(".")
         layout.currentModule = moduleName[1]
 
-
         layout.booted = true
-
-
     })
+
     return layout
 }

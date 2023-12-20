@@ -10,7 +10,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import OrgTopBarNavs from "@/Layouts/Organisation/OrgTopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { get } from 'lodash'
-import { liveOrganisationUsers } from '@/Stores/active-users'
+import { liveOrganisationUsers } from '@/Stores/active-users-org'
 
 
 import {
