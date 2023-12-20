@@ -29,7 +29,7 @@ const props = defineProps<{
 <template>
     <div class="px-5 py-1 w-full border-b flex justify-between">
         <slot name="content">
-            <div class="text-gray-500">
+            <div class="text-gray-500 place-self-center">
                 {{ trans('Estimated recipients') }}:
                 <span class="font-semibold text-gray-700">{{ useLocaleStore().number(emailsEstimated) }}</span>
             </div>

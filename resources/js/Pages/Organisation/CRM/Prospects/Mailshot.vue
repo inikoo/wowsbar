@@ -127,8 +127,8 @@ onUnmounted(() => {
     
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state">
-        <template #rightSide>
-            <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'tertiary'" />
+        <template #rightSide v-if="mailshot.state == 'sent'">
+            <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'secondary'" />
         </template>
     </LabelEstimated>
 
