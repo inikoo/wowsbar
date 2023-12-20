@@ -55,6 +55,7 @@ const props = defineProps<{
         state: string
         emailEstimated: number
     }
+    saved_as_template: boolean
     // [key: string]: any
 }>()
 
@@ -63,6 +64,7 @@ const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab);
 const isAddTemplateOpen = ref(false)
 const isLoading = ref(false)
 const templateName = ref('')
+const templateState = ref(props.saved_as_template)
 
 const component = computed(() => {
 
@@ -85,9 +87,13 @@ const submitAddTemplate = async () => {
             route('org.models.prospect-mailshot.email_templates.store', props.mailshot),
             { name: templateName.value }
         )
-        console.log(response)
+        templateState.value = true
+        
+        setTimeout(() => {
+            isAddTemplateOpen.value = false
+        }, 1000)
         notify({
-            title: "Add email design to template is successfully!",
+            text: "Add email design to template is successfully!",
             // text: error,
             type: 'success'
         })
@@ -127,8 +133,8 @@ onUnmounted(() => {
     
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state">
-        <template #rightSide v-if="mailshot.state == 'sent'">
-            <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'secondary'" />
+        <template #rightSide v-if="mailshot.state == 'sent' && !templateState">
+            <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'tertiary'" />
         </template>
     </LabelEstimated>
 
@@ -140,7 +146,7 @@ onUnmounted(() => {
             </label>
             <PureInput v-model="templateName" placeholder="Input template name" class="max-w-sm" />
             <div class="mx-auto mt-4 w-fit">
-                <Button @click="() => submitAddTemplate()" :style="isLoading ? 'disabled' : templateName ? 'rainbow' : 'disabled'" :loading="isLoading" label="Add" :key="templateName" class="" />
+                <Button @click="() => submitAddTemplate()" :style="isLoading ? 'disabled' : templateState ? 'disabled' : templateName ? 'rainbow' : 'disabled'" :loading="isLoading" label="Add" :key="templateName + isLoading.toString()" class="" />
             </div>
         </div>
     </Modal>
