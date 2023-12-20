@@ -14,19 +14,19 @@ use App\Models\Mail\EmailTemplateCategory;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
-class GetEmailTemplateOptions extends InertiaAction
+class GetSeededEmailTemplates extends InertiaAction
 {
     use AsObject;
 
-    public function handle(ActionRequest $request): array
+    public function handle(?string $category=null): array
     {
         $selectOptions = [];
 
-        /** @var \App\Models\Mail\EmailTemplate $emailTemplates */
-        if($request->get('category') == null) {
+        /** @var EmailTemplate $emailTemplates */
+        if($category== null) {
             $emailTemplates = EmailTemplate::all();
         } else {
-            $emailTemplates = EmailTemplateCategory::where('name', $request->get('category'))->first();
+            $emailTemplates = EmailTemplateCategory::where('name', $category)->first();
             $emailTemplates = $emailTemplates->templates;
         }
 
@@ -37,4 +37,17 @@ class GetEmailTemplateOptions extends InertiaAction
 
         return $selectOptions;
     }
+
+    public function authorize(ActionRequest $request): bool
+    {
+        return true;
+    }
+
+    public function asController(ActionRequest $request): array
+    {
+
+        return $this->handle($request->get('category'));
+    }
+
+
 }

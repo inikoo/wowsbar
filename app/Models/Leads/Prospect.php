@@ -74,6 +74,7 @@ use Spatie\Tags\HasTags;
  * @property bool $can_contact_by_email
  * @property bool $can_contact_by_phone
  * @property bool $can_contact_by_address
+ * @property bool $is_valid_email
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -115,6 +116,7 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Prospect whereIdentityDocumentNumber($value)
  * @method static Builder|Prospect whereIdentityDocumentType($value)
  * @method static Builder|Prospect whereInvoicedAt($value)
+ * @method static Builder|Prospect whereIsValidEmail($value)
  * @method static Builder|Prospect whereLastClickedAt($value)
  * @method static Builder|Prospect whereLastContactedAt($value)
  * @method static Builder|Prospect whereLastOpenedAt($value)
