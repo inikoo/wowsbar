@@ -107,28 +107,9 @@ defineExpose({
         :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails"
         :idMailshot="mailshot.id"
     >
-        <template #content>
-            <div class="flex w-full">
-                <div class="text-gray-500 w-1/2">
-                    {{ trans("Estimated recipients") }}:
-                    <span class="font-semibold text-gray-700">{{
-                        useLocaleStore().number(
-                            mailshot.stats.number_estimated_dispatched_emails
-                        )
-                    }}</span>
-                </div>
-                <div
-                    v-if="!mailshot.is_layout_blank"
-                    class="text-gray-500 w-1/2 flex justify-end"
-                >
-                    <Button
-                        icon="fas fa-th-large"
-                        label="Template"
-                        :style="'tertiary'"
-                        size="xs"
-                        @click="openTemplates = true"
-                    />
-                </div>
+        <template #rightSide>
+            <div v-if="!mailshot.is_layout_blank" class="text-gray-500 w-1/2 flex justify-end">
+                <Button @click="openTemplates = true" icon="fas fa-th-large" label="Template" :style="'tertiary'" size="xs" />
             </div>
         </template>
     </LabelEstimated>
