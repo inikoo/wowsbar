@@ -14,6 +14,7 @@ use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -26,6 +27,7 @@ class StoreEmailTemplate
     private bool $asAction = false;
 
     private Organisation|Shop $parent;
+    private Mailshot $mailshot;
 
     private array $queryRules;
 
@@ -57,9 +59,16 @@ class StoreEmailTemplate
         ];
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        $request->merge([
+            'compiled' => Arr::get($this->mailshot->layout, 'compiled')
+        ]);
+    }
+
     public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
     {
-
+        $this->mailshot = $mailshot;
         $this->fillFromRequest($request);
         $this->fill(['content', $mailshot->layout]);
         $validated=$this->validateAttributes();
