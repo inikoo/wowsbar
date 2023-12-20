@@ -29,6 +29,7 @@ class EmailTemplateResource extends JsonResource
         }
 
         return [
+            'id'              => $emailTemplate->id,
             'slug'            => $emailTemplate->slug,
             'title'           => $emailTemplate->name,
             'image'           => $image ? GetPictureSources::run($image) : null,

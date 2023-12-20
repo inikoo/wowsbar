@@ -5,19 +5,17 @@
   -->
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import axios from 'axios';
-import { notify } from "@kyvg/vue3-notification"
+import { ref } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import { trans } from 'laravel-vue-i18n'
-import Tag from '@/Components/Tag.vue';
-import EmptyState from '@/Components/Utils/EmptyState.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faThLarge, faTreeChristmas, faGlassCheers, faBat, faPlus } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import Image from '@/Components/Image.vue'
-import { get } from 'lodash'
 import { faSpinnerThird } from '@fad'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import TemplatesSeeder from './TemplatesSeeder.vue';
+import { notify } from "@kyvg/vue3-notification"
+import axios from 'axios';
+import SavedTemplates from './SavedTemplates.vue'
 
 library.add(faThLarge, faTreeChristmas, faGlassCheers, faBat, faPlus, faSpinnerThird)
 
@@ -31,112 +29,93 @@ const props = defineProps<{
     changelog?: object,
     showcase?: object,
     snapshots?: object,
+    mailshot : object
 }>()
 
 const emits = defineEmits();
-const loadingState = ref(false)
-const templates = ref([])
-const activeCategory = ref(null)
-
-const getTemplates = async () => {
-    loadingState.value = true
-    try {
-        const response = await axios.get(
-            route('org.json.email.templates', { category: activeCategory.value }),
-        )
-        templates.value = Object.values(response.data)
-        loadingState.value = false
-    } catch (error) {
-        console.log(error)
-        notify({
-            title: "Failed to get Templates",
-            type: "error"
-        });
-        loadingState.value = false
-    }
-}
-
-
-
-const selectTemplate = (template) => {
-    emits("changeTemplate", template);
-}
-
+const selectedIndex = ref(0)
 const categories = [
-    { label: trans('All Template'), value: null, icon: 'fas fa-th-large' },
-    { label: trans('Christmas'), value: 'Christmas', icon: 'fas fa-tree-christmas' },
-    { label: trans('New Year'), value: 'New Year', icon: 'fas fa-glass-cheers' },
-    { label: trans('Halloween'), value: 'Halloween', icon: 'fas fa-bat' },
+    {
+        name: 'templates',
+        label: trans('Templates'),
+        component: TemplatesSeeder,
+    },
+    {
+        name: 'saved_templates',
+        label: trans('Saved Templates'),
+        component: SavedTemplates,
+    },
 ]
 
-watch(activeCategory, () => {
-    getTemplates()
-})
 
-onMounted(() => {
-    getTemplates()
-})
+const getTemplate= async (id) => {
+    console.log(id)
+      try {
+          const response = await axios.get(
+              route('org.json.email_templates.show.compiled_layout', { emailTemplate: id}),
+          )
+          console.log(response)
+          return response.data
+      } catch (error) {
+          console.log(error)
+          notify({
+              title: "Failed to get Templates",
+              type: "error"
+          });
+          return null
+      }
+  }
+
+  const selectTemplate = (template) => {
+    getTemplate(template.id)
+        .then(data => {
+            console.log(data);
+         emits("changeTemplate", data);
+        })
+        .catch(error => {
+            console.error(error);
+            notify({
+              title: "Failed to get Templates",
+              type: "error"
+          });
+        });
+};
 
 </script>
-
+  
 <template >
     <div class="text-center text-2xl font-bold mb-4">{{ trans("Available Templates") }}</div>
-    <div v-if="!loadingState">
-        <div class="flex flex-wrap justify-center items-center gap-4 m-4">
-            <div v-for="category in categories" :key="category.value">
-                <Tag :label="category.label" :theme="category.value == activeCategory ? 5 : 0"
-                    @click="() => activeCategory = category.value">
-                    <template #label>
-                        <FontAwesomeIcon :icon="category.icon" class='' aria-hidden='true' />
+    <TabGroup @change="(index)=>selectedIndex = index"  :selectedIndex="selectedIndex">
+            <TabList class="flex space-x-8 ">
+                <Tab v-for="(category, categoryIndex) in categories" as="template" :key="categoryIndex"
+                    v-slot="{ selected }">
+                    <button :class="[
+                        'whitespace-nowrap border-b-2 py-1.5 px-1 text-sm font-medium focus:ring-0 focus:outline-none',
+                        selected
+                            ? 'border-org-5s00 text-org-500'
+                            : 'border-transparent text-gray-400 hover:border-gray-300',
+                    ]">
                         {{ category.label }}
-                    </template>
-                </Tag>
-            </div>
-        </div>
-        <div v-if="templates.length > 0"
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            <div v-for="template in templates" :key="template.slug" class="relative w-full">
-                <div v-if="template.slug != 'blank'"
-                    class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden">
-                    <Image :src="template.image_thumbnail" :alt="template.title"
-                        class="absolute inset-0 w-full h-full object-cover rounded-lg" />
-                </div>
+                    </button>
+                </Tab>
+            </TabList>
 
-                <div v-else
-                    class="relative pb-[90%] border border-gray-300 rounded-lg overflow-hidden flex justify-center items-center">
-                    <div class="absolute inset-0 w-full h-full object-cover rounded-lg flex justify-center items-center">
-                        <font-awesome-icon :icon="['fas', 'plus']" class="text-4xl text-gray-500" />
-                    </div>
-                </div>
-
-                <div
-                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 hover:opacity-100 transition duration-300">
-                    <div class="text-white text-center">
-                        <Button :label="trans('Use Template')" @click="selectTemplate(template)" />
-                    </div>
-                </div>
-                <span class="flex justify-center p-2 font-bold text-center">{{ template.slug != 'blank' ?
-                    get(template, ['compiled', 'name']) : 'Blank Template' }}</span>
-            </div>
-
-        </div>
-        <div v-else class="p-4">
-            <EmptyState :data="{
-                title: trans('You haven\'t uploaded any templates.'),
-                description: trans(''),
-            }" />
-        </div>
-    </div>
-
-    <div v-else class="flex justify-center align-middle">
-        <FontAwesomeIcon v-if="loadingState" icon='fad fa-spinner-third' class='animate-spin text-[30px]' fixed-width
-            aria-hidden="true" />
-    </div>
-
-    <!-- Handling case when no templates are available -->
+            <TabPanels class="mt-2 h-[600px] overflow-auto">
+                <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
+                    class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none h-full">
+                    <component 
+                    :is="category.component" 
+                    @changeTemplate="selectTemplate"
+                    :mailshot="mailshot"
+                />
+                </TabPanel>
+            </TabPanels>
+    
+        </TabGroup>
 </template>
-
-
-
-
-
+  
+  
+  
+  
+  
+  
