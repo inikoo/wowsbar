@@ -21,7 +21,7 @@ class StopMailshotScheduled
     public function handle(Mailshot $mailshot, array $modelData): Mailshot
     {
         $updateData = array_merge([
-            'state' => MailshotStateEnum::READY,
+            'state'    => MailshotStateEnum::READY,
             'ready_at' => null
         ], $modelData);
 

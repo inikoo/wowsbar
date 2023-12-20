@@ -7,29 +7,29 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class GetMailshotCustomText
+class GetMailshotMergeTags
 {
     use AsAction;
     use WithAttributes;
 
 
-    public function handle(): array
+    public function handle(Mailshot $mailshot): array
     {
-        // TODO: Only for testing (need the actual data from json or database)
 
         return [
             [
-                'name'  => 'Raul',
+                'name'  => __('Name'),
                 'value' => '{{name}}'
             ],
         ];
     }
 
-    public function asController(): array
+    public function asController(Mailshot $mailshot): array
     {
-        return $this->handle();
+        return $this->handle($mailshot);
     }
 }
