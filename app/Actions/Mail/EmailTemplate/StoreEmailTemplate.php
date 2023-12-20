@@ -8,6 +8,7 @@
 namespace App\Actions\Mail\EmailTemplate;
 
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
+use App\Enums\Mail\EmailTemplate\EmailTemplateTypeEnum;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\Outbox;
@@ -55,17 +56,19 @@ class StoreEmailTemplate
     {
         return [
             'name'     => ['required', 'string', 'max:255'],
-            'compiled' => ['required', 'string']
+            'compiled' => ['required', 'array'],
+            'type'     => ['required'],
         ];
     }
 
     public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
     {
         $this->mailshot = $mailshot;
-        $this->fillFromRequest($request);
-        $this->fill(['compiled', $mailshot->layout]);
-        $validated=$this->validateAttributes();
+        $this->fillFromRequest($request)
+            ->fill(['compiled' => $mailshot->layout])
+            ->fill(['type' => EmailTemplateTypeEnum::MARKETING]);
 
+        $validated=$this->validateAttributes();
 
         return  $this->handle($mailshot->outbox, $validated);
     }
