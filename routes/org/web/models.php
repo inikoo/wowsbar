@@ -134,6 +134,8 @@ Route::patch('/product/{product:id}', UpdateProduct::class)->name('product.updat
 Route::delete('/product/{product:id}', UpdateProduct::class)->name('product.delete');
 
 Route::patch('product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
+Route::post('prospect/mailshots/{mailshot:id}/email_template', [StoreEmailTemplate::class, 'fromMailshot'])->name('prospect-mailshot.email_templates.store');
+
 
 Route::prefix('shop')->as('shop.')->group(function () {
     Route::post('', StoreShop::class)->name('store');
@@ -149,7 +151,6 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect/mailshots/settings', UpdateProspectsMailshotSetting::class)->name('prospect-mailshots.settings.update');
         Route::post('prospect/mailshots/settings/email/resend', [SendIdentityEmailVerification::class, 'inShop'])->name('prospect-mailshots.settings.email-verification.resend');
         Route::patch('prospect/mailshots/{mailshot:id}', [UpdateMailshot::class, 'shopProspects'])->name('prospect-mailshot.update');
-        Route::post('prospect/mailshots/{mailshot:id}/email_template', [StoreEmailTemplate::class, 'fromMailshot'])->name('prospect-mailshot.email_templates.store');
 
         Route::post('prospect/mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');
         Route::post('prospect-queries', [StoreProspectQuery::class, 'inShop'])->name('prospect-query.store');
