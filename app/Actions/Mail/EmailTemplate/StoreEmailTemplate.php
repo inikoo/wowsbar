@@ -61,7 +61,7 @@ class StoreEmailTemplate
 
     public function prepareForValidation(ActionRequest $request): void
     {
-        $request->merge([
+        $this->fill([
             'compiled' => $this->mailshot->layout
         ]);
     }
