@@ -59,7 +59,7 @@ const StoreTemplate = async (template) => {
     try {
         const response = await axios.post(
             route(props.updateRoute.name, props.updateRoute.parameters),
-            { data: ["first template"], pagesHtml: template.compiled.html }
+            { data: ["first template"], pagesHtml: template.html }
         );
         props.mailshot.is_layout_blank = false;
     } catch (error) {

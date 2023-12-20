@@ -100,9 +100,9 @@ const getTemplate= async (id) => {
                 </Tab>
             </TabList>
 
-            <TabPanels class="mt-2 h-[600px] overflow-auto">
+            <TabPanels class="mt-2 h-[600px]">
                 <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
-                    class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none h-full">
+                    class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none h-full  overflow-auto">
                     <component 
                     :is="category.component" 
                     @changeTemplate="selectTemplate"
