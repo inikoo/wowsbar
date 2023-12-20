@@ -86,7 +86,7 @@ class MailshotResource extends JsonResource
             'timeline'            => $newTimeline,
             'is_layout_blank'     => blank($mailshot->layout),
             'outbox_id'           => $mailshot->outbox_id,
-            'saved_as_template'   => (bool) $mailshot->outbox->emailTemplates()->first(),
+            'saved_as_template'   => $mailshot->outbox->emailTemplates()->exists(),
         ];
     }
 }
