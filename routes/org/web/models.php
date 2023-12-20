@@ -59,6 +59,7 @@ use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
+use App\Actions\Mail\Mailshot\StopMailshotScheduled;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
@@ -220,6 +221,7 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
 
     Route::post('{mailshot:id}/ready', SetMailshotAsReady::class)->name('state.ready');
+    Route::post('{mailshot:id}/scheduled/stop', StopMailshotScheduled::class)->name('state.scheduled.stop');
     Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
 
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
