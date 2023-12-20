@@ -9,6 +9,8 @@ namespace App\Actions\Mail\EmailTemplate;
 
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
 use App\Models\Mail\EmailTemplate;
+use App\Models\Mail\Mailshot;
+use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
@@ -27,8 +29,9 @@ class StoreEmailTemplate
 
     private array $queryRules;
 
-    public function handle(Organisation|Shop $parent, array $modelData): EmailTemplate
+    public function handle(Organisation|Shop|Outbox $parent, array $modelData): EmailTemplate
     {
+        /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
 
 
@@ -42,8 +45,8 @@ class StoreEmailTemplate
         if ($this->asAction) {
             return true;
         }
-
-        return $request->user()->hasPermissionTo("crm.prospects.edit");
+        // find a better way to do this
+        return true;//$request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array
@@ -54,20 +57,25 @@ class StoreEmailTemplate
         ];
     }
 
+    public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
+    {
+
+        $this->fillFromRequest($request);
+        $this->fill(['content', $mailshot->layout]);
+        $validated=$this->validateAttributes();
+
+
+        return  $this->handle($mailshot->outbox, $validated);
+    }
+
     public function action(Organisation|Shop $parent, $modelData): EmailTemplate
     {
         return $this->handle($parent, $modelData);
     }
 
-    public function jsonResponse(EmailTemplate $emailTemplate): string
+    public function jsonResponse(EmailTemplate $emailTemplate): EmailTemplate
     {
-        return route(
-            'org.crm.shop.mailroom.templates.workshop',
-            [
-                $emailTemplate->parent->slug,
-                $emailTemplate->slug
-            ]
-        );
+        return $emailTemplate;
     }
 
     public function htmlResponse(EmailTemplate $emailTemplate): RedirectResponse
