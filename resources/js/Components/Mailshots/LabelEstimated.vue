@@ -35,6 +35,7 @@ const props = defineProps<{
             </div>
 
             <!-- Create progress bar here (if state === 'sending') -->
+            <slot name="rightSide" />
         </slot>
     </div>
 </template>

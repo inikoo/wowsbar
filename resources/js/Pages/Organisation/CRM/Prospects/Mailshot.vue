@@ -15,15 +15,20 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import MailshotShowcase from "@/Components/Showcases/Organisation/MailshotShowcase.vue";
 import EmailPreview from "@/Components/Email/EmailPreview.vue";
-import {faStop, faPlay, faPaperPlane as fasPaperPlane} from '@fas'
+import {faStop, faPlay, faPaperPlane as fasPaperPlane, faBookmark} from '@fas'
 
 import {faEnvelopeSquare, faAt, faPaperPlane, faSpellCheck} from '@fal'
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableDispatchedEmails from "@/Components/Tables/TableDispatchedEmails.vue";
 import LabelEstimated from "@/Components/Mailshots/LabelEstimated.vue";
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
+import Modal from '@/Components/Utils/Modal.vue'
+import PureInput from '@/Components/Pure/PureInput.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import axios from 'axios'
+import { notify } from '@kyvg/vue3-notification'
 
-library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faSpellCheck)
+library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faBookmark, faSpellCheck)
 
 const props = defineProps<{
     title: string,
@@ -55,6 +60,9 @@ const props = defineProps<{
 
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab);
+const isAddTemplateOpen = ref(false)
+const isLoading = ref(false)
+const templateName = ref('')
 
 const component = computed(() => {
 
@@ -69,6 +77,31 @@ const component = computed(() => {
 
 });
 
+// When click on button Add to Template
+const submitAddTemplate = async () => {
+    isLoading.value = true
+    try {
+        const response = await axios.post(
+            route('org.models.prospect-mailshot.email_templates.store', props.mailshot),
+            { name: templateName.value }
+        )
+        console.log(response)
+        notify({
+            title: "Add email design to template is successfully!",
+            // text: error,
+            type: 'success'
+        })
+    } catch (error: any) {
+        notify({
+            title: "Can't add to template",
+            text: error,
+            type: 'error'
+        })
+    } finally {
+        isLoading.value = false
+    }
+}
+
 onMounted(() => {
     window.Echo.private('org.general')
         .listen(`.mailshot.${props.mailshot.id}`, (e: any) => {
@@ -77,7 +110,6 @@ onMounted(() => {
                 timelineSent.timestamp = e.sent_at  // update the timline data
                 props.pageHead.actions = []  // clear the button 'Stop'
             }
-
         })
 })
 
@@ -91,9 +123,27 @@ onUnmounted(() => {
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)"/>
-    <PageHeading :data="pageHead"></PageHeading>
+    <PageHeading :data="pageHead" />
+    
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state"/>
+    <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state">
+        <template #rightSide>
+            <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'tertiary'" />
+        </template>
+    </LabelEstimated>
+
+    <!-- Modal: Add to template -->
+    <Modal :isOpen="isAddTemplateOpen" @onClose="isAddTemplateOpen = false">
+        <div class="max-w-sm mx-auto">
+            <label for="" class=" text-gray-600">
+                Template name:
+            </label>
+            <PureInput v-model="templateName" placeholder="Input template name" class="max-w-sm" />
+            <div class="mx-auto mt-4 w-fit">
+                <Button @click="() => submitAddTemplate()" :style="isLoading ? 'disabled' : templateName ? 'rainbow' : 'disabled'" :loading="isLoading" label="Add" :key="templateName" class="" />
+            </div>
+        </div>
+    </Modal>
 
     <KeepAlive>
         <Transition name="slide-to-right" mode="out-in">
