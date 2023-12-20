@@ -7,32 +7,14 @@
 
 namespace App\Exports\Market;
 
-use App\Enums\Catalogue\Product\ProductStateEnum;
-use App\Enums\Catalogue\Product\ProductTypeEnum;
-use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class ProductTemplateExport extends Factory implements FromArray
+class ProductTemplateExport implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
             ['Code', 'Unit', 'Price', 'Name', 'State', 'Type', 'Description']
         ];
-
-        do {
-            $array[] = [
-                fake()->lexify,
-                fake()->numerify,
-                fake()->numerify,
-                fake()->numerify,
-                fake()->name,
-                ProductStateEnum::ACTIVE->value,
-                ProductTypeEnum::SUBSCRIPTION->value,
-                fake()->text(1500)
-            ];
-        } while(count($array) <= 5);
-
-        return $array;
     }
 }

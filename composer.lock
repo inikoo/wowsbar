@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b2f30d823194689440dd376e7d12ff8",
+    "content-hash": "2c816b2963dc5b806856e6046693a751",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -121,16 +121,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.294.2",
+            "version": "3.294.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "e6a63e39fed0fd9fb553af42e99aaf8d7c104c88"
+                "reference": "05761093c61ca7a02c1b5ae9be279bf69360e060"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e6a63e39fed0fd9fb553af42e99aaf8d7c104c88",
-                "reference": "e6a63e39fed0fd9fb553af42e99aaf8d7c104c88",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/05761093c61ca7a02c1b5ae9be279bf69360e060",
+                "reference": "05761093c61ca7a02c1b5ae9be279bf69360e060",
                 "shasum": ""
             },
             "require": {
@@ -210,9 +210,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.294.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.294.3"
             },
-            "time": "2023-12-18T19:11:16+00:00"
+            "time": "2023-12-19T19:07:14+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -7131,16 +7131,16 @@
         },
         {
             "name": "owen-it/laravel-auditing",
-            "version": "v13.6.2",
+            "version": "v13.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "2d3510dd73bfa3fb77f53bc1aa3a8721eccd2e98"
+                "reference": "8b9c5bd7d6e79ed63376a86b1861ab1606215801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/2d3510dd73bfa3fb77f53bc1aa3a8721eccd2e98",
-                "reference": "2d3510dd73bfa3fb77f53bc1aa3a8721eccd2e98",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/8b9c5bd7d6e79ed63376a86b1861ab1606215801",
+                "reference": "8b9c5bd7d6e79ed63376a86b1861ab1606215801",
                 "shasum": ""
             },
             "require": {
@@ -7194,7 +7194,7 @@
                 }
             ],
             "description": "Audit changes of your Eloquent models in Laravel/Lumen",
-            "homepage": "https://laravel-auditing.com",
+            "homepage": "http://laravel-auditing.com",
             "keywords": [
                 "Accountability",
                 "Audit",
@@ -7215,7 +7215,7 @@
                 "issues": "https://github.com/owen-it/laravel-auditing/issues",
                 "source": "https://github.com/owen-it/laravel-auditing"
             },
-            "time": "2023-12-18T20:24:08+00:00"
+            "time": "2023-06-19T14:51:52+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -11692,16 +11692,16 @@
         },
         {
             "name": "stevebauman/location",
-            "version": "v7.0.1",
+            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stevebauman/location.git",
-                "reference": "e77c663dc33ae978aa23b76c1fb3950078f68d33"
+                "reference": "fc4dc2eb30a7cd630015caaa02521af43ded6e0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stevebauman/location/zipball/e77c663dc33ae978aa23b76c1fb3950078f68d33",
-                "reference": "e77c663dc33ae978aa23b76c1fb3950078f68d33",
+                "url": "https://api.github.com/repos/stevebauman/location/zipball/fc4dc2eb30a7cd630015caaa02521af43ded6e0e",
+                "reference": "fc4dc2eb30a7cd630015caaa02521af43ded6e0e",
                 "shasum": ""
             },
             "require": {
@@ -11754,9 +11754,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stevebauman/location/issues",
-                "source": "https://github.com/stevebauman/location/tree/v7.0.1"
+                "source": "https://github.com/stevebauman/location/tree/v7.1.0"
             },
-            "time": "2023-09-29T22:49:11+00:00"
+            "time": "2023-11-23T18:01:33+00:00"
         },
         {
             "name": "symfony/cache",

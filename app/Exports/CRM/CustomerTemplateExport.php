@@ -7,10 +7,9 @@
 
 namespace App\Exports\CRM;
 
-use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class CustomerTemplateExport extends Factory implements FromArray
+class CustomerTemplateExport implements FromArray
 {
     public function array(): array
     {
