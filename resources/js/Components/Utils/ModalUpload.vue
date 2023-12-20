@@ -11,7 +11,6 @@ import axios from 'axios'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import { routeType } from '@/types/route'
 import { Link } from "@inertiajs/vue3"
-import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 
 library.add(falFile, faTimes, faFileDownload, faDownload)
 
@@ -23,10 +22,12 @@ const props = defineProps<{
         history?: routeType
     }
     propName?: string
+    useEchoOrgPersonal : Object
     // isUploaded: boolean
 }>()
 
-const emits = defineEmits(['update:modelValue', 'isShowProgress'])
+
+const emits = defineEmits();
 
 // const { isUploaded } = toRefs(props)
 
@@ -66,12 +67,20 @@ const onUploadFile = async (fileUploaded: File) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        useEchoOrgPersonal().isShowProgress = true
-        // emits('isShowProgress', true)
+      /*   const newData = { ...props.useEchoOrgPersonal, isShowProgress : true}
+        emits('update:useEchoOrgPersonal', newData) */
+        props.useEchoOrgPersonal.isShowProgress = true
+ 
     } catch (error: any) {
         console.error(error.message)
     }
     isLoadingUpload.value = false
+}
+
+const closeModal = () =>{
+ /*    useEchoOrgPersonal().isShowProgress = false */
+    props.useEchoOrgPersonal.isShowProgress = false
+    emits('update:modelValue', false)
 }
 
 // Fetch data history when Modal is opened
@@ -96,7 +105,7 @@ watch(() => props.modelValue, async (newVal) => {
 </script>
 
 <template>
-    <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)" :closeButton="true">
+    <Modal :isOpen="modelValue" @onClose="() => closeModal()" :closeButton="true">
         <!-- <div @click="emits('update:modelValue', false)" class="group px-2 absolute right-6 top-4 cursor-pointer">
             <FontAwesomeIcon icon='fal fa-times' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
         </div> -->
@@ -163,8 +172,8 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="[...dataHistoryFileUpload, ...useEchoOrgPersonal().recentlyUploaded].length">
-                        <template v-for="(history, index) in [...dataHistoryFileUpload, ...useEchoOrgPersonal().recentlyUploaded]" :key="index">
+                    <template v-if="[...dataHistoryFileUpload, ...useEchoOrgPersonal.recentlyUploaded].length">
+                        <template v-for="(history, index) in [...dataHistoryFileUpload, ...useEchoOrgPersonal.recentlyUploaded]" :key="index">
                             <component :is="history?.view_route?.name ? Link : 'div'" :href="history?.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
                                 <div class="relative w-36 ring-1 ring-gray-300 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start"
                                     :class="history?.view_route?.name ? 'bg-white hover:bg-gray-100 border-t-[3px] border-gray-500 cursor-pointer' : ' bg-lime-50/50 border-t-[3px] border-lime-400'"

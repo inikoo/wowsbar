@@ -10,42 +10,23 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes, faFrown, faMeh, faSpinnerThird)
 
 const props = defineProps<{
-    progressData:{
-        progressName: string
-        // isShowProgress: boolean
-    }
     description?: string
+    echo : Object
 }>()
+const emits = defineEmits();
 
-const emits = defineEmits<{
-    (e: 'updateShowProgress', newValue: boolean): void
-    (e: 'onFinish'): void
-}>()
-
-// Watch the progress, if 100% then close popup in 3 seconds
-// watch(() => props.progressData.progressPercentage, () => {
-//     props.progressData.progressPercentage > 0
-//         ? (
-//             emits('updateShowProgress', true),
-//             props.progressData.progressPercentage == 100
-//             ? ( setTimeout(  // If progress 100% (finished)
-//                     () => { 
-//                         emits('updateShowProgress', false)
-//                     }, 4000),
-//                 emits('onFinish') )  // Reset data on finish
-//             : ''
-//         )
-//         : emits('updateShowProgress', false)  // If equal 0 (means progress is not running yet)
-// }, { immediate: true })
+const closeModal = ()=>{
+    props.echo.isShowProgress = false
+}
 
 </script>
 
 <template>
-    <div :class="useEchoOrgPersonal().isShowProgress ? 'bottom-16' : '-bottom-24'"
+    <div :class="echo.isShowProgress ? 'bottom-16':'-bottom-24' "
         class="backdrop-blur-sm bg-white/60 ring-1 ring-gray-300 rounded-md px-4 py-2 z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-6 tabular-nums">
-        <template v-if="Object.keys(useEchoOrgPersonal().progressBars.Upload ?? {}).length > 0">
+        <template v-if="Object.keys(useEchoOrgPersonal().progressBars?.Upload ?? {}).length > 0">
             <TransitionGroup name="progressbar">
-                <div v-for="(upload, index) in useEchoOrgPersonal().progressBars.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
+                <div v-for="(upload, index) in useEchoOrgPersonal().progressBars?.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
                     <template v-if="upload.total">
                         <div v-if="upload.done >= upload.total">
                             <!-- Label: All failed -->
@@ -90,7 +71,7 @@ const emits = defineEmits<{
         </div>
 
 
-        <div @click="useEchoOrgPersonal().isShowProgress = false" class="absolute top-0 right-1 px-2 py-1 cursor-pointer text-gray-500 hover:text-gray-600">
+        <div @click="closeModal" class="absolute top-0 right-1 px-2 py-1 cursor-pointer text-gray-500 hover:text-gray-600">
             <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
         </div>
     </div>
