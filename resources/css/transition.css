@@ -50,8 +50,8 @@
     transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-to-up-enter-from, .slide-to-up-leave-to {
-    transform: translateY(100%);
-    scale: 0.1;
+    transform: translateY(15%);
+    scale: 0.8;
     opacity: 0;
 }
 
