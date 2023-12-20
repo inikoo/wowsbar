@@ -62,7 +62,7 @@ class StoreEmailTemplate
     public function prepareForValidation(ActionRequest $request): void
     {
         $request->merge([
-            'compiled' => Arr::get($this->mailshot->layout, 'compiled')
+            'compiled' => $this->mailshot->layout
         ]);
     }
 
