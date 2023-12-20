@@ -17,7 +17,7 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="absolute bottom-6 right-0 w-40 min-w-min overflow-hidden rounded-t border border-gray-300 border-b-0">
+    <div class="absolute bottom-6 right-0 w-40 min-w-min max-w-lg overflow-hidden rounded-t border border-gray-300 border-b-0">
         <!-- Header of Tab Footer (Pin button) -->
         <div class="h-6 flex justify-end items-center pr-1.5 bg-gradient-to-r from-fuchsia-600 to-fuchsia-700">
             <div v-if="pinTab"

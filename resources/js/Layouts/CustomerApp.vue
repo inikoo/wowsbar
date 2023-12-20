@@ -15,7 +15,7 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseCustomerApp } from "@/Composables/initialiseCustomerApp"
 import { useLayoutStore } from "@/Stores/layout"
-import { useAuthFirebase } from "@/Composables/firebaseAuth"
+// import { useAuthFirebase } from "@/Composables/firebaseAuth"
 import Notification from '@/Components/Utils/Notification.vue'
 
 import {
@@ -43,9 +43,9 @@ library.add(
 const layout = initialiseCustomerApp()
 
 
-if (usePage().props.firebaseAuthToken) {
-    useAuthFirebase(usePage().props.firebaseAuthToken)
-}
+// if (usePage().props.firebaseAuthToken) {
+//     useAuthFirebase(usePage().props.firebaseAuthToken)
+// }
 
 const layoutState = useLayoutStore()
 

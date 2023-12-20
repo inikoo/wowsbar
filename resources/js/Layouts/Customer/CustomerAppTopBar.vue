@@ -9,7 +9,6 @@ import {  router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import CustomerTopBarNavs from "@/Layouts/Customer/CustomerTopBarNavs.vue"
 import { ref, onMounted } from "vue"
-import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 
 import {
     Menu,
@@ -39,38 +38,14 @@ const layout = useLayoutStore()
 
 const showSearchDialog = ref(false)
 
-const changeColorMode = (mode: boolean | string) => {
-    // If browsers not support matchMedia
-    if (!window.matchMedia) {
-        return
-    }
-
-    let query: boolean | string = false
-
-    if (mode == "system") {
-        // If browsers prefers dark-mode then true
-        query = window.matchMedia('(prefers-color-scheme: dark)').matches
-    } else {
-        query = mode
-    }
-
-    if(query) {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    }
-}
 
 onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
 })
 
 const logoutAuth = () => {
-    // Sign-out from app and Firebase
+    // Sign-out from app
     router.post(route(props.urlPrefix + 'logout'))
-    useSignOutFirebase()
 }
 
 </script>
