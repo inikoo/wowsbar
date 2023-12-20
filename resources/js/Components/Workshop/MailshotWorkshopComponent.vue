@@ -50,7 +50,7 @@ const getComponent = (componentName: string) => {
 const changeTemplate = (template) => {
     if (editorRef.value.setToNewTemplate)
         editorRef.value.setToNewTemplate(
-            JSON.parse(JSON.stringify(template.compiled.html.design))
+            JSON.parse(JSON.stringify(template.html.design))
         );
     openTemplates.value = false;
 };
@@ -176,12 +176,12 @@ defineExpose({
     </component>
 
     <div v-else class="p-5">
-        <TemplateMailshot @changeTemplate="StoreTemplate" />
+        <TemplateMailshot @changeTemplate="StoreTemplate" :mailshot="mailshot"/>
     </div>
 
     <Modal :isOpen="openTemplates" @onClose="openTemplates = false">
         <div class="overflow-y-auto">
-            <TemplateMailshot @changeTemplate="changeTemplate" />
+            <TemplateMailshot @changeTemplate="changeTemplate" :mailshot="mailshot"/>
         </div>
     </Modal>
 </template>
