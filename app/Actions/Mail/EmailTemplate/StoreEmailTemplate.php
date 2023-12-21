@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\EmailTemplate;
 
+use App\Actions\Helpers\Html\GetImageFromHtml;
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
 use App\Enums\Mail\EmailTemplate\EmailTemplateTypeEnum;
 use App\Models\Mail\EmailTemplate;
@@ -15,6 +16,8 @@ use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -31,11 +34,34 @@ class StoreEmailTemplate
 
     private array $queryRules;
 
-    public function handle(Organisation|Shop|Outbox $parent, array $modelData): EmailTemplate
+    public function handle(Organisation|Shop|Outbox $parent, ?Mailshot $mailshot, array $modelData): EmailTemplate
     {
         /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
 
+        $mailshot?->update(['data' => ['email_template_id' => $emailTemplate->id]]);
+
+        $imagesPath = GetImageFromHtml::run(
+            $emailTemplate->compiled['html']['html'],
+            $emailTemplate->slug
+        );
+
+        if (File::exists($imagesPath['path'])) {
+            foreach (File::files($imagesPath['path']) as $image) {
+                AttachImageToEmailTemplate::run(
+                    $emailTemplate,
+                    'content',
+                    $image->getPathname(),
+                    $image->getFilename()
+                );
+            }
+        }
+
+        SetEmailTemplateScreenshot::run(
+            $emailTemplate,
+            $imagesPath['fullPath'],
+            $imagesPath['filename']
+        );
 
         //StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
 
@@ -69,7 +95,7 @@ class StoreEmailTemplate
 
         $validated=$this->validateAttributes();
 
-        return  $this->handle($mailshot->outbox, $validated);
+        return  $this->handle($mailshot->outbox, $mailshot, $validated);
     }
 
     public function action(Organisation|Shop $parent, $modelData): EmailTemplate

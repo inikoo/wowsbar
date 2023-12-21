@@ -21,6 +21,7 @@ use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Http\Resources\Mail\MailshotEstimatedRecipientsResource;
 use App\Http\Resources\Mail\MailshotResource;
 use App\Http\Resources\Mail\MailshotStatResource;
+use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Illuminate\Support\Arr;
@@ -189,9 +190,9 @@ class ShowProspectMailshot extends InertiaAction
                 'mailshot'      => [
                     'id'             => $mailshot->id,
                     'state'          => $mailshot->state,
-                    'emailEstimated' => MailshotStatResource::make($mailshot->mailshotStats)->number_estimated_dispatched_emails,
+                    'emailEstimated' => $mailshot->mailshotStats->number_estimated_dispatched_emails,
                 ],
-                'saved_as_template'               => $mailshot->outbox->emailTemplates()->exists(),
+                'saved_as_template'   => EmailTemplate::whereId(Arr::get($mailshot->data, 'email_template_id'))->exists(),
                 'tabs'                            => [
                     'current'    => $this->tab,
                     'navigation' => MailshotTabsEnum::navigation()
