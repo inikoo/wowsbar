@@ -6,4 +6,9 @@ export interface PageHeading {
         type: string
         buttons: Button[]
     }[]
+    iconRight?: {
+        tooltip: string
+        icon: string
+        class: string
+    }
 }

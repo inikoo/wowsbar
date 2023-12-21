@@ -18,7 +18,7 @@ class GetMailshotRecipeProspects extends InertiaAction
 {
     use AsObject;
 
-    public function handle(Mailshot $mailshot): array
+    public function handle(Mailshot $mailshot)
     {
         if(Arr::get($mailshot->recipients_recipe, 'recipient_builder_type')!='prospects') {
             return [];
@@ -28,7 +28,7 @@ class GetMailshotRecipeProspects extends InertiaAction
 
     }
 
-    public function asController(Mailshot $mailshot, ActionRequest $request): \Illuminate\Http\Response|array
+    public function asController(Mailshot $mailshot, ActionRequest $request)
     {
         return $this->handle($mailshot);
     }
