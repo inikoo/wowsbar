@@ -27,6 +27,8 @@ import PureInput from '@/Components/Pure/PureInput.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import axios from 'axios'
 import { notify } from '@kyvg/vue3-notification'
+import { Stats } from '@/types/Mailshot'
+
 
 library.add(faEnvelopeSquare, faAt, faPaperPlane, faStop, faPlay, fasPaperPlane, faBookmark, faSpellCheck)
 
@@ -39,10 +41,9 @@ const props = defineProps<{
     }
     changelog?: object,
     showcase: {
-        stats: {
-            id: number
-            number_estimated_dispatched_emails: number
-        }
+        id: number
+        state: string
+        stats: Stats
         timeline: {
             label: string
             timestamp: string
@@ -51,8 +52,8 @@ const props = defineProps<{
     recipients?: object
     email?: object
     mailshot: {
-        id: number
-        state: string
+    //     id: number
+    //     state: string
         emailEstimated: number
     }
     saved_as_template: boolean
@@ -110,19 +111,27 @@ const submitAddTemplate = async () => {
 
 onMounted(() => {
     window.Echo.private('org.general')
-        .listen(`.mailshot.${props.mailshot.id}`, (e: any) => {
+        .listen(`.mailshot.${props.showcase.id}`, (e: any) => {
+            // If send Mailshot is finish
             if(e.state == 'sent'){
+                props.showcase.state = e.state
+
+                // Update: Timeline
                 let timelineSent = props.showcase.timeline.find((item) => item.label == 'Sent')
-                timelineSent.timestamp = e.sent_at  // update the timline data
+                timelineSent.timestamp = e.sent_at
+
+                // Update: PageHeading
                 props.pageHead.actions = []  // clear the button 'Stop'
+                props.pageHead.iconRight = e.state_icon  // update the icon
             }
         })
 })
 
 onUnmounted(() => {
     window.Echo.private(`org.general`)
-    .stopListening(`.mailshot.${props.mailshot.id}`)
+    .stopListening(`.mailshot.${props.showcase.id}`)
 })
+
 
 </script>
 
@@ -132,8 +141,11 @@ onUnmounted(() => {
     <PageHeading :data="pageHead" />
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <LabelEstimated :idMailshot="mailshot.id" :emailsEstimated="mailshot.emailEstimated" :state="mailshot.state">
-        <template #rightSide v-if="mailshot.state == 'sent' && !templateState">
+    
+    <!-- Label Estimated -->
+    <LabelEstimated :idMailshot="showcase.id" :emailsEstimated="showcase.stats.number_estimated_dispatched_emails" :state="showcase.state" :stats="showcase.stats">
+        <!-- Template: save to template -->
+        <template #rightSide v-if="showcase.state == 'sent' && !templateState">
             <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'tertiary'" />
         </template>
     </LabelEstimated>
@@ -151,6 +163,7 @@ onUnmounted(() => {
         </div>
     </Modal>
 
+    <!-- Component: Tabs -->
     <KeepAlive>
         <Transition name="slide-to-right" mode="out-in">
             <component :is="component" :key="currentTab" :tab="currentTab" :data="props[currentTab]"></component>
