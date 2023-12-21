@@ -163,7 +163,7 @@ watch(value.value, (newValue) => {
                         <div class="text-center text-base font-semibold">{{ trans("Interval") }}</div>
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="true"
+                                <PureInput v-model.number="value.quantity" type="number" :minValue="0" :caret="true"
                                     placeholder="days" required />
                             </div>
                             <div class="w-40">

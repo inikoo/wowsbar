@@ -36,7 +36,7 @@ class UnsubscribeMailshot
             [
                 'state'           => DispatchedEmailStateEnum::UNSUBSCRIBED,
                 'date'            => now(),
-                'is_unsubscribed' => true,
+                'is_unsubscribed' => $request->input('is_unsubscribed')
 
             ]
         );

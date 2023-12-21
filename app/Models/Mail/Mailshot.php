@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -39,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $cancelled_at
  * @property \Illuminate\Support\Carbon|null $stopped_at
  * @property array $layout
+ * @property array $data
  * @property array $recipients_recipe
  * @property int|null $publisher_id org user
  * @property string $parent_type
@@ -85,15 +88,17 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot withoutTrashed()
  * @mixin \Eloquent
  */
-class Mailshot extends Model
+class Mailshot extends Model implements HasMedia
 {
     use HasFactory;
     use SoftDeletes;
     use HasSlug;
+    use InteractsWithMedia;
 
     protected $casts = [
         'recipients_recipe' => 'array',
         'layout'            => 'array',
+        'data'              => 'array',
         'type'              => MailshotTypeEnum::class,
         'state'             => MailshotStateEnum::class,
         'sent_at'           => 'datetime',
@@ -101,10 +106,12 @@ class Mailshot extends Model
         'ready_at'          => 'datetime',
         'cancelled_at'      => 'datetime',
         'stopped_at'        => 'datetime',
+        'start_sending_at'  => 'datetime',
     ];
 
     protected $attributes = [
         'layout'            => '{}',
+        'data'              => '{}',
         'recipients_recipe' => '{}',
     ];
 

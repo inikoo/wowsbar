@@ -44,6 +44,7 @@
         "react/promise": "^2.3",
         "rmunate/spell-number": "^4.1",
         "sentry/sentry-laravel": "^3.7",
+        "spatie/browsershot": "^3.60",
         "spatie/crawler": "^8.0",
         "spatie/laravel-analytics": "^5.0",
         "spatie/laravel-backup": "^8.4",

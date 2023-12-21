@@ -89,7 +89,7 @@ const submitAddTemplate = async () => {
             { name: templateName.value }
         )
         templateState.value = true
-        
+
         setTimeout(() => {
             isAddTemplateOpen.value = false
         }, 1000)
@@ -141,7 +141,7 @@ onUnmounted(() => {
     <PageHeading :data="pageHead" />
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    
+
     <!-- Label Estimated -->
     <LabelEstimated :idMailshot="showcase.id" :emailsEstimated="showcase.stats.number_estimated_dispatched_emails" :state="showcase.state" :stats="showcase.stats">
         <!-- Template: save to template -->

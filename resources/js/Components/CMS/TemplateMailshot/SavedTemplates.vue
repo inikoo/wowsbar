@@ -107,7 +107,7 @@
                       </div>
                   </div>
                   <span class="flex justify-center p-2 font-bold text-center">{{ template.slug != 'blank' ?
-                      get(template, ['compiled', 'name']) : 'Blank Template' }}</span>
+                      get(template, ['title']) : 'Blank Template' }}</span>
               </div>
   
           </div>

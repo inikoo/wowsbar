@@ -14,10 +14,24 @@ const props = defineProps<{
     echo : Object
 }>()
 const emits = defineEmits();
+const piniaData  = useEchoOrgPersonal()
 
 const closeModal = ()=>{
     props.echo.isShowProgress = false
 }
+
+watch(
+  () => piniaData,
+  (newVal) => {
+    if (!newVal.isShowProgress) {
+      props.echo.isShowProgress = false; // Not recommended if 'props' is read-only
+      // Instead, consider using a reactive or ref object in the local state
+      // For example:
+      // localState.isShowProgress = false;
+    }
+  },
+  { deep: true }
+);
 
 </script>
 

@@ -87,6 +87,10 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'crm dashboard'])->uses(RemoveProspect::class)->name('remove');
 
     Route::get('/histories/uploads', ['icon' => 'fa-envelope', 'label' => 'history upload prospect'])->uses([HistoryUploads::class, 'inProspect'])->name('uploads.history');
+
+    Route::prefix('uploads')->as('uploads.')->group(function () {
+        Route::get('{upload}', ShowUploads::class)->name('show');
+    });
 });
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
