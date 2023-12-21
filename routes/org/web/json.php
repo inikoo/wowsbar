@@ -7,6 +7,7 @@
 
 use App\Actions\Helpers\Tag\GetTagOptions;
 use App\Actions\Leads\Prospect\GetProspect;
+use App\Actions\Leads\Prospect\Mailshots\GetMailshotRecipeProspects;
 use App\Actions\Leads\Prospect\SearchProspects;
 use App\Actions\Mail\EmailTemplate\GetEmailTemplateCompiledLayout;
 use App\Actions\Mail\EmailTemplate\GetOutboxEmailTemplates;
@@ -22,3 +23,4 @@ Route::get('email/templates/seeded', GetSeededEmailTemplates::class)->name('emai
 Route::get('email/templates/outboxes/{outbox:id}', GetOutboxEmailTemplates::class)->name('email_templates.outbox');
 Route::get('email/templates/{emailTemplate:id}/compiled_layout', GetEmailTemplateCompiledLayout::class)->name('email_templates.show.compiled_layout');
 Route::get('/mailshot/{mailshot:id}/merge-tags', GetMailshotMergeTags::class)->name('mailshot.merge-tags');
+Route::get('/mailshot/{mailshot:id}/recipe-prospects', GetMailshotRecipeProspects::class)->name('mailshot.recipe-prospects');
