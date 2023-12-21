@@ -8,11 +8,14 @@
 namespace App\Models\Mail;
 
 use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Models\CRM\Customer;
+use App\Models\Leads\Prospect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\Mail\DispatchedEmail
@@ -123,6 +126,21 @@ class DispatchedEmail extends Model
     public function outbox(): BelongsTo
     {
         return $this->belongsTo(Outbox::class);
+    }
+
+    public function getName(): string
+    {
+
+        if($this->is_test) {
+            return Auth::user()->contact_name;
+        }
+
+        if($this->recipient) {
+            /** @var Prospect|Customer $recipient */
+            $recipient=$this->recipient;
+            return $recipient->name;
+        }
+        return '';
     }
 
 }

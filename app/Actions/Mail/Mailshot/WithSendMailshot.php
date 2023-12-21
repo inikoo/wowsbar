@@ -22,26 +22,42 @@ trait WithSendMailshot
     ) {
         $html = $emailHtmlBody;
 
+
         if (preg_match_all("/{{(.*?)}}/", $html, $matches)) {
             foreach ($matches[1] as $i => $placeholder) {
-                $placeholder = Str::kebab(trim($placeholder));
-                if ($placeholder == 'unsubscribe') {
-                    $placeholder = sprintf(
-                        "<a ses:no-track href=\"$unsubscribeUrl\">%s</a>",
-                        __('Unsubscribe')
-                    );
-                }
+                $placeholder = $this->replaceMergeTags($placeholder, $dispatchedEmail, $unsubscribeUrl);
+                $html        = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
+            }
+        }
 
-                $html = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
+        if (preg_match_all("/\[(.*?)]/", $html, $matches)) {
+            foreach ($matches[1] as $i => $placeholder) {
+                $placeholder = $this->replaceMergeTags($placeholder, $dispatchedEmail, $unsubscribeUrl);
+                $html        = str_replace($matches[0][$i], sprintf('%s', $placeholder), $html);
             }
         }
 
         return SendSesEmail::run(
-            subject:$subject,
+            subject: $subject,
             emailHtmlBody: $html,
-            dispatchedEmail:$dispatchedEmail,
-            sender:$sender,
-            unsubscribeUrl:$unsubscribeUrl
+            dispatchedEmail: $dispatchedEmail,
+            sender: $sender,
+            unsubscribeUrl: $unsubscribeUrl
         );
     }
+
+    private function replaceMergeTags($placeholder, $dispatchedEmail, $unsubscribeUrl): string
+    {
+        $placeholder = Str::kebab(trim($placeholder));
+
+        return match ($placeholder) {
+            'name'        => $dispatchedEmail->getName(),
+            'unsubscribe' => sprintf(
+                "<a ses:no-track href=\"$unsubscribeUrl\">%s</a>",
+                __('Unsubscribe')
+            ),
+            default => ''
+        };
+    }
+
 }

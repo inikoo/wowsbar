@@ -191,7 +191,7 @@ class ShowProspectMailshot extends InertiaAction
                     'state'          => $mailshot->state,
                     'emailEstimated' => MailshotStatResource::make($mailshot->mailshotStats)->number_estimated_dispatched_emails,
                 ],
-                'saved_as_template'   => $mailshot->outbox->emailTemplates()->exists(),
+                'saved_as_template'               => $mailshot->outbox->emailTemplates()->exists(),
                 'tabs'                            => [
                     'current'    => $this->tab,
                     'navigation' => MailshotTabsEnum::navigation()
