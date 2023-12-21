@@ -36,12 +36,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property MailshotTypeEnum $type
  * @property string $date
  * @property \Illuminate\Support\Carbon|null $ready_at
- * @property string|null $start_sending_at
+ * @property \Illuminate\Support\Carbon|null $start_sending_at
  * @property \Illuminate\Support\Carbon|null $sent_at
  * @property \Illuminate\Support\Carbon|null $cancelled_at
  * @property \Illuminate\Support\Carbon|null $stopped_at
  * @property array $layout
- * @property array $data
  * @property array $recipients_recipe
  * @property int|null $publisher_id org user
  * @property string $parent_type
@@ -50,9 +49,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
  * @property int|null $outbox_id
+ * @property int|null $email_template_id
+ * @property array|null $data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read \App\Models\Mail\Outbox|null $outbox
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
@@ -63,9 +66,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCancelledAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereEmailTemplateId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereOutboxId($value)

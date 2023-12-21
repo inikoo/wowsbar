@@ -16,7 +16,6 @@ use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,12 +33,11 @@ class StoreEmailTemplate
 
     private array $queryRules;
 
-    public function handle(Organisation|Shop|Outbox $parent, ?Mailshot $mailshot, array $modelData): EmailTemplate
+    public function handle(Organisation|Shop|Outbox $parent, array $modelData): EmailTemplate
     {
         /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
 
-        $mailshot?->update(['data' => ['email_template_id' => $emailTemplate->id]]);
 
         $imagesPath = GetImageFromHtml::run(
             $emailTemplate->compiled['html']['html'],
@@ -95,7 +93,10 @@ class StoreEmailTemplate
 
         $validated=$this->validateAttributes();
 
-        return  $this->handle($mailshot->outbox, $mailshot, $validated);
+        $emailTemplate= $this->handle($mailshot->outbox, $validated);
+
+        $mailshot->update(['data' => ['email_template_id' => $emailTemplate->id]]);
+        return $emailTemplate;
     }
 
     public function action(Organisation|Shop $parent, $modelData): EmailTemplate

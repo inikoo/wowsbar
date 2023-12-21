@@ -20,7 +20,7 @@ class GetImageFromHtml
 
     public function handle($html, $filename): array
     {
-        $path = storage_path('app/screenshots/');
+        $path     = storage_path('app/screenshots/');
         $filename = $filename.'.jpg';
 
         Browsershot::html($html)
@@ -29,7 +29,7 @@ class GetImageFromHtml
             ->save($path . $filename);
 
         return [
-            'path' => $path,
+            'path'     => $path,
             'filename' => $filename,
             'fullPath' => $path . $filename
         ];

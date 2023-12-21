@@ -7,6 +7,7 @@
 
 namespace App\Models\Portfolios;
 
+use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsiteStats;
@@ -36,6 +37,8 @@ use Spatie\Sluggable\HasSlug;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property PortfolioWebsiteIntegrationEnum|null $integration
+ * @property array $integration_data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
@@ -55,6 +58,8 @@ use Spatie\Sluggable\HasSlug;
  * @method static Builder|CustomerWebsite whereDeleteComment($value)
  * @method static Builder|CustomerWebsite whereDeletedAt($value)
  * @method static Builder|CustomerWebsite whereId($value)
+ * @method static Builder|CustomerWebsite whereIntegration($value)
+ * @method static Builder|CustomerWebsite whereIntegrationData($value)
  * @method static Builder|CustomerWebsite whereName($value)
  * @method static Builder|CustomerWebsite whereShopId($value)
  * @method static Builder|CustomerWebsite whereSlug($value)
@@ -73,14 +78,17 @@ class CustomerWebsite extends Model implements Auditable
     use HasHistory;
     use IsWebsitePortfolio;
 
-    protected $table='portfolio_websites';
+    protected $table = 'portfolio_websites';
 
     protected $casts = [
-        'data' => 'array',
+        'data'             => 'array',
+        'integration_data' => 'array',
+        'integration'      => PortfolioWebsiteIntegrationEnum::class
     ];
 
     protected $attributes = [
-        'data' => '{}',
+        'data'             => '{}',
+        'integration_data' => '{}'
     ];
 
     protected $guarded = [];

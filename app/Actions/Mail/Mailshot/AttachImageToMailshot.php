@@ -9,7 +9,6 @@ namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Mail\Mailshot;
-use App\Models\Web\Webpage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

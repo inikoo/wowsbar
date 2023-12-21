@@ -31,7 +31,7 @@ class GetPortfolioWebsites
     }
 
 
-    public $commandSignature = 'portfolio-websites:list {--C|customer=}';
+    public $commandSignature = 'portfolio-website:list {--C|customer=}';
 
     public function asCommand(Command $command): int
     {
@@ -43,6 +43,7 @@ class GetPortfolioWebsites
                 $customer=Customer::where('slug', $command->option('customer'))->firstOrFail();
             } catch (Exception) {
                 $command->error("Customer not found");
+                return 1;
             }
 
         }
@@ -60,7 +61,7 @@ class GetPortfolioWebsites
                         $portfolioWebsite->slug,
                         $portfolioWebsite->customer->slug    ,
                         $portfolioWebsite->url,
-                        $portfolioWebsite->integration
+                        $portfolioWebsite->integration->value
                     ];
                 }
             )
