@@ -45,8 +45,8 @@ onMounted(() => {
                 break;
             }
         }
-        if(index != -1)
-        props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, data : props.options.data[index].constrains }
+        if(index != -1) props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, data : props.options.data[index].constrains }
+        else props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[0].id, data : props.options.data[0].constrains }
     }
 
 })
