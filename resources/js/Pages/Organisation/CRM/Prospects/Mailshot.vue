@@ -145,7 +145,7 @@ onUnmounted(() => {
     <!-- Label Estimated -->
     <LabelEstimated :idMailshot="showcase.id" :emailsEstimated="showcase.stats.number_estimated_dispatched_emails" :state="showcase.state" :stats="showcase.stats">
         <!-- Template: save to template -->
-        <template #rightSide v-if="showcase.state == 'sent' && !templateState">
+        <template #rightSide v-if="showcase.state == 'sent'">
             <Button @click="isAddTemplateOpen = true" label="Add to template" icon="fas fa-bookmark" size="xs" :style="'tertiary'" />
         </template>
     </LabelEstimated>
