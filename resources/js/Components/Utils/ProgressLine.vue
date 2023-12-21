@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
             <div v-if="fails" class="h-1.5 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(fails/total)*100}%`" />
         </div>
         <div class="text-xs text-gray-500 tabular-nums">
-            {{ (((success + fails)/total)*100).toFixed(1) }}%
+            {{ total == 0 ? 'Calculating..' : `${(((success + fails)/total)*100).toFixed(1)}%` }}
         </div>
     </div>
 </template>
