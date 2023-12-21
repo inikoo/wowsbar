@@ -51,6 +51,18 @@ const options = {
         legend: {
             display: false
         },
+        tooltip: {
+            // Popup: When the data set is hovered
+            // enabled: false,
+            titleFont: {
+                size: 10,
+                weight: 'lighter'
+            },
+            bodyFont: {
+                size: 11,
+                weight: 'bold'
+            }
+        },
     }
 }
 
@@ -93,7 +105,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    Echo.private(`org.general`)
+    window.Echo.private(`org.general`)
     .stopListening('.prospects.dashboard')
 })
 
@@ -133,7 +145,8 @@ onUnmounted(() => {
                         <Pie :data="{
                             labels: Object.entries(prospectState.cases).map(([, value]) => value.label),
                             datasets: [{
-                                data: Object.entries(prospectState.cases).map(([, value]) => value.count)
+                                data: Object.entries(prospectState.cases).map(([, value]) => value.count),
+                                hoverOffset: 4
                             }]
                         }" :options="options"/>
                     </div>
