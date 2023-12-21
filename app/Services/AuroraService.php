@@ -8,6 +8,7 @@
 namespace App\Services;
 
 use App\Services\Aurora\FetchAuroraProspect;
+use App\Services\Aurora\FetchAuroraWebpage;
 use Illuminate\Support\Facades\DB;
 
 class AuroraService implements SourceService
@@ -26,6 +27,11 @@ class AuroraService implements SourceService
     public function fetchProspect($id): ?array
     {
         return (new FetchAuroraProspect($this))->fetch($id);
+    }
+
+    public function fetchWebpage($id): ?array
+    {
+        return (new FetchAuroraWebpage($this))->fetch($id);
     }
 
 

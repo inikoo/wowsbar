@@ -77,3 +77,4 @@ pg_dump -Fc  --no-owner -x -f "devops/devel/snapshots/hr.dump" ${DB}
 echo "🛃 Organisation prospects imported"
 
 
+
