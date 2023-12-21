@@ -72,6 +72,7 @@ class EditProspectMailshot extends InertiaAction
                     'options'  => [
                         'query'                  => IndexProspectQueries::run(),
                         'custom_prospects_query' => '',
+                        'prospects'                  => ["mailshot" => $mailshot],
                     ],
                     'value' => $mailshot->recipients_recipe
                 ],

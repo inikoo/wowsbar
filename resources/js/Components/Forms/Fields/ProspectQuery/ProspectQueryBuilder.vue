@@ -17,7 +17,7 @@ library.add(faChevronDown, faInfoCircle, faExclamationCircle, faCheckCircle, faC
 
 const props = withDefaults(defineProps<{
     form?: any
-    fieldName: string
+    fieldName: string | Array
     tabName: string
     options: string[] | object
     fieldData?: {
