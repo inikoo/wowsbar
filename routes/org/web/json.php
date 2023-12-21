@@ -6,7 +6,8 @@
  */
 
 use App\Actions\Helpers\Tag\GetTagOptions;
-use App\Actions\Leads\Prospect\GetProspectOptions;
+use App\Actions\Leads\Prospect\GetProspect;
+use App\Actions\Leads\Prospect\SearchProspect;
 use App\Actions\Mail\EmailTemplate\GetEmailTemplateCompiledLayout;
 use App\Actions\Mail\EmailTemplate\GetOutboxEmailTemplates;
 use App\Actions\Mail\EmailTemplate\GetSeededEmailTemplates;
@@ -14,7 +15,9 @@ use App\Actions\Mail\Mailshot\GetMailshotMergeTags;
 use Illuminate\Support\Facades\Route;
 
 Route::get('tags', GetTagOptions::class)->name('tags');
-Route::get('prospects', GetProspectOptions::class)->name('prospects');
+Route::get('prospects', SearchProspect::class)->name('prospects.search');
+Route::get('prospects/{prospect:id}', GetProspect::class)->name('prospects.show');
+
 Route::get('email/templates/seeded', GetSeededEmailTemplates::class)->name('email_templates.seeded');
 Route::get('email/templates/outboxes/{outbox:id}', GetOutboxEmailTemplates::class)->name('email_templates.outbox');
 Route::get('email/templates/{emailTemplate:id}/compiled_layout', GetEmailTemplateCompiledLayout::class)->name('email_templates.show.compiled_layout');

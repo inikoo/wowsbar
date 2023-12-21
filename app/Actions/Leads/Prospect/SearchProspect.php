@@ -12,7 +12,7 @@ use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
-class GetProspectOptions extends InertiaAction
+class SearchProspect extends InertiaAction
 {
     use AsObject;
 
@@ -27,10 +27,7 @@ class GetProspectOptions extends InertiaAction
 
         /** @var Prospect $prospects */
         $prospectsQuery = Prospect::whereWith('contact_name', $request->get('q'))->orWhereWith('company_name', $request->get('q'))->orWhereStartWith('email', $request->get('q'));
-        if (count($request->get("id") ?? []) > 0) {
-            $prospectsQuery->whereIn("id", $request->get("id"));
-        }
-        $prospects = $prospectsQuery->paginate();
+        $prospects      = $prospectsQuery->paginate();
 
         foreach ($prospects as $prospect) {
             $selectOptions[$prospect->id] =
