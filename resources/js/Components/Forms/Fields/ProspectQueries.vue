@@ -79,9 +79,8 @@ onMounted(() => {
                     </td>
                     <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
                     <td class="relative py-2 px-3 text-right font-medium">
-                        <div v-if="option.number_items > 0">
-                            <label :for="'radioProspects' + option.id"
-                                class="bg-transparent absolute inset-0 cursor-pointer" />
+                        <div>
+                            <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
                             <input v-model="form[fieldName].recipient_builder_data.query" :value="{ id: option.id , data : option.constrains }"
                                 type="radio" :id="'radioProspects' + option.id" name="radioProspects"
                                 class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />
