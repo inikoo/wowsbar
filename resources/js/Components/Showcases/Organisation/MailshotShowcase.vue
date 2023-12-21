@@ -18,6 +18,7 @@ import {faSpinnerThird} from '@fad'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import Stats from '@/Components/DataDisplay/Stats.vue'
 import {useTimeCountdown, useFormatTime} from '@/Composables/useFormatTime'
+import ProgressLine from '@/Components/Utils/ProgressLine.vue'
 
 library.add(faPaperPlane, faDungeon, faSkull, faSpinnerThird)
 
@@ -97,14 +98,14 @@ onMounted(() => {
 
 const locale = useLocaleStore();
 
-
-// console.log(props.data)
-
 </script>
 
 
 <template>
     <div class="relative">
+        <!-- <Teleport to="#LabelEstimatedProgressLine">
+            <ProgressLine :total="data.stats.number_dispatched_emails" :success="data.stats.number_delivered_emails" :fails="0" />
+        </Teleport> -->
         <div class="py-3 mx-auto px-5 w-full">
             <TimelineWithPlaceholder :options="data.timeline"/>
 

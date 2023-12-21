@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n"
 import { useLayoutStore } from '@/Stores/layout'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
+import ProgressLine from '@/Components/Utils/ProgressLine.vue'
 
 library.add(faDiscord)
 
@@ -59,13 +60,12 @@ const compLatestProgress = computed(() => {
                 <FooterLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
                 
                 <!-- Progress Upload -->
-                <div v-if="compLatestProgress" class="flex justify-center items-center gap-x-2 text-gray-600 mx-4">
-                    <div class="text-xs leading-none">{{ `${compLatestProgress.action_type} ${compLatestProgress.data.type}` }}</div>
-                    <div class="overflow-hidden rounded-full bg-white w-48 flex justify-start shadow ring-1 ring-gray-300">
-                        <div class="h-1.5 bg-lime-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_success/compLatestProgress.total)*100}%`" />
-                        <div class="h-1.5 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_fails/compLatestProgress.total)*100}%`" />
+                <Transition name="slide-to-up">
+                    <div v-if="compLatestProgress" class="flex justify-center items-center gap-x-2 text-gray-600 mx-4">
+                        <div class="text-xs leading-none">{{ `${compLatestProgress.action_type} ${compLatestProgress.data.type}` }}</div>
+                        <ProgressLine :total="compLatestProgress.total" :success="compLatestProgress.data.number_success" :fails="compLatestProgress.data.number_fails" />
                     </div>
-                </div>
+                </Transition>
             </div>
         </div>
     </footer>

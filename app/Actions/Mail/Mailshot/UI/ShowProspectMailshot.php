@@ -196,12 +196,7 @@ class ShowProspectMailshot extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => MailshotTabsEnum::navigation()
                 ],
-                MailshotTabsEnum::SHOWCASE->value => $this->tab == MailshotTabsEnum::SHOWCASE->value
-                    ?
-                    fn () => MailshotResource::make($mailshot)->getArray()
-                    : Inertia::lazy(
-                        fn () => MailshotResource::make($mailshot)->getArray()
-                    ),
+                MailshotTabsEnum::SHOWCASE->value => MailshotResource::make($mailshot)->getArray(),
                 MailshotTabsEnum::EMAIL->value    => $this->tab == MailshotTabsEnum::EMAIL->value
                     ?
                     fn () => $this->getEmailPreview($mailshot)

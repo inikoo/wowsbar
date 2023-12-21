@@ -40,6 +40,7 @@ const props = defineProps<{
 
 const selectedIndex = ref(0)
 const recipientsCount = ref({type:"query",count:0})
+const dataTabProspect = ref([])
 const emits = defineEmits();
 
 const categories = [
@@ -202,6 +203,8 @@ onMounted(async() => {
                         :fieldData="fieldData"
                         :options="category.options"
                         :changeWeeksValue="changeWeeksValue"
+                        :dataTabProspect="dataTabProspect"
+                        @changeValueDataTabProspect="(value)=>dataTabProspect=value"
                     />
                 </TabPanel>
             </TabPanels>
