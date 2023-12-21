@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import { routeType } from '@/types/route'
 import { Link } from "@inertiajs/vue3"
+import { useEchoOrgPersonal as echo } from '@/Stores/echo-org-personal'
 
 library.add(falFile, faTimes, faFileDownload, faDownload)
 
@@ -172,8 +173,8 @@ watch(() => props.modelValue, async (newVal) => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600"> {{ trans('Recent uploaded') + ` ${propName}:` }} </div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="[...dataHistoryFileUpload, ...useEchoOrgPersonal.recentlyUploaded].length">
-                        <template v-for="(history, index) in [...dataHistoryFileUpload, ...useEchoOrgPersonal.recentlyUploaded]" :key="index">
+                    <template v-if="[...dataHistoryFileUpload, ...echo().recentlyUploaded].length">
+                        <template v-for="(history, index) in [...dataHistoryFileUpload, ...echo().recentlyUploaded]" :key="index">
                             <component :is="history?.view_route?.name ? Link : 'div'" :href="history?.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
                                 <div class="relative w-36 ring-1 ring-gray-300 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start"
                                     :class="history?.view_route?.name ? 'bg-white hover:bg-gray-100 border-t-[3px] border-gray-500 cursor-pointer' : ' bg-lime-50/50 border-t-[3px] border-lime-400'"
