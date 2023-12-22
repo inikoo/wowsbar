@@ -14,6 +14,7 @@ import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
 import { trans } from "laravel-vue-i18n";
 import { isNull } from 'lodash'
+import { useLocaleStore } from '@/Stores/locale.js'
 
 const props = defineProps<{
     form: {
@@ -42,6 +43,7 @@ const selectedIndex = ref(0)
 const recipientsCount = ref({type:"query",count:0})
 const dataTabProspect = ref([])
 const emits = defineEmits();
+const locale = useLocaleStore()
 
 const categories = [
     {
@@ -180,14 +182,14 @@ onMounted(async() => {
                 </Tab>
                 <div style="margin-left: auto;">
                     <button  v-if="recipientsCount.type == 'prospects'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                      {{trans('Total recipients')}}:  {{ recipientsCount.count }}
+                      {{trans('Total recipients')}}:  {{ locale.number(recipientsCount.count ?? 0) }}
                     </button>
                     <button  v-if="recipientsCount.type == 'custom_prospects_query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                        {{trans('Total recipients')}}:   {{ recipientsCount.count }}
+                        {{trans('Total recipients')}}:  {{ locale.number(recipientsCount.count ?? 0) }}
                     </button>
 
                     <button  v-if="recipientsCount.type == 'query'" class="whitespace-nowrap border-b-2 py-1.5 px-1 text-sm focus:ring-0 focus:outline-none border-transparent text-org-500  font-semibold">
-                        {{trans('Total recipients')}}:  {{ recipientsCount.count }}
+                        {{trans('Total recipients')}}: {{ locale.number(recipientsCount.count ?? 0) }}
                     </button>
                 </div>
             </TabList>
