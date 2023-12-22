@@ -1,9 +1,19 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Fri, 22 Dec 2023 00:13:18 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Models\Portfolio;
 
+use App\Models\Traits\HasHistory;
+use App\Models\Traits\IsWebpagePortfolio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Sluggable\HasSlug;
 
 /**
  * App\Models\Portfolio\PortfolioWebpage
@@ -17,6 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $message
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
+ * @property-read \App\Models\Portfolio\PortfolioWebsite|null $portfolioWebsite
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage query()
@@ -31,9 +44,36 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereUrl($value)
  * @mixin \Eloquent
  */
-class PortfolioWebpage extends Model
+class PortfolioWebpage extends Model implements Auditable
 {
     use HasFactory;
+    use HasSlug;
+    use HasHistory;
+    use IsWebpagePortfolio;
+
+    protected $casts = [
+        'data'               => 'array',
+        'layout'             => 'array',
+    ];
+
+    protected $attributes = [
+        'layout'             => '{}',
+        'data'               => '{}'
+    ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'portfolio'
+        ];
+    }
+
+    public function portfolioWebsite(): BelongsTo
+    {
+        return $this->belongsTo(PortfolioWebsite::class);
+    }
+
+
 }

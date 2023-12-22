@@ -76,4 +76,7 @@ pg_dump -Fc  --no-owner -x -f "devops/devel/snapshots/hr.dump" ${DB}
 #php artisan shop:import-prospects awa database/seeders/uploads/local/prospects.xlsx
 echo "🛃 Organisation prospects imported"
 
+php artisan portfolio-website:set-integration aro aurora -S "{\"db\":\"aroma\",\"website\":1}"
+
+
 

@@ -14,11 +14,11 @@ class PortfolioWebsiteResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var PortfolioWebsite $websitePortfolio */
-        $websitePortfolio = $this;
+        /** @var PortfolioWebsite $portfolioWebsite */
+        $portfolioWebsite = $this;
         $divisions        = [];
 
-        foreach ($websitePortfolio->divisions as $value) {
+        foreach ($portfolioWebsite->divisions as $value) {
             $divisions[$value->slug] = [
                 'name'  => $value->slug,
                 'label' => $value->name,
@@ -27,10 +27,10 @@ class PortfolioWebsiteResource extends JsonResource
         }
 
         return array_merge([
-            'id'   => $websitePortfolio->id,
-            'slug' => $websitePortfolio->slug,
-            'name' => $websitePortfolio->name,
-            'url'  => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
+            'id'   => $portfolioWebsite->id,
+            'slug' => $portfolioWebsite->slug,
+            'name' => $portfolioWebsite->name,
+            'url'  => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
         ], $divisions);
     }
 }

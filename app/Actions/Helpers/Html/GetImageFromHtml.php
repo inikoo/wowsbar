@@ -9,6 +9,7 @@ namespace App\Actions\Helpers\Html;
 
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Spatie\Browsershot\Browsershot;
@@ -20,18 +21,23 @@ class GetImageFromHtml
 
     public function handle($html, $filename): array
     {
-        $path     = storage_path('app/screenshots/');
+        $path = storage_path('app/tmp/screenshots/');
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
+
         $filename = $filename.'.jpg';
 
         Browsershot::html($html)
             ->setIncludePath('$PATH:/usr/local/bin')
             ->setOption('newHeadless', true)
-            ->save($path . $filename);
+            ->save($path.$filename);
 
         return [
             'path'     => $path,
             'filename' => $filename,
-            'fullPath' => $path . $filename
+            'fullPath' => $path.$filename
         ];
     }
 

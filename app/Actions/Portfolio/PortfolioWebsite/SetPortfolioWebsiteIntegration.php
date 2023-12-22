@@ -24,8 +24,8 @@ class SetPortfolioWebsiteIntegration
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $attributes): PortfolioWebsite
     {
-
         $portfolioWebsite = $this->update($portfolioWebsite, $attributes, ['integration_data']);
+
         return $portfolioWebsite;
     }
 
@@ -53,15 +53,13 @@ class SetPortfolioWebsiteIntegration
 
         $this->fill(
             [
-                'integration'      => $command->argument('integration'),
+                'integration' => $command->argument('integration'),
             ]
         );
-        if($command->option('settings')) {
-
-
+        if ($command->option('settings')) {
             $this->fill(
                 [
-                    'integration_data' => ['settings'=>json_decode($command->option('settings'), true)]
+                    'integration_data' => ['settings' => json_decode($command->option('settings'), true)]
                 ]
             );
         }

@@ -48,6 +48,8 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Division> $divisions
  * @property-read int|null $divisions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebpage> $portfolioWebpages
+ * @property-read int|null $portfolio_webpages_count
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|PortfolioWebsite dProspects()
@@ -117,6 +119,11 @@ class PortfolioWebsite extends Model implements Auditable
     public function scopedProspects(): MorphMany
     {
         return $this->morphMany(Prospect::class, 'parent');
+    }
+
+    public function portfolioWebpages(): HasMany
+    {
+        return $this->hasMany(PortfolioWebpage::class);
     }
 
 }

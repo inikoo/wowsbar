@@ -17,13 +17,13 @@ class WebsiteUploadedRecordResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Helpers\UploadRecord $websitePortfolio */
-        $websitePortfolio = $this;
+        /** @var \App\Models\Helpers\UploadRecord $portfolioWebsite */
+        $portfolioWebsite = $this;
 
         return [
-            'code'           => Arr::get($websitePortfolio->data, 'code'),
-            'name'           => Arr::get($websitePortfolio->data, 'name'),
-            'domain'         => Arr::get($websitePortfolio->data, 'domain')
+            'code'           => Arr::get($portfolioWebsite->data, 'code'),
+            'name'           => Arr::get($portfolioWebsite->data, 'name'),
+            'domain'         => Arr::get($portfolioWebsite->data, 'domain')
         ];
     }
 }
