@@ -5,7 +5,7 @@ import axios from "axios"
 import Tag from "@/Components/Tag.vue"
 import { notify } from "@kyvg/vue3-notification"
 import { ref, onMounted, watch, reactive, computed} from 'vue'
-
+import { trans } from "laravel-vue-i18n";
 
 const props = withDefaults(defineProps<{
     value: any
@@ -57,7 +57,7 @@ onMounted(() => {
 <template>
     <div>
         <div class="mb-2">
-        <span class="font-bold text-sm block mb-1">Included Tags :</span>
+        <span class="font-bold text-sm block mb-1">{{trans("Included Tags")}} :</span>
             <Multiselect v-model="value[fieldName].tag_ids" mode="tags" placeholder="Select the tag" valueProp="id"
                 trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
                 :options="positive" noResultsText="No one left. Type to add new one.">
@@ -89,7 +89,7 @@ onMounted(() => {
         </div>
 
         <div>
-            <span class="font-bold text-sm block mb-2">Tags not included:</span>
+            <span class="font-bold text-sm block mb-2">{{trans("Tags not included")}} :</span>
             <Multiselect v-model="value[fieldName].negative_tag_ids" mode="tags" placeholder="Select the tag" valueProp="id"
                 trackBy="name" label="name" :close-on-select="false" :searchable="true" :caret="false"
                 :options="negative" noResultsText="No one left. Type to add new one.">
