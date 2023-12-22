@@ -8,15 +8,11 @@
 namespace App\Actions\Portfolio\Crawl;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Crawl;
-use App\Models\Portfolio\PortfolioWebsite;
-use Illuminate\Console\Command;
+use App\Models\Portfolio\Crawl;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Spatie\Crawler\Crawler;
-use Spatie\Crawler\CrawlObservers\CrawlObserver;
 
 class UpdateCrawl
 {

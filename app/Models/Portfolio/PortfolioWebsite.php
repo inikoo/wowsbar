@@ -9,7 +9,6 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
-use App\Models\Crawl;
 use App\Models\Leads\Prospect;
 use App\Models\SysAdmin\Division;
 use App\Models\Traits\HasHistory;
@@ -39,12 +38,14 @@ use Spatie\Sluggable\HasSlug;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property PortfolioWebsiteIntegrationEnum|null $integration
+ * @property PortfolioWebsiteIntegrationEnum $integration
  * @property array $integration_data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Crawl> $crawlers
+ * @property-read int|null $crawlers_count
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Division> $divisions
  * @property-read int|null $divisions_count

@@ -37,7 +37,7 @@ use Spatie\Sluggable\HasSlug;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property PortfolioWebsiteIntegrationEnum|null $integration
+ * @property PortfolioWebsiteIntegrationEnum $integration
  * @property array $integration_data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count

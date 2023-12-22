@@ -59,6 +59,7 @@ php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage' -P hel
 #php artisan customer:new-user aw-advantage  -P hello -N 'Zoe'
 pg_dump -Fc  --no-owner -x -f "devops/devel/snapshots/customers.dump" ${DB}
 php artisan customer-website:import -g wowsbar/data-sets/customer-websites
+./setup_portfolio_websites_integrations.sh
 
 echo "🌱 create test website with a banner"
 php artisan customer:new-portfolio-website aiku http://hello.com 'My website 😸'
@@ -71,12 +72,9 @@ echo "🌱 Importing HR"
 php artisan workplace:create "Beach bar" hq
 php artisan employee:import -g wowsbar/data-sets/employees
 pg_dump -Fc  --no-owner -x -f "devops/devel/snapshots/hr.dump" ${DB}
-
-
 #php artisan shop:import-prospects awa database/seeders/uploads/local/prospects.xlsx
-echo "🛃 Organisation prospects imported"
+#echo "🛃 Organisation prospects imported"
 
-php artisan portfolio-website:set-integration aro aurora -S "{\"db\":\"aroma\",\"website\":1}"
 
 
 
