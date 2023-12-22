@@ -12,13 +12,17 @@ const props = withDefaults(defineProps<{
 }>(), {});
 
 const emits = defineEmits(['onSaveToServer']);
-const { isLoaded, isLoading } = useUnlayer();
 // get last editor id
 const editorId = getNextEditorId();
 // variable untuk menyimpan instance editor
 let editor = null;
 const editorRef = ref(null);
-const loadingReady = ref(true)
+const isUnlayerLoading = ref(true)
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinnerThird } from '@fas'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faSpinnerThird)
 
 
 // on mount load editor unlayer
@@ -136,7 +140,7 @@ onMounted(async () => {
 
     //onready
     editor.addEventListener('editor:ready', function () {
-        loadingReady.value = false
+        isUnlayerLoading.value = false
     });
 
     //loadData
@@ -181,21 +185,21 @@ onMounted(async () => {
 
 });
 
-
 defineExpose({
     editor : editor, 
     setToNewTemplate : setToNewTemplate,
-    ready : loadingReady
+    ready : isUnlayerLoading
 })
-
 
 </script>
 
 <template>
-    <div v-if="isLoading">
-        <span>Loading...</span>
+    <div v-show="isUnlayerLoading" class="mt-32 md:mt-64">
+        <!-- <span>Loading...</span> -->
+        <FontAwesomeIcon icon='fad fa-spinner-third' class='block mx-auto h-14 animate-spin' aria-hidden='true' />
+        <div class="text-center mt-2 text-gray-500">Editor is loading...</div>
     </div>
-    <div class="unlayer" v-else :id="editorId"></div>
+    <div v-show="!isUnlayerLoading" class="unlayer" :id="editorId"></div>
 </template>
 
 <style>
