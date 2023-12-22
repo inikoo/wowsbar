@@ -20,7 +20,12 @@ class GetImageFromHtml
 
     public function handle($html, $filename): array
     {
-        $path     = storage_path('app/screenshots/');
+        $path = storage_path('app/tmp/screenshots/');
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
+
         $filename = $filename.'.jpg';
 
         Browsershot::html($html)
