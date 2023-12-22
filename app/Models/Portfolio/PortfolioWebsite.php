@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
+use App\Models\Crawl;
 use App\Models\Leads\Prospect;
 use App\Models\SysAdmin\Division;
 use App\Models\Traits\HasHistory;
@@ -17,6 +18,7 @@ use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -105,6 +107,11 @@ class PortfolioWebsite extends Model implements Auditable
     public function stats(): HasOne
     {
         return $this->hasOne(PortfolioWebsiteStats::class);
+    }
+
+    public function crawlers(): HasMany
+    {
+        return $this->hasMany(Crawl::class);
     }
 
     public function scopedProspects(): MorphMany
