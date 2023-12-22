@@ -121,16 +121,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.294.4",
+            "version": "3.294.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "4f59bf50aa445fc3ec0b10648b205dd2465e9bec"
+                "reference": "2e34d45e970c77775e4c298e08732d64b647c41c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4f59bf50aa445fc3ec0b10648b205dd2465e9bec",
-                "reference": "4f59bf50aa445fc3ec0b10648b205dd2465e9bec",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2e34d45e970c77775e4c298e08732d64b647c41c",
+                "reference": "2e34d45e970c77775e4c298e08732d64b647c41c",
                 "shasum": ""
             },
             "require": {
@@ -210,9 +210,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.294.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.294.5"
             },
-            "time": "2023-12-20T19:21:19+00:00"
+            "time": "2023-12-21T19:10:21+00:00"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -17450,23 +17450,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "10.1.10",
+            "version": "10.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "599109c8ca6bae97b23482d557d2874c25a65e59"
+                "reference": "78c3b7625965c2513ee96569a4dbb62601784145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/599109c8ca6bae97b23482d557d2874c25a65e59",
-                "reference": "599109c8ca6bae97b23482d557d2874c25a65e59",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/78c3b7625965c2513ee96569a4dbb62601784145",
+                "reference": "78c3b7625965c2513ee96569a4dbb62601784145",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.15",
+                "nikic/php-parser": "^4.18 || ^5.0",
                 "php": ">=8.1",
                 "phpunit/php-file-iterator": "^4.0",
                 "phpunit/php-text-template": "^3.0",
@@ -17516,7 +17516,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/10.1.10"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/10.1.11"
             },
             "funding": [
                 {
@@ -17524,7 +17524,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-11T06:28:43+00:00"
+            "time": "2023-12-21T15:38:30+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -19287,5 +19287,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
