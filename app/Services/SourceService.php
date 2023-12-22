@@ -11,6 +11,6 @@ interface SourceService
 {
     public function fetchProspect($id);
 
-
+    public function fetchWebpage($id);
 
 }
