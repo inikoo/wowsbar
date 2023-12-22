@@ -16,11 +16,17 @@ class FetchAuroraWebpage extends FetchAurora
      */
     protected function parseModel(): void
     {
+
+
+        $url= $this->auroraModelData->{'Webpage URL'};
+        $url= str_replace('https://', '', $url);
+        $url= str_replace($this->auroraModelData->{'Website URL'}.'/', '', $url);
+
+
         $this->parsedData =
             [
-
-                'title' => $this->auroraModelData->{'Webpage Name'},
-                'url'   => $this->auroraModelData->{'Webpage URL'},
+                'title' => $this->auroraModelData->{'Webpage Name'}??$this->auroraModelData->{'Webpage Code'},
+                'url'   => $url
             ];
     }
 
@@ -29,6 +35,7 @@ class FetchAuroraWebpage extends FetchAurora
     {
         return DB::connection('aurora')
             ->table('Page Store Dimension')
+            ->leftJoin('Website Dimension', 'Webpage Website Key', '=', 'Website Key')
             ->where('Page Key', $id)->first();
     }
 }

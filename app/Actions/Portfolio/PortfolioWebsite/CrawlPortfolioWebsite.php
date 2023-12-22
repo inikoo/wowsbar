@@ -52,13 +52,18 @@ class CrawlPortfolioWebsite
         }
         $crawl=$this->handle($portfolioWebsite);
 
+
         $command->table(
             [
+                'Website',
+                'Crawled Webpages',
                 'New Webpages',
                 'Updated Webpages'
             ],
             [
                 [
+                    $crawl->portfolioWebsite->url,
+                    $crawl->number_of_crawled_webpages,
                     $crawl->number_of_new_webpages,
                     $crawl->number_of_updated_webpages
                 ]

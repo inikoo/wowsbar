@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Enums\Portfolio\Crawl\CrawlTypeEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Portfolio\Crawl
@@ -16,13 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $portfolio_website_id
  * @property CrawlTypeEnum $type
- * @property string $crawled_at
+ * @property string|null $crawled_at
  * @property int $number_of_crawled_webpages
  * @property int $number_of_new_webpages
  * @property int $number_of_updated_webpages
  * @property int $number_of_deleted_webpages
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Portfolio\PortfolioWebsite $portfolioWebsite
  * @method static \Illuminate\Database\Eloquent\Builder|Crawl newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Crawl newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Crawl query()
@@ -45,6 +47,11 @@ class Crawl extends Model
     ];
 
     protected $guarded = [];
+
+    public function portfolioWebsite(): BelongsTo
+    {
+        return $this->belongsTo(PortfolioWebsite::class);
+    }
 
 
 }

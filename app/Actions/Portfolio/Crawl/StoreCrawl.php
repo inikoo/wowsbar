@@ -36,6 +36,7 @@ class StoreCrawl
 
         /** @var Crawl $crawl */
         $crawl = $portfolioWebsite->crawlers()->create($modelData);
+        $crawl->refresh();
 
         return $crawl;
     }

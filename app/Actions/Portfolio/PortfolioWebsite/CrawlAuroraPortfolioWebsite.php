@@ -25,12 +25,26 @@ class CrawlAuroraPortfolioWebsite
             ->table('Page Store Dimension')
             ->select('Page Key as source_id')
             ->where('Webpage Website Key', Arr::get($portfolioWebsite->integration_data, 'settings.website'))
-            ->where('Page State', 'Online')
+            ->where('Webpage State', 'Online')
             ->orderBy('Page Key');
 
-        $query->chunk(10000, function ($chunkedData) use ($source, $portfolioWebsite, $crawl) {
+
+        $number_of_crawled_webpages = 0;
+        $number_of_new_webpages     = 0;
+        $number_of_updated_webpages = 0;
+
+        $query->chunk(10000, function ($chunkedData) use (
+            $source,
+            $portfolioWebsite,
+            $crawl,
+            &$number_of_crawled_webpages,
+            &$number_of_new_webpages,
+            &$number_of_updated_webpages
+        ) {
             foreach ($chunkedData as $auroraData) {
                 $webpageData = $source->fetchWebpage($auroraData->source_id);
+                $number_of_crawled_webpages++;
+
 
                 $portfolioWebpage = $portfolioWebsite->portfolioWebpages()->updateOrCreate(
                     [
@@ -38,22 +52,22 @@ class CrawlAuroraPortfolioWebsite
                     ],
                     $webpageData
                 );
+
                 if ($portfolioWebpage->wasRecentlyCreated) {
-                    $crawl->update(
-                        [
-                            'number_of_new_webpages' => $crawl->number_of_new_webpages + 1
-                        ]
-                    );
+                    $number_of_new_webpages++;
                 }
                 if ($portfolioWebpage->wasChanged()) {
-                    $crawl->update(
-                        [
-                            'number_of_updated_webpages' => $crawl->number_of_updated_webpages + 1
-                        ]
-                    );
+                    $number_of_updated_webpages++;
                 }
             }
         });
+        $crawl->update(
+            [
+                'number_of_crawled_webpages' => $number_of_crawled_webpages,
+                'number_of_new_webpages'     => $number_of_new_webpages,
+                'number_of_updated_webpages' => $number_of_updated_webpages,
+            ]
+        );
     }
 
     public function crawlAuroraWebsite(PortfolioWebsite $portfolioWebsite, Crawl $crawl): void
