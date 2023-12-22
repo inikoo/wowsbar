@@ -9,6 +9,7 @@ namespace App\Actions\Helpers\Html;
 
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Spatie\Browsershot\Browsershot;
@@ -31,12 +32,12 @@ class GetImageFromHtml
         Browsershot::html($html)
             ->setIncludePath('$PATH:/usr/local/bin')
             ->setOption('newHeadless', true)
-            ->save($path . $filename);
+            ->save($path.$filename);
 
         return [
             'path'     => $path,
             'filename' => $filename,
-            'fullPath' => $path . $filename
+            'fullPath' => $path.$filename
         ];
     }
 

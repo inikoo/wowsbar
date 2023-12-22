@@ -22,7 +22,7 @@ trait IsWebpagePortfolio
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
 
-                return Abbreviate::run(string:$this->title, max_length:16);
+                return Abbreviate::run(string:$this->title, maximumLength:16);
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')

@@ -51,6 +51,16 @@ class PortfolioWebpage extends Model implements Auditable
     use HasHistory;
     use IsWebpagePortfolio;
 
+    protected $casts = [
+        'data'               => 'array',
+        'layout'             => 'array',
+    ];
+
+    protected $attributes = [
+        'layout'             => '{}',
+        'data'               => '{}'
+    ];
+
     protected $guarded = [];
 
     public function generateTags(): array

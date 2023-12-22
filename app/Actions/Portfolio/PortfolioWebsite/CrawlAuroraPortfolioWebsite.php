@@ -26,9 +26,16 @@ class CrawlAuroraPortfolioWebsite
             ->where('Webpage Website Key', Arr::get($portfolioWebsite->integration_data, 'settings.website'))
             ->orderBy('Page Key');
 
-        $query->chunk(10000, function ($chunkedData) use ($source) {
+        $query->chunk(10000, function ($chunkedData) use ($source, $portfolioWebsite) {
             foreach ($chunkedData as $auroraData) {
                 $webpageData = $source->fetchWebpage($auroraData->source_id);
+
+                $portfolioWebsite->portfolioWebpages()->updateOrCreate(
+                    [
+                        'source_slug' => $auroraData->source_id
+                    ],
+                    $webpageData
+                );
 
 
 
