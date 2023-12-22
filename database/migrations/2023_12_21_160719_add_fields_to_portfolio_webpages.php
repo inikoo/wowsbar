@@ -13,9 +13,10 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('portfolio_webpages', function (Blueprint $table) {
+            $table->jsonb('data');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->string('source_id')->index();
-            $table->unique(['portfolio_website_id','source_id']);
+            $table->string('source_slug')->index()->collation('und_ns');
+            $table->unique(['portfolio_website_id','source_slug']);
         });
     }
 
@@ -23,6 +24,7 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('portfolio_webpages', function (Blueprint $table) {
+            $table->dropColumn('data');
             $table->dropColumn('slug');
             $table->dropColumn('source_id');
             $table->dropUnique(['portfolio_website_id','source_id']);

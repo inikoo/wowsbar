@@ -38,12 +38,14 @@ use Spatie\Sluggable\HasSlug;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property PortfolioWebsiteIntegrationEnum|null $integration
+ * @property PortfolioWebsiteIntegrationEnum $integration
  * @property array $integration_data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Crawl> $crawlers
+ * @property-read int|null $crawlers_count
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Division> $divisions
  * @property-read int|null $divisions_count
@@ -108,6 +110,11 @@ class PortfolioWebsite extends Model implements Auditable
     public function stats(): HasOne
     {
         return $this->hasOne(PortfolioWebsiteStats::class);
+    }
+
+    public function crawlers(): HasMany
+    {
+        return $this->hasMany(Crawl::class);
     }
 
     public function scopedProspects(): MorphMany

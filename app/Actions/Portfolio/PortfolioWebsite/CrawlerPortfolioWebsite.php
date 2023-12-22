@@ -14,6 +14,7 @@ use DOMDocument;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
+use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Psr\Http\Message\ResponseInterface;
@@ -25,6 +26,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
 {
     use WithAttributes;
     use AsCommand;
+    use AsAction;
 
     public string $commandSignature = 'portfolio-website:crawler {url}';
     public ?string $content         = null;
@@ -50,7 +52,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     {
         $request->validate();
 
-        return $this->handle($portfolioWebsite);
+        return $this->handle($portfolioWebsite->url);
     }
 
     public function asCommand(Command $command): int

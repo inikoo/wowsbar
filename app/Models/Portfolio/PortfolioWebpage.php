@@ -22,11 +22,14 @@ use Spatie\Sluggable\HasSlug;
  * @property int|null $portfolio_website_id
  * @property string $title
  * @property string $url
- * @property string $layout
+ * @property array $layout
  * @property string $status
  * @property string|null $message
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property array $data
+ * @property string $slug
+ * @property string $source_slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Portfolio\PortfolioWebsite|null $portfolioWebsite
@@ -34,10 +37,13 @@ use Spatie\Sluggable\HasSlug;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage query()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereLayout($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereMessage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage wherePortfolioWebsiteId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereSourceSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereUpdatedAt($value)
@@ -50,6 +56,16 @@ class PortfolioWebpage extends Model implements Auditable
     use HasSlug;
     use HasHistory;
     use IsWebpagePortfolio;
+
+    protected $casts = [
+        'data'               => 'array',
+        'layout'             => 'array',
+    ];
+
+    protected $attributes = [
+        'layout'             => '{}',
+        'data'               => '{}'
+    ];
 
     protected $guarded = [];
 
