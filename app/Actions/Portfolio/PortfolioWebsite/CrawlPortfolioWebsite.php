@@ -21,7 +21,7 @@ class CrawlPortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite): Crawl
     {
-        $crawl=StoreCrawl::make()->action($portfolioWebsite);
+        $crawl = StoreCrawl::make()->action($portfolioWebsite);
 
 
         switch ($portfolioWebsite->integration) {
@@ -36,39 +36,47 @@ class CrawlPortfolioWebsite
         );
 
         return $crawl;
-
     }
 
-    public string $commandSignature = 'portfolio-website:crawl {portfolio_website}';
+    public string $commandSignature = 'portfolio-website:crawl {portfolio_website?}';
 
     public function asCommand(Command $command): int
     {
-        try {
-            $portfolioWebsite = PortfolioWebsite::where('slug', $command->argument('portfolio_website'))->firstOrFail();
-        } catch (Exception) {
-            $command->error("Portfolio website not found");
+        if (!$command->argument('portfolio_website')) {
+            $portfolioWebsites = PortfolioWebsite::all();
+        } else {
+            try {
+                $portfolioWebsites = collect([PortfolioWebsite::where('slug', $command->argument('portfolio_website'))->firstOrFail()]);
+            } catch (Exception) {
+                $command->error("Portfolio website not found");
 
-            return 1;
+                return 1;
+            }
         }
-        $crawl=$this->handle($portfolioWebsite);
+
+        foreach ($portfolioWebsites as $portfolioWebsite) {
+            $crawl = $this->handle($portfolioWebsite);
 
 
-        $command->table(
-            [
-                'Website',
-                'Crawled Webpages',
-                'New Webpages',
-                'Updated Webpages'
-            ],
-            [
+            $command->table(
                 [
-                    $crawl->portfolioWebsite->url,
-                    $crawl->number_of_crawled_webpages,
-                    $crawl->number_of_new_webpages,
-                    $crawl->number_of_updated_webpages
+                    'Website',
+                    'Crawled Webpages',
+                    'New Webpages',
+                    'Updated Webpages'
+                ],
+                [
+                    [
+                        $crawl->portfolioWebsite->url,
+                        $crawl->number_of_crawled_webpages,
+                        $crawl->number_of_new_webpages,
+                        $crawl->number_of_updated_webpages
+                    ]
                 ]
-            ]
-        );
+            );
+        }
+
+
 
         return 0;
     }

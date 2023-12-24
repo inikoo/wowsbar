@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\PortfolioWebpage;
 
 use App\Actions\Portfolio\PortfolioWebpage\Hydrators\PortfolioWebpageHydrateUniversalSearch;
+use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateWebpages;
 use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -35,7 +36,8 @@ class StorePortfolioWebpage
     {
         /** @var PortfolioWebpage $portfolioWebpage */
         $portfolioWebpage=$portfolioWebsite->portfolioWebpages()->create($modelData);
-
+        $portfolioWebpage->stats()->create();
+        PortfolioWebsiteHydrateWebpages::dispatch($portfolioWebsite);
         PortfolioWebpageHydrateUniversalSearch::dispatch($portfolioWebpage);
         return $portfolioWebpage;
 
