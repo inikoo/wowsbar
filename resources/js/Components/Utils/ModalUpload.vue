@@ -23,7 +23,9 @@ const props = defineProps<{
         history?: routeType
     }
     propName?: string
-    useEchoOrgPersonal : Object
+    useEchoOrgPersonal: {
+        isShowProgress: boolean
+    }
     // isUploaded: boolean
 }>()
 
@@ -36,23 +38,6 @@ const isLoadingUpload = ref(false)
 const dataHistoryFileUpload: any = ref([])
 const isLoadingHistory = ref(false)
 const isDraggedFile = ref(false)
-// let inDragZoneTime: any = null
-
-// const isOnDropzone = (e) => {
-//     e.preventDefault()
-//     console.log("ondrop")
-//     isDraggedFile.value = true
-//     clearTimeout(inDragZoneTime)
-// }
-
-// const isNotOnDropzone = (e) => {
-//     e.preventDefault()
-//     console.log("not dropppp===")
-//     inDragZoneTime = setTimeout(() => {
-//         console.log('wwww')
-//         isDraggedFile.value = false
-//     }, 1100)
-// }
 
 // Running when file is uploaded or dropped
 const onUploadFile = async (fileUploaded: File) => {
@@ -68,10 +53,8 @@ const onUploadFile = async (fileUploaded: File) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-      /*   const newData = { ...props.useEchoOrgPersonal, isShowProgress : true}
-        emits('update:useEchoOrgPersonal', newData) */
         props.useEchoOrgPersonal.isShowProgress = true
- 
+
     } catch (error: any) {
         console.error(error.message)
     }
