@@ -9,15 +9,6 @@ interface OptionsTime {
     localeCode?: string
 }
 
-interface Countdown {
-    years?: string
-    months?: string
-    days?: string
-    hours?: string
-    minutes?: string
-    seconds?: string
-}
-
 export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
@@ -40,7 +31,7 @@ export const useRangeFromNow = (dateIso: string | Date, OptionsTime?: OptionsTim
     return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode], includeSeconds: true })
 }
 
-// Time countdown
+// Time countdown 1
 export const useTimeCountdown: any = (dateIso: string, options?: { human?: boolean, zero?: boolean }) => {
     if (!dateIso) return '-'  // If the provided data date is null
 
@@ -57,11 +48,34 @@ export const useTimeCountdown: any = (dateIso: string, options?: { human?: boole
 }
 
 
-// Time countdown
+// Time countdown 2
 export const useSecondCountdown: any = (dateIso: string | Date, duration: number, options?: { human?: boolean, zero?: boolean }) => {
     if (!dateIso) return false  // If the provided data date is null
 
     const newDate = addSeconds(new Date(dateIso), duration)
     if(isPast(newDate)) return false
     return formatDistanceToNowStrict(newDate)  // 23 seconds
+}
+
+// Convert miliseconds to hours-minutes-seconds
+export const useMilisecondToTime = (miliSecond: number) => {
+    // Calculate minutes and seconds
+    const hours = Math.floor(miliSecond / (1000 * 60 * 60))
+    const minutes = Math.floor((miliSecond % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((miliSecond % (1000 * 60)) / 1000)
+
+    // Format the result
+    const formattedTime =
+        (hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''}` : '') +
+        (minutes > 0 ? `${hours > 0 ? ' ' : ''}${minutes} minute${minutes > 1 ? 's' : ''}` : '') +
+        (seconds > 0
+            ? `${(hours > 0 || minutes > 0)
+                ? ' '
+                : ''}
+                ${seconds} second${seconds > 1
+                    ? 's'
+                    : ''}`
+            : '0 second')
+
+    return formattedTime // 2 hours 56 minutes 23 seconds
 }
