@@ -172,13 +172,13 @@ onMounted(async () => {
 
     //bodyUnlayer
     editor.setBodyValues({
-        backgroundColor: "white",
-        contentWidth: "50%", // or percent "50%"
+        /* backgroundColor: "white", */
+      /*   contentWidth: "50%", // or percent "50%" */
         fontFamily: {
             label: "Helvetica",
             value: "'Helvetica Neue', Helvetica, Arial, sans-serif"
         },
-        preheaderText: "Hello World"
+      /*   preheaderText: "Hello World" */
     });
 
     editorRef.value = editor

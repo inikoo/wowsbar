@@ -32,7 +32,7 @@ const getTagsOptions = async () => {
 
 const positive = computed(() => {
   if (!tagsOptions.value || !props.value || !props.value[props.fieldName] || !props.value[props.fieldName].negative_tag_ids) {
-    return [];
+    return tagsOptions.value;
   }
 
   const negativeTagIds = props.value[props.fieldName].negative_tag_ids;
@@ -41,7 +41,7 @@ const positive = computed(() => {
 
 const negative = computed(() => {
   if (!tagsOptions.value || !props.value || !props.value[props.fieldName] || !props.value[props.fieldName].tag_ids) {
-    return [];
+    return tagsOptions.value ;
   }
 
   const positiveTagIds = props.value[props.fieldName].tag_ids;
