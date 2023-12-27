@@ -45,8 +45,6 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
-                    // const index = eventData.action_type+'-'+eventData.action_id;
-
                     // Update the state
                     this.$patch({
                         progressBars: {
