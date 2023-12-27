@@ -63,7 +63,16 @@ watch(
                             <!-- Label: Success is bigger -->
                             <span v-else class="text-lime-600">Yeah, success roars😎</span>
                         </div>
-                        <div v-else>{{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)</div>
+
+                        <!-- Section: Uploading progress & time remaining -->
+                        <template v-else>
+                            <div>
+                                {{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)
+                            </div>
+                            
+                            <!-- Time Remaining  -->
+                            <div class="text-xs text-gray-500 leading-none tabular-nums">{{ upload.estimatedTime }} remaining</div>
+                        </template>
                 
                         <!-- Progress Bar -->
                         <div class="overflow-hidden rounded-full bg-gray-100 ring-1 ring-gray-300 w-64 flex justify-start">
