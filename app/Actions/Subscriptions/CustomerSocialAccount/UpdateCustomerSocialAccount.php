@@ -8,7 +8,7 @@
 namespace App\Actions\Subscriptions\CustomerSocialAccount;
 
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
-use App\Models\Portfolios\CustomerSocialAccount;
+use App\Models\CRM\CustomerSocialAccount;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

@@ -19,7 +19,9 @@ return new class () extends Migration {
         Schema::create('portfolio_webpages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->unsignedInteger('portfolio_website_id')->index()->nullable();
+            $table->unsignedInteger('customer_id')->index()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('portfolio_website_id')->index()->nullable();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->string('url');

@@ -10,7 +10,7 @@ namespace App\Actions\SysAdmin\Organisation\Hydrators;
 use App\Actions\Traits\WithDivision;
 use App\Actions\Traits\WithEnumStats;
 use App\Enums\Divisions\DivisionEnum;
-use App\Models\Portfolios\CustomerWebsite;
+use App\Models\CRM\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateCustomerWebsites

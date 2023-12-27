@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioWebpage;
 
+use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebpages;
 use App\Actions\Portfolio\PortfolioWebpage\Hydrators\PortfolioWebpageHydrateUniversalSearch;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateWebpages;
 use App\Actions\Traits\WithPortfolioWebsiteAction;
@@ -34,10 +35,14 @@ class StorePortfolioWebpage
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebpage
     {
+
+        data_set($modelData, 'customer_id', $portfolioWebsite->customer_id);
         /** @var PortfolioWebpage $portfolioWebpage */
+
         $portfolioWebpage=$portfolioWebsite->portfolioWebpages()->create($modelData);
         $portfolioWebpage->stats()->create();
         PortfolioWebsiteHydrateWebpages::dispatch($portfolioWebsite);
+        CustomerHydratePortfolioWebpages::dispatch($portfolioWebsite->customer);
         PortfolioWebpageHydrateUniversalSearch::dispatch($portfolioWebpage);
         return $portfolioWebpage;
 
@@ -59,24 +64,19 @@ class StorePortfolioWebpage
         return [
             'url'  => [
                 'required',
-                'url',
+                'string',
                 'max:500',
                 new IUnique(
                     table: 'portfolio_webpages',
                     extraConditions: [
-                        ['column' => 'portfolio_website_id', 'value' => $this->portfolioWebsite],
+                        ['column' => 'portfolio_website_id', 'value' => $this->portfolioWebsite->id],
                     ]
                 ),
             ],
-            'name' => ['required', 'string', 'max:128']
+            'title'       => ['required', 'string', 'max:128'],
+            'source_slug' => ['required'],
         ];
     }
-
-
-
-
-
-
 
 
     public function action(PortfolioWebsite $portfolioWebsite, array $objectData): PortfolioWebpage

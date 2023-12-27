@@ -7,8 +7,8 @@
 
 namespace App\Actions\Traits;
 
+use App\Models\CRM\CustomerSocialAccount;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use App\Models\Portfolios\CustomerSocialAccount;
 use Illuminate\Support\Facades\Event;
 use OwenIt\Auditing\Events\AuditCustom;
 

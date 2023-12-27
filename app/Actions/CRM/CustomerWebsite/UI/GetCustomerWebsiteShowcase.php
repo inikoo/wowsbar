@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Http\Resources\Catalogue\BasketResource;
-use App\Models\Portfolios\CustomerWebsite;
+use App\Models\CRM\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetCustomerWebsiteShowcase

@@ -9,6 +9,7 @@ namespace App\Actions\CRM\Customer;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebpages;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\HydrateModel;
@@ -25,9 +26,10 @@ class HydrateCustomers extends HydrateModel
         CustomerHydrateCustomerUsers::run($customer);
         CustomerHydrateBanners::run($customer);
         CustomerHydratePortfolioWebsites::run($customer);
+        CustomerHydratePortfolioWebpages::run($customer);
     }
 
-    public string $commandSignature = 'hydrate:customers {slugs?*}';
+    public string $commandSignature = 'customer:hydrate {slugs?*}';
 
     protected function getModel(string $slug): Customer
     {

@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\WithCustomersSubNavigation;
 use App\Enums\UI\Organisation\CustomersTabsEnum;
-use App\Http\Resources\CRM\CustomerResource;
+use App\Http\Resources\CRM\CustomersResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -94,9 +94,13 @@ class IndexCustomers extends InertiaAction
                 'customers.name',
                 'customers.slug',
                 'shops.code as shop_code',
-                'shops.slug as shop_slug'
+                'shops.slug as shop_slug',
+                'number_portfolio_websites',
+                'number_portfolio_webpages',
+                'number_banners'
             ])
             ->leftJoin('customer_stats', 'customers.id', 'customer_stats.customer_id')
+            ->leftJoin('customer_portfolio_stats', 'customers.id', 'customer_portfolio_stats.customer_id')
             ->leftJoin('shops', 'shops.id', 'shop_id')
             ->when(true, function ($query) use ($parent) {
                 if (class_basename($parent) == 'Shop') {
@@ -143,13 +147,16 @@ class IndexCustomers extends InertiaAction
                     }
                 )
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true);
+                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'number_portfolio_websites', label: __('Websites'), canBeHidden: false, sortable: true)
+                ->column(key: 'number_portfolio_webpages', label: __('Webpages'), canBeHidden: false, sortable: true)
+                ->column(key: 'number_banners', label: __('Banners'), canBeHidden: false, sortable: true);
         };
     }
 
     public function jsonResponse(LengthAwarePaginator $customers): AnonymousResourceCollection
     {
-        return CustomerResource::collection($customers);
+        return CustomersResource::collection($customers);
     }
 
     public function htmlResponse(LengthAwarePaginator $customers, ActionRequest $request): Response
@@ -207,8 +214,8 @@ class IndexCustomers extends InertiaAction
                     fn () => GetCustomersDashboard::run($this->parent, $request)
                     : Inertia::lazy(fn () => GetCustomersDashboard::run($this->parent, $request)),
                 CustomersTabsEnum::CUSTOMERS->value => $this->tab == CustomersTabsEnum::CUSTOMERS->value ?
-                    fn () => CustomerResource::collection($customers)
-                    : Inertia::lazy(fn () => CustomerResource::collection($customers)),
+                    fn () => CustomersResource::collection($customers)
+                    : Inertia::lazy(fn () => CustomersResource::collection($customers)),
 
 
             ]

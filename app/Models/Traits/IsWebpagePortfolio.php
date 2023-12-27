@@ -21,14 +21,12 @@ trait IsWebpagePortfolio
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-
-                return Abbreviate::run(string:$this->title, maximumLength:16);
+                return Abbreviate::run(string: $this->title ?? $this->url, maximumLength: 16);
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(16);
     }
-
 
 
 }

@@ -9,8 +9,8 @@ namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerWebsite;
 use App\Models\Market\Shop;
-use App\Models\Portfolios\CustomerWebsite;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

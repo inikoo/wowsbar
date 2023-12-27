@@ -9,8 +9,8 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount;
 
 use App\Actions\Traits\WithSocialAudit;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
+use App\Models\CRM\CustomerSocialAccount;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use App\Models\Portfolios\CustomerSocialAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;

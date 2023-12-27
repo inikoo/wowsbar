@@ -1,14 +1,13 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:26:15 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 26 Dec 2023 22:10:10 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Portfolios;
+namespace App\Models\CRM;
 
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
-use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsiteStats;
 use App\Models\Traits\HasHistory;
@@ -43,7 +42,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
- * @property-read Customer $customer
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SysAdmin\Division> $divisions
  * @property-read int|null $divisions_count
  * @property-read PortfolioWebsiteStats|null $stats

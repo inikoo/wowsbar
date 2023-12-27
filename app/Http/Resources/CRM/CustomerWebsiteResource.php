@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Wed, 27 Dec 2023 21:54:10 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\Prospects;
+namespace App\Http\Resources\CRM;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +17,7 @@ class CustomerWebsiteResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Portfolios\CustomerWebsite $customerWebsite */
+        /** @var \App\Models\CRM\CustomerWebsite $customerWebsite */
         $customerWebsite = $this;
 
 
