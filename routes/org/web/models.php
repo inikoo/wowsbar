@@ -74,6 +74,7 @@ use App\Actions\SysAdmin\Guest\StoreGuest;
 use App\Actions\SysAdmin\Guest\UpdateGuest;
 use App\Actions\SysAdmin\Organisation\UpdateOrganisation;
 use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUser;
+use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\PublishWebpage;
 use App\Actions\Web\Webpage\ShowWebpageContent;
@@ -93,7 +94,7 @@ use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
-Route::get('/profile/app-login-qrcode', UpdateProfile::class)->name('profile.app-login-qrcode');
+Route::get('/profile/app-login-qrcode', GetProfileAppLoginQRCode::class)->name('profile.app-login-qrcode');
 
 Route::patch('/employee/{employee:id}', UpdateEmployee::class)->name('employee.update');
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');
