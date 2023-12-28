@@ -9,11 +9,13 @@ namespace App\Actions\CRM\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\CRM\CustomerBanners\UI\IndexCustomerBanners;
+use App\Actions\CRM\CustomerWebpages\UI\IndexCustomerWebpages;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
+use App\Http\Resources\CRM\CustomerWebpagesResource;
 use App\Http\Resources\CRM\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannersResource;
@@ -143,11 +145,16 @@ class ShowCustomerWebsite extends InertiaAction
 
                 CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
                     fn () => BannersResource::collection(IndexCustomerBanners::run($customerWebsite))
-                    : Inertia::lazy(fn () => BannersResource::collection(IndexCustomerBanners::run($customerWebsite)))
+                    : Inertia::lazy(fn () => BannersResource::collection(IndexCustomerBanners::run($customerWebsite))),
+
+                CustomerWebsiteTabsEnum::WEBPAGES->value => $this->tab == CustomerWebsiteTabsEnum::WEBPAGES->value ?
+                    fn () => CustomerWebpagesResource::collection(IndexCustomerWebpages::run($customerWebsite))
+                    : Inertia::lazy(fn () => CustomerWebpagesResource::collection(IndexCustomerWebpages::run($customerWebsite)))
 
             ]
         )->table(IndexCustomerBanners::make()->tableStructure(parent: $customerWebsite, prefix: CustomerWebsiteTabsEnum::BANNERS->value))
-            ->table(IndexHistory::make()->tableStructure(prefix: CustomerWebsiteTabsEnum::CHANGELOG->value));
+            ->table(IndexHistory::make()->tableStructure(prefix: CustomerWebsiteTabsEnum::CHANGELOG->value))
+            ->table(IndexCustomerWebpages::make()->tableStructure(parent: $customerWebsite, prefix: CustomerWebsiteTabsEnum::WEBPAGES->value));
     }
 
     public function jsonResponse(CustomerWebsite $customerWebsite): CustomerWebsiteResource
