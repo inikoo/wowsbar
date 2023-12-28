@@ -24,7 +24,7 @@ import {
     faBell,
     faCopyright,
     faUserCircle,
-    faKey,
+    faKey, faMobileAndroidAlt,
     faClone,
     faPaintBrush,
     faMoonStars,
@@ -38,7 +38,7 @@ import {
     faTrashAlt
 } from '@fal'
 
-library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
+library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faMobileAndroidAlt, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
     faWindowClose)
 
 const props = defineProps<{

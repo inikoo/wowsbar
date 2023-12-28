@@ -42,7 +42,7 @@ class ShowProfile
                 "about"  => [
                     "type"  => "textarea",
                     "label" => __("about"),
-                    "value" => $organisationUser->about,
+                    "value" => $organisationUser->about ?? '',
                 ],
                 "avatar" => [
                     "type"  => "avatar",

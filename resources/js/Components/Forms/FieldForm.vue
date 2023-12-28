@@ -56,13 +56,13 @@ const props = defineProps<{
         verification?: {
             route: routeType
         }
-        noSaveButton: boolean  // Button: save
         value: any
         mode?: string
         required?: boolean
         options?: {}[]
         full: boolean
-        noTitle: boolean
+        noTitle?: boolean
+        noSaveButton?: boolean  // Button: save
     }
     args: {
         updateRoute: routeType

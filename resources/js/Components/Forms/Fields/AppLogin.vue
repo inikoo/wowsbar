@@ -37,7 +37,7 @@ const fetchQrCode = async () => {
         const response = await axios.get(route('org.models.profile.app-login-qrcode'),)
 
         qrValue.value = response.data.toString()
-        setCountdown(300)
+        setCountdown(120)
     } catch (error: any) {
         notify({
             title: 'Error',
