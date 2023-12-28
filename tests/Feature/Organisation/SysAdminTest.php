@@ -282,6 +282,6 @@ test('can show profile', function (Guest $guest) {
             ->component('EditModel')
             ->where('title', 'profile')
             ->has('breadcrumbs', 2)
-            ->has('formData.blueprint', 3);
+            ->has('formData.blueprint', 4);
     });
 })->depends('create guest');
