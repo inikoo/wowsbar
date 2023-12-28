@@ -45,6 +45,7 @@ class StoreOrganisationUserApiTokenFromQRCode
                 $this->fill([
                     'organisation_user_id' => $organisationUserId
                 ]);
+                Cache::forget('profile-app-qr-code:'.$this->get('code'));
             }
         }
 
