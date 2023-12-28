@@ -82,9 +82,11 @@ class ShowProfile
             'label'  => __('App'),
             'icon'   => 'fal fa-mobile-android-alt',
             'fields' => [
-                "language_id" => [
-                    "type"     => "app_login",
-                    "label"    => __("App login"),
+                "app_login" => [
+                    "type"          => "app_login",
+                    "label"         => __("App login"),
+                    "noSaveButton"  => true,
+                    "noTitle"       => true,
                 ],
             ]
         ];

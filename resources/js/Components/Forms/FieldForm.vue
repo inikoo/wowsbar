@@ -38,6 +38,7 @@ import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ProspectRecipients from '@/Components/Forms/Fields/ProspectRecipients.vue'
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
+import AppLogin from '@/Components/Forms/Fields/AppLogin.vue'
 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -55,11 +56,13 @@ const props = defineProps<{
         verification?: {
             route: routeType
         }
+        noSaveButton: boolean  // Button: save
         value: any
         mode?: string
         required?: boolean
         options?: {}[]
         full: boolean
+        noTitle: boolean
     }
     args: {
         updateRoute: routeType
@@ -96,6 +99,7 @@ const components = {
     'prospect_query': ProspectsQuery,
     'ProspectRecipients': ProspectRecipients,
     'senderEmail': SenderEmail,
+    'app_login': AppLogin,
 };
 
 const getComponent = (componentName) => {
@@ -154,14 +158,17 @@ const checkVerification = async () => {
 <template>
     <form @submit.prevent="submit" class="divide-y divide-gray-200 w-full" :class="props.fieldData.full ? '' : 'max-w-2xl'">
         <dl class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 ">
-            <dt class="text-sm font-medium text-gray-400 capitalize">
+            <!-- Title -->
+            <dt v-if="!fieldData.noTitle" class="text-sm font-medium text-gray-400 capitalize">
                 <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
             </dt>
-            <dd :class="props.fieldData.full ? 'sm:col-span-3' : 'sm:col-span-2'">
-                <div class="mt-1 flex items-start text-sm text-gray-900 sm:mt-0">
-                    <div class="relative  flex-grow">
-                        <component :is="getComponent(fieldData['type'])" :form=form :fieldName=field
-                            :options="fieldData['options']" :fieldData="fieldData">
+
+
+            <dd :class="props.fieldData.full ? 'sm:col-span-3' : fieldData.noTitle ? 'sm:col-span-3' : 'sm:col-span-2'">
+                <div class="mt-1 flex items-start text-sm text-gray-700 sm:mt-0">
+                    <div class="relative flex-grow">
+                        <component :is="getComponent(fieldData.type)" :form="form" :fieldName="field"
+                            :options="fieldData.options" :fieldData="fieldData">
                         </component>
 
                         <!-- Verification: Label -->
@@ -172,7 +179,9 @@ const checkVerification = async () => {
                     </div>
 
                     <!-- Button: Save -->
-                    <span class="ml-2 flex-shrink-0">
+                    <template v-if="fieldData.noSaveButton" />
+                    
+                    <span v-else class="ml-2 flex-shrink-0">
                         <button v-if="!fieldData.verification" class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
                             <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-org-600"
                                 :style="{

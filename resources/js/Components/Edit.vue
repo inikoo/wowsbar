@@ -14,6 +14,7 @@ import { useLayoutStore } from '@/Stores/layout'
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
+import { Action as TSAction } from '@/types/Action'
 
 import {
     faWindowClose,
@@ -41,33 +42,29 @@ library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, f
     faWindowClose)
 
 const props = defineProps<{
-
     formData: {
         current?:string,
         blueprint: {
-            // sectionData
-            label: string,
-            title: string,
-            subtitle?: string,
-            icon: string
-            fields: {
-                // FieldData
-                name: string,
-                type: string,
+            [key: string]: { // sectionData
                 label: string,
-                value: string | object
-                icon?: string
-                action?: {
-                    data?: any
-                    method?: string
+                title: string,
+                subtitle?: string,
+                icon: string
+                fields: { // FieldData
+                    name: string,
+                    type: string,
+                    label: string,
+                    value: string | {}
+                    icon?: string
+                    action: TSAction
+                }[]
+                button: {
+                    title: string
+                    route: string
+                    disable: boolean
                 }
-            }[]
-            button: {
-                title: string
-                route: string
-                disable: boolean
             }
-        }[]
+        }
         args: {
             updateRoute: {
                 name: string,
@@ -79,7 +76,7 @@ const props = defineProps<{
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
+const currentTab = ref<string>(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
