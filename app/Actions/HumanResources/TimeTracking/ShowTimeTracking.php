@@ -5,18 +5,18 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\TimeSheet;
+namespace App\Actions\HumanResources\TimeTracking;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\EmployeeTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
+use App\Enums\UI\Organisation\EmployeeTabsEnum;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\HumanResources\Employee;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowTimeSheet extends InertiaAction
+class ShowTimeTracking extends InertiaAction
 {
     public function handle(Employee $employee): Employee
     {
@@ -40,7 +40,7 @@ class ShowTimeSheet extends InertiaAction
     public function htmlResponse(Employee $employee, ActionRequest $request): Response
     {
         return Inertia::render(
-            'HumanResources/TimeSheet',
+            'HumanResources/TimeTracking',
             [
                 'title'                                 => __('employee'),
                 'breadcrumbs'                           => $this->getBreadcrumbs($employee),
@@ -92,7 +92,7 @@ class ShowTimeSheet extends InertiaAction
     public function getBreadcrumbs(Employee $employee, $suffix = null): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'           => 'modelWithIndex',
