@@ -65,3 +65,19 @@ test('create api token from qr code', function () {
 
 
 })->depends('create qr code');
+
+test('create api token from credentials', function () {
+
+
+    $response = postJson(route('mobile-app.tokens.credentials.store', [
+        'username'        => $this->organisationUser->username,
+        'password'        => 'password',
+        'device_name'     => 'test device'
+    ]));
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'token'
+    ]);
+
+
+})->depends('create qr code');

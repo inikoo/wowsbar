@@ -23,18 +23,21 @@ class StoreOrganisationUserApiTokenFromCredentials
     private bool $asAction = false;
 
 
-    public function handle(OrganisationUser $organisationUser, array $modelData): string
+    public function handle(OrganisationUser $organisationUser, array $modelData): array
     {
-        return $organisationUser->createToken(Arr::get($modelData, 'device_name', 'unknown-device'))->plainTextToken;
+        return [
+            'token'=> $organisationUser->createToken(Arr::get($modelData, 'device_name', 'unknown-device'))->plainTextToken
+            ];
     }
 
 
     public function rules(): array
     {
         return [
-            'username'    => ['required', 'exists:organisation_users,username'],
-            'password'    => ['required', 'string'],
-            'device_name' => ['required', 'string'],
+            'username'             => ['required', 'exists:organisation_users,username'],
+            'password'             => ['required', 'string'],
+            'device_name'          => ['required', 'string'],
+            'organisation_user_id' => ['sometimes'],
         ];
     }
 
@@ -42,6 +45,7 @@ class StoreOrganisationUserApiTokenFromCredentials
     public function afterValidator(Validator $validator, ActionRequest $request): void
     {
         $organisationUser = OrganisationUser::where('username', $request->get('username'))->first();
+
 
         if (!$organisationUser) {
             $validator->errors()->add('username', __('Wrong username.'));
@@ -61,19 +65,20 @@ class StoreOrganisationUserApiTokenFromCredentials
             return;
         }
 
+
         $this->fill([
             'organisation_user_id' => $organisationUser->id
         ]);
     }
 
 
-    public function asController(ActionRequest $request): string
+    public function asController(ActionRequest $request): array
     {
         $this->fillFromRequest($request);
 
         $validatedData = $this->validateAttributes();
 
-        $organisationUser = OrganisationUser::find($validatedData['organisation_user_id']);
+        $organisationUser = OrganisationUser::find($this->get('organisation_user_id'));
 
         return $this->handle($organisationUser, Arr::only($validatedData, ['device_name']));
     }
