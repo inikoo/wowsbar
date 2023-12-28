@@ -22,7 +22,10 @@ class GetProfileAppLoginQRCode
 
     public function handle(OrganisationUser $organisationUser): string
     {
-        return Cache::put('profile-app-qr-code:'.$organisationUser->id, Str::ulid(), 300);
+
+        $code=Str::ulid();
+        Cache::put('profile-app-qr-code:'.$code, $organisationUser->id, 120);
+        return $code;
     }
 
 
