@@ -93,6 +93,7 @@
         "pinia": "^2.1.4",
         "puppeteer": "^21.6.1",
         "pusher-js": "^8.3.0",
+        "qrcode.vue": "^3.4.1",
         "qs": "^6.11.1",
         "sass": "^1.63.6",
         "sass-loader": "^13.3.2",
