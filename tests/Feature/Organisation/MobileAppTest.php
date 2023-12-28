@@ -8,6 +8,8 @@
 
 use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
 
+use Laravel\Sanctum\Sanctum;
+
 use function Pest\Laravel\{actingAs};
 
 use function Pest\Laravel\{getJson};
@@ -62,22 +64,32 @@ test('create api token from qr code', function () {
     $response->assertJsonStructure([
         'token'
     ]);
-
-
 })->depends('create qr code');
 
 test('create api token from credentials', function () {
-
-
     $response = postJson(route('mobile-app.tokens.credentials.store', [
-        'username'        => $this->organisationUser->username,
-        'password'        => 'password',
-        'device_name'     => 'test device'
+        'username'    => $this->organisationUser->username,
+        'password'    => 'password',
+        'device_name' => 'test device'
     ]));
     $response->assertOk();
     $response->assertJsonStructure([
         'token'
     ]);
+});
 
-
-})->depends('create qr code');
+test('get profile data', function () {
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $response = getJson(route('mobile-app.profile.show'));
+    $response->assertOk();
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->id->toBe($this->organisationUser->id)
+        ->contact_name->toBe($this->organisationUser->contact_name)
+        ->username->toBe($this->organisationUser->username)
+        ->roles->toBeArray()
+        ->permissions->toBeArray();
+});

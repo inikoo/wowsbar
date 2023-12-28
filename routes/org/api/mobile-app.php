@@ -8,5 +8,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::name('mobile-app.')->group(function () {
+    Route::middleware(["auth:sanctum"])->group(function () {
+        Route::prefix("profile")
+            ->name("profile.")
+            ->group(__DIR__."/profile.php");
+    });
     require __DIR__."/tokens.php";
 });

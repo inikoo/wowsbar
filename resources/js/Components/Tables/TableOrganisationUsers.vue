@@ -8,7 +8,6 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {User} from "@/types/user";
-import {trans} from "laravel-vue-i18n";
 import Image from "@/Components/Image.vue";
 import Tag from "@/Components/Tag.vue"
 
@@ -61,7 +60,7 @@ function setColor(status: status) {
 
         <template #cell(roles)="{ item: user }">
             <div class="space-y-1">
-                <Tag v-for="abcde in user.roles.split(',')" stringToColor :label="abcde">{{ abcde }}</Tag>
+                <Tag class="mr-1" v-for="role in user.roles" stringToColor :label="role">{{ role }}</Tag>
             </div>
         </template>
     </Table>
