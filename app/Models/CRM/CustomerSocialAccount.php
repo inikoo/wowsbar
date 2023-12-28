@@ -1,9 +1,13 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 26 Dec 2023 22:09:39 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
-namespace App\Models\Portfolios;
+namespace App\Models\CRM;
 
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
-use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Traits\IsSocialAccount;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +31,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read Customer $customer
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSocialAccount newQuery()

@@ -10,8 +10,8 @@ namespace App\Actions\Subscriptions\CustomerSocialAccount;
 use App\Actions\Traits\WithSocialAudit;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerSocialAccount;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use App\Models\Portfolios\CustomerSocialAccount;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Validation\Rules\Enum;
@@ -31,7 +31,7 @@ class StoreCustomerSocialAccount
     {
         data_set($modelData, 'shop_id', $customer->shop_id);
 
-        /** @var CustomerSocialAccount $customerSocialAccount */
+        /** @var \App\Models\CRM\CustomerSocialAccount $customerSocialAccount */
         $customerSocialAccount = $customer->socialAccounts()->create($modelData);
 
         $this->createAudit(PortfolioSocialAccount::find($customerSocialAccount->id));

@@ -15,8 +15,8 @@ use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniv
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Portfolios\CustomerWebsite;
 use App\Models\SysAdmin\Division;
 use App\Rules\IUnique;
 use Exception;
@@ -45,7 +45,7 @@ class StoreCustomerWebsite
     public function handle(Customer $customer, array $modelData): CustomerWebsite
     {
         data_set($modelData, 'shop_id', $customer->shop_id);
-        /** @var CustomerWebsite $customerWebsite */
+        /** @var \App\Models\CRM\CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
 
         $portfolioWebsite=PortfolioWebsite::find($customerWebsite->id);

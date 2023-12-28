@@ -7,7 +7,10 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
+use App\Actions\Portfolio\PortfolioWebpage\StorePortfolioWebpage;
+use App\Actions\Portfolio\PortfolioWebpage\UpdatePortfolioWebpage;
 use App\Models\Portfolio\Crawl;
+use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Services\AuroraService;
 use App\Services\SourceService;
@@ -44,6 +47,17 @@ class CrawlAuroraPortfolioWebsite
             foreach ($chunkedData as $auroraData) {
                 $webpageData = $source->fetchWebpage($auroraData->source_id);
                 $number_of_crawled_webpages++;
+
+
+
+                /** @var PortfolioWebpage $portfolioWebpage */
+                if($portfolioWebpage= $portfolioWebsite->portfolioWebpages()->where('source_slug', $auroraData->source_id)->first()) {
+                    UpdatePortfolioWebpage::make()->action($portfolioWebpage, $webpageData);
+                } else {
+                    data_set($webpageData, 'source_slug', $auroraData->source_id);
+                    //print_r($webpageData);
+                    StorePortfolioWebpage::make()->action($portfolioWebsite, $webpageData);
+                }
 
 
                 $portfolioWebpage = $portfolioWebsite->portfolioWebpages()->updateOrCreate(

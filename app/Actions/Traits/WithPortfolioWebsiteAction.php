@@ -7,8 +7,8 @@
 
 namespace App\Actions\Traits;
 
+use App\Models\CRM\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Portfolios\CustomerWebsite;
 use Illuminate\Support\Facades\Event;
 use OwenIt\Auditing\Events\AuditCustom;
 

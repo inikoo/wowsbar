@@ -23,9 +23,15 @@ class FetchAuroraWebpage extends FetchAurora
         $url= str_replace($this->auroraModelData->{'Website URL'}.'/', '', $url);
 
 
+        $title=$this->auroraModelData->{'Webpage Name'};
+        if(!$title) {
+            $title=$this->auroraModelData->{'Webpage Code'};
+        }
+
+
         $this->parsedData =
             [
-                'title' => $this->auroraModelData->{'Webpage Name'}??$this->auroraModelData->{'Webpage Code'},
+                'title' => $title,
                 'url'   => $url
             ];
     }

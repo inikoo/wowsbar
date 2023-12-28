@@ -16,6 +16,7 @@ import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableCustomerBanners from "@/Components/Tables/TableCustomerBanners.vue";
 import PortfolioWebsiteShowcase from '@/Pages/Organisation/Subscriptions/PortfolioWebsiteShowcase.vue';
+import TableCustomerWebpages from "@/Components/Tables/TableCustomerWebpages.vue";
 
 import {faWindowMaximize, faGlobe} from '@fal'
 
@@ -31,6 +32,7 @@ const props = defineProps<{
     showcase?:object
     changelog?: object
     banners?: object
+    webpages?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -42,6 +44,7 @@ const component = computed(() => {
         details: ModelDetails,
         changelog: TableHistories,
         banners: TableCustomerBanners,
+        webpages: TableCustomerWebpages,
         showcase: PortfolioWebsiteShowcase
     };
     return components[currentTab.value];

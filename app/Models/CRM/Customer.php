@@ -20,8 +20,6 @@ use App\Models\Market\Shop;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Portfolios\CustomerSocialAccount;
-use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
@@ -84,7 +82,9 @@ use Spatie\Tags\HasTags;
  * @property-read Currency $currency
  * @property-read Collection<int, CustomerUser> $customerUsers
  * @property-read int|null $customer_users_count
- * @property-read Collection<int, CustomerWebsite> $customerWebsites
+ * @property-read Collection<int, \App\Models\CRM\CustomerWebpage> $customerWebpages
+ * @property-read int|null $customer_webpages_count
+ * @property-read Collection<int, \App\Models\CRM\CustomerWebsite> $customerWebsites
  * @property-read int|null $customer_websites_count
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
@@ -96,7 +96,7 @@ use Spatie\Tags\HasTags;
  * @property-read Shop $shop
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
- * @property-read Collection<int, CustomerSocialAccount> $socialAccounts
+ * @property-read Collection<int, \App\Models\CRM\CustomerSocialAccount> $socialAccounts
  * @property-read int|null $social_accounts_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
  * @property-read int|null $tags_count
@@ -272,6 +272,11 @@ class Customer extends Model implements HasMedia, Auditable
     public function customerWebsites(): HasMany
     {
         return $this->hasMany(CustomerWebsite::class);
+    }
+
+    public function customerWebpages(): HasMany
+    {
+        return $this->hasMany(CustomerWebpage::class);
     }
 
     public function registerMediaCollections(): void

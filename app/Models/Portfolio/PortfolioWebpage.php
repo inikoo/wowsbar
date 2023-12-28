@@ -21,6 +21,7 @@ use Spatie\Sluggable\HasSlug;
  *
  * @property int $id
  * @property string $slug
+ * @property int|null $customer_id
  * @property int|null $portfolio_website_id
  * @property string $title
  * @property string $url
@@ -40,6 +41,7 @@ use Spatie\Sluggable\HasSlug;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage query()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioWebpage whereId($value)
@@ -82,7 +84,7 @@ class PortfolioWebpage extends Model implements Auditable
 
     public function portfolioWebsite(): BelongsTo
     {
-        return $this->belongsTo(PortfolioWebsite::class);
+        return $this->belongsTo(PortfolioWebsite::class, 'portfolio_website_id');
     }
 
     public function stats(): HasOne

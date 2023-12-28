@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\CustomerWebsite\UI;
+namespace App\Actions\CRM\CustomerWebpages\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistory;
@@ -17,9 +17,8 @@ use App\Http\Resources\CRM\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerWebpage;
 use App\Models\CRM\CustomerWebsite;
-use App\Models\Market\Shop;
-use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
@@ -29,9 +28,9 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexCustomerWebsites extends InertiaAction
+class IndexCustomerWebpages extends InertiaAction
 {
-    private Customer|Shop|Organisation $parent;
+    private Customer|CustomerWebsite $parent;
 
     public function authorize(ActionRequest $request): bool
     {
@@ -40,76 +39,47 @@ class IndexCustomerWebsites extends InertiaAction
         return $request->user()->hasPermissionTo('crm.view');
     }
 
-    public function asController(ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
-
-        return $this->handle(organisation());
-    }
-
-    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
-
-        return $this->handle($shop);
-    }
-
-    /** @noinspection PhpUnusedParameterInspection */
-    public function inCustomerInShop(Shop $shop, Customer $customer, ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
-
-        return $this->handle($customer);
-    }
 
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Organisation|Shop|Customer $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Customer|CustomerWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $this->parent = $parent;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('portfolio_websites.name', $value)
-                    ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.slug', 'ilike', "$value%");
+                $query->whereAnyWordStartWith('portfolio_webpages.url', $value)
+                    ->orWhere('portfolio_webpages.title', $value);
             });
         });
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(CustomerWebsite::class);
+        $queryBuilder = QueryBuilder::for(CustomerWebpage::class);
 
         switch (class_basename($parent)) {
             case 'Customer':
                 $queryBuilder->where('customer_id', $parent->id);
                 break;
-            case 'Shop':
-                $queryBuilder->where('portfolio_websites.shop_id', $parent->id);
+            case 'CustomerWebsite':
+                $queryBuilder->where('portfolio_website_id', $parent->id);
                 break;
         }
 
         return $queryBuilder
             ->select([
-                'customers.name as customer_name',
-                'portfolio_websites.slug',
-                'portfolio_websites.name',
                 'url',
-                'customers.slug as customer_slug',
-                'number_portfolio_webpages',
-                'number_banners'
+                'title'
             ])
-            ->defaultSort('portfolio_websites.slug')
-            ->leftJoin('customers', 'customer_id', 'customers.id')
-            ->leftJoin('portfolio_website_stats', 'portfolio_websites.id', 'portfolio_website_stats.portfolio_website_id')
-            ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
+            ->defaultSort('portfolio_webpages.slug')
+            ->allowedSorts(['slug', 'title', 'url'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
     }
 
-    public function tableStructure(Organisation|Shop|Customer $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
+    public function tableStructure(Customer|CustomerWebsite $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks, $parent) {
             if ($prefix) {
@@ -124,19 +94,10 @@ class IndexCustomerWebsites extends InertiaAction
                 ->withEmptyState(
                     match (class_basename($parent)) {
                         'Customer' => [
-                            'title'       => __("This customer don't have any website"),
+                            'title'       => __("This customer don't have any webpage"),
                             'description' => $this->canEdit ? __('New website.') : null,
                             'count'       => $parent->portfolioStats->number_portfolio_websites,
-                            'action'      => [
-                                'type'    => 'button',
-                                'style'   => 'create',
-                                'tooltip' => __('new website'),
-                                'label'   => __('website'),
-                                'route'   => [
-                                    'name'       => 'org.crm.shop.customers.show.customer-websites.create',
-                                    'parameters' => [$parent->shop->slug, $parent->slug]
-                                ]
-                            ]
+
                         ],
                         default =>
                         [
@@ -145,19 +106,14 @@ class IndexCustomerWebsites extends InertiaAction
                         ]
                     }
                 )
-                ->withExportLinks($exportLinks)
-                ->column(key: 'slug', label: __('code'), sortable: true);
+                ->withExportLinks($exportLinks);
 
-            if (class_basename($parent) != 'Customer') {
-                $table->column(key: 'customer_name', label: __('customer'), sortable: true);
-            }
+
+
             $table
-                ->column(key: 'slug', label: __('Code'), sortable: true)
-                ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'number_portfolio_webpages', label: __('url'), sortable: true)
-                ->column(key: 'number_banners', label: __('Banners'), canBeHidden: false, sortable: true)
-                ->defaultSort('slug');
+                ->column(key: 'title', label: __('name'), sortable: true)
+                ->defaultSort('url');
         };
     }
 

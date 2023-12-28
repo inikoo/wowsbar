@@ -8,17 +8,28 @@
 namespace App\Actions\Portfolio\PortfolioWebsite\Hydrators;
 
 use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class PortfolioWebsiteHydrateWebpages
 {
     use AsAction;
 
+    private PortfolioWebsite $portfolioWebsite;
+    public function __construct(PortfolioWebsite $portfolioWebsite)
+    {
+        $this->portfolioWebsite = $portfolioWebsite;
+    }
+
+    public function getJobMiddleware(): array
+    {
+        return [(new WithoutOverlapping($this->portfolioWebsite->id))->dontRelease()];
+    }
 
     public function handle(PortfolioWebsite $portfolioWebsite): void
     {
         $stats = [
-            'number_of_webpages' => $portfolioWebsite->portfolioWebpages()->count(),
+            'number_portfolio_webpages' => $portfolioWebsite->portfolioWebpages()->count(),
         ];
 
 

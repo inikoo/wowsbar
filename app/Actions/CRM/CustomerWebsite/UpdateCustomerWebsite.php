@@ -9,9 +9,9 @@ namespace App\Actions\CRM\CustomerWebsite;
 
 use App\Actions\CRM\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
+use App\Http\Resources\CRM\CustomerWebsiteResource;
 use App\Models\CRM\Customer;
-use App\Models\Portfolios\CustomerWebsite;
+use App\Models\CRM\CustomerWebsite;
 use App\Rules\IUnique;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;

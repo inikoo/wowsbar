@@ -51,7 +51,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_success_status_registered
  * @property int $number_prospects_success_status_invoiced
  * @property int $number_prospects_dont_contact_me
- * @property int $number_of_webpages
+ * @property int $number_portfolio_webpages
  * @property-read \App\Models\Portfolio\PortfolioWebsite $website
  * @method static Builder|PortfolioWebsiteStats newModelQuery()
  * @method static Builder|PortfolioWebsiteStats newQuery()
@@ -69,7 +69,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeLandscape($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeSquare($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberHistoricSnapshots($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberOfWebpages($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberPortfolioWebpages($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspects($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateClicked($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsContactedStateNeverOpen($value)

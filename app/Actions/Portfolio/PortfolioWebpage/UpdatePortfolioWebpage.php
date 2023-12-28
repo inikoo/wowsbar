@@ -11,7 +11,6 @@ use App\Actions\Portfolio\PortfolioWebpage\Hydrators\PortfolioWebpageHydrateUniv
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\PortfolioWebpageResource;
 use App\Models\Portfolio\PortfolioWebpage;
-use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -21,7 +20,9 @@ class UpdatePortfolioWebpage
 
 
 
-    private PortfolioWebsite $portfolioWebsite;
+    private PortfolioWebpage $portfolioWebpage;
+
+    private bool $asAction=false;
 
     public function handle(PortfolioWebpage $portfolioWebpage, array $modelData): PortfolioWebpage
     {
@@ -34,25 +35,28 @@ class UpdatePortfolioWebpage
 
     public function authorize(ActionRequest $request): bool
     {
+        if ($this->asAction) {
+            return true;
+        }
         return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
 
     public function rules(ActionRequest $request): array
     {
-        $currentID = $request->route()->parameters()['portfolioWebpage']->id;
+
 
         return [
             'url'  => [
                 'sometimes',
                 'required',
-                'active_url',
+                'string',
                 'max:500',
                 new IUnique(
                     table: 'portfolio_webpages',
                     extraConditions: [
-                        ['column' => 'portfolio_website_id', 'value' => $this->portfolioWebsite->id],
-                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                        ['column' => 'portfolio_website_id', 'value' => $this->portfolioWebpage->portfolio_website_id],
+                        ['column' => 'id', 'operator' => '!=', 'value' => $this->portfolioWebpage->id]
                     ]
                 ),
 
@@ -73,11 +77,20 @@ class UpdatePortfolioWebpage
 
     public function asController(PortfolioWebpage $portfolioWebpage, ActionRequest $request): PortfolioWebpage
     {
-        $this->portfolioWebsite =$portfolioWebpage->porfolioWebsite;
+        $this->portfolioWebpage =$portfolioWebpage;
         $request->validate();
         return $this->handle($portfolioWebpage, $request->validated());
     }
 
+    public function action(PortfolioWebpage $portfolioWebpage, array $modelData): PortfolioWebpage
+    {
+        $this->asAction  = true;
+
+        $this->portfolioWebpage =$portfolioWebpage;
+        $this->setRawAttributes($modelData);
+        $validatedData = $this->validateAttributes();
+        return $this->handle($portfolioWebpage, $validatedData);
+    }
 
     public function jsonResponse(PortfolioWebpage $portfolioWebpage): PortfolioWebpageResource
     {

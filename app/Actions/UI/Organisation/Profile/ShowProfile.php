@@ -78,6 +78,17 @@ class ShowProfile
             ]
         ];
 
+        $sections['app'] = [
+            'label'  => __('App'),
+            'icon'   => 'fal fa-mobile-android-alt',
+            'fields' => [
+                "language_id" => [
+                    "type"     => "app_login",
+                    "label"    => __("App login"),
+                ],
+            ]
+        ];
+
         $currentSection = 'properties';
         if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
             $currentSection = $request->get('section');
