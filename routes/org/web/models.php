@@ -93,6 +93,8 @@ use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
+Route::get('/profile/app-login-qrcode', UpdateProfile::class)->name('profile.app-login-qrcode');
+
 Route::patch('/employee/{employee:id}', UpdateEmployee::class)->name('employee.update');
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');
 Route::delete('/employee/{employee:id}', DeleteEmployee::class)->name('employee.delete');
