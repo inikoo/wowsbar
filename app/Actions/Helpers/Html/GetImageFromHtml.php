@@ -44,7 +44,6 @@ class GetImageFromHtml
     public function asController(): array
     {
         $mailshot = Mailshot::first();
-
         return $this->handle(Arr::get($mailshot->layout, 'html')['html'], $mailshot->slug);
     }
 }

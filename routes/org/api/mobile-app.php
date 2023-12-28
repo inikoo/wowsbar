@@ -7,6 +7,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::name('han.')->group(function () {
+Route::name('mobile-app.')->group(function () {
     require __DIR__."/tokens.php";
 });
