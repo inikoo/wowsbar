@@ -64,6 +64,11 @@ class Kernel extends HttpKernel
 
     protected $middlewareGroups = [
 
+        'api' => [
+            ForceJsonResponse::class,
+            EnsureFrontendRequestsAreStateful::class,
+            SubstituteBindings::class,
+        ],
         'webhooks' => [
             ForceJsonResponse::class,
             EnsureFrontendRequestsAreStateful::class,
@@ -119,17 +124,6 @@ class Kernel extends HttpKernel
             LogCustomerUserRequestMiddleware::class
         ],
 
-
-        'webhooks-api' => [
-            EnsureFrontendRequestsAreStateful::class,
-            SubstituteBindings::class,
-        ],
-
-        'customer-api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            ThrottleRequests::class.':api',
-            SubstituteBindings::class,
-        ],
 
         'broadcast'  => [
             EncryptCookies::class,

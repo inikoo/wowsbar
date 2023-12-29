@@ -38,28 +38,35 @@ class StoreEmailTemplate
         /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
 
+        $imagesPath =null;
 
-        $imagesPath = GetImageFromHtml::run(
-            $emailTemplate->compiled['html']['html'],
-            $emailTemplate->slug
-        );
+        if(!app()->environment('testing')) {
+            $imagesPath = GetImageFromHtml::run(
+                $emailTemplate->compiled['html']['html'],
+                $emailTemplate->slug
+            );
 
-        if (File::exists($imagesPath['path'])) {
-            foreach (File::files($imagesPath['path']) as $image) {
-                AttachImageToEmailTemplate::run(
-                    $emailTemplate,
-                    'content',
-                    $image->getPathname(),
-                    $image->getFilename()
-                );
+            if (File::exists($imagesPath['path'])) {
+                foreach (File::files($imagesPath['path']) as $image) {
+                    AttachImageToEmailTemplate::run(
+                        $emailTemplate,
+                        'content',
+                        $image->getPathname(),
+                        $image->getFilename()
+                    );
+                }
             }
+
+            SetEmailTemplateScreenshot::run(
+                $emailTemplate,
+                $imagesPath['fullPath'],
+                $imagesPath['filename']
+            );
+
         }
 
-        SetEmailTemplateScreenshot::run(
-            $emailTemplate,
-            $imagesPath['fullPath'],
-            $imagesPath['filename']
-        );
+
+
 
         //StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
 

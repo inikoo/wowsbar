@@ -14,6 +14,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useTimeCountdown } from '@/Composables/useFormatTime'
 import axios from 'axios'
 import { notify } from '@kyvg/vue3-notification'
+import {trans} from "laravel-vue-i18n";
 library.add(faSync)
 
 const props = defineProps<{
@@ -35,8 +36,8 @@ const qrValue = ref('')
 const fetchQrCode = async () => {
     try {
         const response = await axios.get(route('org.models.profile.app-login-qrcode'),)
-
-        qrValue.value = response.data.toString()
+        console.log(response.data)
+        qrValue.value = response.data.code.toString()
         setCountdown(120)
     } catch (error: any) {
         notify({
@@ -73,7 +74,7 @@ const setCountdown = (duration: number) => {
         // To handle stepped 2 seconds at early
         timeCountdown.value = useTimeCountdown(date, { human: true })
     }, 50)
-    
+
     intervalCountdown.value = setInterval(() => {
         timeCountdown.value = useTimeCountdown(date, { human: true })
         if(!timeCountdown.value) {
@@ -110,7 +111,7 @@ const setCountdown = (duration: number) => {
                         <FontAwesomeIcon icon='fal fa-sync' :class="isRegenerating ? 'animate-spin' : ''" class='h-5' aria-hidden='true' />
                     </div>
                 </div>
-                <p v-if="timeCountdown" class="mt-1 text-sm text-gray-500 tabular-nums">This QR Code valid for {{ timeCountdown }}.</p>
+                <p v-if="timeCountdown" class="mt-4 text-sm text-gray-500 tabular-nums">{{trans('This QR Code valid for')}} {{ timeCountdown }}.</p>
             </template>
             <div v-else class="h-[200px] aspect-square skeleton" />
         </div>

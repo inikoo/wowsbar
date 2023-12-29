@@ -94,6 +94,8 @@ test('create guest from command', function () {
     return $guest;
 });
 
+
+
 test('update guest', function ($guest) {
     $guest = UpdateGuest::make()->action($guest, ['contact_name' => 'Wow']);
     expect($guest->contact_name)->toBe('Wow');

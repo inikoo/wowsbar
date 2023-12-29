@@ -20,16 +20,22 @@ class GetProfileAppLoginQRCode
     private bool $asAction = false;
 
 
-    public function handle(OrganisationUser $organisationUser): string
+    public function handle(OrganisationUser $organisationUser): array
     {
 
-        $code=Str::ulid();
+        $code=$this->getCode();
         Cache::put('profile-app-qr-code:'.$code, $organisationUser->id, 120);
-        return $code;
+        return [
+            'code' => $code
+        ];
     }
 
+    public function getCode(): string
+    {
+        return Str::ulid();
+    }
 
-    public function asController(ActionRequest $request): string
+    public function asController(ActionRequest $request): array
     {
         $this->validateAttributes();
 
