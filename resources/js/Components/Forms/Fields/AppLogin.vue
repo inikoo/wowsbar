@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 import QrcodeVue from 'qrcode.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -82,6 +82,18 @@ const setCountdown = (duration: number) => {
         }
     }, 1000)
 }
+
+// onMounted(() => {
+//     window.Echo.private('org.general')
+//         .listen(`.mailshot.${props.data.id}`, (e: any) => {
+//             // Method here
+//         })
+// })
+
+// onUnmounted(() => {
+//     window.Echo.private(`org.general`)
+//     .stopListening(`.mailshot.${props.data.id}`)
+// })
 
 </script>
 
