@@ -35,7 +35,7 @@ const props = defineProps<{
     title: string
     tabs: {
         current: string;
-        navigation: object;
+        navigation: {}
     },
     uploads: {
         templates: {
@@ -48,11 +48,11 @@ const props = defineProps<{
         upload: routeType
         history: routeType
     }
-    dashboard?: object
-    prospects?: object
-    mailshots?: object
-    lists?: object
-    history?: object
+    dashboard?: {}
+    prospects?: {}
+    mailshots?: {}
+    lists?: {}
+    history?: {}
     tags: {
         data: {
             id: number
