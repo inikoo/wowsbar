@@ -22,7 +22,6 @@ import { Disclosure } from "@headlessui/vue"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import { trans } from "laravel-vue-i18n"
-import { useAppearanceStore } from "@/Stores/appearance"
 import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
@@ -38,34 +37,6 @@ defineEmits<{
 const layout = useLayoutStore()
 
 const showSearchDialog = ref(false)
-
-const changeColorMode = (mode: boolean | string) => {
-    // If browsers not support matchMedia
-    if (!window.matchMedia) {
-        return
-    }
-
-    let query: boolean | string = false
-
-    if (mode == "system") {
-        // If browsers prefers dark-mode then true
-        query = window.matchMedia('(prefers-color-scheme: dark)').matches
-    } else {
-        query = mode
-    }
-
-    if(query) {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    }
-}
-
-onMounted(() => {
-    useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
-})
 
 const logoutAuth = () => {
     // Sign-out from app and Firebase
