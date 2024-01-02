@@ -8,18 +8,19 @@
 // import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
 import { liveOrganisationUsers } from '@/Stores/active-users'
+import { onMounted } from 'vue'
+import { routeType } from '@/types/route'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes)
 
-
 type UserOnline = {
     id: string
     is_active: boolean
     last_active: string
-    route: object
+    route: routeType
     user: {
         avatar_id: number
         contact_name: string
@@ -27,6 +28,13 @@ type UserOnline = {
     }
 }
 const layout = useLayoutStore()
+
+onMounted(() => {
+    if (localStorage.getItem('rightSidebar')) {
+        // Read from local storage then store to Pinia
+        layout.rightSidebar = JSON.parse(localStorage.getItem('rightSidebar') ?? '')
+    }
+})
 
 </script>
 
