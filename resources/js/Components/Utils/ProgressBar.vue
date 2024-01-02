@@ -1,12 +1,12 @@
 <script setup lang='ts'>
-// Used well in EmployeesUpload.vue
-import { watch } from 'vue'
+import { watch, ref } from 'vue';
 import { trans } from 'laravel-vue-i18n'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes, faFrown, faMeh } from '@fal'
 import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { throttle } from 'lodash';
 library.add(faTimes, faFrown, faMeh, faSpinnerThird)
 
 const props = defineProps<{
@@ -19,6 +19,10 @@ const piniaData  = useEchoOrgPersonal()
 const closeModal = ()=>{
     props.echo.isShowProgress = false
 }
+
+const throttledValue = throttle((newValue) => {
+    return newValue
+}, 800)
 
 watch(
   () => piniaData,
@@ -71,7 +75,7 @@ watch(
                             </div>
                             
                             <!-- Time Remaining  -->
-                            <div class="text-xs text-gray-500 leading-none tabular-nums">{{ upload.estimatedTime }} remaining</div>
+                            <div class="text-xs text-gray-500 leading-none tabular-nums">{{ throttledValue(upload.estimatedTime) }} remaining</div>
                         </template>
                 
                         <!-- Progress Bar -->

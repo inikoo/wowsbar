@@ -62,8 +62,8 @@ const props = defineProps<{
 
 const dataModal = reactive({isModalOpen: false})
 
-const currentTab = ref<string>(props.tabs.current);
-const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab);
+const currentTab = ref<string>(props.tabs.current)
+const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
     const components: any = {
