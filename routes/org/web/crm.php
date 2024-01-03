@@ -27,6 +27,8 @@ use App\Actions\CRM\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\CRM\CustomerWebsite\UI\EditCustomerWebsite;
 use App\Actions\CRM\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\CRM\CustomerWebsite\UI\ShowCustomerWebsite;
+use App\Actions\CRM\ShipperAccount\UI\CreateShipperAccount;
+use App\Actions\CRM\ShipperAccount\UI\IndexShipperAccounts;
 use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
@@ -153,6 +155,13 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('/customer-websites/create', ['icon' => 'fa-envelope', 'label' => 'create customer website'])->uses([CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');
             Route::get('/customer-websites/{customerWebsite}', ['icon' => 'fa-envelope', 'label' => 'show customer website'])->uses([ShowCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.show');
             Route::get('/customer-websites/{customerWebsite}/edit', ['icon' => 'fa-envelope', 'label' => 'edit customer website'])->uses([EditCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.edit');
+
+            Route::prefix('shipper-accounts')->as('shipper-accounts.')->group(function () {
+                Route::get('/', ['icon' => 'fa-envelope', 'label' => 'shipper accounts'])->uses([IndexShipperAccounts::class, 'inCustomerInShop'])->name('index');
+                Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create shipper account'])->uses([CreateShipperAccount::class, 'inCustomerInShop'])->name('create');
+//                Route::get('/{shipperAccount}', ['icon' => 'fa-envelope', 'label' => 'show shipper account'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show');
+//                Route::get('/{shipperAccount}/edit', ['icon' => 'fa-envelope', 'label' => 'edit shipper account'])->uses([EditOrgCustomerUser::class, 'inCustomerInShop'])->name('edit');
+            });
         });
     });
 
