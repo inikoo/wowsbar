@@ -20,6 +20,7 @@ enum CustomerTabsEnum: string
     case WEBSITES       = 'websites';
     case SOCIAL_ACCOUNT = 'social_account';
     case ORDERS         = 'orders';
+    case SHIPPER_ACCOUNTS        = 'shipper_accounts';
 
 
     case DATA               = 'data';
@@ -57,6 +58,10 @@ enum CustomerTabsEnum: string
             CustomerTabsEnum::ORDERS => [
                 'title' => __('orders'),
                 'icon'  => 'fal fa-shopping-cart',
+            ],
+            CustomerTabsEnum::SHIPPER_ACCOUNTS => [
+                'title' => __('shipper accounts'),
+                'icon'  => 'fal fa-shipping-fast',
             ],
             CustomerTabsEnum::ATTACHMENTS => [
                 'align' => 'right',
