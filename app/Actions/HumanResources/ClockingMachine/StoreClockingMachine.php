@@ -8,10 +8,15 @@
 namespace App\Actions\HumanResources\ClockingMachine;
 
 use App\Actions\HumanResources\ClockingMachine\Hydrators\ClockingMachineHydrateUniversalSearch;
+use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateClockingMachines;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateClockingMachines;
+use App\Enums\HumanResources\ClockingMachine\ClockingMachineTypeEnum;
+use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -25,8 +30,10 @@ class StoreClockingMachine
 
     public function handle(Workplace $workplace, array $modelData): ClockingMachine
     {
-        /** @var \App\Models\HumanResources\ClockingMachine $clockingMachine */
+        /** @var ClockingMachine $clockingMachine */
         $clockingMachine =  $workplace->clockingMachines()->create($modelData);
+        OrganisationHydrateClockingMachines::dispatch();
+        WorkplaceHydrateClockingMachines::dispatch($workplace);
         ClockingMachineHydrateUniversalSearch::dispatch($clockingMachine);
         return $clockingMachine;
     }
@@ -44,15 +51,22 @@ class StoreClockingMachine
     public function rules(): array
     {
         return [
-            'code'  => ['required', 'iunique:clocking_machines', 'between:2,64', 'alpha_dash'],
+            'name'  => ['required', 'iunique:clocking_machines', 'max:64', 'string'],
+            'type'  => ['required', Rule::enum(ClockingMachineTypeEnum::class)],
+            'data'  => ['sometimes', 'array'],
+
         ];
     }
 
     public function asController(Workplace $workplace, ActionRequest $request): ClockingMachine
     {
-        $request->validate();
+        $this->fillFromRequest($request);
+        return $this->handle($workplace, $this->validateAttributes());
+    }
 
-        return $this->handle($workplace, $request->validated());
+    public function jsonResponse(ClockingMachine $clockingMachine): ClockingMachineResource
+    {
+        return ClockingMachineResource::make($clockingMachine);
     }
 
     public function htmlResponse(ClockingMachine $clockingMachine): RedirectResponse

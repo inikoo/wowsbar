@@ -30,7 +30,7 @@ class IndexClockingMachines extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereStartWith('clocking_machines.code', $value);
+                $query->whereStartWith('clocking_machines.name', $value);
             });
         });
 
@@ -40,10 +40,10 @@ class IndexClockingMachines extends InertiaAction
 
         /**  @noinspection PhpUndefinedMethodInspection */
         return QueryBuilder::for(ClockingMachine::class)
-            ->defaultSort('clocking_machines.code')
+            ->defaultSort('clocking_machines.name')
             ->select(
                 [
-                    'clocking_machines.code as code',
+                    'clocking_machines.name as name',
                     'clocking_machines.id',
                     'workplaces.slug as workplace_slug',
                     'clocking_machines.slug'
@@ -55,7 +55,7 @@ class IndexClockingMachines extends InertiaAction
                     $query->where('clocking_machines.workplace_id', $parent->id);
                 }
             })
-            ->allowedSorts(['slug','code'])
+            ->allowedSorts(['slug','name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -89,8 +89,8 @@ class IndexClockingMachines extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->defaultSort('code');
+                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
+                ->defaultSort('name');
         };
     }
 

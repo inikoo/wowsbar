@@ -61,6 +61,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int|null $shops_count
  * @property-read \App\Models\SysAdmin\OrganisationStats|null $stats
  * @property-read \App\Models\SysAdmin\OrganisationTaskStats|null $taskStats
+ * @property-read Timezone $timezone
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites

@@ -52,7 +52,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $employees_count
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
- * @property-read WorkplaceStats|null $stats
+ * @property-read \App\Models\HumanResources\WorkplaceStats|null $stats
  * @property-read Timezone|null $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace newModelQuery()
