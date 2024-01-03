@@ -30,7 +30,7 @@ beforeEach(function () {
         'inertia.testing.page_paths',
         [resource_path('js/Pages/Organisation')]
     );
-    $this->qrCode = Str::uuid()->toString();
+    $this->qrCode = '01HK72GNDME2AZMHA9T7N9WF1A';
 });
 
 test('create qr code', function () {

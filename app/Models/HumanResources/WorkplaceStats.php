@@ -1,18 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 22 Sep 2023 14:19:34 Malaysia Time, plane Bali-KL
+ * Created: Sat, 30 Dec 2023 14:29:00 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models;
+namespace App\Models\HumanResources;
 
-use App\Models\HumanResources\Workplace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\WorkplaceStats
+ * App\Models\HumanResources\WorkplaceStats
  *
  * @property int $id
  * @property int $workplace_id

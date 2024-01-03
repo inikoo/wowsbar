@@ -13,7 +13,6 @@ use App\Models\Assets\Timezone;
 use App\Models\Traits\HasAddress;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
-use App\Models\WorkplaceStats;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -77,6 +76,10 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace withoutTrashed()
  * @mixin \Eloquent
  */
+
+
+
+
 class Workplace extends Model implements Auditable
 {
     use HasSlug;

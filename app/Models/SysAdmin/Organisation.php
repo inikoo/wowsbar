@@ -9,6 +9,7 @@ namespace App\Models\SysAdmin;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
+use App\Models\Assets\Timezone;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
@@ -149,6 +150,11 @@ class Organisation extends Model implements HasMedia
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function timezone(): BelongsTo
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function users(): HasMany

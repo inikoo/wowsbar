@@ -21,7 +21,7 @@ class CreateEmployee extends InertiaAction
     /**
      * @throws Exception
      */
-    public function handle(): Response
+    public function htmlResponse(): Response
     {
         return Inertia::render(
             'CreateModel',
@@ -168,16 +168,11 @@ class CreateEmployee extends InertiaAction
     }
 
 
-    /**
-     * @throws Exception
-     */
-    public function asController(ActionRequest $request): Response
+    public function asController(ActionRequest $request): void
     {
         $this->initialisation($request);
 
-        return $this->handle();
     }
-
 
     public function getBreadcrumbs(): array
     {
