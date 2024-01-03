@@ -174,31 +174,28 @@ test('create clocking machine in workplace', function () {
         ['*']
     );
     $response = postJson(route('mobile-app.hr.workplaces.show.clocking-machines.store', [$this->workplace->id]), [
-        'name' => 'test clocking machine',
-        'type' => ClockingMachineTypeEnum::STATIC_NFC->value,
-        'data' => [
-            'nfc_tag' => 'test-nfc-tag'
-        ]
+        'name'    => 'test clocking machine',
+        'type'    => ClockingMachineTypeEnum::STATIC_NFC->value,
+        'nfc_tag' => 'test-nfc-tag'
     ]);
 
     $response->assertStatus(201);
 
     expect($response->json('data'))->toBeArray()
         ->and($response->json('data'))
-        ->name->toBe('test clocking machine');
+        ->name->toBe('test clocking machine')->nfc_tag->toBe('test-nfc-tag');
 
     /** @var Organisation $organisation */
-    $organisation=$this->organisation;
+    $organisation = $this->organisation;
     $organisation->refresh();
     expect($organisation->humanResourcesStats->number_clocking_machines)->toBe(1)
-    ->and($organisation->humanResourcesStats->number_clocking_machines_type_static_nfc)->toBe(1);
+        ->and($organisation->humanResourcesStats->number_clocking_machines_type_static_nfc)->toBe(1);
 
     /** @var Workplace $workplace */
-    $workplace=$this->workplace;
+    $workplace = $this->workplace;
     $workplace->refresh();
     expect($workplace->stats->number_clocking_machines)->toBe(1)
         ->and($workplace->stats->number_clocking_machines_type_static_nfc)->toBe(1);
-
 });
 
 test('get clocking machines list in working place', function () {

@@ -15,8 +15,10 @@ use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -30,11 +32,19 @@ class StoreClockingMachine
 
     public function handle(Workplace $workplace, array $modelData): ClockingMachine
     {
+
+        if (Arr::get($modelData, 'type') == ClockingMachineTypeEnum::STATIC_NFC->value) {
+            data_set($modelData, 'data.nfc_tag', $this->get('nfc_tag'));
+            Arr::forget($modelData, 'nfc_tag');
+        }
+
+
         /** @var ClockingMachine $clockingMachine */
-        $clockingMachine =  $workplace->clockingMachines()->create($modelData);
+        $clockingMachine = $workplace->clockingMachines()->create($modelData);
         OrganisationHydrateClockingMachines::dispatch();
         WorkplaceHydrateClockingMachines::dispatch($workplace);
         ClockingMachineHydrateUniversalSearch::dispatch($clockingMachine);
+
         return $clockingMachine;
     }
 
@@ -51,16 +61,24 @@ class StoreClockingMachine
     public function rules(): array
     {
         return [
-            'name'  => ['required', 'iunique:clocking_machines', 'max:64', 'string'],
-            'type'  => ['required', Rule::enum(ClockingMachineTypeEnum::class)],
-            'data'  => ['sometimes', 'array'],
+            'name'    => ['required', 'iunique:clocking_machines', 'max:64', 'string'],
+            'type'    => ['required', Rule::enum(ClockingMachineTypeEnum::class)],
+            'nfc_tag' => ['sometimes', 'string'],
 
         ];
+    }
+
+    public function afterValidator(Validator $validator, ActionRequest $request): void
+    {
+        if ($this->get('type') == ClockingMachineTypeEnum::STATIC_NFC && empty($this->get('nfc_tag'))) {
+            $validator->errors()->add('nfc_tag', 'Invalid NFC Tag');
+        }
     }
 
     public function asController(Workplace $workplace, ActionRequest $request): ClockingMachine
     {
         $this->fillFromRequest($request);
+
         return $this->handle($workplace, $this->validateAttributes());
     }
 
