@@ -12,6 +12,9 @@ Route::name('mobile-app.')->group(function () {
         Route::prefix("profile")
             ->name("profile.")
             ->group(__DIR__."/profile.php");
+        Route::prefix("hr")
+            ->name("hr.")
+            ->group(__DIR__."/hr.php");
     });
     require __DIR__."/tokens.php";
 });

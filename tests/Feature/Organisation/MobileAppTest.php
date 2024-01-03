@@ -93,3 +93,33 @@ test('get profile data', function () {
         ->roles->toBeArray()
         ->permissions->toBeArray();
 });
+
+test('get working places list', function () {
+
+    $this->artisan('workplace:create office hq')->assertExitCode(0);
+
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $response = getJson(route('mobile-app.hr.workplaces.index'));
+
+    $response->assertOk();
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->toHaveCount(1);
+});
+
+test('get clocking machines list', function () {
+
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $response = getJson(route('mobile-app.hr.clocking-machines.index'));
+
+    $response->assertOk();
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->toHaveCount(0);
+});

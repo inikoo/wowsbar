@@ -51,7 +51,7 @@ class IndexWorkplaces extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('slug')
-            ->select(['slug', 'id', 'name', 'type'])
+            ->select(['slug', 'id', 'name', 'type','created_at','updated_at'])
             ->allowedSorts(['slug','name'])
             ->allowedFilters([$globalSearch, 'slug', 'name', 'type'])
             ->withPaginator($prefix)
@@ -100,17 +100,15 @@ class IndexWorkplaces extends InertiaAction
 
         return
             (
-                $request->user()->tokenCan('root') or
                 $request->user()->hasPermissionTo('hr.view')
             );
     }
 
 
-    public function jsonResponse(LengthAwarePaginator $workplace): AnonymousResourceCollection
+    public function jsonResponse(LengthAwarePaginator $workplaces): AnonymousResourceCollection
     {
-        return WorkPlaceResource::collection($workplace);
+        return WorkPlaceResource::collection($workplaces);
     }
-
 
     public function htmlResponse(LengthAwarePaginator $workplace): Response
     {
@@ -140,14 +138,12 @@ class IndexWorkplaces extends InertiaAction
         )->table($this->tableStructure());
     }
 
-
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
 
         return $this->handle();
     }
-
 
     public function getBreadcrumbs(): array
     {
