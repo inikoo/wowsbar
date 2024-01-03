@@ -141,11 +141,12 @@ test('create working place by command', function () {
 
 test('create clocking machines', function ($createdWorkplace) {
     $arrayData = [
-        'code' => 'ABC'
+        'name' => 'ABC',
+        'type' => 'static-nfc',
     ];
 
     $clockingMachine = StoreClockingMachine::run($createdWorkplace, $arrayData);
-    expect($clockingMachine->code)->toBe($arrayData['code']);
+    expect($clockingMachine->name)->toBe($arrayData['name']);
 
     return $clockingMachine;
 })->depends('create working place successful');
@@ -153,12 +154,12 @@ test('create clocking machines', function ($createdWorkplace) {
 
 test('update clocking machines', function ($createdClockingMachine) {
     $arrayData = [
-        'code' => 'abc',
+        'name' => 'abc',
     ];
 
     $updatedClockingMachine = UpdateClockingMachine::run($createdClockingMachine, $arrayData);
 
-    expect($updatedClockingMachine->code)->toBe($arrayData['code']);
+    expect($updatedClockingMachine->name)->toBe($arrayData['name']);
 })->depends('create clocking machines');
 
 test('can show hr dashboard', function () {
