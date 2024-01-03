@@ -5,20 +5,20 @@
   -->
 
 <script setup lang="ts">
-import {ref, Ref, reactive, onMounted, onUnmounted} from 'vue'
-import {useLocaleStore} from '@/Stores/locale.js'
+import {ref, Ref, onMounted, onUnmounted } from 'vue'
+import { useLocaleStore } from '@/Stores/locale.js'
 import TimelineWithPlaceholder from '@/Components/Utils/TimelineWithPlaceholder.vue'
-import CountUp from 'vue-countup-v3'
-import {trans} from "laravel-vue-i18n"
+// import CountUp from 'vue-countup-v3'
+import { trans } from "laravel-vue-i18n"
 // import Pusher from 'pusher-js'
 
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faPaperPlane, faDungeon, faSkull} from '@fal'
-import {faSpinnerThird} from '@fad'
-import {library} from '@fortawesome/fontawesome-svg-core'
-import Stats from '@/Components/DataDisplay/Stats.vue'
-import {useTimeCountdown, useFormatTime} from '@/Composables/useFormatTime'
-import ProgressLine from '@/Components/Utils/ProgressLine.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPaperPlane, faDungeon, faSkull } from '@fal'
+import { faSpinnerThird } from '@fad'
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import Stats from '@/Components/DataDisplay/Stats.vue'
+import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime'
+// import ProgressLine from '@/Components/Utils/ProgressLine.vue'
 
 library.add(faPaperPlane, faDungeon, faSkull, faSpinnerThird)
 

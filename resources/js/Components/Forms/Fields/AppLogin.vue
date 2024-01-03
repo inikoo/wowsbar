@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 import QrcodeVue from 'qrcode.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -77,8 +77,24 @@ const setCountdown = (duration: number) => {
 
     intervalCountdown.value = setInterval(() => {
         timeCountdown.value = useTimeCountdown(date, { human: true })
+        if(!timeCountdown.value) {
+            clearInterval(intervalCountdown.value)
+            isQrCode.value = false
+        }
     }, 1000)
 }
+
+// onMounted(() => {
+//     window.Echo.private('org.general')
+//         .listen(`.mailshot.${props.data.id}`, (e: any) => {
+//             // Method here
+//         })
+// })
+
+// onUnmounted(() => {
+//     window.Echo.private(`org.general`)
+//     .stopListening(`.mailshot.${props.data.id}`)
+// })
 
 </script>
 
@@ -89,9 +105,9 @@ const setCountdown = (duration: number) => {
         </div>
         <div v-else class="">
             <template v-if="!isRegenerating">
-                <div class="relative flex items-center justify-center gap-x-3">
+                <div class="relative w-fit mx-auto flex items-center justify-center gap-x-3">
                     <QrcodeVue :value="qrValue" :size="200" level="L" render-as="svg" foreground="#334155" />
-                    <div @click="onRegenerateQr()" v-tooltip="'Regenerate QR Code'" class="absolute right-0 cursor-pointer p-0.5 text-gray-400 hover:text-gray-600">
+                    <div @click="onRegenerateQr()" v-tooltip="'Regenerate QR Code'" class="absolute -right-8 cursor-pointer p-0.5 text-gray-400 hover:text-gray-600">
                         <FontAwesomeIcon icon='fal fa-sync' :class="isRegenerating ? 'animate-spin' : ''" class='h-5' aria-hidden='true' />
                     </div>
                 </div>

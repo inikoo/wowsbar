@@ -14,6 +14,11 @@ const props = withDefaults(defineProps<{
 library.add(faThumbtack)
 
 const layout = useLayoutStore()
+
+const onPinTab = () => {
+    layout.rightSidebar[props.tabName].show = !layout.rightSidebar[props.tabName]?.show
+    localStorage.setItem('rightSidebar', JSON.stringify(layout.rightSidebar))
+}
 </script>
 
 <template>
@@ -21,7 +26,7 @@ const layout = useLayoutStore()
         <!-- Header of Tab Footer (Pin button) -->
         <div class="h-6 flex justify-end items-center pr-1.5 bg-gradient-to-r from-fuchsia-600 to-fuchsia-700">
             <div v-if="pinTab"
-                @click="layout.rightSidebar[tabName].show = !layout.rightSidebar[tabName]?.show"
+                @click="onPinTab()"
                 class="px-1.5 h-full flex items-center leading-none"
                 :class="[
                     layout.systemName === 'org'

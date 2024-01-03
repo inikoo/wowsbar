@@ -8,18 +8,19 @@
 // import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
 import { liveOrganisationUsers } from '@/Stores/active-users'
+import { onMounted } from 'vue'
+import { routeType } from '@/types/route'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faTimes)
 
-
 type UserOnline = {
     id: string
     is_active: boolean
     last_active: string
-    route: object
+    route: routeType
     user: {
         avatar_id: number
         contact_name: string
@@ -27,6 +28,18 @@ type UserOnline = {
     }
 }
 const layout = useLayoutStore()
+
+onMounted(() => {
+    if (localStorage.getItem('rightSidebar')) {
+        // Read from local storage then store to Pinia
+        layout.rightSidebar = JSON.parse(localStorage.getItem('rightSidebar') ?? '')
+    }
+})
+
+const onClickRemoveBar = (tabName: 'activeUsers') => {
+    layout.rightSidebar[tabName].show = false
+    localStorage.setItem('rightSidebar', JSON.stringify(layout.rightSidebar))
+}
 
 </script>
 
@@ -37,7 +50,7 @@ const layout = useLayoutStore()
             <li v-if="layout.rightSidebar.activeUsers.show" class="px-2 py-2" key="1">
                 <div class="pl-2 pr-1.5 bg-slate-300/80 text-slate-700 text-xs font-semibold rounded flex justify-between leading-none">
                     <span class="py-1">Active Users</span>
-                    <div @click="layout.rightSidebar.activeUsers.show = false" class="flex justify-center items-center cursor-pointer px-1.5 text-slate-400 hover:text-slate-600">
+                    <div @click="onClickRemoveBar('activeUsers')" class="flex justify-center items-center cursor-pointer px-1.5 text-slate-400 hover:text-slate-600">
                         <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
                     </div>
                 </div>
