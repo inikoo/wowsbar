@@ -7,7 +7,9 @@
 
 use App\Actions\HumanResources\ClockingMachine\UI\IndexClockingMachines;
 use App\Actions\HumanResources\Workplace\UI\IndexWorkplaces;
+use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 
 Route::get('workplaces', IndexWorkplaces::class)->name('workplaces.index');
-
+Route::get('workplaces/{workplace:id}', ShowWorkplace::class)->name('workplaces.show');
+Route::get('workplaces/{workplace:id}/clocking-machines', [IndexClockingMachines::class,'inWorkplace'])->name('workplaces.show.clocking-machines.index');
 Route::get('clocking-machines', [IndexClockingMachines::class,'inOrganisation'])->name('clocking-machines.index');

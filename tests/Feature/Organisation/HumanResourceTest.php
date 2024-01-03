@@ -128,6 +128,17 @@ test('update working place successful', function ($createdWorkplace) {
         ->and(organisation()->humanResourcesStats->number_workplaces_type_home)->toBe(1);
 })->depends('create working place successful');
 
+test('create working place by command', function () {
+    $this->artisan('workplace:create office2 hq')->assertExitCode(0);
+    $this->artisan('workplace:create office2 hq')->assertExitCode(1);
+    $workplace=Workplace::where('name', 'office2')->first();
+    $this->organisation->refresh();
+    expect($workplace)->not->toBeNull()
+        ->and($this->organisation->humanResourcesStats->number_workplaces)->toBe(2);
+});
+
+
+
 test('create clocking machines', function ($createdWorkplace) {
     $arrayData = [
         'code' => 'ABC'
@@ -157,7 +168,7 @@ test('can show hr dashboard', function () {
             ->component('HumanResources/HumanResourcesDashboard')
             ->has('breadcrumbs', 2)
             ->where('stats.0.stat', 1)->where('stats.0.href.name', 'org.hr.employees.index')
-            ->where('stats.1.stat', 1)->where('stats.1.href.name', 'org.hr.workplaces.index');
+            ->where('stats.1.stat', 2)->where('stats.1.href.name', 'org.hr.workplaces.index');
     });
 });
 
@@ -168,7 +179,7 @@ test('can show list of workplaces', function () {
             ->component('HumanResources/Workplaces')
             ->has('title')
             ->has('breadcrumbs', 3)
-            ->has('data.data', 1);
+            ->has('data.data', 2);
     });
 });
 

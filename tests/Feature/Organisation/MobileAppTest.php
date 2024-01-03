@@ -6,8 +6,12 @@
  */
 
 
+use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
 
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
+use App\Models\Helpers\Address;
+use App\Models\HumanResources\Workplace;
 use Laravel\Sanctum\Sanctum;
 
 use function Pest\Laravel\{actingAs};
@@ -31,7 +35,21 @@ beforeEach(function () {
         [resource_path('js/Pages/Organisation')]
     );
     $this->qrCode = '01HK72GNDME2AZMHA9T7N9WF1A';
+
+
+    if (!Workplace::where('name', 'office')->exists()) {
+        $modelData = [
+            'name'    => 'office',
+            'type'    => WorkplaceTypeEnum::BRANCH,
+            'address' => Address::factory()->definition()
+        ];
+
+        StoreWorkplace::make()->action($modelData);
+    }
+
+    $this->workplace = Workplace::where('name', 'office')->first();
 });
+
 
 test('create qr code', function () {
     actingAs($this->organisationUser, 'org');
@@ -94,10 +112,21 @@ test('get profile data', function () {
         ->permissions->toBeArray();
 });
 
+test('get clocking machines list', function () {
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $response = getJson(route('mobile-app.hr.clocking-machines.index'));
+
+    $response->assertOk();
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->toHaveCount(0);
+});
+
+
 test('get working places list', function () {
-
-    $this->artisan('workplace:create office hq')->assertExitCode(0);
-
     Sanctum::actingAs(
         $this->organisationUser,
         ['*']
@@ -110,13 +139,26 @@ test('get working places list', function () {
         ->toHaveCount(1);
 });
 
-test('get clocking machines list', function () {
-
+test('get working place data', function () {
     Sanctum::actingAs(
         $this->organisationUser,
         ['*']
     );
-    $response = getJson(route('mobile-app.hr.clocking-machines.index'));
+    $response = getJson(route('mobile-app.hr.workplaces.show', [$this->workplace->id]));
+    $response->assertOk();
+
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->id->toBe($this->workplace->id)
+        ->name->toBe($this->workplace->name);
+});
+
+test('get clocking machines list in workplace', function () {
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $response = getJson(route('mobile-app.hr.workplaces.show.clocking-machines.index', [$this->workplace->id]));
 
     $response->assertOk();
     expect($response->json('data'))->toBeArray()
