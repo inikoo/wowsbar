@@ -33,7 +33,7 @@ class StoreOrganisationUserApiTokenFromQRCode
     public function rules(): array
     {
         return [
-            'code'                 => ['required', 'uuid'],
+            'code'                 => ['required', 'ulid'],
             'organisation_user_id' => ['required', 'exists:organisation_users,id'],
             'device_name'          => ['required', 'string'],
         ];
