@@ -11,7 +11,6 @@ use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Shipper;
 use App\Models\ShipperAccount;
-use App\Models\ShipperProvider;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +49,7 @@ class StoreShipperAccount
     public function rules(): array
     {
         return [
-            'shipper_id'  => ['required', 'exists:shippers,id'],
+            'shipper_id'   => ['required', 'exists:shippers,id'],
             'credentials'  => ['required', 'string', 'max:255']
         ];
     }

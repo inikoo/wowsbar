@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Actions\Utils\Abbreviate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -22,7 +21,7 @@ class ShipperAccount extends Model
     use HasSlug;
 
     protected $guarded = [];
-    protected $casts = [
+    protected $casts   = [
         'credentials' => 'array',
         'data'        => 'array'
     ];

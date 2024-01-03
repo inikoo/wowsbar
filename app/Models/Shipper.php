@@ -10,7 +10,7 @@ class Shipper extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $casts = [
+    protected $casts   = [
         'data' => 'array',
     ];
 }

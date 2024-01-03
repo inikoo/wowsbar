@@ -8,7 +8,6 @@
 namespace App\Actions\CRM\ShipperAccount\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Customer;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetShipperOptions extends InertiaAction

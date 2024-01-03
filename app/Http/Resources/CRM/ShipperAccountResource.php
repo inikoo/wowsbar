@@ -7,9 +7,6 @@
 
 namespace App\Http\Resources\CRM;
 
-use App\Enums\CRM\Appointment\AppointmentEventEnum;
-use App\Enums\CRM\Appointment\AppointmentStateEnum;
-use App\Models\CRM\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

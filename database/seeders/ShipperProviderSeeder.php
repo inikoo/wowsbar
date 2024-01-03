@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Shipper;
 use App\Models\ShipperProvider;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ShipperProviderSeeder extends Seeder
@@ -46,16 +45,16 @@ class ShipperProviderSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            if(!ShipperProvider::where('slug',$item['slug'])->exists()) {
+            if(!ShipperProvider::where('slug', $item['slug'])->exists()) {
                 $provider = ShipperProvider::create($item);
 
                 Shipper::updateOrCreate([
-                    'slug' => $provider->slug,
-                    'name' => $provider->name,
-                    'country_id' => 1,
+                    'slug'          => $provider->slug,
+                    'name'          => $provider->name,
+                    'country_id'    => 1,
                     'provider_type' => ShipperProvider::class,
-                    'provider_id' => $provider->id,
-                    'data' => '{}'
+                    'provider_id'   => $provider->id,
+                    'data'          => '{}'
                 ]);
             }
         }

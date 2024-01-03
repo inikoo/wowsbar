@@ -10,15 +10,10 @@ namespace App\Actions\CRM\ShipperAccount\UI;
 use App\Actions\InertiaAction;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
-use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\CRM\ShipperAccountResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Auth\Guest;
-use App\Models\Auth\OrganisationUser;
 
-use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
-use App\Models\HumanResources\Employee;
 use App\Models\Market\Shop;
 
 use App\Models\ShipperAccount;
@@ -100,8 +95,8 @@ class IndexShipperAccounts extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No shipper accounts found!'),
-                        'count' => $parent->shipperAccounts()->count(),
+                        'title'       => __('No shipper accounts found!'),
+                        'count'       => $parent->shipperAccounts()->count(),
                         'action'      => [
                             'type'    => 'button',
                             'style'   => 'create',

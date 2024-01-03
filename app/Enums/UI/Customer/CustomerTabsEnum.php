@@ -17,9 +17,9 @@ enum CustomerTabsEnum: string
 
     case SHOWCASE = 'showcase';
 
-    case WEBSITES       = 'websites';
-    case SOCIAL_ACCOUNT = 'social_account';
-    case ORDERS         = 'orders';
+    case WEBSITES                = 'websites';
+    case SOCIAL_ACCOUNT          = 'social_account';
+    case ORDERS                  = 'orders';
     case SHIPPER_ACCOUNTS        = 'shipper_accounts';
 
 

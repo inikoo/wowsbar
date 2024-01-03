@@ -11,7 +11,6 @@ use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Shipper;
-use App\Models\ShipperProvider;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,20 +26,20 @@ class CreateShipperAccount extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('new shipper account'),
+                'title'    => __('new shipper account'),
                 'pageHead' => [
                     'title' => __('new shipper account'),
-                    'icon' => [
-                        'icon' => ['fal', 'fa-handshake'],
+                    'icon'  => [
+                        'icon'  => ['fal', 'fa-handshake'],
                         'title' => __('shipper account')
                     ],
                     'actions' => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name' => 'org.crm.shop.customers.show',
+                                'name'       => 'org.crm.shop.customers.show',
                                 'parameters' => $request->route()->parameters
                             ]
                         ]
@@ -50,26 +49,26 @@ class CreateShipperAccount extends InertiaAction
                     'blueprint' =>
                         [
                             [
-                                'title' => __('shipper account'),
+                                'title'  => __('shipper account'),
                                 'fields' => [
                                     'shipper_id' => [
-                                        'type' => 'select',
-                                        'mode' => 'single',
-                                        'label' => __('shipper'),
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('shipper'),
                                         'required' => true,
-                                        'options' => GetShipperOptions::run(Shipper::all())
+                                        'options'  => GetShipperOptions::run(Shipper::all())
                                     ],
                                     'credentials' => [
-                                        'type' => 'input',
-                                        'label' => __('api key'),
-                                        'value' => '',
+                                        'type'     => 'input',
+                                        'label'    => __('api key'),
+                                        'value'    => '',
                                         'required' => true,
                                     ]
                                 ]
                             ],
                         ],
                     'route' => [
-                        'name' => 'org.models.shop.customer.shipper-account.store',
+                        'name'       => 'org.models.shop.customer.shipper-account.store',
                         'parameters' => [$parent->shop_id, $parent->id]
                     ]
                 ]
@@ -98,7 +97,7 @@ class CreateShipperAccount extends InertiaAction
             ),
             [
                 [
-                    'type' => 'creatingModel',
+                    'type'          => 'creatingModel',
                     'creatingModel' => [
                         'label' => __('creating shipper account'),
                     ]
