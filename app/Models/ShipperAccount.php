@@ -32,7 +32,7 @@ class ShipperAccount extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('label')
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(12)
             ->doNotGenerateSlugsOnUpdate();

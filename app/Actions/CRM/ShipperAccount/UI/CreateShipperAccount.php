@@ -40,7 +40,7 @@ class CreateShipperAccount extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name'       => 'org.crm.shop.customers.show',
-                                'parameters' => $request->route()->parameters
+                                'parameters' => array_merge($request->route()->parameters, ['tab' => 'shipper_accounts'])
                             ]
                         ]
                     ]
@@ -51,6 +51,12 @@ class CreateShipperAccount extends InertiaAction
                             [
                                 'title'  => __('shipper account'),
                                 'fields' => [
+                                    'label' => [
+                                        'type'     => 'input',
+                                        'label'    => __('label'),
+                                        'value'    => '',
+                                        'required' => true,
+                                    ],
                                     'shipper_id' => [
                                         'type'     => 'select',
                                         'mode'     => 'single',

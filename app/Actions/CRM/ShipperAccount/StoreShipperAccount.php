@@ -51,6 +51,7 @@ class StoreShipperAccount
     public function rules(): array
     {
         return [
+            'label'        => ['required', 'string', 'max:255'],
             'shipper_id'   => ['required', 'exists:shippers,id'],
             'credentials'  => ['required', 'string', 'max:255']
         ];
@@ -69,7 +70,8 @@ class StoreShipperAccount
     {
         return Redirect::route('org.crm.shop.customers.show', [
             $shipperAccount->customer->shop->slug,
-            $shipperAccount->slug
+            $shipperAccount->customer->slug,
+            'tab' => 'shipper_accounts'
         ]);
     }
 

@@ -186,7 +186,18 @@ class ShowCustomer extends InertiaAction
                 //     ]
                 // ]
             ))->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: CustomerTabsEnum::SOCIAL_ACCOUNT->value))
-            ->table(IndexShipperAccounts::make()->tableStructure(parent: $customer, prefix: CustomerTabsEnum::SHIPPER_ACCOUNTS->value));
+            ->table(IndexShipperAccounts::make()->tableStructure(parent: $customer, modelOperations: [
+            'createLink' => [
+                [
+                    'route' => [
+                        'name'       => 'org.crm.shop.customers.shipper-accounts.create',
+                        'parameters' => array_values($this->originalParameters)
+                    ],
+                    'label' => __('create'),
+                    'style' => 'primary'
+                ],
+            ]
+        ], prefix: CustomerTabsEnum::SHIPPER_ACCOUNTS->value));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource
