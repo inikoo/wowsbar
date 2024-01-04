@@ -5,11 +5,17 @@ import { faDesktop, faMobileAndroidAlt, faTabletAndroidAlt } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faDesktop, faMobileAndroidAlt, faTabletAndroidAlt)
 
+const props = withDefaults(defineProps<{
+    currentView: string
+}>(), {
+    currentView: 'desktop'
+})
+
 defineEmits<{
-    (e: 'screenView', id: string): void
+    (e: 'screenView', deviceType: string): void
 }>()
 
-const screenView = ref('desktop')
+const screenView = ref(props.currentView)
 
 </script>
 
