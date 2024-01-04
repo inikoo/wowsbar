@@ -33,6 +33,8 @@ class StoreShipperAccount
      */
     public function handle(Customer $customer, array $modelData): ShipperAccount
     {
+        data_set($modelData, 'data', []);
+
         /** @var ShipperAccount */
         return $customer->shipperAccounts()->create($modelData);
     }
@@ -63,11 +65,11 @@ class StoreShipperAccount
         return $this->handle($customer, $this->validateAttributes());
     }
 
-    public function htmlResponse(Customer $customer): RedirectResponse
+    public function htmlResponse(ShipperAccount $shipperAccount): RedirectResponse
     {
         return Redirect::route('org.crm.shop.customers.show', [
-            $customer->shop->slug,
-            $customer->slug
+            $shipperAccount->customer->shop->slug,
+            $shipperAccount->slug
         ]);
     }
 
