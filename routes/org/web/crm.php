@@ -159,7 +159,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::prefix('shipper-accounts')->as('shipper-accounts.')->group(function () {
                 Route::get('/', ['icon' => 'fa-envelope', 'label' => 'shipper accounts'])->uses([IndexShipperAccounts::class, 'inCustomerInShop'])->name('index');
                 Route::get('/create', ['icon' => 'fa-envelope', 'label' => 'create shipper account'])->uses([CreateShipperAccount::class, 'inCustomerInShop'])->name('create');
-                //                Route::get('/{shipperAccount}', ['icon' => 'fa-envelope', 'label' => 'show shipper account'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show');
+                Route::get('/{shipperAccount}', ['icon' => 'fa-envelope', 'label' => 'show shipper account'])->uses([ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show');
                 //                Route::get('/{shipperAccount}/edit', ['icon' => 'fa-envelope', 'label' => 'edit shipper account'])->uses([EditOrgCustomerUser::class, 'inCustomerInShop'])->name('edit');
             });
         });
