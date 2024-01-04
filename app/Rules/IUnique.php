@@ -40,12 +40,11 @@ class IUnique implements ValidationRule
 
         if (!blank($this->extraConditions)) {
             foreach ($this->extraConditions as $columnCollection) {
-
-                if(empty($columnCollection['operator'])) {
-                    $columnCollection['operator']='=';
+                if (empty($columnCollection['operator'])) {
+                    $columnCollection['operator'] = '=';
                 }
 
-                if (!isset($columnCollection['column'])  || !isset($columnCollection['value'])) {
+                if (!isset($columnCollection['column']) || !isset($columnCollection['value'])) {
                     continue;
                 }
 
@@ -64,7 +63,9 @@ class IUnique implements ValidationRule
                     continue;
                 }
 
-                $count = $count->where($columnCollection['column'], $columnCollection['operator'], $columnCollection['value']);
+
+
+                $count->where($columnCollection['column'], $columnCollection['operator'], $columnCollection['value']);
             }
         }
 

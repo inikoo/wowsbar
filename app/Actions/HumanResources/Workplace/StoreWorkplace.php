@@ -12,6 +12,7 @@ use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSear
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\HumanResources\Workplace;
+use App\Rules\IUnique;
 use App\Rules\ValidAddress;
 use Exception;
 use Illuminate\Console\Command;
@@ -60,7 +61,7 @@ class StoreWorkplace
     public function rules(): array
     {
         return [
-            'name'    => ['required', 'max:255'],
+            'name'    => ['required', 'max:255', new IUnique('workplaces')],
             'type'    => ['required', new Enum(WorkplaceTypeEnum::class)],
             'address' => ['required', new ValidAddress()]
         ];

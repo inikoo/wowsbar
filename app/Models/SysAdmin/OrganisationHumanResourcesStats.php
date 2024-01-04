@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_workplaces_type_client_premises
  * @property int $number_workplaces_type_road
  * @property int $number_workplaces_type_other
+ * @property int $number_clocking_machines_type_static_nfc
+ * @property int $number_clocking_machines_type_mobile_app
  * @property-read \App\Models\SysAdmin\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats newQuery()
@@ -46,6 +48,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberClockingMachines($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberClockingMachinesTypeMobileApp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberClockingMachinesTypeStaticNfc($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberClockings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberEmployees($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationHumanResourcesStats whereNumberEmployeesGenderFemale($value)

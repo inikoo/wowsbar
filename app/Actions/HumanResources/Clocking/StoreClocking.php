@@ -46,7 +46,7 @@ class StoreClocking
         if($this->asAction) {
             return true;
         }
-        return $request->user()->hasPermissionTo("hr.workplaces.edit");
+        return $request->user()->hasPermissionTo("hr.edit");
     }
     public function rules(): array
     {
