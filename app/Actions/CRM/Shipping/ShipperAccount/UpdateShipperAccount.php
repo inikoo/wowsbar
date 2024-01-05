@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\ShipperAccount;
+namespace App\Actions\CRM\Shipping\ShipperAccount;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\ShipperAccount;

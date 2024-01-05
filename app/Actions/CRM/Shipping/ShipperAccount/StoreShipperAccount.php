@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\ShipperAccount;
+namespace App\Actions\CRM\Shipping\ShipperAccount;
 
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;

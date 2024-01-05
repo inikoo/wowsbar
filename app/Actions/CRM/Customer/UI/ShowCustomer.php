@@ -9,7 +9,7 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\CRM\CustomerWebsite\UI\IndexCustomerWebsites;
-use App\Actions\CRM\ShipperAccount\UI\IndexShipperAccounts;
+use App\Actions\CRM\Shipping\ShipperAccount\UI\IndexShipperAccounts;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;

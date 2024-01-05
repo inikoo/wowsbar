@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\ShipperAccount\UI;
+namespace App\Actions\CRM\Shipping\ShipperAccount\UI;
 
 use App\Actions\InertiaAction;
 use Lorisleiva\Actions\Concerns\AsObject;

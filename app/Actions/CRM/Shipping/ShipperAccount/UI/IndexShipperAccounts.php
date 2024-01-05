@@ -5,17 +5,15 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\ShipperAccount\UI;
+namespace App\Actions\CRM\Shipping\ShipperAccount\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\ShipperAccountResource;
 use App\InertiaTable\InertiaTable;
-
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-
 use App\Models\ShipperAccount;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

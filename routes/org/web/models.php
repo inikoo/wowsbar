@@ -24,7 +24,7 @@ use App\Actions\CRM\Customer\Surveys\StoreSurvey;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\CRM\CustomerWebsite\UpdateCustomerWebsite;
-use App\Actions\CRM\ShipperAccount\StoreShipperAccount;
+use App\Actions\CRM\Shipping\ShipperAccount\StoreShipperAccount;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\ShipperAccount\UI;
+namespace App\Actions\CRM\Shipping\ShipperAccount\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
@@ -15,7 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateShipperAccount extends InertiaAction
+class EditShipperAccount extends InertiaAction
 {
     public function handle(Customer $parent, ActionRequest $request): Response
     {
@@ -26,9 +26,9 @@ class CreateShipperAccount extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('new shipper account'),
+                'title'    => __('edit shipper account'),
                 'pageHead' => [
-                    'title' => __('new shipper account'),
+                    'title' => __('edit shipper account'),
                     'icon'  => [
                         'icon'  => ['fal', 'fa-handshake'],
                         'title' => __('shipper account')
