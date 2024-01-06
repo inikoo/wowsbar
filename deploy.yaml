@@ -1,10 +1,6 @@
 import:
   - deploy/env.php
   - recipe/laravel.php
-  - deploy/lib/common.php
-  - deploy/supervisor.php
-  - deploy/nginx.php
-  - deploy/install.php
   - deploy/deploy.php
   - contrib/npm.php
   - contrib/discord.php
@@ -12,21 +8,17 @@ import:
 config:
   application: 'wowsbar'
   host: 'wowsbar'
-  remote_user: wowsbar
   repository: 'https://github.com/inikoo/wowsbar.git'
-  db: 'wowsbar'
-  db_backup: 'wowsbar_backup'
-  db_collate: 'C.UTF-8'
-  writable_use_sudo: true
-  root_path: '/var/www/wowsbar'
-  app_urls: 'wowsbar.com *.wowsbar.com awads.io *.awads.io'
-  http_port: 8080
 
 hosts:
   wowsbar:
-    environment: 'prod'
+    environment: 'production'
     deploy_path: '{{root_path}}/prod'
     branch: production
+  devops:
+    environment: 'staging'
+    deploy_path: '~/wowsbar_staging'
+    branch: staging
 tasks:
   build:
     - run: uptime

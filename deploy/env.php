@@ -18,12 +18,15 @@ Dotenv::createImmutable(__DIR__ . '/../')->load();
 desc('Inject all necessary .env variables inside deployer config');
 task('install:env', function () {
 
-    $websites_urls='';
-    foreach(explode(',', env('DEPLOY_WEBSITES_URLS')) as $urls) {
-        $websites_urls.=" $urls *.$urls";
+    $environment=currentHost()->get('environment');
+    if($environment=='production') {
+        $dotenv = Dotenv::createImmutable(__DIR__, '../.env.wowsbar.production.deploy');
+    } else {
+        $dotenv = Dotenv::createImmutable(__DIR__, '../.env.wowsbar.staging.deploy');
     }
+    $dotenv->load();
 
-    set('nginx_urls', env('DEPLOY_APP_URL').' *.'.env('DEPLOY_APP_URL').$websites_urls);
+    set('remote_user', env('DEPLOY_REMOTE_USER'));
     set('discord_channel', env('DEPLOY_DISCORD_CHANNEL'));
     set('discord_token', env('DEPLOY_DISCORD_CHANNEL_TOKEN'));
     set('release_semver', env('RELEASE'));
