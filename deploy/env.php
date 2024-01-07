@@ -1,8 +1,8 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 16 Oct 2023 00:01:26 Malaysia Time, Office, Bali, Indonesia
- * Copyright (c) 2023, Raul A Perusquia Flores
+ * Created: Fri, 05 Jan 2024 14:23:05 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2024, Raul A Perusquia Flores
  */
 
 namespace Deployer;
@@ -10,10 +10,6 @@ namespace Deployer;
 use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
-
-
-
-Dotenv::createImmutable(__DIR__ . '/../')->load();
 
 desc('Inject all necessary .env variables inside deployer config');
 task('install:env', function () {
@@ -25,10 +21,8 @@ task('install:env', function () {
         $dotenv = Dotenv::createImmutable(__DIR__, '../.env.wowsbar.staging.deploy');
     }
     $dotenv->load();
-
     set('remote_user', env('DEPLOY_REMOTE_USER'));
+    set('release_semver', env('RELEASE'));
     set('discord_channel', env('DEPLOY_DISCORD_CHANNEL'));
     set('discord_token', env('DEPLOY_DISCORD_CHANNEL_TOKEN'));
-    set('release_semver', env('RELEASE'));
-
 });
