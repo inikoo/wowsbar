@@ -10,7 +10,7 @@ return [
     'host'         => env('ELASTICSEARCH_HOST'),
     'api_key'      => env('ELASTICSEARCH_API_KEY'),
     'ca_bundle'    => env('ELASTICSEARCH_CA_BUNDLE'),
-    'index_prefix' => env('ELASTICSEARCH_INDEX_PREFIX', 'wowsbar').'_'.env('APP_ENV', 'production').'_',
+    'index_prefix' => env('ELASTICSEARCH_INDEX_PREFIX', 'wowsbar').'_'.env('APP_ENV', 'local').'_',
 
     'indices' => [
         'mappings' => [
