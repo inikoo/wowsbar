@@ -36,7 +36,7 @@ lang/php_*.json
 /delete-bucket.sh
 /.env.local
 /.env.prod
-
+install.sh
 import-customers.sh
 /private
 /clover.xml
