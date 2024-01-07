@@ -17,7 +17,7 @@ hosts:
     branch: production
   staging:
     environment: 'staging'
-    deploy_path: '~/wowsbar_staging'
+    deploy_path: '~/wowsbar'
     branch: staging
 tasks:
   build:
