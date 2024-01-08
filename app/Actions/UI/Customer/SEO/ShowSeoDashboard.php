@@ -85,14 +85,13 @@ class ShowSeoDashboard extends InertiaAction
 
     private function getDashboard(Customer $customer): array
     {
-
         return [
             'flatTreeMaps' => [
                 [
                     [
                         'name'  => __('websites'),
                         'icon'  => ['fal', 'fa-globe'],
-                        'href'  => ['customer.portfolio.websites.index'],
+                        'href'  => ['name' => 'customer.portfolio.websites.index'],
                         'index' => [
                             'number' => 0 // todo make stats for portfolio division stuff
                         ]

@@ -76,7 +76,7 @@ class ShowPortfolio extends InertiaAction
 
             ]
         )
-            ->table(IndexCustomerModuleHistory::make()->tableStructure(prefix:PortfolioDashboardTabsEnum::CHANGELOG->value));
+            ->table(IndexCustomerModuleHistory::make()->tableStructure(prefix: PortfolioDashboardTabsEnum::CHANGELOG->value));
     }
 
     private function getDashboard(): array
@@ -90,7 +90,7 @@ class ShowPortfolio extends InertiaAction
                     [
                         'name'  => __('websites'),
                         'icon'  => ['fal', 'fa-globe'],
-                        'href'  => ['customer.portfolio.websites.index'],
+                        'href'  => ['name' => 'customer.portfolio.websites.index'],
                         'index' => [
                             'number' => $customer->portfolioStats->number_portfolio_websites
                         ]

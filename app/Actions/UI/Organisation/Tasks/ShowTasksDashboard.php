@@ -47,7 +47,7 @@ class ShowTasksDashboard
                         [
                             'name'  => __('divisions'),
                             'icon'  => ['fal', 'fa-indent'],
-                            'href'  => ['org.labour.divisions.index'],
+                            'href'  => ['name' => 'org.labour.divisions.index'],
                             'index' => [
                                 'number' => $organisation->taskStats->number_divisions
                             ]
@@ -55,7 +55,7 @@ class ShowTasksDashboard
                         [
                             'name'  => __('task types'),
                             'icon'  => ['fal', 'fa-tasks-alt'],
-                            'href'  => ['org.labour.types.index'],
+                            'href'  => ['name' => 'org.labour.types.index'],
                             'index' => [
                                 'number' => $organisation->taskStats->number_task_types
                             ]
@@ -63,7 +63,7 @@ class ShowTasksDashboard
                         [
                             'name'  => __('tasks'),
                             'icon'  => ['fal', 'fa-tasks'],
-                            'href'  => ['org.labour.tasks.index'],
+                            'href'  => ['name' => 'org.labour.tasks.index'],
                             'index' => [
                                 'number' => $organisation->taskStats->number_tasks
                             ]

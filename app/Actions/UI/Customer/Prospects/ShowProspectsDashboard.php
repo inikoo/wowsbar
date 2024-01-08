@@ -94,7 +94,7 @@ class ShowProspectsDashboard extends InertiaAction
                     [
                         'name'  => __('prospects'),
                         'icon'  => ['fal', 'fa-transporter-2'],
-                        'href'  => ['customer.portfolio.websites.index'],
+                        'href'  => ['name' => 'customer.portfolio.websites.index'],
                         'index' => [
                             'number' => $customer->portfolioStats->number_prospects
                         ]

@@ -28,35 +28,33 @@ class ShowBannersDashboard extends InertiaAction
     public function asController(ActionRequest $request): ActionRequest
     {
         $this->initialisation($request)->withTab(BannersDashboardTabsEnum::values());
+
         return $request;
     }
 
 
-
     public function htmlResponse(ActionRequest $request): Response
     {
-
-
         return Inertia::render(
             'Banners/BannersDashboard',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('banners'),
-                'pageHead'     => [
-                    'title'             => __('banners'),
-                    'icon'              => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('banners'),
+                'pageHead'    => [
+                    'title' => __('banners'),
+                    'icon'  => [
                         'icon'    => ['fal', 'fa-sign'],
                         'tooltip' => __('Banners')
                     ],
                 ],
 
-                'tabs'                             => [
+                'tabs'                                     => [
                     'current'    => $this->tab,
                     'navigation' => BannersDashboardTabsEnum::navigation(),
                 ],
                 BannersDashboardTabsEnum::DASHBOARD->value => $this->tab == BannersDashboardTabsEnum::DASHBOARD->value ?
                     fn () => $this->getDashboard()
-                    : Inertia::lazy(fn () =>  $this->getDashboard()),
+                    : Inertia::lazy(fn () => $this->getDashboard()),
 
                 BannersDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == BannersDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistory::run(PortfolioWebsite::class))
@@ -68,7 +66,7 @@ class ShowBannersDashboard extends InertiaAction
 
     private function getDashboard(): array
     {
-        $customer=customer();
+        $customer = customer();
 
         return [
             'flatTreeMaps' => [
@@ -76,7 +74,7 @@ class ShowBannersDashboard extends InertiaAction
                     [
                         'name'  => __('banners'),
                         'icon'  => ['fal', 'fa-sign'],
-                        'href'  => ['customer.banners.banners.index'],
+                        'href'  => ['name' => 'customer.banners.banners.index'],
                         'index' => [
                             'number' => $customer->portfolioStats->number_banners
                         ]
