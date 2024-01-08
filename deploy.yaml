@@ -13,7 +13,7 @@ config:
 hosts:
   wowsbar:
     environment: 'production'
-    deploy_path: '{{root_path}}/prod'
+    deploy_path: '~/prod'
     branch: production
   staging:
     environment: 'staging'
