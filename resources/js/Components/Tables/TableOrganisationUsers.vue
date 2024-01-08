@@ -29,14 +29,14 @@ function userRoute(user: User) {
     }
 }
 
-function setColor(status: status) {
-    switch (status) {
-        case 'Active':
-            return '#87d068';
-        case 'Suspended':
-            return '#ff5500';
-    }
-}
+// function setColor(status: status) {
+//     switch (status) {
+//         case 'Active':
+//             return '#87d068';
+//         case 'Suspended':
+//             return '#ff5500';
+//     }
+// }
 
 </script>
 
@@ -50,7 +50,7 @@ function setColor(status: status) {
 
         <template #cell(avatar)="{ item: user }">
             <div class="flex justify-center">
-                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full" :alt="user.username"/>
+                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full overflow-hidden" :alt="user.username"/>
             </div>
         </template>
 
