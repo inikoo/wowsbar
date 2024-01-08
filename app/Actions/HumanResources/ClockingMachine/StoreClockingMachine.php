@@ -82,9 +82,13 @@ class StoreClockingMachine
         return $this->handle($workplace, $this->validateAttributes());
     }
 
-    public function jsonResponse(ClockingMachine $clockingMachine): ClockingMachineResource
+    public function action(Workplace $workplace, array $objectData): ClockingMachine
     {
-        return ClockingMachineResource::make($clockingMachine);
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($workplace, $validatedData);
     }
 
     public function htmlResponse(ClockingMachine $clockingMachine): RedirectResponse
@@ -98,12 +102,10 @@ class StoreClockingMachine
         );
     }
 
-    public function action(Workplace $workplace, array $objectData): ClockingMachine
+    public function jsonResponse(ClockingMachine $clockingMachine): ClockingMachineResource
     {
-        $this->asAction = true;
-        $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
-
-        return $this->handle($workplace, $validatedData);
+        return ClockingMachineResource::make($clockingMachine);
     }
+
+
 }
