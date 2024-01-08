@@ -15,7 +15,7 @@ return new class () extends Migration {
     {
         Schema::table('portfolio_websites', function (Blueprint $table) {
             $table->string('integration')->index()->default(PortfolioWebsiteIntegrationEnum::NONE->value);
-            $table->jsonb('integration_data');
+            $table->jsonb('integration_data')->nullable();
         });
     }
 
