@@ -10,6 +10,7 @@ namespace App\Actions\CRM\Shipping\Shipment\UI;
 use App\Actions\InertiaAction;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
+use App\Http\Resources\CRM\ShipmentResource;
 use App\Http\Resources\CRM\ShipperAccountResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
@@ -70,9 +71,6 @@ class IndexShipments extends InertiaAction
         return $queryBuilder
             ->defaultSort('-created_at')
             ->allowedSorts(['created_at'])
-            ->when(true, function ($query) use ($parent) {
-                $query->where('customer_id', $parent->id);
-            })
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -125,7 +123,7 @@ class IndexShipments extends InertiaAction
         return $this->handle($customer);
     }
 
-    public function htmlResponse(LengthAwarePaginator $shipperAccounts, ActionRequest $request): Response
+    public function htmlResponse(LengthAwarePaginator $shipments, ActionRequest $request): Response
     {
         $scope     = $this->parent;
         $container = null;
@@ -144,13 +142,13 @@ class IndexShipments extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('shipper accounts'),
+                'title'       => __('shipments'),
                 'pageHead'    => [
-                    'title'     => __('shipper accounts'),
+                    'title'     => __('shipments'),
                     'container' => $container,
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-shipping-fast'],
-                        'title' => __('shipper accounts')
+                        'title' => __('shipments')
                     ],
                     'actions'   =>
                         [
@@ -166,10 +164,10 @@ class IndexShipments extends InertiaAction
                             ] : []
                         ]
                 ],
-                'data'        => ShipperAccountResource::collection($shipperAccounts),
+                'data'        => ShipmentResource::collection($shipments),
 
             ]
-        )->table($this->tableStructure(parent: $this->parent, prefix: CustomerTabsEnum::SHIPPER_ACCOUNTS));
+        )->table($this->tableStructure(parent: $this->parent, prefix: CustomerTabsEnum::SHIPMENTS));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
