@@ -16,6 +16,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $label
  * @property array $data
+ * @property array $credentials
  * @property-read Shipper $shipper
  * @property-read Customer $customer
  */

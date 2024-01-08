@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Shipping\ShipperAccount;
 
+use App\Enums\CRM\Shipping\ShippingProviderEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Shipper;
@@ -14,6 +15,7 @@ use App\Models\ShipperAccount;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -33,10 +35,22 @@ class StoreShipperAccount
      */
     public function handle(Customer $customer, array $modelData): ShipperAccount
     {
+        $shipperProvider = Shipper::find($modelData['shipper_id'])->slug;
+
         data_set($modelData, 'data', []);
 
+        match ($shipperProvider) {
+            ShippingProviderEnum::DHL->value =>
+            data_set($modelData, 'credentials', [
+                'account_id' => $modelData['account_id'],
+                'username'   => $modelData['username'],
+                'password'   => $modelData['password']
+            ]),
+            ShippingProviderEnum::FEDEX->value, ShippingProviderEnum::SICEPAT->value => null,
+        };
+
         /** @var ShipperAccount */
-        return $customer->shipperAccounts()->create($modelData);
+        return $customer->shipperAccounts()->create(Arr::except($modelData, ['account_id', 'username', 'password']));
     }
 
     public function authorize(ActionRequest $request): bool
@@ -53,7 +67,9 @@ class StoreShipperAccount
         return [
             'label'        => ['required', 'string', 'max:255'],
             'shipper_id'   => ['required', 'exists:shippers,id'],
-            'credentials'  => ['required', 'string', 'max:255']
+            'account_id'  => ['required', 'string', 'max:50'],
+            'username'  => ['required', 'string', 'max:50'],
+            'password'  => ['required', 'string', 'max:50']
         ];
     }
     /**

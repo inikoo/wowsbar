@@ -38,9 +38,10 @@ class StoreShipment
 
         $providerResponse = match ($shipperAccount->slug) {
             ShippingProviderEnum::DHL->value => StoreShipmentToDhlProvider::run($shipperAccount, $modelData),
-            ShippingProviderEnum::FEDEX->value => $modelData['data']['service'] = 'INTERNATIONAL_ECONOMY',
-            ShippingProviderEnum::SICEPAT->value => $modelData['data']['service'] = 'REG',
+            ShippingProviderEnum::FEDEX->value, ShippingProviderEnum::SICEPAT->value => null,
         };
+
+        data_set($modelData, 'data.provider_response', $providerResponse);
 
         /** @var ShipperAccount */
         return $shipperAccount->shipments()->create($modelData);
@@ -59,8 +60,8 @@ class StoreShipment
     {
         return [
             'status'        => ['required', 'string', 'max:255'],
-            'reference'   => ['required', 'exists:shippers,id'],
-            'tracking'  => ['required', 'string', 'max:255']
+            'reference'     => ['required', 'exists:shippers,id'],
+            'tracking'      => ['required', 'string', 'max:255']
         ];
     }
     /**

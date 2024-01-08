@@ -20,10 +20,10 @@ class StoreShipmentToDhlProvider
 
     public function handle(ShipperAccount $shipperAccount, array $modelData)
     {
-        $response = Http::withBasicAuth(Arr::get($shipperAccount->data,
-            'api_username'),
-            Arr::get($shipperAccount->data, 'api_password'))
-            ->post(Arr::get($shipperAccount->data, 'api_url'),
+        $response = Http::withBasicAuth(Arr::get($shipperAccount->credentials,
+            'username'),
+            Arr::get($shipperAccount->credentials, 'password'))
+            ->post(Arr::get($shipperAccount->credentials, 'api_url'),
                 $this->scheme($shipperAccount, $modelData));
 
         return $response->json();
@@ -37,7 +37,7 @@ class StoreShipmentToDhlProvider
             "productCode" => "P",
             "localProductCode" => "P",
             "getRateEstimates" => false,
-            "accounts" => [["typeCode" => "shipper", "number" => Arr::get($shipperAccount->data, 'account_number')]],
+            "accounts" => [["typeCode" => "shipper", "number" => Arr::get($shipperAccount->credentials, 'account_id')]],
             "outputImageProperties" => [
                 "printerDPI" => 300,
                 "encodingFormat" => "pdf",

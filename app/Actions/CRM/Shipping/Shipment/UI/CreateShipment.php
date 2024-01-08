@@ -5,17 +5,19 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\Shipping\ShipperAccount\UI;
+namespace App\Actions\CRM\Shipping\Shipment\UI;
 
+use App\Actions\CRM\Shipping\ShipperAccount\UI\GetShipperOptions;
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Shipper;
+use App\Models\ShipperAccount;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateShipperAccount extends InertiaAction
+class CreateShipment extends InertiaAction
 {
     public function handle(Customer $parent, ActionRequest $request): Response
     {
@@ -26,12 +28,12 @@ class CreateShipperAccount extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('new shipper account'),
+                'title'    => __('new shipment'),
                 'pageHead' => [
-                    'title' => __('new shipper account'),
+                    'title' => __('new shipment'),
                     'icon'  => [
                         'icon'  => ['fal', 'fa-handshake'],
-                        'title' => __('shipper account')
+                        'title' => __('shipment')
                     ],
                     'actions' => [
                         [
@@ -49,38 +51,20 @@ class CreateShipperAccount extends InertiaAction
                     'blueprint' =>
                         [
                             [
-                                'title'  => __('shipper account'),
+                                'title'  => __('shipment'),
                                 'fields' => [
-                                    'label' => [
+                                    'planned_shipping_at' => [
                                         'type'     => 'input',
-                                        'label'    => __('label'),
+                                        'label'    => __('Planned Shipping At'),
                                         'value'    => '',
                                         'required' => true,
                                     ],
-                                    'shipper_id' => [
+                                    'shipper_account_id' => [
                                         'type'     => 'select',
                                         'mode'     => 'single',
                                         'label'    => __('shipper'),
                                         'required' => true,
-                                        'options'  => GetShipperOptions::run(Shipper::all())
-                                    ],
-                                    'account_id' => [
-                                        'type'     => 'input',
-                                        'label'    => __('account id'),
-                                        'value'    => '',
-                                        'required' => true,
-                                    ],
-                                    'username' => [
-                                        'type'     => 'input',
-                                        'label'    => __('username'),
-                                        'value'    => '',
-                                        'required' => true,
-                                    ],
-                                    'password' => [
-                                        'type'     => 'password',
-                                        'label'    => __('password'),
-                                        'value'    => '',
-                                        'required' => true,
+                                        'options'  => GetShipperOptions::run(ShipperAccount::all())
                                     ]
                                 ]
                             ],
