@@ -49,6 +49,8 @@ jobs:
           touch .env.wowsbar.production.deploy
           echo RELEASE=${{ steps.semver.outputs.next }} >> .env.wowsbar.production.deploy
           echo DEPLOY_REMOTE_USER=${{ secrets.PRODUCTION_DEPLOY_REMOTE_USER }} >> .env.wowsbar.production.deploy
+          echo DEPLOY_DISCORD_CHANNEL=${{ secrets.DEPLOY_DISCORD_CHANNEL }}
+          echo DEPLOY_DISCORD_CHANNEL_TOKEN=${{ secrets.DEPLOY_DISCORD_CHANNEL_TOKEN }}
       - name: Launch 🚀
         uses: deployphp/action@v1
         with:
