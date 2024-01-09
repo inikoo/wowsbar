@@ -10,7 +10,6 @@ namespace App\Actions\Mail\Mailshot\Unsubscribe;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Mail\DispatchedEmailResource;
 use App\Models\Mail\DispatchedEmail;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,12 +29,7 @@ class ShowUnsubscribeMailshot
 
     public function htmlResponse(DispatchedEmail $dispatchedEmail): Response
     {
-        $title      =null;
-        $description=null;
-        if($dispatchedEmail->mailshot) {
-            $title       = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.title');
-            $description = Arr::get($dispatchedEmail->mailshot->parent->settings, 'mailshot.unsubscribe.description');
-        }
+
 
 
 
@@ -43,12 +37,11 @@ class ShowUnsubscribeMailshot
             'title'           => __("Unsubscribe"),
             'dispatchedEmail' => DispatchedEmailResource::make($dispatchedEmail)->getArray(),
             'message'         => [
-                'title'       => __($title ?? "Unsubscription successful"),
-                'description' => __($description ?? "You have been unsubscribed, sorry for any inconvenience caused."),
-                'caution'     => match ($dispatchedEmail->is_test) {
-                    true    => __("This is a test mailshot, no action was taken and you can ignore this message."),
-                    default => null
-                }
+                'confirmationTitle'       => __("Unsubscription successful"),
+                'successTitle'            => __("Unsubscription successful"),
+                'successDescription'      => __("You have been unsubscribed, sorry for any inconvenience caused."),
+                'button'                  => __('Please confirm you unsubscription'),
+
             ]
         ]);
     }

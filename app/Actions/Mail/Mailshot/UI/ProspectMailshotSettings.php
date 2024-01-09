@@ -46,6 +46,8 @@ class ProspectMailshotSettings extends InertiaAction
             ]
         ];
 
+        // no need anymore, is hardcoded in the template
+        /*
         $sections['unsubscribe'] = [
             'label'  => __('Mailshot unsubscribe'),
             'icon'   => 'fal fa-sliders-h',
@@ -53,20 +55,18 @@ class ProspectMailshotSettings extends InertiaAction
                 'title'       => [
                     'type'     => 'input',
                     'label'    => __('title'),
-                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title'),
+                    'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.title')??'',
                     'required' => true,
-                    'value'    => ''
                 ],
                 'description' => [
                     'type'     => 'textarea',
                     'label'    => __('description'),
                     'value'    => Arr::get($shop->settings, 'mailshot.unsubscribe.description'),
                     'required' => true,
-                    'value'    => ''
                 ],
             ]
         ];
-
+*/
 
         $currentSection = 'sender_email';
         if ($section and Arr::has($sections, $section)) {
