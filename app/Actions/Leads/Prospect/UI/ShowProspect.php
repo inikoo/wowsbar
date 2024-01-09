@@ -116,20 +116,21 @@ class ShowProspect extends InertiaAction
                 ],
                 */
 
-                'actions_with_confirmation' => [
-                    [
-                        'route'        => [
-                            'name'       => 'org.models.shop.prospect.unsubscribe.update',
-                            'parameters' => [
-                                'shop'     => $prospect->shop->id,
-                                'prospect' => $prospect->id
-                            ]
-                        ],
-                        'label'        => __('Unsubscribe'),
-                        'confirmation' => __('Are you sure you want to unsubscribe this prospect?')
-                    ],
+                'unsubscribeActions' => [
+                    'unsubscribe' =>
+                        $this->canEdit ? [
+                            'route'        => [
+                                'name'       => 'org.models.shop.prospect.unsubscribe.update',
+                                'parameters' => [
+                                    'shop'     => $prospect->shop->id,
+                                    'prospect' => $prospect->id
+                                ]
+                            ],
+                            'label'        => __('Unsubscribe'),
+                            'confirmation' => __('Are you sure you want to unsubscribe this prospect?')
+                        ] : null,
 
-                    [
+                    'undo' => $this->canEdit ? [
                         'route'        => [
                             'name'       => 'org.models.shop.prospect.undo_unsubscribe.update',
                             'parameters' => [
@@ -139,18 +140,17 @@ class ShowProspect extends InertiaAction
                         ],
                         'label'        => __('Undo Unsubscribe'),
                         'confirmation' => __('Are you sure you want to revoke the unsubscribe this prospect?')
-                    ],
+                    ] : null,
                 ],
 
 
-
                 ProspectTabsEnum::SHOWCASE->value => $this->tab == ProspectTabsEnum::SHOWCASE->value ?
-        fn () => GetProspectShowcase::run($prospect)
-        : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
+                    fn () => GetProspectShowcase::run($prospect)
+                    : Inertia::lazy(fn () => GetProspectShowcase::run($prospect)),
 
                 ProspectsTabsEnum::HISTORY->value => $this->tab == ProspectsTabsEnum::HISTORY->value ?
-        fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))
-        : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))),
+                    fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: $prospect, prefix: ProspectTabsEnum::HISTORY->value))),
 
 
             ]
