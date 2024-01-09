@@ -20,9 +20,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <Popover :popover-placement="'bottom-start'">
-    <PopoverButton tabindex="-1">
-      <slot name="button"></slot>
+  <Popover :popover-placement="'bottom-start'" class="focus-visible:ring-0">
+    <PopoverButton tabindex="-1" v-slot="{ open, close }"  class="focus-visible:ring-0">
+      <slot name="button" :open="open" :close="close"></slot>
     </PopoverButton>
 
     <transition
@@ -33,10 +33,10 @@ const props = defineProps({
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <PopoverPanel v-slot="{ close }" ref="panelPopover"
+      <PopoverPanel v-slot="{ open, close }" ref="panelPopover"
         :class="`absolute z-50 mt-3 transform py-3 px-4 bg-white rounded-md shadow-md w-fit ${position}`" >
         <!-- Pass closePopover method to content slot -->
-        <slot name="content" :close="close"></slot>
+        <slot name="content" :open="open" :close="close"></slot>
       </PopoverPanel>
     </transition>
   </Popover>

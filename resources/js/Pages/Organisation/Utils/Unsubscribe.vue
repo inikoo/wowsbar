@@ -33,15 +33,12 @@ const props = defineProps<{
 
 const onClickUnsubscribe = async () => {
     try {
-         await axios.post(
+        await axios.post(
             route('org.unsubscribe.mailshot.update', props.dispatchedEmail.ulid)
         )
 
-
-        router.reload(
-        {
+        router.reload({
             only: ['dispatchedEmail'],  // only reload the props dispatchedEmail
-
         }
     )
 
@@ -67,6 +64,7 @@ const onClickUnsubscribe = async () => {
                     <h2 class="mx-auto max-w-2xl text-center text-3xl font-semibold tracking-tight sm:text-4xl">
                         {{ message.successTitle }}
                     </h2>
+
                     <p class="mx-auto mt-2 max-w-2xl text-center text-lg leading-8 text-gray-500">
                         {{ message.successDescription }}
                     </p>
@@ -77,16 +75,14 @@ const onClickUnsubscribe = async () => {
                 </template>
 
                 <!-- Section: Confirmation -->
-                <div v-else class="mx-auto w-fit flex justify-center flex-col gap-y-4">
+                <div v-else class="mx-auto w-fit flex justify-center flex-col gap-y-8">
                     <h2 class="mx-auto max-w-2xl text-center text-3xl font-semibold tracking-tight">
                         {{ message.confirmationTitle }}
                     </h2>
 
                     <span class="mx-auto">
-                        <Button @click="onClickUnsubscribe()" :style="'rainbow'" :label="message.button" size="xl" />
+                        <Button @click="onClickUnsubscribe()" :style="'rainbow'" :label="message.button" size="" class="rounded-xl px-10 py-8 text-2xl" />
                     </span>
-
-
                 </div>
 
                 <p v-if="dispatchedEmail.is_test" class="mx-auto mt-2 max-w-2xl text-center text-sm leading-8 text-red-500">

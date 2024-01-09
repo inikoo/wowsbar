@@ -66,6 +66,7 @@ else if (props.style == 'positive') styleClass = 'border border-lime-500 text-li
 else if (props.style == 'white') styleClass = 'bg-white text-gray-600'
 else if (props.style == 'red') styleClass = 'bg-red-500 hover:bg-red-600 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'green') styleClass = 'bg-lime-400 hover:bg-lime-500 text-white focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2'
+else if (props.style == 'gray') styleClass = 'bg-gray-200 hover:bg-gray-300 border border-gray-400 text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2'
 
 // else if (props.style == 'negative' || props.style == 'cancel') styleClass = 'border border-red-400 text-red-600 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'disabled') styleClass = 'cursor-not-allowed border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 disabled:cursor-not-allowed disabled:opacity-70'
@@ -148,7 +149,7 @@ const getActionIcon = (icon: any) => {
 
 <template>
     <button type="button"
-        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none"
         :class="[
             // icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
             full ? 'w-full justify-center' : 'min-w-max',
