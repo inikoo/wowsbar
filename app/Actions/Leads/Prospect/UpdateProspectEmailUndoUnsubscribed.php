@@ -7,34 +7,50 @@
 
 namespace App\Actions\Leads\Prospect;
 
+use App\Enums\CRM\Prospect\ProspectContactedStateEnum;
 use App\Enums\CRM\Prospect\ProspectFailStatusEnum;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class UpdateProspectEmailUndoUnsubscribed
 {
     use AsAction;
 
-    public function handle(Prospect $prospect, Carbon $date): void
+    public function handle(Prospect $prospect): void
     {
         $dataToUpdate = [
-            'dont_contact_me'   => false,
-            'dont_contact_me_at'=> null,
-            'failed_at'         => null,
+            'dont_contact_me'    => false,
+            'dont_contact_me_at' => null,
+            'failed_at'          => null,
         ];
 
 
-        /*
-
         if ($prospect->state != ProspectStateEnum::SUCCESS) {
-            $dataToUpdate['state']           = ProspectStateEnum::FAIL;
-            $dataToUpdate['fail_status']     = ProspectFailStatusEnum::UNSUBSCRIBED;
-            $dataToUpdate['contacted_state'] = ProspectFailStatusEnum::NA;
+            $state          = ProspectStateEnum::CONTACTED;
+            $contactedState = ProspectContactedStateEnum::NEVER_OPEN;
+
+            if(!$prospect->last_contacted_at) {
+                $state          = ProspectStateEnum::NO_CONTACTED;
+                $contactedState = ProspectContactedStateEnum::NA;
+            }
+
+            if($prospect->last_opened_at) {
+                $contactedState = ProspectContactedStateEnum::OPEN;
+            }
+
+            if($prospect->last_clicked_at) {
+                $contactedState = ProspectContactedStateEnum::CLICKED;
+            }
+
+
+
+
+            $dataToUpdate['state']           = $state;
+            $dataToUpdate['fail_status']     = ProspectFailStatusEnum::NA;
+            $dataToUpdate['contacted_state'] = $contactedState;
         }
-        */
 
         UpdateProspect::run(
             $prospect,
@@ -44,6 +60,6 @@ class UpdateProspectEmailUndoUnsubscribed
 
     public function inShop(Shop $shop, Prospect $prospect): void
     {
-        $this->handle($prospect, now());
+        $this->handle($prospect);
     }
 }
