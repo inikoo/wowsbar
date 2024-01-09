@@ -207,7 +207,7 @@ test('can show list of employees', function () {
     });
 });
 
-test('can show employees', function () {
+test('can show employee', function () {
     $employee = Employee::first();
     expect($employee->organisationUser)->toBeInstanceOf(OrganisationUser::class);
 

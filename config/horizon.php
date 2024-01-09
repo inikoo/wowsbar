@@ -56,7 +56,7 @@ return [
 
     'prefix' => env(
         'HORIZON_PREFIX',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_horizon:'
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_'.env('APP_ENV').'_horizon:'
     ),
 
     /*
@@ -223,6 +223,23 @@ return [
 
     'environments' => [
         'production' => [
+            'supervisor-1' => [
+                'maxProcesses'    => 15,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+            'supervisor-long-running' => [
+                'maxProcesses'    => 10,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+            'supervisor-ses' => [
+                'maxProcesses'    => 4,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+        ],
+        'staging' => [
             'supervisor-1' => [
                 'maxProcesses'    => 15,
                 'balanceMaxShift' => 1,
