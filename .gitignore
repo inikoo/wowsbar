@@ -32,7 +32,7 @@ yarn-error.log
 /load_my_snapshot.sh
 /resources/private/
 lang/php_*.json
-
+deploy.sh
 /delete-bucket.sh
 /.env.local
 /.env.prod
