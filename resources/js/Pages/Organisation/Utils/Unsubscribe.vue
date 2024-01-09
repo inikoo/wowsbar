@@ -77,13 +77,13 @@ const onClickUnsubscribe = async () => {
                 </template>
 
                 <!-- Section: Confirmation -->
-                <div v-else class="mx-auto w-fit flex justify-center flex-col gap-y-4">
+                <div v-else class="mx-auto w-fit flex justify-center flex-col gap-y-8">
                     <h2 class="mx-auto max-w-2xl text-center text-3xl font-semibold tracking-tight">
                         {{ message.confirmationTitle }}
                     </h2>
 
                     <span class="mx-auto">
-                        <Button @click="onClickUnsubscribe()" :style="'rainbow'" :label="message.button" size="xl" />
+                        <Button @click="onClickUnsubscribe()" :style="'rainbow'" :label="message.button" size="" class="rounded-xl px-10 py-8 text-2xl" />
                     </span>
 
 
