@@ -32,17 +32,15 @@ const props = defineProps<{
 
 const onClickUnsubscribe = async () => {
     try {
-        const response = await axios.post(
+         await axios.post(
             route('org.unsubscribe.mailshot.update', props.dispatchedEmail.ulid)
         )
-        // console.log(response)
+
 
         router.reload(
         {
             only: ['dispatchedEmail'],  // only reload the props dispatchedEmail
-            // onSuccess: () => {
-            //     currentTab.value = tabSlug;
-            // },
+
         }
     )
 
@@ -55,8 +53,7 @@ const onClickUnsubscribe = async () => {
     }
 }
 
-// TODO create a MASSIVE button [Confirm unsubscribe]   and call by POST  route(org.unsubscribe.mailshot.update,dispatchedEmail.ulid)
-// if dispatchedEmail.is_test is tru just disabke the button
+
 </script>
 
 <template >
@@ -85,11 +82,11 @@ const onClickUnsubscribe = async () => {
                     <h2 class="mx-auto max-w-2xl text-center text-3xl font-semibold tracking-tight">
                         {{ trans('Please confirm you unsubscription') }}
                     </h2>
-                    
+
                     <span class="mx-auto">
                         <Button @click="onClickUnsubscribe()" :style="'rainbow'" label="Unsubscribe" size="xl" />
                     </span>
-                    
+
                     <p v-if="dispatchedEmail.is_test" class="mx-auto mt-2 max-w-2xl text-center text-sm leading-8 text-red-500">
                         {{ trans('This is a test mailshot, no action was taken and you can ignore this message.') }}
                     </p>
