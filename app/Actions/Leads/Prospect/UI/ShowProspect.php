@@ -117,7 +117,8 @@ class ShowProspect extends InertiaAction
                 */
 
                 'unsubscribeActions' => [
-                    'unsubscribe' =>
+                    'is_subscribed'=> !$prospect->dont_contact_me,
+                    'unsubscribe'  =>
                         $this->canEdit ? [
                             'route'        => [
                                 'name'       => 'org.models.shop.prospect.unsubscribe.update',
