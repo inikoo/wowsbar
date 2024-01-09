@@ -36,8 +36,7 @@ beforeEach(function () {
         'inertia.testing.page_paths',
         [resource_path('js/Pages/Organisation')]
     );
-    $this->qrCode = '01HK72GNDME2AZMHA9T7N9WF1A';
-
+    $this->qrCode = Str::ulid()->toBase32();
 
     if (!Workplace::where('name', 'office')->exists()) {
         $modelData = [
