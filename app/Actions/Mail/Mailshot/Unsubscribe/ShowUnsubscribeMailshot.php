@@ -37,10 +37,10 @@ class ShowUnsubscribeMailshot
             'title'           => __("Unsubscribe"),
             'dispatchedEmail' => DispatchedEmailResource::make($dispatchedEmail)->getArray(),
             'message'         => [
-                'confirmationTitle'       => __("Unsubscription successful"),
+                'confirmationTitle'       => __("Are you sure to unsubscribe?"),
                 'successTitle'            => __("Unsubscription successful"),
                 'successDescription'      => __("You have been unsubscribed, sorry for any inconvenience caused."),
-                'button'                  => __('Please confirm you unsubscription'),
+                'button'                  => __('Click here to unsubscribe'),
 
             ]
         ]);
