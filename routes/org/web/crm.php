@@ -37,6 +37,7 @@ use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Helpers\Uploads\DownloadUploads;
 use App\Actions\Helpers\Uploads\HistoryUploads;
+use App\Actions\Helpers\Uploads\UI\IndexUploads;
 use App\Actions\Helpers\Uploads\UI\ShowUploads;
 use App\Actions\Leads\Prospect\ExportProspects;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateProspectsMailshot;
@@ -93,6 +94,7 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/histories/uploads', ['icon' => 'fa-envelope', 'label' => 'history upload prospect'])->uses([HistoryUploads::class, 'inProspect'])->name('uploads.history');
 
     Route::prefix('uploads')->as('uploads.')->group(function () {
+        Route::get('/', [IndexUploads::class, 'inShop'])->name('index');
         Route::get('{upload}', ShowUploads::class)->name('show');
     });
 });
@@ -203,14 +205,15 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('{mailshot}/recipients/{dispatchedEmail:id}', ['icon' => 'fa-envelope', 'label' => 'show dispatched email'])->uses(ShowDispatchedEmail::class)->name('show.recipients.show');
         });
 
-        Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
-        Route::get('/{prospect}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect'])->uses([EditProspect::class, 'inShop'])->name('edit');
-        Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'remove prospect'])->uses([RemoveProspect::class, 'inShop'])->name('remove');
-
         Route::prefix('uploads')->as('uploads.')->group(function () {
+            Route::get('/', [IndexUploads::class, 'inShop'])->name('index');
             Route::get('{upload}/download', ['icon' => 'fa-envelope', 'label' => 'download uploads'])->uses(DownloadUploads::class)->name('download');
             Route::get('{upload}', [ShowUploads::class, 'inShop'])->name('show');
         });
+        
+        Route::get('/{prospect}', ['icon' => 'fa-envelope', 'label' => 'show prospect'])->uses([ShowProspect::class, 'inShop'])->name('show');
+        Route::get('/{prospect}/edit', ['icon' => 'fa-envelope', 'label' => 'edit prospect'])->uses([EditProspect::class, 'inShop'])->name('edit');
+        Route::get('/{prospect}/delete', ['icon' => 'fa-envelope', 'label' => 'remove prospect'])->uses([RemoveProspect::class, 'inShop'])->name('remove');
     });
 
 

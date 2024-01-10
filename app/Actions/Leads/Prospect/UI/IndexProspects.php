@@ -317,7 +317,8 @@ class IndexProspects extends InertiaAction
                     ]
                 ),
             ),
-            'org.crm.shop.prospects.index' =>
+            'org.crm.shop.prospects.index',
+            'org.crm.shop.prospects.uploads.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs(
                     'org.crm.shop.dashboard',
