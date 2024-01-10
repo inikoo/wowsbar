@@ -8,18 +8,18 @@
 import Table from '@/Components/Table/Table.vue'
 import { useFormatTime } from "@/Composables/useFormatTime"
 import { useLocaleStore } from "@/Stores/locale"
-import Tag from '@/Components/Tag.vue'
+import {User} from "@/types/user";
+import {Link} from '@inertiajs/vue3'
 
 const props = defineProps<{
     data: {
         data: {
             id: number
-            row_number: number
-            errors: string[]
-            fail_column: number
-            status: string
-            created_at: string
-            updated_at: string
+            number_rows: number
+            number_success: number
+            number_fails: number
+            original_filename: string
+            uploaded_at: string
         }[]
     }
     tab?: string
@@ -27,26 +27,28 @@ const props = defineProps<{
 
 const locale = useLocaleStore()
 
+function uploadRoute(upload) {
+    switch (route().current()) {
+        case 'org.crm.shop.prospects.uploads.index':
+            return route(
+                'org.crm.shop.prospects.uploads.show',
+                [route().params['shop'], upload.id]);
+    }
+}
 
 </script>
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(errors)="{ item }">
-            <span class="text-red-500">{{ item.errors[0] }}</span>
+        <template #cell(original_filename)="{ item }">
+            <Link :href="uploadRoute(item)" class="w-full h-full py-2">
+                {{ item.original_filename }}
+            </Link>
         </template>
         <template #cell(updated_at)="{ item }">
             <span class="text-gray-500">
-                {{ useFormatTime(item.updated_at, { localeCode: locale.language.code, formatTime: 'hms' }) }}
+                {{ useFormatTime(item.uploaded_at, { localeCode: locale.language.code, formatTime: 'hms' }) }}
             </span>
-        </template>
-        <template #cell(created_at)="{ item }">
-            <span class="text-gray-500">
-                {{ useFormatTime(item.created_at, { localeCode: locale.language.code, formatTime: 'hms' }) }}
-            </span>
-        </template>
-        <template #cell(status)="{ item }">
-            <Tag :theme="item.status == 'failed' ? 7 : 3" :label="item.status" />
         </template>
     </Table>
 </template>

@@ -43,7 +43,7 @@ class ShowUploads extends InertiaAction
     public function htmlResponse(Upload $upload, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Upload/Upload',
+            'Upload/UploadRecords',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

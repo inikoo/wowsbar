@@ -24,6 +24,7 @@ use App\Actions\CRM\Customer\Surveys\StoreSurvey;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\CRM\CustomerWebsite\UpdateCustomerWebsite;
+use App\Actions\CRM\Shipping\ShipperAccount\StoreShipperAccount;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
@@ -162,6 +163,8 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
         Route::post('surveys', [StoreSurvey::class, 'inShop'])->name('surveys.store');
+
+        Route::post('customer/{customer:id}/shipper-accounts', [StoreShipperAccount::class, 'inShopInCustomer'])->name('customer.shipper-account.store');
     });
 });
 
