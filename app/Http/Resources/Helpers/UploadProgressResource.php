@@ -9,11 +9,19 @@ namespace App\Http\Resources\Helpers;
 
 use App\Http\Resources\HasSelfCall;
 use App\Models\Helpers\Upload;
+use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UploadProgressResource extends JsonResource
 {
     use HasSelfCall;
+
+    public Organisation $organisation;
+    public function __construct($resource, Organisation $organisation)
+    {
+        parent::__construct($resource);
+        $this->organisation = $organisation;
+    }
 
     public function toArray($request): array
     {
@@ -29,8 +37,9 @@ class UploadProgressResource extends JsonResource
             'total'        => $upload->number_rows,
             'done'         => $upload->number_success + $upload->number_fails,
             'view_route'   => [
-                'name'       => 'org.crm.prospects.uploads.show',
+                'name'       => 'org.crm.shop.prospects.uploads.show',
                 'parameters' => [
+                    'shop'      => $this->organisation->shops()->first()->slug,
                     'upload'    => $upload->id,
                 ],
             ],
