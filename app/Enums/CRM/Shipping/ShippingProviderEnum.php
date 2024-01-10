@@ -8,14 +8,12 @@
 namespace App\Enums\CRM\Shipping;
 
 use App\Enums\EnumHelperTrait;
-use App\Models\Market\Shop;
-use App\Models\SysAdmin\Organisation;
 
 enum ShippingProviderEnum: string
 {
     use EnumHelperTrait;
 
-    case DHL  = 'dhl';
-    case FEDEX  = 'fedex';
+    case DHL      = 'dhl';
+    case FEDEX    = 'fedex';
     case SICEPAT  = 'sicepat';
 }

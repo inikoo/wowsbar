@@ -11,7 +11,6 @@ use App\Actions\CRM\Shipping\ShipperAccount\UI\GetShipperOptions;
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Shipper;
 use App\Models\ShipperAccount;
 use Inertia\Inertia;
 use Inertia\Response;

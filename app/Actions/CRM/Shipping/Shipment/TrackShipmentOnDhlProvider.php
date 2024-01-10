@@ -20,11 +20,17 @@ class TrackShipmentOnDhlProvider
 
     public function handle(ShipperAccount $shipperAccount, array $modelData)
     {
-        $response = Http::withBasicAuth(Arr::get($shipperAccount->data,
-            'api_username'),
-            Arr::get($shipperAccount->data, 'api_password'))
-            ->get(Arr::get($shipperAccount->data, 'api_url'),
-                $this->scheme($shipperAccount, $modelData));
+        $response = Http::withBasicAuth(
+            Arr::get(
+                $shipperAccount->data,
+                'api_username'
+            ),
+            Arr::get($shipperAccount->data, 'api_password')
+        )
+            ->get(
+                Arr::get($shipperAccount->data, 'api_url'),
+                $this->scheme($shipperAccount, $modelData)
+            );
 
         return $response->json();
     }

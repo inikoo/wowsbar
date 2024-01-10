@@ -8,8 +8,6 @@
 namespace App\Enums\CRM\Shipping;
 
 use App\Enums\EnumHelperTrait;
-use App\Models\Market\Shop;
-use App\Models\SysAdmin\Organisation;
 
 enum ShippingStateEnum: string
 {
@@ -23,8 +21,8 @@ enum ShippingStateEnum: string
     public static function labels(): array
     {
         return [
-            'pending' => __('Pending'),
-            'error'    => __('Error'),
+            'pending'      => __('Pending'),
+            'error'        => __('Error'),
             'fail'         => __('Fail'),
             'success'      => __('Success')
         ];

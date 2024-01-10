@@ -24,9 +24,9 @@ class Shipment extends Model
 
     protected $guarded = [];
     protected $casts   = [
-        'data' => 'array',
+        'data'        => 'array',
         'credentials' => 'array',
-        'tracking' => 'array',
-        'status' => ShippingStateEnum::class
+        'tracking'    => 'array',
+        'status'      => ShippingStateEnum::class
     ];
 }

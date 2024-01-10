@@ -67,9 +67,9 @@ class StoreShipperAccount
         return [
             'label'        => ['required', 'string', 'max:255'],
             'shipper_id'   => ['required', 'exists:shippers,id'],
-            'account_id'  => ['required', 'string', 'max:50'],
-            'username'  => ['required', 'string', 'max:50'],
-            'password'  => ['required', 'string', 'max:50']
+            'account_id'   => ['required', 'string', 'max:50'],
+            'username'     => ['required', 'string', 'max:50'],
+            'password'     => ['required', 'string', 'max:50']
         ];
     }
     /**

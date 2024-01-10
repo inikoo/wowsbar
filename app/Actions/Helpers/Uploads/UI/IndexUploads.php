@@ -9,11 +9,8 @@ namespace App\Actions\Helpers\Uploads\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
-use App\Http\Resources\Helpers\UploadRecordsResource;
 use App\Http\Resources\Helpers\UploadsResource;
-use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\Helpers\Upload;
-use App\Models\Helpers\UploadRecord;
 use App\Models\Market\Shop;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
