@@ -36,7 +36,7 @@ class UpdateClockingMachine
     public function rules(): array
     {
         return [
-            'code'  => ['sometimes','required'.'iunique:clocking_machines'],
+            'name'  => ['sometimes','required'.'iunique:clocking_machines'],
         ];
     }
 

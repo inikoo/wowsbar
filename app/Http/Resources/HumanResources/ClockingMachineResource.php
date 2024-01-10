@@ -30,7 +30,7 @@ class ClockingMachineResource extends JsonResource
             'created_at' => $clockingMachine->created_at,
             'updated_at' => $clockingMachine->updated_at,
             'nfc_tag'    => Arr::get($clockingMachine->data, 'nfc_tag'),
-            'workplace'  => new WorkPlaceResource($clockingMachine->workplace),
+            'workplace'  => new WorkplaceResource($clockingMachine->workplace),
         ];
     }
 }
