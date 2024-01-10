@@ -5,9 +5,10 @@
  */
 
 export interface Image {
-    src: {
-        original:string,
-        webp?:string
-    }
-    alt?:string
+    original: string
+    original_2x?: string
+    avif?: string
+    avif_2x?: string
+    webp?: string
+    webp_2x?: string
 }
