@@ -23,9 +23,8 @@ export const initialiseOrgApp = () => {
     const echoGeneral = useEchoOrgGeneral()
 
     // Subscribe, sees join, sees leaving, listen to Websockets
-    liveOrganisationUsers().subscribe();
-
-    echoGeneral.subscribe()
+    liveOrganisationUsers().subscribe()  // Websockets: active users
+    echoGeneral.subscribe()  // Websockets: notification
 
     if (usePage().props.auth.user) {
         echoPersonal.subscribe(usePage().props.auth.user.id)

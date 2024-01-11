@@ -9,7 +9,7 @@
 import { useForm } from '@inertiajs/vue3'
 import { useLayoutStore } from '@/Stores/layout'
 import { routeType } from '@/types/route'
-import { ref, computed } from 'vue'
+import { ref, computed, Component } from 'vue'
 import axios from 'axios'
 
 import Input from '@/Components/Forms/Fields/Input.vue'
@@ -72,7 +72,7 @@ const props = defineProps<{
 const layout = useLayoutStore()
 const updateRoute = props['fieldData']['updateRoute'] ?? props.args['updateRoute'];
 
-const components = {
+const components: {[key: string]: Component} = {
     'select': Select,
     'input': Input,
     'inputWithAddOn': InputWithAddOn,
@@ -100,9 +100,9 @@ const components = {
     'ProspectRecipients': ProspectRecipients,
     'senderEmail': SenderEmail,
     'app_login': AppLogin,
-};
+}
 
-const getComponent = (componentName) => {
+const getComponent = (componentName: string) => {
     return components[componentName] ?? null;
 };
 
