@@ -158,10 +158,10 @@ class IndexProspects extends InertiaAction
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'phone', label: __('phone'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
+                ->column(key: 'contact_website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
 
             if (class_basename($parent) != 'Tag') {
-                $table->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true);
+                $table->column(key: 'tags', label: __('tags'), canBeHidden: false, searchable: true);
             }
         };
     }
