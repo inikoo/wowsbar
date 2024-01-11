@@ -7,7 +7,7 @@
 
 namespace App\Models\Helpers;
 
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
@@ -32,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $parent_type
  * @property int|null $parent_id
  * @property int|null $customer_id
- * @property SnapshotStateEnum $state
+ * @property \App\Enums\Helpers\Snapshot\SnapshotStateEnum $state
  * @property string|null $published_at
  * @property string|null $published_until
  * @property string $checksum

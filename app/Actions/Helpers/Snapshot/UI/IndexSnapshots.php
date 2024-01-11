@@ -8,7 +8,7 @@
 namespace App\Actions\Helpers\Snapshot\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
 use App\Models\Mail\EmailTemplate;
