@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 13 Nov 2023 15:45:50 Malaysia Time, Kuala Lumpur, Malaysia
- * Copyright (c) 2023, Raul A Perusquia Flores
+ * Created: Wed, 10 Jan 2024 22:07:01 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2024, Raul A Perusquia Flores
  */
 
-namespace App\Enums\Mail;
+namespace App\Enums\Mail\MailshotSendChannel;
 
 use App\Enums\EnumHelperTrait;
 

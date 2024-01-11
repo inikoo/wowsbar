@@ -10,9 +10,8 @@ namespace App\Actions\Web\Website;
 use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
-
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Models\Helpers\Snapshot;
 use App\Models\Web\Website;
 use Illuminate\Support\Arr;

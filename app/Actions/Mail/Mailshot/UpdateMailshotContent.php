@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

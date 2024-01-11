@@ -14,7 +14,7 @@ use App\Actions\Mail\DispatchedEmail\UI\IndexDispatchedEmail;
 use App\Actions\Mail\MailshotRecipient\UI\IndexEstimatedRecipients;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WithProspectsSubNavigation;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
 use App\Enums\UI\Organisation\MailshotTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Mail\DispatchedEmailResource;

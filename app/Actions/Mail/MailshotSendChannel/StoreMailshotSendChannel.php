@@ -7,8 +7,8 @@
 
 namespace App\Actions\Mail\MailshotSendChannel;
 
-use App\Enums\Mail\MailshotSendChannelStateEnum;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\MailshotSendChannel\MailshotSendChannelStateEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Lorisleiva\Actions\Concerns\AsAction;

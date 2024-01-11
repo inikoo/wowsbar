@@ -7,8 +7,8 @@
 
 namespace App\Actions\SysAdmin\Organisation\Hydrators;
 
-use App\Enums\Mail\MailshotStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
 

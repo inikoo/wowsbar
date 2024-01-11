@@ -7,9 +7,9 @@
 
 namespace App\Stubs\Migrations;
 
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Banner\BannerTypeEnum;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 

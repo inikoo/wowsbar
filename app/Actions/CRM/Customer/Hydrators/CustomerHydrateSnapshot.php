@@ -7,7 +7,7 @@
 
 namespace App\Actions\CRM\Customer\Hydrators;
 
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Models\CRM\Customer;
 use Lorisleiva\Actions\Concerns\AsAction;
 

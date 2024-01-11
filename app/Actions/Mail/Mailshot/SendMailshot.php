@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;

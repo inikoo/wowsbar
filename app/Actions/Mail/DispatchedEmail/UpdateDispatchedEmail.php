@@ -10,7 +10,7 @@ namespace App\Actions\Mail\DispatchedEmail;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateCumulativeDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
 
 class UpdateDispatchedEmail

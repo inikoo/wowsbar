@@ -10,7 +10,7 @@ namespace App\Actions\Mail\Ses;
 use App\Actions\Leads\Prospect\UpdateProspectEmailSent;
 use App\Actions\Mail\DispatchedEmail\UpdateDispatchedEmail;
 use App\Actions\Mail\EmailAddress\Traits\AwsClient;
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use App\Models\Mail\DispatchedEmail;
 use Aws\Exception\AwsException;
 use Aws\Result;
