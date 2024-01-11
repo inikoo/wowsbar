@@ -24,9 +24,9 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
 
 
     public Upload $data;
-    public Organisation $organisation;
+    public ?Organisation $organisation = null;
 
-    public function __construct(Upload $upload, Organisation $organisation)
+    public function __construct(Upload $upload, ?Organisation $organisation = null)
     {
         $this->organisation = $organisation;
         $this->data         = $upload;

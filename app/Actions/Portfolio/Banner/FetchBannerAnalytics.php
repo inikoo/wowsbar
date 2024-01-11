@@ -30,7 +30,7 @@ class FetchBannerAnalytics
             // TODO: Get Property ID from $portfolioWebsite
 
             /** @var \App\Models\Portfolio\PortfolioWebsite $portfolioWebsite */
-            $analytics = GetAnalytics::run(env('ANALYTICS_PROPERTY_ID'), $portfolioWebsite->created_at);
+            $analytics = GetAnalytics::run(config('services.analytics.property_id'), $portfolioWebsite->created_at);
 
             foreach ($analytics->toArray() as $analytic) {
                 $banner = Banner::where('ulid', $analytic['bannerId'])->first();

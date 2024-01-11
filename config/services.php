@@ -37,4 +37,8 @@ return [
         'configuration_set' => env('AWS_SES_CONFIGURATION_SET')
     ],
 
+    'analytics' => [
+        'property_id'       => env('ANALYTICS_PROPERTY_ID')
+    ],
+
 ];
