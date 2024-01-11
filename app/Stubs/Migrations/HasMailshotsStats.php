@@ -7,8 +7,8 @@
 
 namespace App\Stubs\Migrations;
 
-use App\Enums\Mail\MailshotStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use Illuminate\Database\Schema\Blueprint;
 
 trait HasMailshotsStats

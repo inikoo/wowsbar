@@ -10,7 +10,7 @@ namespace App\Actions\Mail\Mailshot;
 use App\Actions\Helpers\Query\GetQueryEloquentQueryBuilder;
 use App\Actions\Helpers\Query\WithQueryCompiler;
 use App\Actions\Traits\WithCheckCanContactByEmail;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Query;
 use App\Models\Leads\Prospect;

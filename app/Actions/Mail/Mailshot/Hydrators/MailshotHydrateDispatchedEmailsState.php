@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\DispatchedEmail;
 use App\Models\Mail\Mailshot;

@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Mail\Mailshot\UI\ProspectMailshotSettings;
 use App\Actions\Traits\WithProspectsSubNavigation;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;

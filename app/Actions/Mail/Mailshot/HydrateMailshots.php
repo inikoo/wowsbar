@@ -12,7 +12,7 @@ use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateCumulativeDispatchedEmail
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEmails;
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Collection;
 

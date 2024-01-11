@@ -8,8 +8,8 @@
 namespace App\Models\Mail;
 
 use App\Actions\Utils\Abbreviate;
-use App\Enums\Mail\MailshotStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,11 +29,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property string $subject
- * @property MailshotStateEnum $state
+ * @property \App\Enums\Mail\Mailshot\MailshotStateEnum $state
  * @property \Illuminate\Support\Carbon|null $schedule_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property MailshotTypeEnum $type
+ * @property \App\Enums\Mail\Mailshot\MailshotTypeEnum $type
  * @property string $date
  * @property \Illuminate\Support\Carbon|null $ready_at
  * @property \Illuminate\Support\Carbon|null $start_sending_at

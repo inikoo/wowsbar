@@ -44,11 +44,8 @@ class IndexProspects extends InertiaAction
     {
         $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
 
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('crm.prospects.view')
-            );
+        return  $request->user()->hasPermissionTo('crm.prospects.view');
+
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

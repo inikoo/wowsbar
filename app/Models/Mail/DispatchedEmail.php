@@ -7,7 +7,6 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Mail\DispatchedEmailStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Leads\Prospect;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
  * @property string|null $recipient_type
  * @property int|null $recipient_id
  * @property string|null $provider_message_id
- * @property DispatchedEmailStateEnum $state
+ * @property \App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum $state
  * @property bool $is_error
  * @property bool $is_rejected
  * @property bool $is_sent
@@ -88,7 +87,7 @@ class DispatchedEmail extends Model
 {
     protected $casts = [
         'data'        => 'array',
-        'state'       => DispatchedEmailStateEnum::class,
+        'state'       => \App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum::class,
     ];
 
     protected $attributes = [
