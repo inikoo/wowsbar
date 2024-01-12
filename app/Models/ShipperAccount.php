@@ -11,14 +11,16 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
+ * App\Models\ShipperAccount
  *
- * @property int $id
- * @property string $slug
- * @property string $label
- * @property array $data
- * @property array $credentials
- * @property-read Shipper $shipper
  * @property-read Customer $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Shipment> $shipments
+ * @property-read int|null $shipments_count
+ * @property-read \App\Models\Shipper|null $shipper
+ * @method static \Illuminate\Database\Eloquent\Builder|ShipperAccount newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ShipperAccount newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ShipperAccount query()
+ * @mixin \Eloquent
  */
 
 class ShipperAccount extends Model

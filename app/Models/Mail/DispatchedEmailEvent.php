@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Mail\DispatchedEmailEvent
  *
  * @property int $id
- * @property \App\Enums\Mail\DispatchedEmailEvent\DispatchedEmailEventTypeEnum $type
+ * @property DispatchedEmailEventTypeEnum $type
  * @property int|null $dispatched_email_id
  * @property string $date
  * @property array $data

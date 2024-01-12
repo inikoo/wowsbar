@@ -29,11 +29,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property string $subject
- * @property \App\Enums\Mail\Mailshot\MailshotStateEnum $state
+ * @property MailshotStateEnum $state
  * @property \Illuminate\Support\Carbon|null $schedule_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Enums\Mail\Mailshot\MailshotTypeEnum $type
+ * @property MailshotTypeEnum $type
  * @property string $date
  * @property \Illuminate\Support\Carbon|null $ready_at
  * @property \Illuminate\Support\Carbon|null $start_sending_at

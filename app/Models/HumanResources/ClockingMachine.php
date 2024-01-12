@@ -28,9 +28,9 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\HumanResources\ClockingMachine
  *
  * @property int $id
+ * @property int $workplace_id
  * @property string $slug
  * @property string $name
- * @property int $workplace_id
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
