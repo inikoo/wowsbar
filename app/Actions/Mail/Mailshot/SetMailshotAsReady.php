@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
 use App\Models\Mail\Mailshot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;

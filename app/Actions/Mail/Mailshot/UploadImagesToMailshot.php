@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\SysAdmin\Organisation\AttachImageToOrganisation;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Mail\Mailshot;
 use Exception;

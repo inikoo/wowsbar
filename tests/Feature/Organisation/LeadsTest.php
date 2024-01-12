@@ -9,7 +9,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Mail\Mailshot\StoreMailshot;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Models\Helpers\Fetch;
 use App\Models\Helpers\Query;

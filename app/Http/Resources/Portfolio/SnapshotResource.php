@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\HasSelfCall;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\OrganisationUser;

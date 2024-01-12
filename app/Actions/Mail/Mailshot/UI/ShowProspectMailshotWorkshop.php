@@ -10,7 +10,7 @@ namespace App\Actions\Mail\Mailshot\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Traits\Actions\WithActionButtons;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
 use App\Http\Resources\Mail\MailshotResource;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;

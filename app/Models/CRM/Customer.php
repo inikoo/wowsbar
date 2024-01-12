@@ -21,6 +21,7 @@ use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Search\UniversalSearch;
+use App\Models\ShipperAccount;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
@@ -94,6 +95,7 @@ use Spatie\Tags\HasTags;
  * @property-read int|null $portfolio_websites_count
  * @property Collection<int, \App\Models\Helpers\Tag> $tags
  * @property-read Shop $shop
+ * @property-read ShipperAccount $shipperAccounts
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read Collection<int, \App\Models\CRM\CustomerSocialAccount> $socialAccounts
@@ -313,5 +315,10 @@ class Customer extends Model implements HasMedia, Auditable
     public function socialAccounts(): HasMany
     {
         return $this->hasMany(CustomerSocialAccount::class);
+    }
+
+    public function shipperAccounts(): HasMany
+    {
+        return $this->hasMany(ShipperAccount::class);
     }
 }

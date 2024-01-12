@@ -7,14 +7,14 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Mail\DispatchedEmailEventTypeEnum;
+use App\Enums\Mail\DispatchedEmailEvent\DispatchedEmailEventTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Mail\DispatchedEmailEvent
  *
  * @property int $id
- * @property DispatchedEmailEventTypeEnum $type
+ * @property \App\Enums\Mail\DispatchedEmailEvent\DispatchedEmailEventTypeEnum $type
  * @property int|null $dispatched_email_id
  * @property string $date
  * @property array $data

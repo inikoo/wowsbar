@@ -12,7 +12,7 @@ use App\Actions\Mail\Outbox\Hydrators\OutboxHydrateMailshots;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use Lorisleiva\Actions\ActionRequest;

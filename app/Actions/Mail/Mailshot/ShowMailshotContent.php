@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\ActionRequest;
 

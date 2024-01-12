@@ -20,15 +20,16 @@ class UploadsResource extends JsonResource
         $upload = $this;
 
         return [
-            'id'             => $upload->id,
-            'type'           => $upload->type,
-            'uploaded_at'    => $upload->uploaded_at,
-            'filename'       => $upload->filename,
-            'number_rows'    => $upload->number_rows,
-            'number_success' => $upload->number_success,
-            'number_fails'   => $upload->number_fails,
-            'path'           => $upload->path,
-            'download_route' => [
+            'id'                => $upload->id,
+            'type'              => $upload->type,
+            'uploaded_at'       => $upload->uploaded_at,
+            'original_filename' => $upload->original_filename,
+            'filename'          => $upload->filename,
+            'number_rows'       => $upload->number_rows,
+            'number_success'    => $upload->number_success,
+            'number_fails'      => $upload->number_fails,
+            'path'              => $upload->path,
+            'download_route'    => [
                 'name'       => 'org.uploads.download',
                 'parameters' => $upload->id,
             ],

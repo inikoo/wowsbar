@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Mail\Mailshot\UI\ProspectMailshotSettings;
 use App\Actions\Traits\WithProspectsSubNavigation;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Enums\Mail\SenderEmail\SenderEmailStateEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\Mail\MailshotsResource;
@@ -73,7 +73,7 @@ class IndexProspectMailshots extends InertiaAction
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('mailshots.slug')
-            ->allowedSorts(['slug'])
+            ->allowedSorts(['slug', 'subject', 'date'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -118,13 +118,13 @@ class IndexProspectMailshots extends InertiaAction
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'date', label: __('date'), sortable: true)
-                ->column(key: 'number_recipients', label: __('recipients'), sortable: true)
-                ->column(key: 'percentage_bounced', label: __('bounces'), sortable: true)
-                ->column(key: 'number_delivered', label: __('delivered'), sortable: true)
-                ->column(key: 'percentage_opened', label: __('opened'), sortable: true)
-                ->column(key: 'percentage_clicked', label: __('clicked'), sortable: true)
-                ->column(key: 'percentage_spam', label: __('spam'), sortable: true)
-                ->column(key: 'percentage_unsubscribe', label: __('unsubscribed'), sortable: true)
+                ->column(key: 'number_recipients', label: __('recipients'))
+                ->column(key: 'percentage_bounced', label: __('bounces'))
+                ->column(key: 'number_delivered', label: __('delivered'))
+                ->column(key: 'percentage_opened', label: __('opened'))
+                ->column(key: 'percentage_clicked', label: __('clicked'))
+                ->column(key: 'percentage_spam', label: __('spam'))
+                ->column(key: 'percentage_unsubscribe', label: __('unsubscribed'))
                 ->column(key: 'actions', label: ' ')
                 ->defaultSort('slug');
         };
@@ -199,7 +199,7 @@ class IndexProspectMailshots extends InertiaAction
     {
         $this->initialisation($request)->withTab(ProspectsMailshotsTabsEnum::values());
 
-        return $this->handle($shop);
+        return $this->handle($shop, prefix: ProspectsMailshotsTabsEnum::MAILSHOTS->value);
     }
 
 

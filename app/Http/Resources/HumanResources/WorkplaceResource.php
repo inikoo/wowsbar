@@ -13,7 +13,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
-class WorkPlaceResource extends JsonResource
+class WorkplaceResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {

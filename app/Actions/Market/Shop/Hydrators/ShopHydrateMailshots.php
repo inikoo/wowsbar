@@ -7,8 +7,8 @@
 
 namespace App\Actions\Market\Shop\Hydrators;
 
-use App\Enums\Mail\MailshotStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Market\Shop;
 use Lorisleiva\Actions\Concerns\AsAction;
 

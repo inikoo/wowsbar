@@ -9,8 +9,8 @@ namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
-use App\Http\Resources\HumanResources\WorkPlaceInertiaResource;
-use App\Http\Resources\HumanResources\WorkPlaceResource;
+use App\Http\Resources\HumanResources\WorkplaceInertiaResource;
+use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Workplace;
 use Closure;
@@ -107,7 +107,7 @@ class IndexWorkplaces extends InertiaAction
 
     public function jsonResponse(LengthAwarePaginator $workplaces): AnonymousResourceCollection
     {
-        return WorkPlaceResource::collection($workplaces);
+        return WorkplaceResource::collection($workplaces);
     }
 
     public function htmlResponse(LengthAwarePaginator $workplace): Response
@@ -133,7 +133,7 @@ class IndexWorkplaces extends InertiaAction
                     ]
                 ],
 
-                'data'        => WorkPlaceInertiaResource::collection($workplace),
+                'data'        => WorkplaceInertiaResource::collection($workplace),
             ]
         )->table($this->tableStructure());
     }

@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot\Hydrators;
 
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\Mailshot;
 use Illuminate\Queue\Middleware\WithoutOverlapping;

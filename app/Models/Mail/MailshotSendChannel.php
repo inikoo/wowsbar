@@ -7,7 +7,7 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Mail\MailshotSendChannelStateEnum;
+use App\Enums\Mail\MailshotSendChannel\MailshotSendChannelStateEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
