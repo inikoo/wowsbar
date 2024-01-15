@@ -51,7 +51,19 @@ class IndexWorkplaces extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('slug')
-            ->select(['slug', 'id', 'name', 'type','created_at','updated_at'])
+            ->select([
+                'slug',
+                'id',
+                'name',
+                'type',
+                'created_at',
+                'updated_at',
+                'timezone_id',
+                'address_id',
+                'address_id',
+                ])
+            ->with('address')
+            ->with('stats')
             ->allowedSorts(['slug','name'])
             ->allowedFilters([$globalSearch, 'slug', 'name', 'type'])
             ->withPaginator($prefix)
