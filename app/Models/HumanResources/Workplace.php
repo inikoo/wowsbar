@@ -10,7 +10,7 @@ namespace App\Models\HumanResources;
 use App\Actions\Utils\Abbreviate;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\Assets\Timezone;
-use App\Models\Traits\HasAddress;
+use App\Models\Helpers\Address;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Model;
@@ -39,18 +39,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
- * @property-read int|null $addresses_count
+ * @property-read Address|null $address
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\ClockingMachine> $clockingMachines
  * @property-read int|null $clocking_machines_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\Clocking> $clockings
  * @property-read int|null $clockings_count
- * @property-read \App\Models\Assets\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\Employee> $employees
  * @property-read int|null $employees_count
- * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
  * @property-read \App\Models\HumanResources\WorkplaceStats|null $stats
  * @property-read Timezone|null $timezone
@@ -85,7 +82,6 @@ class Workplace extends Model implements Auditable
     use HasSlug;
     use HasUniversalSearch;
     use SoftDeletes;
-    use HasAddress;
     use HasHistory;
 
     protected $casts = [
@@ -132,6 +128,11 @@ class Workplace extends Model implements Auditable
     public function timezone(): BelongsTo
     {
         return $this->belongsTo(Timezone::class);
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
     }
 
     public function owner(): MorphTo

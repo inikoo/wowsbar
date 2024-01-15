@@ -7,15 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string $status
- * @property string $reference
- * @property string $tracking
- * @property string $error_message
- * @property string $min_state
- * @property string $max_state
- * @property string $tracked_at
- * @property string $tracked_count
- * @property string $data
+ * App\Models\Shipment
+ *
+ * @property ShippingStateEnum $status
+ * @method static \Illuminate\Database\Eloquent\Builder|Shipment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shipment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shipment query()
+ * @mixin \Eloquent
  */
 
 class Shipment extends Model

@@ -32,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $parent_type
  * @property int|null $parent_id
  * @property int|null $customer_id
- * @property \App\Enums\Helpers\Snapshot\SnapshotStateEnum $state
+ * @property SnapshotStateEnum $state
  * @property string|null $published_at
  * @property string|null $published_until
  * @property string $checksum

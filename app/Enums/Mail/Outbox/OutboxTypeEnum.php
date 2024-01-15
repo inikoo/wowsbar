@@ -32,17 +32,17 @@ enum OutboxTypeEnum: string
     public function label(): string
     {
         return match ($this) {
-            OutboxTypeEnum::NEW_CUSTOMER       => 'New customer',
-            OutboxTypeEnum::INVOICE_DELETED    => 'Invoice deleted',
-            OutboxTypeEnum::NEW_ORDER          => 'New order',
-            OutboxTypeEnum::SHOP_PROSPECT      => 'Shop prospect',
-            OutboxTypeEnum::CUSTOMER_PROSPECT  => 'Customer prospect',
-            OutboxTypeEnum::MARKETING          => 'Marketing',
-            OutboxTypeEnum::NEWSLETTER         => 'Newsletter',
-            OutboxTypeEnum::ORDER_CONFIRMATION => 'Order confirmation',
-            OutboxTypeEnum::PASSWORD_REMINDER  => 'Password reminder',
-            OutboxTypeEnum::REGISTRATION       => 'Registration',
-            OutboxTypeEnum::TEST               => 'Test',
+            OutboxTypeEnum::NEW_CUSTOMER       => __('New customer'),
+            OutboxTypeEnum::INVOICE_DELETED    => __('Invoice deleted'),
+            OutboxTypeEnum::NEW_ORDER          => __('New order'),
+            OutboxTypeEnum::SHOP_PROSPECT      => __('Shop prospect'),
+            OutboxTypeEnum::CUSTOMER_PROSPECT  => __('Customer prospect'),
+            OutboxTypeEnum::MARKETING          => __('Marketing'),
+            OutboxTypeEnum::NEWSLETTER         => __('Newsletter'),
+            OutboxTypeEnum::ORDER_CONFIRMATION => __('Order confirmation'),
+            OutboxTypeEnum::PASSWORD_REMINDER  => __('Password reminder'),
+            OutboxTypeEnum::REGISTRATION       => __('Registration'),
+            OutboxTypeEnum::TEST               => __('Test'),
         };
     }
 

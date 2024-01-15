@@ -7,10 +7,10 @@
 
 namespace App\Actions\HumanResources\Workplace;
 
-use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
+use App\Models\Helpers\Address;
 use App\Models\HumanResources\Workplace;
 use App\Rules\IUnique;
 use App\Rules\ValidAddress;
@@ -34,13 +34,17 @@ class StoreWorkplace
 
     public function handle(array $modelData): Workplace
     {
-
-        $addressData=Arr::get($modelData, 'address');
+        $addressData = Arr::get($modelData, 'address');
         Arr::forget($modelData, 'address');
         $workplace = Workplace::create($modelData);
-        StoreAddressAttachToModel::run($workplace, $addressData, ['scope' => 'contact']);
 
-        $workplace->location = $workplace->getLocation();
+
+        $address = Address::create($addressData);
+        $workplace->update([
+            'address_id' => $address->id,
+        ]);
+
+        $workplace->location = $workplace->address->getLocation();
         $workplace->save();
         $workplace->stats()->create();
         OrganisationHydrateWorkplaces::run();
@@ -61,9 +65,10 @@ class StoreWorkplace
     public function rules(): array
     {
         return [
-            'name'    => ['required', 'max:255', new IUnique('workplaces')],
-            'type'    => ['required', new Enum(WorkplaceTypeEnum::class)],
-            'address' => ['required', new ValidAddress()]
+            'name'        => ['required', 'max:255', new IUnique('workplaces')],
+            'type'        => ['required', new Enum(WorkplaceTypeEnum::class)],
+            'address'     => ['required', new ValidAddress()],
+            'timezone_id' => ['required', 'exists:timezones,id']
         ];
     }
 
