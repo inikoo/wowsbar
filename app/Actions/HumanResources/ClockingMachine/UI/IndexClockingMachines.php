@@ -7,13 +7,14 @@
 
 namespace App\Actions\HumanResources\ClockingMachine\UI;
 
+use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
-use App\Models\Tenancy\Tenant;
+use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -25,11 +26,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexClockingMachines extends InertiaAction
 {
-    public function handle(Workplace|Tenant $parent, $prefix=null): LengthAwarePaginator
+    public function handle(Workplace|Organisation $parent, $prefix=null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('clocking_machines.slug', 'ILIKE', "%$value%");
+                $query->whereStartWith('clocking_machines.name', $value);
             });
         });
 
@@ -39,10 +40,10 @@ class IndexClockingMachines extends InertiaAction
 
         /**  @noinspection PhpUndefinedMethodInspection */
         return QueryBuilder::for(ClockingMachine::class)
-            ->defaultSort('clocking_machines.code')
+            ->defaultSort('clocking_machines.name')
             ->select(
                 [
-                    'clocking_machines.code as code',
+                    'clocking_machines.name as name',
                     'clocking_machines.id',
                     'workplaces.slug as workplace_slug',
                     'clocking_machines.slug'
@@ -54,7 +55,7 @@ class IndexClockingMachines extends InertiaAction
                     $query->where('clocking_machines.workplace_id', $parent->id);
                 }
             })
-            ->allowedSorts(['slug','code'])
+            ->allowedSorts(['slug','name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -75,7 +76,7 @@ class IndexClockingMachines extends InertiaAction
                     [
                         'title'       => __('no clocking machines'),
                         'description' => $this->canEdit ? __('Get started by creating a new clocking machine.') : null,
-                        'count'       => organisation()->stats->number_clocking_machines,
+                        'count'       => organisation()->humanResourcesStats->number_clocking_machines,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -88,20 +89,17 @@ class IndexClockingMachines extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->defaultSort('code');
+                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
+                ->defaultSort('name');
         };
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('hr.workplaces.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('hr.edit');
 
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('hr.view')
-            );
+        return $request->user()->hasPermissionTo('hr.view');
+
     }
 
 
@@ -175,7 +173,7 @@ class IndexClockingMachines extends InertiaAction
         return match ($routeName) {
             'org.hr.clocking-machines.index' =>
             array_merge(
-                (new HumanResourcesDashboard())->getBreadcrumbs(),
+                (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'org.hr.clocking-machines.index',
@@ -186,7 +184,7 @@ class IndexClockingMachines extends InertiaAction
             'org.hr.workplaces.show.clocking-machines.index',
             =>
             array_merge(
-                (new \App\Actions\HumanResources\Workplace\UI\ShowWorkplace())->getBreadcrumbs(
+                (new ShowWorkplace())->getBreadcrumbs(
                     $routeParameters['workplace']
                 ),
                 $headCrumb([

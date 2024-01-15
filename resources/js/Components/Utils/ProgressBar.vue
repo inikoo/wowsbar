@@ -1,51 +1,50 @@
 <script setup lang='ts'>
-// Used well in EmployeesUpload.vue
-import { watch } from 'vue'
+import { watch, ref } from 'vue';
 import { trans } from 'laravel-vue-i18n'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes, faFrown, faMeh } from '@fal'
 import { faSpinnerThird } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { throttle } from 'lodash';
 library.add(faTimes, faFrown, faMeh, faSpinnerThird)
 
 const props = defineProps<{
-    progressData:{
-        progressName: string
-        // isShowProgress: boolean
-    }
     description?: string
+    echo : Object
 }>()
+const emits = defineEmits();
+const piniaData  = useEchoOrgPersonal()
 
-const emits = defineEmits<{
-    (e: 'updateShowProgress', newValue: boolean): void
-    (e: 'onFinish'): void
-}>()
+const closeModal = ()=>{
+    props.echo.isShowProgress = false
+}
 
-// Watch the progress, if 100% then close popup in 3 seconds
-// watch(() => props.progressData.progressPercentage, () => {
-//     props.progressData.progressPercentage > 0
-//         ? (
-//             emits('updateShowProgress', true),
-//             props.progressData.progressPercentage == 100
-//             ? ( setTimeout(  // If progress 100% (finished)
-//                     () => { 
-//                         emits('updateShowProgress', false)
-//                     }, 4000),
-//                 emits('onFinish') )  // Reset data on finish
-//             : ''
-//         )
-//         : emits('updateShowProgress', false)  // If equal 0 (means progress is not running yet)
-// }, { immediate: true })
+const throttledValue = throttle((newValue) => {
+    return newValue
+}, 800)
+
+watch(
+  () => piniaData,
+  (newVal) => {
+    if (!newVal.isShowProgress) {
+      props.echo.isShowProgress = false; // Not recommended if 'props' is read-only
+      // Instead, consider using a reactive or ref object in the local state
+      // For example:
+      // localState.isShowProgress = false;
+    }
+  },
+  { deep: true }
+);
 
 </script>
 
 <template>
-    <div :class="useEchoOrgPersonal().isShowProgress ? 'bottom-16' : '-bottom-24'"
+    <div :class="echo.isShowProgress ? 'bottom-16':'-bottom-24' "
         class="backdrop-blur-sm bg-white/60 ring-1 ring-gray-300 rounded-md px-4 py-2 z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-6 tabular-nums">
-        <template v-if="Object.keys(useEchoOrgPersonal().progressBars.Upload ?? {}).length > 0">
+        <template v-if="Object.keys(useEchoOrgPersonal().progressBars?.Upload ?? {}).length > 0">
             <TransitionGroup name="progressbar">
-                <div v-for="(upload, index) in useEchoOrgPersonal().progressBars.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
+                <div v-for="(upload, index) in useEchoOrgPersonal().progressBars?.Upload" :key="index" class="flex justify-center items-center flex-col gap-y-1 text-gray-600">
                     <template v-if="upload.total">
                         <div v-if="upload.done >= upload.total">
                             <!-- Label: All failed -->
@@ -68,7 +67,16 @@ const emits = defineEmits<{
                             <!-- Label: Success is bigger -->
                             <span v-else class="text-lime-600">Yeah, success roars😎</span>
                         </div>
-                        <div v-else>{{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)</div>
+
+                        <!-- Section: Uploading progress & time remaining -->
+                        <template v-else>
+                            <div>
+                                {{ description ?? trans('Adding')}} ({{ upload.data.number_success + upload.data.number_fails }}/<span class="font-semibold inline">{{ upload.total }}</span>)
+                            </div>
+                            
+                            <!-- Time Remaining  -->
+                            <div class="text-xs text-gray-500 leading-none tabular-nums">{{ throttledValue(upload.estimatedTime) }} remaining</div>
+                        </template>
                 
                         <!-- Progress Bar -->
                         <div class="overflow-hidden rounded-full bg-gray-100 ring-1 ring-gray-300 w-64 flex justify-start">
@@ -90,7 +98,7 @@ const emits = defineEmits<{
         </div>
 
 
-        <div @click="useEchoOrgPersonal().isShowProgress = false" class="absolute top-0 right-1 px-2 py-1 cursor-pointer text-gray-500 hover:text-gray-600">
+        <div @click="closeModal" class="absolute top-0 right-1 px-2 py-1 cursor-pointer text-gray-500 hover:text-gray-600">
             <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
         </div>
     </div>

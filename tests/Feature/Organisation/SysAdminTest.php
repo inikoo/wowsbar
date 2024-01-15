@@ -94,6 +94,8 @@ test('create guest from command', function () {
     return $guest;
 });
 
+
+
 test('update guest', function ($guest) {
     $guest = UpdateGuest::make()->action($guest, ['contact_name' => 'Wow']);
     expect($guest->contact_name)->toBe('Wow');
@@ -282,6 +284,6 @@ test('can show profile', function (Guest $guest) {
             ->component('EditModel')
             ->where('title', 'profile')
             ->has('breadcrumbs', 2)
-            ->has('formData.blueprint', 3);
+            ->has('formData.blueprint', 4);
     });
 })->depends('create guest');

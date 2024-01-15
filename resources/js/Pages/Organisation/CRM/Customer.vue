@@ -15,7 +15,7 @@ import {
     faGraduationCap,
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
-    faTags, faCube, faCodeBranch, faMicrophoneStand
+    faTags, faCube, faCodeBranch, faMicrophoneStand, faShippingFast
 } from '@fal'
 import ModelDetails from "@/Components/ModelDetails.vue"
 import {useTabChange} from "@/Composables/tab-change"
@@ -33,6 +33,7 @@ import TableCustomerWebsites from "@/Components/Tables/TableCustomerWebsites.vue
 import { routeType } from '@/types/route'
 import TableAppointments from "@/Components/Tables/TableAppointments.vue";
 import TablePortfolioSocialAccounts from "@/Components/Tables/TablePortfolioSocialAccounts.vue";
+import TableShipperAccounts from "@/Components/Tables/TableShipperAccounts.vue";
 
 library.add(
     faStickyNote,
@@ -45,7 +46,8 @@ library.add(
     faPaperPlane,
     faCube,
     faCodeBranch,
-    faMicrophoneStand
+    faMicrophoneStand,
+    faShippingFast
 )
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Components/ModelChangelog.vue'))
@@ -61,6 +63,7 @@ const props = defineProps<{
     websites?: object
     social_account?: object
     appointments?: object
+    shipper_accounts?: object
     uploadRoutes: {
         upload: routeType
         history?: routeType
@@ -78,7 +81,8 @@ const components = {
     history: ModelChangelog,
     websites: TableCustomerWebsites,
     appointments: TableAppointments,
-    social_account: TablePortfolioSocialAccounts
+    social_account: TablePortfolioSocialAccounts,
+    shipper_accounts: TableShipperAccounts
 }
 
 // Selected component

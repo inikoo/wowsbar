@@ -7,7 +7,7 @@
 
 namespace App\Stubs\Migrations;
 
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 
 trait HasDispatchedEmailsStats

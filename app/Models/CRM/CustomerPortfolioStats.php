@@ -68,6 +68,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_uploaded_images_scope_square
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $number_portfolio_webpages
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats query()
@@ -86,6 +87,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypeLandscape($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypeSquare($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberHistoricSnapshots($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebpages($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsitesBannersCustomer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsitesBannersInterested($value)

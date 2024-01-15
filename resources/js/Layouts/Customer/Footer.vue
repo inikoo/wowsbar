@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
-import FooterTabActiveUsers from '@/Layouts/Customer/FooterActiveUsers.vue'
+import FooterActiveUsers from '@/Layouts/Customer/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import {usePage} from "@inertiajs/vue3";
 import Image from "@/Components/Image.vue";
@@ -52,7 +52,7 @@ library.add(faHeart,faComputerClassic,faDiscord)
 
             <!-- Right: Tab Section -->
             <div class="flex items-end flex-row-reverse text-sm">
-                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                <FooterActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
                 <FooterLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
             </div>
         </div>

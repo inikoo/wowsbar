@@ -1,7 +1,7 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Wowsbar: Marketing Agency web application.",
     "keywords": [
         "laravel",
         "framework"
@@ -29,6 +29,7 @@
         "kreait/laravel-firebase": "^5.2",
         "laravel/framework": "^10.10",
         "laravel/horizon": "^5.17",
+        "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "lcherone/php-petname": "^1.0",
@@ -37,13 +38,14 @@
         "maatwebsite/excel": "^3.1",
         "masbug/flysystem-google-drive-ext": "^2.2",
         "matchish/laravel-scout-elasticsearch": "^7.2",
-        "owen-it/laravel-auditing": "^13.5",
+        "owen-it/laravel-auditing": "13.5.1",
         "phpmailer/phpmailer": "^6.8",
         "propaganistas/laravel-phone": "^5.0",
         "pusher/pusher-php-server": "^7.2",
         "react/promise": "^2.3",
         "rmunate/spell-number": "^4.1",
         "sentry/sentry-laravel": "^3.7",
+        "spatie/browsershot": "^3.60",
         "spatie/crawler": "^8.0",
         "spatie/laravel-analytics": "^5.0",
         "spatie/laravel-backup": "^8.4",
@@ -123,6 +125,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }

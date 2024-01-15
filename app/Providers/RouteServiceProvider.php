@@ -28,6 +28,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->domain(config('app.domain'))
                 ->middleware('webhooks')
                 ->group(base_path('routes/webhooks/webhooks.php'));
+            Route::prefix('api')
+                ->domain(config('app.domain'))
+                ->middleware('api')
+                ->group(base_path('routes/org/api/mobile-app.php'));
 
             Route::domain(config('app.delivery_domain'))
                 ->name('delivery.')
@@ -41,11 +45,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('public')
                 ->name('public.')
                 ->group(base_path('routes/public/web/app.php'));
-
-            Route::middleware('webhooks-api')
-                ->name('webhooks.')
-                ->prefix('webhooks')
-                ->group(base_path('routes/webhooks/webhooks.php'));
 
             Route::middleware('customer')
                 ->prefix('app')

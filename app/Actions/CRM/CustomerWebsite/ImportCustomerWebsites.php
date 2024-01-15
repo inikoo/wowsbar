@@ -11,8 +11,8 @@ use App\Actions\Helpers\Uploads\ImportUpload;
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
 use App\Imports\Portfolios\CustomerWebsiteImport;
+use App\Models\CRM\CustomerWebsite;
 use App\Models\Helpers\Upload;
-use App\Models\Portfolios\CustomerWebsite;
 
 class ImportCustomerWebsites
 {

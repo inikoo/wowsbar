@@ -7,12 +7,14 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Mail\DispatchedEmailStateEnum;
+use App\Models\CRM\Customer;
+use App\Models\Leads\Prospect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\Mail\DispatchedEmail
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $recipient_type
  * @property int|null $recipient_id
  * @property string|null $provider_message_id
- * @property DispatchedEmailStateEnum $state
+ * @property \App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum $state
  * @property bool $is_error
  * @property bool $is_rejected
  * @property bool $is_sent
@@ -85,7 +87,7 @@ class DispatchedEmail extends Model
 {
     protected $casts = [
         'data'        => 'array',
-        'state'       => DispatchedEmailStateEnum::class,
+        'state'       => \App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum::class,
     ];
 
     protected $attributes = [
@@ -123,6 +125,21 @@ class DispatchedEmail extends Model
     public function outbox(): BelongsTo
     {
         return $this->belongsTo(Outbox::class);
+    }
+
+    public function getName(): string
+    {
+
+        if($this->is_test) {
+            return Auth::user()->contact_name;
+        }
+
+        if($this->recipient) {
+            /** @var Prospect|Customer $recipient */
+            $recipient=$this->recipient;
+            return $recipient->name;
+        }
+        return '';
     }
 
 }

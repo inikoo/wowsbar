@@ -11,9 +11,9 @@ use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateCumulativeDispatchedEmail
 use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateDispatchedEmailsState;
 use App\Actions\Mail\Mailshot\UpdateMailshotSentState;
 use App\Actions\Mail\Mailshot\WithSendMailshot;
-use App\Enums\Mail\DispatchedEmailStateEnum;
-use App\Enums\Mail\MailshotSendChannelStateEnum;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\DispatchedEmail\DispatchedEmailStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\MailshotSendChannel\MailshotSendChannelStateEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Exception;
@@ -60,7 +60,7 @@ class SendMailshotChannel
             $unsubscribeUrl = route('org.unsubscribe.mailshot.show', $recipient->dispatchedEmail->ulid);
 
 
-            $this->sendEmailWithUnsubscribe(
+            $this->sendEmailWithMergeTags(
                 $recipient->dispatchedEmail,
                 $mailshot->sender(),
                 $mailshot->subject,

@@ -14,9 +14,9 @@ return new class () extends Migration {
     {
         Schema::create('clocking_machines', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->unsignedBigInteger('workplace_id')->index();
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->index()->collation('und_ns');
-            $table->unsignedBigInteger('workplace_id')->index();
             $table->foreign('workplace_id')->references('id')->on('workplaces');
             $table->jsonb('data');
             $table->timestampsTz();

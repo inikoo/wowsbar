@@ -7,15 +7,13 @@
 
 namespace App\Exports\HumanResources;
 
-use Carbon\Carbon;
-use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class EmployeeTemplateExport extends Factory implements FromArray
+class EmployeeTemplateExport implements FromArray
 {
     public function array(): array
     {
-        $array = [
+        return [
               [
                   'Worker Number',
                   'Name',
@@ -29,22 +27,5 @@ class EmployeeTemplateExport extends Factory implements FromArray
                   'reset password'
               ]
         ];
-
-        do {
-            $array[] = [
-                rand(0000, 9999),
-                fake()->name,
-                fake()->userName,
-                fake()->jobTitle,
-                'dev-w',
-                \PhpOffice\PhpSpreadsheet\Shared\Date::dateTimeToExcel(Carbon::make(fake()->date)),
-                'bb',
-                fake()->userName,
-                fake()->password,
-                true
-            ];
-        } while(count($array) <= 10);
-
-        return $array;
     }
 }

@@ -9,16 +9,17 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\CRM\CustomerWebsite\UI\IndexCustomerWebsites;
-use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
-
+use App\Actions\CRM\Shipping\ShipperAccount\UI\IndexShipperAccounts;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\SysAdmin\UI\CRM\ShowCRMDashboard;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\CRM\CustomerResource;
+use App\Http\Resources\CRM\CustomerWebsitesResource;
+use App\Http\Resources\CRM\ShipperAccountResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -137,12 +138,16 @@ class ShowCustomer extends InertiaAction
                     : Inertia::lazy(fn () => AppointmentResource::collection(IndexAppointments::run($customer))),
 
                 CustomerTabsEnum::WEBSITES->value => $this->tab == CustomerTabsEnum::WEBSITES->value ?
-                    fn () => CustomerWebsiteResource::collection(IndexCustomerWebsites::run(parent:$customer, prefix:CustomerTabsEnum::WEBSITES->value))
-                    : Inertia::lazy(fn () => CustomerWebsiteResource::collection(IndexCustomerWebsites::run(parent:$customer, prefix:CustomerTabsEnum::WEBSITES->value))),
+                    fn () => CustomerWebsitesResource::collection(IndexCustomerWebsites::run(parent:$customer, prefix:CustomerTabsEnum::WEBSITES->value))
+                    : Inertia::lazy(fn () => CustomerWebsitesResource::collection(IndexCustomerWebsites::run(parent:$customer, prefix:CustomerTabsEnum::WEBSITES->value))),
 
                 CustomerTabsEnum::SOCIAL_ACCOUNT->value => $this->tab == CustomerTabsEnum::SOCIAL_ACCOUNT->value ?
                     fn () => PortfolioSocialAccountResource::collection(IndexPortfolioSocialAccounts::run($customer))
                     : Inertia::lazy(fn () => PortfolioSocialAccountResource::collection(IndexPortfolioSocialAccounts::run($customer))),
+
+                CustomerTabsEnum::SHIPPER_ACCOUNTS->value => $this->tab == CustomerTabsEnum::SHIPPER_ACCOUNTS->value ?
+                    fn () => ShipperAccountResource::collection(IndexShipperAccounts::run($customer))
+                    : Inertia::lazy(fn () => ShipperAccountResource::collection(IndexShipperAccounts::run($customer))),
 
             ]
         )->table(IndexAppointments::make()->tableStructure(parent: $customer, prefix: CustomerTabsEnum::APPOINTMENTS->value))
@@ -180,7 +185,19 @@ class ShowCustomer extends InertiaAction
                 //         ]
                 //     ]
                 // ]
-            ))->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: CustomerTabsEnum::SOCIAL_ACCOUNT->value));
+            ))->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: CustomerTabsEnum::SOCIAL_ACCOUNT->value))
+            ->table(IndexShipperAccounts::make()->tableStructure(parent: $customer, modelOperations: [
+            'createLink' => [
+                [
+                    'route' => [
+                        'name'       => 'org.crm.shop.customers.shipper-accounts.create',
+                        'parameters' => array_values($this->originalParameters)
+                    ],
+                    'label' => __('create'),
+                    'style' => 'primary'
+                ],
+            ]
+        ], prefix: CustomerTabsEnum::SHIPPER_ACCOUNTS->value));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource

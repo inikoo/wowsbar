@@ -4,6 +4,8 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+import { useMilisecondToTime } from "@/Composables/useFormatTime"
+import { differenceInMilliseconds } from 'date-fns/esm'
 import { defineStore } from "pinia";
 
 // interface ProgressBar {
@@ -45,16 +47,23 @@ export const useEchoOrgPersonal = defineStore("echo-org-personal", {
             window.Echo.private("org.personal." + userID).listen(
                 ".action-progress",
                 (eventData) => {
-                    // const index = eventData.action_type+'-'+eventData.action_id;
+                    // console.log(eventData)
 
                     // Update the state
                     this.$patch({
                         progressBars: {
                             [eventData.action_type]: {
-                                [eventData.action_id]: eventData
+                                [eventData.action_id]: {
+                                    ...eventData,
+                                    time_echo: new Date(),
+                                    estimatedTime: useMilisecondToTime(differenceInMilliseconds(new Date(), this.progressBars?.[eventData.action_type]?.[eventData.action_id]?.time_echo ?? new Date()) * (eventData.total-eventData.done))
+                                    // useEstimatedTime(new Date(), (this.progressBars?.[eventData.action_type]?.[eventData.action_id]?.time_echo ?? 0))
+                                }
                             }
                         }
                     })
+
+                    // console.log(this.progressBars[eventData.action_type][eventData.action_id].estimatedTime)
 
                     // To show the progress bars
                     if(!this.isShowProgress) this.isShowProgress = true

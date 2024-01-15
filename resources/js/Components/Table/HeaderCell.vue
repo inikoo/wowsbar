@@ -53,7 +53,7 @@ const isCellNumber = computed(() => {
                     </div>
                     <span v-else class="capitalize">{{ cell.label ? trans(cell.label) : ''}}</span>
 
-                    <!-- Icon: arrow for ort -->
+                    <!-- Icon: arrow for sort -->
                     <svg v-if="cell.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
                         'text-gray-400': !cell.sorted,
                         'text-green-500': cell.sorted,

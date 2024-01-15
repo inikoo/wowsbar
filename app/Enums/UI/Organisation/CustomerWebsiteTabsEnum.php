@@ -17,6 +17,7 @@ enum CustomerWebsiteTabsEnum: string
 
     case SHOWCASE             = 'showcase';
 
+    case WEBPAGES               = 'webpages';
     case BANNERS                = 'banners';
     case SEO                    = 'seo';
     case GOOGLE_ADS             = 'google_ads';
@@ -32,6 +33,10 @@ enum CustomerWebsiteTabsEnum: string
             CustomerWebsiteTabsEnum::SHOWCASE => [
                 'title' => __('website'),
                 'icon'  => 'fas fa-info-circle',
+            ],
+            CustomerWebsiteTabsEnum::WEBPAGES => [
+                'title' => __('webpages'),
+                'icon'  => 'fal fa-briefcase',
             ],
             CustomerWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),

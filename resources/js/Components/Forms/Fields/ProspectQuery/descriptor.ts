@@ -31,7 +31,8 @@ export default {
             information :  trans("Filter by SEO tags"),
             value : {
                 tag_ids : [],
-                logic : 'all'
+                logic : 'all',
+                negative_tag_ids : []
             },
         },
         {

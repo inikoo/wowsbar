@@ -8,11 +8,17 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Traits\WithExportData;
+use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Exports\CRM\ProspectsExport;
+use App\InertiaTable\InertiaTable;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
+use App\Models\SysAdmin\Organisation;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportProspects
@@ -34,7 +40,64 @@ class ExportProspects
             $parent = organisation();
         }
 
-        return $this->export(new ProspectsExport($parent), 'prospects', $type);
+        $result = $this->customQuery($parent);
+
+        return $this->export(new ProspectsExport($result), 'prospects', $type);
+    }
+
+
+    protected function getElementGroups($parent): array
+    {
+        return
+            [
+                'state' => [
+                    'label'    => __('State'),
+                    'elements' => array_merge_recursive(
+                        ProspectStateEnum::labels(),
+                        ProspectStateEnum::count($parent)
+                    ),
+                    'engine'   => function ($query, $elements) {
+                        $query->whereIn('prospects.state', $elements);
+                    }
+                ]
+            ];
+    }
+
+    public function customQuery(Organisation|Shop $parent, $prefix = null)
+    {
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('prospects.name', '~*', "\y$value\y")
+                    ->orWhere('prospects.email', '=', $value)
+                    ->orWhere('prospects.phone', '=', $value)
+                    ->orWhere('prospects.contact_website', '=', $value);
+            });
+        });
+
+        if ($prefix) {
+            InertiaTable::updateQueryBuilderParameters($prefix);
+        }
+
+        $query = QueryBuilder::for(Prospect::class);
+
+
+        if (class_basename($parent) == 'Shop') {
+            $query->where('shop_id', $parent->id);
+        }
+
+        foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $query->whereElementGroup(
+                prefix: $prefix,
+                key: $key,
+                allowedElements: array_keys($elementGroup['elements']),
+                engine: $elementGroup['engine']
+            );
+        }
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $query
+            ->allowedFilters([$globalSearch]);
     }
 
     /**

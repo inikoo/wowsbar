@@ -62,6 +62,7 @@ class ShowProspect extends InertiaAction
     public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
     {
         $subNavigation = $this->getSubNavigation($request);
+
         return Inertia::render(
             'CRM/Prospect',
             [
@@ -82,8 +83,8 @@ class ShowProspect extends InertiaAction
                         'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
-                    'iconRight'          => $prospect->state->stateIcon()[$prospect->state->value],
-                    'actions'            => [
+                    'iconRight'     => $prospect->state->stateIcon()[$prospect->state->value],
+                    'actions'       => [
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
@@ -93,6 +94,7 @@ class ShowProspect extends InertiaAction
                     'navigation' => ProspectTabsEnum::navigation()
                 ],
 
+                /*
                 'unsubscribe' => [
                     'route' => [
                         'name'       => 'org.models.shop.prospect.unsubscribe.update',
@@ -102,6 +104,46 @@ class ShowProspect extends InertiaAction
                         ]
                     ]
                 ],
+
+                'undo_unsubscribe' => [
+                    'route' => [
+                        'name'       => 'org.models.shop.prospect.undo_unsubscribe.update',
+                        'parameters' => [
+                            'shop'     => $prospect->shop->id,
+                            'prospect' => $prospect->id
+                        ]
+                    ]
+                ],
+                */
+
+                'unsubscribeActions' => [
+                    'is_subscribed'=> !$prospect->dont_contact_me,
+                    'unsubscribe'  =>
+                        $this->canEdit ? [
+                            'route'        => [
+                                'name'       => 'org.models.shop.prospect.unsubscribe.update',
+                                'parameters' => [
+                                    'shop'     => $prospect->shop->id,
+                                    'prospect' => $prospect->id
+                                ]
+                            ],
+                            'label'        => __('Unsubscribe'),
+                            'confirmation' => __('Are you sure you want to unsubscribe this prospect?')
+                        ] : null,
+
+                    'undo' => $this->canEdit ? [
+                        'route'        => [
+                            'name'       => 'org.models.shop.prospect.undo_unsubscribe.update',
+                            'parameters' => [
+                                'shop'     => $prospect->shop->id,
+                                'prospect' => $prospect->id
+                            ]
+                        ],
+                        'label'        => __('Undo Unsubscribe'),
+                        'confirmation' => __('Are you sure you want to revoke the unsubscribe this prospect?')
+                    ] : null,
+                ],
+
 
                 ProspectTabsEnum::SHOWCASE->value => $this->tab == ProspectTabsEnum::SHOWCASE->value ?
                     fn () => GetProspectShowcase::run($prospect)

@@ -53,7 +53,6 @@ class ShowShop extends InertiaAction
 
     public function htmlResponse(Shop $shop, ActionRequest $request): Response
     {
-
         $actions = [
             !$shop->website && $this->canEdit ? [
                 'type'  => 'button',
@@ -80,17 +79,17 @@ class ShowShop extends InertiaAction
         return Inertia::render(
             'Market/Shop',
             [
-                'title'       => __('shop'),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'        => __('shop'),
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->parameters
                 ),
-                'navigation' => [
+                'navigation'   => [
                     'previous' => $this->getPrevious($shop, $request),
                     'next'     => $this->getNext($shop, $request),
                 ],
-                'pageHead' => [
-                    'title' => $shop->name,
-                    'icon'  => [
+                'pageHead'     => [
+                    'title'   => $shop->name,
+                    'icon'    => [
                         'title' => __('Shop'),
                         'icon'  => 'fal fa-store-alt'
                     ],
@@ -101,7 +100,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('customers'),
                             'icon'  => ['fal', 'fa-user'],
-                            'href'  => ['crm.shops.show.customers.index', $shop->slug],
+                            'href'  => ['name' => 'crm.shops.show.customers.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->crmStats->number_customers
                             ]
@@ -109,7 +108,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('prospects'),
                             'icon'  => ['fal', 'fa-user'],
-                            'href'  => ['crm.shops.show.prospects.index', $shop->slug],
+                            'href'  => ['name' => 'crm.shops.show.prospects.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => 'TBD'// $shop->stats->number_customers
                             ]
@@ -119,7 +118,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('departments'),
                             'icon'  => ['fal', 'fa-folder-tree'],
-                            'href'  => ['org.shops.show.departments.index', $shop->slug],
+                            'href'  => ['name' => 'org.shops.show.departments.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->catalogueStats->number_departments
                             ]
@@ -129,7 +128,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('products'),
                             'icon'  => ['fal', 'fa-cube'],
-                            'href'  => ['org.shops.show.products.index', $shop->slug],
+                            'href'  => ['name' => 'org.shops.show.products.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_products
                             ]
@@ -139,7 +138,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('orders'),
                             'icon'  => ['fal', 'fa-shopping-cart'],
-                            'href'  => ['crm.shops.show.orders.index', $shop->slug],
+                            'href'  => ['name' => 'crm.shops.show.orders.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_orders
                             ]
@@ -147,7 +146,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('invoices'),
                             'icon'  => ['fal', 'fa-file-invoice'],
-                            'href'  => ['crm.shops.show.invoices.index', $shop->slug],
+                            'href'  => ['name' => 'crm.shops.show.invoices.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_invoices
                             ]
@@ -155,14 +154,14 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('delivery-notes'),
                             'icon'  => ['fal', 'fa-sticky-note'],
-                            'href'  => ['crm.shops.show.delivery-notes.index', $shop->slug],
+                            'href'  => ['name' => 'crm.shops.show.delivery-notes.index', 'parameters' => $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_deliveries
                             ]
                         ]
                     ]
                 ],
-                'tabs' => [
+                'tabs'         => [
                     'current'    => $this->tab,
                     'navigation' => ShopTabsEnum::navigation()
                 ],
@@ -274,7 +273,7 @@ class ShowShop extends InertiaAction
 
 
                         ],
-                        'suffix' => $suffix,
+                        'suffix'         => $suffix,
                     ]
                 ]
             );

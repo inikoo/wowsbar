@@ -13,19 +13,16 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
+        //NOTE: All this table is dropped and recreated in the PortfolioWebsiteSeeder
         Schema::create('portfolio_webpages', function (Blueprint $table) {
             $table->smallIncrements('id');
-
             $table->unsignedInteger('portfolio_website_id')->index()->nullable();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');
-
             $table->string('title');
             $table->string('url');
             $table->longText('layout');
-
             $table->string('status')->default(PortfolioWebpageStatusEnum::SUCCESS);
             $table->string('message')->nullable();
-
             $table->timestampsTz();
         });
     }

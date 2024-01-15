@@ -5,19 +5,20 @@
   -->
 
 <script setup lang="ts">
-import {ref, Ref, reactive, onMounted, onUnmounted} from 'vue'
-import {useLocaleStore} from '@/Stores/locale.js'
+import {ref, Ref, onMounted, onUnmounted } from 'vue'
+import { useLocaleStore } from '@/Stores/locale.js'
 import TimelineWithPlaceholder from '@/Components/Utils/TimelineWithPlaceholder.vue'
-import CountUp from 'vue-countup-v3'
-import {trans} from "laravel-vue-i18n"
+// import CountUp from 'vue-countup-v3'
+import { trans } from "laravel-vue-i18n"
 // import Pusher from 'pusher-js'
 
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faPaperPlane, faDungeon, faSkull} from '@fal'
-import {faSpinnerThird} from '@fad'
-import {library} from '@fortawesome/fontawesome-svg-core'
-import Stats from '@/Components/DataDisplay/Stats.vue'
-import {useTimeCountdown, useFormatTime} from '@/Composables/useFormatTime'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPaperPlane, faDungeon, faSkull } from '@fal'
+import { faSpinnerThird } from '@fad'
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import Stats from '@/Components/DataDisplay/Stats.vue'
+import { useTimeCountdown, useFormatTime } from '@/Composables/useFormatTime'
+// import ProgressLine from '@/Components/Utils/ProgressLine.vue'
 
 library.add(faPaperPlane, faDungeon, faSkull, faSpinnerThird)
 
@@ -97,14 +98,14 @@ onMounted(() => {
 
 const locale = useLocaleStore();
 
-
-// console.log(props.data)
-
 </script>
 
 
 <template>
     <div class="relative">
+        <!-- <Teleport to="#LabelEstimatedProgressLine">
+            <ProgressLine :total="data.stats.number_dispatched_emails" :success="data.stats.number_delivered_emails" :fails="0" />
+        </Teleport> -->
         <div class="py-3 mx-auto px-5 w-full">
             <TimelineWithPlaceholder :options="data.timeline"/>
 
@@ -140,14 +141,18 @@ const locale = useLocaleStore();
                 <!-- Recipient -->
                 <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
                     <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
-                    <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
-                            <span>
-                                {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
-                            </span>
-                            <FontAwesomeIcon v-if="!data.sent_at" icon='fad fa-spinner-third' class='h-4 animate-spin' aria-hidden='true' />
-                        </div>
-                    </dd>
+                        <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex relative">
+                            <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                                <span class="mr-6">
+                                    <!-- Displaying the number -->
+                                    {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
+                                </span>
+                                <span class="absolute top-1 right-0 flex items-center justify-end">
+                                    <!-- Conditionally rendering spinner icon -->
+                                    <FontAwesomeIcon v-if="!data.sent_at" icon="fad fa-spinner-third" class="h-4 animate-spin" aria-hidden="true" />
+                                </span>
+                            </div>
+                        </dd>
                 </div>
 
                 <!-- Bounce -->

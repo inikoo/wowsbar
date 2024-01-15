@@ -1,2 +1,7 @@
 !.gitignore
 *.dump
+*.sql
+*.gz
+*.bz2
+*.zip
+cms/

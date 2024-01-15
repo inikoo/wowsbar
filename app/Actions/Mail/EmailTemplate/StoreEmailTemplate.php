@@ -7,11 +7,16 @@
 
 namespace App\Actions\Mail\EmailTemplate;
 
+use App\Actions\Helpers\Html\GetImageFromHtml;
 use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
+use App\Enums\Mail\EmailTemplate\EmailTemplateTypeEnum;
 use App\Models\Mail\EmailTemplate;
+use App\Models\Mail\Mailshot;
+use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -24,12 +29,43 @@ class StoreEmailTemplate
     private bool $asAction = false;
 
     private Organisation|Shop $parent;
+    private Mailshot $mailshot;
 
     private array $queryRules;
 
-    public function handle(Organisation|Shop $parent, array $modelData): EmailTemplate
+    public function handle(Organisation|Shop|Outbox $parent, array $modelData): EmailTemplate
     {
+        /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
+
+        $imagesPath =null;
+
+        if(!app()->environment('testing')) {
+            $imagesPath = GetImageFromHtml::run(
+                $emailTemplate->compiled['html']['html'],
+                $emailTemplate->slug
+            );
+
+            if (File::exists($imagesPath['path'])) {
+                foreach (File::files($imagesPath['path']) as $image) {
+                    AttachImageToEmailTemplate::run(
+                        $emailTemplate,
+                        'content',
+                        $image->getPathname(),
+                        $image->getFilename()
+                    );
+                }
+            }
+
+            SetEmailTemplateScreenshot::run(
+                $emailTemplate,
+                $imagesPath['fullPath'],
+                $imagesPath['filename']
+            );
+
+        }
+
+
 
 
         //StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
@@ -42,16 +78,32 @@ class StoreEmailTemplate
         if ($this->asAction) {
             return true;
         }
-
-        return $request->user()->hasPermissionTo("crm.prospects.edit");
+        // find a better way to do this
+        return true;//$request->user()->hasPermissionTo("crm.prospects.edit");
     }
 
     public function rules(): array
     {
         return [
             'name'     => ['required', 'string', 'max:255'],
-            'compiled' => ['required', 'string']
+            'compiled' => ['required', 'array'],
+            'type'     => ['required'],
         ];
+    }
+
+    public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
+    {
+        $this->mailshot = $mailshot;
+        $this->fillFromRequest($request)
+            ->fill(['compiled' => $mailshot->layout])
+            ->fill(['type' => EmailTemplateTypeEnum::MARKETING]);
+
+        $validated=$this->validateAttributes();
+
+        $emailTemplate= $this->handle($mailshot->outbox, $validated);
+
+        $mailshot->update(['data' => ['email_template_id' => $emailTemplate->id]]);
+        return $emailTemplate;
     }
 
     public function action(Organisation|Shop $parent, $modelData): EmailTemplate
@@ -59,15 +111,9 @@ class StoreEmailTemplate
         return $this->handle($parent, $modelData);
     }
 
-    public function jsonResponse(EmailTemplate $emailTemplate): string
+    public function jsonResponse(EmailTemplate $emailTemplate): EmailTemplate
     {
-        return route(
-            'org.crm.shop.mailroom.templates.workshop',
-            [
-                $emailTemplate->parent->slug,
-                $emailTemplate->slug
-            ]
-        );
+        return $emailTemplate;
     }
 
     public function htmlResponse(EmailTemplate $emailTemplate): RedirectResponse

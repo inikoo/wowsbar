@@ -5,11 +5,11 @@
   -->
 
 <script setup lang="ts">
-import {Head} from "@inertiajs/vue3"
+import { Head, router } from '@inertiajs/vue3';
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import TableProspects from "@/Components/Tables/TableProspects.vue"
 import {capitalize} from "@/Composables/capitalize"
-import {computed, reactive, ref} from "vue"
+import { computed, reactive, ref, watch } from 'vue';
 import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import UploadExcel from '@/Components/Upload/UploadExcel.vue'
 import {PageHeading as TSPageHeading} from '@/types/PageHeading'
@@ -25,6 +25,7 @@ import ProspectsDashboard from "@/Pages/Organisation/CRM/Prospects/ProspectsDash
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faSeedling,faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags,faThumbsDown, faLaugh, faChair} from '@fal'
 import TableProspectLists from "@/Components/Tables/TableProspectLists.vue";
+import { useEchoOrgPersonal } from '@/Stores/echo-org-personal';
 
 library.add(faSeedling,faTachometerAlt, faTransporter, faCodeBranch, faMailBulk, faStore, faClock, faInfo, faTags, faThumbsDown, faLaugh, faChair)
 
@@ -34,7 +35,7 @@ const props = defineProps<{
     title: string
     tabs: {
         current: string;
-        navigation: object;
+        navigation: {}
     },
     uploads: {
         templates: {
@@ -47,11 +48,11 @@ const props = defineProps<{
         upload: routeType
         history: routeType
     }
-    dashboard?: object
-    prospects?: object
-    mailshots?: object
-    lists?: object
-    history?: object
+    dashboard?: {}
+    prospects?: {}
+    mailshots?: {}
+    lists?: {}
+    history?: {}
     tags: {
         data: {
             id: number
@@ -61,21 +62,29 @@ const props = defineProps<{
 
 const dataModal = reactive({isModalOpen: false})
 
-let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+const currentTab = ref<string>(props.tabs.current)
+const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
-
     const components: any = {
         dashboard: ProspectsDashboard,
         prospects: TableProspects,
         mailshots: TableProspectsMailshots,
         history: TableHistories,
         lists: TableProspectLists
-    };
-    return components[currentTab.value];
+    }
+    
+    return components[currentTab.value]
+})
 
-});
+// Watch the recently uploaded file then reload the props to update data table
+watch(useEchoOrgPersonal().recentlyUploaded, () => {
+    router.reload(
+        {
+            only: ['prospects'],  // only reload the props with dynamic name tabSlug
+        }
+    )
+})
 </script>
 
 <template layout="OrgApp">

@@ -30,8 +30,8 @@ use App\Actions\HumanResources\JobPosition\UI\EditJobPosition;
 use App\Actions\HumanResources\JobPosition\UI\IndexJobPositions;
 use App\Actions\HumanResources\JobPosition\UI\RemoveJobPosition;
 use App\Actions\HumanResources\JobPosition\UI\ShowJobPosition;
-use App\Actions\HumanResources\TimeSheet\IndexTimesheets;
-use App\Actions\HumanResources\TimeSheet\ShowTimeSheet;
+use App\Actions\HumanResources\TimeTracking\IndexTimeTrackings;
+use App\Actions\HumanResources\TimeTracking\ShowTimeTracking;
 use App\Actions\HumanResources\Workplace\UI\CreateWorkplace;
 use App\Actions\HumanResources\Workplace\UI\EditWorkplace;
 use App\Actions\HumanResources\Workplace\UI\ExportWorkplace;
@@ -67,8 +67,8 @@ Route::get('/positions/{jobPosition}/delete', RemoveJobPosition::class)->name('j
 Route::get('/calendars', IndexCalendars::class)->name('calendars.index');
 Route::get('/calendars/{calendar}', ShowCalendar::class)->name('calendars.show');
 
-Route::get('/time-sheets', IndexTimeSheets::class)->name('time-sheets.index');
-Route::get('/time-sheets/{timeSheet}', ShowTimesheet::class)->name('time-sheets.show');
+Route::get('/time-sheets', IndexTimeTrackings::class)->name('time-sheets.index');
+Route::get('/time-sheets/{timeSheet}', ShowTimeTracking::class)->name('time-sheets.show');
 
 Route::get('/workplaces', IndexWorkplaces::class)->name('workplaces.index');
 Route::get('/workplaces/create', CreateWorkplace::class)->name('workplaces.create');

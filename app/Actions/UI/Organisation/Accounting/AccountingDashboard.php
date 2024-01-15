@@ -36,28 +36,28 @@ class AccountingDashboard
         return Inertia::render(
             'Accounting/AccountingDashboard',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('accounting'),
-                'pageHead' => [
+                'title'        => __('accounting'),
+                'pageHead'     => [
                     'title' => __('accounting'),
                 ],
                 'flatTreeMaps' => [
                     [
                         [
-                            'name'  => __('accounts'),
-                            'icon'  => ['fal', 'fa-money-check-alt'],
-                            'href'  => ['org.accounting.payment-accounts.index'],
-                            'index' => [
+                            'name'         => __('accounts'),
+                            'icon'         => ['fal', 'fa-money-check-alt'],
+                            'href'         => ['name' => 'org.accounting.payment-accounts.index'],
+                            'index'        => [
                                 'number' => 0
                             ],
                             'rightSubLink' => [
                                 'tooltip'    => __('payment methods'),
                                 'icon'       => ['fal', 'fa-cash-register'],
                                 'labelStyle' => 'bordered',
-                                'href'       => ['org.accounting.payment-service-providers.index'],
+                                'href'       => ['name' => 'org.accounting.payment-service-providers.index'],
 
                             ]
 
@@ -65,7 +65,7 @@ class AccountingDashboard
                         [
                             'name'  => __('payments'),
                             'icon'  => ['fal', 'fa-coins'],
-                            'href'  => ['org.accounting.payments.index'],
+                            'href'  => ['name' => 'org.accounting.payments.index'],
                             'index' => [
                                 'number' => 0
                             ]
@@ -74,7 +74,7 @@ class AccountingDashboard
                         [
                             'name'  => __('invoices'),
                             'icon'  => ['fal', 'fa-file-invoice-dollar'],
-                            'href'  => ['org.accounting.invoices.index'],
+                            'href'  => ['name' => 'org.accounting.invoices.index'],
                             'index' => [
                                 'number' => 0
                             ]

@@ -14,72 +14,47 @@ import { useLayoutStore } from '@/Stores/layout'
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
+import { Action as TSAction } from '@/types/Action'
+import { routeType } from '@/types/route'
 
-import {
-    faWindowClose,
-    faToggleOn,
-    faEdit,
-    faUserLock,
-    faBell,
-    faCopyright,
-    faUserCircle,
-    faKey,
-    faClone,
-    faPaintBrush,
-    faMoonStars,
-    faLightbulbOn,
-    faCheck,
-    faPhone,
-    faIdCard,
-    faFingerprint,
-    faLanguage,
-    faAddressBook,
-    faTrashAlt
-} from '@fal'
+import { faWindowClose, faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faMobileAndroidAlt, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt } from '@fal'
 
-library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
+library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faMobileAndroidAlt, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
     faWindowClose)
 
 const props = defineProps<{
-
     formData: {
         current?:string,
         blueprint: {
-            // sectionData
-            label: string,
-            title: string,
-            subtitle?: string,
-            icon: string
-            fields: {
-                // FieldData
-                name: string,
-                type: string,
+            [key: string]: { // sectionData
                 label: string,
-                value: string | object
-                icon?: string
-                action?: {
-                    data?: any
-                    method?: string
+                title: string,
+                subtitle?: string,
+                icon: string
+                fields: { // FieldData
+                    name: string,
+                    type: string,
+                    label: string,
+                    value: string | {}
+                    icon?: string
+                    action: TSAction
+                }[]
+                button: {
+                    title: string
+                    route: string
+                    disable: boolean
                 }
-            }[]
-            button: {
-                title: string
-                route: string
-                disable: boolean
             }
-        }[]
+        }
         args: {
-            updateRoute: {
-                name: string,
-                parameters: string | string[]
-            }
+            updateRoute: routeType
         }
         title?: string
     }
 }>()
 
 const layout = useLayoutStore()
-const currentTab: Ref<string> = ref(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
+const currentTab = ref<string>(props.formData?.current ?? Object.keys(props.formData?.blueprint)[0])  // if formData.current not exist, take first navigation
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})

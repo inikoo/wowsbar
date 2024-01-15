@@ -7,6 +7,7 @@
 
 namespace App\Models\HumanResources;
 
+use App\Enums\HumanResources\ClockingMachine\ClockingMachineTypeEnum;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -27,13 +28,14 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\HumanResources\ClockingMachine
  *
  * @property int $id
- * @property string $slug
- * @property string $code
  * @property int $workplace_id
+ * @property string $slug
+ * @property string $name
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
+ * @property ClockingMachineTypeEnum $type
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Collection<int, \App\Models\HumanResources\Clocking> $clockings
@@ -44,12 +46,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ClockingMachine newQuery()
  * @method static Builder|ClockingMachine onlyTrashed()
  * @method static Builder|ClockingMachine query()
- * @method static Builder|ClockingMachine whereCode($value)
  * @method static Builder|ClockingMachine whereCreatedAt($value)
  * @method static Builder|ClockingMachine whereData($value)
  * @method static Builder|ClockingMachine whereDeletedAt($value)
  * @method static Builder|ClockingMachine whereId($value)
+ * @method static Builder|ClockingMachine whereName($value)
  * @method static Builder|ClockingMachine whereSlug($value)
+ * @method static Builder|ClockingMachine whereType($value)
  * @method static Builder|ClockingMachine whereUpdatedAt($value)
  * @method static Builder|ClockingMachine whereWorkplaceId($value)
  * @method static Builder|ClockingMachine withTrashed()
@@ -65,12 +68,13 @@ class ClockingMachine extends Model implements Auditable
     use HasHistory;
 
     protected $casts = [
-        'data'        => 'array',
-        'status'      => 'boolean',
+        'data'   => 'array',
+        'status' => 'boolean',
+        'type'   => ClockingMachineTypeEnum::class
     ];
 
     protected $attributes = [
-        'data'        => '{}',
+        'data' => '{}',
     ];
 
     protected $guarded = [];
@@ -90,7 +94,7 @@ class ClockingMachine extends Model implements Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('code')
+            ->generateSlugsFrom('name')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate()
             ->slugsShouldBeNoLongerThan(8);

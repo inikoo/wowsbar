@@ -6,6 +6,7 @@ import QueryInformatics from '@/Components/Queries/QueryInformatics.vue'
 import { trans } from "laravel-vue-i18n"
 import { onMounted } from 'vue'
 import { isNull } from 'lodash'
+import { useLocaleStore } from '@/Stores/locale.js'
 
 library.add(faEnvelope, faAsterisk, faCodeBranch, faTags)
 const props = defineProps<{
@@ -30,8 +31,7 @@ const props = defineProps<{
     }
 }>()
 
-console.log('propsQuerys',props.options);
-
+const locale = useLocaleStore()
 const emits = defineEmits<{
     (e: 'onUpdate'): void
 }>()
@@ -45,8 +45,8 @@ onMounted(() => {
                 break;
             }
         }
-        if(index != -1)
-        props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, data : props.options.data[index].constrains }
+        if(index != -1) props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[index].id, data : props.options.data[index].constrains }
+        else props.form[props.fieldName].recipient_builder_data.query = { id: props.options.data[0].id, data : props.options.data[0].constrains }
     }
 
 })
@@ -77,11 +77,10 @@ onMounted(() => {
                         <QueryInformatics :option="option" :changeWeeksValue="(value)=>props.changeWeeksValue(value,index)"/>
 
                     </td>
-                    <td class="px-2 py-2 text-center tabular-nums">{{ option.number_items }}</td>
+                    <td class="px-2 py-2 text-center tabular-nums">{{ locale.number(option.number_items ?? 0) }}</td>
                     <td class="relative py-2 px-3 text-right font-medium">
-                        <div v-if="option.number_items > 0">
-                            <label :for="'radioProspects' + option.id"
-                                class="bg-transparent absolute inset-0 cursor-pointer" />
+                        <div>
+                            <label :for="'radioProspects' + option.id" class="bg-transparent absolute inset-0 cursor-pointer" />
                             <input v-model="form[fieldName].recipient_builder_data.query" :value="{ id: option.id , data : option.constrains }"
                                 type="radio" :id="'radioProspects' + option.id" name="radioProspects"
                                 class="appearance-none ring-1 ring-gray-400 text-org-600 focus:border-0 focus:outline-none focus:ring-0" />

@@ -35,7 +35,7 @@ return [
             'org',
             'customer'
         ],
-        'resolver'     => \App\AuditResolvers\AuditUserResolver::class
+        'resolver'     => OwenIt\Auditing\Resolvers\UserResolver::class
     ],
 
     /*

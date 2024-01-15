@@ -41,8 +41,8 @@ class ShowBillingDashboard extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('Billing'),
                 'pageHead'    => [
-                    'title' => __('Billing'),
-                    'icon'  => [
+                    'title'   => __('Billing'),
+                    'icon'    => [
                         'icon'    => ['fal', 'fa-credit-card'],
                         'tooltip' => __('Billing')
                     ],
@@ -66,14 +66,13 @@ class ShowBillingDashboard extends InertiaAction
 
     private function getDashboard(Customer $customer): array
     {
-
         return [
             'flatTreeMaps' => [
                 [
                     [
                         'name'  => __('websites'),
                         'icon'  => ['fal', 'fa-globe'],
-                        'href'  => ['customer.portfolio.websites.index'],
+                        'href'  => ['name' => 'customer.portfolio.websites.index'],
                         'index' => [
                             'number' => 0 // todo make stats for portfolio division stuff
                         ]

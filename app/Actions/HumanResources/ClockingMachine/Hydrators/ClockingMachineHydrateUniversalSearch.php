@@ -21,7 +21,7 @@ class ClockingMachineHydrateUniversalSearch
             [
                 'in_organisation' => true,
                 'section'         => 'hr',
-                'title'           => $clockingMachine->code,
+                'title'           => $clockingMachine->name,
                 'description'     => $clockingMachine->workplace->name
             ]
         );

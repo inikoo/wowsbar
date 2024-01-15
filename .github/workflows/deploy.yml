@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Wowsbar
 
 on:
   push:
@@ -6,24 +6,32 @@ on:
 
 concurrency: production_environment
 
-env:
-  HOME: /home/devops
-
 permissions:
   contents: write
 
 jobs:
   laravel-tests:
     name: Deploy wowsbar 🚀
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
       - name: Composer install
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Get Next Version
@@ -33,20 +41,23 @@ jobs:
           token: ${{ github.token }}
           branch: production
           noVersionBumpBehavior: current
+          noNewCommitBehavior: current
           patchList: fix, bugfix, perf, refactor, test, tests, clean, cleanup, pint, partial, review, update-deps, chores, review
           patchAll: true
-      - name: Set release in .env
+      - name: Set .env
         run: |
-          sed -i~ '/^RELEASE=/s/=.*/="${{ steps.semver.outputs.next }}"/' ../../../../env.wowsbar.deploy
-      - name: Prepare environment
-        run: |
-          ln -s ../../../../env.wowsbar.deploy .env
+          touch .env.wowsbar.production.deploy
+          echo RELEASE=${{ steps.semver.outputs.next }} >> .env.wowsbar.production.deploy
+          echo DEPLOY_REMOTE_USER=${{ secrets.PRODUCTION_DEPLOY_REMOTE_USER }} >> .env.wowsbar.production.deploy
+          echo DEPLOY_DISCORD_CHANNEL=${{ secrets.DEPLOY_DISCORD_CHANNEL }}
+          echo DEPLOY_DISCORD_CHANNEL_TOKEN=${{ secrets.DEPLOY_DISCORD_CHANNEL_TOKEN }}
       - name: Launch 🚀
         uses: deployphp/action@v1
         with:
-          dep: deploy
-          skip-ssh-setup: true
+          dep: deploy wowsbar
           ssh-config: ${{ secrets.DEPLOY_SSH_CONFIG }}
+          private-key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+          known-hosts: ${{ secrets.DEPLOYER_KNOWN_HOSTS }}
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
@@ -61,7 +72,7 @@ jobs:
         uses: newrelic/deployment-marker-action@v2.3.0
         with:
           apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
-          guid: ${{ secrets.NEW_RELIC_DEPLOYMENT_ENTITY_GUID }}
+          guid: wowsbar
           version: ${{ steps.semver.outputs.next }}
           user: "${{ github.actor }}"
       - name: Create Sentry release

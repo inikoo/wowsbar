@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 11 Jan 2024 16:29:33 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2024, Raul A Perusquia Flores
+ */
 
 use App\Models\Auth\Guest;
 use App\Models\Helpers\Upload;

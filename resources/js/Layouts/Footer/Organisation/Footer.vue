@@ -6,16 +6,15 @@
 
 <script setup lang="ts">
 import { ref, Ref, computed } from 'vue';
-import FooterTabActiveUsers from '@/Layouts/Organisation/FooterActiveUsers.vue'
+import FooterActiveUsers from '@/Layouts/Organisation/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
-import { usePage } from "@inertiajs/vue3"
-import Image from "@/Components/Image.vue"
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n"
 import { useLayoutStore } from '@/Stores/layout'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
+import ProgressLine from '@/Components/Utils/ProgressLine.vue'
 
 library.add(faDiscord)
 
@@ -40,10 +39,7 @@ const compLatestProgress = computed(() => {
         <div class="flex justify-between transition-all duration-200 ease-in-out"
             :class="[useLayoutStore().leftSidebar.show ? 'pl-52' : 'pl-12']"
         >
-            <!-- Left: Logo Section -->
-            <!-- <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <Image class="h-auto w-14 select-none" :src="logoSrc" alt="Org-Wowsbar" />
-            </div> -->
+
 
             <!-- Section: Discord -->
             <div class="flex items-center gap-x-1.5 py-1">
@@ -55,17 +51,16 @@ const compLatestProgress = computed(() => {
 
             <!-- Right: Tab Section -->
             <div class="flex items-center flex-row-reverse text-sm">
-                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                <FooterActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
                 <FooterLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
-                
+
                 <!-- Progress Upload -->
-                <div v-if="compLatestProgress" class="flex justify-center items-center gap-x-2 text-gray-600 mx-4">
-                    <div class="text-xs leading-none">{{ `${compLatestProgress.action_type} ${compLatestProgress.data.type}` }}</div>
-                    <div class="overflow-hidden rounded-full bg-white w-48 flex justify-start shadow ring-1 ring-gray-300">
-                        <div class="h-1.5 bg-lime-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_success/compLatestProgress.total)*100}%`" />
-                        <div class="h-1.5 bg-red-500 transition-all duration-100 ease-in-out" :style="`width: ${(compLatestProgress.data.number_fails/compLatestProgress.total)*100}%`" />
+                <Transition name="slide-to-up">
+                    <div v-if="compLatestProgress" class="flex justify-center items-center gap-x-2 text-gray-600 mx-4">
+                        <div class="text-xs leading-none">{{ `${compLatestProgress.action_type} ${compLatestProgress.data.type}` }}</div>
+                        <ProgressLine :total="compLatestProgress.total" :success="compLatestProgress.data.number_success" :fails="compLatestProgress.data.number_fails" />
                     </div>
-                </div>
+                </Transition>
             </div>
         </div>
     </footer>

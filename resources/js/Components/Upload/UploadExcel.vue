@@ -2,10 +2,11 @@
 
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import ProgressBar from '@/Components/Utils/ProgressBar.vue'
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted} from 'vue';
 import { routeType } from '@/types/route'
 import { router } from '@inertiajs/vue3'
 import { useEchoOrgPersonal } from '@/Stores/echo-org-personal'
+import { cloneDeep } from 'lodash';
 
 const props = defineProps<{
     routes: {
@@ -28,33 +29,9 @@ const emits = defineEmits<{
     (e: 'onCloseModal', value: boolean): void
 }>()
 
-const isShowProgress = ref(false)
+const echo = ref(cloneDeep(useEchoOrgPersonal()))
 
 
-// Progress bar for adding file
-// const compProgressBar = computed(() => {
-//     return useEchoOrgPersonal().progressBars.total ? useEchoOrgPersonal().progressBars.done/useEchoOrgPersonal().progressBars.total * 100 : 0
-// })
-
-
-// On finish uploading
-const onFinish = () => {
-    // setTimeout(() => {
-    //     // Reset data from Pusher binding
-    //     useEchoOrgPersonal().progressBars = { data: {
-    //             number_success: 0,
-    //             number_fails: 0
-    //         },
-    //         done: 0,
-    //         total: 0
-    //     }  // Reset value, Can lead to isShowProgress to false
-    // }, 6000)
-    if(props.propName) {
-        router.reload({
-            only: [props.propName],  // only reload the props prospects so the table is updated
-        })
-    }
-}
 
 </script>
 
@@ -65,16 +42,13 @@ const onFinish = () => {
             v-model="dataModal.isModalOpen"
             :routes="routes"
             :propName="propName"
+            :useEchoOrgPersonal="echo"
         />
     </KeepAlive>
 
     <ProgressBar
-        :progressData="{
-            progressName: 'employees'
-        }"
         :description="description"
-        @updateShowProgress="(newValue: boolean) => isShowProgress = newValue"
-        @onFinish="onFinish"
+        :echo="echo"
     />
 
 </template>

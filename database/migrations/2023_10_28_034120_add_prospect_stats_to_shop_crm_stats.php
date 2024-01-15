@@ -25,7 +25,6 @@ return new class () extends Migration {
     {
         Schema::table('shop_crm_stats', function (Blueprint $table) {
             $this->undoProspectsStats($table);
-
         });
     }
 };

@@ -47,6 +47,44 @@ test('check seeded job positions', function () {
     expect(organisation()->humanResourcesStats->number_job_positions)->toBe(19);
 });
 
+test('create working place successful', function () {
+    $modelData = [
+        'name'    => 'office',
+        'type'    => WorkplaceTypeEnum::BRANCH,
+        'address' => Address::factory()->definition()
+    ];
+
+    $workplace = StoreWorkplace::make()->action($modelData);
+    expect($workplace)->toBeInstanceOf(Workplace::class)
+        ->and(organisation()->humanResourcesStats->number_workplaces)->toBe(1)
+        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(1);
+
+
+    return $workplace;
+});
+
+test('update working place successful', function ($createdWorkplace) {
+    $arrayData        = [
+        'name'    => 'home office',
+        'type'    => WorkplaceTypeEnum::HOME,
+        'address' => Address::create(Address::factory()->definition())->toArray()
+    ];
+    $updatedWorkplace = UpdateWorkplace::run($createdWorkplace, $arrayData);
+
+    expect($updatedWorkplace->name)->toBe($arrayData['name'])
+        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(0)
+        ->and(organisation()->humanResourcesStats->number_workplaces_type_home)->toBe(1);
+})->depends('create working place successful');
+
+test('create working place by command', function () {
+    $this->artisan('workplace:create office2 hq')->assertExitCode(0);
+    $this->artisan('workplace:create office2 hq')->assertExitCode(1);
+    $workplace = Workplace::where('name', 'office2')->first();
+    $this->organisation->refresh();
+    expect($workplace)->not->toBeNull()
+        ->and($this->organisation->humanResourcesStats->number_workplaces)->toBe(2);
+});
+
 test('create employee successful', function () {
     $arrayData = [
         'alias'               => 'artha',
@@ -99,42 +137,14 @@ test('create user from employee', function () {
         ->and($organisationUser->contact_name)->toBe($lastEmployee->contact_name);
 });
 
-test('create working place successful', function () {
-    $modelData = [
-        'name'    => 'office',
-        'type'    => WorkplaceTypeEnum::BRANCH,
-        'address' => Address::factory()->definition()
-    ];
-
-    $workplace = StoreWorkplace::make()->action($modelData);
-    expect($workplace)->toBeInstanceOf(Workplace::class)
-        ->and(organisation()->humanResourcesStats->number_workplaces)->toBe(1)
-        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(1);
-
-
-    return $workplace;
-});
-
-test('update working place successful', function ($createdWorkplace) {
-    $arrayData        = [
-        'name'    => 'home office',
-        'type'    => 'home',
-        'address' => Address::create(Address::factory()->definition())->toArray()
-    ];
-    $updatedWorkplace = UpdateWorkplace::run($createdWorkplace, $arrayData);
-
-    expect($updatedWorkplace->name)->toBe($arrayData['name'])
-        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(0)
-        ->and(organisation()->humanResourcesStats->number_workplaces_type_home)->toBe(1);
-})->depends('create working place successful');
-
-test('create clocking machines', function ($createdWorkplace) {
+test('create clocking machines', function ($workplace) {
     $arrayData = [
-        'code' => 'ABC'
+        'name' => 'ABC',
+        'type' => 'static-nfc',
     ];
 
-    $clockingMachine = StoreClockingMachine::run($createdWorkplace, $arrayData);
-    expect($clockingMachine->code)->toBe($arrayData['code']);
+    $clockingMachine = StoreClockingMachine::run($workplace, $arrayData);
+    expect($clockingMachine->name)->toBe($arrayData['name']);
 
     return $clockingMachine;
 })->depends('create working place successful');
@@ -142,12 +152,12 @@ test('create clocking machines', function ($createdWorkplace) {
 
 test('update clocking machines', function ($createdClockingMachine) {
     $arrayData = [
-        'code' => 'abc',
+        'name' => 'abc',
     ];
 
     $updatedClockingMachine = UpdateClockingMachine::run($createdClockingMachine, $arrayData);
 
-    expect($updatedClockingMachine->code)->toBe($arrayData['code']);
+    expect($updatedClockingMachine->name)->toBe($arrayData['name']);
 })->depends('create clocking machines');
 
 test('can show hr dashboard', function () {
@@ -157,7 +167,7 @@ test('can show hr dashboard', function () {
             ->component('HumanResources/HumanResourcesDashboard')
             ->has('breadcrumbs', 2)
             ->where('stats.0.stat', 1)->where('stats.0.href.name', 'org.hr.employees.index')
-            ->where('stats.1.stat', 1)->where('stats.1.href.name', 'org.hr.workplaces.index');
+            ->where('stats.1.stat', 2)->where('stats.1.href.name', 'org.hr.workplaces.index');
     });
 });
 
@@ -168,7 +178,7 @@ test('can show list of workplaces', function () {
             ->component('HumanResources/Workplaces')
             ->has('title')
             ->has('breadcrumbs', 3)
-            ->has('data.data', 1);
+            ->has('data.data', 2);
     });
 });
 
@@ -197,7 +207,7 @@ test('can show list of employees', function () {
     });
 });
 
-test('can show employees', function () {
+test('can show employee', function () {
     $employee = Employee::first();
     expect($employee->organisationUser)->toBeInstanceOf(OrganisationUser::class);
 

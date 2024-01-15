@@ -32,9 +32,18 @@ trait WithImportModel
 
     public function asController(ActionRequest $request): void
     {
+        $request->validate();
+
         $file = $request->file('file');
         Storage::disk('local')->put($this->tmpPath, $file);
         $this->handle($file);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'file' => ['required', 'file', 'mimes:xlsx,csv,xls']
+        ];
     }
 
     public function asCommand(Command $command): int

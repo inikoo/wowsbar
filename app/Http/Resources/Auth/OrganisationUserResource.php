@@ -10,7 +10,6 @@ namespace App\Http\Resources\Auth;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Arr;
 use JsonSerializable;
 
 class OrganisationUserResource extends JsonResource
@@ -31,7 +30,8 @@ class OrganisationUserResource extends JsonResource
             'created_at'   => $organisationUser->created_at,
             'updated_at'   => $organisationUser->updated_at,
             'status'       => $organisationUser->status ? 'Active' : 'Suspended',
-            'roles'        => Arr::join($organisationUser->getRoleNames()->toArray(), ', '),
+            'roles'        => $organisationUser->getRoleNames()->toArray(),
+            'permissions'  => $organisationUser->getAllPermissions()->pluck('name')->toArray()
         ];
     }
 }

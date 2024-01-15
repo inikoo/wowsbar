@@ -31,10 +31,10 @@ class MailshotResource extends JsonResource
             };
 
             $timelines[] = [
-                'label'      => 'Mailshot ' . $timelineKey,
-                'icon'       => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
-//                'timestamp'  => $mailshot->{$timeline} ? $mailshot->{$timeline}->toISOString() : null
-            'timestamp'  => null
+                'label'     => 'Mailshot '.$timelineKey,
+                'icon'      => $timeline == 'created_at' ? 'fal fa-sparkles' : $mailshot->state->stateIcon()[$timelineKey]['icon'],
+                //                'timestamp'  => $mailshot->{$timeline} ? $mailshot->{$timeline}->toISOString() : null
+                'timestamp' => null
             ];
         }
 
@@ -44,28 +44,26 @@ class MailshotResource extends JsonResource
 
         $newTimeline = [
             [
-                'label'      => __('Mailshot created'),
+                'label'     => __('Mailshot created'),
                 // 'icon'       => $mailshot->state->stateIcon()['in-process']['icon'],
-                'timestamp'  => $mailshot->created_at ? $mailshot->created_at : null
+                'timestamp' => $mailshot->created_at ? $mailshot->created_at : null
             ],
             [
-                'label'      => __('Mailshot composed'),
+                'label'     => __('Mailshot composed'),
                 // 'icon'       => $mailshot->state->stateIcon()['ready']['icon'],
-                'timestamp'  => $mailshot->ready_at ? $mailshot->ready_at : ($mailshot->start_sending_at ? $mailshot->start_sending_at : null)
+                'timestamp' => $mailshot->ready_at ? $mailshot->ready_at : ($mailshot->start_sending_at ? $mailshot->start_sending_at : null)
             ],
             [
-                'label'      => __('Start send'),
+                'label'     => __('Start send'),
                 // 'icon'       => $mailshot->state->stateIcon()['sending']['icon'],
-                'timestamp'  => $mailshot->start_sending_at ? $mailshot->start_sending_at : null
+                'timestamp' => $mailshot->start_sending_at ? $mailshot->start_sending_at : null
             ],
             [
-                'label'      => __('Sent'),
+                'label'     => __('Sent'),
                 // 'icon'       => $mailshot->state->stateIcon()['sent']['icon'],
-                'timestamp'  => $mailshot->sent_at ? $mailshot->sent_at : null
+                'timestamp' => $mailshot->sent_at ? $mailshot->sent_at : null
             ]
         ];
-
-
 
 
         return [
@@ -87,6 +85,7 @@ class MailshotResource extends JsonResource
             'updated_at'          => $mailshot->updated_at,
             'timeline'            => $newTimeline,
             'is_layout_blank'     => blank($mailshot->layout),
+            'outbox_id'           => $mailshot->outbox_id
         ];
     }
 }

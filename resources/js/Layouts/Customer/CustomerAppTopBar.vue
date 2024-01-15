@@ -21,7 +21,6 @@ import { Disclosure } from "@headlessui/vue"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import { trans } from "laravel-vue-i18n"
-import { useAppearanceStore } from "@/Stores/appearance"
 import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
@@ -37,11 +36,6 @@ defineEmits<{
 const layout = useLayoutStore()
 
 const showSearchDialog = ref(false)
-
-
-onMounted(() => {
-    useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
-})
 
 const logoutAuth = () => {
     // Sign-out from app

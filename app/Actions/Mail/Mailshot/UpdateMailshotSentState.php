@@ -7,13 +7,13 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\Mail\MailshotSendChannelStateEnum;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\MailshotSendChannel\MailshotSendChannelStateEnum;
 use App\Models\Mail\Mailshot;
 use Exception;
+use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Console\Command;
 
 class UpdateMailshotSentState
 {

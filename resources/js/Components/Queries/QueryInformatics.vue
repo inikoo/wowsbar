@@ -96,10 +96,10 @@ const onChangeLastContact = async (closed) => {
 
 
 
-const changeQuantity = (value) => {
+/* const changeQuantity = (value) => {
     if (!value.target.value || value.target.value <= 0) formMessage.value = 'input valid days'
     else formMessage.value = ''
-}
+} */
 
 
 watch(value.value, (newValue) => {
@@ -163,8 +163,8 @@ watch(value.value, (newValue) => {
                         <div class="text-center text-base font-semibold">{{ trans("Interval") }}</div>
                         <div class="flex gap-x-2">
                             <div class="w-20">
-                                <PureInput v-model.number="value.quantity" type="number" :minValue="1" :caret="true"
-                                    @input="changeQuantity" placeholder="days" required />
+                                <PureInput v-model.number="value.quantity" type="number" :minValue="0" :caret="true"
+                                    placeholder="days" required />
                             </div>
                             <div class="w-40">
                                 <PureMultiselect v-model="value.unit" :options="['day', 'week', 'month']" required />

@@ -7,7 +7,11 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
+use
+
+
+
+App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\HumanResources\SyncJobPosition;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUser;
@@ -47,7 +51,7 @@ class UpdateEmployee
             SyncJobPosition::run($employee, $jobPositions);
             Arr::forget($modelData, 'positions');
         }
-        $employee = $this->update($employee, $modelData, ['data', 'salary',]);
+        $employee = $this->update($employee, $modelData, ['data', 'salary']);
 
         if ($employee->wasChanged(['worker_number', 'worker_number', 'contact_name', 'work_email', 'job_title', 'email'])) {
             EmployeeHydrateUniversalSearch::dispatch($employee);

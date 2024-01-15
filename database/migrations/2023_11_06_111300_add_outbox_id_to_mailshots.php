@@ -22,7 +22,6 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('mailshots', function (Blueprint $table) {
-            $table->dropForeign('outbox_id');
             $table->dropColumn('outbox_id');
         });
     }

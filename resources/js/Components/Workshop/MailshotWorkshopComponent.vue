@@ -50,7 +50,7 @@ const getComponent = (componentName: string) => {
 const changeTemplate = (template) => {
     if (editorRef.value.setToNewTemplate)
         editorRef.value.setToNewTemplate(
-            JSON.parse(JSON.stringify(template.compiled.html.design))
+            JSON.parse(JSON.stringify(template.html.design))
         );
     openTemplates.value = false;
 };
@@ -59,7 +59,7 @@ const StoreTemplate = async (template) => {
     try {
         const response = await axios.post(
             route(props.updateRoute.name, props.updateRoute.parameters),
-            { data: ["first template"], pagesHtml: template.compiled.html }
+            { data: ["first template"], pagesHtml: template.html }
         );
         props.mailshot.is_layout_blank = false;
     } catch (error) {
@@ -107,28 +107,9 @@ defineExpose({
         :emailsEstimated="mailshot.stats.number_estimated_dispatched_emails"
         :idMailshot="mailshot.id"
     >
-        <template #content>
-            <div class="flex w-full">
-                <div class="text-gray-500 w-1/2">
-                    {{ trans("Estimated recipients") }}:
-                    <span class="font-semibold text-gray-700">{{
-                        useLocaleStore().number(
-                            mailshot.stats.number_estimated_dispatched_emails
-                        )
-                    }}</span>
-                </div>
-                <div
-                    v-if="!mailshot.is_layout_blank"
-                    class="text-gray-500 w-1/2 flex justify-end"
-                >
-                    <Button
-                        icon="fas fa-th-large"
-                        label="Template"
-                        :style="'tertiary'"
-                        size="xs"
-                        @click="openTemplates = true"
-                    />
-                </div>
+        <template #rightSide>
+            <div v-if="!mailshot.is_layout_blank" class="text-gray-500 w-1/2 flex justify-end">
+                <Button @click="openTemplates = true" icon="fas fa-th-large" label="Template" :style="'tertiary'" size="xs" />
             </div>
         </template>
     </LabelEstimated>
@@ -172,16 +153,17 @@ defineExpose({
         :loadRoute="loadRoute"
         :imagesUploadRoute="imagesUploadRoute"
         ref="editorRef"
+        :mailshot="mailshot"
     >
     </component>
 
     <div v-else class="p-5">
-        <TemplateMailshot @changeTemplate="StoreTemplate" />
+        <TemplateMailshot @changeTemplate="StoreTemplate" :mailshot="mailshot"/>
     </div>
 
     <Modal :isOpen="openTemplates" @onClose="openTemplates = false">
         <div class="overflow-y-auto">
-            <TemplateMailshot @changeTemplate="changeTemplate" />
+            <TemplateMailshot @changeTemplate="changeTemplate" :mailshot="mailshot"/>
         </div>
     </Modal>
 </template>

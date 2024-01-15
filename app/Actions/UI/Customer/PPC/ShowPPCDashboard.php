@@ -28,36 +28,35 @@ class ShowPPCDashboard extends InertiaAction
     public function asController(ActionRequest $request): ActionRequest
     {
         $this->initialisation($request)->withTab(PPCDashboardTabsEnum::values());
+
         return $request;
     }
 
 
-
     public function htmlResponse(ActionRequest $request): Response
     {
-
         $customer = $request->get('customer');
 
         return Inertia::render(
             'PPC/PPCDashboard',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('Google Ads'),
-                'pageHead'     => [
-                    'title'             => __('Google Ads'),
-                    'icon'              => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('Google Ads'),
+                'pageHead'    => [
+                    'title' => __('Google Ads'),
+                    'icon'  => [
                         'icon'    => ['fal', 'fa-ad'],
                         'tooltip' => __('Google Ads')
                     ],
                 ],
 
-                'tabs'                             => [
+                'tabs'                                 => [
                     'current'    => $this->tab,
                     'navigation' => PPCDashboardTabsEnum::navigation(),
                 ],
                 PPCDashboardTabsEnum::DASHBOARD->value => $this->tab == PPCDashboardTabsEnum::DASHBOARD->value ?
                     fn () => $this->getDashboard($customer)
-                    : Inertia::lazy(fn () =>  $this->getDashboard($customer)),
+                    : Inertia::lazy(fn () => $this->getDashboard($customer)),
 
                 PPCDashboardTabsEnum::CHANGELOG->value => $this->tab == PPCDashboardTabsEnum::CHANGELOG->value
                     ?
@@ -85,14 +84,13 @@ class ShowPPCDashboard extends InertiaAction
 
     private function getDashboard(Customer $customer): array
     {
-
         return [
             'flatTreeMaps' => [
                 [
                     [
                         'name'  => __('websites'),
                         'icon'  => ['fal', 'fa-globe'],
-                        'href'  => ['customer.portfolio.websites.index'],
+                        'href'  => ['name' => 'customer.portfolio.websites.index'],
                         'index' => [
                             'number' => 0 // todo make stats for portfolio division stuff
                         ]
@@ -101,6 +99,7 @@ class ShowPPCDashboard extends InertiaAction
             ],
         ];
     }
+
     public function getBreadcrumbs(): array
     {
         return

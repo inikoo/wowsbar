@@ -7,7 +7,7 @@
 
 namespace App\Models\Mail;
 
-use App\Enums\Mail\DispatchedEmailEventTypeEnum;
+use App\Enums\Mail\DispatchedEmailEvent\DispatchedEmailEventTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 /**

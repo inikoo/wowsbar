@@ -32,11 +32,11 @@ yarn-error.log
 /load_my_snapshot.sh
 /resources/private/
 lang/php_*.json
-
+deploy.sh
 /delete-bucket.sh
 /.env.local
 /.env.prod
-
+install.sh
 import-customers.sh
 /private
 /clover.xml
@@ -48,3 +48,7 @@ _ide_helper.php
 /export_wowsbar_aurora_db.sh
 /devops/tests/paso/
 .bashrc
+/crawl_au.sh
+/setup_portfolio_websites_integrations.sh
+/.env.wowsbar.production.deploy
+/.env.wowsbar.staging.deploy

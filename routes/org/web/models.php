@@ -24,6 +24,7 @@ use App\Actions\CRM\Customer\Surveys\StoreSurvey;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\CRM\CustomerWebsite\UpdateCustomerWebsite;
+use App\Actions\CRM\Shipping\ShipperAccount\StoreShipperAccount;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\Helpers\AwsEmail\SendIdentityEmailVerification;
@@ -47,11 +48,12 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\Tags\DeleteTagsProspect;
 use App\Actions\Leads\Prospect\Tags\SyncTagsProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Leads\Prospect\UpdateProspectEmailUndoUnsubscribed;
 use App\Actions\Leads\Prospect\UpdateProspectEmailUnsubscribed;
+use App\Actions\Mail\EmailTemplate\StoreEmailTemplate;
 use App\Actions\Mail\EmailTemplate\UI\ShowEmailTemplateContent;
 use App\Actions\Mail\EmailTemplate\UpdateEmailTemplateContent;
 use App\Actions\Mail\Mailshot\DeleteMailshot;
-use App\Actions\Mail\Mailshot\GetMailshotCustomText;
 use App\Actions\Mail\Mailshot\ResumeMailshot;
 use App\Actions\Mail\Mailshot\SendMailshot;
 use App\Actions\Mail\Mailshot\SendMailshotTest;
@@ -59,6 +61,7 @@ use App\Actions\Mail\Mailshot\SetMailshotAsReady;
 use App\Actions\Mail\Mailshot\SetMailshotAsScheduled;
 use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StopMailshot;
+use App\Actions\Mail\Mailshot\StopMailshotScheduled;
 use App\Actions\Mail\Mailshot\StoreMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshot;
 use App\Actions\Mail\Mailshot\UpdateMailshotContent;
@@ -73,6 +76,7 @@ use App\Actions\SysAdmin\Guest\StoreGuest;
 use App\Actions\SysAdmin\Guest\UpdateGuest;
 use App\Actions\SysAdmin\Organisation\UpdateOrganisation;
 use App\Actions\SysAdmin\OrganisationUser\UpdateOrganisationUser;
+use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\PublishWebpage;
 use App\Actions\Web\Webpage\ShowWebpageContent;
@@ -92,6 +96,8 @@ use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
+Route::get('/profile/app-login-qrcode', GetProfileAppLoginQRCode::class)->name('profile.app-login-qrcode');
+
 Route::patch('/employee/{employee:id}', UpdateEmployee::class)->name('employee.update');
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');
 Route::delete('/employee/{employee:id}', DeleteEmployee::class)->name('employee.delete');
@@ -132,6 +138,8 @@ Route::patch('/product/{product:id}', UpdateProduct::class)->name('product.updat
 Route::delete('/product/{product:id}', UpdateProduct::class)->name('product.delete');
 
 Route::patch('product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
+Route::post('prospect/mailshots/{mailshot:id}/email_template', [StoreEmailTemplate::class, 'fromMailshot'])->name('prospect-mailshot.email_templates.store');
+
 
 Route::prefix('shop')->as('shop.')->group(function () {
     Route::post('', StoreShop::class)->name('store');
@@ -143,15 +151,20 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::patch('prospect/{prospect:id}/unsubscribe', [UpdateProspectEmailUnsubscribed::class, 'inShop'])->name('prospect.unsubscribe.update');
+        Route::patch('prospect/{prospect:id}/undo_unsubscribe', [UpdateProspectEmailUndoUnsubscribed::class, 'inShop'])->name('prospect.undo_unsubscribe.update');
+
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
         Route::patch('prospect/mailshots/settings', UpdateProspectsMailshotSetting::class)->name('prospect-mailshots.settings.update');
         Route::post('prospect/mailshots/settings/email/resend', [SendIdentityEmailVerification::class, 'inShop'])->name('prospect-mailshots.settings.email-verification.resend');
         Route::patch('prospect/mailshots/{mailshot:id}', [UpdateMailshot::class, 'shopProspects'])->name('prospect-mailshot.update');
+
         Route::post('prospect/mailshots', [StoreMailshot::class, 'shopProspects'])->name('prospect-mailshot.store');
         Route::post('prospect-queries', [StoreProspectQuery::class, 'inShop'])->name('prospect-query.store');
         Route::patch('prospect-queries/{query}', [UpdateProspectQuery::class, 'inShop'])->name('prospect-query.update');
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
         Route::post('surveys', [StoreSurvey::class, 'inShop'])->name('surveys.store');
+
+        Route::post('customer/{customer:id}/shipper-accounts', [StoreShipperAccount::class, 'inShopInCustomer'])->name('customer.shipper-account.store');
     });
 });
 
@@ -220,12 +233,12 @@ Route::prefix('mailshot')->as('mailshot.')->group(function () {
     Route::post('{mailshot:id}/send/test', SendMailshotTest::class)->name('send.test');
 
     Route::post('{mailshot:id}/ready', SetMailshotAsReady::class)->name('state.ready');
+    Route::post('{mailshot:id}/scheduled/stop', StopMailshotScheduled::class)->name('state.scheduled.stop');
     Route::post('{mailshot:id}/scheduled', SetMailshotAsScheduled::class)->name('state.scheduled');
 
     Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
     Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
 
-    Route::get('/custom/texts', GetMailshotCustomText::class)->name('custom.text');
 });
 
 Route::prefix('email-templates')->as('email-templates.')->group(function () {

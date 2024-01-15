@@ -8,7 +8,7 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Web\Webpage;
+use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -21,11 +21,11 @@ class AttachImageToMailshot
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function handle(Webpage $webpage, string $collection, string $imagePath, string $originalFilename, string $extension = null): Media
+    public function handle(Mailshot $mailshot, string $collection, string $imagePath, string $originalFilename, string $extension = null): Media
     {
         $checksum = md5_file($imagePath);
         /** @var Media $media */
-        $media = $webpage->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
+        $media = $mailshot->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
 
         if ($media) {
             return $media;
@@ -34,7 +34,7 @@ class AttachImageToMailshot
         $filename = dechex(crc32($checksum)).'.';
         $filename .= empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
-        $media= $webpage->addMedia($imagePath)
+        $media= $mailshot->addMedia($imagePath)
             ->preservingOriginal()
             ->withProperties(
                 [

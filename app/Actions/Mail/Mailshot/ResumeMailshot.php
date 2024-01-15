@@ -8,8 +8,8 @@
 namespace App\Actions\Mail\Mailshot;
 
 use App\Actions\Mail\MailshotSendChannel\SendMailshotChannel;
-use App\Enums\Mail\MailshotSendChannelStateEnum;
-use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\MailshotSendChannel\MailshotSendChannelStateEnum;
 use App\Models\Mail\Mailshot;
 use App\Models\Mail\MailshotSendChannel;
 use Illuminate\Support\Facades\DB;

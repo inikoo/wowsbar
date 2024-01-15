@@ -8,8 +8,8 @@
 namespace App\Models\Mail;
 
 use App\Actions\Utils\Abbreviate;
-use App\Enums\Mail\MailshotStateEnum;
-use App\Enums\Mail\MailshotTypeEnum;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
+use App\Enums\Mail\Mailshot\MailshotTypeEnum;
 use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -47,9 +49,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $delete_comment
  * @property string|null $recipients_stored_at
  * @property int|null $outbox_id
+ * @property int|null $email_template_id
+ * @property array|null $data
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotSendChannel> $channels
  * @property-read int|null $channels_count
  * @property-read \App\Models\Mail\MailshotStats|null $mailshotStats
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read \App\Models\Mail\Outbox|null $outbox
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mail\MailshotRecipient> $recipients
@@ -60,9 +66,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot query()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCancelledAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereEmailTemplateId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereOutboxId($value)
@@ -85,15 +93,17 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot withoutTrashed()
  * @mixin \Eloquent
  */
-class Mailshot extends Model
+class Mailshot extends Model implements HasMedia
 {
     use HasFactory;
     use SoftDeletes;
     use HasSlug;
+    use InteractsWithMedia;
 
     protected $casts = [
         'recipients_recipe' => 'array',
         'layout'            => 'array',
+        'data'              => 'array',
         'type'              => MailshotTypeEnum::class,
         'state'             => MailshotStateEnum::class,
         'sent_at'           => 'datetime',
@@ -101,10 +111,12 @@ class Mailshot extends Model
         'ready_at'          => 'datetime',
         'cancelled_at'      => 'datetime',
         'stopped_at'        => 'datetime',
+        'start_sending_at'  => 'datetime',
     ];
 
     protected $attributes = [
         'layout'            => '{}',
+        'data'              => '{}',
         'recipients_recipe' => '{}',
     ];
 

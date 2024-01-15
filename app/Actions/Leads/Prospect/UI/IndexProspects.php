@@ -44,11 +44,8 @@ class IndexProspects extends InertiaAction
     {
         $this->canEdit = $request->user()->hasPermissionTo('crm.prospects.edit');
 
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('crm.prospects.view')
-            );
+        return  $request->user()->hasPermissionTo('crm.prospects.view');
+
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -158,10 +155,10 @@ class IndexProspects extends InertiaAction
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'phone', label: __('phone'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
+                ->column(key: 'contact_website', label: __('website'), canBeHidden: false, sortable: true, searchable: true);
 
             if (class_basename($parent) != 'Tag') {
-                $table->column(key: 'tags', label: __('tags'), canBeHidden: false, sortable: true, searchable: true);
+                $table->column(key: 'tags', label: __('tags'), canBeHidden: false, searchable: true);
             }
         };
     }
@@ -317,7 +314,8 @@ class IndexProspects extends InertiaAction
                     ]
                 ),
             ),
-            'org.crm.shop.prospects.index' =>
+            'org.crm.shop.prospects.index',
+            'org.crm.shop.prospects.uploads.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs(
                     'org.crm.shop.dashboard',

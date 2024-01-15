@@ -13,12 +13,12 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
+use App\Http\Resources\CRM\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerWebsite;
 use App\Models\Market\Shop;
-use App\Models\Portfolios\CustomerWebsite;
 use App\Models\SysAdmin\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -91,9 +91,18 @@ class IndexCustomerWebsites extends InertiaAction
         }
 
         return $queryBuilder
-            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'url', 'customers.slug as customer_slug')
+            ->select([
+                'customers.name as customer_name',
+                'portfolio_websites.slug',
+                'portfolio_websites.name',
+                'url',
+                'customers.slug as customer_slug',
+                'number_portfolio_webpages',
+                'number_banners'
+            ])
             ->defaultSort('portfolio_websites.slug')
             ->leftJoin('customers', 'customer_id', 'customers.id')
+            ->leftJoin('portfolio_website_stats', 'portfolio_websites.id', 'portfolio_website_stats.portfolio_website_id')
             ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -146,6 +155,8 @@ class IndexCustomerWebsites extends InertiaAction
                 ->column(key: 'slug', label: __('Code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
+                ->column(key: 'number_portfolio_webpages', label: __('url'), sortable: true)
+                ->column(key: 'number_banners', label: __('Banners'), canBeHidden: false, sortable: true)
                 ->defaultSort('slug');
         };
     }

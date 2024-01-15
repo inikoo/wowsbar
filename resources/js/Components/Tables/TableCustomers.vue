@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
+import {useLocaleStore} from "@/Stores/locale";
 
 const props = defineProps<{
     data: object,
@@ -25,7 +26,7 @@ function customerRoute(customer) {
                 [customer.slug]);
     }
 }
-
+const locale = useLocaleStore()
 </script>
 
 <template>
@@ -33,6 +34,11 @@ function customerRoute(customer) {
         <template #cell(slug)="{ item: customer }">
             <Link :href="customerRoute(customer)" class="py-1 specialUnderlineOrg">
                 {{ customer['slug'] }}
+            </Link>
+        </template>
+        <template #cell(number_portfolio_webpages)="{ item: customer }">
+            <Link :href="customerRoute(customer)" class="py-1 specialUnderlineOrg">
+                {{ locale.number(customer['number_portfolio_webpages']) }}
             </Link>
         </template>
     </Table>

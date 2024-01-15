@@ -7,7 +7,7 @@
 
 namespace App\Actions\CRM\CustomerWebsite\Hydrators;
 
-use App\Models\Portfolios\CustomerWebsite;
+use App\Models\CRM\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CustomerWebsiteHydrateUniversalSearch

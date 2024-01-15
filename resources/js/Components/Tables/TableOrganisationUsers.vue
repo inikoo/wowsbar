@@ -8,7 +8,6 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {User} from "@/types/user";
-import {trans} from "laravel-vue-i18n";
 import Image from "@/Components/Image.vue";
 import Tag from "@/Components/Tag.vue"
 
@@ -30,14 +29,14 @@ function userRoute(user: User) {
     }
 }
 
-function setColor(status: status) {
-    switch (status) {
-        case 'Active':
-            return '#87d068';
-        case 'Suspended':
-            return '#ff5500';
-    }
-}
+// function setColor(status: status) {
+//     switch (status) {
+//         case 'Active':
+//             return '#87d068';
+//         case 'Suspended':
+//             return '#ff5500';
+//     }
+// }
 
 </script>
 
@@ -51,7 +50,7 @@ function setColor(status: status) {
 
         <template #cell(avatar)="{ item: user }">
             <div class="flex justify-center">
-                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full" :alt="user.username"/>
+                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full overflow-hidden" :alt="user.username"/>
             </div>
         </template>
 
@@ -61,7 +60,7 @@ function setColor(status: status) {
 
         <template #cell(roles)="{ item: user }">
             <div class="space-y-1">
-                <Tag v-for="abcde in user.roles.split(',')" stringToColor :label="abcde">{{ abcde }}</Tag>
+                <Tag class="mr-1" v-for="role in user.roles" stringToColor :label="role">{{ role }}</Tag>
             </div>
         </template>
     </Table>

@@ -111,7 +111,7 @@ class IndexOrganisationUsers extends InertiaAction
             $table
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
-                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
+                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'], type: 'avatar')
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)

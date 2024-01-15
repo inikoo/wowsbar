@@ -10,7 +10,7 @@ namespace App\Actions\UI\Organisation\Profile;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
-use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\Auth\OrganisationUserResource;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
@@ -28,9 +28,9 @@ class ShowProfile
         return $request->user();
     }
 
-    public function jsonResponse(OrganisationUser $organisationUser): UserResource
+    public function jsonResponse(OrganisationUser $organisationUser): OrganisationUserResource
     {
-        return new UserResource($organisationUser);
+        return new OrganisationUserResource($organisationUser);
     }
 
     public function htmlResponse(OrganisationUser $organisationUser, ActionRequest $request): Response
@@ -42,7 +42,7 @@ class ShowProfile
                 "about"  => [
                     "type"  => "textarea",
                     "label" => __("about"),
-                    "value" => $organisationUser->about,
+                    "value" => $organisationUser->about ?? '',
                 ],
                 "avatar" => [
                     "type"  => "avatar",
@@ -74,6 +74,19 @@ class ShowProfile
                     "value"    => $organisationUser->language_id,
                     "options"  => GetLanguagesOptions::make()->translated(),
                     "canClear" => false
+                ],
+            ]
+        ];
+
+        $sections['app'] = [
+            'label'  => __('App'),
+            'icon'   => 'fal fa-mobile-android-alt',
+            'fields' => [
+                "app_login" => [
+                    "type"          => "app_login",
+                    "label"         => __("App login"),
+                    "noSaveButton"  => true,
+                    "noTitle"       => true,
                 ],
             ]
         ];

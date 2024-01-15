@@ -11,7 +11,7 @@ use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\HumanResources\WorkPlaceResource;
+use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\Models\HumanResources\Workplace;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
@@ -71,8 +71,8 @@ class UpdateWorkplace
         }
     }
 
-    public function jsonResponse(Workplace $workplace): WorkPlaceResource
+    public function jsonResponse(Workplace $workplace): WorkplaceResource
     {
-        return new WorkPlaceResource($workplace);
+        return new WorkplaceResource($workplace);
     }
 }

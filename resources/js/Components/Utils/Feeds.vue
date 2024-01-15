@@ -46,7 +46,7 @@ const props = defineProps<{
 
             <!-- Condition: normal -->
             <div v-else class="flex justify-between w-full gap-x-5">
-                <div class="flex flex-col items-center text-xs leading-5 gap-x-1 gap-y-1">
+                <div class="flex flex-col items-start text-xs leading-5 gap-x-1 gap-y-1">
                     <div v-if="feed.label" class="font-semibold text-gray-600 leading-4">{{ feed.label }}</div>
                     <div class="capitalize text-gray-400 leading-4 text-xxs">{{ feed.description }}</div>
                 </div>

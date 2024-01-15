@@ -17,7 +17,7 @@ use App\Enums\UI\Organisation\WorkplaceTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\Http\Resources\HumanResources\ClockingResource;
-use App\Http\Resources\HumanResources\WorkPlaceResource;
+use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\Models\HumanResources\Workplace;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -171,9 +171,9 @@ class ShowWorkplace extends InertiaAction
     }
 
 
-    public function jsonResponse(Workplace $workplace): WorkPlaceResource
+    public function jsonResponse(Workplace $workplace): WorkplaceResource
     {
-        return new WorkPlaceResource($workplace);
+        return new WorkplaceResource($workplace);
     }
 
     public function getBreadcrumbs(Workplace $workplace, $suffix = null): array

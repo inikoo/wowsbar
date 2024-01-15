@@ -28,6 +28,7 @@ import Popover from '@/Components/Utils/Popover.vue';
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
+import { routeType } from '../../../types/route'
 
 library.add(
     faStickyNote,
@@ -54,13 +55,25 @@ const props = defineProps<{
     }
     showcase?: object
     history?: object
-    unsubscribe : object
+    unsubscribeActions: {
+        is_subscribed: boolean
+        unsubscribe: {
+            route: routeType
+            label: string
+            confirmation: string
+        }
+        undo: {
+            route: routeType
+            label: string
+            confirmation: string
+        }
+    }
 }>()
+
 let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab);
 const loading = ref(false)
 const component = computed(() => {
-
     const components = {
         showcase: ProspectShowcase,
         history: TableHistories,
@@ -69,33 +82,65 @@ const component = computed(() => {
 
 });
 
-
-const setUnsubscribe = async (close) => {
+// From subscribe to unsubscribe
+const setUnsubscribe = async (routeAction: routeType, closePopover: Function) => {
     loading.value = true
     try {
-        const response = await axios.patch(
+        await axios.patch(
             route(
-                props.unsubscribe.route.name,
-                props.unsubscribe.route.parameters
+                routeAction.name,
+                routeAction.parameters
             ),
             { data: {} }
         )
 
         notify({
             title: "Success!",
-            text: 'Successfuly to set unsubscribe.',
+            text: 'Prospect is now unsubscribe to mailshot.',
             type: "success"
         })
-        close()
+        closePopover()
         loading.value = false
-        props.showcase.info.dont_contact_me_at = 'unsubscribe'
+        props.unsubscribeActions.is_subscribed = false
 
     } catch (error) {
         console.log(error)
         loading.value = false
         notify({
             title: "Failed",
-            text: 'failed to set unsubscribe',
+            text: 'Failed to set unsubscribe.',
+            type: "error"
+        });
+    }
+}
+
+// From unsubscribe to subscribe
+const setSubscribe = async (routeAction: routeType, closePopover: Function) => {
+    loading.value = true
+    try {
+        await axios.patch(
+            route(
+                routeAction.name,
+                routeAction.parameters
+            ),
+            { data: {} }
+        )
+
+        notify({
+            title: "Success!",
+            text: 'Prospect is now subscribe to mailshot🥳',
+            type: "success"
+        })
+        closePopover()
+        loading.value = false
+        props.unsubscribeActions.is_subscribed = true
+
+    } catch (error) {
+        console.log(error)
+        loading.value = false
+        notify({
+            title: "Failed",
+            text: 'Failed to set the user to subscribe.',
             type: "error"
         });
     }
@@ -104,22 +149,43 @@ const setUnsubscribe = async (close) => {
 </script>
 
 <template layout="OrgApp">
+    <!-- aa<pre>{{ unsubscribeActions.is_subscribed }}</pre>dd -->
+    <!-- <pre>{{ unsubscribeActions }}</pre> -->
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template v-if="!showcase.info.dont_contact_me_at" #other>
-            <div>
-                <Popover :width="'w-full'" position="right-[20px]" ref="_popover">
-                    <template #button>
-                        <div class="relative">
-                            <Button :style="'tertiary'">Unsubscribe</Button>
+        <template #other>
+            <!-- If subscribed -->
+            <div v-if="unsubscribeActions.is_subscribed" class="relative">
+                <Popover :width="'w-full'" position="right-[0px]" ref="_popover">
+                    <template #button="{ open: openPopover }">
+                        <Button :style="openPopover ? 'gray' : 'tertiary'" :key="openPopover+'unsubscribe'">{{ unsubscribeActions.unsubscribe.label }}</Button>
+                    </template>
+
+                    <template #content="{ close: closePopover }">
+                        <div class="p-2 w-64">
+                            <p class="mb-2 text-gray-500 text-xs">{{ unsubscribeActions.unsubscribe.confirmation }}</p>
+                            <div class="flex justify-end gap-2">
+                                <Button :style="'tertiary'" size="xs" @click="closePopover()" label="Cancel"></Button>
+                                <Button size="xs" @click="setUnsubscribe(unsubscribeActions.unsubscribe.route, closePopover)" :loading="loading" label="Unsubscribe"/>
+                            </div>
                         </div>
                     </template>
-                    <template #content="{ close: closed }">
+                </Popover>
+            </div>
+            
+            <!-- If already unsubscribed -->
+            <div v-else class="relative">
+                <Popover :width="'w-full'" position="right-[0px]" ref="_popover">
+                    <template #button="{ open: openPopover }">
+                        <Button :style="openPopover ? 'gray' : 'tertiary'" :key="openPopover+'unsubscribe'">{{ unsubscribeActions.undo.label }}</Button>
+                    </template>
+
+                    <template #content="{ close: closePopover }">
                         <div class="p-2 w-64">
-                            <p class="mb-2 text-gray-500 text-xs">{{trans('Are you sure you want to unsubscribe this prospect?')}}</p>
+                            <p class="mb-2 text-gray-500 text-xs">{{ unsubscribeActions.undo.confirmation }}</p>
                             <div class="flex justify-end gap-2">
-                                <Button :style="'tertiary'" size="xs" @click="closed()" label="Cancel"></Button>
-                                <Button size="xs" @click="setUnsubscribe(closed)" :loading="loading" label="Ok"/>
+                                <Button :style="'tertiary'" size="xs" @click="closePopover()" label="Cancel"></Button>
+                                <Button size="xs" @click="setSubscribe(unsubscribeActions.undo.route, closePopover)" :loading="loading" label="Resubscribe"/>
                             </div>
                         </div>
                     </template>

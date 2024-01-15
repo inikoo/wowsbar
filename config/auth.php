@@ -44,23 +44,18 @@ return [
     */
 
     'guards' => [
-      /*
-        'web' => [
+
+        'customer'     => [
             'driver'   => 'session',
             'provider' => 'users',
         ],
-      */
-        'customer' => [
-            'driver'   => 'session',
-            'provider' => 'users',
-        ],
-        'org' => [
+        'org'          => [
             'driver'   => 'session',
             'provider' => 'org_users',
         ],
-      'broadcasting' => [
-          'driver' => 'websockets-auth',
-      ],
+        'broadcasting' => [
+            'driver' => 'websockets-auth',
+        ],
     ],
 
     /*
@@ -81,7 +76,7 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'users'     => [
             'driver' => 'eloquent',
             'model'  => User::class,
         ],

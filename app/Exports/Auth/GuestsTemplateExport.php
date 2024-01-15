@@ -7,10 +7,9 @@
 
 namespace App\Exports\Auth;
 
-use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class GuestsTemplateExport extends Factory implements FromArray
+class GuestsTemplateExport implements FromArray
 {
     public function array(): array
     {

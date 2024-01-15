@@ -8,10 +8,17 @@
 namespace App\Actions\HumanResources\ClockingMachine;
 
 use App\Actions\HumanResources\ClockingMachine\Hydrators\ClockingMachineHydrateUniversalSearch;
+use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateClockingMachines;
+use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateClockingMachines;
+use App\Enums\HumanResources\ClockingMachine\ClockingMachineTypeEnum;
+use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -25,9 +32,19 @@ class StoreClockingMachine
 
     public function handle(Workplace $workplace, array $modelData): ClockingMachine
     {
-        /** @var \App\Models\HumanResources\ClockingMachine $clockingMachine */
-        $clockingMachine =  $workplace->clockingMachines()->create($modelData);
+
+        if (Arr::get($modelData, 'type') == ClockingMachineTypeEnum::STATIC_NFC->value) {
+            data_set($modelData, 'data.nfc_tag', $this->get('nfc_tag'));
+            Arr::forget($modelData, 'nfc_tag');
+        }
+
+
+        /** @var ClockingMachine $clockingMachine */
+        $clockingMachine = $workplace->clockingMachines()->create($modelData);
+        OrganisationHydrateClockingMachines::dispatch();
+        WorkplaceHydrateClockingMachines::dispatch($workplace);
         ClockingMachineHydrateUniversalSearch::dispatch($clockingMachine);
+
         return $clockingMachine;
     }
 
@@ -44,15 +61,34 @@ class StoreClockingMachine
     public function rules(): array
     {
         return [
-            'code'  => ['required', 'iunique:clocking_machines', 'between:2,64', 'alpha_dash'],
+            'name'    => ['required', 'iunique:clocking_machines', 'max:64', 'string'],
+            'type'    => ['required', Rule::enum(ClockingMachineTypeEnum::class)],
+            'nfc_tag' => ['sometimes', 'string'],
+
         ];
+    }
+
+    public function afterValidator(Validator $validator, ActionRequest $request): void
+    {
+        if ($this->get('type') == ClockingMachineTypeEnum::STATIC_NFC && empty($this->get('nfc_tag'))) {
+            $validator->errors()->add('nfc_tag', 'Invalid NFC Tag');
+        }
     }
 
     public function asController(Workplace $workplace, ActionRequest $request): ClockingMachine
     {
-        $request->validate();
+        $this->fillFromRequest($request);
 
-        return $this->handle($workplace, $request->validated());
+        return $this->handle($workplace, $this->validateAttributes());
+    }
+
+    public function action(Workplace $workplace, array $objectData): ClockingMachine
+    {
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($workplace, $validatedData);
     }
 
     public function htmlResponse(ClockingMachine $clockingMachine): RedirectResponse
@@ -66,12 +102,10 @@ class StoreClockingMachine
         );
     }
 
-    public function action(Workplace $workplace, array $objectData): ClockingMachine
+    public function jsonResponse(ClockingMachine $clockingMachine): ClockingMachineResource
     {
-        $this->asAction = true;
-        $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
-
-        return $this->handle($workplace, $validatedData);
+        return ClockingMachineResource::make($clockingMachine);
     }
+
+
 }
