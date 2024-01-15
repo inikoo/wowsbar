@@ -65,7 +65,7 @@ class ShowClockingMachine extends InertiaAction
                             'icon'  => ['fal', 'fa-chess-clock'],
                             'title' => __('clocking machines')
                         ],
-                    'title'   => $clockingMachine->code,
+                    'title'   => $clockingMachine->name,
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -207,14 +207,14 @@ class ShowClockingMachine extends InertiaAction
 
     public function getPrevious(ClockingMachine $clockingMachine, ActionRequest $request): ?array
     {
-        $previous = ClockingMachine::where('code', '<', $clockingMachine->code)->orderBy('code', 'desc')->first();
+        $previous = ClockingMachine::where('name', '<', $clockingMachine->name)->orderBy('name', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(ClockingMachine $clockingMachine, ActionRequest $request): ?array
     {
-        $next = ClockingMachine::where('code', '>', $clockingMachine->code)->orderBy('code')->first();
+        $next = ClockingMachine::where('name', '>', $clockingMachine->name)->orderBy('name')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
@@ -227,7 +227,7 @@ class ShowClockingMachine extends InertiaAction
 
         return match ($routeName) {
             'org.hr.clocking-machines.show' => [
-                'label' => $clockingMachine->code,
+                'label' => $clockingMachine->name,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
@@ -237,7 +237,7 @@ class ShowClockingMachine extends InertiaAction
                 ]
             ],
             'org.hr.workplaces.show.clocking-machines.show' => [
-                'label' => $clockingMachine->code,
+                'label' => $clockingMachine->name,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [

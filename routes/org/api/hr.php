@@ -5,8 +5,11 @@
  * Copyright (c) 2024, Raul A Perusquia Flores
  */
 
+
+use App\Actions\HumanResources\Clocking\StoreClockingFromClockingMachine;
 use App\Actions\HumanResources\ClockingMachine\StoreClockingMachine;
 use App\Actions\HumanResources\ClockingMachine\UI\IndexClockingMachines;
+use App\Actions\HumanResources\ClockingMachine\UI\ShowClockingMachine;
 use App\Actions\HumanResources\Workplace\UI\IndexWorkplaces;
 use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 
@@ -16,3 +19,5 @@ Route::get('workplaces/{workplace:id}/clocking-machines', [IndexClockingMachines
 Route::post('workplaces/{workplace:id}/clocking-machines', StoreClockingMachine::class)->name('workplaces.show.clocking-machines.store');
 
 Route::get('clocking-machines', [IndexClockingMachines::class,'inOrganisation'])->name('clocking-machines.index');
+Route::get('clocking-machines/{clockingMachine:id}', [ShowClockingMachine::class,'inOrganisation'])->name('clocking-machines.show');
+Route::post('clocking-machines/{clockingMachine:id}/clockings', StoreClockingFromClockingMachine::class)->name('clocking-machines.show.clockings.store');

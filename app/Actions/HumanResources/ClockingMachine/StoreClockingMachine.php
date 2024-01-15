@@ -78,7 +78,6 @@ class StoreClockingMachine
     public function asController(Workplace $workplace, ActionRequest $request): ClockingMachine
     {
         $this->fillFromRequest($request);
-
         return $this->handle($workplace, $this->validateAttributes());
     }
 

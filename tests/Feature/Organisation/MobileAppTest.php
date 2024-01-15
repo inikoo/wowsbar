@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
 
@@ -13,6 +14,8 @@ use App\Enums\HumanResources\ClockingMachine\ClockingMachineTypeEnum;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\Assets\Timezone;
 use App\Models\Helpers\Address;
+use App\Models\HumanResources\ClockingMachine;
+use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\Workplace;
 use App\Models\SysAdmin\Organisation;
 use Laravel\Sanctum\Sanctum;
@@ -41,10 +44,10 @@ beforeEach(function () {
 
     if (!Workplace::where('name', 'office')->exists()) {
         $modelData = [
-            'name'       => 'office',
-            'type'       => WorkplaceTypeEnum::BRANCH,
-            'address'    => Address::factory()->definition(),
-            'timezone_id'=> Timezone::where('name', 'Asia/Kuala_Lumpur')->first()->id
+            'name'        => 'office',
+            'type'        => WorkplaceTypeEnum::BRANCH,
+            'address'     => Address::factory()->definition(),
+            'timezone_id' => Timezone::where('name', 'Asia/Kuala_Lumpur')->first()->id
         ];
 
         StoreWorkplace::make()->action($modelData);
@@ -142,7 +145,7 @@ test('get working places list', function () {
         ->toHaveCount(1);
 });
 
-test('get working place data', function () {
+test('get workplace data', function () {
     Sanctum::actingAs(
         $this->organisationUser,
         ['*']
@@ -210,4 +213,54 @@ test('get clocking machines list in working place', function () {
     expect($response->json('data'))->toBeArray()
         ->and($response->json('data'))
         ->toHaveCount(1);
+});
+
+test('get clocking machine data', function () {
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+
+    $clockingMachine = ClockingMachine::first();
+
+    $response = getJson(route('mobile-app.hr.clocking-machines.show', [$clockingMachine->id]));
+    $response->assertOk();
+
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'))
+        ->id->toBe($clockingMachine->id)
+        ->name->toBe($clockingMachine->name);
+});
+
+test('create clocking', function () {
+    Sanctum::actingAs(
+        $this->organisationUser,
+        ['*']
+    );
+    $clockingMachine = ClockingMachine::first();
+    $employee        = StoreEmployee::make()->action(
+        organisation(),
+        Employee::factory()->definition()
+    );
+    $response        = postJson(route('mobile-app.hr.clocking-machines.show.clockings.store', [$clockingMachine->id]), [
+        'subject_type' => 'Employee',
+        'subject_id'   => $employee->id,
+    ]);
+
+    $response->assertStatus(201);
+    ;
+
+    expect($response->json('data'))->toBeArray()
+        ->and($response->json('data'));
+
+    /** @var Organisation $organisation */
+    $organisation = $this->organisation;
+    $organisation->refresh();
+    expect($organisation->humanResourcesStats->number_clockings)->toBe(1);
+
+    /** @var Workplace $workplace */
+    $workplace = $this->workplace;
+    $workplace->refresh();
+    expect($workplace->stats->number_clockings)->toBe(1);
+
 });
