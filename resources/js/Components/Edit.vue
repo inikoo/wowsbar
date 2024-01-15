@@ -15,28 +15,9 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import { Action as TSAction } from '@/types/Action'
+import { routeType } from '@/types/route'
 
-import {
-    faWindowClose,
-    faToggleOn,
-    faEdit,
-    faUserLock,
-    faBell,
-    faCopyright,
-    faUserCircle,
-    faKey, faMobileAndroidAlt,
-    faClone,
-    faPaintBrush,
-    faMoonStars,
-    faLightbulbOn,
-    faCheck,
-    faPhone,
-    faIdCard,
-    faFingerprint,
-    faLanguage,
-    faAddressBook,
-    faTrashAlt
-} from '@fal'
+import { faWindowClose, faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faMobileAndroidAlt, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt } from '@fal'
 
 library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faMobileAndroidAlt, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
     faWindowClose)
@@ -66,10 +47,7 @@ const props = defineProps<{
             }
         }
         args: {
-            updateRoute: {
-                name: string,
-                parameters: string | string[]
-            }
+            updateRoute: routeType
         }
         title?: string
     }
