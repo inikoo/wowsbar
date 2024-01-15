@@ -68,6 +68,17 @@ class StoreClockingFromClockingMachine
         ];
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        $this->fill(
+            [
+                'subject_type' => $request->user()->parent_type,
+                'subject_id'   => $request->user()->parent_id,
+            ]
+        );
+    }
+
+
     public function asController(ClockingMachine $clockingMachine, ActionRequest $request): Clocking
     {
         $this->fillFromRequest($request);

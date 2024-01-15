@@ -243,8 +243,7 @@ test('create clocking', function () {
         Employee::factory()->definition()
     );
     $response        = postJson(route('mobile-app.hr.clocking-machines.show.clockings.store', [$clockingMachine->id]), [
-        'subject_type' => 'Employee',
-        'subject_id'   => $employee->id,
+
     ]);
 
     $response->assertStatus(201);
