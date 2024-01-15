@@ -9,6 +9,9 @@
 use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
+use App\Actions\Helpers\LiveCustomersUsersCurrentPage\DeleteLiveUsers;
+use App\Actions\Helpers\LiveCustomersUsersCurrentPage\IndexLiveCustomerUsersCurrentPage;
+use App\Actions\Helpers\LiveCustomersUsersCurrentPage\StoreCustomerLiveUsersCurrentPage;
 use App\Actions\Media\ImageGenerator;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -36,6 +39,10 @@ Route::patch('/portfolio-social-account/{portfolioSocialAccount}/post/{post}', U
 
 Route::post('/portfolio-social-account', StorePortfolioSocialAccount::class)->name('portfolio-social-account.store');
 Route::patch('/portfolio-social-account/{portfolioSocialAccount}', UpdatePortfolioSocialAccount::class)->name('portfolio-social-account.update');
+
+Route::post('live-organisation-users-current-page/{organisationUser:id}', StoreCustomerLiveUsersCurrentPage::class)->name('live-customer-users-current-page.store');
+Route::delete('live-users', DeleteLiveUsers::class)->name('live-users.delete');
+Route::get('live-organisation-users-current-page', IndexLiveCustomerUsersCurrentPage::class)->name('live-customer-users-current-page.index');
 
 Route::prefix('portfolio-website')->name('portfolio-website.')->group(function () {
     Route::post('', StorePortfolioWebsite::class)->name('store');
