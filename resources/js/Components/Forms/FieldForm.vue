@@ -9,7 +9,8 @@
 import { useForm } from '@inertiajs/vue3'
 import { useLayoutStore } from '@/Stores/layout'
 import { routeType } from '@/types/route'
-import { ref, computed, Component } from 'vue'
+import { ref, computed } from 'vue'
+import type { Component } from 'vue'
 import axios from 'axios'
 
 import Input from '@/Components/Forms/Fields/Input.vue'
@@ -162,7 +163,6 @@ const checkVerification = async () => {
             <dt v-if="!fieldData.noTitle" class="text-sm font-medium text-gray-400 capitalize">
                 <div class="inline-flex items-start leading-none"><FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>{{ fieldData.label }}</div>
             </dt>
-
 
             <dd :class="props.fieldData.full ? 'sm:col-span-3' : fieldData.noTitle ? 'sm:col-span-3' : 'sm:col-span-2'">
                 <div class="mt-1 flex items-start text-sm text-gray-700 sm:mt-0">

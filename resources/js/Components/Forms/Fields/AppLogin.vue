@@ -36,7 +36,6 @@ const qrValue = ref('')
 const fetchQrCode = async () => {
     try {
         const response = await axios.get(route('org.models.profile.app-login-qrcode'),)
-        console.log(response.data)
         qrValue.value = response.data.code.toString()
         setCountdown(120)
     } catch (error: any) {
