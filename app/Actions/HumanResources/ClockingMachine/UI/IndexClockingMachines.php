@@ -41,20 +41,7 @@ class IndexClockingMachines extends InertiaAction
         /**  @noinspection PhpUndefinedMethodInspection */
         return QueryBuilder::for(ClockingMachine::class)
             ->defaultSort('clocking_machines.name')
-            ->select(
-                [
-                    'clocking_machines.type',
-                    'clocking_machines.created_at',
-                    'clocking_machines.updated_at',
-                    'clocking_machines.data',
-                    'clocking_machines.name as name',
-                    'clocking_machines.id',
-                    'workplaces.slug as workplace_slug',
-                    'workplaces.name as workplace_name',
-                    'clocking_machines.slug'
-                ]
-            )
-            ->leftJoin('workplaces', 'clocking_machines.workplace_id', 'workplaces.id')
+            ->with('workplace')
             ->when($parent, function ($query) use ($parent) {
                 if (class_basename($parent) == 'Workplace') {
                     $query->where('clocking_machines.workplace_id', $parent->id);
