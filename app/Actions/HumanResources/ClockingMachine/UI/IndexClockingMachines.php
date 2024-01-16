@@ -43,9 +43,14 @@ class IndexClockingMachines extends InertiaAction
             ->defaultSort('clocking_machines.name')
             ->select(
                 [
+                    'clocking_machines.type',
+                    'clocking_machines.created_at',
+                    'clocking_machines.updated_at',
+                    'clocking_machines.data',
                     'clocking_machines.name as name',
                     'clocking_machines.id',
                     'workplaces.slug as workplace_slug',
+                    'workplaces.name as workplace_name',
                     'clocking_machines.slug'
                 ]
             )
