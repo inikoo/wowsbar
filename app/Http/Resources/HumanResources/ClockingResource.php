@@ -22,13 +22,16 @@ class ClockingResource extends JsonResource
 {
     public function toArray($request): array
     {
+        /** @var ClockingMachine $clockingMachine */
+        $clockingMachine = $this;
+
         return [
-            'id'                    => $this->id,
-            'slug'                  => $this->slug,
-            'type'                  => $this->type,
-            'notes'                 => $this->notes,
-            'workplace_slug'        => $this->workplace_slug,
-            'clocking_machine_slug' => $this->clocking_machine_slug,
+            'id'                    => $clockingMachine->id,
+            'slug'                  => $clockingMachine->slug,
+            'type'                  => $clockingMachine->type,
+            'notes'                 => $clockingMachine->notes,
+            'workplace_slug'        => $clockingMachine->workplace->slug,
+            'clocking_machine_slug' => $clockingMachine->slug,
         ];
     }
 }
