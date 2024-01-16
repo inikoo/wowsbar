@@ -49,16 +49,17 @@ test('check seeded job positions', function () {
 
 test('create working place successful', function () {
     $modelData = [
-        'name'    => 'office',
-        'type'    => WorkplaceTypeEnum::BRANCH,
-        'address' => Address::factory()->definition()
+        'name'        => 'office',
+        'type'        => WorkplaceTypeEnum::BRANCH,
+        'address'     => Address::factory()->definition(),
+        'timezone_id' => 1
     ];
 
     $workplace = StoreWorkplace::make()->action($modelData);
     expect($workplace)->toBeInstanceOf(Workplace::class)
         ->and(organisation()->humanResourcesStats->number_workplaces)->toBe(1)
-        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(1);
-
+        ->and(organisation()->humanResourcesStats->number_workplaces_type_branch)->toBe(1)
+        ->and(organisation()->humanResourcesStats->number_workplaces_type_home)->toBe(0);
 
     return $workplace;
 });
@@ -67,7 +68,7 @@ test('update working place successful', function ($createdWorkplace) {
     $arrayData        = [
         'name'    => 'home office',
         'type'    => WorkplaceTypeEnum::HOME,
-        'address' => Address::create(Address::factory()->definition())->toArray()
+        'address' => Address::factory()->definition()
     ];
     $updatedWorkplace = UpdateWorkplace::run($createdWorkplace, $arrayData);
 
