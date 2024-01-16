@@ -158,22 +158,24 @@ watch(() => props.modelValue, async (newVal) => {
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
                     <template v-if="[...dataHistoryFileUpload, ...echo().recentlyUploaded].length">
                         <template v-for="(history, index) in [...dataHistoryFileUpload, ...echo().recentlyUploaded]" :key="index">
-                            <component :is="history?.view_route?.name ? Link : 'div'" :href="history?.view_route?.name ? route(history.view_route.name, history.view_route.parameters) : '#'">
+                            <Link
+                                :href="history?.view_route?.name
+                                    ? route(history.view_route.name, history.view_route.parameters)
+                                    : route(dataHistoryFileUpload[0].view_route.name, {...dataHistoryFileUpload[0].view_route.parameters, upload: history.action_id})"
+                            >
                                 <div class="relative w-36 ring-1 ring-gray-300 rounded px-2 pt-2.5 pb-1 flex flex-col justify-start"
-                                    :class="history?.view_route?.name ? 'bg-white hover:bg-gray-100 border-t-[3px] border-gray-500 cursor-pointer' : ' bg-lime-50/50 border-t-[3px] border-lime-400'"
+                                    :class="history?.view_route?.name ? 'bg-white hover:bg-gray-100 border-t-[3px] border-gray-500 cursor-pointer' : ' bg-lime-50/50 hover:bg-lime-100/70 border-t-[3px] border-lime-400'"
                                 >
-                                    <!-- <a v-if="history.download_route" :href="route(history.download_route?.name, history.download_route?.parameters)" target="_blank" class="absolute top-0.5 right-2 cursor-pointer">
-                                        <Button :style="'tertiary'" icon="fas fa-download" size="xxs"/>
-                                    </a> -->
-                                    <p class="text-lg leading-none text-gray-700 font-semibold">{{ history.number_rows ?? history.total }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
+                                    <p class="text-lg leading-none text-gray-700 font-semibold">
+                                        {{ history.number_rows ?? history.total }} <span class="text-xs text-gray-500 font-normal">rows</span>
+                                    </p>
                                     <div class="flex gap-x-2">
                                         <span class="text-lime-600 text-xxs">{{ history.number_success ?? history.data.number_success }} success,</span>
                                         <span class="text-red-500 text-xxs">{{ history.number_fails ?? history.data.number_fails }} fails</span>
                                     </div>
-                                    <!-- <span class="text-gray-600 text-xs leading-none truncate">{{ history.filename }}</span> -->
                                     <span class="text-gray-400 text-xxs mt-2">{{ useFormatTime(history.uploaded_at ?? history.start_at, { formatTime: 'hms'}) }}</span>
                                 </div>
-                            </component>
+                            </Link>
                         </template>
                     </template>
                     <div v-else class="text-gray-500 text-xs">
