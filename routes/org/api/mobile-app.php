@@ -15,6 +15,9 @@ Route::name('mobile-app.')->group(function () {
         Route::prefix("hr")
             ->name("hr.")
             ->group(__DIR__."/hr.php");
+        Route::prefix("helpers")
+            ->name("helpers.")
+            ->group(__DIR__."/helpers.php");
     });
     require __DIR__."/tokens.php";
 });

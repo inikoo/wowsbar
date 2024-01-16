@@ -11,6 +11,7 @@ use App\Actions\Helpers\Address\UpdateAddress;
 use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Enums\UI\Organisation\WorkplaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\Models\HumanResources\Workplace;
@@ -55,7 +56,7 @@ class UpdateWorkplace
     {
         return [
             'name'    => ['sometimes', 'required', 'max:255'],
-            'type'    => ['sometimes', 'required', Rule::enum(WorkplaceTabsEnum::class)],
+            'type'    => ['sometimes', 'required', Rule::enum(WorkplaceTypeEnum::class)],
             'address' => ['sometimes', 'array', new ValidAddress()]
         ];
     }
