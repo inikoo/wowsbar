@@ -33,10 +33,10 @@ class WorkplaceResource extends JsonResource
             'location'                                 => $workplace->location,
             'timezone'                                 => $workplace->timezone_id ? TimezoneResource::make($workplace->timezone)->getArray() : null,
             'address'                                  => $workplace->address_id ? AddressResource::make($workplace->address)->getArray() : null,
-            'number_clocking_machines'                 => $workplace->stats->number_clocking_machines,
-            'number_clocking_machines_type_static_nfc' => $workplace->stats->number_clocking_machines_type_static_nfc,
-            'number_clocking_machines_type_mobile_app' => $workplace->stats->number_clocking_machines_type_mobile_app,
-            'number_clockings'                         => $workplace->stats->number_clockings,
+            'number_clocking_machines'                 => $workplace->stats?->number_clocking_machines,
+            'number_clocking_machines_type_static_nfc' => $workplace->stats?->number_clocking_machines_type_static_nfc,
+            'number_clocking_machines_type_mobile_app' => $workplace->stats?->number_clocking_machines_type_mobile_app,
+            'number_clockings'                         => $workplace->stats?->number_clockings,
         ];
     }
 }
