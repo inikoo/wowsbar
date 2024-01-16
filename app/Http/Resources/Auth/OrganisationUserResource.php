@@ -24,6 +24,7 @@ class OrganisationUserResource extends JsonResource
             'id'           => $organisationUser->id,
             'slug'         => $organisationUser->slug,
             'username'     => $organisationUser->username,
+            'about'        => $organisationUser->about,
             'email'        => $organisationUser->email,
             'avatar'       => $organisationUser->avatarImageSources(48, 48),
             'contact_name' => $organisationUser->contact_name,
