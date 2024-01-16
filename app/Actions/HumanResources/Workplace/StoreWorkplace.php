@@ -68,7 +68,7 @@ class StoreWorkplace
             'name'        => ['required', 'max:255', new IUnique('workplaces')],
             'type'        => ['required', new Enum(WorkplaceTypeEnum::class)],
             'address'     => ['required', new ValidAddress()],
-            'timezone_id' => ['required', 'exists:timezones,id']
+            'timezone_id' => ['sometimes', 'nullable', 'exists:timezones,id']
         ];
     }
 

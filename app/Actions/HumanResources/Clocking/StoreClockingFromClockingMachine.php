@@ -32,9 +32,8 @@ class StoreClockingFromClockingMachine
     public function handle(ClockingMachine $clockingMachine, array $modelData): Clocking
     {
         $modelData['workplace_id'] = $clockingMachine->workplace_id;
-
-        $modelData['clocked_at'] = date('Y-m-d H:i:s');
-        $modelData['type']       = ClockingTypeEnum::CLOCKING_MACHINE;
+        $modelData['clocked_at']   = date('Y-m-d H:i:s');
+        $modelData['type']         = ClockingTypeEnum::CLOCKING_MACHINE;
 
         data_set($modelData, 'generator_type', Arr::get($modelData, 'subject_type'));
         data_set($modelData, 'generator_id', Arr::get($modelData, 'subject_id'));

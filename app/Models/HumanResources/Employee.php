@@ -70,6 +70,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $tasks_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\HumanResources\Workplace|null $workplace
+ * @method static \Database\Factories\HumanResources\EmployeeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee onlyTrashed()

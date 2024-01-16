@@ -7,13 +7,16 @@
 
 namespace App\Actions\HumanResources\Workplace;
 
-use App\Actions\Helpers\Address\StoreAddressAttachToModel;
+use App\Actions\Helpers\Address\UpdateAddress;
 use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\UI\Organisation\WorkplaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\Models\HumanResources\Workplace;
+use App\Rules\ValidAddress;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWorkplace
@@ -26,16 +29,16 @@ class UpdateWorkplace
         Arr::forget($modelData, 'address');
 
         $workplace = $this->update($workplace, $modelData, ['data']);
-
-        if ($addressData) {
-            StoreAddressAttachToModel::run($workplace, $addressData, ['scope' => 'contact']);
-
-            $workplace->location = $workplace->getLocation();
-            $workplace->save();
-        }
         if ($workplace->wasChanged('type')) {
             OrganisationHydrateWorkplaces::run();
         }
+
+        if ($addressData) {
+            UpdateAddress::run($workplace->address, $addressData);
+            $workplace->location = $workplace->address->getLocation();
+            $workplace->save();
+        }
+
 
         WorkplaceHydrateUniversalSearch::dispatch($workplace);
 
@@ -52,8 +55,8 @@ class UpdateWorkplace
     {
         return [
             'name'    => ['sometimes', 'required', 'max:255'],
-            'type'    => ['sometimes', 'required'],
-            'address' => ['sometimes', 'required']
+            'type'    => ['sometimes', 'required', Rule::enum(WorkplaceTabsEnum::class)],
+            'address' => ['sometimes', 'array', new ValidAddress()]
         ];
     }
 
