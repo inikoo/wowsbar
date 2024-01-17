@@ -15,6 +15,7 @@ use App\Models\HumanResources\Clocking;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
 use App\Rules\PolyExist;
+use App\Rules\HasClocked;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -61,9 +62,8 @@ class StoreClockingFromClockingMachine
     public function rules(): array
     {
         return [
-            'subject_type' => ['required', 'string', new PolyExist()],
-            'subject_id'   => ['required', 'integer'],
-
+            'subject_type' => ['required', 'string', new PolyExist(), new HasClocked()],
+            'subject_id'   => ['required', 'integer']
         ];
     }
 

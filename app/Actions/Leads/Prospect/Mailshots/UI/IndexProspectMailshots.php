@@ -55,7 +55,8 @@ class IndexProspectMailshots extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(Mailshot::class)
             ->leftJoin('mailshot_stats', 'mailshot_stats.mailshot_id', 'mailshots.id')
-            ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
+            ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT)
+            ->orderBy('mailshots.sent_at', 'desc');
 
         $queryBuilder->where('parent_id', $shop->id);
 

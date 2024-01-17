@@ -272,6 +272,8 @@ class ShowProspectMailshot extends InertiaAction
         $layout = $mailshot->layout;
         $html   = Arr::get($layout, 'html');
 
+        dd(Arr::get($html, 'html'));
+
         return [
             'sender'    => $mailshot->sender(),
             'subject'   => $mailshot->subject,

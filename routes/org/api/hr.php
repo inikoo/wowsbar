@@ -25,3 +25,5 @@ Route::post('workplaces/{workplace:id}/clocking-machines', StoreClockingMachine:
 Route::get('clocking-machines', [IndexClockingMachines::class,'inOrganisation'])->name('clocking-machines.index');
 Route::get('clocking-machines/{clockingMachine:id}', [ShowClockingMachine::class,'inOrganisation'])->name('clocking-machines.show');
 Route::post('clocking-machines/{clockingMachine:id}/clockings', StoreClockingFromClockingMachine::class)->name('clocking-machines.show.clockings.store');
+
+Route::post('clockings', StoreClockingFromClockingMachine::class)->name('clockings.store');
