@@ -108,7 +108,7 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('-date')
-            ->allowedSorts(['name', 'date'])
+            ->allowedSorts(['name', 'date', 'number_views'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -170,7 +170,7 @@ class IndexBanners extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'views', label: __('views'), sortable: true)
+                ->column(key: 'number_views', label: __('views'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image']);
             if (class_basename($parent) != 'PortfolioWebsite') {
                 $table->column(key: 'websites', label: __('websites'));

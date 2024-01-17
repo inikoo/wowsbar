@@ -44,7 +44,7 @@ class BannersResource extends JsonResource
             'image'              => $image ? GetPictureSources::run($image) : null,
             'websites'           => json_decode($this->websites),
             'date'               => $banner->date,
-            'views'              => $banner->number_views,
+            'number_views'       => $banner->number_views,
             'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
 
 
