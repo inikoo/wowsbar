@@ -179,7 +179,7 @@ const selectedBox: selectedJob = reactive({})
 // To preserved on first load (so the box is selected)
 for (const key in optionsJob) {
     for (const item of optionsJob[key as keyof selectedJob]) {
-        if ((props.form[props.fieldName].map((option: any) => option = option.code)).includes(item.code)) {
+        if (props.form[props.fieldName].includes(item.code)) {
             selectedBox[key as keyof selectedJob] = item.code;
         }
     }

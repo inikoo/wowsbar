@@ -93,7 +93,7 @@ class EditEmployee extends InertiaAction
                     'label'       => __('position'),
                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                     'placeholder' => __('Select a job position'),
-                    'value'       => $employee->jobPositions,
+                    'value'       => $employee->jobPositions()->pluck('slug'),
                 ],
                 'job_title'           => [
                     'type'        => 'input',
