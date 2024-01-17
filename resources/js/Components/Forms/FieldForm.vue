@@ -119,7 +119,9 @@ const form = useForm(formFields)
 form['fieldType'] = 'edit'
 
 function submit() {
-    form.post(route(updateRoute.name, updateRoute.parameters))
+    form.post(route(updateRoute.name, updateRoute.parameters), {
+        preserveScroll: true,
+    })
 }
 
 

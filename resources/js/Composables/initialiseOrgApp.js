@@ -84,18 +84,15 @@ export const initialiseOrgApp = () => {
             layout.app = usePage().props.app
         }
 
-        layout.systemName = 'org'
-
         layout.currentRouteParameters = route().params
         layout.currentRoute = route().current()
 
-        let moduleName = layout.currentRoute.split(".")
-        layout.currentModule = moduleName[1]
-
+        layout.systemName = 'org'
+        let moduleName = (layout.currentRoute || '').split(".")
+        layout.currentModule = moduleName.length > 1 ? moduleName[1] : ''
 
         layout.booted = true
-
-
     })
+
     return layout
 }

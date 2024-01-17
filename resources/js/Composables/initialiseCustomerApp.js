@@ -41,8 +41,8 @@ export const initialiseCustomerApp = () => {
         layout.currentRoute = route().current();
 
 
-        let moduleName = layout.currentRoute.split('.');
-        layout.currentModule = moduleName[1];
+        let moduleName = (layout.currentRoute || '').split(".")
+        layout.currentModule = moduleName.length > 1 ? moduleName[1] : ''
 
         if(layout.currentModule==='portfolio'){
             layout.currentModule = moduleName[2];
