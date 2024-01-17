@@ -33,6 +33,7 @@ yarn-error.log
 /resources/private/
 lang/php_*.json
 deploy.sh
+deploy_production.sh
 /delete-bucket.sh
 /.env.local
 /.env.prod
