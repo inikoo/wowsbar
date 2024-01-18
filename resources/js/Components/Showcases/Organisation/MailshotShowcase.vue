@@ -136,24 +136,23 @@ const locale = useLocaleStore();
                 </div>
             </div>
 
-
             <!-- Box -->
             <dl class="mt-5 grid grid-flow-col grid-rows-2 md:grid-rows-1 gap-[1px] overflow-hidden rounded-lg bg-gray-200 shadow">
                 <!-- Recipient -->
                 <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
                     <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
-                        <dd class="qwezxc relative mt-0.5 flex items-baseline justify-between md:block lg:flex">
-                            <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
-                                <span class="mr-6">
-                                    <!-- Displaying the number -->
-                                    {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
-                                </span>
-                                <span class="absolute top-1/2 -translate-y-1/2 right-0 flex items-center justify-end qwezxc">
-                                    <!-- Conditionally rendering spinner icon -->
-                                    <FontAwesomeIcon v-if="data.state == 'sending'" icon="fad fa-spinner-third" class="h-4 animate-spin" aria-hidden="true" />
-                                </span>
-                            </div>
-                        </dd>
+                    <dd class="relative mt-0.5 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
+                            <span class="mr-6">
+                                <!-- Displaying the number -->
+                                {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
+                            </span>
+                            <span class="absolute top-1/2 -translate-y-1/2 right-0 flex items-center justify-end">
+                                <!-- Conditionally rendering spinner icon -->
+                                <FontAwesomeIcon v-if="data.state == 'sending'" icon="fad fa-spinner-third" class="h-4 animate-spin" aria-hidden="true" />
+                            </span>
+                        </div>
+                    </dd>
                 </div>
 
                 <!-- Bounce -->
