@@ -15,9 +15,9 @@ enum TimeTrackingStatusEnum: string
 
     case CREATING = 'creating';
 
-    case OPEN = 'open';
+    case IN = 'in';
 
-    case CLOSED = 'closed';
+    case OUT = 'out';
 
     case ERROR = 'error';
 

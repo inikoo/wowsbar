@@ -9,12 +9,16 @@ namespace App\Models\Auth;
 
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\HumanResources\JobPosition;
+use App\Models\HumanResources\TimeTracking;
 use App\Models\Tasks\Task;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -173,5 +177,10 @@ class Guest extends Model implements HasMedia, Auditable
     public function tasks(): MorphToMany
     {
         return $this->morphToMany(Task::class, 'author');
+    }
+
+    public function timeTracking(): HasOne
+    {
+        return $this->hasOne(TimeTracking::class);
     }
 }
