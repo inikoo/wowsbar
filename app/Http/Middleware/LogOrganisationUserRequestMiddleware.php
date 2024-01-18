@@ -17,9 +17,15 @@ class LogOrganisationUserRequestMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+
+        if(!str_starts_with($request->route()->getName(), 'org.')) {
+            return $next($request);
+        }
+
         if($request->route()->getName()=='org.logout') {
             return $next($request);
         }
+
 
         /* @var OrganisationUser $organisationUser */
         $organisationUser = $request->user();
