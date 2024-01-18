@@ -103,6 +103,7 @@ const locale = useLocaleStore();
 
 <template>
     <div class="relative">
+    <!-- <pre>{{ data.state }}</pre> -->
         <!-- <Teleport to="#LabelEstimatedProgressLine">
             <ProgressLine :total="data.stats.number_dispatched_emails" :success="data.stats.number_delivered_emails" :fails="0" />
         </Teleport> -->
@@ -141,15 +142,15 @@ const locale = useLocaleStore();
                 <!-- Recipient -->
                 <div class="bg-white px-4 py-5 sm:px-4 sm:pt-3 sm:pb-2">
                     <dt class="text-gray-400 capitalize text-sm">Recipient</dt>
-                        <dd class="mt-0.5 flex items-baseline justify-between md:block lg:flex relative">
+                        <dd class="qwezxc relative mt-0.5 flex items-baseline justify-between md:block lg:flex">
                             <div class="flex items-baseline text-2xl font-semibold text-org-600 tabular-nums">
                                 <span class="mr-6">
                                     <!-- Displaying the number -->
                                     {{ locale.number(data.sent_at ? data.stats.number_dispatched_emails : data.stats.number_estimated_dispatched_emails ?? 0) }}
                                 </span>
-                                <span class="absolute top-1 right-0 flex items-center justify-end">
+                                <span class="absolute top-1/2 -translate-y-1/2 right-0 flex items-center justify-end qwezxc">
                                     <!-- Conditionally rendering spinner icon -->
-                                    <FontAwesomeIcon v-if="!data.sent_at" icon="fad fa-spinner-third" class="h-4 animate-spin" aria-hidden="true" />
+                                    <FontAwesomeIcon v-if="data.state == 'sending'" icon="fad fa-spinner-third" class="h-4 animate-spin" aria-hidden="true" />
                                 </span>
                             </div>
                         </dd>
