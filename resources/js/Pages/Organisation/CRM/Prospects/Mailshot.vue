@@ -71,10 +71,10 @@ const component = computed(() => {
 
     const components = {
         showcase: MailshotShowcase,
+        recipients: TableDispatchedEmails,
         email: EmailPreview,
-        details: ModelDetails,
         changelog: TableHistories,
-        recipients: TableDispatchedEmails
+        details: ModelDetails,
     };
     return components[currentTab.value];
 

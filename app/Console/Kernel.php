@@ -27,15 +27,11 @@ class Kernel extends ConsoleKernel
         $schedule->job(SendMailshotScheduled::makeJob())
             ->name(SendMailshotScheduled::class)
             ->everyMinute();
-
         $schedule->job(CheckPendingSenderEmailVerifications::makeJob())
             ->name(CheckPendingSenderEmailVerifications::class)
-            ->everyMinute();
-
-
+            ->everyFourHours();
 
     }
-
 
     protected function commands(): void
     {
