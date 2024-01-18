@@ -5,25 +5,23 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import { faTags} from '@fal';
+import { Head } from '@inertiajs/vue3'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTags, faChair, faSeedling, faThumbsDown, faLaugh } from '@fal'
 import { capitalize } from "@/Composables/capitalize"
 
-import PageHeading from '@/Components/Headings/PageHeading.vue';
+import PageHeading from '@/Components/Headings/PageHeading.vue'
 
 
-import { computed, defineAsyncComponent, ref } from "vue";
-import { useTabChange } from "@/Composables/tab-change";
-import ModelDetails from "@/Components/ModelDetails.vue";
+import { computed, defineAsyncComponent, ref } from "vue"
+import { useTabChange } from "@/Composables/tab-change"
+import ModelDetails from "@/Components/ModelDetails.vue"
 
-import Tabs from "@/Components/Navigation/Tabs.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
-import TableProspects from "@/Components/Tables/TableProspects.vue";
+import Tabs from "@/Components/Navigation/Tabs.vue"
+import TableHistories from "@/Components/Tables/TableHistories.vue"
+import TableProspects from "@/Components/Tables/TableProspects.vue"
 
-library.add(
-   faTags
-)
+library.add( faTags, faChair, faSeedling, faThumbsDown, faLaugh )
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Components/ModelChangelog.vue'))
 
@@ -31,11 +29,11 @@ const props = defineProps<{
     title: string,
     pageHead: object,
     tabs: {
-        current: string;
-        navigation: object;
+        current: string
+        navigation: object
     },
     history?: object
-    prospects?:object
+    prospects?: object
     tags: {
         id: number
         slug: string
@@ -45,8 +43,8 @@ const props = defineProps<{
 
 }>()
 
-let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+let currentTab = ref(props.tabs.current)
+const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
 
@@ -54,8 +52,8 @@ const component = computed(() => {
         details: ModelDetails,
         history: TableHistories,
         prospects: TableProspects
-    };
-    return components[currentTab.value];
+    }
+    return components[currentTab.value]
 
 });
 
@@ -64,6 +62,6 @@ const component = computed(() => {
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" />
     <component :is="component" :tab="currentTab" :data="props[currentTab]" :tagsList="[tags]"></component>
 </template>

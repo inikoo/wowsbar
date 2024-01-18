@@ -5,20 +5,20 @@
   -->
 
 <script setup lang="ts">
-import {ref, Ref} from 'vue'
-import {Link} from '@inertiajs/vue3'
+import { ref, Ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
-import {Prospect} from "@/types/prospect"
-import {trans} from "laravel-vue-i18n"
+import { Prospect } from "@/types/prospect"
+import { trans } from "laravel-vue-i18n"
 import Multiselect from '@vueform/multiselect'
 import axios from 'axios'
-import {notify} from '@kyvg/vue3-notification'
+import { notify } from '@kyvg/vue3-notification'
 import CopyButton from '@/Components/Utils/CopyButton.vue'
 
 import Tag from '@/Components/Tag.vue'
-import Icon from "@/Components/Icon.vue";
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice} from '@fal'
+import Icon from "@/Components/Icon.vue"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice } from '@fal'
 
 library.add(faPoo, faCommentDots, faSeedling, faCommentExclamation, faSignIn, faFileInvoice)
 
