@@ -121,13 +121,13 @@ watch(value.value, (newValue) => {
         <!-- Icon: Email -->
         <div v-if="option.constrains.can_contact_by.fields.length > 0" class="inline-flex items-start">
             <div class="relative inline-flex">
-                <Popover :width="'w-full'" position="right-[-60px] top-[-70px]" ref="_popover">
-                    <template #button>
+                <!-- <Popover :width="'w-full'" position="right-[-60px] top-[-70px]" ref="_popover"> -->
+                    <!-- <template #button> -->
                         <div class="relative" title="testing email">
                             <font-awesome-icon :icon="['fas', 'paper-plane']" />
                         </div>
-                    </template>
-                    <template #content="{ close: closed }">
+                    <!-- </template> -->
+                    <!-- <template #content="{ close: closed }">
                         <div class="flex gap-2">
                             <div v-for="(item, index) in option.constrains.can_contact_by.fields">
                                 <Tag :theme="index + 1" size="sm">
@@ -140,8 +140,8 @@ watch(value.value, (newValue) => {
                             </div>
                         </div>
 
-                    </template>
-                </Popover>
+                    </template> -->
+                <!-- </Popover> -->
             </div>
         </div>
         <p v-if="!option.has_arguments" class="text-gray-500">{{ trans('(Not contacted yet)') }}</p>

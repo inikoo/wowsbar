@@ -11,6 +11,7 @@ import { useLocaleStore } from "@/Stores/locale"
 import { Link } from '@inertiajs/vue3'
 import { faEnvelope, faAsterisk } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import Tag from '@/Components/Tag.vue'
 library.add(faEnvelope, faAsterisk)
 
 const props = defineProps<{
@@ -41,7 +42,7 @@ function tagRoute(tag: object) {
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(label)="{ item: tag }">
             <Link :href="tagRoute(tag)">
-                {{ tag["label"] }}
+                <Tag :label="tag.label" stringToColor />
             </Link>
         </template>
 

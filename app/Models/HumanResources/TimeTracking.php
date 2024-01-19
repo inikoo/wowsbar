@@ -23,8 +23,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $subject_type Employee|Guest
  * @property int $subject_id
  * @property int|null $workplace_id
- * @property string|null $starts_at
- * @property string|null $ends_at
+ * @property \Carbon\Carbon|null $starts_at
+ * @property \Carbon\Carbon|null $ends_at
  * @property int|null $start_clocking_id
  * @property int|null $end_clocking_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -59,11 +59,13 @@ class TimeTracking extends Model
     use SoftDeletes;
 
     protected $casts = [
-        'status'      => TimeTrackingStatusEnum::class
+        'status'      => TimeTrackingStatusEnum::class,
+        'starts_at'   => 'datetime',
+        'ends_at'     => 'datetime'
     ];
 
 
-    protected $guarded = [];
+    protected $guarded = ['clocked_at'];
 
     public function getRouteKeyName(): string
     {
@@ -74,7 +76,7 @@ class TimeTracking extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return $this->starts_at;
+                return now()->format('YmdHis');
             })
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();

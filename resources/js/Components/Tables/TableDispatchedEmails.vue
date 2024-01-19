@@ -10,6 +10,8 @@ import { useLocaleStore } from "@/Stores/locale"
 import { faEnvelope, faAsterisk } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {Link} from "@inertiajs/vue3";
+import { useFormatTime } from '@/Composables/useFormatTime'
+
 library.add(faEnvelope, faAsterisk)
 
 const props = defineProps<{
@@ -23,8 +25,8 @@ function listRoute(dispatchedEmail) {
     switch (route().current()) {
         case 'org.crm.shop.prospects.mailshots.show':
             return route(
-                'org.crm.shop.prospects.mailshots.show.recipients.show',
-                [route().params['shop'], route().params['mailshot'], dispatchedEmail.id]);
+                'org.crm.shop.prospects.show',
+                [route().params['shop'], dispatchedEmail.slug]);
 
     }
 }
@@ -32,12 +34,14 @@ function listRoute(dispatchedEmail) {
 </script>
 
 <template>
-
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(contact_name)="{ item: dispatchedEmail }">
-            <Link :href="listRoute(dispatchedEmail)">
-                {{ dispatchedEmail['contact_name'] }}
+            <Link :href="listRoute(dispatchedEmail)"  class="specialUnderlineOrg py-1">
+                {{ dispatchedEmail.contact_name }}
             </Link>
+        </template>
+        <template #cell(last_contacted_at)="{ item: dispatchedEmail }">
+            <div class="text-gray-500 whitespace-nowrap">{{ useFormatTime(dispatchedEmail.last_contacted_at, {formatTime: 'hm'}) }}</div>
         </template>
     </Table>
 </template>

@@ -75,7 +75,7 @@ export const initialiseOrgApp = () => {
         }
 
         // Set avatar thumbnail
-        if (usePage().props.auth.user.avatar_thumbnail) {
+        if (usePage().props.auth?.user?.avatar_thumbnail) {
             layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
         }
 

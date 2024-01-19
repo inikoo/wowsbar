@@ -20,17 +20,16 @@ const props = defineProps<{
 
 onMounted(() => {
     window.Echo.private('org.general').listen('.prospects.dashboard', (e) => {
-        if (e.data.counts.prospects !==  undefined) {
-            props.stats.prospects.stat = e.data.counts.prospects
+        if (e.data?.counts?.prospects !==  undefined || e.data?.counts?.prospects !==  false) {
+            props.stats.prospects.stat = e.data.counts?.prospects
         }
-    
     })
 })
 
 onUnmounted(() => {
-    Echo.private(`org.general`)
-    .stopListening('.prospects.dashboard')
+    window.Echo.private(`org.general`).stopListening('.prospects.dashboard')
 })
+
 </script>
 
 

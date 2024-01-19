@@ -44,7 +44,7 @@ class IndexProspectMailshots extends InertiaAction
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('contact_name', $value)
+                $query->whereAnyWordStartWith('mailshots.subject', $value)
                     ->orWhere('mailshots.slug', 'ILIKE', "$value%");
             });
         });
@@ -55,11 +55,9 @@ class IndexProspectMailshots extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(Mailshot::class)
             ->leftJoin('mailshot_stats', 'mailshot_stats.mailshot_id', 'mailshots.id')
-            ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT)
-            ->orderBy('mailshots.sent_at', 'desc');
+            ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
 
         $queryBuilder->where('parent_id', $shop->id);
-
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -73,7 +71,7 @@ class IndexProspectMailshots extends InertiaAction
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
-            ->defaultSort('mailshots.slug')
+            ->defaultSort('date')
             ->allowedSorts(['slug', 'subject', 'date'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
