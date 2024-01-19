@@ -10,9 +10,14 @@ namespace App\Actions\Leads\Prospect\Tags;
 use App\Actions\Helpers\Tag\Hydrators\TagHydrateProspects;
 use App\Actions\Helpers\Tag\Hydrators\TagHydrateSubjects;
 use App\Actions\Leads\Prospect\Tags\Hydrators\TagHydrateUniversalSearch;
+use App\Actions\Mail\Mailshot\Hydrators\MailshotHydrateEstimatedEmails;
+use App\Enums\Mail\Mailshot\MailshotStateEnum;
 use App\Models\Helpers\Tag;
 use App\Models\Leads\Prospect;
+use App\Models\Mail\Mailshot;
+use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -47,6 +52,11 @@ class SyncTagsProspect
             TagHydrateUniversalSearch::dispatch($tag);
         }
 
+        $mailshots = Mailshot::whereState(MailshotStateEnum::IN_PROCESS)->get();
+
+        foreach ($mailshots as $mailshot) {
+            MailshotHydrateEstimatedEmails::dispatch($mailshot);
+        }
 
         return $prospect;
     }

@@ -10,14 +10,18 @@ namespace App\Actions\Mail\Mailshot\Hydrators;
 use App\Actions\Mail\Mailshot\GetEstimatedNumberRecipients;
 use App\Events\MailshotPusherEvent;
 use App\Models\Mail\Mailshot;
+use Illuminate\Console\Command;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsCommand;
 
 class MailshotHydrateEstimatedEmails
 {
     use AsAction;
+    use AsCommand;
 
     private Mailshot $mailshot;
+    public bool $asAction = false;
 
     public function __construct(Mailshot $mailshot)
     {
@@ -50,4 +54,19 @@ class MailshotHydrateEstimatedEmails
     }
 
 
+    public string $commandSignature = 'mailshot:estimated-emails {mailshot}';
+
+    /**
+     * @throws \Throwable
+     */
+    public function asCommand(Command $command): int
+    {
+        $this->asAction = true;
+
+        $mailshot = Mailshot::whereSlug($command->argument('mailshot'))->first();
+
+        $this->handle($mailshot);
+
+        return  0;
+    }
 }
