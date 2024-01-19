@@ -43,8 +43,6 @@ class StoreTimeTracking
             ->first();
 
         if(!$timeTracking) {
-            data_forget($modelData, 'clocked_at');
-
             /** @var TimeTracking $timeTracking */
             $timeTracking = TimeTracking::create($modelData);
         }
@@ -60,7 +58,6 @@ class StoreTimeTracking
         }
 
         if ($timeTracking) {
-            data_forget($modelData, 'clocked_at');
             $timeTracking = $this->update($timeTracking, $modelData);
         }
 

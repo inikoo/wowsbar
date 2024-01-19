@@ -179,8 +179,8 @@ class Guest extends Model implements HasMedia, Auditable
         return $this->morphToMany(Task::class, 'author');
     }
 
-    public function timeTracking(): HasOne
+    public function timeTracking(): MorphOne
     {
-        return $this->hasOne(TimeTracking::class);
+        return $this->morphOne(TimeTracking::class, 'subject');
     }
 }

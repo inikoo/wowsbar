@@ -32,7 +32,8 @@ class OrganisationUserResource extends JsonResource
             'updated_at'   => $organisationUser->updated_at,
             'status'       => $organisationUser->status ? 'Active' : 'Suspended',
             'roles'        => $organisationUser->getRoleNames()->toArray(),
-            'permissions'  => $organisationUser->getAllPermissions()->pluck('name')->toArray()
+            'permissions'  => $organisationUser->getAllPermissions()->pluck('name')->toArray(),
+            'clocking_status' => $organisationUser->parent->timeTracking->status
         ];
     }
 }
