@@ -24,6 +24,7 @@ class DispatchedEmailResource extends JsonResource
             'id'              => $dispatchedEmail->id,
             'ulid'            => $dispatchedEmail->ulid,
             'contact_name'    => $dispatchedEmail->mailshotRecipient?->recipient?->contact_name,
+            'slug'            => $dispatchedEmail->mailshotRecipient?->recipient?->slug,
             'subject'         => $dispatchedEmail->mailshot?->subject,
             'email'           => $dispatchedEmail->email->address,
             'state'           => $dispatchedEmail->state,
