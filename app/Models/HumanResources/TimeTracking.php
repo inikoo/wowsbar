@@ -65,7 +65,7 @@ class TimeTracking extends Model
     ];
 
 
-    protected $guarded = [];
+    protected $guarded = ['clocked_at'];
 
     public function getRouteKeyName(): string
     {
