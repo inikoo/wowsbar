@@ -44,7 +44,7 @@ class IndexProspectMailshots extends InertiaAction
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('contact_name', $value)
+                $query->whereAnyWordStartWith('mailshots.subject', $value)
                     ->orWhere('mailshots.slug', 'ILIKE', "$value%");
             });
         });
@@ -73,7 +73,7 @@ class IndexProspectMailshots extends InertiaAction
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
-            ->defaultSort('mailshots.slug')
+            ->defaultSort('mailshots.date')
             ->allowedSorts(['slug', 'subject', 'date'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
