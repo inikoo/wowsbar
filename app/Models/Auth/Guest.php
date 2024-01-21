@@ -16,9 +16,6 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -116,7 +113,6 @@ class Guest extends Model implements HasMedia, Auditable
         ];
     }
 
-
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -130,7 +126,6 @@ class Guest extends Model implements HasMedia, Auditable
 
     protected static function booted(): void
     {
-
         static::updated(function (Guest $guest) {
             if (!$guest->wasRecentlyCreated) {
                 if ($guest->wasChanged('status')) {
