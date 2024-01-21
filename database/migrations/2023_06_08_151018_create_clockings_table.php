@@ -27,12 +27,10 @@ return new class () extends Migration {
             $table->string('generator_type')->nullable();
             $table->unsignedInteger('generator_id')->nullable();
             $table->text('notes')->nullable();
-
             $table->timestampsTz();
             $table->softDeletes();
             $table->nullableMorphs('deleted_by');
-            $table->unique(['subject_type', 'subject_id']);
-            $table->unique(['generator_type', 'generator_id']);
+
         });
     }
 
