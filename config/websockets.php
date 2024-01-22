@@ -29,7 +29,7 @@ return [
             'secret'                 => env('PUSHER_WOWSBAR_SECRET'),
             'path'                   => env('PUSHER_APP_PATH'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
         [
@@ -39,7 +39,7 @@ return [
             'secret'                 => env('PUSHER_WOWSBAR_DEVEL_SECRET'),
             'path'                   => env('PUSHER_APP_PATH'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
         [
@@ -49,7 +49,7 @@ return [
             'secret'                 => env('PUSHER_WOWSBAR_STAGING_SECRET'),
             'path'                   => env('PUSHER_APP_PATH'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
         [
@@ -59,7 +59,7 @@ return [
             'secret'                 => env('PUSHER_WOWSBAR_SECRET'),
             'path'                   => env('PUSHER_AIKU_SECRET'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
         [
@@ -69,7 +69,7 @@ return [
             'secret'                 => env('PUSHER_AIKU_DEVEL_SECRET'),
             'path'                   => env('PUSHER_APP_PATH'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
         [
@@ -79,7 +79,7 @@ return [
             'secret'                 => env('PUSHER_AIKU_STAGING_SECRET'),
             'path'                   => env('PUSHER_APP_PATH'),
             'capacity'               => null,
-            'enable_client_messages' => false,
+            'enable_client_messages' => true,
             'enable_statistics'      => true,
         ],
     ],
