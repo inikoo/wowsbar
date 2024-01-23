@@ -243,7 +243,7 @@ test('create clocking', function () {
         Employee::factory()->definition()
     );
     $response        = postJson(route('mobile-app.hr.clocking-machines.show.clockings.store', [$clockingMachine->id]), [
-
+        'nfc_tag' => 'test-nfc-tag',
     ]);
 
     $response->assertStatus(201);

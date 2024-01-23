@@ -21,19 +21,19 @@ class OrganisationUserResource extends JsonResource
 
 
         return [
-            'id'           => $organisationUser->id,
-            'slug'         => $organisationUser->slug,
-            'username'     => $organisationUser->username,
-            'about'        => $organisationUser->about,
-            'email'        => $organisationUser->email,
-            'avatar'       => $organisationUser->avatarImageSources(48, 48),
-            'contact_name' => $organisationUser->contact_name,
-            'created_at'   => $organisationUser->created_at,
-            'updated_at'   => $organisationUser->updated_at,
-            'status'       => $organisationUser->status ? 'Active' : 'Suspended',
-            'roles'        => $organisationUser->getRoleNames()->toArray(),
-            'permissions'  => $organisationUser->getAllPermissions()->pluck('name')->toArray(),
-            'clocking_status' => $organisationUser->parent->timeTracking->status
+            'id'              => $organisationUser->id,
+            'slug'            => $organisationUser->slug,
+            'username'        => $organisationUser->username,
+            'about'           => $organisationUser->about,
+            'email'           => $organisationUser->email,
+            'avatar'          => $organisationUser->avatarImageSources(48, 48),
+            'contact_name'    => $organisationUser->contact_name,
+            'created_at'      => $organisationUser->created_at,
+            'updated_at'      => $organisationUser->updated_at,
+            'status'          => $organisationUser->status ? 'Active' : 'Suspended',
+            'roles'           => $organisationUser->getRoleNames()->toArray(),
+            'permissions'     => $organisationUser->getAllPermissions()->pluck('name')->toArray(),
+            'clocking_status' => $organisationUser->parent->timeTracking?->status
         ];
     }
 }

@@ -58,11 +58,6 @@ class ProcessSendMailshot
             }
 
 
-            //   if (!$this->canContactByEmail($recipient)) {
-            //       continue;
-            //   }
-
-
 
             $recipientExists = $mailshot->recipients()->where('recipient_id', $recipient->id)->where('recipient_type', class_basename($recipient))->exists();
             if (!$recipientExists) {

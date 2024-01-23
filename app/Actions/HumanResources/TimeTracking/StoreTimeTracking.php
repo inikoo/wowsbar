@@ -8,13 +8,11 @@
 namespace App\Actions\HumanResources\TimeTracking;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\HumanResources\Clocking\ClockingTypeEnum;
 use App\Enums\HumanResources\TimeTracking\TimeTrackingStatusEnum;
 use App\Models\HumanResources\Clocking;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\TimeTracking;
 use App\Models\HumanResources\Workplace;
-use Beste\Clock;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -49,12 +47,12 @@ class StoreTimeTracking
 
         if ($timeTracking && ($timeTracking->status === TimeTrackingStatusEnum::IN)) {
             $modelData['end_clocking_id'] = $parent->id;
-            $modelData['ends_at'] = $modelData['clocked_at'];
-            $modelData['status'] = TimeTrackingStatusEnum::OUT;
-        } else if ($timeTracking && ($timeTracking->status === TimeTrackingStatusEnum::CREATING)) {
-            $modelData['starts_at'] = $modelData['clocked_at'];
+            $modelData['ends_at']         = $modelData['clocked_at'];
+            $modelData['status']          = TimeTrackingStatusEnum::OUT;
+        } elseif ($timeTracking && ($timeTracking->status === TimeTrackingStatusEnum::CREATING)) {
+            $modelData['starts_at']         = $modelData['clocked_at'];
             $modelData['start_clocking_id'] = $parent->id;
-            $modelData['status'] = TimeTrackingStatusEnum::IN;
+            $modelData['status']            = TimeTrackingStatusEnum::IN;
         }
 
         if ($timeTracking) {

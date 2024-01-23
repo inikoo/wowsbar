@@ -27,9 +27,9 @@ class HasClocked implements ValidationRule, ValidatorAwareRule
 
     public function validate($attribute, $value, $fail): void
     {
-        $type = Relation::getMorphedModel($value);
+        $type         = Relation::getMorphedModel($value);
         $modelIDField = preg_replace('/type$/', 'id', $attribute);
-        $modelID = Arr::get($this->validator->getData(), $modelIDField);
+        $modelID      = Arr::get($this->validator->getData(), $modelIDField);
 
         if (Clocking::where('subject_type', class_basename($type))->where('subject_id', $modelID)->exists()) {
             $fail('The user has been clocked.')->translate();
