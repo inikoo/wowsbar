@@ -46,7 +46,7 @@ class MailshotHydrateDispatchedEmailsState
         );
         $mailshot->mailshotStats()->update($stats);
 
-        MailshotPusherEvent::dispatch($mailshot);
+        //MailshotPusherEvent::dispatch($mailshot);
 
     }
 

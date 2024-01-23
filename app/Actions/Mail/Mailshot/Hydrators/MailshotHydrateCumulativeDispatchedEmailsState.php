@@ -83,7 +83,7 @@ class MailshotHydrateCumulativeDispatchedEmailsState
         );
 
 
-        MailshotPusherEvent::dispatch($mailshot);
+        //MailshotPusherEvent::dispatch($mailshot);
 
     }
 }
