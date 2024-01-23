@@ -9,7 +9,7 @@ import { trans } from 'laravel-vue-i18n'
 import { faSave as fadSave } from '@fad'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faDownload } from '@fal'
-import { faArrowLeft } from '@far'
+import { faArrowLeft, faPencil, faTrashAlt } from '@far'
 import { faPlus, faSave, faUpload } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { useLayoutStore } from '@/Stores/layout'
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
     loading:false
 })
 
-library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft, faSpinnerThird)
+library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft, faPencil, faTrashAlt, faSpinnerThird)
 
 let styleClass = ''
 let sizeClass = ''
