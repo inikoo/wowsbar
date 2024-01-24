@@ -17,6 +17,7 @@
         "aws/aws-php-sns-message-validator": "^1.1",
         "aws/aws-sdk-php": "^3.293",
         "aws/aws-sdk-php-laravel": "^3.8",
+        "beyondcode/laravel-websockets": "^1.14",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
         "elasticsearch/elasticsearch": "^8.8",
