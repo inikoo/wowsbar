@@ -43,7 +43,7 @@ class MailshotHydrateEmails
         );
 
 
-        MailshotPusherEvent::dispatch($mailshot);
+        //MailshotPusherEvent::dispatch($mailshot);
 
     }
 
