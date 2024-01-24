@@ -50,7 +50,7 @@ class MailshotHydrateEstimatedEmails
         );
 
         $mailshot->refresh();
-        MailshotPusherEvent::dispatch($mailshot);
+        //MailshotPusherEvent::dispatch($mailshot);
     }
 
 

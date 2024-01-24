@@ -15,10 +15,8 @@ use App\Enums\HumanResources\Clocking\ClockingTypeEnum;
 use App\Http\Resources\HumanResources\ClockingResource;
 use App\Models\HumanResources\Clocking;
 use App\Models\HumanResources\ClockingMachine;
-use App\Models\HumanResources\TimeTracking;
 use App\Models\HumanResources\Workplace;
 use App\Rules\PolyExist;
-use App\Rules\HasClocked;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -38,8 +36,8 @@ class StoreClockingFromClockingMachine
     {
         data_forget($modelData, 'nfc_tag');
         $modelData['workplace_id'] = $clockingMachine->workplace_id;
-        $modelData['clocked_at'] = date('Y-m-d H:i:s');
-        $modelData['type'] = ClockingTypeEnum::CLOCKING_MACHINE;
+        $modelData['clocked_at']   = date('Y-m-d H:i:s');
+        $modelData['type']         = ClockingTypeEnum::CLOCKING_MACHINE;
 
         data_set($modelData, 'generator_type', Arr::get($modelData, 'subject_type'));
         data_set($modelData, 'generator_id', Arr::get($modelData, 'subject_id'));
@@ -82,8 +80,8 @@ class StoreClockingFromClockingMachine
     {
         return [
             'subject_type' => ['required', 'string', new PolyExist()],
-            'subject_id' => ['required', 'integer'],
-            'nfc_tag' => ['required', 'string']
+            'subject_id'   => ['required', 'integer'],
+            'nfc_tag'      => ['required', 'string']
         ];
     }
 
@@ -92,7 +90,7 @@ class StoreClockingFromClockingMachine
         $this->fill(
             [
                 'subject_type' => $request->user()->parent_type,
-                'subject_id' => $request->user()->parent_id
+                'subject_id'   => $request->user()->parent_id
             ]
         );
     }

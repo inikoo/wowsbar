@@ -68,7 +68,7 @@ trait WithSendMailshot
 
             // Find and modify color values within the style attribute
             $style = preg_replace_callback('/color\s*:\s*([^;]+);/i', function ($colorMatch) {
-                $colorValue = $colorMatch[1];
+                $colorValue    = $colorMatch[1];
                 $modifiedColor = $colorValue . ' !important';
                 return 'color: ' . $modifiedColor . ';';
             }, $style);

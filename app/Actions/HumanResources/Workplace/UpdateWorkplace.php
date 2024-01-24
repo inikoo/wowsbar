@@ -12,7 +12,6 @@ use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSear
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
-use App\Enums\UI\Organisation\WorkplaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkplaceResource;
 use App\Models\HumanResources\Workplace;
 use App\Rules\ValidAddress;
