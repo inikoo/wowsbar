@@ -11,6 +11,7 @@ import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { breakpointType } from '@/Composables/useWindowSize'
+import { useRemoveHttps } from '@/Composables/useRemoveHttps'
 import { useWindowSize } from '@vueuse/core'
 import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
 
@@ -141,8 +142,7 @@ const compHandleBannerLessSlide = computed(() => {
                 </div>
 
                 <!-- <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' /> -->
-                <a target="_top" v-if="!!component?.layout?.link" :href="`https://${component?.layout?.link.replace(/^https?:\/\//g, '')}`"
-                    class="absolute bg-transparent w-full h-full" />
+                <a target="_top" v-if="!!component?.layout?.link" :href="`https://${useRemoveHttps(component?.layout?.link)}`" class="absolute bg-transparent w-full h-full" />
 
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)"
                     :position="position" :corner="slideCorner" />

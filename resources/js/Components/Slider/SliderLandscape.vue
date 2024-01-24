@@ -11,6 +11,7 @@ import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
+import { useRemoveHttps } from '@/Composables/useRemoveHttps'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@fas'
@@ -99,7 +100,7 @@ watch(componentEdited, (newVal) => {
                         </span>
                     </div>
                     <!-- <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' /> -->
-                    <a v-if="!!component?.layout?.link" :href="`https://${component?.layout?.link.replace(/^https?:\/\//g, '')}`" target="_top" class="absolute bg-transparent w-full h-full" />
+                    <a v-if="!!component?.layout?.link" :href="`https://${useRemoveHttps(component?.layout?.link)}`" target="_top" class="absolute bg-transparent w-full h-full" />
                     <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
 
                     <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->

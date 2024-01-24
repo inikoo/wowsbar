@@ -43,7 +43,7 @@ const optionType = [
                 label: trans('Link'),
                 value: null,
                 defaultValue : 'https://',
-                placeholder: "www.example.com"
+                placeholder: "https://www.example.com"
             },
             {
                 name: 'width',

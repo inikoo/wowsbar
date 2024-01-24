@@ -237,7 +237,7 @@ const CommonBlueprint = ref([
                 label: trans("Hyperlink"),
                 defaultValue : '',
                 value: ["common", "centralStage", "linkOfText"],
-                placeholder: "www.example.com"
+                placeholder: "https://www.example.com"
             },
             {
                 name: ["common", "centralStage", "style", "fontFamily"],
@@ -405,7 +405,7 @@ const ComponentsBlueprint = ref([
                 label: trans("Hyperlink"),
                 defaultValue : '',
                 value: ["layout", "centralStage", "linkOfText"],
-                placeholder: "www.example.com"
+                placeholder: "https://www.example.com"
             },
             {
                 name: ["layout", "centralStage", "style", "fontFamily"],
