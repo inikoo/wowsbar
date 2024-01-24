@@ -20,12 +20,17 @@ class SendNotification
         BroadcastNotification::dispatch($title, $text);
     }
 
-    public string $commandSignature = 'send:notification';
+    public string $commandSignature = 'send:notification {message?}';
 
     public function asCommand(Command $command): int
     {
-        $title = $command->ask('Title');
-        $text  = $command->ask('Text');
+        if ($command->hasArgument('message')) {
+            $title = 'Hey';
+            $text  = $command->argument('message');
+        } else {
+            $title = $command->ask('Title');
+            $text  = $command->ask('Text');
+        }
 
         $this->handle($title, $text);
 
