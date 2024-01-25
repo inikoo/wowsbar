@@ -36,5 +36,4 @@ class SendNotification
 
         return 0;
     }
-
 }
