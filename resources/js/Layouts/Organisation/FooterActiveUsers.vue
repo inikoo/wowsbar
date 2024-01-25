@@ -49,7 +49,8 @@ const layout = useLayoutStore()
             <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'"
                 :tabName="`activeUsers`">
                 <template #default>
-                    <Link v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" :href="dataUser.current_page?.url || '#'" class="flex items-center py-1 px-2 gap-x-1.5 hover:bg-slate-700/10" :class="dataUser.id == layout.user.id ? 'bg-gray-100/20' : ''">
+                    <Link v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" :href="dataUser.current_page?.url || '#'" class="flex items-center py-1 px-2 gap-x-1.5"
+                        :class="dataUser.id == layout.user.id ? 'bg-slate-700/20' : 'hover:bg-slate-700/10'">
                         <Image v-if="dataUser.avatar_thumbnail?.original" :src="dataUser.avatar_thumbnail" :alt="dataUser.username" class="h-5 aspect-square rounded-full shadow overflow-hidden" />
                         <div v-else class="h-5 aspect-square rounded-full overflow-hidden skeleton" />
                         

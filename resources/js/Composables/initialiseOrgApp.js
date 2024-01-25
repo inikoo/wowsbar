@@ -80,9 +80,11 @@ export const initialiseOrgApp = () => {
 
         // Set avatar thumbnail
         if (usePage().props.auth?.user?.avatar_thumbnail) {
+            layout.user = usePage().props.auth?.user
             layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
         }
 
+            console.log(layout.user)
         // Set logo app
         if (usePage().props.app) {
             layout.app = usePage().props.app
