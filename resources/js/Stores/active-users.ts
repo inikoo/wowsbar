@@ -40,12 +40,12 @@ export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {
         subscribe() {
             window.Echo.join(`org.live.users`)
                 .joining((user: LiveUser) => {
-                    console.log('Someone is join: ', user);
+                    // console.log('Someone is join: ', user);
                     window.Echo.join(`org.live.users`).whisper(`sendTo${user.id}`, this.liveOrganisationUsers[usePage().props.auth.user.id])
                 })
 
                 .leaving((user: LiveUser) => {
-                    console.log(user)
+                    // console.log(user)
                     // If user 'logout', no need to set the action to 'leave'
                     if (this.liveOrganisationUsers?.[user.id]?.action != 'logout') {
                         // this.liveOrganisationUsers[user.id].action = 'leave'
@@ -63,8 +63,7 @@ export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {
                 })
 
                 .listenForWhisper(`sendTo${usePage().props.auth.user.id}`, (otherUser: LiveUser) => {
-                    console.log('otherUser', otherUser)
-                    // On the first load and on navigating page 
+                    // Receive data from others (that they know I join the channel)
                     this.liveOrganisationUsers[otherUser.id] = otherUser
                 })
 
