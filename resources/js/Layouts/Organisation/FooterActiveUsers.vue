@@ -49,7 +49,7 @@ const layout = useLayoutStore()
                 <template #default>
                     <div v-for="(dataUser, index) in liveOrganisationUsers().liveOrganisationUsers" class="flex justify-start py-1 px-2 gap-x-1.5 cursor-default">
                         <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
-                        <span class="capitalize font-semibold">{{ dataUser?.name }}</span>
+                        <span class="capitalize font-semibold">{{ dataUser?.username }}</span>
                         <span v-if="dataUser.current_page?.label" class="capitalize">- {{ dataUser?.current_page?.label }}</span>
                         <span v-else class="capitalize text-gray-500 italic">- Unknown</span>
                         <!-- <span v-if="dataUser.loggedIn" class="text-gray-800">{{ dataUser.route?.name ? trans(dataUser.route.label ?? '') : '' }}</span>

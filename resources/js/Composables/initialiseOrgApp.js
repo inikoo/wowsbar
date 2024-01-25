@@ -30,22 +30,26 @@ export const initialiseOrgApp = () => {
         echoPersonal.subscribe(usePage().props.auth.user.id)
 
         router.on('navigate', (event) => {
-            // console.log(usePage().props.auth.user?.id)
-            if(usePage().props.auth.user?.id) {
-                // console.log("===== ada auth id =====")
-                axios.post(
-                    route('org.models.live-organisation-users-current-page.store',
-                        usePage().props.auth.user?.id  ),
-                    {
-                        'label': event.detail.page.props.title
-                    }
-                )
-                .then((response) => {
-                    // console.log("Broadcast sukses", response)
-                })
-                .catch(error => {
-                    console.error('Error broadcasting.'+error);
-                });
+            const dataActiveUser = {
+                ...usePage().props.auth.user,
+                name: null,
+                last_active: new Date(),
+                action: 'navigate',
+                current_page: {
+                    label: event.detail.page.props.title,
+                    url: event.detail.page.url,
+                    icon_left: usePage().props.live_users?.icon_left || null,
+                    icon_right: usePage().props.live_users?.icon_right || null,
+                },
+            }
+
+            // To avoid emit on logout
+            if(dataActiveUser.id){
+                // Set to self
+                liveOrganisationUsers().liveOrganisationUsers[usePage().props.auth.user.id ] = dataActiveUser
+                
+                // Websockets: broadcast to others
+                window.Echo.join(`org.live.users`).whisper('otherIsNavigating', dataActiveUser)
             }
         })
     }
@@ -66,12 +70,12 @@ export const initialiseOrgApp = () => {
         }
 
         if (usePage().props.organisation) {
-            layout.organisation = usePage().props.organisation ?? null
+            layout.organisation = usePage().props.organisation
         }
 
         // Set data of User
         if (usePage().props.user) {
-            layout.user = usePage().props.user ?? null
+            layout.user = usePage().props.user
         }
 
         // Set avatar thumbnail
