@@ -178,7 +178,7 @@ onMounted(async () => {
             label: "Helvetica",
             value: "'Helvetica Neue', Helvetica, Arial, sans-serif"
         },
-      /*   preheaderText: "Hello World" */
+      /*   preheaderText: "" */
     });
 
     editorRef.value = editor

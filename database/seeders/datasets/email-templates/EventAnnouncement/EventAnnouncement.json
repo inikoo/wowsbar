@@ -875,7 +875,7 @@
                     "contentAlign": "center",
                     "contentWidth": "500px",
                     "popupPosition": "center",
-                    "preheaderText": "Hello World",
+                    "preheaderText": "",
                     "backgroundColor": "white",
                     "backgroundImage": {
                         "url": null,
