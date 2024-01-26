@@ -1,4 +1,4 @@
-// To copy a text to clipboard
+// To remove https:// or http:// from a string
 export const useRemoveHttps = (text: string) => {
     if(!text) return ''
 

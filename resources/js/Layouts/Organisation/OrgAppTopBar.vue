@@ -42,6 +42,20 @@ const showSearchDialog = ref(false)
 
 const logoutAuth = () => {
     router.post(route(props.urlPrefix + 'logout'))
+
+    const dataActiveUser = {
+        ...layout.user,
+        name: null,
+        last_active: new Date(),
+        action: 'logout',
+        current_page: {
+            label: trans('Logout'),
+            url: null,
+            icon_left: null,
+            icon_right: null,
+        },
+    }
+    window.Echo.join(`org.live.users`).whisper('otherIsNavigating', dataActiveUser)
     liveOrganisationUsers().unsubscribe()  // Unsubscribe from Laravel Echo
 }
 
