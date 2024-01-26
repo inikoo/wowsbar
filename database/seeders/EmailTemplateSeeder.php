@@ -30,7 +30,8 @@ class EmailTemplateSeeder extends Seeder
 
             if ($emailTemplate = EmailTemplate::where('name', Arr::get($template, 'name'))->where('is_seeded', true)->first()) {
                 $emailTemplate->update([
-                    'name' => Arr::get($template, 'name'),
+                    'name'      => Arr::get($template, 'name'),
+                    'compiled'  => json_decode(file_get_contents($filePath), true),
                 ]);
             } else {
                 $emailTemplate = StoreEmailTemplate::make()->action(
