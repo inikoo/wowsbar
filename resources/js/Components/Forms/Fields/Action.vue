@@ -20,7 +20,7 @@ const props = defineProps<{
                 :href="`${button.route?.name ? route(button.route?.name, button.route?.parameters) : route(button.href?.name, button.href?.parameters)}`" class=""
                 :method="button.route?.method ?? 'get'"
             >
-                <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight" :key="`${button.label}${button.style}`" :tooltip="button.tooltip"
+                <Button :style="button.style" :label="button.label" :icon="button.icon" :iconRight="button.iconRight" :key="`ActionButton${button.label}${button.style}`" :tooltip="button.tooltip"
                     class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
                 </Button>
             </Link>
@@ -29,13 +29,11 @@ const props = defineProps<{
 
     <!-- Button -->
     <Link v-else-if="action.route"
-        :href="`${action.route ? route(action.route?.name, action.route?.parameters) : route(action.href?.name, action.href?.parameters)}`"
+        :href="action.route?.name ? route(action.route?.name, action.route?.parameters) : action.href?.name ? route(action.href?.name, action.href?.parameters) : '#'"
         :method="action.route?.method ?? 'get'"
         :as="action.route?.method ? 'button' : undefined"
         :data="action.route?.method !== 'get' ? dataToSubmit : null"
     >
-        <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" :key="`${action.label}${action.style}`" :tooltip="action.tooltip" />
+        <Button :style="action.style" :label="action.label" :icon="action.icon" :iconRight="action.iconRight" :key="`ActionButton${action.label}${action.style}`" :tooltip="action.tooltip" />
     </Link>
-
-
 </template>

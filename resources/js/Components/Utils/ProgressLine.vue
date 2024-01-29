@@ -15,7 +15,7 @@ let secondHelper = 0
 let intervalHelper = setInterval(() => {
     secondHelper++
     strCalculating.value += '.'
-    console.log('interval')
+    // console.log('interval')
     if(secondHelper%4 === 0) {
         strCalculating.value = 'Calculating'
     }
