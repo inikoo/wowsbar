@@ -34,7 +34,7 @@ export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {
                 })
 
                 .listenForWhisper('otherIsNavigating', (e: LiveUser) => {
-                    // On the first load and on navigating page 
+                    // On the first load and on navigating page
                     this.liveOrganisationUsers[e.id] = e
                 })
 

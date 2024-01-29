@@ -11,13 +11,13 @@ export const useCustOnlineUsers = defineStore('useCustOnlineUsers', {
     },
     actions: {
         unsubscribe() {
-            window.Echo.leave(`cust.live.users`)
+            window.Echo.leave(`cust.online.users`)
         },
         subscribe() {
-            console.log(window.Echo.join(`cust.live.users`)
+            console.log(window.Echo.join(`cust.online.users`)
                 .joining((user: LiveUser) => {
                     // console.log('Someone is join: ', user);
-                    window.Echo.join(`cust.live.users`).whisper(`sendTo${user.id}`, this.onlineUsers[usePage().props.auth.user.id])
+                    window.Echo.join(`cust.online.users`).whisper(`sendTo${user.id}`, this.onlineUsers[usePage().props.auth.user.id])
                 })
 
                 .leaving((user: LiveUser) => {
@@ -34,7 +34,7 @@ export const useCustOnlineUsers = defineStore('useCustOnlineUsers', {
                 })
 
                 .listenForWhisper('otherIsNavigating', (e: LiveUser) => {
-                    // On the first load and on navigating page 
+                    // On the first load and on navigating page
                     this.onlineUsers[e.id] = e
                 })
 
