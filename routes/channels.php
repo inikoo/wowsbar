@@ -6,6 +6,7 @@
  */
 
 use App\Models\Auth\OrganisationUser;
+use App\Models\Auth\CustomerUser;
 use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('org.personal.{userID}', function (OrganisationUser $user, int $userID) {
@@ -22,4 +23,8 @@ Broadcast::channel('org.live.users', function (OrganisationUser $organisationUse
         'alias'       => $organisationUser->slug,
         'name'        => $organisationUser->contact_name,
     ];
+});
+
+Broadcast::channel('cust.online.users', function (CustomerUser $customerUser) {
+    return true;
 });
