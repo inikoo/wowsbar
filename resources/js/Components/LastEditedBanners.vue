@@ -52,7 +52,7 @@ const props = defineProps<{
                         <dd class="text-gray-600 text-xs italic tracking-wide space-x-1">
                             <FontAwesomeIcon fixed-width icon='fal fa-history' class='text-gray-400' aria-hidden='true' />
                             <span class="text-gray-500">{{ trans('Last edited on') }}</span>
-                            <time :datetime="lastEditedBanner.updated_at">{{ useRangeFromNow(lastEditedBanner.updated_at, locale.language.code) }}</time>
+                            <time :datetime="lastEditedBanner.updated_at">{{ useRangeFromNow(lastEditedBanner.updated_at, { localeCode: locale.language.code }) }}</time>
                         </dd>
                         <div>
                             <FontAwesomeIcon fixed-width :icon='lastEditedBanner.state_icon?.icon' :class='lastEditedBanner.state_icon?.class' class="" aria-hidden='true' :alt="lastEditedBanner.state_icon?.tooltip"/>
@@ -69,7 +69,3 @@ const props = defineProps<{
         </ul>
     </div>
 </template>
-
-<style scoped>
-
-</style>
