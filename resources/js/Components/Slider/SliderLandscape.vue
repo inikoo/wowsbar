@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, toRef, computed } from 'vue'
+import { ref, watch, toRef, computed, nextTick, onMounted } from 'vue'
 import { get } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
@@ -34,7 +34,7 @@ const props = defineProps<{
 }>()
 
 const swiperRef = ref(null)
-const isSwiperInit = ref(false)
+const intSwiperKey = ref(0)
 
 const filteredNulls = (corners: CornersData) => {
     if(corners) {
@@ -54,6 +54,12 @@ watch(componentEdited, (newVal) => {
     swiperRef.value?.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
 })
 
+onMounted(() => {
+    setTimeout(() => {
+        intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
+    }, 100)
+})
+
 </script>
 
 <template>
@@ -67,7 +73,7 @@ watch(componentEdited, (newVal) => {
                 : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
         ]">
             <Swiper ref="swiperRef"
-                @init="isSwiperInit = true"
+                :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
                 :spaceBetween="-1"
                 :slidesPerView="1"
@@ -85,7 +91,6 @@ watch(componentEdited, (newVal) => {
                 } : false"
                 :navigation="!data.navigation || data.navigation?.sideNav?.value"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
-                :key="isSwiperInit ? '1' : '2'"
             >
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->

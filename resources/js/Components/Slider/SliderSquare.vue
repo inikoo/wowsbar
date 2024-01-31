@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, computed, toRef } from 'vue'
+import { ref, watch, computed, toRef, onMounted } from 'vue'
 import { get } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
@@ -37,7 +37,7 @@ const props = defineProps<{
 }>()
 
 const swiperRef = ref(null)
-const isSwiperInit = ref(false)
+const intSwiperKey = ref(0)
 const { width: screenWidth, height: screenHeight }: any = useWindowSize()  // To detect responsive
 
 const filteredNulls = (corners: CornersData) => {
@@ -97,6 +97,11 @@ const compHandleBannerLessSlide = computed(() => {
                 : actualSlides.value.length >= 8 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
 })
 
+onMounted(() => {
+    setTimeout(() => {
+        intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
+    }, 100)
+})
 </script>
 
 <template>
@@ -104,7 +109,7 @@ const compHandleBannerLessSlide = computed(() => {
     <!-- <pre>{{ props.data.components[1] }}</pre> -->
     <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
         <Swiper ref="swiperRef"
-            @init="isSwiperInit = true"
+            :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
             :spaceBetween="0"
             :slidesPerView="compSlidesPerView"
@@ -120,7 +125,6 @@ const compHandleBannerLessSlide = computed(() => {
             } : false"
             :navigation="!data.navigation || data.navigation?.sideNav?.value"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
-            :key="isSwiperInit ? '1' : '2'"    
         >
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id"
                 class="h-full overflow-hidden aspect-square">
