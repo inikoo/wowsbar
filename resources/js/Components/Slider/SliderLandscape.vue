@@ -33,7 +33,8 @@ const props = defineProps<{
     view?: string
 }>()
 
-const swiperRef = ref()
+const swiperRef = ref(null)
+const isSwiperInit = ref(false)
 
 const filteredNulls = (corners: CornersData) => {
     if(corners) {
@@ -50,7 +51,7 @@ const compIndexCurrentComponent = computed(() => {
 
 // Jump view to slide (banner) on click slide (SlidesWorkshop)
 watch(componentEdited, (newVal) => {
-    swiperRef.value.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
+    swiperRef.value?.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
 })
 
 </script>
@@ -66,6 +67,7 @@ watch(componentEdited, (newVal) => {
                 : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
         ]">
             <Swiper ref="swiperRef"
+                @init="isSwiperInit = true"
                 :slideToClickedSlide="true"
                 :spaceBetween="-1"
                 :slidesPerView="1"
@@ -82,7 +84,9 @@ watch(componentEdited, (newVal) => {
                     },
                 } : false"
                 :navigation="!data.navigation || data.navigation?.sideNav?.value"
-                :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
+                :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
+                :key="isSwiperInit ? '1' : '2'"
+            >
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
                     <div v-if="get(component, ['backgroundType', $props.view ? $props.view : 'desktop'], 'image') == 'image'" class="relative w-full h-full">

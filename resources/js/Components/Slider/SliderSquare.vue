@@ -36,7 +36,8 @@ const props = defineProps<{
     view?: string
 }>()
 
-const swiperRef = ref()
+const swiperRef = ref(null)
+const isSwiperInit = ref(false)
 const { width: screenWidth, height: screenHeight }: any = useWindowSize()  // To detect responsive
 
 const filteredNulls = (corners: CornersData) => {
@@ -102,7 +103,11 @@ const compHandleBannerLessSlide = computed(() => {
     <!-- Square -->
     <!-- <pre>{{ props.data.components[1] }}</pre> -->
     <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
-        <Swiper ref="swiperRef" :slideToClickedSlide="false" :spaceBetween="0" :slidesPerView="compSlidesPerView"
+        <Swiper ref="swiperRef"
+            @init="isSwiperInit = true"
+            :slideToClickedSlide="false"
+            :spaceBetween="0"
+            :slidesPerView="compSlidesPerView"
             :centeredSlides="false" :loop="true" :autoplay="{
                 delay: data.delay,
                 disableOnInteraction: false,
@@ -114,7 +119,9 @@ const compHandleBannerLessSlide = computed(() => {
                 },
             } : false"
             :navigation="!data.navigation || data.navigation?.sideNav?.value"
-            :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
+            :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
+            :key="isSwiperInit ? '1' : '2'"    
+        >
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id"
                 class="h-full overflow-hidden aspect-square">
 
