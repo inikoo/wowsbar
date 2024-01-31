@@ -57,7 +57,7 @@ watch(componentEdited, (newVal) => {
 onMounted(() => {
     setTimeout(() => {
         intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
-    }, 100)
+    }, 600)
 })
 
 </script>
