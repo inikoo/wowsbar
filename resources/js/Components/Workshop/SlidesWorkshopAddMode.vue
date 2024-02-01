@@ -5,7 +5,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import SlideAddMode from '@/Components/Banner/SlideAddMode.vue'
-import { useBannerBackgroundColor, useHeadlineText } from '@/Composables/useCommonList'
+import { useBannerBackgroundColor, useHeadlineText } from '@/Composables/useStockList'
 import { CommonData, SlideWorkshopData } from "@/types/BannerWorkshop"
 import { routeType } from '@/types/route';
 

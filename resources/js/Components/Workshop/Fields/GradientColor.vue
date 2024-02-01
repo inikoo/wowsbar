@@ -1,7 +1,7 @@
 
 <script  setup lang="ts">
 import 'vue-color-kit/dist/vue-color-kit.css'
-import { useBannerBackgroundColor } from "@/Composables/useCommonList"
+import { useBannerBackgroundColor } from "@/Composables/useStockList"
 import { set, get } from "lodash";
 import { ref, watch, toRefs } from "vue";
 import { faPaintBrushAlt, faText } from '@far'

@@ -6,22 +6,15 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
-import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useCommonList"
+import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useStockList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import {
-    faTrashAlt,
-    faAlignJustify,
-    faCog,
-    faImage,
-    faLock, faTools,
-} from '@fal'
+import { faTrashAlt, faAlignJustify, faCog, faImage, faLock, faTools, } from '@fal'
 // import {  } from '@far'
 import { faEye, faEyeSlash } from '@fas'
 import { faClone } from '@fad'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
 import { ulid } from "ulid"
-import Input from "@/Components/Forms/Fields/Input.vue"
 import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from "../Elements/Buttons/Button.vue"
@@ -31,7 +24,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Image from "@/Components/Image.vue"
-import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
+import { BannerWorkshop, SlideWorkshopData } from '@/types/BannerWorkshop'
 import { routeType } from '@/types/route'
 import { notify } from "@kyvg/vue3-notification"
 
@@ -43,11 +36,11 @@ const props = defineProps<{
     imagesUploadRoute: routeType
     user: string
     screenView: string
-}>();
+}>()
 
 const emits = defineEmits<{
     (e: "jumpToIndex", id: string): void;
-}>();
+}>()
 
 const isDragging = ref(false);
 const fileInput = ref();

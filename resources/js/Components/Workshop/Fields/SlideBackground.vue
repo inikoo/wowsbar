@@ -10,7 +10,7 @@ import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import Image from '@/Components/Image.vue'
 import { set, get } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
-import { useBannerBackgroundColor } from "@/Composables/useCommonList"
+import { useBannerBackgroundColor } from "@/Composables/useStockList"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUpload } from '@fas'
