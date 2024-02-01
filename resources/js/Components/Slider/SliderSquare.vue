@@ -102,6 +102,10 @@ onMounted(() => {
         intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
     }, 600)
 })
+
+const compColorNav = computed(() => {
+    return get(props.data, ['navigation', 'colorNav'], 'blue')
+})
 </script>
 
 <template>
@@ -117,7 +121,7 @@ onMounted(() => {
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
-            :pagination="!data.navigation || (data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet') ? {  // Render Navigation (bullet)
+            :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type'], false) == 'bullet' ? {  // Render Navigation (bullet)
                 clickable: true,
                 renderBullet: (index, className) => {
                     return `<span class='${className}'></span>`
@@ -168,7 +172,7 @@ onMounted(() => {
             </SwiperSlide>
             
             <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'button'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
-                <SlideControls :swiperRef="swiperRef" />
+                <SlideControls :dataBanner="data" :swiperRef="swiperRef" />
             </div>
         </Swiper>
 
@@ -197,14 +201,23 @@ onMounted(() => {
     object-fit: cover;
 }
 
-// Banner: Pagination
+// Pagination: Bullet
 .swiper-pagination-bullet {
-    @apply h-3 w-3 bg-blue-700/20 opacity-100 text-slate-700 text-center
+    @apply h-3 w-3 text-slate-700 text-center;
+    background-color: v-bind(compColorNav) !important;
+    opacity: 0.4 !important;
 }
 
-// Banner: Pagination active
+// Pagination: Bullet (active)
 .swiper-pagination-bullet-active {
-    @apply bg-sky-500 text-white scale-110
+    @apply text-white scale-110;
+    background-color: v-bind(compColorNav) !important;
+    opacity: 1 !important;
+}
+
+// Navigation: Arrow
+.swiper-button-prev, .swiper-button-next{
+    color: v-bind(compColorNav) !important;
 }
 
 </style>

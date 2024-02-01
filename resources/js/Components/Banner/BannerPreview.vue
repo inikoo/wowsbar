@@ -5,13 +5,21 @@ import SliderSquare from "@/Components/Slider/SliderSquare.vue"
 import Image from '@/Components/Image.vue'
 
 const props = defineProps<{
-    data: any
+    data: {
+        type: string
+        compiled_layout: {}
+        published_snapshot: {
+            publisher: string
+            publisher_avatar: string
+            comment: string
+            published_at: string
+        }
+    }
 }>()
 
 </script>
 
 <template>
-    <!-- <pre>{{ data }}</pre> -->
     <!-- If banner is 'landscape' -->
     <div v-if="data.type == 'landscape'">
         <div v-if="data.published_snapshot" class="w-full bg-white flex items-center justify-between py-3 px-4">
@@ -53,4 +61,5 @@ const props = defineProps<{
             <SliderSquare :data="data.compiled_layout" :production="false" />
         </div>
     </div>
+    <!-- <pre>{{ data.compiled_layout }}</pre> -->
 </template>

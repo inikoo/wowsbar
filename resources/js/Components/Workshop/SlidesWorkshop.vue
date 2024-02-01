@@ -519,7 +519,7 @@ const ComponentsBlueprint = ref([
 
 
 const setCommonEdit = () => {
-    if (props.data.common.user && props.data.common.user !== props.user) {
+    if (props.data.common?.user && props.data.common?.user !== props.user) {
         notify({
             title: "Error!",
             text: `${props.data.common.user} working for this area`,

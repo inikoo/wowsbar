@@ -41,6 +41,22 @@
     opacity: 0;
 }
 
+/* Transition name="slide-to-left" */
+.slide-bot-to-top-enter-active {
+    transition: all 0.1s ease-out;
+}
+.slide-bot-to-top-leave-active {
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-bot-to-top-enter-from {
+    transform: translateY(20px);
+    opacity: 0;
+}
+.slide-bot-to-top-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
 /* Transition name="slide-to-up" */
 /* Used in: Popup on FooterTab */
 .slide-to-up-enter-active {

@@ -60,6 +60,10 @@ onMounted(() => {
     }, 600)
 })
 
+const compColorNav = computed(() => {
+    return get(props.data, ['navigation', 'colorNav'], 'blue')
+})
+
 </script>
 
 <template>
@@ -83,10 +87,10 @@ onMounted(() => {
                     delay: data.delay,
                     disableOnInteraction: false,
                 }"
-                :pagination="!data.navigation || (data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet') ? {  // Render Navigation (bullet)
+                :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type'], false) == 'bullet' ? {  // Render Navigation (bullet)
                     clickable: true,
                     renderBullet: (index, className) => {
-                        return `<span class='${className}' />`
+                        return `<span class='${className}'></span>`
                     },
                 } : false"
                 :navigation="!data.navigation || data.navigation?.sideNav?.value"
@@ -118,7 +122,7 @@ onMounted(() => {
                 </SwiperSlide>
                 
                 <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'button'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
-                    <SlideControls :swiperRef="swiperRef" />
+                    <SlideControls :dataBanner="data" :swiperRef="swiperRef" />
                 </div>
             </Swiper>
 
@@ -147,34 +151,23 @@ onMounted(() => {
     object-fit: cover;
 }
 
-// Banner: Pagination
-// .swiper-pagination-bullet {
-//     @apply h-3 aspect-square opacity-100 text-center
-// }
+// Pagination: Bullet
+.swiper-pagination-bullet {
+    @apply h-3 w-3 text-slate-700 text-center;
+    background-color: v-bind(compColorNav) !important;
+    opacity: 0.4 !important;
+}
 
-// // Banner: Pagination active
-// .swiper-pagination-bullet-active {
-//     @apply scale-110
-// }
+// Pagination: Bullet (active)
+.swiper-pagination-bullet-active {
+    @apply text-white scale-110;
+    background-color: v-bind(compColorNav) !important;
+    opacity: 1 !important;
+}
 
-// .swiper-pagination-bullet {
-//     @apply h-3 aspect-square opacity-100 text-center;
-//     background-color: v-bind('colorNav') !important;
-//     opacity: 50% !important;
-// }
-
-// .swiper-pagination-bullet-active {
-//     // @apply scale-105;
-//     background-color: v-bind('colorNav') !important;
-//     scale: 105% !important;
-// }
-
-// .swiper-pagination {
-//     --swiper-pagination-color: goldenrod;
-// }
-
-// .swiper-button-next, .swiper-button-prev {
-//     color: v-bind('data.navigation?.colorNav');
-// }
+// Navigation: Arrow
+.swiper-button-prev, .swiper-button-next{
+    color: v-bind(compColorNav) !important;
+}
 
 </style>
