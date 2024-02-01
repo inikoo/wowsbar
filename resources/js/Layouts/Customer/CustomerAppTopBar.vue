@@ -5,10 +5,10 @@
   -->
 
 <script setup lang="ts">
-import {  router } from "@inertiajs/vue3"
+import {  router, Link } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import CustomerTopBarNavs from "@/Layouts/Customer/CustomerTopBarNavs.vue"
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 
 import {
