@@ -133,7 +133,7 @@ const deleteUser = () => {
             delete set.components[index].user  // Removing the 'user' property from components
         }
     }
-    if (set.common.user) delete set.common.user
+    if (set.common?.user) delete set.common.user
     return set
 }
 

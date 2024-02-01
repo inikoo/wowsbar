@@ -55,7 +55,7 @@ const getNestedValue = (obj, keys) => {
     }, obj)
 }
 
-const value = ref(setFormValue(props.data, 'background'))
+const value = ref(setFormValue(props.data.layout, 'background'))
 
 watch(data, (newValue) => {
     value.value = setFormValue(newValue, props.fieldName)
@@ -85,11 +85,11 @@ const updateLocalFormValue = (newValue) => {
 const uploadImageRespone = (res) => {
     props.data.image = {
         ...props.data.image,
-        ...{[screenView.value ?? 'desktop']: res.data[0]}
+        ...{[screenView.value || 'desktop']: res.data[0]}
     }
-    props.data.backgroundType = {
-        ...props.data.backgroundType,
-        ...{[screenView.value ?? 'desktop']: 'image'}
+    props.data.layout.backgroundType = {
+        ...props.data.layout.backgroundType,
+        ...{[screenView.value || 'desktop']: 'image'}
     }
 
     isOpenCropModal.value = false
@@ -98,13 +98,13 @@ const uploadImageRespone = (res) => {
 
 // When click on the list background color
 const onChangeBackgroundColor = (bgColor: string) => {
-    props.data.background = {
-        ...props.data.background,
-        [screenView.value ?? 'desktop']: bgColor
+    props.data.layout.background = {
+        ...props.data.layout.background,
+        [screenView.value || 'desktop']: bgColor
     }
-    props.data.backgroundType = {
-        ...props.data.backgroundType,
-        [screenView.value ?? 'desktop']: 'color'
+    props.data.layout.backgroundType = {
+        ...props.data.layout.backgroundType,
+        [screenView.value || 'desktop']: 'color'
     }
 }
 
@@ -177,7 +177,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
                 <div class="h-full relative flex items-center" >
-                    <div v-if="get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'"
+                    <div v-if="get(data, ['layout', 'backgroundType', screenView || 'desktop'], 'image') === 'image'"
                         class="group h-full relative"
                     >
                         <!-- <div class="group-hover:bg-gray-700/50 inset-0 absolute h-full"></div>
@@ -185,10 +185,10 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <FontAwesomeIcon icon='fal fa-trash-alt' class='text-3xl text-red-500' aria-hidden='true' />
                         </div>
                         <FontAwesomeIcon icon='fal fa-times' class='absolute top-0 -right-8 text-3xl text-red-400 hover:text-red-500' aria-hidden='true' /> -->
-                        <Image :src="get(data, ['image', screenView ? screenView : 'desktop', 'source'])"
+                        <Image :src="get(data, ['image', screenView || 'desktop', 'source'])"
                             :alt="data.image?.name" :imageCover="true"/>
                     </div>
-                    <div v-else class="h-full w-96" :style="{ background: get(data, ['background', screenView], get(data, ['background', 'desktop', 'gray']))}">
+                    <div v-else class="h-full w-96" :style="{ background: get(data, ['layout', 'background', screenView], 'gray')}">
                         <!-- If the background is a color -->
                     </div>
                 </div>
@@ -199,7 +199,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex flex-col gap-y-2">
                 <div class="flex items-center gap-x-4 py-1"
-                    :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'navigationSecondActiveCustomer pl-2' : 'navigationSecondCustomer']"
+                    :class="[get(data, ['layout', 'backgroundType', screenView || 'desktop'], 'image') == 'image' ? 'navigationSecondActiveCustomer pl-2' : 'navigationSecondCustomer']"
                 >
                     <div>An Image:</div>
                     <div class="flex items-center gap-x-2">
@@ -215,17 +215,17 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
                         
                         <div v-if="bannerType === 'landscape'" class="overflow-hidden h-7 rounded shadow-md"
-                            :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400', `aspect-[${ratio.w}/${ratio.h}]`]">
+                            :class="[get(data, ['layout', 'backgroundType', screenView || 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400', `aspect-[${ratio.w}/${ratio.h}]`]">
                             <Image
-                                :src="get(data, ['image', screenView ? screenView : 'desktop', 'thumbnail'])"
+                                :src="get(data, ['image', screenView || 'desktop', 'thumbnail'])"
                                 :alt="data.image?.name" :imageCover="true"
-                                @click="data.backgroundType[screenView ? screenView : 'desktop'] = 'image'"
+                                @click="data.layout.backgroundType[screenView || 'desktop'] = 'image'"
                                 class="h-auto cursor-pointer rounded overflow-hidden"
                             />
                         </div>
                         <div v-else class="ml-1 h-10 aspect-square overflow-hidden rounded shadow-md cursor-pointer"
-                            :class="[get(data, ['backgroundType', 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400']"
-                            @click="data.backgroundType['desktop'] = 'image'"
+                            :class="[get(data, ['layout', 'backgroundType', 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400']"
+                            @click="data.layout.backgroundType['desktop'] = 'image'"
                         >
                             <Image
                                 :src="get(data, ['image', 'desktop', 'thumbnail'])"
@@ -238,7 +238,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                 
                 <!-- List: Background Color -->
                 <div class="flex items-center gap-x-4"
-                    :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], get(data, ['backgroundType', 'desktop'], '')) === 'color'
+                    :class="get(data, ['layout', 'backgroundType', screenView || 'desktop'], get(data, ['layout', 'backgroundType', 'desktop'], '')) === 'color'
                         ? 'navigationSecondActiveCustomer pl-2'
                         : 'navigationSecondCustomer'"
                 >
@@ -248,7 +248,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         <div v-for="bgColor in backgroundColorList"
                             @click="onChangeBackgroundColor(bgColor)"
                             class="w-full rounded h-full aspect-square shadow cursor-pointer"
-                            :class="data?.background?.[screenView ? screenView : 'desktop'] ===  bgColor && data?.backgroundType?.[screenView ? screenView : 'desktop'] === 'color' 
+                            :class="data?.background?.[screenView || 'desktop'] ===  bgColor && data?.layout.backgroundType?.[screenView || 'desktop'] === 'color' 
                                 ? 'ring-2 ring-offset-2 ring-gray-600'
                                 : 'hover:ring-2 hover:ring-offset-0 hover:ring-gray-500'"
                             :style="{background: bgColor}" />

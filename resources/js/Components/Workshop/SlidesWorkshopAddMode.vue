@@ -55,12 +55,12 @@ const uploadImageRespone = (res) => {
             ulid: ulid(),
             layout: {
                 imageAlt: set.name,
+                backgroundType: {
+                    desktop: 'image'
+                },
             },
             image: {
                 desktop: set,
-            },
-            backgroundType: {
-                desktop: 'image'
             },
             visibility: true,
         })
@@ -86,16 +86,16 @@ const onClickQuickStart = () => {
                             fontSubtitle: "text-[15px] lg:text-[25px]"
                         }
                     }
-                }
+                },
+                background: {
+                    desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
+                },
+                backgroundType: {
+                    desktop: 'color',
+                },
             },
             image: {
                 desktop: {},
-            },
-            background: {
-                desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
-            },
-            backgroundType: {
-                desktop: 'color',
             },
             visibility: true,
         })
@@ -114,20 +114,20 @@ const onClickQuickStart = () => {
                             fontSubtitle: "text-[10px] lg:text-[15px]"
                         }
                     }
-                }
+                },
+                background: {
+                    desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
+                    tablet: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
+                    mobile: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
+                },
+                backgroundType: {
+                    desktop: 'color',
+                },
             },
             image: {
                 desktop: {},
                 tablet: {},
                 mobile: {},
-            },
-            background: {
-                desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
-                tablet: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
-                mobile: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
-            },
-            backgroundType: {
-                desktop: 'color',
             },
             visibility: true,
         })

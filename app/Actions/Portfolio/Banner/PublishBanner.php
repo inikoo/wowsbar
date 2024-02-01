@@ -115,7 +115,7 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout'         => ['required', 'array:delay,common,components'],
+            'layout'         => ['required', 'array:type,delay,common,components,navigation,published_hash'],
             'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
             'publisher_id'   => ['sometimes'],
             'publisher_type' => ['sometimes', 'string'],
@@ -126,7 +126,7 @@ class PublishBanner
     {
         $request->merge(
             [
-                'layout'         => $request->only(['delay', 'common', 'components']),
+                'layout'         => $request->only(['type', 'delay', 'common', 'components', 'navigation', 'published_hash']),
                 'publisher_id'   => $request->get('customerUser')->id,
                 'publisher_type' => 'CustomerUser'
             ]

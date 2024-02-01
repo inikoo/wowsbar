@@ -86,7 +86,7 @@ onMounted(() => {
                 :pagination="!data.navigation || (data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'bullet') ? {  // Render Navigation (bullet)
                     clickable: true,
                     renderBullet: (index, className) => {
-                        return `<span class='${className}'></span>`
+                        return `<span class='${className}' />`
                     },
                 } : false"
                 :navigation="!data.navigation || data.navigation?.sideNav?.value"
@@ -94,10 +94,10 @@ onMounted(() => {
             >
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
-                    <div v-if="get(component, ['backgroundType', $props.view ? $props.view : 'desktop'], 'image') == 'image'" class="relative w-full h-full">
-                        <Image :src="get(component, ['image', props.view ? props.view : 'desktop', 'source'], get(component, ['image', 'desktop', 'source']))" alt="Wowsbar" />
+                    <div v-if="get(component, ['layout', 'backgroundType', $props.view || 'desktop'], 'image') == 'image'" class="relative w-full h-full">
+                        <Image :src="get(component, ['image', props.view || 'desktop', 'source'], null)" alt="Wowsbar" />
                     </div>
-                    <div v-else :style="{ background: get(component, ['background', props.view ? props.view : 'desktop'], get(component, ['background', 'desktop'], 'gray'))}" class="w-full h-full" />
+                    <div v-else :style="{ background: get(component, ['layout', 'background', props.view || 'desktop'], 'gray')}" class="w-full h-full" />
 
                     <!-- Section: Not Visible (for workshop) -->
                     <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
@@ -123,7 +123,7 @@ onMounted(() => {
             </Swiper>
 
             <!-- Reserved Corner: Button Controls -->
-            <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
+            <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common?.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
         </div>
     </div>
 </template>
@@ -148,13 +148,33 @@ onMounted(() => {
 }
 
 // Banner: Pagination
-.swiper-pagination-bullet {
-    @apply h-3 w-3 bg-blue-700/20 opacity-100 text-slate-700 text-center
-}
+// .swiper-pagination-bullet {
+//     @apply h-3 aspect-square opacity-100 text-center
+// }
 
-// Banner: Pagination active
-.swiper-pagination-bullet-active {
-    @apply bg-sky-500 text-white scale-110
-}
+// // Banner: Pagination active
+// .swiper-pagination-bullet-active {
+//     @apply scale-110
+// }
+
+// .swiper-pagination-bullet {
+//     @apply h-3 aspect-square opacity-100 text-center;
+//     background-color: v-bind('colorNav') !important;
+//     opacity: 50% !important;
+// }
+
+// .swiper-pagination-bullet-active {
+//     // @apply scale-105;
+//     background-color: v-bind('colorNav') !important;
+//     scale: 105% !important;
+// }
+
+// .swiper-pagination {
+//     --swiper-pagination-color: goldenrod;
+// }
+
+// .swiper-button-next, .swiper-button-prev {
+//     color: v-bind('data.navigation?.colorNav');
+// }
 
 </style>

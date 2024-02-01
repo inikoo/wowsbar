@@ -51,21 +51,21 @@ export interface SlideWorkshopData {
         centralStage?: CentralStageData
         imageAlt: string
         corners?: CornersData
+        background: {
+            desktop: string
+            tablet?: string
+            mobile?: string
+        }
+        backgroundType: {
+            desktop: string
+            tablet?: string
+            mobile?: string
+        }
     }
     image: {
         desktop: Images | {}
         tablet?: Images | {}
         mobile?: Images | {}
-    }
-    background: {
-        desktop: string
-        tablet?: string
-        mobile?: string
-    }
-    backgroundType: {
-        desktop: string
-        tablet?: string
-        mobile?: string
     }
     visibility: boolean
     corners?: CornersData
@@ -81,6 +81,7 @@ export interface CommonData {
 }
 
 export interface BannerNavigation {
+    colorNav?: string
     sideNav?: {
         value: boolean
         type: string

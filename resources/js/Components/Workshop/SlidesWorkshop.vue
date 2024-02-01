@@ -587,20 +587,20 @@ const addNewSlide = () => {
                         fontSubtitle: "text-[10px] lg:text-[15px]"
                     }
                 }
-            }
+            },
+            background: {
+                desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
+                tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+                mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+            },
+            backgroundType: {
+                desktop: 'color'
+            },
         },
         image: {
             desktop: {},
             tablet: {},
             mobile: {},
-        },
-        background: {
-            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
-            tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
-            mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
-        },
-        backgroundType: {
-            desktop: 'color'
         },
         visibility: true,
     });
@@ -635,10 +635,10 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                     : 'navigationCustomer hover:bg-gray-100 border-gray-300',
                 ]" @click="setCommonEdit"
             >
-                <FontAwesomeIcon v-if="props.data.common.user == props.user || !props.data.common.user"
+                <FontAwesomeIcon v-if="props.data.common?.user == props.user || !props.data.common?.user"
                     icon="fal fa-cog" class="text-xl md:text-base text-gray-500" aria-hidden="true" />
-                <FontAwesomeIcon :name="props.data.common.user" v-else="
-                    props.data.common.user == props.user || !props.data.common.user
+                <FontAwesomeIcon :name="props.data.common?.user" v-else="
+                    props.data.common?.user == props.user || !props.data.common?.user
                     " :icon="['fal', 'lock']" class="text-gray-600" aria-hidden="true" />
                 <span class="text-gray-600 text-sm hidden sm:inline">{{ trans("Common properties") }}</span>
             </div>
@@ -667,16 +667,16 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <!-- Image slide: if Image is selected in SlideBackground -->
                             <div v-if="data.type === 'square'" class="">
                                 <!-- If Banner Square -->
-                                <Image v-if="get(slide, ['backgroundType', 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image v-if="get(slide, ['layout', 'backgroundType', 'desktop'], 'image') === 'image'" :src="get(slide, ['image', 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
 
                                 <!-- If the slide is color -->
-                                <div v-else :style="{ background: get(slide, ['background', 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div v-else :style="{ background: get(slide, ['layout', 'background', 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             <div v-else>
-                                <Image v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image v-if="get(slide, ['layout', 'backgroundType', screenView || 'desktop'], 'image') === 'image'" :src="get(slide, ['image', screenView || 'desktop', 'thumbnail'], false)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
 
                                 <!-- If the slide is color -->
-                                <div v-else :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div v-else :style="{ background: get(slide, ['layout', 'background', screenView || 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->

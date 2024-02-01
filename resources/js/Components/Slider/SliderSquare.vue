@@ -130,13 +130,13 @@ onMounted(() => {
                 class="h-full overflow-hidden aspect-square">
 
                 <!-- Section: image or background -->
-                <div v-if="get(component, ['backgroundType', 'desktop'], 'image') === 'image'"
+                <div v-if="get(component, ['layout', 'backgroundType', 'desktop'], 'image') === 'image'"
                     class="relative w-full h-full">
                     <Image :src="get(component, ['image', 'desktop', 'source'], null)"
                         alt="Wowsbar" />
                 </div>
                 <div v-else
-                    :style="{ background: get(component.background, 'desktop', 'gray') }"
+                    :style="{ background: get(component, ['layout', 'background', 'desktop'], 'gray') }"
                     class="w-full h-full" />
 
                 <!-- Section: Not Visible (for workshop) -->
@@ -173,7 +173,7 @@ onMounted(() => {
         </Swiper>
 
         <!-- Reserved Corner: Button Controls -->
-        <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position"
+        <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common?.corners)" :position="position"
             :corner="corner" :swiperRef="swiperRef" />
     </div>
 </template>

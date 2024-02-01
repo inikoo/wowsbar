@@ -15,7 +15,7 @@ export const useBannerBackgroundColor = () => {
 
 export const useSolidColor = [
     'rgb(99, 102, 241)', // Indigo
-    'rgb(243, 244, 246)', // Gray
+    'rgb(255, 255, 255)', // White
     'rgb(41, 37, 36)', // Stone
     'rgb(245, 158, 11)', // Amber
     'rgb(59, 130, 246)', // Blue
