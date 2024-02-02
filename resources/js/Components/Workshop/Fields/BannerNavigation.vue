@@ -34,10 +34,10 @@ if (!props.data.navigation) {
 
 const bottomNavOptions = [
     {
-        value: 'bullet'
+        value: 'bullets'
     },
     {
-        value: 'button'
+        value: 'buttons'
     },
 ]
 
@@ -47,7 +47,7 @@ const bottomNavOptions = [
     <div class="mt-2">
         <div class="ml-3 w-fit bg-gray-100 border border-gray-300 rounded px-2 py-2 space-y-2 mb-2">
             <div class="leading-none text-xs text-gray-500">
-                Select colors for navigation
+                Colors
             </div>
             <div class="flex gap-x-1">
                 <div v-for="color in useSolidColor" @click="() => data.navigation.colorNav = color"

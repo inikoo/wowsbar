@@ -121,7 +121,7 @@ const compColorNav = computed(() => {
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
-            :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type'], false) == 'bullet' ? {  // Render Navigation (bullet)
+            :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type'], false) == 'bullets' ? {  // Render Navigation (bullet)
                 clickable: true,
                 renderBullet: (index, className) => {
                     return `<span class='${className}'></span>`
@@ -171,7 +171,7 @@ const compColorNav = computed(() => {
                     :data="data.common?.centralStage" />
             </SwiperSlide>
             
-            <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'button'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
+            <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
                 <SlideControls :dataBanner="data" :swiperRef="swiperRef" />
             </div>
         </Swiper>

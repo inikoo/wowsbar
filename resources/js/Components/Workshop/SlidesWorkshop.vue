@@ -186,8 +186,8 @@ const CommonBlueprint = ref([
                 label: trans("Navigation"),
                 value: null,
                 options: [
-                    { label: 'Side Navigation (arrow)', name: 'sideNav' },
-                    { label: 'Bottom Navigation (bullet or button)', name: 'bottomNav' }
+                    { label: 'Navigation (arrows)', name: 'sideNav' },
+                    { label: 'Pagination (bullets or buttons)', name: 'bottomNav' }
                 ]
             },
         ],
