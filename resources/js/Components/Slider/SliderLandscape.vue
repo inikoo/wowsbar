@@ -55,9 +55,9 @@ watch(() => props.data.components.filter(component => component.ulid == props.ju
 })
 
 onMounted(() => {
-    setTimeout(() => {
-        intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
-    }, 600)
+    // setTimeout(() => {
+    //     intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
+    // }, 600)
 })
 
 const compColorNav = computed(() => {
