@@ -44,7 +44,7 @@ const filteredNulls = (corners: CornersData) => {
     return ''
 }
 
-// const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it 
+// const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it
 const compIndexCurrentComponent = computed(() => {
     return props.data.components.findIndex(component => component.ulid == props.jumpToIndex)
 })
@@ -54,11 +54,11 @@ watch(() => props.data.components.filter(component => component.ulid == props.ju
     swiperRef.value?.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
 })
 
-onMounted(() => {
+//onMounted(() => {
     // setTimeout(() => {
     //     intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
     // }, 600)
-})
+//})
 
 const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
@@ -120,7 +120,7 @@ const compColorNav = computed(() => {
                     <CentralStage v-if="component?.layout?.centralStage?.title?.length > 0 || component?.layout?.centralStage?.subtitle?.length > 0" :data="component?.layout?.centralStage" />
                     <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 </SwiperSlide>
-                
+
                 <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
                     <SlideControls :dataBanner="data" :swiperRef="swiperRef" />
                 </div>
