@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/org/api/mobile-app.php'));
 
             Route::domain(config('app.delivery_domain'))
-                ->name('delivery.')
+                ->domain(config('app.delivery-domain'))
                 ->group(base_path('routes/delivery/app.php'));
 
             Route::middleware('org-web')
