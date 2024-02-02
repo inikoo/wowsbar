@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, } from "vue"
+import { ref, watch, onMounted } from 'vue'
 import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useStockList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTrashAlt, faAlignJustify, faCog, faImage, faLock, faTools, } from '@fal'
@@ -620,10 +620,14 @@ const duplicateSlide = (selectedSlide: SlideWorkshopData) => {
 
 const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
 
+onMounted(() => {
+    commonEditActive.value = true
+})
+
 </script>
 
 <template>
-    <!-- <pre>{{ data.components }}</pre> -->
+    <!-- <pre>{{ commonEditActive }}</pre> -->
     <div class="flex flex-grow gap-2.5">
         <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
