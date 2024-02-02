@@ -182,12 +182,12 @@ const compColorNav = computed(() => {
     </div>
 </template>
 
-<style lang="scss">
-.swiper {
+<style lang="scss" scoped>
+:deep(.swiper) {
     @apply w-full h-full;
 }
 
-.swiper-slide {
+:deep(.swiper-slide) {
     @apply bg-gray-200;
     text-align: center;
     font-size: 18px;
@@ -196,27 +196,27 @@ const compColorNav = computed(() => {
     align-items: center;
 }
 
-.swiper-slide img {
+:deep(.swiper-slide img) {
     @apply w-full h-full;
     object-fit: cover;
 }
 
 // Pagination: Bullet
-.swiper-pagination-bullet {
+:deep(.swiper-pagination-bullet) {
     @apply h-3 w-3 text-slate-700 text-center;
     background-color: v-bind(compColorNav) !important;
     opacity: 0.4 !important;
 }
 
 // Pagination: Bullet (active)
-.swiper-pagination-bullet-active {
+:deep(.swiper-pagination-bullet-active) {
     @apply text-white scale-110;
     background-color: v-bind(compColorNav) !important;
     opacity: 1 !important;
 }
 
 // Navigation: Arrow
-.swiper-button-prev, .swiper-button-next{
+:deep(.swiper-button-prev), :deep(.swiper-button-next) {
     color: v-bind(compColorNav) !important;
 }
 
