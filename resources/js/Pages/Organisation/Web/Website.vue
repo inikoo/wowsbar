@@ -14,7 +14,7 @@ import TableWebpages from "@/Components/Tables/TableWebpages.vue";
 import ModelDetails from "@/Components/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import WebsiteShowcase from '@/Pages/Organisation/Web/WebsiteShowcase.vue';
-import WebsiteAnalytics from '@/Pages/Organisation/Web/WebsiteAnalytics.vue';
+import WebsiteAnalytics from '@/Components/DataDisplay/WebsiteAnalytics.vue';
 
 
 import PageHeading from "@/Components/Headings/PageHeading.vue";

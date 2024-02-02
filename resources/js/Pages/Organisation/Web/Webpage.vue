@@ -31,8 +31,8 @@ import {
     faSortAmountDownAlt,
     faLayerGroup
 } from '@fal';
-import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
-import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
+import WebpageShowcase from "@/Components/Showcases/Organisation/WebpageShowcase.vue";
+import WebpageAnalytics from "@/Components/DataDisplay/WebpageAnalytics.vue";
 import TableSnapshots from "@/Components/Tables/TableSnapshots.vue";
 
 
