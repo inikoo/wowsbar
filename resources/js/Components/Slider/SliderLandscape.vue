@@ -34,7 +34,7 @@ const props = defineProps<{
 }>()
 
 const swiperRef = ref(null)
-const intSwiperKey = ref(0)
+// const intSwiperKey = ref(0)
 
 const filteredNulls = (corners: CornersData) => {
     if(corners) {
@@ -77,7 +77,6 @@ const compColorNav = computed(() => {
                 : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
         ]">
             <Swiper ref="swiperRef"
-                :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
                 :spaceBetween="-1"
                 :slidesPerView="1"

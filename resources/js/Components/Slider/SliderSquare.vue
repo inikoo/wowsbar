@@ -38,7 +38,7 @@ const props = defineProps<{
 }>()
 
 const swiperRef = ref(null)
-const intSwiperKey = ref(0)
+// const intSwiperKey = ref(0)
 const { width: screenWidth, height: screenHeight }: any = useWindowSize()  // To detect responsive
 
 const filteredNulls = (corners: CornersData) => {
@@ -114,7 +114,6 @@ const compColorNav = computed(() => {
     <!-- <pre>{{ props.data.components[1] }}</pre> -->
     <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
         <Swiper ref="swiperRef"
-            :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
             :spaceBetween="0"
             :slidesPerView="compSlidesPerView"

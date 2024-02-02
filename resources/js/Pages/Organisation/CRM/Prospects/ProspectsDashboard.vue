@@ -109,7 +109,7 @@ onUnmounted(() => {
     .stopListening('.prospects.dashboard')
 })
 
-
+console.log('qwe', props.data.prospectStats)
 
 </script>
 
