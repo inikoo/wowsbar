@@ -17,9 +17,13 @@ class DetectWebsite
     public function handle(Request $request, Closure $next): Response
     {
         $domain = $request->getHost();
-
-
         //todo cache this somehow
+
+
+        if(app()->environment('staging')) {
+            $domain = str_replace('staging.', '', $domain);
+        }
+
         $website = Website::where('domain', $domain)->firstOrFail();
 
         $request->merge([
