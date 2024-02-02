@@ -48,14 +48,14 @@ const filteredNulls = (corners: CornersData) => {
     return ''
 }
 
-const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it 
+// const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it 
 const compIndexCurrentComponent = computed(() => {
     return props.data.components.findIndex(component => component.ulid == props.jumpToIndex)
 })
 
 // Jump view to slide (banner) on click slide (SlidesWorkshop)
-watch(componentEdited, (newVal) => {
-    swiperRef.value.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
+watch(() => props.data.components.filter(component => component.ulid == props.jumpToIndex), (newVal) => {
+    swiperRef.value?.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 200, false)
 })
 
 const screenBreakpoint = computed(() => {
