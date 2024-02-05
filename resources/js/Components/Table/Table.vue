@@ -1,5 +1,5 @@
 <!--suppress JSUnresolvedReference, JSIncompatibleTypesComparison -->
-<script setup>
+<script setup lang="ts">
 import Pagination from '@/Components/Table/Pagination.vue';
 import HeaderCell from '@/Components/Table/HeaderCell.vue';
 import TableFilterSearch from '@/Components/Table/TableFilterSearch.vue';
@@ -16,7 +16,7 @@ import { Link } from "@inertiajs/vue3"
 import {trans} from 'laravel-vue-i18n'
 import { capitalize } from "@/Composables/capitalize"
 
-import { computed, onMounted, ref, watch, onUnmounted, getCurrentInstance, Transition, toRefs } from 'vue';
+import { computed, onMounted, ref, watch, onUnmounted, getCurrentInstance, Transition, toRefs, reactive } from 'vue'
 import qs from 'qs';
 import clone from 'lodash-es/clone';
 import filter from 'lodash-es/filter';
@@ -24,8 +24,10 @@ import findKey from 'lodash-es/findKey';
 import forEach from 'lodash-es/forEach';
 import isEqual from 'lodash-es/isEqual';
 import map from 'lodash-es/map';
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCheckSquare, faSquare } from '@fal'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faCheckSquare, faSquare)
 
 
 import {useLocaleStore} from '@/Stores/locale.js';
@@ -125,6 +127,9 @@ const props = defineProps(
         },
         exportLinks: {
             type: Object
+        },
+        isCheckBox: {
+            type: Boolean
         }
     });
     const app = getCurrentInstance();
@@ -317,13 +322,13 @@ function changeGlobalSearchValue(value) {
     changeSearchInputValue('global', value);
 }
 
-function changeFilterValue(key, value) {
-    const intKey = findDataKey('filters', key);
+// function changeFilterValue(key, value) {
+//     const intKey = findDataKey('filters', key);
 
-    queryBuilderData.value.filters[intKey].value = value;
-    queryBuilderData.value.cursor = null;
-    queryBuilderData.value.page = 1;
-}
+//     queryBuilderData.value.filters[intKey].value = value;
+//     queryBuilderData.value.cursor = null;
+//     queryBuilderData.value.page = 1;
+// }
 
 function onPerPageChange(value) {
     queryBuilderData.value.cursor = null
@@ -337,11 +342,11 @@ function findDataKey(dataKey, key) {
     });
 }
 
-function changeColumnStatus(key, visible) {
-    const intKey = findDataKey('columns', key);
+// function changeColumnStatus(key, visible) {
+//     const intKey = findDataKey('columns', key);
 
-    queryBuilderData.value.columns[intKey].hidden = !visible;
-}
+//     queryBuilderData.value.columns[intKey].hidden = !visible;
+// }
 
 function getFilterForQuery() {
     let filtersWithValue = {};
@@ -572,6 +577,22 @@ watch(name, () => {
     queryBuilderData.value.sort = null
     resetQuery()
 })
+
+const selectRow: {[key: string]: boolean} = reactive({})
+
+// To preserve the object selectRow
+if (props.isCheckBox) {
+    for(const row in props.resource.data){
+        selectRow[props.resource.data[row].slug] = false
+    }
+}
+
+// On select select all
+const onClickSelectAll = (state: boolean) => {
+    for(const row in props.resource.data){
+        selectRow[props.resource.data[row].slug] = !state
+    }
+}
 </script>
 
 <template>
@@ -702,6 +723,11 @@ watch(name, () => {
                         <table class="divide-y divide-gray-200 bg-white w-full">
                             <thead class="bg-gray-50">
                                 <tr class="border-t border-gray-200">
+                                    <div v-if="isCheckBox" @click="() => onClickSelectAll(Object.values(selectRow).every((value) => value === true))" class="py-1.5 cursor-pointer">
+                                        <FontAwesomeIcon v-if="Object.values(selectRow).every((value) => value === true)" icon='fal fa-check-square' class='mx-auto block h-5 my-auto' fixed-width aria-hidden='true' />
+                                        <FontAwesomeIcon v-else icon='fal fa-square' class='mx-auto block h-5 my-auto' fixed-width aria-hidden='true' />
+                                    </div>
+                                    
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
                                         :type="columnsType[column.key]" :column="column" :resource="compResourceData">
@@ -712,13 +738,19 @@ watch(name, () => {
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <slot name="body" :show="show">
                                     <tr v-for="(item, key) in compResourceData" :key="`table-${name}-row-${key}`"
-                                        class=""
-                                        :class="[{
-                                            'bg-gray-50': striped && key % 2,
-                                        },
+                                        class="isolate relative"
+                                        :class="[
+                                            striped && key % 2 ? 'bg-gray-50' : '',
                                             striped ? 'hover:bg-gray-100' : 'hover:bg-gray-50'
                                         ]"
                                     >
+                                        <!-- Column: Check box -->
+                                        <td v-if="isCheckBox" key="checkbox" class="h-full" >
+                                            <div v-if="selectRow[item.slug]" class="absolute inset-0 bg-lime-500/10 -z-10"/>
+                                            <FontAwesomeIcon v-if="selectRow[item.slug] === true" @click="selectRow[item.slug] = !selectRow[item.slug]" icon='fal fa-check-square' class='p-2 cursor-pointer' fixed-width aria-hidden='true' />
+                                            <FontAwesomeIcon v-else @click="selectRow[item.slug] = !selectRow[item.slug]" icon='fal fa-square' class='p-2 cursor-pointer' fixed-width aria-hidden='true' />
+                                        </td>
+
                                         <td v-for="column in queryBuilderProps.columns" v-show="show(column.key)"
                                             :key="`table-${name}-row-${key}-column-${column.key}`"
                                             class="text-sm py-2 text-gray-700 whitespace-normal h-full"
