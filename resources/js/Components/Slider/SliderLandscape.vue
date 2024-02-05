@@ -34,7 +34,7 @@ const props = defineProps<{
 }>()
 
 const swiperRef = ref(null)
-// const intSwiperKey = ref(0)
+const intSwiperKey = ref(1)
 
 const filteredNulls = (corners: CornersData) => {
     if(corners) {
@@ -54,11 +54,11 @@ watch(() => props.data.components.filter(component => component.ulid == props.ju
     swiperRef.value?.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
 })
 
-//onMounted(() => {
-    // setTimeout(() => {
-    //     intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
-    // }, 600)
-//})
+onMounted(() => {
+    setTimeout(() => {
+        intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
+    }, 600)
+})
 
 const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
@@ -77,6 +77,7 @@ const compColorNav = computed(() => {
                 : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
         ]">
             <Swiper ref="swiperRef"
+                :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
                 :spaceBetween="-1"
                 :slidesPerView="1"
