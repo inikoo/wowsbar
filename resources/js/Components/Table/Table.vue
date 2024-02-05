@@ -131,13 +131,17 @@ const props = defineProps(
         isCheckBox: {
             type: Boolean
         }
-    });
-    const app = getCurrentInstance();
-    const $inertia = app ? app.appContext.config.globalProperties.$inertia : props.inertia;
-    const updates = ref(0);
+});
 
-let queryBuilderProps;
-queryBuilderProps = computed(() => {
+const emits = defineEmits<{
+    (e: 'onSelectRow', value: {[key: string]: boolean}): void
+}>()
+
+const app = getCurrentInstance();
+const $inertia = app ? app.appContext.config.globalProperties.$inertia : props.inertia;
+const updates = ref(0);
+
+const queryBuilderProps = computed(() => {
     let data = $inertia.page.props.queryBuilderProps
         ? $inertia.page.props.queryBuilderProps[props.name] || {}
         : {};
@@ -593,6 +597,11 @@ const onClickSelectAll = (state: boolean) => {
         selectRow[props.resource.data[row].slug] = !state
     }
 }
+
+watch(selectRow, () => {
+    emits('onSelectRow', selectRow)
+}, {deep: true})
+
 </script>
 
 <template>
