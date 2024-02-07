@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from '@fal'
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
@@ -43,6 +43,7 @@ const getComponent = (componentName: string) => {
         'toogle':Toogle,
         'gradientColor' : GradientColor,
         'bannerNavigation' : BannerNavigation,
+        'number' : PrimitiveInput,
     };
     return components[componentName]
 };

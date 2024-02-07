@@ -77,6 +77,7 @@ const renderImage = (component) => {
 }
 
 const renderBackground = (component) => {
+    console.log('sdfsdf',props.view)
     if (!props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
@@ -84,10 +85,10 @@ const renderBackground = (component) => {
         } else if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
             view = "tablet";
         }
-        return get(component, ['layout', 'background', props.view ], get(component, ['layout', 'background', 'desktop'], 'gray'))
+        return get(component, ['layout', 'background', view ], get(component, ['layout', 'background', 'desktop'], 'gray'))
     } else return get(component, ['layout', 'background', props.view], get(component, ['layout', 'background', 'desktop'], 'gray'))
 }
-
+console.log(props)
 </script>
 
 <template>
@@ -103,7 +104,7 @@ const renderBackground = (component) => {
             <Swiper ref="swiperRef"
                 :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
-                :spaceBetween="-1"
+                :spaceBetween="data.spaceBetween.range ? data.spaceBetween.range : 0"
                 :slidesPerView="1"
                 :centeredSlides="true"
                 :loop="true"
@@ -122,7 +123,7 @@ const renderBackground = (component) => {
             >
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
-                    <div v-if="get(component, ['layout', 'backgroundType', $props.view || 'desktop'], 'image') == 'image'" class="relative w-full h-full">
+                    <div v-if="get(component, ['layout', 'backgroundType', props.view],get(component, ['layout', 'backgroundType','desktop'], 'image')) == 'image'" class="relative w-full h-full">
                         <Image :src="renderImage(component)" alt="Wowsbar" />
                     </div>
                     <div v-else :style="{ background: renderBackground(component)}" class="w-full h-full" />

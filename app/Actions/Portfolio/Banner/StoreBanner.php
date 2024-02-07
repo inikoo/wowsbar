@@ -48,6 +48,9 @@ class StoreBanner
 
         $layout = [
             "delay"      => 5000,
+            "spaceBetween" => [
+                "range" => 0
+            ],
             "navigation" => [
                 "bottomNav" => [
                     "value"     => true,

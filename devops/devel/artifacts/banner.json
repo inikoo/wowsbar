@@ -3,6 +3,9 @@
     "name": "Banner",
     "blueprint": {
         "delay": 5000,
+        "spaceBetween": {
+            "range" : 0
+        },
         "common": {
             "centralStage": {
                 "title": null,
