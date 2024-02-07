@@ -42,6 +42,16 @@ const section = reactive({});
 
 const cornersSection = ref([
     {
+        label: trans("top Middle"),
+        valueForm: get(cornersValue.value, [`topMiddle`]),
+        id: "topMiddle",
+    },
+    {
+        label: trans("Bottom Middle"),
+        valueForm: get(cornersValue.value, [`topBottom`]),
+        id: "bottomMiddle",
+    },
+    {
         label: trans("top left"),
         valueForm: get(cornersValue.value, [`topLeft`]),
         id: "topLeft",
@@ -133,7 +143,7 @@ const clear=(section)=>{
             v-if="Object.keys(section).length"
             :section="section"
             :fieldData="fieldData"
-            @clear="clear"
+            @clear="clear"     
         />
     </div>
 </template>

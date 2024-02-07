@@ -25,6 +25,12 @@ const positionClasses = computed(() => {
     let classes;
     if (props.corner.type != 'ribbon') {
         switch (props.position) {
+            case 'topMiddle':
+                classes = 'top-6 right-15 text-center';
+                break;
+            case 'bottomMiddle':
+                classes = 'bottom-6 right-15 text-center';
+                break;
             case 'topRight':
                 classes = 'top-6 right-7 text-right';
                 break;
