@@ -191,7 +191,7 @@ const CommonBlueprint = ref([
                 ]
             },
             {
-                name: ["spaceBetween","range"],
+                name: ["common","spaceBetween"],
                 type: "number",
                 label: trans("space Between"),
                 value: null,

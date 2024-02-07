@@ -48,9 +48,6 @@ class StoreBanner
 
         $layout = [
             "delay"      => 5000,
-            "spaceBetween" => [
-                "range" => 0
-            ],
             "navigation" => [
                 "bottomNav" => [
                     "value"     => true,
@@ -67,6 +64,7 @@ class StoreBanner
                 //         "type" => "slideControls"
                 //     ]
                 // ],
+                "spaceBetween" => 0,
                 "centralStage" => [
                     "title"    => null,
                     "subtitle" => null,

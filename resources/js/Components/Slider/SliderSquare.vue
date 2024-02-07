@@ -116,7 +116,7 @@ const compColorNav = computed(() => {
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
-            :spaceBetween="get(data,['spaceBetween','range']) ? data.spaceBetween.range : 0"
+            :spaceBetween="get(data,['common','spaceBetween']) ? data.common.spaceBetween : 0"
             :slidesPerView="compSlidesPerView"
             :centeredSlides="false" :loop="true" :autoplay="{
                 delay: data.delay,

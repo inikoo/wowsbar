@@ -22,14 +22,15 @@ const props = defineProps<{
 }>()
 
 const positionClasses = computed(() => {
+    console.log(props)
     let classes;
     if (props.corner.type != 'ribbon') {
         switch (props.position) {
             case 'topMiddle':
-                classes = 'top-6 right-15 text-center';
+                classes = 'top-6 flex w-full justify-center text-center';
                 break;
             case 'bottomMiddle':
-                classes = 'bottom-6 right-15 text-center';
+                classes = 'bottom-6 flex w-full justify-center text-center';
                 break;
             case 'topRight':
                 classes = 'top-6 right-7 text-right';

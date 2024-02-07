@@ -77,7 +77,6 @@ const renderImage = (component) => {
 }
 
 const renderBackground = (component) => {
-    console.log('sdfsdf',props.view)
     if (!props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
@@ -88,7 +87,7 @@ const renderBackground = (component) => {
         return get(component, ['layout', 'background', view ], get(component, ['layout', 'background', 'desktop'], 'gray'))
     } else return get(component, ['layout', 'background', props.view], get(component, ['layout', 'background', 'desktop'], 'gray'))
 }
-console.log(props)
+
 </script>
 
 <template>
