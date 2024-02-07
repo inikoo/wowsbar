@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 10 Aug 2023 12:14:27 Malaysia Time, Pantai Lembeng, Bali
- * Copyright (c) 2023, Raul A Perusquia Flores
+ * Created: Wed, 07 Feb 2024 11:29:10 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2024, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Media;
+namespace App\Actions\Media\Media;
 
 use App\Models\Media\Media;
 use App\Models\SysAdmin\Organisation;
@@ -41,26 +41,22 @@ class StoreStockImage
 
             $filename.=$extension;
 
-            $animated=false;
-            if($extension and strtolower($extension)=='gif') {
-                $animated=IsAnimatedGif::run($imagePath);
-            }
-
-
-            $name=preg_replace('/\..*$/', '', $originalFilename);
-            $name=preg_replace('/_/', ' ', $name);
-            return $organisation->addMedia($imagePath)
+            $name =preg_replace('/\..*$/', '', $originalFilename);
+            $name =preg_replace('/_/', ' ', $name);
+            $media= $organisation->addMedia($imagePath)
                 ->preservingOriginal()
                 ->withProperties(
                     [
                         'scope'      => $scope,
                         'checksum'   => $checksum,
-                        'is_animated'=> $animated
                     ]
                 )
                 ->usingName($name)
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);
+            $media->refresh();
+            UpdateIsAnimatedMedia::run($media, $imagePath);
+            return $media;
 
         } else {
             return $organisationMedia;

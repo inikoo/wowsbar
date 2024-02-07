@@ -7,7 +7,7 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Media\StoreStockImage;
+use App\Actions\Media\Media\StoreStockImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 

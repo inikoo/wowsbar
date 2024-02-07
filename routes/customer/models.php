@@ -9,7 +9,7 @@
 use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
-use App\Actions\Media\ImageGenerator;
+use App\Actions\Media\Media\ImageGenerator;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
 use App\Actions\Portfolio\Banner\PublishBanner;

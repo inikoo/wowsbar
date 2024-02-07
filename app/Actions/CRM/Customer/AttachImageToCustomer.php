@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Customer;
 
+use App\Actions\Media\Media\UpdateIsAnimatedMedia;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\CRM\Customer;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -42,6 +43,7 @@ class AttachImageToCustomer
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);
             $media->refresh();
+            UpdateIsAnimatedMedia::run($media, $imagePath);
         }
         return $media;
     }

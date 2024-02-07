@@ -7,6 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Media\Media\UpdateIsAnimatedMedia;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Mail\Mailshot;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -45,6 +46,7 @@ class AttachImageToMailshot
             ->usingFileName($filename)
             ->toMediaCollection($collection);
         $media->refresh();
+        UpdateIsAnimatedMedia::run($media, $imagePath);
         return $media;
     }
 }

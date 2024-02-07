@@ -53,3 +53,4 @@ _ide_helper.php
 /setup_portfolio_websites_integrations.sh
 /.env.wowsbar.production.deploy
 /.env.wowsbar.staging.deploy
+/copy_prod_db_to_staging.sh

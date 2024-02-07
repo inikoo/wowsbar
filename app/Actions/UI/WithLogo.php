@@ -8,7 +8,6 @@
 namespace App\Actions\UI;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Media\Media;
 
 trait WithLogo
@@ -21,12 +20,8 @@ trait WithLogo
         $logoWhite = organisation()->getMedia('logo_white')->first();
 
         return [
-            'logo'        => $logo ? GetPictureSources::run(
-                (new Image())->make($logo->getImgProxyFilename())->resize(0, 64)
-            ) : null,
-            'footer_logo' => $logoWhite ? GetPictureSources::run(
-                (new Image())->make($logoWhite->getImgProxyFilename())->resize(0, 16)
-            ) : null,
+            'logo'        => $logo ? GetPictureSources::run($logo->getImage()->resize(0, 64)) : null,
+            'footer_logo' => $logoWhite ? GetPictureSources::run($logoWhite->getImage()->resize(0, 16)) : null,
         ];
     }
 }

@@ -8,8 +8,8 @@
 namespace App\Http\Resources\Mail;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\HasSelfCall;
+use App\Models\Mail\EmailTemplate;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EmailTemplateResource extends JsonResource
@@ -18,14 +18,14 @@ class EmailTemplateResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var \App\Models\Mail\EmailTemplate $emailTemplate */
+        /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $this;
 
         $image          = null;
         $imageThumbnail = null;
         if ($emailTemplate->screenshot) {
-            $image          = (new Image())->make($emailTemplate->screenshot->getImgProxyFilename());
-            $imageThumbnail = (new Image())->make($emailTemplate->screenshot->getImgProxyFilename())->resize(0, 200);
+            $image          = $emailTemplate->screenshot->getImage();
+            $imageThumbnail = $emailTemplate->screenshot->getImage()->resize(0, 200);
         }
 
         return [

@@ -24,9 +24,7 @@ class SetPortfolioWebsiteIntegration
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $attributes): PortfolioWebsite
     {
-        $portfolioWebsite = $this->update($portfolioWebsite, $attributes, ['integration_data']);
-
-        return $portfolioWebsite;
+        return $this->update($portfolioWebsite, $attributes, ['integration_data']);
     }
 
 
