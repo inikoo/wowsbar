@@ -9,7 +9,6 @@ namespace App\Http\Resources\UniversalSearch\Customers;
 
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,7 +26,7 @@ class BannerSearchResultResource extends JsonResource
 
         $imageThumbnail = null;
         if ($banner->image) {
-            $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
+            $imageThumbnail = $banner->image->getImage()->resize(0, 48);
         }
 
         return [

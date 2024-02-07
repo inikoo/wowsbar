@@ -7,6 +7,7 @@
 
 namespace App\Actions\SysAdmin\Organisation;
 
+use App\Actions\Media\Media\UpdateIsAnimatedMedia;
 use App\Models\SysAdmin\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -39,6 +40,7 @@ class AttachImageToOrganisation
             ->toMediaCollection($collection);
 
         $media->refresh();
+        UpdateIsAnimatedMedia::run($media, $imagePath);
         return $media;
 
     }

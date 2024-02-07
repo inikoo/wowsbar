@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Media\Media\UpdateIsAnimatedMedia;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -47,6 +48,7 @@ class AttachImageToWebsite
             ->usingFileName($filename)
             ->toMediaCollection($collection);
         $media->refresh();
+        UpdateIsAnimatedMedia::run($media, $imagePath);
         return $media;
     }
 }

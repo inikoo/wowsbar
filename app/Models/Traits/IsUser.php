@@ -8,7 +8,6 @@
 namespace App\Models\Traits;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,7 +28,7 @@ trait IsUser
     public function avatarImageSources($width = 0, $height = 0)
     {
         if($this->avatar) {
-            $avatarThumbnail = (new Image())->make($this->avatar->getImgProxyFilename())->resize($width, $height);
+            $avatarThumbnail = $this->avatar->getImage()->resize($width, $height);
             return GetPictureSources::run($avatarThumbnail);
         }
         return null;

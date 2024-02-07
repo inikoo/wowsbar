@@ -9,7 +9,6 @@ namespace App\Http\Resources\Portfolio;
 
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\HasSelfCall;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,8 +28,8 @@ class BannerResource extends JsonResource
         $image          = null;
         $imageThumbnail = null;
         if ($banner->image) {
-            $image          = (new Image())->make($banner->image->getImgProxyFilename());
-            $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
+            $image          = $banner->image->getImage();
+            $imageThumbnail = $banner->image->getImage()->resize(0, 48);
         }
 
         $publishedSnapshot = [];
@@ -38,6 +37,7 @@ class BannerResource extends JsonResource
             $snapshot          = $banner->liveSnapshot;
             $publishedSnapshot = SnapshotResource::make($snapshot)->getArray();
         }
+
 
         return [
             'id'                 => $banner->id,

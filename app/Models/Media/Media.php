@@ -7,6 +7,7 @@
 
 namespace App\Models\Media;
 
+use App\Helpers\ImgProxy\Image;
 use App\Models\Traits\IsMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
@@ -77,6 +78,12 @@ class Media extends BaseMedia
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+
+    public function getImage(): Image
+    {
+        return (new Image())->make($this->getImgProxyFilename(), $this->is_animated);
     }
 
 }

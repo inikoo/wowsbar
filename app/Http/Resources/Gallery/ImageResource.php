@@ -8,9 +8,9 @@
 namespace App\Http\Resources\Gallery;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Helpers\NaturalLanguage;
 use App\Http\Resources\HasSelfCall;
+use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ImageResource extends JsonResource
@@ -19,16 +19,15 @@ class ImageResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var \App\Models\Media\Media $media */
+        /** @var Media $media */
         $media = $this;
 
-
-        $image          = (new Image())->make($media->getImgProxyFilename(), $media->is_animated);
-        $imageThumbnail = (new Image())->make($media->getImgProxyFilename(), $media->is_animated)->resize(0, 48);
-
+        $image          = $media->getImage();
+        $imageThumbnail = $media->getImage()->resize(0, 48);
 
         return [
             'id'                   => $media->id,
+            'is_animated'          => $media->is_animated,
             'slug'                 => $media->slug,
             'uuid'                 => $media->uuid,
             'name'                 => $media->name,

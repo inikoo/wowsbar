@@ -8,7 +8,6 @@
 namespace App\Http\Resources\CRM;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Media\Media;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,7 +29,7 @@ class OrgCustomerUsersResource extends JsonResource
         $imageThumbnail = null;
         if ($this->avatar_id) {
             $media          = Media::find($this->avatar_id);
-            $imageThumbnail = (new Image())->make($media->getImgProxyFilename())->resize(0, 48);
+            $imageThumbnail = $media->getImage()->resize(0, 48);
         }
 
 

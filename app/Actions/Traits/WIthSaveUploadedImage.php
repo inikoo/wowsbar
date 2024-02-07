@@ -7,6 +7,7 @@
 
 namespace App\Actions\Traits;
 
+use App\Actions\Media\Media\UpdateIsAnimatedMedia;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
 use App\Models\Mail\EmailTemplate;
@@ -49,6 +50,8 @@ trait WIthSaveUploadedImage
                 ->usingName($originalFilename)
                 ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
                 ->toMediaCollection($collection);
+            $media->refresh();
+            UpdateIsAnimatedMedia::run($media, $imagePath);
             $model->update([$field => $media->id]);
         }
 
