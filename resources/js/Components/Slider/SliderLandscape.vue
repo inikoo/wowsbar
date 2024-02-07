@@ -104,7 +104,7 @@ console.log(props)
             <Swiper ref="swiperRef"
                 :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
-                :spaceBetween="data.spaceBetween.range ? data.spaceBetween.range : 0"
+                :spaceBetween="get(data,['spaceBetween','range']) ? data.spaceBetween.range : -1"
                 :slidesPerView="1"
                 :centeredSlides="true"
                 :loop="true"
