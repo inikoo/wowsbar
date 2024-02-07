@@ -65,7 +65,7 @@ const compColorNav = computed(() => {
 })
 
 const renderImage = (component) => {
-    if (!props.production) {
+    if (props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
             view = "mobile";
@@ -77,7 +77,8 @@ const renderImage = (component) => {
 }
 
 const renderBackground = (component) => {
-    if (!props.production) {
+    console.log('ini')
+    if (props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
             view = "mobile";
@@ -103,7 +104,7 @@ const renderBackground = (component) => {
             <Swiper ref="swiperRef"
                 :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
-                :spaceBetween="get(data,['spaceBetween','range']) ? data.spaceBetween.range : -1"
+                :spaceBetween="-1"
                 :slidesPerView="1"
                 :centeredSlides="true"
                 :loop="true"
