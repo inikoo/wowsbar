@@ -64,6 +64,18 @@ const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
 })
 
+const renderImage = (component) => {
+    if (props.production) {
+        let view = "desktop"
+        if (window.matchMedia("(max-width: 767px)").matches) {
+            view = "mobile";
+        } else if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
+            view = "tablet";
+        }
+        return get(component, ['image', view || 'desktop', 'source'], null)
+    } else return get(component, ['image', props.view || 'desktop', 'source'], null)
+}
+
 </script>
 
 <template>
@@ -99,7 +111,7 @@ const compColorNav = computed(() => {
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
                     <div v-if="get(component, ['layout', 'backgroundType', $props.view || 'desktop'], 'image') == 'image'" class="relative w-full h-full">
-                        <Image :src="get(component, ['image', props.view || 'desktop', 'source'], null)" alt="Wowsbar" />
+                        <Image :src="renderImage(component)" alt="Wowsbar" />
                     </div>
                     <div v-else :style="{ background: get(component, ['layout', 'background', props.view || 'desktop'], 'gray')}" class="w-full h-full" />
 
