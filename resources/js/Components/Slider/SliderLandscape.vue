@@ -65,15 +65,27 @@ const compColorNav = computed(() => {
 })
 
 const renderImage = (component) => {
-    if (props.production) {
+    if (!props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
             view = "mobile";
         } else if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
             view = "tablet";
         }
-        return get(component, ['image', view || 'desktop', 'source'], null)
-    } else return get(component, ['image', props.view || 'desktop', 'source'], null)
+        return get(component, ['image', view, 'source'],get(component, ['image','desktop', 'source'], null))
+    } else return get(component, ['image', props.view, 'source'], get(component, ['image','desktop', 'source'], null))
+}
+
+const renderBackground = (component) => {
+    if (!props.production) {
+        let view = "desktop"
+        if (window.matchMedia("(max-width: 767px)").matches) {
+            view = "mobile";
+        } else if (window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches) {
+            view = "tablet";
+        }
+        return get(component, ['layout', 'background', props.view ], get(component, ['layout', 'background', 'desktop'], 'gray'))
+    } else return get(component, ['layout', 'background', props.view], get(component, ['layout', 'background', 'desktop'], 'gray'))
 }
 
 </script>
@@ -113,7 +125,7 @@ const renderImage = (component) => {
                     <div v-if="get(component, ['layout', 'backgroundType', $props.view || 'desktop'], 'image') == 'image'" class="relative w-full h-full">
                         <Image :src="renderImage(component)" alt="Wowsbar" />
                     </div>
-                    <div v-else :style="{ background: get(component, ['layout', 'background', props.view || 'desktop'], 'gray')}" class="w-full h-full" />
+                    <div v-else :style="{ background: renderBackground(component)}" class="w-full h-full" />
 
                     <!-- Section: Not Visible (for workshop) -->
                     <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
