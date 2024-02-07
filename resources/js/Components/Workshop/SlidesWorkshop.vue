@@ -190,6 +190,13 @@ const CommonBlueprint = ref([
                     { label: 'Pagination (bullets or buttons)', name: 'bottomNav' }
                 ]
             },
+            {
+                name: ["common","spaceBetween"],
+                type: "number",
+                label: trans("space Between"),
+                value: null,
+                placeholder: "Enter space between"
+            },
         ],
     },
     {

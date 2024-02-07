@@ -98,11 +98,11 @@ const compHandleBannerLessSlide = computed(() => {
                 : actualSlides.value.length >= 8 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
 })
 
-//onMounted(() => {
-    // setTimeout(() => {
-    //     intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
-    // }, 600)
-//})
+onMounted(() => {
+    setTimeout(() => {
+        intSwiperKey.value++  // To handle bug on Browser back navigation (Agnest & Cat)
+    }, 600)
+})
 
 const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
@@ -116,7 +116,7 @@ const compColorNav = computed(() => {
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
-            :spaceBetween="0"
+            :spaceBetween="get(data,['common','spaceBetween']) ? data.common.spaceBetween : 0"
             :slidesPerView="compSlidesPerView"
             :centeredSlides="false" :loop="true" :autoplay="{
                 delay: data.delay,

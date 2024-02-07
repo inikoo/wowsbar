@@ -64,6 +64,7 @@ class StoreBanner
                 //         "type" => "slideControls"
                 //     ]
                 // ],
+                "spaceBetween" => 0,
                 "centralStage" => [
                     "title"    => null,
                     "subtitle" => null,

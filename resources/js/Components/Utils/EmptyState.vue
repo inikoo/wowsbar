@@ -28,6 +28,7 @@ const props = defineProps<{
         }
         description: string
         title: string
+        icons?: string[]
     }
 }>()
 
@@ -47,7 +48,25 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
 
 <template>
     <div class="text-center border-gray-200 pt-14">
-        <div class="mb-6">
+        <div v-if="data?.icons?.length === 1" class="mb-6">
+            <FontAwesomeIcon :icon="data?.icons?.[0]" class="mx-auto h-9 text-gray-300" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[0]" class="mx-7 h-12 w-12 text-gray-400" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[0]" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
+        </div>
+        
+        <div v-else-if="data?.icons?.length === 2" class="mb-6">
+            <FontAwesomeIcon :icon="data?.icons?.[1]" class="mx-auto h-9 text-gray-300" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[0]" class="mx-7 h-12 w-12 text-gray-400" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[1]" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
+        </div>
+        
+        <div v-else-if="data?.icons?.length === 3" class="mb-6">
+            <FontAwesomeIcon :icon="data?.icons?.[1]" class="mx-auto h-9 text-gray-300" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[0]" class="mx-7 h-12 w-12 text-gray-400" aria-hidden="true" />
+            <FontAwesomeIcon :icon="data?.icons?.[2]" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
+        </div>
+
+        <div v-else class="mb-6">
             <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-9 text-gray-300" aria-hidden="true" />
             <FontAwesomeIcon :icon="randomIcon[randomIndex].firstIcon" class="mx-7 h-12 w-12 text-gray-400" aria-hidden="true" />
             <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
@@ -55,6 +74,7 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
 
         <h3 class="font-logo text-lg font-bold text-gray-600 capitalize">{{ data?.title ?? trans('No records found') }}</h3>
         <p v-if="data?.description" class="text-sm text-gray-500 inline-block">{{ data?.description }}</p>
+
         <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="mt-4 block">
             <Button size="xs" :style="data?.action.style" :icon="data?.action.icon" :label="data?.action.tooltip" />
         </Link>

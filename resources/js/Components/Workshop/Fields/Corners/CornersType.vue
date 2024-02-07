@@ -193,17 +193,22 @@ const onUpdateFieldCorner =(field, newValue)=>{
 
 
 const filterType = () => {
+    let FinalData = optionType
     if (props.fieldData?.optionType) {
         const data = optionType.filter((item) => {
             // Check if the item's value is present in the optionType array
             return props.fieldData?.optionType.includes(item.value);
         });
-        return data;
+        FinalData = data;
     }
-    return optionType
+    if(props.section.id == "topMiddle" || props.section.id == "bottomMiddle" ){
+       const index = FinalData.findIndex((item)=>item.value == 'ribbon')
+       if(index) FinalData.splice(index,1)
+    }
+    return FinalData
 }
 
-const Type = filterType()
+const Type = ref(filterType())
 
 const onClear =()=>{
     emits("clear",props.section);
@@ -211,14 +216,15 @@ const onClear =()=>{
 }
 
 const findDefaultActive=(data)=>{
-    const nextactive = Type.find((item)=>item.value == get(props.section,['valueForm','type']))
+    const nextactive = Type.value.find((item)=>item.value == get(props.section,['valueForm','type']))
     return nextactive
 }
 
 const activeType = ref(findDefaultActive())
 
 watch(props.section, (newValue) => {
-    const nextactive = Type.find((item)=>item.value == get(newValue,['valueForm','type']))
+    Type.value = filterType()
+    const nextactive = Type.value.find((item)=>item.value == get(newValue,['valueForm','type']))
     activeType.value = nextactive
 })
 

@@ -30,7 +30,7 @@ function employeeRoute(employee) {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5"   >
+    <Table :resource="data" :name="tab">
         <template #cell(slug)="{ item: employee }">
             <Link :href="employeeRoute(employee)" class="py-1 specialUnderlineOrg">
                 {{ employee['slug'] }}
@@ -50,7 +50,5 @@ function employeeRoute(employee) {
                 </Link>
             </div>
         </template>
-
-
     </Table>
 </template>
