@@ -37,7 +37,7 @@ const props = defineProps<{
             </div>
         </div>
         <div class="aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-fit h-56 md:h-60">
-            <SliderLandscape :data="data.compiled_layout" :production="false" />
+            <SliderLandscape :data="data.compiled_layout" :production="true" />
         </div>
     </div>
 
@@ -58,7 +58,7 @@ const props = defineProps<{
             </div>
         </div>
         <div class="aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-fit h-56 md:h-60">
-            <SliderSquare :data="data.compiled_layout" :production="false" />
+            <SliderSquare :data="data.compiled_layout" :production="true" />
         </div>
     </div>
     <!-- <pre>{{ data.compiled_layout }}</pre> -->
