@@ -110,9 +110,10 @@ const compColorNav = computed(() => {
 </script>
 
 <template>
-    <!-- Square -->
-    <!-- <pre>{{ props.data.components[1] }}</pre> -->
-    <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
+    <div class="relative w-full">
+        <div class="relative mx-auto transition-all duration-200 ease-in-out" :class="[
+                'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
+        ]">
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
@@ -180,6 +181,7 @@ const compColorNav = computed(() => {
         <!-- Reserved Corner: Button Controls -->
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common?.corners)" :position="position"
             :corner="corner" :swiperRef="swiperRef" />
+    </div>
     </div>
 </template>
 

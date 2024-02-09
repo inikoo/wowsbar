@@ -77,7 +77,6 @@ const renderImage = (component) => {
 }
 
 const renderBackground = (component) => {
-    console.log('ini')
     if (props.production) {
         let view = "desktop"
         if (window.matchMedia("(max-width: 767px)").matches) {
@@ -104,7 +103,7 @@ const renderBackground = (component) => {
             <Swiper ref="swiperRef"
                 :key="'banner' + intSwiperKey"
                 :slideToClickedSlide="true"
-                :spaceBetween="-1"
+                :spaceBetween="get(data,['common','spaceBetween']) ? data.common.spaceBetween : 0"
                 :slidesPerView="1"
                 :centeredSlides="true"
                 :loop="true"
