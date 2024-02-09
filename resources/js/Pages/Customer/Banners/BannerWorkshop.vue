@@ -39,6 +39,7 @@ const props = defineProps<{
     imagesUploadRoute: routeType
     autoSaveRoute: routeType
     publishRoute: routeType
+    currentView?: Object
 }>()
 
 

@@ -63,7 +63,7 @@ const { data, fieldName, value } = toRefs(props);
       } else {
           localData[props.fieldName] = newValue;
       }
-      console.log('localData',localData)
+
       emits("update:data", localData); 
     }
   

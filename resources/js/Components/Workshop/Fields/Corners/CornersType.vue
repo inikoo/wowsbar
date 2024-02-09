@@ -237,7 +237,7 @@ watch(props.section, (newValue) => {
         <div class="w-full flex">
             <span class="isolate flex w-full rounded-md gap-x-2">
                 <!-- Select the type of Corner: Text, Link Button, Slide Controls, Ribbon -->
-                <button v-for="(item, index) in Type" :key="item + section.id" type="button"
+                <button v-for="(item, index) in Type" :key="item + section.id + index" type="button"
                     @click="clickTypeCorner(index, item)" :class="[
                         'py-2', 'px-4', 'rounded',
                         get(activeType,'value') == item.value ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400'
@@ -266,21 +266,20 @@ watch(props.section, (newValue) => {
                     <!-- Available Field on Corners -->
                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                         <div v-if="field.type == 'input' || field.type == 'number'" class="relative flex-grow">
-                            <Input :key="field.label + section.id"
+                            <Input :key="field.label + section.id + index"
                                 :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
-                                @input="setUpData"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)" />
                         </div>
                         <div v-if="field.type == 'colorPicker'" class="relative flex-grow">
-                            <ColorPicker :key="field.label + section.id"
+                            <ColorPicker :key="field.label + section.id + index"
                                 :color="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"
                                 />
                         </div>
                         <div v-if="field.type == 'radio'" class="relative flex-grow">
-                            <Radio :key="field.label + index"
+                            <Radio :key="field.label + index + index"
                                 :radioValue="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 :fieldData="{ options: field.options, defaultValue: field.defaultValue }" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"/>

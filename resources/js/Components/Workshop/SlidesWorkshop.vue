@@ -36,6 +36,7 @@ const props = defineProps<{
     imagesUploadRoute: routeType
     user: string
     screenView: string
+    isOpen?:Object
 }>()
 
 const emits = defineEmits<{
@@ -755,8 +756,7 @@ onMounted(() => {
 
         <!-- The Editor: Common Properties -->
         <div class="border border-gray-300 w-3/4 rounded-md" v-if="commonEditActive">
-            <SliderCommonWorkshop ref="_SlideWorkshop" :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
-                />
+            <SliderCommonWorkshop ref="_SlideWorkshop" :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" />
         </div>
 
         <!-- The Editor: Slide -->

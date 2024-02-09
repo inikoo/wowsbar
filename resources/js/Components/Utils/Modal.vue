@@ -7,7 +7,7 @@ library.add(faTimes)
 
 const props = withDefaults(defineProps<{
     width?: string
-    isOpen: boolean
+    isOpen?: boolean
     closeButton?: boolean
 }>(), {
     width: 'w-4/5'

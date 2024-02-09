@@ -9,6 +9,7 @@ import { ref, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaintBrushAlt, faText } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { Obj } from '@popperjs/core'
 library.add(faPaintBrushAlt, faText)
 
 
@@ -25,6 +26,9 @@ const props = withDefaults(defineProps<{
     colorSuggestions?: Boolean
     stylePanel?: any
     mode?: string
+    bannerType? : string
+    counter? : Boolean,
+    common?: Object
 }>(), {
     colorSuggestions: () => true,
     mode: 'color',

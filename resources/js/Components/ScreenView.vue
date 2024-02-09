@@ -6,7 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faDesktop, faMobileAndroidAlt, faTabletAndroidAlt)
 
 const props = withDefaults(defineProps<{
-    currentView: string
+    currentView?: string
 }>(), {
     currentView: 'desktop'
 })
