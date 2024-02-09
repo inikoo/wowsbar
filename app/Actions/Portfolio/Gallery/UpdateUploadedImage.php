@@ -48,7 +48,7 @@ class UpdateUploadedImage
         return [
             'name'     => ['sometimes', 'string'],
             'images'   => ['sometimes'],
-            'images.*' => ["mimes:jpg,png,jpeg|max:102400"]
+            'images.*' => ["mimes:jpg,png,jpeg,gif","max:50000"]
         ];
     }
 

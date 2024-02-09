@@ -53,7 +53,7 @@ class UploadImagesToWebsite
     {
         return [
             'images'   => ['required'],
-            'images.*' => ["mimes:jpg,png,jpeg|max:102400"]
+            'images.*' => ["mimes:jpg,png,jpeg,gif","max:50000"]
         ];
     }
 
