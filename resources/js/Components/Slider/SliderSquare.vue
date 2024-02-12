@@ -111,7 +111,14 @@ const compColorNav = computed(() => {
 
 <template>
     <div class="relative w-full">
-        <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
+        <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :class="[ !production ? 
+            $props.view
+                ? { 'aspect-[5/5] w-full' : $props.view == 'mobile',
+                    'aspect-[6/2] w-full' : $props.view == 'tablet',
+                    'aspect-[4/1] w-full' : $props.view == 'desktop'}
+                : 'aspect-[5/5] md:aspect-[6/2] lg:aspect-[4/1] w-full'
+            : null
+        ]">
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
