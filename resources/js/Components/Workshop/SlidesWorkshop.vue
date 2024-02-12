@@ -193,8 +193,33 @@ const CommonBlueprint = ref([
             },
             {
                 name: ["common","spaceBetween"],
-                type: "number",
+                type: "radio",
                 label: trans("space Between"),
+                value: null,
+                placeholder: "Enter space between",
+                options: [
+                    {
+                        label: "zero",
+                        value: 0,
+                    },
+                    {
+                        label: "Medium",
+                        value: 5,
+                    },
+                    {
+                        label: "Large",
+                        value: 10,
+                    },
+                    {
+                        label: "Extra Large",
+                        value: 20,
+                    },
+                ],
+            },
+            {
+                name: ["common","spaceColor"],
+                type: "colorpicker",
+                label: trans("space color"),
                 value: null,
                 placeholder: "Enter space between"
             },
