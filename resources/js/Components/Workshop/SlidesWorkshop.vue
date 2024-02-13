@@ -219,7 +219,7 @@ const CommonBlueprint = ref([
             {
                 name: ["common","spaceColor"],
                 type: "colorpicker",
-                label: trans("space color"),
+                label: trans("Border color"),
                 value: null,
                 placeholder: "Enter space between"
             },
