@@ -51,7 +51,7 @@ const Load = async () => {
             ),
         )
         if (response) {
-            // console.log(response)
+            console.log(response)
             return response.data.html.design
         }
     } catch (error) {
@@ -121,7 +121,7 @@ onMounted(async () => {
                 {
                     label: "Montserrat",
                     value: "Montserrat",
-                    url: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap" 
+                    url: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap"
                 }
             ]
         }
@@ -186,7 +186,7 @@ onMounted(async () => {
 });
 
 defineExpose({
-    editor : editor, 
+    editor : editor,
     setToNewTemplate : setToNewTemplate,
     ready : isUnlayerLoading
 })
