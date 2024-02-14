@@ -30,6 +30,7 @@ class ShowMailshotContent
 
     public function jsonResponse(array $content): false|string
     {
+        dd($content);
         return json_encode($content);
     }
 
