@@ -29,8 +29,6 @@ class GetImageFromHtml
 
         $filename = $filename.'.jpg';
 
-        dd($html, $filename, $path.$filename);
-
         Browsershot::html($html)
             ->setIncludePath('$PATH:/usr/bin')
             ->setOption('newHeadless', true)
