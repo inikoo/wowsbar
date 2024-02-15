@@ -82,7 +82,7 @@ class UpdateIsAnimatedMedia
                 return 1;
             }
 
-           $this->processMedia($media, $command);
+            $this->processMedia($media, $command);
 
 
         } else {
