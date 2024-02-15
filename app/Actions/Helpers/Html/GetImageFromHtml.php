@@ -31,8 +31,10 @@ class GetImageFromHtml
 
         Browsershot::html($html)
             ->setIncludePath('$PATH:/usr/bin')
+            ->waitUntilNetworkIdle()
+            ->timeout(120)
             ->noSandbox()
-            /* ->setOption('newHeadless', true) */
+            ->setOption('newHeadless', true)
             ->save($path.$filename);
 
         return [
