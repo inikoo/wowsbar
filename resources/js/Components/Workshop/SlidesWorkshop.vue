@@ -774,9 +774,8 @@ onMounted(() => {
 
 
             </div>
-            <div class="text-xs text-gray-400 py-1">
-                The recommended image size is 1800 x 450
-            </div>
+            <div class="text-xs text-gray-400 pt-2">Max file size 10 MB</div>
+            <div class="text-xs text-gray-400 py-1">The recommended image size is 1800 x 450</div>
         </div>
 
         <!-- The Editor: Common Properties -->

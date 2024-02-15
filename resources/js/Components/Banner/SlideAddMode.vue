@@ -63,6 +63,7 @@ const onChange = () => {
                 </div>
             </div>
         </div>
+        <div  class="text-xs text-gray-400 py-1" :class="bannerType == 'landscape' ? '' : 'mx-auto w-fit'">{{ trans("Max file size 10 MB") }}</div>
         <div v-if="bannerType == 'landscape'" class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>
         <div v-else-if="bannerType == 'square'" class="mx-auto w-fit text-xs text-gray-400 py-1">{{ trans("The recommended image size is 500 x 500") }}</div>
     </div>

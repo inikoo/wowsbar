@@ -197,7 +197,9 @@ const addComponent =  (element) => {
     </div>
     
     <!-- Button -->
-    <div class="flex justify-end py-2.5 gap-3 pb-0">
+    <div class="flex justify-between py-2.5 px-3">
+    <div class="text-base text-gray-500">Max file size 10 MB</div> <!-- Teks "max file size 10 mb" di pojok kiri -->
+    <div class="flex gap-3"> <!-- Container untuk tombol-tombol di pojok kanan -->
         <Button @click="() => closeModal()" :style="'red'">
             <div class="flex items-center">
                 <FontAwesomeIcon icon='fal fa-times' fixed-width class='' aria-hidden='true' />
@@ -217,6 +219,7 @@ const addComponent =  (element) => {
             <div class="tabular-nums">Selected images ({{ imagesSelected.data.length }})</div>
         </Button>
     </div>
+</div>
 
     <Modal :isOpen="isOpenCropModal" @onClose="closeCropModal">
         <div>
