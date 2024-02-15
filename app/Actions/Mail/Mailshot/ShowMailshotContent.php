@@ -28,9 +28,9 @@ class ShowMailshotContent
     }
 
 
-    public function jsonResponse(array $content): false|string
+    public function jsonResponse(array $content): array
     {
-        return json_encode($content);
+        return $content;
     }
 
     public function authorize(ActionRequest $request): bool

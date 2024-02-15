@@ -49,7 +49,6 @@ class ShowProspectMailshotWorkshop extends InertiaAction
 
     public function htmlResponse(Mailshot $mailshot, ActionRequest $request): Response
     {
-        dd(MailshotResource::make($mailshot)->getArray());
         return Inertia::render(
             'CRM/Prospects/WorkshopMailshot',
             [

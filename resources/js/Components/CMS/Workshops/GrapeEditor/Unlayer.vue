@@ -44,16 +44,16 @@ const Store = async (update, data) => {
 
 const Load = async () => {
     try {
-        const response = await fetch(
+        const response = await axios.get(
             route(
                 props.loadRoute.name,
                 props.loadRoute.parameters
             ),
-        ).then(response => console.log(response.json()))
-        // if (response) {
-        //     console.log(response)
-        //     return response.data.html.design
-        // }
+        )
+        if (response) {
+            // console.log(response)
+            return response.data.html.design
+        }
     } catch (error) {
         console.log(error)
         notify({
