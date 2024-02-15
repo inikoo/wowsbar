@@ -151,14 +151,12 @@ onUnmounted(() => {
     </LabelEstimated>
 
     <!-- Modal: Add to template -->
-    <Modal :isOpen="isAddTemplateOpen" @onClose="isAddTemplateOpen = false">
+    <Modal :isOpen="isAddTemplateOpen" @onClose="isAddTemplateOpen = false" width="w-fit">
         <div class="max-w-sm mx-auto">
-            <label for="" class=" text-gray-600">
-                Template name:
-            </label>
+            <div class=" text-gray-600 text-xs pb-2">Template name:</div>
             <PureInput v-model="templateName" placeholder="Input template name" class="max-w-sm" />
-            <div class="mx-auto mt-4 w-fit">
-                <Button @click="() => submitAddTemplate()" :style="isLoading ? 'disabled' : templateState ? 'disabled' : templateName ? 'rainbow' : 'disabled'" :loading="isLoading" label="Add" :key="templateName + isLoading.toString()" class="" />
+            <div class="ml-auto mt-4 w-fit">
+                <Button @click="() => submitAddTemplate()" :style="isLoading ? 'disabled' : templateState ? 'disabled' : templateName ? 'rainbow' : 'disabled'" :loading="isLoading" label="Add Tempaltes" :key="templateName + isLoading.toString()" class="" />
             </div>
         </div>
     </Modal>
