@@ -30,7 +30,7 @@ class GetImageFromHtml
         $filename = $filename.'.jpg';
 
         Browsershot::html($html)
-            ->setIncludePath('$PATH:/usr/local/bin')
+            ->setIncludePath('$PATH:/usr/bin')
             ->setOption('newHeadless', true)
             ->save($path.$filename);
 
