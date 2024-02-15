@@ -10,6 +10,7 @@ namespace App\Actions\Helpers\Html;
 use App\Models\Mail\Mailshot;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Spatie\Browsershot\Browsershot;
@@ -29,10 +30,16 @@ class GetImageFromHtml
 
         $filename = $filename.'.jpg';
 
-        Browsershot::html($html)
+        $shot = Browsershot::html($html)
             ->setIncludePath('$PATH:/usr/bin')
+            ->fullPage()
             ->setOption('newHeadless', true)
-            ->save($path.$filename);
+            ->base64Screenshot();
+
+        $image = str_replace('data:image/png;base64,', '', $shot);
+        $image = str_replace(' ', '+', $image);
+
+        File::put($path.$filename, base64_decode($image));
 
         return [
             'path'     => $path,
