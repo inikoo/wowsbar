@@ -197,7 +197,7 @@ onMounted(async() => {
             <TabPanels class="mt-2">
                 <TabPanel v-for="(category, categoryIndex) in categories" :key="categoryIndex"
                     class="rounded bg-gray-50 p-3 ring-2 ring-gray-200 focus:outline-none">
-                    <component 
+                    <component
                         :is="category.component"
                         :form="form"
                         :fieldName="category.fieldName"
