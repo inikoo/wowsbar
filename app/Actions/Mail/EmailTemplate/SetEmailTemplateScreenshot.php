@@ -7,9 +7,11 @@
 
 namespace App\Actions\Mail\EmailTemplate;
 
+use App\Actions\Helpers\Html\GetImageFromHtml;
 use App\Actions\Traits\WithActionUpdate;
 use App\Actions\Traits\WIthSaveUploadedImage;
 use App\Models\Mail\EmailTemplate;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SetEmailTemplateScreenshot
@@ -22,15 +24,25 @@ class SetEmailTemplateScreenshot
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function handle(EmailTemplate $emailTemplate, string $imagePath, string $originalFilename, string $extension = null): EmailTemplate
+    public function handle(EmailTemplate $emailTemplate): EmailTemplate
     {
-        return $this->saveUploadedImage(
-            model: $emailTemplate,
-            collection: 'screenshot',
-            field: 'screenshot_id',
-            imagePath: $imagePath,
-            originalFilename: $originalFilename,
-            extension: $extension,
+        $imagesPath = GetImageFromHtml::run(
+            $emailTemplate->compiled['html']['html'],
+            $emailTemplate->slug
         );
+
+        if (File::exists($imagesPath['path'])) {
+            foreach (File::files($imagesPath['path']) as $image) {
+                return $this->saveUploadedImage(
+                    model: $emailTemplate,
+                    collection: 'screenshot',
+                    field: 'screenshot_id',
+                    imagePath: $image->getPathname(),
+                    originalFilename: $image->getFilename()
+                );
+            }
+        }
+
+        return $emailTemplate;
     }
 }

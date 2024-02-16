@@ -7,10 +7,7 @@
 
 namespace App\Actions\Helpers\Html;
 
-use App\Models\Mail\Mailshot;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Spatie\Browsershot\Browsershot;
@@ -48,9 +45,4 @@ class GetImageFromHtml
         ];
     }
 
-    public function asController(): array
-    {
-        $mailshot = Mailshot::first();
-        return $this->handle(Arr::get($mailshot->layout, 'html')['html'], $mailshot->slug);
-    }
 }
