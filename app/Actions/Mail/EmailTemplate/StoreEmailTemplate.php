@@ -35,7 +35,7 @@ class StoreEmailTemplate
     {
         /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
-        //SetEmailTemplateScreenshot::run($emailTemplate);
+        SetEmailTemplateScreenshot::dispatch($emailTemplate);
 
 
 
