@@ -710,7 +710,7 @@ onMounted(() => {
                                 <div v-else :style="{ background: get(slide, ['layout', 'background', 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             <div v-else>
-                                <Image v-if="get(slide, ['layout', 'backgroundType', screenView || 'desktop'], 'image') === 'image'" :src="get(slide, ['image', screenView || 'desktop', 'thumbnail'], false)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image v-if="get(slide, ['layout', 'backgroundType', screenView ], get(slide, ['layout', 'backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', screenView, 'thumbnail'], get(slide, ['image','desktop', 'thumbnail'], false))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
 
                                 <!-- If the slide is color -->
                                 <div v-else :style="{ background: get(slide, ['layout', 'background', screenView || 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
