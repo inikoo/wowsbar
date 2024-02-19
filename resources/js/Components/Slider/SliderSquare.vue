@@ -104,22 +104,28 @@ onMounted(() => {
     }, 600)
 })
 
+// Handle color of arrow navigation (default is blue)
 const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
+})
+
+
+// Handle width of banner on first load
+const compWidthBanner = computed(() => {
+    return compSlidesPerView.value > compHandleBannerLessSlide.value.length ? compHandleBannerLessSlide.value.length : compSlidesPerView.value
 })
 
 </script>
 
 <template>
-<div class="relative w-full">
-    <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :class="[ !production ? 
-        $props.view
-            ? { 'aspect-[1/1] w-full' : $props.view == 'mobile',
-                'aspect-[3/1] w-full' : $props.view == 'tablet',
-                'aspect-[4/1] w-full' : $props.view == 'desktop'}
-            : 'aspect-[1/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
-        : null
-    ]" :style="{ backgroundColor: props.data.common.spaceColor }">
+    <div class="h-full max-h-full max-w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :style="{
+        backgroundColor: props.data.common.spaceColor,
+        aspectRatio:
+            $props.view == 'mobile' ? '1/1'
+            : $props.view == 'tablet' ? compHandleBannerLessSlide.length >= 3 ? '3/1' : `${compHandleBannerLessSlide.length}/1`
+            : $props.view == 'desktop' ? compHandleBannerLessSlide.length >= 4 ? '4/1' : `${compHandleBannerLessSlide.length}/1`
+            : `${compWidthBanner}/1`
+        }">
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
@@ -138,7 +144,8 @@ const compColorNav = computed(() => {
                 },
             } : false"
             :navigation="!data.navigation || data.navigation?.sideNav?.value"
-            :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
+            :modules="[Autoplay, Pagination, Navigation]"
+            class="mySwiper h-full w-full"
         >
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id"
                 class="h-full overflow-hidden aspect-square">
@@ -189,7 +196,6 @@ const compColorNav = computed(() => {
         <!-- Reserved Corner: Button Controls -->
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common?.corners)" :position="position"
             :corner="corner" :swiperRef="swiperRef" />
-    </div>
     </div>
 </template>
 
