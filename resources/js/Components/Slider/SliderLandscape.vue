@@ -106,7 +106,7 @@ const renderBackground = (component) => {
                 :spaceBetween="get(data,['common','spaceBetween']) ? data.common.spaceBetween : 0"
                 :slidesPerView="1"
                 :centeredSlides="true"
-                :loop="true"
+                :loop="data.components.filter((item)=>item.ulid).length > 1"
                 :autoplay="{
                     delay: data.delay,
                     disableOnInteraction: false,

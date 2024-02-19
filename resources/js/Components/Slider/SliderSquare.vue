@@ -78,7 +78,7 @@ const compSlidesPerView = computed(() => {
                 : actualSlides.value.length < 4 ? actualSlides.value.length : 4  // if actualSlides length is less than 4 then slidePerview = actualSlide length
 })
 
-// The actual Slides
+// The actual Slides (filter slide that don't have ulid)
 const actualSlides = computed(() => {
     return props.data.components.filter((item) => item.ulid)
 })
@@ -107,24 +107,27 @@ onMounted(() => {
 const compColorNav = computed(() => {
     return get(props.data, ['navigation', 'colorNav'], 'blue')
 })
+
 </script>
 
 <template>
 <div class="relative w-full">
-        <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :class="[ !production ? 
-            $props.view
-                ? { 'aspect-[5/5] w-full' : $props.view == 'mobile',
-                    'aspect-[6/2] w-full' : $props.view == 'tablet',
-                    'aspect-[4/1] w-full' : $props.view == 'desktop'}
-                : 'aspect-[5/5] md:aspect-[6/2] lg:aspect-[4/1] w-full'
-            : null
-        ]" :style="{ backgroundColor: props.data.common.spaceColor }">
+    <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :class="[ !production ? 
+        $props.view
+            ? { 'aspect-[1/1] w-full' : $props.view == 'mobile',
+                'aspect-[3/1] w-full' : $props.view == 'tablet',
+                'aspect-[4/1] w-full' : $props.view == 'desktop'}
+            : 'aspect-[1/1] md:aspect-[3/1] lg:aspect-[4/1] w-full'
+        : null
+    ]" :style="{ backgroundColor: props.data.common.spaceColor }">
         <Swiper ref="swiperRef"
             :key="'banner' + intSwiperKey"
             :slideToClickedSlide="false"
             :spaceBetween="get(data,['common','spaceBetween']) ? data.common.spaceBetween : 0"
             :slidesPerView="compSlidesPerView"
-            :centeredSlides="false" :loop="true" :autoplay="{
+            :centeredSlides="false"
+            :loop="compHandleBannerLessSlide.length > compSlidesPerView"
+            :autoplay="{
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
