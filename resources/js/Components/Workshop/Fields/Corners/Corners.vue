@@ -42,19 +42,14 @@ const section = reactive({});
 
 const cornersSection = ref([
     {
-        label: trans("top Middle"),
-        valueForm: get(cornersValue.value, [`topMiddle`]),
-        id: "topMiddle",
-    },
-    {
-        label: trans("Bottom Middle"),
-        valueForm: get(cornersValue.value, [`topBottom`]),
-        id: "bottomMiddle",
-    },
-    {
         label: trans("top left"),
         valueForm: get(cornersValue.value, [`topLeft`]),
         id: "topLeft",
+    },
+    {
+        label: trans("top Middle"),
+        valueForm: get(cornersValue.value, [`topMiddle`]) || get(cornersValue.value, [`topBottom`]),
+        id: "topMiddle",
     },
     {
         label: trans("Top right"),
@@ -65,6 +60,11 @@ const cornersSection = ref([
         label: trans("bottom left"),
         valueForm: get(cornersValue.value, [`bottomLeft`]),
         id: "bottomLeft",
+    },
+    {
+        label: trans("Bottom Middle"),
+        valueForm: get(cornersValue.value, [`bottomMiddle`]),
+        id: "bottomMiddle",
     },
     {
         label: trans("Bottom right"),
@@ -101,11 +101,8 @@ const clear=(section)=>{
 
 <template>
     <div class="space-y-8">
-        <div
-            class="grid grid-cols-2 gap-0.5 h-full bg-amber-400 border border-gray-300"
-        >
-            <div
-                v-for="(cornerSection, index) in cornersSection"
+        <div class="grid grid-cols-3 gap-0.5 h-full bg-amber-400 border border-gray-300" >
+            <div v-for="(cornerSection, index) in cornersSection"
                 :key="cornerSection.id"
                 class="relative overflow-hidden flex items-center justify-center flex-grow text-base font-semibold py-4"
                 :class="[ common &&
