@@ -67,6 +67,9 @@ class AppServiceProvider extends ServiceProvider
                 'Fetch'                  => 'App\Models\Helpers\Fetch',
                 'EmailTemplate'          => 'App\Models\Mail\EmailTemplate',
                 'Upload'                 => 'App\Models\Helpers\Upload',
+                'Mailshot'               => 'App\Models\Mail\Mailshot',
+                'Outbox'                 => 'App\Models\Mail\Outbox',
+                'Email'                  => 'App\Models\Mail\Email',
 
             ]
         );

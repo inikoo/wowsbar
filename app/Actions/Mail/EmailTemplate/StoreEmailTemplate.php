@@ -7,8 +7,6 @@
 
 namespace App\Actions\Mail\EmailTemplate;
 
-use App\Actions\Helpers\Html\GetImageFromHtml;
-use App\Actions\Helpers\Snapshot\StoreEmailTemplateSnapshot;
 use App\Enums\Mail\EmailTemplate\EmailTemplateTypeEnum;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\Mailshot;
@@ -16,7 +14,6 @@ use App\Models\Mail\Outbox;
 use App\Models\Market\Shop;
 use App\Models\SysAdmin\Organisation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -32,43 +29,15 @@ class StoreEmailTemplate
     private Mailshot $mailshot;
 
     private array $queryRules;
+    private string $scope;
 
     public function handle(Organisation|Shop|Outbox $parent, array $modelData): EmailTemplate
     {
         /** @var EmailTemplate $emailTemplate */
         $emailTemplate = $parent->emailTemplates()->create($modelData);
-
-        $imagesPath =null;
-
-        if(!app()->environment('testing')) {
-            $imagesPath = GetImageFromHtml::run(
-                $emailTemplate->compiled['html']['html'],
-                $emailTemplate->slug
-            );
-
-            if (File::exists($imagesPath['path'])) {
-                foreach (File::files($imagesPath['path']) as $image) {
-                    AttachImageToEmailTemplate::run(
-                        $emailTemplate,
-                        'content',
-                        $image->getPathname(),
-                        $image->getFilename()
-                    );
-                }
-            }
-
-            SetEmailTemplateScreenshot::run(
-                $emailTemplate,
-                $imagesPath['fullPath'],
-                $imagesPath['filename']
-            );
-
-        }
+        SetEmailTemplateScreenshot::dispatch($emailTemplate);
 
 
-
-
-        //StoreEmailTemplateSnapshot::run($emailTemplate, $modelData);
 
         return $emailTemplate;
     }
@@ -78,8 +47,11 @@ class StoreEmailTemplate
         if ($this->asAction) {
             return true;
         }
-        // find a better way to do this
-        return true;//$request->user()->hasPermissionTo("crm.prospects.edit");
+        if ($this->scope == 'prospects') {
+            return $request->user()->hasPermissionTo("crm.prospects.mailshots.edit");
+        }
+
+        return false;
     }
 
     public function rules(): array
@@ -93,16 +65,19 @@ class StoreEmailTemplate
 
     public function fromMailshot(Mailshot $mailshot, ActionRequest $request): EmailTemplate
     {
+        $this->scope = 'prospects';
+
         $this->mailshot = $mailshot;
         $this->fillFromRequest($request)
             ->fill(['compiled' => $mailshot->layout])
             ->fill(['type' => EmailTemplateTypeEnum::MARKETING]);
 
-        $validated=$this->validateAttributes();
+        $validated = $this->validateAttributes();
 
-        $emailTemplate= $this->handle($mailshot->outbox, $validated);
+        $emailTemplate = $this->handle($mailshot->outbox, $validated);
 
         $mailshot->update(['data' => ['email_template_id' => $emailTemplate->id]]);
+
         return $emailTemplate;
     }
 

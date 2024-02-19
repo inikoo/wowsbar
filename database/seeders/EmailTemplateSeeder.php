@@ -8,8 +8,8 @@
 namespace Database\Seeders;
 
 use App\Actions\Mail\EmailTemplate\AttachImageToEmailTemplate;
-use App\Actions\Mail\EmailTemplate\SetEmailTemplateScreenshot;
 use App\Actions\Mail\EmailTemplate\StoreEmailTemplate;
+use App\Actions\Traits\WIthSaveUploadedImage;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Mail\EmailTemplateCategory;
 use Illuminate\Database\Seeder;
@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\File;
 
 class EmailTemplateSeeder extends Seeder
 {
+    use WIthSaveUploadedImage;
+
+    /**
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     */
     public function run(): void
     {
         $this->seedEmailTemplateCategories();
@@ -62,11 +68,17 @@ class EmailTemplateSeeder extends Seeder
                     );
                 }
 
-                SetEmailTemplateScreenshot::run(
-                    $emailTemplate,
-                    database_path($basePath) . '/' . Arr::get($template, 'image'),
-                    Arr::get($template, 'image')
+
+
+                $this->saveUploadedImage(
+                    model: $emailTemplate,
+                    collection: 'screenshot',
+                    field: 'screenshot_id',
+                    imagePath: database_path($basePath) . '/' . Arr::get($template, 'image'),
+                    originalFilename:  Arr::get($template, 'image'),
                 );
+
+
             }
         }
     }
