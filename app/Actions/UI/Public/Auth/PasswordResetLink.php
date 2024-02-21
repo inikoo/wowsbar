@@ -9,7 +9,6 @@ namespace App\Actions\UI\Public\Auth;
 
 use App\Actions\Auth\User\SendLinkResetPassword;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -20,10 +19,7 @@ class PasswordResetLink
 {
     use AsController;
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function handle(ActionRequest $request): array
+    public function handle(ActionRequest $request): void
     {
         $token = Str::random(64);
         $email = $request->input('email');
@@ -37,11 +33,6 @@ class PasswordResetLink
         ]);
 
         SendLinkResetPassword::run($token, $email);
-
-        return [
-            'status' => 200,
-            'email'  => [trans(Password::RESET_LINK_SENT)],
-        ];
     }
 
     public function create(): Response
@@ -58,13 +49,10 @@ class PasswordResetLink
         ];
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function asController(ActionRequest $request): array
+    public function asController(ActionRequest $request): void
     {
         $request->validate();
 
-        return $this->handle($request);
+        $this->handle($request);
     }
 }
