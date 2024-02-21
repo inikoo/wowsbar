@@ -43,6 +43,13 @@ const resetPassword = useForm({
 const submitResetPassword = () => {
     resetPassword.post(route('public.password.email'), {
         onFinish: () => form.reset('email'),
+        onSuccess: () => {
+            notify({
+                title: "We already send email to your email.",
+                text: 'Please check and reset you password',
+                type: "success"
+            })
+        },
     })
 }
 
@@ -140,7 +147,6 @@ const condition: Ref<string | boolean> = ref(false)
                             <input v-model="resetPassword.email" name="email" autocomplete="email" type="email" required
                                 class="text-gray-700 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
                                 placeholder="Enter your email" />
-                            <div v-if="resetPassword.errors.email">{{ resetPassword.errors.email }}</div>
                         </div>
                     </div>
 
