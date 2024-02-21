@@ -7,11 +7,8 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
 use App\Actions\Mail\Mailshot\WithSendMailshot;
 use App\Actions\Mail\Ses\SendSesEmail;
-use App\Models\Mail\Email;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -32,7 +29,8 @@ class SendLinkResetPassword
 
         $emailHtmlBody = file_get_contents(base_path('database/seeders/datasets/reset-password-templates/reset_password.html'));
 
-        $emailData = $this->getEmailData('Reset Password Link',
+        $emailData = $this->getEmailData(
+            'Reset Password Link',
             $sender,
             $email,
             $emailHtmlBody,
@@ -67,7 +65,7 @@ class SendLinkResetPassword
 
         return match ($placeholder) {
             'reset-password-url' => $url,
-            default => ''
+            default              => ''
         };
     }
 }

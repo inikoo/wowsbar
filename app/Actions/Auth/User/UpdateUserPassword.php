@@ -32,7 +32,7 @@ class UpdateUserPassword
     {
         return [
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'token' => ['nullable', 'string']
+            'token'    => ['nullable', 'string']
         ];
     }
 

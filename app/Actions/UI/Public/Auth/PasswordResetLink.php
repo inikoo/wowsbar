@@ -8,11 +8,9 @@
 namespace App\Actions\UI\Public\Auth;
 
 use App\Actions\Auth\User\SendLinkResetPassword;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -33,8 +31,8 @@ class PasswordResetLink
         DB::table('password_reset_tokens')->updateOrInsert([
             'email' => $email,
         ], [
-            'email' => $request->input('email'),
-            'token' => $token,
+            'email'      => $request->input('email'),
+            'token'      => $token,
             'created_at' => now()
         ]);
 
@@ -42,7 +40,7 @@ class PasswordResetLink
 
         return [
             'status' => 200,
-            'email' => [trans(Password::RESET_LINK_SENT)],
+            'email'  => [trans(Password::RESET_LINK_SENT)],
         ];
     }
 
