@@ -128,7 +128,7 @@ return [
     ],
 
     'devel' => [
-        'sender_email_address'              => env('DEVEL_SENDER_EMAIL_ADDRESS'),
+        'sender_email_address'              => env('DEVEL_SENDER_EMAIL_ADDRESS', 'dev@aw-advantage.com'),
         'max_mailshot_recipients'           => env('DEVEL_MAX_MAILSHOT_RECIPIENTS', 2000),
         'send_ses_emails'                   => env('DEVEL_SEND_SES_EMAILS', false),
         'rewrite_mailshot_recipients_email' => env('DEVEL_REWRITE_MAILSHOT_RECIPIENTS_EMAIL', false),
