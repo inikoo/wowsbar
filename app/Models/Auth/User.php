@@ -8,6 +8,7 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Actions\Auth\User\SendLinkResetPassword;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
@@ -174,5 +175,10 @@ class User extends Authenticatable implements HasMedia, Auditable
     {
         $this->addMediaCollection('avatar')
             ->singleFile();
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        SendLinkResetPassword::run($token, $this->email);
     }
 }

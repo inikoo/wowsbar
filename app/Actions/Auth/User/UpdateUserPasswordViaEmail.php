@@ -14,7 +14,7 @@ use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateUserPassword
+class UpdateUserPasswordViaEmail
 {
     use WithActionUpdate;
 
@@ -30,16 +30,25 @@ class UpdateUserPassword
     public function rules(): array
     {
         return [
-            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()]
+            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'token'    => ['nullable', 'string'],
+            'email'    => ['nullable', 'string']
         ];
     }
 
-
-    public function asController(ActionRequest $request): User
+    public function asController(ActionRequest $request): void
     {
         $request->validate();
 
-        return $this->handle($request->user(), $request->validated());
+        \Illuminate\Support\Facades\Password::broker()->reset(
+            $request->only('email', 'password', 'token'),
+            function ($user, $password) {
+                $this->handle($user, [
+                    'password'       => $password,
+                    'reset_password' => false
+                ]);
+            }
+        );
     }
 
     public function action(User $user, $objectData): User

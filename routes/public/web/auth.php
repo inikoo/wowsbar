@@ -10,6 +10,7 @@ use App\Actions\Auth\User\Logout;
 use App\Actions\Auth\User\UI\ShowLogin;
 use App\Actions\Auth\User\UI\ShowResetUserPassword;
 use App\Actions\Auth\User\UpdateUserPassword;
+use App\Actions\Auth\User\UpdateUserPasswordViaEmail;
 use App\Actions\CRM\Customer\Register;
 use App\Actions\UI\Public\Auth\PasswordResetLink;
 use App\Actions\UI\Public\Auth\ShowRegister;
@@ -23,9 +24,10 @@ Route::middleware('guest:customer')->group(function () {
     Route::get('reset/password', ShowResetUserPassword::class)->name('reset-password.edit');
     Route::post('reset/password', PasswordResetLink::class)->name('password.email');
 
-    Route::patch('reset/password', UpdateUserPassword::class)->name('reset-password.update');
+    Route::patch('reset/password/email', UpdateUserPasswordViaEmail::class)->name('reset-password.email.update');
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', Logout::class)->name('logout');
+    Route::patch('reset/password', UpdateUserPassword::class)->name('reset-password.update');
 });

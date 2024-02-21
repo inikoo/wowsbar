@@ -17,11 +17,12 @@ const repeatPassword = ref('')
 
 const formReset = useForm({
     password: '',
-    token: route().params.token
+    token: route().params.token,
+    email: route().params.email
 })
 
 const submitResetPassword = () => {
-    formReset.patch(route('public.reset-password.update'), {})
+    formReset.patch(route(route().params.token ? 'public.reset-password.email.update' : 'public.reset-password.update'), {})
 }
 
 

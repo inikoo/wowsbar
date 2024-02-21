@@ -7,9 +7,8 @@
 
 namespace App\Actions\UI\Public\Auth;
 
-use App\Actions\Auth\User\SendLinkResetPassword;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -19,20 +18,20 @@ class PasswordResetLink
 {
     use AsController;
 
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function handle(ActionRequest $request): void
     {
-        $token = Str::random(64);
-        $email = $request->input('email');
+        $status = Password::broker()->sendResetLink(
+            $request->only('email')
+        );
 
-        DB::table('password_reset_tokens')->updateOrInsert([
-            'email' => $email,
-        ], [
-            'email'      => $request->input('email'),
-            'token'      => $token,
-            'created_at' => now()
-        ]);
-
-        SendLinkResetPassword::run($token, $email);
+        if($status === Password::INVALID_USER) {
+            throw ValidationException::withMessages([
+                'email' => [trans($status)],
+            ]);
+        }
     }
 
     public function create(): Response

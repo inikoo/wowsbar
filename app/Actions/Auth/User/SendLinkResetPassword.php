@@ -23,7 +23,8 @@ class SendLinkResetPassword
     public function handle(string $token, string $email): void
     {
         $url = route('public.reset-password.edit', [
-            'token' => $token
+            'token' => $token,
+            'email' => $email
         ]);
         $sender = config('mail.devel.sender_email_address');
 
