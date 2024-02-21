@@ -9,6 +9,7 @@ namespace App\Actions\Auth\User;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -31,6 +32,7 @@ class UpdateUserPassword
     {
         return [
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'token' => ['nullable', 'string']
         ];
     }
 
@@ -39,7 +41,27 @@ class UpdateUserPassword
     {
         $request->validate();
 
+        if($request->input('token') !== null) {
+            return $this->inUnAuth($request);
+        }
+
         return $this->handle($request->user(), $request->validated());
+    }
+
+    public function inUnAuth(ActionRequest $request): User
+    {
+        $request->validate();
+
+        $userModel = DB::table('password_reset_tokens')->where('token', $request->input('token'));
+        /** @var User $user */
+        $user = $userModel->first();
+        $user = User::where('email', $user->email)->first();
+
+
+        $response = $this->handle($user, $request->only('password'));
+        $userModel->delete();
+
+        return $response;
     }
 
     public function action(User $user, $objectData): User

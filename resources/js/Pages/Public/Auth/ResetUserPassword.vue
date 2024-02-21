@@ -17,12 +17,12 @@ const repeatPassword = ref('')
 
 const formReset = useForm({
     password: '',
+    token: route().params.token
 })
 
 const submitResetPassword = () => {
     formReset.patch(route('public.reset-password.update'), {})
 }
-
 
 
 watchEffect(() => {

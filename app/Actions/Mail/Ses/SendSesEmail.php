@@ -233,7 +233,6 @@ class SendSesEmail
         }
 
 
-
         return $rawData;
     }
 

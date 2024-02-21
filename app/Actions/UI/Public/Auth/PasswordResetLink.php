@@ -7,8 +7,11 @@
 
 namespace App\Actions\UI\Public\Auth;
 
+use App\Actions\Auth\User\SendLinkResetPassword;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,19 +25,25 @@ class PasswordResetLink
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function handle(ActionRequest $request): RedirectResponse
+    public function handle(ActionRequest $request): array
     {
-        $status = Password::broker('public')->sendResetLink(
-            $request->only('email')
-        );
+        $token = Str::random(64);
+        $email = $request->input('email');
 
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
+        DB::table('password_reset_tokens')->updateOrInsert([
+            'email' => $email,
+        ], [
+            'email' => $request->input('email'),
+            'token' => $token,
+            'created_at' => now()
         ]);
+
+        SendLinkResetPassword::run($token, $email);
+
+        return [
+            'status' => 200,
+            'email' => [trans(Password::RESET_LINK_SENT)],
+        ];
     }
 
     public function create(): Response
@@ -47,14 +56,14 @@ class PasswordResetLink
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
+            'email' => ['required', 'email', 'exists:users'],
         ];
     }
 
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function asController(ActionRequest $request): RedirectResponse
+    public function asController(ActionRequest $request): array
     {
         $request->validate();
 

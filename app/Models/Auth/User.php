@@ -8,12 +8,18 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Actions\Auth\User\SendLinkResetPassword;
+use App\Actions\Mail\DispatchedEmail\StoreDispatchedEmail;
+use App\Actions\Mail\Mailshot\WithSendMailshot;
+use App\Actions\Mail\Ses\SendSesEmail;
 use App\Models\Assets\Language;
+use App\Models\Mail\Email;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Traits\IsUser;
 use App\Models\Web\Website;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -175,5 +181,4 @@ class User extends Authenticatable implements HasMedia, Auditable
         $this->addMediaCollection('avatar')
             ->singleFile();
     }
-
 }
