@@ -747,7 +747,7 @@ watch(selectRow, () => {
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <slot name="body" :show="show">
                                     <tr v-for="(item, key) in compResourceData" :key="`table-${name}-row-${key}`"
-                                        class="isolate relative"
+                                        class="relative"
                                         :class="[
                                             striped && key % 2 ? 'bg-gray-50' : '',
                                             striped ? 'hover:bg-gray-100' : 'hover:bg-gray-50'
