@@ -109,7 +109,6 @@ onBeforeUnmount(() => {
 
 
 <template>
-    <!-- If overflow-hidden, affect to Multiselect on Address -->
     <div class="rounded-lg shadow">
         <div v-if="!isMobile" class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 
@@ -123,7 +122,8 @@ onBeforeUnmount(() => {
                                     ? `navigationSecondActive${capitalize(layout.systemName)}`
                                     : `navigationSecond${capitalize(layout.systemName)}`,
                                 'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
-                            ]">
+                            ]"
+                        >
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-2 h-4 w-4"
                                 :class="[
                                     tabActive[key]

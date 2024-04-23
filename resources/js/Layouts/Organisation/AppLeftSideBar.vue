@@ -5,18 +5,18 @@
   -->
 
 <script setup lang="ts">
-import {trans} from 'laravel-vue-i18n'
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
-import {Link} from "@inertiajs/vue3"
-import {ref, onMounted, onUnmounted} from 'vue'
-import {router} from '@inertiajs/vue3'
+import { trans } from 'laravel-vue-i18n'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { Link } from "@inertiajs/vue3"
+import { ref, onMounted, onUnmounted } from 'vue'
+import { router } from '@inertiajs/vue3'
 
-import {library} from "@fortawesome/fontawesome-svg-core"
-import {faTasksAlt, faShapes, faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from '@fal'
-import {faGoogle} from "@fortawesome/free-brands-svg-icons"
-import {faChevronLeft} from '@far'
-import {useLayoutStore} from "@/Stores/layout.js"
-import {computed} from "vue"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faTasksAlt, faShapes, faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection } from '@fal'
+import { faGoogle } from "@fortawesome/free-brands-svg-icons"
+import { faChevronLeft } from '@far'
+import { useLayoutStore } from "@/Stores/layout.js"
+import { computed } from "vue"
 
 library.add(faTasksAlt, faShapes, faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
 
@@ -53,7 +53,7 @@ const handleKey = (event: any) => {
     }
 }
 
-// Set LeftSidebar value to local storage
+// Set LeftSidebar value to local storage (collapsed/expanded)
 const handleToggleLeftbar = () => {
     localStorage.setItem('leftSideBar', (!layout.leftSidebar.show).toString())
     layout.leftSidebar.show = !layout.leftSidebar.show
@@ -62,14 +62,22 @@ const handleToggleLeftbar = () => {
 </script>
 
 <template>
-    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gradient-to-t from-org-700 to-org-600 h-full text-gray-400"
+    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 h-full"
         :class="[layout.leftSidebar.show ? 'w-8/12 md:w-48' : 'w-8/12 md:w-10']"
+        :style="{
+            'background-image': `linear-gradient(to bottom left, color-mix(in srgb, ${layout.app.theme[0]} 85%, white), ${layout.app.theme[0]})`,
+            'color': layout.app.theme[2]
+        }"
         @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-5 aspect-square bg-org-500 hover:bg-org-600 text-org-100 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-5 aspect-square border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
             :title="layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar'"
+            :style="{
+                'background-color':  `color-mix(in srgb, ${layout.app.theme[0]} 85%, black)`,
+                'color': layout.app.theme[1]
+            }"
         >
             <div class="flex items-center justify-center transition-all duration-300 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='h-[10px] leading-none' aria-hidden='true'

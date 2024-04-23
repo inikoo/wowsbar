@@ -563,6 +563,7 @@ class GetLayout
 
         return [
             'navigation' => $navigation,
+            'app_theme' => $user->settings['app_theme'] ?? null,
         ];
     }
 }

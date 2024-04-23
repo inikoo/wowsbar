@@ -14,6 +14,7 @@ export const useLayoutStore = defineStore("layout", {
             slug: "",
             name: "",
             showLiveUsers: false,
+            // TODO create new Org default color
             theme: useColorTheme[0] as string[],  // For styling app color
             logo: {},
             url: "",
