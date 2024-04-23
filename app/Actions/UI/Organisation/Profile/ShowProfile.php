@@ -39,34 +39,34 @@ class ShowProfile
             'label'  => __('Profile'),
             'icon'   => 'fal fa-user-circle',
             'fields' => [
-                "about"  => [
-                    "type"  => "textarea",
-                    "label" => __("about"),
-                    "value" => $organisationUser->about ?? '',
-                ],
                 "avatar" => [
                     "type"  => "avatar",
                     "label" => __("photo"),
                     "value" => $organisationUser->avatarImageSources(320, 320)
                 ],
-            ]
-        ];
-
-        $sections['password'] = [
-            'label'  => __('Password'),
-            'icon'   => 'fal fa-key',
-            'fields' => [
                 "password" => [
                     "type"  => "password",
                     "label" => __("password"),
                     "value" => "",
                 ],
+                "about"  => [
+                    "type"  => "textarea",
+                    "label" => __("about"),
+                    "value" => $organisationUser->about ?? '',
+                ],
             ]
         ];
 
-        $sections['language'] = [
-            'label'  => __('Language'),
-            'icon'   => 'fal fa-language',
+        // $sections['password'] = [
+        //     'label'  => __('Password'),
+        //     'icon'   => 'fal fa-key',
+        //     'fields' => [
+        //     ]
+        // ];
+
+        $sections['settings'] = [
+            'label'  => __('Settings'),
+            'icon'   => 'fal fa-cog',
             'fields' => [
                 "language_id" => [
                     "type"     => "language",
@@ -74,6 +74,11 @@ class ShowProfile
                     "value"    => $organisationUser->language_id,
                     "options"  => GetLanguagesOptions::make()->translated(),
                     "canClear" => false
+                ],
+                "app_theme" => [
+                    "type"  => "app_theme",
+                    "label" => __("theme color"),
+                    "value" => Arr::get($organisationUser->settings, 'app_theme'),
                 ],
             ]
         ];

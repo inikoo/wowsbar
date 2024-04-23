@@ -5,6 +5,7 @@
  */
 
 import { defineStore } from "pinia";
+import { useColorTheme } from '@/Composables/useStockList'
 
 export const useLayoutStore = defineStore("layout", {
     state: () => ({
@@ -13,6 +14,7 @@ export const useLayoutStore = defineStore("layout", {
             slug: "",
             name: "",
             showLiveUsers: false,
+            theme: useColorTheme[0] as string[],  // For styling app color
             logo: {},
             url: "",
         },

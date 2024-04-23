@@ -25,6 +25,19 @@ class UpdateProfile
 
     public function handle(OrganisationUser $organisationUser, array $modelData, ?UploadedFile $avatar): OrganisationUser
     {
+        foreach ($modelData as $key => $value) {
+            data_set(
+                $modelData,
+                match ($key) {
+                    'app_theme'     => 'settings.app_theme',
+                    default         => $key
+                },
+                $value
+            );
+        };
+
+        data_forget($modelData, 'app_theme');
+
         if ($avatar) {
             SetOrganisationUserAvatarFromImage::run(
                 organisationUser: $organisationUser,
@@ -33,6 +46,7 @@ class UpdateProfile
                 extension: $avatar->getClientOriginalExtension()
             );
         }
+        $organisationUser->refresh();
 
         return $this->update($organisationUser, $modelData, ['profile', 'settings']);
     }
@@ -44,6 +58,7 @@ class UpdateProfile
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'about'       => 'sometimes|nullable|string|max:255',
             'language_id' => ['sometimes', 'required', 'exists:languages,id'],
+            'app_theme'   => ['sometimes', 'required'],
             'avatar'      => [
                 'sometimes',
                 'nullable',

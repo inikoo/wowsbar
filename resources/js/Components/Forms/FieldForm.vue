@@ -40,6 +40,7 @@ import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ProspectRecipients from '@/Components/Forms/Fields/ProspectRecipients.vue'
 import ProspectsQuery from '@/Components/Forms/Fields/ProspectQuery/ProspectQueryBuilder.vue'
 import AppLogin from '@/Components/Forms/Fields/AppLogin.vue'
+import AppTheme from '@/Components/Forms/Fields/AppTheme.vue'
 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -101,6 +102,7 @@ const components: {[key: string]: Component} = {
     'ProspectRecipients': ProspectRecipients,
     'senderEmail': SenderEmail,
     'app_login': AppLogin,
+    'app_theme': AppTheme,
 }
 
 const getComponent = (componentName: string) => {

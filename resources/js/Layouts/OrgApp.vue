@@ -6,7 +6,7 @@
 
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, provide } from "vue"
 import { usePage } from "@inertiajs/vue3"
 import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 import AppLeftSideBar from "@/Layouts/Organisation/AppLeftSideBar.vue"
@@ -64,6 +64,7 @@ const layout = initialiseOrgApp()
 
 
 const layoutState = useLayoutStore()
+provide('layout', useLayoutStore())
 
 </script>
 
