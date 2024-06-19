@@ -28,7 +28,7 @@ class DeliverBannerExport
     }
 
 
-    public function htmlResponse(array $compiledLayout): Response
+    public function htmlResponse(array $compiledLayout): Array
     {
         return $compiledLayout;
     }
