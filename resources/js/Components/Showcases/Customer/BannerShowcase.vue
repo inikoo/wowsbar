@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 // import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
 import BannerPreview from '@/Components/Banner/BannerPreview.vue'
@@ -14,18 +14,21 @@ import { cloneDeep } from 'lodash'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSign, faGlobe } from '@fal'
+import { faSign, faGlobe, faCopy } from '@fal'
 import { faLink } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useCopyText } from '@/Composables/useCopyText'
 
-library.add(faSign, faGlobe, faLink)
+library.add(faSign, faGlobe, faCopy, faLink)
 
 const props = defineProps<{
     data: {
+        id: number
+        ulid: string
         state: string
         delivery_url: string
         export_url: string
+
     }
     tab?: string
 }>()
@@ -33,6 +36,16 @@ const props = defineProps<{
 onMounted(() => {
     props.data.compiled_layout.components = cloneDeep(props.data.compiled_layout.components).filter((item: {visibility: boolean}) => item.visibility === true)
 })
+
+// Method: Copy ulid
+const isOnCopy = ref(false)
+const onCopyUlid = async (text: string) => {
+    isOnCopy.value = true
+    useCopyText(text)
+    setTimeout(() => {
+        isOnCopy.value = false
+    }, 2000)
+}
 
 </script>
 
@@ -64,7 +77,9 @@ onMounted(() => {
                 </Button>
             </div>
             <div class="w-full text-center text-gray-500 mt-2 text-sm italic">
-                {{ data.export_url }}
+                {{ data.ulid }}
+                <FontAwesomeIcon v-if="!isOnCopy" @click="() => onCopyUlid(data.ulid)" icon='fal fa-copy' class='cursor-pointer hover:text-gray-600' fixed-width aria-hidden='true' />
+                <FontAwesomeIcon v-else icon='fal fa-check' class='text-green-500' fixed-width aria-hidden='true' />
             </div>
         </div>
     </div>
