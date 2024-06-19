@@ -14,12 +14,12 @@ import { cloneDeep } from 'lodash'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSign, faGlobe, faCopy } from '@fal'
+import { faSign, faGlobe, faCopy, faCheck } from '@fal'
 import { faLink } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useCopyText } from '@/Composables/useCopyText'
 
-library.add(faSign, faGlobe, faCopy, faLink)
+library.add(faSign, faGlobe, faCopy, faCheck, faLink)
 
 const props = defineProps<{
     data: {
