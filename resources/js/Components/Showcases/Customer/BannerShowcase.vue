@@ -62,9 +62,9 @@ onMounted(() => {
                 <Button :style="'secondary'" class="" size="xl" @click="useCopyText(data.delivery_url)" title="Copy url to clipboard">
                     <FontAwesomeIcon icon='far fa-link' class='text-gray-500' aria-hidden='true' />
                 </Button>
-                <div class="w-full text-gray-500 mt-2 text-sm italic">
-                    {{ data.export_url }}
-                </div>
+            </div>
+            <div class="w-full text-center text-gray-500 mt-2 text-sm italic">
+                {{ data.export_url }}
             </div>
         </div>
     </div>
