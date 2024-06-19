@@ -22,7 +22,11 @@ import { useCopyText } from '@/Composables/useCopyText'
 library.add(faSign, faGlobe, faLink)
 
 const props = defineProps<{
-    data: any
+    data: {
+        state: string
+        delivery_url: string
+        export_url: string
+    }
     tab?: string
 }>()
 
@@ -58,6 +62,9 @@ onMounted(() => {
                 <Button :style="'secondary'" class="" size="xl" @click="useCopyText(data.delivery_url)" title="Copy url to clipboard">
                     <FontAwesomeIcon icon='far fa-link' class='text-gray-500' aria-hidden='true' />
                 </Button>
+                <div class="w-full text-gray-500 mt-2 text-sm italic">
+                    {{ data.export_url }}
+                </div>
             </div>
         </div>
     </div>

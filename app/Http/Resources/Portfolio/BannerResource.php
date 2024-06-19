@@ -62,6 +62,7 @@ class BannerResource extends JsonResource
             ],
             'compiled_layout'    => $banner->compiled_layout,
             'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
+            'export_url'         => config('app.delivery_url').'/banners-export/'.$banner->ulid,
             'published_snapshot' => $publishedSnapshot,
             'views'              => $banner->stats?->number_views,
         ];
