@@ -22,7 +22,7 @@ const props = defineProps<{
 }>()
 
 const positionClasses = computed(() => {
-    console.log(props)
+    // console.log(props)
     let classes;
     if (props.corner.type != 'ribbon') {
         switch (props.position) {
