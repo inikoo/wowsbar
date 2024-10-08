@@ -17,7 +17,7 @@ class DeliverAnnouncement
 
     public function htmlResponse($data)
     {
-        return response($data, 200)
+        return response()->view('announcement', ['data' => $data])
             ->header('Content-Type', 'text/javascript');
     }
 
