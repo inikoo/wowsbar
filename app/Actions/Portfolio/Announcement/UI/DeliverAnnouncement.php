@@ -8,17 +8,16 @@ class DeliverAnnouncement
 {
     use AsController;
 
-    public function handle(string $ulid): string
+    public function handle(string $ulid): null
     {
-        return 'console.log("hello")';
+        return null;
 
     }
 
 
     public function htmlResponse($data)
     {
-        return response()->view('announcement', ['data' => $data])
-            ->header('Content-Type', 'text/javascript');
+        return view('announcement', ['data' => $data]);
     }
 
 }
