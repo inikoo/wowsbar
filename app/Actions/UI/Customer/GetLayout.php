@@ -128,10 +128,10 @@ class GetLayout
 
             ];
             $websiteSubNav['announcement'] = [
-                'scope'   => 'announcement',
-                'icon'    => ['fal', 'fa-sign'],
-                'label'   => __('Announcement'),
-                'route'   => 'customer.banners.announcement.index',
+                'scope'     => 'announcement',
+                'icon'      => ['fal', 'fa-sign'],
+                'label'     => __('Announcement'),
+                'route'     => 'customer.banners.announcement.index',
                 'root'      => 'customer.banners.announcement.index',
                 // 'topMenu' => [
                 //     'subSections' => [
@@ -172,12 +172,12 @@ class GetLayout
 
 
             ];
-            $websiteSubNav['Footer'] = [
-                'scope'   => 'Footer',
-                'icon'    => ['fal', 'fa-sign'],
-                'label'   => __('Footer'),
-                'route'   => 'customer.banners.announcement.index',
-                'root'      => 'customer.banners.announcement.index',
+            $websiteSubNav['footer'] = [
+                'scope'     => 'footer',
+                'icon'      => ['fal', 'fa-sign'],
+                'label'     => __('Footer'),
+                'route'     => 'customer.banners.workshop.footers.index',
+                'root'      => 'customer.banners.workshop.footers.index',
             ];
         }
 

@@ -26,6 +26,8 @@ use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexBannersPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowBannersPortfolioWebsite;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\Web\Website\ShowFooter;
+use App\Actions\Web\Website\ShowFooterPreview;
 use Illuminate\Support\Facades\Route;
 
 Route::name('dashboard')->group(function () {
@@ -63,12 +65,21 @@ Route::name('announcement.')->prefix('announcement')->group(function () {
     // });
 });
 
+Route::name('workshop.')->prefix('workshop')
+    ->group(function () {
+        Route::name('footers.')->prefix('footers')->group(function () {
+            Route::get('', ShowFooter::class)->name('index');
+            Route::get('preview', ShowFooterPreview::class)->name('preview');
+        });
+    });
+
 Route::prefix('websites')->name('websites')->group(function () {
     Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexBannersPortfolioWebsites::class)->name('.index');
     Route::prefix('{portfolioWebsite}')->group(function () {
         Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses(ShowBannersPortfolioWebsite::class)->name('.show');
     });
 });
+
 Route::prefix('gallery')->name('gallery')->group(function () {
     Route::get('/', ShowGallery::class);
     Route::prefix('uploaded-images')->name('.uploaded-images')->group(function () {

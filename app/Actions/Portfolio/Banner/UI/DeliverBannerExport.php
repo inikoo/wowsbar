@@ -9,8 +9,6 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Models\Portfolio\Banner;
 use Illuminate\Support\Facades\Cache;
-use Inertia\Inertia;
-use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class DeliverBannerExport
@@ -28,7 +26,7 @@ class DeliverBannerExport
     }
 
 
-    public function htmlResponse(array $compiledLayout): Array
+    public function htmlResponse(array $compiledLayout): array
     {
         return $compiledLayout;
     }
