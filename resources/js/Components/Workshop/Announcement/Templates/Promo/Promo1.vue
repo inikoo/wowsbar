@@ -19,20 +19,19 @@ const closeIcon = '<svg class="svg-inline--fa fa-times fa-fw" aria-hidden="true"
 </script>
 
 <template>
-    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1" :style="propertiesToHTMLStyle(announcementData.container_properties)">
-        
-
-        <div class="text-sm leading-6" v-html="announcementData.fields.text_1.text">
+    <div class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5" :style="propertiesToHTMLStyle(announcementData.container_properties)">
+        <div class="mx-auto text-sm leading-6" v-html="announcementData.fields.text_1.text">
             
         </div>
 
         <!-- Close Button -->
-        <div class="flex flex-1 justify-end">
-            <button type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px]">
-                <span class="sr-only">Dismiss</span>
-                <span v-html="closeIcon"></span>
-            </button>
-        </div>
+        <button type="button" class="absolute flex flex-1 justify-end p-3 -translate-y-1/4 -translate-x-1/4" :style="{
+            top: announcementData.fields.close_button.position_top + '%',
+            left: announcementData.fields.close_button.position_left + '%'
+        }">
+            <span class="sr-only">Dismiss</span>
+            <span v-html="closeIcon"></span>
+        </button>
     </div>
 
 </template>

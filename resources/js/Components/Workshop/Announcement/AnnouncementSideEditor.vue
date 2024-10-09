@@ -21,6 +21,8 @@ import AnnouncementTemplateList from '@/Components/Workshop/Announcement/Announc
 // import { Root as RootWebpage } from '@/types/webpageTypes'
 import { Collapse } from 'vue-collapsed'
 import { trans } from 'laravel-vue-i18n'
+import Editor from '@/Components/Editor/Editor.vue'
+import PureInputNumber from '@/Components/Pure/PureInputNumber.vue'
 
 
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
@@ -117,12 +119,47 @@ const announcementData = inject('announcementData', {})
     <div class="rounded overflow-hidden bg-white">
         <div @click="() => selectedBlockOpenPanel === 'content' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'content'"
             class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
-            <div class="select-none">{{ trans('Content') }}</div>
+            <div class="select-none font-semibold">{{ trans('Content') }}</div>
             <FontAwesomeIcon icon='fal fa-chevron-down' :class="selectedBlockOpenPanel === 'content' ? 'rotate-180' : ''" class="transition-all" fixed-width aria-hidden='true' />
         </div>
 
         <Collapse as="section" :when="selectedBlockOpenPanel === 'content'">
-            xxxx
+            <div  class="border-t border-gray-300 pb-3">
+                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Text 1') }}</div>
+                <div class="">
+                    <Editor v-model="announcementData.fields.text_1.text" />
+                </div>
+            </div>
+
+            <div  class="border-t border-gray-300 pb-3">
+                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Text 2') }}</div>
+                <div class="">
+                    <Editor v-model="announcementData.fields.text_2.text" />
+                </div>
+            </div>
+
+            <div  class="border-t border-gray-300 pb-3">
+                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Close button') }}</div>
+                <div class="mx-auto h-11 w-11 flex justify-center items-center rounded-md border border-gray-300">
+                    <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' fixed-width aria-hidden='true' />
+                </div>
+
+                <div class="px-3 mb-4">
+                    <div class="mb-2">
+                        <div class="text-xs">{{ trans('Position Y') }}</div>
+                    </div>
+                    
+                    <PureInputNumber v-model="announcementData.fields.close_button.position_top" class="" suffix="%" />
+                </div>
+
+                <div class="px-3">
+                    <div class="mb-2">
+                        <div class="text-xs">{{ trans('Position X') }}</div>
+                    </div>
+                    
+                    <PureInputNumber v-model="announcementData.fields.close_button.position_left" class="" suffix="%" />
+                </div>
+            </div>
         </Collapse>
     </div>
 

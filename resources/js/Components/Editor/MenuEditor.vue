@@ -15,7 +15,7 @@ import { Color } from '@tiptap/extension-color'
 import FontSize from 'tiptap-extension-font-size'
 import Link from '@tiptap/extension-link'
 
-import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue'
+import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faText, faUndoAlt, faRedoAlt } from '@far'

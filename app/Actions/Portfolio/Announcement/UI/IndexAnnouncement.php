@@ -269,7 +269,7 @@ class IndexAnnouncement extends InertiaAction
                         ],
                         "close_button" => [
                             "position_top" => "50%",
-                            "position_bottom" => "50%",
+                            "position_left" => "50%",
                             "text_color" => "rgba(0, 0, 0, 0.5)",
                             "size" => "0.5"
                         ]
