@@ -84,9 +84,9 @@ const openModalBlockList = () => {
 
 }
 
-defineExpose({
-    isModalBlocksList
-})
+// defineExpose({
+//     isModalBlocksList
+// })
 
 const selectedBlockOpenPanel = ref<string | null>(null)
 
@@ -99,7 +99,7 @@ const announcementData = inject('announcementData', {})
         <Button icon="fas fa-plus" type="dashed" size="xs" @click="openModalBlockList" />
     </div> -->
 
-    <div class="rounded overflow-hidden bg-white">
+    <div class="rounded bg-white">
         <div @click="() => selectedBlockOpenPanel === 'container' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'container'"
             class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
             <div class="select-none font-semibold">{{ trans('Container Settings') }}</div>
@@ -108,7 +108,7 @@ const announcementData = inject('announcementData', {})
 
         <Collapse as="section" :when="selectedBlockOpenPanel === 'container'">
             <PanelProperties
-                v-model="announcementData.block_properties"
+                v-model="announcementData.container_properties"
                 @update:modelValue="() => (console.log('zzz'), debouncedSendUpdate('element'))"
             />
         </Collapse>
@@ -128,6 +128,10 @@ const announcementData = inject('announcementData', {})
 
 
     <Modal :isOpen="isModalBlocksList" @onClose="openModalBlockList">
-        <AnnouncementTemplateList :onPickBlock="onPickBlock" :webBlockTypes="webBlockTypeCategories" scope="webpage" />
+        <AnnouncementTemplateList
+            :onPickBlock="onPickBlock"
+            :webBlockTypes="webBlockTypeCategories"
+            scope="webpage"
+        />
     </Modal>
 </template>

@@ -47,7 +47,18 @@ const model = defineModel<Borderproperty>({
     required: true
 })
 
-const isBorderSameValue = ref(false)
+const isAllValueAreSame = (scope: {}) => {
+    const aaa: number[] = []
+    for (let key in scope) {
+        if (scope[key as keyof Borderproperty].hasOwnProperty('value')) {
+            aaa.push(scope[key as keyof Borderproperty].value)
+        }
+    }
+    
+    return aaa.every(value => value === aaa[0])
+}
+
+const isBorderSameValue = ref(isAllValueAreSame(model.value))
 const changeBorderValueToSame = (newVal: number) => {
     for (let key in model.value) {
         if (model.value[key as keyof Borderproperty].hasOwnProperty('value')) {
@@ -56,7 +67,7 @@ const changeBorderValueToSame = (newVal: number) => {
     }
 }
 
-const isRoundedSameValue = ref(false)
+const isRoundedSameValue = ref(isAllValueAreSame(model.value.rounded))
 const changeRoundedValueToSame = (newVal: number) => {
     for (let key in model.value.rounded) {
         if (model.value.rounded[key as keyof Borderproperty].hasOwnProperty('value')) {
@@ -147,19 +158,19 @@ const iconRoundedCorner = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" 
                         <div class="grid grid-cols-5 items-center">
                             <FontAwesomeIcon icon='fad fa-border-bottom' v-tooltip="trans('Border bottom')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
-                                <PureInputNumber v-model="model.right.value" class="" suffix="px" />
+                                <PureInputNumber v-model="model.bottom.value" class="" suffix="px" />
                             </div>
                         </div>
                         <div class="grid grid-cols-5 items-center">
                             <FontAwesomeIcon icon='fad fa-border-left' v-tooltip="trans('Border left')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
-                                <PureInputNumber v-model="model.bottom.value" class="" suffix="px" />
+                                <PureInputNumber v-model="model.left.value" class="" suffix="px" />
                             </div>
                         </div>
                         <div class="grid grid-cols-5 items-center">
                             <FontAwesomeIcon icon='fad fa-border-right' v-tooltip="trans('Border right')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
-                                <PureInputNumber v-model="model.left.value" class="" suffix="px" />
+                                <PureInputNumber v-model="model.right.value" class="" suffix="px" />
                             </div>
                         </div>
                     </div>
