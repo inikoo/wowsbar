@@ -1,0 +1,360 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Mon, 02 Oct 2023 03:20:36 Malaysia Time, Kuala Lumpur, Malaysia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
+<script setup lang="ts">
+import { Head, router } from '@inertiajs/vue3'
+import { provide, reactive, ref } from 'vue'
+import PageHeading from '@/Components/Headings/PageHeading.vue'
+import { capitalize } from "@/Composables/capitalize"
+import { trans } from 'laravel-vue-i18n'
+import { Collapse } from 'vue-collapsed'
+
+
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faGlobe, faImage } from '@fal'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
+import { notify } from '@kyvg/vue3-notification'
+import ScreenView from '@/Components/ScreenView.vue'
+library.add(faGlobe, faImage)
+
+const props = defineProps<{
+    pageHead: {}
+    title: string
+    data: {}
+    firstBanner?: {
+        text: string
+        createRoute: {
+            name: string
+            parameters?: any[]
+        }
+    }
+}>()
+
+const selectedBlockOpenPanel = ref(true)
+const isLoading = ref<string | boolean>(false)
+const comment = ref("")
+const openDrawer = ref<string | boolean>(false)
+// const iframeSrc = ref(route('grp.websites.preview', [route().params['website'], route().params['webpage']]))
+const data = ref({ ...props.webpage })
+const iframeClass = ref('w-full h-full')
+const isIframeLoading = ref(false)
+const _WebpageSideEditor = ref(null)
+
+const isAddBlockLoading = ref<string | null>(null)
+const addNewBlock = async (block: Daum) => {
+    // try {
+    //     const response = router.post(
+    //         route(props.webpage.add_web_block_route.name, props.webpage.add_web_block_route.parameters),
+    //         { web_block_type_id: block.id }
+    //     )
+    //     const set = { ...response.data.data }
+    //     data.value = set
+    // } catch (error: any) {
+    //     console.error('error', error)
+    // }
+    // isAddBlockLoading.value = null
+    router.post(
+        route(props.webpage.add_web_block_route.name, props.webpage.add_web_block_route.parameters),
+        { web_block_type_id: block.id },
+        {
+            onStart: () => isAddBlockLoading.value = 'addBlock' + block.id,
+            onFinish: () => isAddBlockLoading.value = null,
+            onError: (error) => {
+                notify({
+                    title: trans('Something went wrong'),
+                    text: error.message,
+                    type: 'error',
+                })
+            }
+        }
+    )
+}
+
+const isSavingBlock = ref(false)
+const sendBlockUpdate = async (block: {}) => {
+    // try {
+    //     const response = router.patch(
+    //         route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
+    //         { layout: block.web_block.layout }
+    //     )
+    //     const set = { ...response.data.data }
+    //     data.value = set
+    // } catch (error: any) {
+    //     console.error('error', error)
+    // }
+    // console.log('on send block update')
+
+    router.patch(
+        route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
+        { layout: block.web_block.layout },
+        {
+            onStart: () => isSavingBlock.value = true,
+            onFinish: () => isSavingBlock.value = false,
+            onError: (error) => {
+                notify({
+                    title: trans('Something went wrong'),
+                    text: error.message,
+                    type: 'error',
+                })
+            },
+            preserveScroll: true
+        },
+    )
+}
+
+const sendOrderBlock = async (block: Object) => {
+    try {
+        const response = await router.post(
+            route(props.webpage.reorder_web_blocks_route.name, props.webpage.reorder_web_blocks_route.parameters),
+            { positions: block }
+        )
+        // const set = { ...response.data.data }
+        // data.value = set
+    } catch (error: any) {
+        console.error('error', error)
+    }
+}
+
+const isLoadingDelete = ref<string | null>(null)
+const sendDeleteBlock = async (block: {}) => {
+    // console.log('block', block)
+    // isLoading.value = 'deleteBlock' + block.id
+    // try {
+    //     const response = await axios.delete(
+    //         route(props.webpage.delete_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id })
+    //     )
+    //     const set = { ...response.data.data }
+    //     data.value = set
+    // } catch (error: any) {
+    //     console.error('error', error)
+    // }
+
+    router.delete(
+        route(props.webpage.delete_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
+        {
+            onStart: () => isLoadingDelete.value = 'deleteBlock' + block.id,
+            onFinish: () => isLoadingDelete.value = null,
+            onError: (error) => {
+                notify({
+                    title: trans('Something went wrong'),
+                    text: error.message,
+                    type: 'error',
+                })
+            }
+        }
+    )
+    // isLoading.value = false
+}
+
+
+// const onPublish = async (action: {}, popover: {}) => {
+//     try {
+//         // Ensure action is defined and has necessary properties
+//         if (!action || !action.method || !action.name || !action.parameters) {
+//             throw new Error('Invalid action parameters')
+//         }
+
+//         isLoading.value = true
+
+//         // Make sure route and axios are defined and used correctly
+//         const response = await axios[action.method](route(action.name, action.parameters), {
+//             comment: comment.value,
+//             publishLayout: { blocks: data.value.layout }
+//         })
+//         popover.close()
+
+//     } catch (error) {
+//         // Ensure the error is logged properly
+//         console.error('Error:', error)
+//         const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred'
+//         notify({
+//             title: 'Something went wrong.',
+//             text: errorMessage,
+//             type: 'error',
+//         })
+//     } finally {
+//         isLoading.value = false
+//     }
+// };
+
+const announcementData = reactive({
+    "id": 1,
+    "code": "announcement1abc",
+    // "scope": "webpage",
+    "name": "Announcement Simple",
+    "created_at": null,
+    "updated_at": null,
+    "icon": "fal fa-presentation",
+    "fields": {
+        "text_1": {
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
+            "size": "1",
+            "text_color": "rgba(255, 255, 255, 1)",
+        },
+        "text_2": {
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
+            "size": "1",
+            "text_color": "rgba(255, 255, 255, 1)",
+        },
+        "button_1": {
+            "label":  "Click me",
+            "url": "https://example.com",
+            "target": "_blank",
+            "border": "1px solid rgba(245, 12, 89, 0.7)",
+            "bg_color": "rgba(245, 12, 89, 0.7)",
+            "text_color": "rgba(255, 255, 255, 1)",
+            "width": "full"
+        },
+        "close_button": {
+            "position_top": "50%",
+            "position_bottom": "50%",
+            "text_color": "rgba(0, 0, 0, 0.5)",
+            "size": "0.5"
+        }
+    },
+    "block_properties": {
+        "link": {
+            "href": "",
+            "target": "_blank",
+        },
+        "border": {
+            "top": {
+                "value": 0
+            },
+            "left": {
+                "value": 0
+            },
+            "unit": "px",
+            "color": "#000000",
+            "right": {
+                "value": 0
+            },
+            "bottom": {
+                "value": 0
+            },
+            "rounded": {
+                "unit": "px",
+                "topleft": {
+                    "value": 0
+                },
+                "topright": {
+                    "value": 0
+                },
+                "bottomleft": {
+                    "value": 0
+                },
+                "bottomright": {
+                    "value": 0
+                }
+            }
+        },
+        "margin": {
+            "top": {
+                "value": 0
+            },
+            "left": {
+                "value": 0
+            },
+            "unit": "px",
+            "right": {
+                "value": 0
+            },
+            "bottom": {
+                "value": 0
+            }
+        },
+        "padding": {
+            "top": {
+                "value": 0
+            },
+            "left": {
+                "value": 0
+            },
+            "unit": "px",
+            "right": {
+                "value": 0
+            },
+            "bottom": {
+                "value": 0
+            }
+        },
+        "background": {
+            "type": "color",
+            "color": "#fff",
+            "image": {
+                "original": null
+            }
+        }
+    }
+})
+
+provide('announcementData', announcementData)
+
+</script>
+
+<template layout="CustomerApp">
+    
+    <Head :title="capitalize(title)" />
+    <PageHeading :data="pageHead"></PageHeading>
+
+    <div class="grid grid-cols-5 h-[86.7vh]">
+        <!-- Section: Side editor -->
+        <div class="col-span-1 md:block hidden h-full p-2 ">
+            <div class="bg-amber-100 border border-gray-300 h-full py-2 px-3 rounded">
+                <AnnouncementSideEditor
+                    :isLoadingDelete
+                    :isAddBlockLoading
+                    :webBlockTypeCategories="webBlockTypeCategories"
+                    @update="sendBlockUpdate"
+                    @delete="sendDeleteBlock"
+                    @add="addNewBlock"
+                    @order="sendOrderBlock"
+                />
+            </div>
+        </div>
+
+        <!-- Section: Preview -->
+        <div v-if="true" class="md:col-span-4 col-span-5 h-full flex flex-col py-2 px-3">
+            <div class="flex justify-between">
+                <!-- <div class="py-1 px-2 cursor-pointer md:hidden block" title="Desktop view" v-tooltip="'Navigation'">
+                    <FontAwesomeIcon :icon='faBars' aria-hidden='true' @click="()=>openDrawer = true" />
+                    <Drawer v-model:visible="openDrawer" :header="''" :dismissable="true">
+                        <WebpageSideEditor ref="_WebpageSideEditor" :webpage="data" :webBlockTypeCategories="webBlockTypeCategories"
+                            @update="sendBlockUpdate" @delete="sendDeleteBlock" @add="addNewBlock"
+                            @order="sendOrderBlock"  @openBlockList="()=>{openDrawer = false, _WebpageSideEditor.isModalBlocksList = true}" />
+                    </Drawer>
+                </div> -->
+
+                <!-- Section: Screenview -->
+                <div class="flex">
+                    <ScreenView @screenView="setIframeView" />
+                    <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'"
+                        @click="openFullScreenPreview">
+                        <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' />
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 h-full w-full">
+                <div v-if="isIframeLoading" class="flex justify-center items-center w-full h-64 p-12 bg-white">
+                    <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
+                </div>
+
+                <div v-else class="h-full w-full bg-white">
+                    <pre>{{ announcementData }}</pre>
+                    <!-- <iframe
+                        :src="iframeSrc"
+                        :title="props.title"
+                        :class="[iframeClass, isIframeLoading ? 'hidden' : '']"
+                        @error="handleIframeError"
+                        @load="isIframeLoading = false"
+                    /> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

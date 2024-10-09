@@ -127,6 +127,51 @@ class GetLayout
 
 
             ];
+            $websiteSubNav['announcement'] = [
+                'scope'   => 'announcement',
+                'icon'    => ['fal', 'fa-sign'],
+                'label'   => __('Announcement'),
+                'route'   => 'customer.banners.announcement.index',
+                'root'      => 'customer.banners.announcement.index',
+                // 'topMenu' => [
+                //     'subSections' => [
+
+                //         [
+                //             'icon'  => ['fal', 'fa-chart-network'],
+                //             'route' => [
+                //                 'name' => 'customer.banners.dashboard',
+                //             ]
+                //         ],
+                //         [
+                //             'icon'  => ['fal', 'fa-sign'],
+                //             'label' => __('banners'),
+                //             'route' => [
+                //                 'name' => 'customer.banners.banners.index',
+                //             ]
+                //         ],
+
+                //         [
+                //             'icon'  => ['fal', 'fa-globe'],
+                //             'label' => __('websites'),
+                //             'route' => [
+                //                 'name' => 'customer.banners.websites.index',
+                //             ]
+                //         ],
+                //         /*
+                //         [
+                //             'icon'  => ['fal', 'fa-photo-video'],
+                //             'label' => __('gallery'),
+                //             'route' => [
+                //                 'name' => 'customer.banners.gallery',
+                //             ]
+                //         ],
+                //         */
+                //     ],
+
+                // ]
+
+
+            ];
         }
 
 

@@ -66,8 +66,9 @@ const routeList = {
 
 <template>
     <div class="flex items-center justify-between gap-x-3 flex-wrap px-6 w-full relative">
+        <!-- Background image -->
         <div class="flex items-center gap-x-2 py-1" >
-            <div class="group rounded-md overflow-hidden relative">
+            <div class="group/background rounded-md overflow-hidden relative">
                 <Image
                     :src="undefined"
                     :alt="'data.image?.name'"
@@ -76,7 +77,7 @@ const routeList = {
                     class="h-12 aspect-square cursor-pointer "
                 />
 
-                <div @click="() => isOpenGallery = true" class="hidden group-hover:flex absolute inset-0 bg-black/20 items-center justify-center cursor-pointer">
+                <div @click="() => isOpenGallery = true" class="hidden group-hover/background:flex absolute inset-0 bg-black/20 items-center justify-center cursor-pointer">
                     <FontAwesomeIcon icon='fal fa-pencil' class='text-white' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -84,7 +85,7 @@ const routeList = {
             <PureRadio v-model="model.type" :options="[{ name: 'image'}]" by="name" key="image" />
         </div>
         
-        <!-- List: Background Color -->
+        <!-- Background Color -->
         <div class="flex items-center gap-x-4 h-min" >
             <ColorPicker
                 :color="model.color"

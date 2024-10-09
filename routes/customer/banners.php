@@ -10,6 +10,7 @@ use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
 use App\Actions\Portfolio\Banner\UI\DuplicateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
+use App\Actions\Portfolio\Announcement\UI\IndexAnnouncement;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\Portfolio\Banner\UI\RemoveBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBanner;
@@ -45,6 +46,21 @@ Route::name('banners.')->prefix('cms')->group(function () {
         Route::get('snapshots', [IndexSnapshots::class, 'inBanner'])->name('show.snapshots.index');
         Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('show.snapshots.show');
     });
+});
+
+Route::name('announcement.')->prefix('announcement')->group(function () {
+    Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
+    // Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('create');
+    // Route::prefix('{banner}')->group(function () {
+    //     Route::get('', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBanner::class)->name('show');
+    //     Route::get('edit', ['icon' => 'globe', 'label' => 'banner'])->uses(EditBanner::class)->name('edit');
+    //     Route::get('workshop', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBannerWorkshop::class)->name('workshop');
+    //     Route::get('delete', ['icon' => 'globe', 'label' => 'banner'])->uses(RemoveBanner::class)->name('remove');
+    //     Route::get('deleted', ['icon' => 'globe', 'label' => 'banner'])->withTrashed()->uses(ShowDeletedBanner::class)->name('deleted');
+    //     Route::get('duplicate', DuplicateBanner::class)->name('duplicate');
+    //     Route::get('snapshots', [IndexSnapshots::class, 'inBanner'])->name('show.snapshots.index');
+    //     Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('show.snapshots.show');
+    // });
 });
 
 Route::prefix('websites')->name('websites')->group(function () {

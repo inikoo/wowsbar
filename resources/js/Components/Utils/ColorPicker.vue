@@ -71,7 +71,7 @@ const opacityToHexCode = (opacity: number) => {
         </PopoverButton>
 
         <PopoverPanel v-slot="{ close }" class="absolute left-8 top-0 z-10 mt-3">
-            <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+            <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="relative  bg-white p-2.5">
                     <ColorPicker
                         style="width: 220px;"
@@ -79,6 +79,7 @@ const opacityToHexCode = (opacity: number) => {
                         :color="color"
                         :sucker-hide="true"
                         @changeColor="(e) => emits('changeColor', {...e, hex: e.hex + opacityToHexCode(e.rgba.a)})"
+                        class="top-0 bottom-0"
                     />
                 </div>
             </div>
@@ -89,3 +90,9 @@ const opacityToHexCode = (opacity: number) => {
         </PopoverPanel>
     </Popover>
 </template>
+
+<style>
+.hu-color-picker {
+    height: fit-content
+}
+</style>
