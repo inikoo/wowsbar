@@ -172,6 +172,13 @@ class GetLayout
 
 
             ];
+            $websiteSubNav['Footer'] = [
+                'scope'   => 'Footer',
+                'icon'    => ['fal', 'fa-sign'],
+                'label'   => __('Footer'),
+                'route'   => 'customer.banners.announcement.index',
+                'root'      => 'customer.banners.announcement.index',
+            ];
         }
 
 
