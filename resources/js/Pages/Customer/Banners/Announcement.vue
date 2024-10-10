@@ -11,6 +11,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { Collapse } from 'vue-collapsed'
+import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/Promo1.vue'
 
 
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -32,6 +33,7 @@ const props = defineProps<{
             parameters?: any[]
         }
     }
+    announcementData: {}
 }>()
 
 const selectedBlockOpenPanel = ref(true)
@@ -181,118 +183,9 @@ const sendDeleteBlock = async (block: {}) => {
 //     }
 // };
 
-const announcementData = reactive({
-    "id": 1,
-    "code": "announcement1abc",
-    // "scope": "webpage",
-    "name": "Announcement Simple",
-    "created_at": null,
-    "updated_at": null,
-    "icon": "fal fa-presentation",
-    "fields": {
-        "text_1": {
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
-            "size": "1",
-            "text_color": "rgba(255, 255, 255, 1)",
-        },
-        "text_2": {
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
-            "size": "1",
-            "text_color": "rgba(255, 255, 255, 1)",
-        },
-        "button_1": {
-            "label":  "Click me",
-            "url": "https://example.com",
-            "target": "_blank",
-            "border": "1px solid rgba(245, 12, 89, 0.7)",
-            "bg_color": "rgba(245, 12, 89, 0.7)",
-            "text_color": "rgba(255, 255, 255, 1)",
-            "width": "full"
-        },
-        "close_button": {
-            "position_top": "50%",
-            "position_bottom": "50%",
-            "text_color": "rgba(0, 0, 0, 0.5)",
-            "size": "0.5"
-        }
-    },
-    "block_properties": {
-        "link": {
-            "href": "",
-            "target": "_blank",
-        },
-        "border": {
-            "top": {
-                "value": 0
-            },
-            "left": {
-                "value": 0
-            },
-            "unit": "px",
-            "color": "#000000",
-            "right": {
-                "value": 0
-            },
-            "bottom": {
-                "value": 0
-            },
-            "rounded": {
-                "unit": "px",
-                "topleft": {
-                    "value": 0
-                },
-                "topright": {
-                    "value": 0
-                },
-                "bottomleft": {
-                    "value": 0
-                },
-                "bottomright": {
-                    "value": 0
-                }
-            }
-        },
-        "margin": {
-            "top": {
-                "value": 0
-            },
-            "left": {
-                "value": 0
-            },
-            "unit": "px",
-            "right": {
-                "value": 0
-            },
-            "bottom": {
-                "value": 0
-            }
-        },
-        "padding": {
-            "top": {
-                "value": 0
-            },
-            "left": {
-                "value": 0
-            },
-            "unit": "px",
-            "right": {
-                "value": 0
-            },
-            "bottom": {
-                "value": 0
-            }
-        },
-        "background": {
-            "type": "color",
-            "color": "#fff",
-            "image": {
-                "original": null
-            }
-        }
-    }
-})
 
-provide('announcementData', announcementData)
+
+provide('announcementData', props.announcementData)
 
 </script>
 
@@ -300,6 +193,7 @@ provide('announcementData', announcementData)
     
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
+
 
     <div class="grid grid-cols-5 h-[86.7vh]">
         <!-- Section: Side editor -->
@@ -345,6 +239,8 @@ provide('announcementData', announcementData)
                 </div>
 
                 <div v-else class="h-full w-full bg-white">
+                    <Promo1 :announcementData="announcementData"></Promo1>
+
                     <pre>{{ announcementData }}</pre>
                     <!-- <iframe
                         :src="iframeSrc"

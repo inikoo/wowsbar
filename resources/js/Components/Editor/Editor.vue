@@ -18,7 +18,7 @@ import MenuEditor from './MenuEditor.vue'
 import Placeholder from '@tiptap/extension-placeholder'
 import FontFamily from '@tiptap/extension-font-family'
 
-import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue'
+import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faText, faUndoAlt, faRedoAlt } from '@far'
