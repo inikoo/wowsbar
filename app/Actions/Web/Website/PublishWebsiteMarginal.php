@@ -25,15 +25,8 @@ class PublishWebsiteMarginal
 
     public function handle(Website $website, string $marginal, array $modelData): void
     {
-        $layout = [];
-        if ($marginal == 'header') {
-            $layout = $website->unpublishedHeaderSnapshot->layout;
-        } elseif ($marginal == 'footer') {
-            $layout = $website->unpublishedFooterSnapshot->layout;
-        }
-
+        $layout      = Arr::get($modelData, 'layout');
         $firstCommit = true;
-
 
         foreach ($website->snapshots()->where('scope', $marginal)->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             $firstCommit = false;
@@ -69,11 +62,17 @@ class PublishWebsiteMarginal
             ]
         );
 
-        $updateData = [
-            "live_{$marginal}_snapshot_id"   => $snapshot->id,
-            "compiled_layout->$marginal"     => $snapshot->compiledLayout(),
-            "published_{$marginal}_checksum" => md5(json_encode($snapshot->layout)),
-        ];
+        if (in_array($marginal, ['header', 'footer'])) {
+            $updateData = [
+                "live_{$marginal}_snapshot_id"    => $snapshot->id,
+                "compiled_layout->$marginal"      => $snapshot->layout,
+                "published_{$marginal}_checksum"  => md5(json_encode($snapshot->layout)),
+            ];
+        } else {
+            $updateData = [
+                "compiled_layout->$marginal"     => $snapshot->layout
+            ];
+        }
 
         $website->update($updateData);
     }
@@ -103,6 +102,7 @@ class PublishWebsiteMarginal
             'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
             'publisher_id'   => ['sometimes'],
             'publisher_type' => ['sometimes', 'string'],
+            'layout'         => ['sometimes', 'array'],
         ];
     }
 
@@ -116,8 +116,11 @@ class PublishWebsiteMarginal
         return "🚀";
     }
 
-    public function footer(Website $website, ActionRequest $request): string
+    public function footer(ActionRequest $request): string
     {
+        $website =  $request->get('website');
+
+        $this->isAction = true;
         $request->validate();
         $this->handle($website, 'footer', $request->validated());
 

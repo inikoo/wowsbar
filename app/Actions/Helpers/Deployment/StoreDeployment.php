@@ -20,7 +20,6 @@ class StoreDeployment
 
     public function handle(Banner|Website|Webpage|EmailTemplate $model, array $modelData): Deployment
     {
-
         /** @var Deployment $deployment */
         $deployment=$model->deployments()->create($modelData);
         $deployment->generateSlug();
