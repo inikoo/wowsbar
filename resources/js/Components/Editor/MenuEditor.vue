@@ -1,21 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import TextStyle from '@tiptap/extension-text-style'
-import Underline from '@tiptap/extension-underline'
-import Subscript from '@tiptap/extension-subscript'
-import Superscript from '@tiptap/extension-superscript'
-import BulletList from '@tiptap/extension-bullet-list'
-import ListItem from '@tiptap/extension-list-item'
-import Heading from '@tiptap/extension-heading'
-import TextAlign from '@tiptap/extension-text-align'
-import Highlight from '@tiptap/extension-highlight'
-import { Color } from '@tiptap/extension-color'
-import FontSize from 'tiptap-extension-font-size'
-import Link from '@tiptap/extension-link'
-
 import ColorPicker from '@/Components/Utils/ColorPicker.vue'
+import Dropdown from 'primevue/dropdown';
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faText, faUndoAlt, faRedoAlt } from '@far'
@@ -32,15 +18,14 @@ const props = withDefaults(defineProps<{
 });
 
 
-const onHeadingClick = (index: number) => {
-    props.editor.chain().focus().toggleHeading({ level: index }).run()
+const onHeadingClick = (value: any) => {
+    props.editor.chain().focus().toggleHeading(value).run()
 }
 
 
 </script>
 
 <template>
-
     <div v-if="action.key == 'heading'" class="group relative inline-block">
         <div class="text-xs min-w-16 p-1 appearance-none rounded cursor-pointer border border-gray-200"
             :class="{ 'bg-slate-700 text-white font-bold': editor?.isActive('heading') }">
@@ -55,8 +40,6 @@ const onHeadingClick = (index: number) => {
             </div>
         </div>
     </div>
-
-
 
     <div v-else-if="action.key == 'fontSize'" class="group relative inline-block">
         <div class="flex items-center text-xs min-w-10 py-1 pl-1.5 pr-0 appearance-none rounded cursor-pointer border border-gray-500"
@@ -82,23 +65,12 @@ const onHeadingClick = (index: number) => {
         </div>
     </div>
 
-
-    <ColorPicker v-else-if="action.key == 'highlight'" :color="editor?.getAttributes('highlight').color"
-        @changeColor="(color) => editor?.chain().setHighlight({ color: color.hex }).run()"
-        class="flex items-center justify-center w-6 aspect-square rounded cursor-pointer border border-gray-700"
-        :style="{ backgroundColor: editor?.getAttributes('highlight').color }">
-        <FontAwesomeIcon icon='fal fa-paint-brush-alt' class='text-gray-500' fixed-width aria-hidden='true' />
-    </ColorPicker>
-
-
-    <ColorPicker v-else-if="action.key == 'color'" :color="editor?.getAttributes('textStyle').color"
-        @changeColor="(color) => editor?.chain().setColor(color.hex).run()"
-        class="flex items-center justify-center w-6 aspect-square rounded cursor-pointer border border-gray-700">
-        <FontAwesomeIcon icon='far fa-text' fixed-width aria-hidden='true'
-            :style="{ color: editor?.getAttributes('textStyle').color || '#010101' }" />
-    </ColorPicker>
-
-
+    <div v-else-if="action.key == 'color'" class="mb-4 flex justify-between items-center bg-white">
+        <div class="flex items-center">
+            <input type="color" @input="editor.chain().focus().setColor($event.target.value).run()"
+                :value="editor.getAttributes('textStyle').color">
+        </div>
+    </div>
 
     <button v-else type="button" @click="action?.action" :class="{
         'bg-gray-200 rounded': editor?.isActive(action.active),
@@ -108,6 +80,73 @@ const onHeadingClick = (index: number) => {
             <FontAwesomeIcon :icon='action.icon' />
         </span>
     </button>
-
-
 </template>
+
+<style scoped lang="scss">
+.ToolbarContainer {
+    background: #000000;
+    border-bottom: 2px solid #999999;
+    border-radius: 9px 9px 0 0;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin: -20px -20px 20px -20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 0 20px;
+
+    &.sticky {
+        border-top: 2px solid transparent;
+        box-shadow: 0px 3px 5px -3px rgba(#333333, 0.5);
+    }
+}
+
+.Toolbar {
+    display: flex;
+    width: 100%;
+
+    .icon {
+        border-radius: 5px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+
+        &.disabled {
+            color: rgba(#ffffff, 0.5);
+            pointer-events: none;
+        }
+    }
+
+    .text {
+        font-size: 20px;
+        line-height: 1.4;
+        margin-top: 2px;
+    }
+
+    .icon:hover {
+        background: #3d3d3d;
+        color: #5fccff;
+        cursor: pointer;
+    }
+
+    .divider {
+        border: none;
+        border-left: 2px solid rgba(#fff, 0.4);
+        margin: 2px 10px;
+    }
+
+    .icon+.icon {
+        margin-left: 4px;
+    }
+
+    .rightItems {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+}
+</style>

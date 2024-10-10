@@ -65,7 +65,7 @@ const toggleList = ref([
     { key: 'link', icon: 'fal fa-link', action: () => onActionClick('link'), active: 'link' },
     { key: 'undo', icon: 'far fa-undo-alt', action: () => onActionClick('undo'), active: 'undo' },
     { key: 'redo', icon: 'far fa-redo-alt', action: () => onActionClick('redo'), active: 'redo' },
-    { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' },
+/*     { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' }, */
     { key: 'color', icon: 'far fa-text', action: () => onActionClick('color'), active: 'textcolor' },
     { key: 'clear', icon: 'fal fa-eraser', action: () => onActionClick('clear'), active: 'clear' },
 ])
@@ -200,7 +200,7 @@ defineExpose({
     <div v-if="editable">
         <BubbleMenu v-if="type == 'Bubble' && editor" :editor="editor" :tippy-options="{ duration: 100 }">
             <section
-                class="buttons text-gray-700 flex text-xs items-center flex-wrap gap-x-4 border-t border-l border-r border-gray-400 p-1 bg-gray-200">
+                class="text-gray-700 flex text-xs flex-wrap gap-x-4 border-t border-l border-r border-gray-400 p-2 bg-white rounded-md">
                 <MenuEditor v-for="action in toggleList" :key="action.key" :editor="editor" :action="action" />
             </section>
         </BubbleMenu>

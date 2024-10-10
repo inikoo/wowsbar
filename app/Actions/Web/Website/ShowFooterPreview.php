@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Arr;
 
 class ShowFooterPreview
 {
@@ -30,7 +31,9 @@ class ShowFooterPreview
         return Inertia::render(
             'Banners/PreviewFooterWorkshop',
             [
-                'footer'        => GetWebsiteWorkshopFooter::run($website),
+                'footer'        => [
+                    'data' => Arr::get($website->compiled_layout, 'footer')
+                ],
                 'autosaveRoute' => [
                     'name'       => '',
                     'parameters' => [
@@ -41,8 +44,10 @@ class ShowFooterPreview
         );
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
+        $website = $request->get('website');
+
         return $website;
     }
 }

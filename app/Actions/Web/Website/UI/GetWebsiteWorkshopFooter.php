@@ -9,11 +9,11 @@ namespace App\Actions\Web\Website\UI;
 
 use App\Models\Web\Website;
 use Illuminate\Support\Arr;
-use Lorisleiva\Actions\Concerns\AsObject;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetWebsiteWorkshopFooter
 {
-    use AsObject;
+    use AsAction;
 
     public function handle(Website $website): array
     {

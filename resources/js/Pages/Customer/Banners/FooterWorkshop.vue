@@ -27,8 +27,10 @@ const props = defineProps<{
     autosaveRoute: routeType
 }>()
 
+console.log(props)
 const tabsBar = ref(0)
-const usedTemplates = ref(footerTheme1)
+const usedTemplates = ref( props?.data?.data ? props.data.data :  footerTheme1)
+console.log('inii',usedTemplates)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
@@ -53,8 +55,6 @@ const autoSave = async (data: Object) => {
             route("customer.models.banner.workshop.footers.autosave.footer"),
             { layout: data }
         )
-
-
     } catch (error: any) {
         console.error('error', error)
     }
@@ -71,12 +71,9 @@ watch(usedTemplates, (newVal) => {
 }, { deep: true })
 
 onMounted(()=>{
-    const channelName = `footer.preview`
-	const chanel = window.Echo.join(channelName).whisper("otherIsNavigating", { 
-        previewMode: previewMode,   
-        usedTemplates : usedTemplates.value
+    if (socketLayout) socketLayout.actions.send({ 
+        previewMode: previewMode
     })
-	console.log("funcition",chanel)
 })
 </script>
 
