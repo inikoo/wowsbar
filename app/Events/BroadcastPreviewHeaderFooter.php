@@ -8,8 +8,6 @@
 namespace App\Events;
 
 use App\Actions\Web\Website\GetWebsiteWorkshopFooter;
-use App\Actions\Web\Website\GetWebsiteWorkshopHeader;
-use App\Actions\Web\Website\GetWebsiteWorkshopMenuPreview;
 use App\Models\Web\Website;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;

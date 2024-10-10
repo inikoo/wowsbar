@@ -34,6 +34,12 @@ class AuthServiceProvider extends ServiceProvider
             if (!is_null($id)) {
                 return OrganisationUser::find($id);
             }
+
+
+            $id=Session::get('login_customer_'.sha1('Illuminate\Auth\SessionGuard'));
+            if (!is_null($id)) {
+                return OrganisationUser::find($id);
+            }
             //... todo: try other guards
 
             return false;
