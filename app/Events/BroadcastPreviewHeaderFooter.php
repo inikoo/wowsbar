@@ -7,7 +7,7 @@
 
 namespace App\Events;
 
-use App\Actions\Web\Website\GetWebsiteWorkshopFooter;
+use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
 use App\Models\Web\Website;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
