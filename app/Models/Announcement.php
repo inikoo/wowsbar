@@ -11,7 +11,11 @@ class Announcement extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $casts = [
+        "container_properties" => "array",	
+        "fields	" => "array",	
+    ];
+    
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

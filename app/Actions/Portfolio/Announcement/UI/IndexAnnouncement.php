@@ -224,7 +224,7 @@ class IndexAnnouncement extends InertiaAction
             ];
         }
 
-
+        
         return Inertia::render(
             'Banners/Announcement',
             [
@@ -241,16 +241,16 @@ class IndexAnnouncement extends InertiaAction
                         'icon'  => 'fal fa-sign'
                     ],
                 ],
-                'firstBanner'      => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
+                'firstBanner' => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcementData' => [
-                    "id"   => 1,
+                    "id" => 1,
                     "code" => "announcement1abc",
                     // "scope" => "webpage",
-                    "name"       => "Announcement Simple",
+                    "name" => "Announcement Simple",
                     "created_at" => null,
                     "updated_at" => null,
-                    "icon"       => "fal fa-presentation",
-                    "fields"     => [
+                    "icon" => "fal fa-presentation",
+                    "fields" => [
                         "text_1" => [
                             "text" => '<p>GeneriCon 2023 is on June 7 – 9 in Denver. <a href="#" class="whitespace-nowrap font-semibold">Get your
                     ticket&nbsp;<span aria-hidden="true">&rarr;</span></a></p>',
@@ -259,24 +259,24 @@ class IndexAnnouncement extends InertiaAction
                             "text" => "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
                         ],
                         "button_1" => [
-                            "label"      => "Click me",
-                            "url"        => "https://example.com",
-                            "target"     => "_blank",
-                            "border"     => "1px solid rgba(245, 12, 89, 0.7)",
-                            "bg_color"   => "rgba(245, 12, 89, 0.7)",
+                            "label" => "Click me",
+                            "url" => "https://example.com",
+                            "target" => "_blank",
+                            "border" => "1px solid rgba(245, 12, 89, 0.7)",
+                            "bg_color" => "rgba(245, 12, 89, 0.7)",
                             "text_color" => "rgba(255, 255, 255, 1)",
-                            "width"      => "full"
+                            "width" => "full"
                         ],
                         "close_button" => [
-                            "position_top"  => "50%",
+                            "position_top" => "50%",
                             "position_left" => "50%",
-                            "text_color"    => "rgba(0, 0, 0, 0.5)",
-                            "size"          => "0.5"
+                            "text_color" => "rgba(0, 0, 0, 0.5)",
+                            "size" => "0.5"
                         ]
                     ],
                     "container_properties" => [
                         "link" => [
-                            "href"   => "",
+                            "href" => "",
                             "target" => "_blank",
                         ],
                         "border" => [
@@ -286,7 +286,7 @@ class IndexAnnouncement extends InertiaAction
                             "left" => [
                                 "value" => 0
                             ],
-                            "unit"  => "px",
+                            "unit" => "px",
                             "color" => "#000000",
                             "right" => [
                                 "value" => 0
@@ -295,7 +295,7 @@ class IndexAnnouncement extends InertiaAction
                                 "value" => 0
                             ],
                             "rounded" => [
-                                "unit"    => "px",
+                                "unit" => "px",
                                 "topleft" => [
                                     "value" => 0
                                 ],
@@ -317,7 +317,7 @@ class IndexAnnouncement extends InertiaAction
                             "left" => [
                                 "value" => 0
                             ],
-                            "unit"  => "px",
+                            "unit" => "px",
                             "right" => [
                                 "value" => 0
                             ],
@@ -332,7 +332,7 @@ class IndexAnnouncement extends InertiaAction
                             "left" => [
                                 "value" => 0
                             ],
-                            "unit"  => "px",
+                            "unit" => "px",
                             "right" => [
                                 "value" => 0
                             ],
@@ -341,7 +341,7 @@ class IndexAnnouncement extends InertiaAction
                             ]
                         ],
                         "background" => [
-                            "type"  => "color",
+                            "type" => "color",
                             "color" => "linear-gradient(to right, #ff80b5, #9089fc)",
                             "image" => [
                                 "original" => null
