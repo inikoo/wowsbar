@@ -2,22 +2,20 @@
 
 namespace App\Actions\Portfolio\Announcement\UI;
 
+use App\Models\Announcement;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class DeliverAnnouncement
 {
     use AsController;
 
-    public function handle(string $ulid): null
+    public function handle(Announcement $announcement): Announcement
     {
-        return null;
-
+        return $announcement;
     }
 
-
-    public function htmlResponse($data)
+    public function htmlResponse(Announcement $announcement)
     {
-        return view('announcement', ['data' => $data]);
+        return view('announcement', ['data' => $announcement]);
     }
-
 }
