@@ -20,12 +20,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
 import { notify } from '@kyvg/vue3-notification'
 import ScreenView from '@/Components/ScreenView.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 library.add(faGlobe, faImage)
 
 const props = defineProps<{
     pageHead: {}
     title: string
-    data: {}
+    data: {},
+    store_route: {},
     firstBanner?: {
         text: string
         createRoute: {
@@ -183,6 +185,16 @@ const sendDeleteBlock = async (block: {}) => {
 //     }
 // };
 
+const isLoadingSave = ref(false)
+const onSave = () => {
+    router.post(route(props.store_route.name, props.store_route.parameters), {
+        ...props.announcementData
+    }, {
+        onStart: () => isLoadingSave.value = true,
+        onFinish: () => isLoadingSave.value = false,
+        onError: (error) => console.error('======', error)
+    })
+}
 
 
 provide('announcementData', props.announcementData)
@@ -190,9 +202,13 @@ provide('announcementData', props.announcementData)
 </script>
 
 <template layout="CustomerApp">
-    
+
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
+    <PageHeading :data="pageHead">
+        <template #other>
+            <Button @click="onSave" label="save" :loading="isLoadingSave" />
+        </template>
+    </PageHeading>
 
 
     <div class="grid grid-cols-5 h-[86.7vh]">

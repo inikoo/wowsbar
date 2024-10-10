@@ -58,6 +58,11 @@ class StoreAnnouncement
         ];
     }
 
+    public function htmlResponse(Announcement $announcement): \Illuminate\Http\Response
+    {
+        //
+    }
+
     public function inCustomer(ActionRequest $request): Announcement
     {
         $this->scope    = 'customer';

@@ -68,9 +68,9 @@ setTimeout(() => {
 }, 1000)
 
 if(document.body) {
-    console.log('aaaa')
-} else {
     console.log('bbb', document)
+} else {
+    {{--console.log(JSON.parse({{ $data }}));--}}
 }
 
 </script>
