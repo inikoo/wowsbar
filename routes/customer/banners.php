@@ -7,6 +7,7 @@
 
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
+use App\Actions\Portfolio\Announcement\UI\ShowAnnouncement;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
 use App\Actions\Portfolio\Banner\UI\DuplicateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
@@ -52,6 +53,7 @@ Route::name('banners.')->prefix('cms')->group(function () {
 
 Route::name('announcement.')->prefix('announcement')->group(function () {
     Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
+    Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
     // Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('create');
     // Route::prefix('{banner}')->group(function () {
     //     Route::get('', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBanner::class)->name('show');

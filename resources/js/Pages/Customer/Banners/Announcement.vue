@@ -26,7 +26,8 @@ library.add(faGlobe, faImage)
 const props = defineProps<{
     pageHead: {}
     title: string
-    data: {}
+    data: {},
+    store_route: {},
     firstBanner?: {
         text: string
         createRoute: {
@@ -186,7 +187,7 @@ const sendDeleteBlock = async (block: {}) => {
 
 const isLoadingSave = ref(false)
 const onSave = () => {
-    router.post(route('customer.models.banner.announcement.store'), {
+    router.post(route(props.store_route.name, props.store_route.parameters), {
         ...props.announcementData
     }, {
         onStart: () => isLoadingSave.value = true,
@@ -201,7 +202,7 @@ provide('announcementData', props.announcementData)
 </script>
 
 <template layout="CustomerApp">
-    
+
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other>

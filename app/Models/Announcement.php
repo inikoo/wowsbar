@@ -4,18 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Announcement extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $guarded = [];
-    protected $casts = [
-        "container_properties" => "array",	
-        "fields	" => "array",	
+    protected $casts   = [
+        "container_properties" => "array",
+        "fields"               => "array",
     ];
-    
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
