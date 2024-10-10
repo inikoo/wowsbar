@@ -96,7 +96,7 @@ const handleDisclosureToggle = (index) => {
 
 
 <template>
-    <div>
+    <div class="p-4">
         <div v-for="(item, index) of modelValue" :key="index" class="p-1">
             <div class="relative">
                 <button @click="handleDisclosureToggle(index)" :class="openIndex === index ? 'rounded-t-lg' : 'rounded-lg'"
