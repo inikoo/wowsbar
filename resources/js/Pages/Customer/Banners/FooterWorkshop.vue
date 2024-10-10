@@ -7,7 +7,8 @@ import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import SideEditor from '@/Components/Workshop/Fields/SideEditor.vue';
 import ScreenView from "@/Components/ScreenView.vue"
 import { SocketFooter } from "@/Composables/SocketWebBlock"
-
+import { debounce } from 'lodash'
+import axios from 'axios'
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -33,6 +34,7 @@ const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
 const socketLayout = SocketFooter();
+const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 
 
 const setIframeView = (view: String) => {
@@ -45,16 +47,35 @@ const setIframeView = (view: String) => {
     }
 }
 
+const autoSave = async (data: Object) => {
+    try {
+        const response = await axios.patch(
+            route("customer.models.banner.workshop.footers.autosave.footer"),
+            { layout: data }
+        )
+
+
+    } catch (error: any) {
+        console.error('error', error)
+    }
+}
+
 watch(previewMode, (newVal) => {
-    if (socketLayout) socketLayout.actions.send({ previewMode: newVal })
+    if (socketLayout) socketLayout.actions.send({ 
+        previewMode: newVal, 
+    })
 }, { deep: true })
 
-console.log(usedTemplates.value)
-
+watch(usedTemplates, (newVal) => {
+    if (newVal) debouncedSendUpdate(newVal)
+}, { deep: true })
 
 onMounted(()=>{
     const channelName = `footer.preview`
-	const chanel = window.Echo.join(channelName).whisper("otherIsNavigating", { data: 'sdsd' })
+	const chanel = window.Echo.join(channelName).whisper("otherIsNavigating", { 
+        previewMode: previewMode,   
+        usedTemplates : usedTemplates.value
+    })
 	console.log("funcition",chanel)
 })
 </script>
@@ -75,7 +96,7 @@ onMounted(()=>{
                             aria-hidden='true' />
                     </div>
                 </div>
-                <div class="w-[85%] overflow-auto">
+                <div class="w-[85%]">
                     <SideEditor v-model="usedTemplates.data.footer"
                         :bluprint="usedTemplates.data.bluprint[tabsBar].bluprint" />
                 </div>
