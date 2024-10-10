@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, nextTick, defineExpose } from 'vue'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import TextStyle from '@tiptap/extension-text-style'
@@ -46,6 +46,7 @@ const props = withDefaults(defineProps<{
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
+    (e: 'onEditClick', value: any): void
 }>()
 
 const toggleList = ref([
@@ -177,36 +178,42 @@ const setLink = () => {
     }
 }
 
+const onEditorClick = () => {
+    emits('onEditClick', editor.value)
+}
+
 onMounted(() => {
-    toggleList.value = toggleList.value.filter(item => props.toogle?.includes(item.key))
+    nextTick(() => {
+        toggleList.value = toggleList.value.filter(item => props.toogle?.includes(item.key))
+        if (editor.value) editor.value.commands.selectAll() // Ensure editor is ready
+    })
 })
 
-/* watch(() => props.modelValue, (newValue, oldValue) => {
-    const isSame = newValue === oldValue
-    if (isSame) {
-        return
-    }
-
-    editor.value?.commands.setContent(newValue, false)
-}) */
+defineExpose({
+  editor
+})
 
 </script>
 
+
 <template>
-    <div v-if="editable" class="">
+    <div v-if="editable">
         <BubbleMenu v-if="type == 'Bubble' && editor" :editor="editor" :tippy-options="{ duration: 100 }">
-            <section class="buttons text-gray-700 flex text-xs items-center flex-wrap gap-x-4 border-t border-l border-r border-gray-400 p-1 bg-gray-200">
+            <section
+                class="buttons text-gray-700 flex text-xs items-center flex-wrap gap-x-4 border-t border-l border-r border-gray-400 p-1 bg-gray-200">
                 <MenuEditor v-for="action in toggleList" :key="action.key" :editor="editor" :action="action" />
             </section>
         </BubbleMenu>
 
-        <section v-else-if="type == 'basic' && editor" class="buttons text-xs text-gray-700 flex items-center flex-wrap gap-x-4 border border-gray-400 p-2 rounded-t-lg bg-white">
+        <section v-else-if="type == 'basic' && editor"
+            class="buttons text-xs text-gray-700 flex items-center flex-wrap gap-x-4 border border-gray-400 p-2 rounded-t-lg bg-white">
             <MenuEditor v-for="action in toggleList" :key="action.key" :editor="editor" :action="action" />
         </section>
-
-        <EditorContent :editor="editor" :class="type == 'basic' ? 'basic-content' : ''"/>
+        <EditorContent @click="onEditorClick" :editor="editor" :class="type == 'basic' ? 'basic-content' : ''" />
     </div>
-    <div v-else id="blockTextContent"><div v-html="modelValue"/></div>
+    <div v-else id="blockTextContent">
+        <div v-html="modelValue" />
+    </div>
 </template>
 
 
@@ -214,10 +221,6 @@ onMounted(() => {
 <style lang="scss">
 /* Basic editor styles */
 .tiptap {
-  /*   >*+* {
-        margin-top: 0.75em;
-    } */
-
     blockquote {
         padding-left: 1rem;
         border-left: 3px solid rgba(#0D0D0D, 0.1);
@@ -355,8 +358,5 @@ onMounted(() => {
 #blockTextContent p:empty::after {
     content: "\00A0";
 }
-
-
-
 
 </style>

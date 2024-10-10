@@ -48,10 +48,10 @@ console.log(usedTemplates.value)
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 
-    <div class="h-[84vh] grid grid-flow-row-dense grid-cols-4">
+    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-6">
         <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
-                <div class="w-[10%] bg-slate-200 ">
+                <div class="w-[15%] bg-slate-200 ">
                     <div v-for="(tab, index) in usedTemplates?.data.bluprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
@@ -60,7 +60,7 @@ console.log(usedTemplates.value)
                             aria-hidden='true' />
                     </div>
                 </div>
-                <div class="w-[90%]">
+                <div class="w-[85%]">
                     <SideEditor v-model="usedTemplates.data.footer"
                         :bluprint="usedTemplates.data.bluprint[tabsBar].bluprint" />
                 </div>
@@ -68,7 +68,7 @@ console.log(usedTemplates.value)
 
         </div>
 
-        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-3' : 'col-span-4'">
+        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-5' : 'col-span-6'">
             <div class="h-full w-full bg-white">
                 <div v-if="usedTemplates?.data" class="w-full h-full">
                     <div class="flex justify-between bg-slate-200 border border-b-gray-300">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Multiselect from "@vueform/multiselect"
 import { cloneDeep } from 'lodash'
@@ -117,10 +117,10 @@ const deleteSocial = (event, index) => {
 </script>
 
 <template>
-    <div>
+    <div class="p-4">
         <div v-for="(item, index) of modelValue.data" :key="index" class="p-1">
             <div class="flex">
-                <Multiselect :modelValue="item" :options="payments" :object="true" :canClear="false"
+                <Multiselect :modelValue="item" :options="payments" :object="true" :canClear="false" :caret="false"
                     @update:modelValue="value => updatePayment(index, value)">
                     <template v-slot:singlelabel="{ value }">
                         <div class="flex items-center  rounded-lg  w-full  p-2 m-2 mr-0">
@@ -135,7 +135,6 @@ const deleteSocial = (event, index) => {
                                 class="text-red-500 hover:text-red-600 cursor-pointer p-3 transition-transform transform hover:scale-110"
                                 @click="(e) => deleteSocial(e, index)" />
                         </div>
-
                     </template>
 
                     <template v-slot:option="{ option }">
