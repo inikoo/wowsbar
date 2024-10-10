@@ -28,7 +28,7 @@ class ShowFooterPreview
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Web/PreviewWorkshop',
+            'Banners/PreviewFooterWorkshop',
             [
                 'footer'        => GetWebsiteWorkshopFooter::run($website),
                 'autosaveRoute' => [

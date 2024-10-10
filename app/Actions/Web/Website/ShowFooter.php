@@ -37,7 +37,7 @@ class ShowFooter
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Org/Web/Workshop/Footer/FooterWorkshop',
+            'Banners/FooterWorkshop',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -60,7 +60,7 @@ class ShowFooter
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        [
+                        /* [
                             'type'  => 'button',
                             'style' => 'primary',
                             'icon'  => ["fas", "fa-rocket"],
@@ -72,7 +72,7 @@ class ShowFooter
                                     'website' => $website->id
                                 ],
                             ]
-                        ],
+                        ], */
                     ],
                 ],
 
@@ -91,7 +91,6 @@ class ShowFooter
                 ],
 
                 'data' => GetWebsiteWorkshopFooter::run($website),
-                // 'webBlockTypeCategories' => WebBlockTypeCategoryResource::collection(IndexWebBlockTypeCategories::run(WebBlockTypeCategorySlugEnum::FOOTER->value))
             ]
         );
     }
