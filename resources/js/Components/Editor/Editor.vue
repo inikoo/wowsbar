@@ -220,12 +220,17 @@ defineExpose({
 
 <style lang="scss">
 /* Basic editor styles */
+.ProseMirror p {
+        width: fit-content !important;
+    }
+
 .tiptap {
     blockquote {
         padding-left: 1rem;
         border-left: 3px solid rgba(#0D0D0D, 0.1);
     }
 
+   
 
     ul,
     ol {

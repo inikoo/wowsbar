@@ -93,10 +93,10 @@ const deleteSubMenu = () => {
     selectedData.value.data.splice(selectedIndex.value, 1)
 }
 
-const onRightClickMenu = (event , data , column, index) => {
+const onRightClickMenu = (event, data, column, index) => {
     selectedData.value = data;
     selectedIndex.value = index,
-    selectedColumn.value = column
+        selectedColumn.value = column
     menu.value.show(event);
 };
 
@@ -107,7 +107,7 @@ const onRightClickSubMenu = (event, data, column, index) => {
     subMenu.value.show(event);
 };
 
-const selectAllEditor = (editor : any) => {
+const selectAllEditor = (editor: any) => {
     editor.commands.selectAll()
 }
 
@@ -132,11 +132,11 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                     <div class="flex">
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-xl text-white cursor-grab pr-3 mr-2" />
-                                        <div class="w-full"
+                                        <div class="w-fit"
                                             @contextmenu="onRightClickMenu($event, item, modelValue.column['column_1']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :toogle="[]" :editable="editable"
-                                                    :key="editKey" @onEditClick="selectAllEditor"/>
+                                                    :key="editKey" @onEditClick="selectAllEditor" />
                                             </span>
                                         </div>
                                         <ContextMenu ref="menu" :model="Menuitems">
@@ -157,7 +157,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                             @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_1']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :toogle="['link']"
-                                                                    :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                    :editable="editable" :key="editKey"
+                                                                    @onEditClick="selectAllEditor" />
                                                             </span>
                                                         </div>
                                                         <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -183,7 +184,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                         @contextmenu="onRightClickMenu($event, item, modelValue.column['column_1']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :toogle="[]"
-                                                                :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                :editable="editable" :key="editKey"
+                                                                @onEditClick="selectAllEditor" />
                                                         </span>
                                                     </div>
                                                     <ContextMenu ref="menu" :model="Menuitems">
@@ -215,7 +217,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"
                                                                                 :toogle="['link']" :editable="editable"
-                                                                                :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                                :key="editKey"
+                                                                                @onEditClick="selectAllEditor" />
                                                                         </span>
                                                                     </div>
                                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -253,7 +256,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                             @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :toogle="[]" :editable="editable"
-                                                    :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                    :key="editKey" @onEditClick="selectAllEditor" />
                                             </span>
                                         </div>
                                         <ContextMenu ref="menu" :model="Menuitems">
@@ -274,7 +277,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                             @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_2']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :toogle="['link']"
-                                                                    :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                    :editable="editable" :key="editKey"
+                                                                    @onEditClick="selectAllEditor" />
                                                             </span>
                                                         </div>
                                                         <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -301,7 +305,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                         @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :toogle="[]"
-                                                                :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                :editable="editable" :key="editKey"
+                                                                @onEditClick="selectAllEditor" />
                                                         </span>
                                                     </div>
                                                     <ContextMenu ref="menu" :model="Menuitems">
@@ -333,7 +338,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"
                                                                                 :toogle="['link']" :editable="editable"
-                                                                                :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                                :key="editKey"
+                                                                                @onEditClick="selectAllEditor" />
                                                                         </span>
                                                                     </div>
                                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -369,7 +375,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                             @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :toogle="[]" :editable="editable"
-                                                    :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                    :key="editKey" @onEditClick="selectAllEditor" />
                                             </span>
                                         </div>
                                         <ContextMenu ref="menu" :model="Menuitems">
@@ -390,7 +396,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                             @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_2']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :toogle="['link']"
-                                                                    :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                    :editable="editable" :key="editKey"
+                                                                    @onEditClick="selectAllEditor" />
                                                             </span>
                                                         </div>
                                                         <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -417,7 +424,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                         @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :toogle="[]"
-                                                                :editable="editable" :key="editKey"  @onEditClick="selectAllEditor"/>
+                                                                :editable="editable" :key="editKey"
+                                                                @onEditClick="selectAllEditor" />
                                                         </span>
                                                     </div>
                                                     <ContextMenu ref="menu" :model="Menuitems">
@@ -449,7 +457,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"
                                                                                 :toogle="['link']" :editable="editable"
-                                                                                :key="editKey"  @onEditClick="selectAllEditor" />
+                                                                                :key="editKey"
+                                                                                @onEditClick="selectAllEditor" />
                                                                         </span>
                                                                     </div>
                                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
@@ -475,7 +484,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                     class="md:hidden mb-6 md:mb-5 bg-[#9c7c64] md:bg-transparent text-center md:text-left pt-4 pb-6 space-y-4 md:py-0 md:space-y-0">
                     <h2 class="text-xl tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
                     <div class="flex md:space-x-6 md:mb-4 justify-around md:justify-start">
-                        <a v-for="item of modelValue.socialData" target="_blank"  :key="item.icon" :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
+                        <a v-for="item of modelValue.socialData" target="_blank" :key="item.icon"
+                            :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
                     </div>
                 </div>
 
@@ -491,7 +501,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                         </div>
                         <address
                             class="mt-10 md:mt-0 not-italic mb-4 text-center md:text-left text-xs md:text-sm text-gray-300">
-                            <Editor v-model="modelValue.column.column_4.data.textBox1" 
+                            <Editor v-model="modelValue.column.column_4.data.textBox1"
                                 :toogle="[...toogle, 'color', 'highlight']" :editable="editable" />
                         </address>
 
@@ -503,7 +513,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                             class="hidden md:block mb-6 md:mb-5 bg-[#9c7c64] md:bg-transparent text-center md:text-left pt-4 pb-6 space-y-4 md:py-0 md:space-y-0">
                             <h2 class="text-xl tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
                             <div class="flex md:space-x-6 md:mb-4 justify-around md:justify-start">
-                                <a v-for="item of modelValue.socialData" :key="item.icon" target="_blank" 
+                                <a v-for="item of modelValue.socialData" :key="item.icon" target="_blank"
                                     :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
                             </div>
                         </div>

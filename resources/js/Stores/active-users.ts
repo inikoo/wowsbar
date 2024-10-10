@@ -14,7 +14,7 @@ export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {
             window.Echo.leave(`org.live.users`)
         },
         subscribe() {
-            window.Echo.join(`org.live.users`)
+            const chanel = window.Echo.join(`org.live.users`)
                 .joining((user: LiveUser) => {
                     // console.log('Someone is join: ', user);
                     window.Echo.join(`org.live.users`).whisper(`sendTo${user.id}`, this.liveOrganisationUsers[usePage().props.auth.user.id])
@@ -42,6 +42,8 @@ export const liveOrganisationUsers = defineStore('liveOrganisationUsers', {
                     // Receive data from others (that they know I join the channel)
                     this.liveOrganisationUsers[otherUser.id] = otherUser
                 })
+
+                console.log('dfdfdf',chanel)
 
         },
     },

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted} from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import SideEditor from '@/Components/Workshop/Fields/SideEditor.vue';
 import ScreenView from "@/Components/ScreenView.vue"
+import { SocketFooter } from "@/Composables/SocketWebBlock"
 
 
 import { routeType } from "@/types/route"
@@ -27,8 +28,11 @@ const props = defineProps<{
 
 const tabsBar = ref(0)
 const usedTemplates = ref(footerTheme1)
+const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
+const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
+const socketLayout = SocketFooter();
 
 
 const setIframeView = (view: String) => {
@@ -41,7 +45,18 @@ const setIframeView = (view: String) => {
     }
 }
 
+watch(previewMode, (newVal) => {
+    if (socketLayout) socketLayout.actions.send({ previewMode: newVal })
+}, { deep: true })
+
 console.log(usedTemplates.value)
+
+
+onMounted(()=>{
+    const channelName = `footer.preview`
+	const chanel = window.Echo.join(channelName).whisper("otherIsNavigating", { data: 'sdsd' })
+	console.log("funcition",chanel)
+})
 </script>
 
 <template>
@@ -60,7 +75,7 @@ console.log(usedTemplates.value)
                             aria-hidden='true' />
                     </div>
                 </div>
-                <div class="w-[85%]">
+                <div class="w-[85%] overflow-auto">
                     <SideEditor v-model="usedTemplates.data.footer"
                         :bluprint="usedTemplates.data.bluprint[tabsBar].bluprint" />
                 </div>
@@ -80,7 +95,7 @@ console.log(usedTemplates.value)
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <!-- <div class="text-xs" :class="[
+                            <div class="text-xs" :class="[
                                 previewMode ? 'text-slate-600' : 'text-slate-300'
                             ]">Preview</div>
                             <Switch @click="previewMode = !previewMode" :class="[
@@ -90,18 +105,10 @@ console.log(usedTemplates.value)
                                 <span aria-hidden="true" :class="previewMode ? 'translate-x-3' : 'translate-x-0'"
                                     class="pointer-events-none inline-block h-full w-1/2 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out">
                                 </span>
-                            </Switch> -->
-
-                            <!-- <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'"
-                                @click="isModalOpen = true">
-                                <FontAwesomeIcon icon="fas fa-th-large" aria-hidden='true' />
-                            </div> -->
+                            </Switch>                       
                         </div>
                     </div>
 
-                    <!-- <div v-if="isIframeLoading" class="flex justify-center items-center w-full h-64 p-12 bg-white">
-                        <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
-                    </div> -->
                     <iframe :src="iframeSrc" :title="props.title"
                         :class="[iframeClass]" />
                 </div>

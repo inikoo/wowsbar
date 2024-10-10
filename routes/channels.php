@@ -23,3 +23,7 @@ Broadcast::channel('org.live.users', function (OrganisationUser $organisationUse
         'name'        => $organisationUser->contact_name,
     ];
 });
+
+Broadcast::channel("footer.preview", function (OrganisationUser $organisationUser) {
+    return true;
+});
