@@ -30,6 +30,7 @@ use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
+use App\Actions\Web\Website\PublishWebsiteMarginal;
 
 Route::post('/portfolio-social-account/{portfolioSocialAccount}/ads', StorePortfolioSocialAccountAds::class)->name('portfolio-social-account.ads.store');
 Route::post('/portfolio-social-account/{portfolioSocialAccount}/post', StorePortfolioSocialAccountPost::class)->name('portfolio-social-account.post.store');
@@ -57,6 +58,14 @@ Route::prefix('/banner')->name('banner.')->group(function () {
     Route::prefix('announcements')->name('announcement.')->group(function () {
         Route::post('{announcement}', [UpdateAnnouncement::class, 'inCustomer'])->name('update');
     });
+
+    Route::name('workshop.')->prefix('workshop')
+        ->group(function () {
+            Route::name('footers.')->prefix('footers')->group(function () {
+                Route::patch('autosave/footer', [PublishWebsiteMarginal::class, 'footer'])->name('autosave.footer');
+                Route::post('publish/footer', [PublishWebsiteMarginal::class, 'footer'])->name('publish.footer');
+            });
+        });
 
     Route::prefix('{banner:id}')->group(function () {
         Route::patch('', UpdateBanner::class)->name('update');
