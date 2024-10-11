@@ -38,7 +38,7 @@ const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
 const socketLayout = SocketFooter();
 const comment = ref('')
-const isIframeLoading = ref(true)
+const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 
 const onPublish = async (popover: Function) => {
@@ -94,7 +94,7 @@ watch(usedTemplates, (newVal) => {
 }, { deep: true })
 
 onMounted(()=>{
-    if (socketLayout) socketLayout.actions.send({previewMode: previewMode})
+    if (socketLayout) socketLayout.actions.send({ previewMode: previewMode.value })
 })
 
 
@@ -164,7 +164,6 @@ const handleIframeError = () => {
                             </Switch>                       
                         </div>
                     </div>
-
                         <div v-if="isIframeLoading" class="loading-overlay">
                          <div class="spinner"></div>
                          </div>
