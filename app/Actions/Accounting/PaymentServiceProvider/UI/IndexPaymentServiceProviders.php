@@ -12,6 +12,7 @@ use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Http\Resources\Accounting\PaymentServiceProviderResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Accounting\PaymentServiceProvider;
+use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -90,6 +91,10 @@ class IndexPaymentServiceProviders extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
+        if ($request->user() instanceof User) {
+            return true;
+        }
+
         $this->canEdit = $request->user()->hasPermissionTo('accounting.edit');
 
         return

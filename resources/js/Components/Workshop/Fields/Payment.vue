@@ -26,7 +26,7 @@ const GetPayment = async () => {
             route('customer.accounting.payment-service-providers.index'),
         )
         console.log(response)
-        /*  if (response && response.data && response.data.data) {
+         if (response && response.data && response.data.data) {
              const ini = response.data.data.map((item) => ({
                  name: item.name,
                  value: item.name,
@@ -35,76 +35,13 @@ const GetPayment = async () => {
              payments.value = ini
          } else {
              console.error('Invalid response format', response)
-         } */
+         }
     } catch (error: any) {
         console.error('error', error)
     }
 }
 
-const payments = ref(
-    [
-        {
-            name: "Account",
-            value: "Account",
-            image: "http://10.0.0.100:8080/X38TpeGGthplkff_9H-a4bAf0NIoLsKTCoqVb1pkJR4/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyNC9iODEwYzZlN2NlYjExM2E3Nzk2Njg4YTUyMzk0NWZkNi5pbWFnZS1wbmc"
-        },
-        {
-            name: "Bank",
-            value: "Bank",
-            image: "http://10.0.0.100:8080/ktrvH060gisaofNEU85FNSuLaYqWmwk8tRec-pYbMww/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyNi9iZTA3MDdmOTEyNTk0MTI2ZDc4ZmEzMmU2MWY1MjM2YS5pbWFnZS1wbmc"
-        },
-        {
-            name: "Btree",
-            value: "Btree",
-            image: "http://10.0.0.100:8080/Ag3VzsEHFmapcOyvG-vePxRQRkFttWyA00Q7cYiN_70/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyNy9iMzI3NzIzMjAxNGJmZmExYmM4NWFhODVhOTBjOTdkNi5pbWFnZS1wbmc"
-        },
-        {
-            name: "Cash",
-            value: "Cash",
-            image: "http://10.0.0.100:8080/YSzJb88aKuDiGAuwwx6-tugTFJfZmZnPlAjgLo4AwV0/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyNS80MmQ4YjNiMTM0MGZlYmQ4YmE1YjJmNWJhYWI0NzcwYi5pbWFnZS1wbmc"
-        },
-        {
-            name: "Checkout",
-            value: "Checkout",
-            image: "http://10.0.0.100:8080/RwDUfiomQukTP-H6oJOC-iTAd6YfHJpkKbvP8ILurgw/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyOC80NzdhMGIxYjU0NzhmZGY2ZjZiNDMwMTc1MGQ4Y2NmOC5pbWFnZS1wbmc"
-        },
-        {
-            name: "Cash on delivery",
-            value: "Cash on delivery",
-            image: "http://10.0.0.100:8080/OK-pau4xjRX34Ndjtiq2cIecAJdF8LNSowib3kfD3tU/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzNS9lODY2Mzg4ZjI3OTBmNjUzMzIxNWZiOTVkZjBmZmIwYi5pbWFnZS1wbmc"
-        },
-        {
-            name: "Hokodo",
-            value: "Hokodo",
-            image: "http://10.0.0.100:8080/S_eltHQT0QdWrsPPp3gU9PpJiWiRDiRrYFvl_ljGpH4/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMyOS80Mzg2ZDA0Yjg3ZDUxM2ZlMjIwNWY1ZTFlODQ1OGU0MC5pbWFnZS1wbmc"
-        },
-        {
-            name: "Pastpay",
-            value: "Pastpay",
-            image: "http://10.0.0.100:8080/VOmcarVa45Xc1wBzA0zOoXtEfC4NXT0myGA7YPI2FFo/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzMi8wMzBlZDI1Yzk1NzkyNjQxNzBmNDJlOGI0ZmI2M2UwZS5pbWFnZS1wbmc"
-        },
-        {
-            name: "Paypal",
-            value: "Paypal",
-            image: "http://10.0.0.100:8080/GRbbdcntDve-rTXAy13_CJk6kzL7fKwaBn6uEXMB89g/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzMC85ZmI4NzU0YjYzOWQ5NGViMGU4YmMzYjY1M2FlYThkNC5pbWFnZS1wbmc"
-        },
-        {
-            name: "Sofort",
-            value: "Sofort",
-            image: "http://10.0.0.100:8080/Ie6XR9dzAajd9U_Hi66thiyIjYLuIAAmafRDzzeOFfo/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzMS9mMjMzMTA0YjI2MTgxNWYwNmZjOGY2ZTA2MzRkYzQ5NS5pbWFnZS1wbmc"
-        },
-        {
-            name: "Worldpay",
-            value: "Worldpay",
-            image: "http://10.0.0.100:8080/7Ii0FXxaQR6vOkcZyO8MbHvCvL_Zu01euYD_4CgZ7yM/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzNC9kOGYzYzk1OGM5MDU5MjBiMWZhYjM3Y2RhMjhkMDJmYS5pbWFnZS1wbmc"
-        },
-        {
-            name: "Xendit",
-            value: "Xendit",
-            image: "http://10.0.0.100:8080/QvUYWR35xXY6Gw6w3WaG_QJQFstzEs7QLRIGE1RU_2g/bG9jYWw6Ly8vYWlrdS9hcHAvbWVkaWEvbWVkaWEvMjMzMy8zYTg3ZGEwMGE3ODNhZWQxNzZhNjlhNzc2MDEwMDI0My5pbWFnZS1wbmc"
-        }
-    ]
-)
+const payments = ref([])
 
 
 const addPayments = () => {

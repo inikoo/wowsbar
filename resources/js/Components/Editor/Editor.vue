@@ -31,12 +31,12 @@ const props = withDefaults(defineProps<{
     modelValue: string,
     toogle?: string[],
     type?: string,
-    editable?:boolean
-    placeholder?:any | String
-}>(),{
-    editable : true,
+    editable?: boolean
+    placeholder?: any | String
+}>(), {
+    editable: true,
     type: 'Bubble',
-    placeholder : '',
+    placeholder: '',
     toogle: () => [
         'heading', 'fontSize', 'bold', 'italic', 'underline', 'bulletList',
         'orderedList', 'blockquote', 'divider', 'alignLeft', 'alignRight',
@@ -65,7 +65,7 @@ const toggleList = ref([
     { key: 'link', icon: 'fal fa-link', action: () => onActionClick('link'), active: 'link' },
     { key: 'undo', icon: 'far fa-undo-alt', action: () => onActionClick('undo'), active: 'undo' },
     { key: 'redo', icon: 'far fa-redo-alt', action: () => onActionClick('redo'), active: 'redo' },
-/*     { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' }, */
+    /*     { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' }, */
     { key: 'color', icon: 'far fa-text', action: () => onActionClick('color'), active: 'textcolor' },
     { key: 'clear', icon: 'fal fa-eraser', action: () => onActionClick('clear'), active: 'clear' },
 ])
@@ -89,8 +89,8 @@ const editor = useEditor({
             types: ['textStyle'],
         }),
         Placeholder.configure({
-          // Use a placeholder:
-          placeholder: props.placeholder,
+            // Use a placeholder:
+            placeholder: props.placeholder,
         }),
         TextAlign.configure({
             types: ['heading', 'paragraph'],
@@ -190,7 +190,7 @@ onMounted(() => {
 })
 
 defineExpose({
-  editor
+    editor
 })
 
 </script>
@@ -221,8 +221,12 @@ defineExpose({
 <style lang="scss">
 /* Basic editor styles */
 .ProseMirror p {
-        width: fit-content !important;
-    }
+    width: fit-content !important;
+}
+
+.ProseMirror {
+    padding: 0px !important;
+}
 
 .tiptap {
     blockquote {
@@ -230,7 +234,8 @@ defineExpose({
         border-left: 3px solid rgba(#0D0D0D, 0.1);
     }
 
-   
+
+
 
     ul,
     ol {
@@ -281,7 +286,8 @@ defineExpose({
 }
 
 .fixed-width-bubble-menu {
-    width: 300px; /* Set your desired fixed width */
+    width: 300px;
+    /* Set your desired fixed width */
 }
 
 .basic-content {
@@ -301,11 +307,11 @@ defineExpose({
 }
 
 .tiptap p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
 }
 
 #blockTextContent blockquote {
@@ -363,5 +369,4 @@ defineExpose({
 #blockTextContent p:empty::after {
     content: "\00A0";
 }
-
 </style>
