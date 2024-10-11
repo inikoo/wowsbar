@@ -159,7 +159,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                         <div class="w-full"
                                                             @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_1']['data'], subIndex)">
                                                             <span class="text-sm block">
-                                                                <Editor v-model="sub.name" :toogle="['link']"
+                                                                <Editor v-model="sub.name"
                                                                      :key="editKey"
                                                                     @onEditClick="selectAllEditor" />
                                                             </span>

@@ -1,3 +1,5 @@
+import FontFamily from "@tiptap/extension-font-family";
+
 export const footerTheme1 = {
     code: "FooterTheme1",
     name: "Footer 1",
@@ -168,7 +170,10 @@ export const footerTheme1 = {
                 { label: "Linkedin", icon: "fab fa-linkedin-in", link: "" },
             ],
             properties: {
-                textColor: "#FFFFFF",
+                text : {
+                    color : "#FFFFFF",
+                    fontFamily : null
+                },
                 background: {
                     type: "color",
                     color: "#000000",

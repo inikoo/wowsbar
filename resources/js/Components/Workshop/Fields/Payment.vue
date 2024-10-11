@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Multiselect from "@vueform/multiselect"
 import { cloneDeep } from 'lodash'
+import axios from 'axios'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faShieldAlt, faTimes, faTrash } from "@fas"
@@ -18,6 +19,28 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'update:modelValue', value: {}): void
 }>();
+
+const GetPayment = async () => {
+    try {
+        const response = await axios.get(
+            route('customer.accounting.payment-service-providers.index'),
+        )
+        console.log(response)
+        /*  if (response && response.data && response.data.data) {
+             const ini = response.data.data.map((item) => ({
+                 name: item.name,
+                 value: item.name,
+                 image: item.logo
+             }))
+             payments.value = ini
+         } else {
+             console.error('Invalid response format', response)
+         } */
+    } catch (error: any) {
+        console.error('error', error)
+    }
+}
+
 const payments = ref(
     [
         {
@@ -114,6 +137,11 @@ const deleteSocial = (event, index) => {
     emits('update:modelValue', { data: set });
 }
 
+onMounted(() => {
+    GetPayment()
+});
+
+
 </script>
 
 <template>
@@ -123,10 +151,10 @@ const deleteSocial = (event, index) => {
                 <Multiselect :modelValue="item" :options="payments" :object="true" :canClear="false" :caret="false"
                     @update:modelValue="value => updatePayment(index, value)">
                     <template v-slot:singlelabel="{ value }">
-                        <div class="flex items-center  rounded-lg  w-full  p-2 m-2 mr-0">
+                        <div class="flex items-center rounded-lg w-full p-2 m-2 mr-0">
                             <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
                                 :src="value.image" alt="avatar">
-                            <div class="ml-4">
+                            <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
                                 {{ value.name }}
                             </div>
                         </div>
@@ -142,12 +170,10 @@ const deleteSocial = (event, index) => {
                             class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
                             <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
                                 :src="option.image" alt="avatar">
-                            <div class="ml-4">
+                            <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
                                 {{ option.name }}
                             </div>
                         </div>
-
-
                     </template>
                 </Multiselect>
             </div>

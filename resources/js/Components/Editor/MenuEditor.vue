@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ColorPicker from '@/Components/Utils/ColorPicker.vue'
-import Dropdown from 'primevue/dropdown';
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -65,9 +64,9 @@ const onHeadingClick = (value: any) => {
         </div>
     </div>
 
-    <div v-else-if="action.key == 'color'" class="mb-4 flex justify-between items-center bg-white">
+    <div v-else-if="action.key == 'color'" class=" flex justify-between items-center bg-white">
         <div class="flex items-center">
-            <input type="color" @input="editor.chain().focus().setColor($event.target.value).run()"
+            <input type="color" class="w-5 h-5" @input="editor.chain().focus().setColor($event.target.value).run()"
                 :value="editor.getAttributes('textStyle').color">
         </div>
     </div>

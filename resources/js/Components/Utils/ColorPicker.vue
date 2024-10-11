@@ -41,6 +41,7 @@ const props = withDefaults(defineProps<{
 
 const emits = defineEmits<{
     (e: 'changeColor', value: Color): void
+    (e: 'inputBlur'): void
 }>()
 
 // Method: change 0.2 to '33' (hexadecimal)
@@ -78,6 +79,7 @@ const opacityToHexCode = (opacity: number) => {
                         theme="dark"
                         :color="color"
                         :sucker-hide="true"
+                        @inputBlur="emits('inputBlur')"
                         @changeColor="(e) => emits('changeColor', {...e, hex: e.hex + opacityToHexCode(e.rgba.a)})"
                         class="top-0 bottom-0"
                     />

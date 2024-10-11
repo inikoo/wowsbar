@@ -1,7 +1,10 @@
+import FontFamily from "@tiptap/extension-font-family";
+
 export const  getStyles = ( properties : any) => {
     if(properties){
         return {
-            color : properties.textColor,
+            color : properties.text.color,
+            fontFamily : properties.text.fontFamily,
             paddingTop: (properties.padding.top.value || 0) + properties.padding.unit, 
             paddingBottom: (properties.padding.bottom.value || 0) + properties.padding.unit, 
             paddingRight: (properties.padding.right.value || 0) + properties.padding.unit, 
