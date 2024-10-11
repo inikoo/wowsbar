@@ -13,12 +13,10 @@ use App\Http\Resources\CRM\AppointmentResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\Guest;
 use App\Models\Auth\OrganisationUser;
-
 use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\HumanResources\Employee;
 use App\Models\Market\Shop;
-
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;

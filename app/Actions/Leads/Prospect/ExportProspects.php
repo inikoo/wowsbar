@@ -34,7 +34,7 @@ class ExportProspects
     {
         $type = $objectData['type'];
 
-        if($parent = request()->route('shop')) {
+        if ($parent = request()->route('shop')) {
             $parent = Shop::whereSlug($parent)->firstOrFail();
         } else {
             $parent = organisation();

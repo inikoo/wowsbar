@@ -22,7 +22,7 @@ class NaturalLanguage extends DefaultUrlGenerator
             $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
 
             $baseExponent=floor($base);
-            if(is_null($precision)) {
+            if (is_null($precision)) {
                 $precision=match((int) $baseExponent) {
                     0,1=>0,
                     default=> 1

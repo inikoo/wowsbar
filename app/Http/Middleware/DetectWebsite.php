@@ -20,7 +20,7 @@ class DetectWebsite
         //todo cache this somehow
 
 
-        if(app()->environment('staging')) {
+        if (app()->environment('staging')) {
             $domain = str_replace('staging.', '', $domain);
         }
 

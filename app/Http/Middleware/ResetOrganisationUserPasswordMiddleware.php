@@ -16,7 +16,7 @@ class ResetOrganisationUserPasswordMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user(Auth::getDefaultDriver())->reset_password) {
+        if ($request->user(Auth::getDefaultDriver())->reset_password) {
             return redirect()->route('org.reset-password.edit');
         }
         return $next($request);

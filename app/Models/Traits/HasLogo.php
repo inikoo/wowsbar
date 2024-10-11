@@ -20,7 +20,7 @@ trait HasLogo
 
     public function logoImageSources($width = 0, $height = 0)
     {
-        if($this->logo) {
+        if ($this->logo) {
             $logoThumbnail = $this->logo->getImage()->resize($width, $height);
             return GetPictureSources::run($logoThumbnail);
         }

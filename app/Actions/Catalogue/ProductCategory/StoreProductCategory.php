@@ -8,7 +8,6 @@
 namespace App\Actions\Catalogue\ProductCategory;
 
 use App\Actions\Catalogue\ProductCategory\Hydrators\ProductCategoryHydrateUniversalSearch;
-
 use App\Actions\SysAdmin\Organisation\Hydrators\OrganisationHydrateDepartments;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryTypeEnum;
 use App\Models\SysAdmin\Organisation;

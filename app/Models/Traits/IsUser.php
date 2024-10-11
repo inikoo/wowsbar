@@ -27,7 +27,7 @@ trait IsUser
 
     public function avatarImageSources($width = 0, $height = 0)
     {
-        if($this->avatar) {
+        if ($this->avatar) {
             $avatarThumbnail = $this->avatar->getImage()->resize($width, $height);
             return GetPictureSources::run($avatarThumbnail);
         }

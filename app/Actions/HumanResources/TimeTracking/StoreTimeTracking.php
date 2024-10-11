@@ -40,7 +40,7 @@ class StoreTimeTracking
             ->where('workplace_id', $parent->workplace_id)
             ->first();
 
-        if(!$timeTracking) {
+        if (!$timeTracking) {
             /** @var TimeTracking $timeTracking */
             $timeTracking = TimeTracking::create($modelData);
         }

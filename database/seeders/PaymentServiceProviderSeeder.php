@@ -32,7 +32,7 @@ class PaymentServiceProviderSeeder extends Seeder
 
             $paymentServiceProvider=PaymentServiceProvider::where('code', Arr::get($modelData, 'code'))->first();
 
-            if(!$paymentServiceProvider) {
+            if (!$paymentServiceProvider) {
                 $paymentServiceProvider=StorePaymentServiceProvider::run(Arr::except($modelData, ['countries']));
             }
 

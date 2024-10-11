@@ -34,7 +34,7 @@ class StoreDispatchedEmail
             ], $modelData)
         );
 
-        if($dispatchedEmail->outbox_id) {
+        if ($dispatchedEmail->outbox_id) {
             OutboxHydrateEmails::dispatch($dispatchedEmail->outbox)->delay(60);
         }
 

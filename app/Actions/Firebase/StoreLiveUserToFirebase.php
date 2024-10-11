@@ -29,7 +29,7 @@ class StoreLiveUserToFirebase
             'loggedIn'    => $loggedIn,
             'last_active' => now(),
         ];
-        if($route) {
+        if ($route) {
             $data['route']=$route;
         }
 

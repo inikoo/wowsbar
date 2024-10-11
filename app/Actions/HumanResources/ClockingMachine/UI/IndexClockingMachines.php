@@ -56,7 +56,7 @@ class IndexClockingMachines extends InertiaAction
     public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix) {
-            if($prefix) {
+            if ($prefix) {
                 $table
                     ->name($prefix)
                     ->pageName($prefix.'Page');

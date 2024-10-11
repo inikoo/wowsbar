@@ -9,7 +9,6 @@
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\UI\Organisation\Profile\GetProfileAppLoginQRCode;
-
 use App\Enums\HumanResources\ClockingMachine\ClockingMachineTypeEnum;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\Assets\Timezone;
@@ -21,7 +20,6 @@ use App\Models\SysAdmin\Organisation;
 use Laravel\Sanctum\Sanctum;
 
 use function Pest\Laravel\{actingAs};
-
 use function Pest\Laravel\{getJson};
 use function Pest\Laravel\{postJson};
 

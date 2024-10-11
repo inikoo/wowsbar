@@ -39,9 +39,9 @@ class StoreAppointment
     {
         $this->parent = $parent;
 
-        if(class_basename($parent) == 'Shop') {
+        if (class_basename($parent) == 'Shop') {
             data_set($modelData, 'customer_id', $modelData['customer_id']);
-        } elseif(class_basename($parent) == 'Customer') {
+        } elseif (class_basename($parent) == 'Customer') {
             data_set($modelData, 'shop_id', $parent->shop_id);
             data_set($modelData, 'name', $parent->name);
         }

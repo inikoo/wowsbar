@@ -51,7 +51,7 @@ class UpdateBannerImage
     public function asCommand(Command $command): int
     {
 
-        if($banner=$this->getBanner($command)) {
+        if ($banner=$this->getBanner($command)) {
             $banner = $this->handle($banner);
 
             $command->info("Done! banner $banner->name image updated  🥳");

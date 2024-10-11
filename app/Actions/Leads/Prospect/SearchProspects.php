@@ -21,7 +21,7 @@ class SearchProspects extends InertiaAction
         $selectOptions = [];
 
         $needle=$request->get('q');
-        if($needle === null) {
+        if ($needle === null) {
             return $selectOptions;
         }
 

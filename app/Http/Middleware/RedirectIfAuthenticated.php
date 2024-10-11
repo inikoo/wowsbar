@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if($guard=='customer') {
+                if ($guard=='customer') {
                     $redirectTo='/app/dashboard';
                 } else {
                     $redirectTo='/dashboard';

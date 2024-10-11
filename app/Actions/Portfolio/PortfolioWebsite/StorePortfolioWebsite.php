@@ -126,7 +126,7 @@ class StorePortfolioWebsite
 
         $portfolioWebpage= $this->handle($customer, $request->validated());
 
-        if($welcomeStep==1) {
+        if ($welcomeStep==1) {
             $customer->update(
                 [
                     'data->welcome_step'=> 2

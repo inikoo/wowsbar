@@ -87,6 +87,14 @@ return [
             //'teamDriveId' => env('GOOGLE_DRIVE_TEAM_DRIVE_ID'),
             //'sharedFolderId' => env('GOOGLE_DRIVE_SHARED_FOLDER_ID'),
         ],
+        'sftp' => [
+            'driver'   => 'sftp',
+            'host'     => env('SFTP_HOST'),
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+            'root'     => storage_path('app/media'),
+            'timeout'  => 30,
+        ],
         'excel-uploads' => match (env('APP_ENV')) {
             'production' => [
                 'driver'   => 's3',

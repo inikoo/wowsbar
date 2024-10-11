@@ -207,7 +207,7 @@ class ShowShopProduct extends InertiaAction
 
     private function getNavigation(?ShopProduct $shopProduct, string $routeName): ?array
     {
-        if(!$shopProduct) {
+        if (!$shopProduct) {
             return null;
         }
         return match ($routeName) {

@@ -21,6 +21,9 @@ Route::middleware([
             Route::prefix("dashboard")
                 ->name("dashboard.")
                 ->group(__DIR__."/dashboard.php");
+            Route::prefix("accounting")
+                ->name("accounting.")
+                ->group(__DIR__."/accounting.php");
             Route::prefix("portfolio")
                 ->name("portfolio.")
                 ->group(__DIR__."/portfolio.php");

@@ -23,7 +23,7 @@ class DivisionSeeder extends Seeder
 
             $division=Division::where('slug', $slug)->first();
 
-            if(!$division) {
+            if (!$division) {
 
                 $modelData = [
                     'slug' => $slug,

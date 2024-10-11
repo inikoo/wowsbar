@@ -29,7 +29,7 @@ class DeleteBanner
 
         CustomerHydrateBanners::run($customer);
 
-        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+        foreach ($banner->portfolioWebsites as $portfolioWebsite) {
             PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
 

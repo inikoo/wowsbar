@@ -41,7 +41,7 @@ class ResumeMailshot
             ->update(['state' => MailshotSendChannelStateEnum::READY]);
 
 
-        foreach(MailshotSendChannel::where('mailshot_id', $mailshot->id)
+        foreach (MailshotSendChannel::where('mailshot_id', $mailshot->id)
             ->where('state', MailshotSendChannelStateEnum::READY)->get() as $mailshotSendChannel) {
             SendMailshotChannel::dispatch($mailshotSendChannel);
         }

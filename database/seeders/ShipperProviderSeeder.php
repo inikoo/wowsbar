@@ -45,7 +45,7 @@ class ShipperProviderSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            if(!ShipperProvider::where('slug', $item['slug'])->exists()) {
+            if (!ShipperProvider::where('slug', $item['slug'])->exists()) {
                 $provider = ShipperProvider::create($item);
 
                 Shipper::updateOrCreate([

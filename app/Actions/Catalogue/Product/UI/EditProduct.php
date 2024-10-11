@@ -8,7 +8,6 @@
 namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\InertiaAction;
-
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use Inertia\Inertia;
@@ -154,7 +153,7 @@ class EditProduct extends InertiaAction
 
     private function getNavigation(?Product $product, string $routeName): ?array
     {
-        if(!$product) {
+        if (!$product) {
             return null;
         }
         return match ($routeName) {

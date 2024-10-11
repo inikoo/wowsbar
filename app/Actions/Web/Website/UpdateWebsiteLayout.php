@@ -23,7 +23,7 @@ class UpdateWebsiteLayout
     public function handle(Website $website, array $modelData): Website
     {
 
-        if(Arr::exists($modelData, 'logo')) {
+        if (Arr::exists($modelData, 'logo')) {
             /** @var UploadedFile $logo */
             $logo=Arr::get($modelData, 'logo');
             Arr::forget($modelData, 'logo');

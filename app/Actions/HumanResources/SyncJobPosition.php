@@ -20,10 +20,10 @@ class SyncJobPosition
     public function handle(Employee|Guest $model, array $jobPositions): void
     {
         $model->jobPositions()->sync($jobPositions);
-        if($organisationUser=$model->organisationUser) {
+        if ($organisationUser=$model->organisationUser) {
 
             $roles=[];
-            foreach($model->jobPositions as $jobPosition) {
+            foreach ($model->jobPositions as $jobPosition) {
                 $roles=array_merge($roles, $jobPosition->roles()->pluck('id')->all());
             }
 
@@ -32,9 +32,9 @@ class SyncJobPosition
         }
 
 
-        if(class_basename($model)=='Employee') {
+        if (class_basename($model)=='Employee') {
             EmployeeHydrateJobPositionsShare::dispatch($model);
-            foreach($jobPositions as $jobPositionId) {
+            foreach ($jobPositions as $jobPositionId) {
                 HydrateJobPosition::dispatch($jobPositionId);
             }
         }

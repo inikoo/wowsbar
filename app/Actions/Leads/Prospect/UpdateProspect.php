@@ -56,7 +56,7 @@ class UpdateProspect
 
             if ($prospect->wasChanged(['email'])) {
                 $isValidEmail=true;
-                if(Arr::get($modelData, 'email', '')!='' &&  !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
+                if (Arr::get($modelData, 'email', '')!='' &&  !filter_var(Arr::get($modelData, 'email'), FILTER_VALIDATE_EMAIL)) {
                     $isValidEmail=false;
                 }
                 $prospect->update([

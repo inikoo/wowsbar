@@ -145,7 +145,7 @@ class ShowInvoice extends InertiaAction
 
     private function getNavigation(?Invoice $invoice, string $routeName): ?array
     {
-        if(!$invoice) {
+        if (!$invoice) {
             return null;
         }
         return match ($routeName) {

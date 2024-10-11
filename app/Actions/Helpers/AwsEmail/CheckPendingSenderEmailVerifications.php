@@ -28,7 +28,7 @@ class CheckPendingSenderEmailVerifications
 
             $state = GetEmailSesVerificationState::run($email);
 
-            if($state==SenderEmailStateEnum::PENDING || $state==SenderEmailStateEnum::ERROR) {
+            if ($state==SenderEmailStateEnum::PENDING || $state==SenderEmailStateEnum::ERROR) {
                 return;
             }
 

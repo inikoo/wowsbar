@@ -30,7 +30,7 @@ class UploadFileR2
     public function asCommand(Command $command): int
     {
         $res=$this->handle($command->argument('name'));
-        if($res) {
+        if ($res) {
             $command->line('OK');
             return 0;
         }

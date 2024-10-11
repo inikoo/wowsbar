@@ -16,7 +16,6 @@ use App\Enums\UI\Organisation\OrganisationUserTabsEnum;
 use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\OrganisationUserResource;
 use App\Http\Resources\History\HistoryResource;
-
 use App\Models\Auth\OrganisationUser;
 use Inertia\Inertia;
 use Inertia\Response;

@@ -12,7 +12,6 @@ use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
-
 use App\Models\Leads\Prospect;
 use Carbon\Carbon;
 use Exception;
@@ -112,7 +111,7 @@ trait WithAuroraParsers
         $addressData['country_id']          = $this->parseCountryID($country, $prefix);
 
 
-        if(!array_filter($addressData)) {
+        if (!array_filter($addressData)) {
             $addressData=null;
         }
 

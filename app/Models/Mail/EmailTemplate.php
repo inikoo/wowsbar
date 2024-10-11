@@ -90,7 +90,7 @@ class EmailTemplate extends Model implements HasMedia
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                if(mb_strlen($this->name)>=8) {
+                if (mb_strlen($this->name)>=8) {
                     return Abbreviate::run($this->name);
                 } else {
                     return  $this->name;

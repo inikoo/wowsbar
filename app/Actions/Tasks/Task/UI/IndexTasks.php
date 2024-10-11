@@ -58,7 +58,7 @@ class IndexTasks extends InertiaAction
         $queryBuilder = QueryBuilder::for(Task::class);
         $queryBuilder->with(['task', 'activity', 'author']);
 
-        if($parent) {
+        if ($parent) {
             $queryBuilder->where([['author_id', $parent->id], ['author_type', $parent::class]]);
         }
 

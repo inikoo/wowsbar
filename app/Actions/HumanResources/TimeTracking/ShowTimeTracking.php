@@ -133,7 +133,7 @@ class ShowTimeTracking extends InertiaAction
 
     private function getNavigation(?Employee $employee, string $routeName): ?array
     {
-        if(!$employee) {
+        if (!$employee) {
             return null;
         }
         return match ($routeName) {

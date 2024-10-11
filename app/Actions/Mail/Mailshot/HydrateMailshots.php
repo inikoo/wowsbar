@@ -33,7 +33,7 @@ class HydrateMailshots extends HydrateModel
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::SPAM);
         MailshotHydrateCumulativeDispatchedEmailsState::run($mailshot, DispatchedEmailStateEnum::UNSUBSCRIBED);
 
-        if(!$mailshot->start_sending_at) {
+        if (!$mailshot->start_sending_at) {
             MailshotHydrateEstimatedEmails::run($mailshot);
         }
 

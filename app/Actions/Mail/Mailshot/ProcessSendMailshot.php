@@ -40,10 +40,10 @@ class ProcessSendMailshot
         $queryBuilder = GetMailshotRecipientsQueryBuilder::run($mailshot);
 
         $mailshotSendChannel = StoreMailshotSendChannel::run($mailshot);
-        foreach($queryBuilder->get() as $recipient) {
+        foreach ($queryBuilder->get() as $recipient) {
 
 
-            if($counter>=250) {
+            if ($counter>=250) {
 
 
                 UpdateMailshotSendChannel::run(

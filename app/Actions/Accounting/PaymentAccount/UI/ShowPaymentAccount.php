@@ -187,7 +187,7 @@ class ShowPaymentAccount extends InertiaAction
         return match ($routeName) {
             'org.accounting.shops.show.payment-accounts.show' =>
             array_merge(
-                (new  AccountingDashboard())->getBreadcrumbs('org.accounting.shops.show.dashboard', $routeParameters),
+                (new AccountingDashboard())->getBreadcrumbs('org.accounting.shops.show.dashboard', $routeParameters),
                 $headCrumb(
                     $routeParameters['paymentAccount'],
                     [
@@ -210,7 +210,7 @@ class ShowPaymentAccount extends InertiaAction
             ),
             'org.accounting.payment-accounts.show' =>
             array_merge(
-                (new  AccountingDashboard())->getBreadcrumbs('org.accounting.dashboard.show', $routeParameters),
+                (new AccountingDashboard())->getBreadcrumbs('org.accounting.dashboard.show', $routeParameters),
                 $headCrumb(
                     $routeParameters['paymentAccount'],
                     [

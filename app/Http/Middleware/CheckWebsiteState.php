@@ -32,20 +32,20 @@ class CheckWebsiteState
 
 
             switch ($website->state) {
-                case                     WebsiteStateEnum::LIVE:
+                case WebsiteStateEnum::LIVE:
                     $url = 'disclosure/maintenance';
                     if ($request->route()->getName() == 'public.disclosure.maintenance') {
                         return $next($request);
                     }
                     break;
-                case                     WebsiteStateEnum::IN_PROCESS:
+                case WebsiteStateEnum::IN_PROCESS:
                     $url = 'disclosure/under-construction';
                     if ($request->route()->getName() == 'public.disclosure.under-construction') {
                         return $next($request);
                     }
 
                     break;
-                case                     WebsiteStateEnum::CLOSED:
+                case WebsiteStateEnum::CLOSED:
                     if ($request->route()->getName() == 'public.disclosure.closed') {
                         return $next($request);
                     }

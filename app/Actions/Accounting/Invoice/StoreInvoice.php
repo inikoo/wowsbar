@@ -30,7 +30,7 @@ class StoreInvoice
     ): Invoice {
 
 
-        if(class_basename($parent)=='Customer') {
+        if (class_basename($parent)=='Customer') {
             $modelData['customer_id'] = $parent->id;
         } else {
             $modelData['customer_id'] = $parent->customer_id;

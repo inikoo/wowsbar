@@ -50,7 +50,7 @@ trait HasProspectStats
 
     public function prospectsPrepareForStatsVersion2(Blueprint $table): Blueprint
     {
-        foreach([
+        foreach ([
             'number_prospects_state_no_contacted',
             'number_prospects_state_contacted',
             'number_prospects_state_not_interested',

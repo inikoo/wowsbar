@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c33c9b17d3207b2eabe1c485743349df",
+    "content-hash": "c7dd007c4a56c8b5aad0d7ab2339c3da",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5242,6 +5242,55 @@
                 "source": "https://github.com/thephpleague/flysystem-local/tree/3.29.0"
             },
             "time": "2024-08-09T21:24:39+00:00"
+        },
+        {
+            "name": "league/flysystem-sftp-v3",
+            "version": "3.29.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-sftp-v3.git",
+                "reference": "ce9b209e2fbe33122c755ffc18eb4d5bd256f252"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp-v3/zipball/ce9b209e2fbe33122c755ffc18eb4d5bd256f252",
+                "reference": "ce9b209e2fbe33122c755ffc18eb4d5bd256f252",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^3.0.14",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2",
+                "phpseclib/phpseclib": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\PhpseclibV3\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "SFTP filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "file",
+                "files",
+                "filesystem",
+                "sftp"
+            ],
+            "support": {
+                "source": "https://github.com/thephpleague/flysystem-sftp-v3/tree/3.29.0"
+            },
+            "time": "2024-08-14T19:35:54+00:00"
         },
         {
             "name": "league/glide",
@@ -18873,6 +18922,6 @@
         "ext-pdo": "*",
         "ext-zip": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

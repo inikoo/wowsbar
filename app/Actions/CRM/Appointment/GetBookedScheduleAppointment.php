@@ -56,9 +56,9 @@ class GetBookedScheduleAppointment
                 ->whereNotIn('organisation_user_id', $organisationUser)
                 ->pluck('schedule_at');
 
-            if($employees->count() != 0) {
+            if ($employees->count() != 0) {
                 $bookedSchedules[$date] = $availableTimes;
-            } elseif(count($appointment) > 0) {
+            } elseif (count($appointment) > 0) {
                 $bookedSchedules[$date] = $appointment->map(function ($item) {
                     return Carbon::parse($item)->format('H:i');
                 })->toArray();

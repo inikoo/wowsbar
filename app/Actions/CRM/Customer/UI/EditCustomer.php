@@ -70,7 +70,7 @@ class EditCustomer extends InertiaAction
             ]
         ];
 
-        if($this->canDelete) {
+        if ($this->canDelete) {
             $sections['delete'] = [
                 'label'  => __('Delete'),
                 'icon'   => 'fal fa-trash-alt',

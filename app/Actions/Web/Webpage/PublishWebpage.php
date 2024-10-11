@@ -42,7 +42,7 @@ class PublishWebpage
         $layout = $webpage->unpublishedSnapshot->layout;
 
 
-        if($layout!='' and  Arr::get($layout, 'html')) {
+        if ($layout!='' and  Arr::get($layout, 'html')) {
             $layout['html'] = ExtractWebpage::run(Arr::get($layout, 'html'));
         }
 

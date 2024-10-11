@@ -73,7 +73,7 @@ class IndexShopDepartments extends InertiaAction
             );
         }
 
-        if(class_basename($parent)=='Shop') {
+        if (class_basename($parent)=='Shop') {
             $queryBuilder->where('shop_id', $parent->id);
         }
 

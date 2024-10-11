@@ -18,11 +18,11 @@ class LogOrganisationUserRequestMiddleware
     public function handle(Request $request, Closure $next)
     {
 
-        if(!str_starts_with($request->route()->getName(), 'org.')) {
+        if (!str_starts_with($request->route()->getName(), 'org.')) {
             return $next($request);
         }
 
-        if($request->route()->getName()=='org.logout') {
+        if ($request->route()->getName()=='org.logout') {
             return $next($request);
         }
 

@@ -288,7 +288,7 @@ class StoreShipmentToDhlProvider
             ],
         ];
 
-        if(Arr::get($modelData['data'], 'valueAddedServices')) {
+        if (Arr::get($modelData['data'], 'valueAddedServices')) {
             $shippingData["valueAddedServices"] = [
                 ["serviceCode" => "II", "value" => 10, "currency" => "USD"],
             ];

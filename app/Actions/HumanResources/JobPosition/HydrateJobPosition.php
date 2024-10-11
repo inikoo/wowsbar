@@ -23,7 +23,7 @@ class HydrateJobPosition
     {
 
         $jobPosition=JobPosition::find($jobPositionID);
-        if($jobPosition) {
+        if ($jobPosition) {
             $jobPosition->update(
                 [
                     'number_employees' => DB::table('job_positionables')->where('job_position_id', $jobPosition->id)->count(),
@@ -62,7 +62,7 @@ class HydrateJobPosition
     public function asCommand(Command $command): int
     {
 
-        if(!$command->argument('job-positions')) {
+        if (!$command->argument('job-positions')) {
             $jobPositions=JobPosition::all();
         } else {
             $jobPositions =  JobPosition::query()

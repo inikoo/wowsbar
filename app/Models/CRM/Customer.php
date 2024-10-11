@@ -194,7 +194,7 @@ class Customer extends Model implements HasMedia, Auditable
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                if(mb_strlen($this->name)>=6) {
+                if (mb_strlen($this->name)>=6) {
                     return Abbreviate::run($this->name);
                 } else {
                     return  $this->name;

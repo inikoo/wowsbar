@@ -142,7 +142,7 @@ class Handler extends ExceptionHandler
 
         $page='Utils/Error';
 
-        if($app=='org' or $app=='customer') {
+        if ($app=='org' or $app=='customer') {
             $page= Auth::check() ? 'Utils/ErrorInApp' : 'Utils/Error';
         }
 

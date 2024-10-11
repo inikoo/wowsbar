@@ -28,7 +28,7 @@ class PairCurrencyViaOpenExchangeApi
         $rate = $result = Arr::get($result['rates'], $targetCurrency);
 
 
-        if($amount) {
+        if ($amount) {
             $result = $rate * $amount;
         }
 

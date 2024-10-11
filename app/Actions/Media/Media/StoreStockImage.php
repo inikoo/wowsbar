@@ -35,7 +35,7 @@ class StoreStockImage
         if (!$organisationMedia) {
             $filename=dechex(crc32($checksum)).'.';
 
-            if(empty($extension)) {
+            if (empty($extension)) {
                 $extension=pathinfo($imagePath, PATHINFO_EXTENSION);
             }
 

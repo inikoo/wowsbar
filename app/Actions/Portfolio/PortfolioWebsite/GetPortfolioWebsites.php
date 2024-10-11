@@ -22,7 +22,7 @@ class GetPortfolioWebsites
     public function handle(?Customer $customer): Collection
     {
         $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
-        if($customer) {
+        if ($customer) {
             $queryBuilder->where('customer_id', $customer->id);
         }
         return $queryBuilder->get();
@@ -37,7 +37,7 @@ class GetPortfolioWebsites
     {
 
         $customer=null;
-        if($command->option('customer')) {
+        if ($command->option('customer')) {
 
             try {
                 $customer=Customer::where('slug', $command->option('customer'))->firstOrFail();

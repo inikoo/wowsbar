@@ -22,7 +22,7 @@ class StoreMailshotSendChannel
         data_set($modelData, 'number_emails', 0, overwrite: false);
 
         $mailshot->refresh();
-        if($mailshot->state==MailshotStateEnum::STOPPED) {
+        if ($mailshot->state==MailshotStateEnum::STOPPED) {
             data_set($modelData, 'state', MailshotSendChannelStateEnum::STOPPED->value);
         }
 

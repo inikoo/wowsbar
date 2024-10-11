@@ -20,7 +20,7 @@ class MailroomSeeder extends Seeder
         foreach (MailroomCodeEnum::cases() as $case) {
 
             $mailroom=Mailroom::where('code', $case->value)->first();
-            if(!$mailroom) {
+            if (!$mailroom) {
                 StoreMailroom::run(
                     [
                         'code' => $case->value

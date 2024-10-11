@@ -24,7 +24,7 @@ class GetProspectShowcase
         $feeds     = [];
 
         foreach ($prospect->audits()->orderby('id')->get() as $value) {
-            if($value->event == 'created') {
+            if ($value->event == 'created') {
                 $feeds[$value->created_at->toISOString()] = [
                     'label'       => 'Prospect ' . $value->event,
                     'description' => null,

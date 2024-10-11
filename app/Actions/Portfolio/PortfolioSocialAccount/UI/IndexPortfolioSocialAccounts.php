@@ -57,7 +57,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(PortfolioSocialAccount::class);
 
-        if($customer) {
+        if ($customer) {
             $queryBuilder->where('customer_id', $customer->id);
         }
 

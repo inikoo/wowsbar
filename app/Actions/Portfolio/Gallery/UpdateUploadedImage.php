@@ -23,7 +23,7 @@ class UpdateUploadedImage
     {
         $imageFiles = $modelData['images'] ?? [];
 
-        if(count($imageFiles) > 0) {
+        if (count($imageFiles) > 0) {
             foreach ($imageFiles as $imageFile) {
                 AttachImageToCustomer::run(
                     customer: customer(),

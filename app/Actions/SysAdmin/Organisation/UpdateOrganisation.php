@@ -23,7 +23,7 @@ class UpdateOrganisation
 
     public function handle(Organisation $organisation, array $modelData): Organisation
     {
-        if(Arr::exists($modelData, 'logo')) {
+        if (Arr::exists($modelData, 'logo')) {
             /** @var UploadedFile $logo */
             $logo=Arr::get($modelData, 'logo');
             Arr::forget($modelData, 'logo');

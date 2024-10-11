@@ -34,7 +34,7 @@ enum WebpageTabsEnum: string
         return collect(self::cases())
             ->filter(
                 function ($case) use ($webpage) {
-                    if($case==WebpageTabsEnum::WEBPAGES &&
+                    if ($case==WebpageTabsEnum::WEBPAGES &&
                         (
                             $webpage->type   ==WebpageTypeEnum::AUTH       ||
                             $webpage->type   ==WebpageTypeEnum::ENGAGEMENT ||

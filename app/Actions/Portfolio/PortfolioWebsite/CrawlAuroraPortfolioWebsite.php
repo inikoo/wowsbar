@@ -51,7 +51,7 @@ class CrawlAuroraPortfolioWebsite
 
 
                 /** @var PortfolioWebpage $portfolioWebpage */
-                if($portfolioWebpage= $portfolioWebsite->portfolioWebpages()->where('source_slug', $auroraData->source_id)->first()) {
+                if ($portfolioWebpage= $portfolioWebsite->portfolioWebpages()->where('source_slug', $auroraData->source_id)->first()) {
                     UpdatePortfolioWebpage::make()->action($portfolioWebpage, $webpageData);
                 } else {
                     data_set($webpageData, 'source_slug', $auroraData->source_id);

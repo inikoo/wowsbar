@@ -20,7 +20,7 @@ class AuditCustomerResolver implements Resolver
             return config('global.customer_id');
         }
 
-        if($auditable->customer_id) {
+        if ($auditable->customer_id) {
             return $auditable->customer_id;
         }
 

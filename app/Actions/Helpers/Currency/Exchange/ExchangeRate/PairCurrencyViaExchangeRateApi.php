@@ -20,7 +20,7 @@ class PairCurrencyViaExchangeRateApi
         $apiKeys = explode(',', env('CURRENCY_EXCHANGE_API_KEY'));
         $baseUrl = env('CURRENCY_EXCHANGE_API_URL') . '/' . Arr::shuffle($apiKeys)[0] . '/pair/' . $baseCurrency . '/' . $targetCurrency;
 
-        if($amount) {
+        if ($amount) {
             $baseUrl .= '/' . $amount;
         }
 

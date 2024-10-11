@@ -29,7 +29,7 @@ class SendMailshotScheduled
 
 
         foreach ($mailshots as $mailshot) {
-            if($mailshot->ready_at->format('Y-m-d H:i') >= now()->format('Y-m-d H:i')) {
+            if ($mailshot->ready_at->format('Y-m-d H:i') >= now()->format('Y-m-d H:i')) {
                 ProcessSendMailshot::dispatch($mailshot);
             }
         }

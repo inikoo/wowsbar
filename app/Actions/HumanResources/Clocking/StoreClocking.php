@@ -43,7 +43,7 @@ class StoreClocking
 
     public function authorize(ActionRequest $request): bool
     {
-        if($this->asAction) {
+        if ($this->asAction) {
             return true;
         }
         return $request->user()->hasPermissionTo("hr.edit");
@@ -72,7 +72,7 @@ class StoreClocking
 
     public function htmlResponse(Clocking $clocking): RedirectResponse
     {
-        if(!$clocking->clocking_machine_id) {
+        if (!$clocking->clocking_machine_id) {
             return Redirect::route('org.hr.workplaces.show.clockings.show', [
                 $clocking->workplace->slug,
                 $clocking->slug

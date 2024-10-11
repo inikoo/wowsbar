@@ -63,9 +63,9 @@ class IndexCustomerBanners extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(Banner::class);
 
-        if(class_basename($parent)=='CustomerWebsite') {
+        if (class_basename($parent)=='CustomerWebsite') {
             $queryBuilder->where('portfolio_website_id', $parent->id);
-        } elseif(class_basename($parent)=='Customer') {
+        } elseif (class_basename($parent)=='Customer') {
             $queryBuilder->where('customer_id', $parent->id);
         }
 

@@ -28,7 +28,7 @@ class FetchProspects extends FetchAction
 
         if ($prospectData = $source->fetchProspect($sourceId)) {
 
-            if($this->pretend) {
+            if ($this->pretend) {
                 print_r($prospectData);
                 return null;
             }

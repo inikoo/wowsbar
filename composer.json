@@ -33,6 +33,7 @@
         "laravel/tinker": "^2.8",
         "lcherone/php-petname": "^1.0",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "league/flysystem-sftp-v3": "^3.29",
         "lorisleiva/laravel-actions": "^2.6",
         "maatwebsite/excel": "^3.1",
         "masbug/flysystem-google-drive-ext": "^2.2",

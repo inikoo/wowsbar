@@ -96,7 +96,7 @@ class FetchAction
     {
         $this->hydrateDelay = 120;
 
-        if($command->option('pretend')) {
+        if ($command->option('pretend')) {
             $this->pretend = true;
         }
 
@@ -123,12 +123,12 @@ class FetchAction
             $this->reset();
         }
 
-        if($this->pretend) {
+        if ($this->pretend) {
             $command->info('Pretend mode');
         } else {
             $command->info('');
         }
-        if(!$this->pretend) {
+        if (!$this->pretend) {
             $this->fetch = StoreFetch::run(
                 [
                     'type' => $this->getFetchType($command),
@@ -144,14 +144,14 @@ class FetchAction
 
 
         if ($command->option('source_id')) {
-            if(!$this->pretend) {
+            if (!$this->pretend) {
                 UpdateFetch::run($this->fetch, ['number_items' => 1]);
             }
 
             $this->handle($source, $command->option('source_id'));
         } else {
             $numberItems = $this->count() ?? 0;
-            if(!$this->pretend) {
+            if (!$this->pretend) {
                 UpdateFetch::run($this->fetch, ['number_items' => $numberItems]);
             }
             if (!$command->option('quiet') and !$command->getOutput()->isDebug()) {
@@ -175,7 +175,7 @@ class FetchAction
         if ($command->getName() == 'fetch:prospects') {
             HydrateModelTypeQueries::run('Prospect');
         }
-        if(!$this->pretend) {
+        if (!$this->pretend) {
             UpdateFetch::run($this->fetch, ['finished_at' => now()]);
         }
         return 0;

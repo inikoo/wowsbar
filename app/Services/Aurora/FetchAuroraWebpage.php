@@ -24,7 +24,7 @@ class FetchAuroraWebpage extends FetchAurora
 
 
         $title=$this->auroraModelData->{'Webpage Name'};
-        if(!$title) {
+        if (!$title) {
             $title=$this->auroraModelData->{'Webpage Code'};
         }
 

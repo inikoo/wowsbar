@@ -28,7 +28,7 @@ class UpdateBanner
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
-        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+        foreach ($banner->portfolioWebsites as $portfolioWebsite) {
             PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
 
