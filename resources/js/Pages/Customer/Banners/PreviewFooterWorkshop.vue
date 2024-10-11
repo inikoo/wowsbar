@@ -21,7 +21,7 @@ const props = defineProps<{
 }>()
 
 const socketLayout = SocketFooter();
-const usedTemplates = reactive({ data : props.footer.data ?  props.footer.data : footerTheme1.data })
+const usedTemplates = reactive({ data : props.footer.data ?  {...props.footer.data} : footerTheme1 })
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const ToolWorkshop = ref({
     previewMode: false,
@@ -39,8 +39,7 @@ const autoSave = async (data: Object) => {
     }
 }
 
-watch(usedTemplates.data, (newVal) => {
-    console.log(newVal)
+watch(()=> usedTemplates.data, (newVal) => {
     if (newVal) debouncedSendUpdate(newVal)
 }, { deep: true })
 
@@ -63,13 +62,14 @@ onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
 });
 
-
-console.log('preview',usedTemplates)
 </script>
 
 <template>
     <div class="p-4">
-        <Footer1 v-model="usedTemplates.data.data.footer" :preview-mode="ToolWorkshop.previewMode" />
+        <Footer1 
+            v-model="usedTemplates.data.data.footer" 
+            :preview-mode="ToolWorkshop.previewMode"
+        />
     </div>
 </template>
 
