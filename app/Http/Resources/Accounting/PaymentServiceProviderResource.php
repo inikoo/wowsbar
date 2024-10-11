@@ -13,12 +13,14 @@ class PaymentServiceProviderResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\SysAdmin\Accounting\PaymentServiceProvider $paymentServiceProvider */
+        /** @var \App\Models\Accounting\PaymentServiceProvider $paymentServiceProvider */
         $paymentServiceProvider=$this;
+
         return [
 
             'code'            => $paymentServiceProvider->code,
             'name'            => $paymentServiceProvider->name,
+            'logo'            => $paymentServiceProvider->getFirstMediaUrl('logo'),
             'created_at'      => $paymentServiceProvider->created_at,
             'updated_at'      => $paymentServiceProvider->updated_at,
         ];
