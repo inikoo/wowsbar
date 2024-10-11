@@ -79,10 +79,10 @@ class ShowAnnouncement extends InertiaAction
                     ],
                 ],
                 'store_route' => [
-                  'name'        => 'customer.models.banner.announcement.update',
-                   'parameters' => [
-                       'announcement' => $announcement->id
-                   ]
+                    'name'        => 'customer.models.banner.announcement.update',
+                    'parameters' => [
+                        'announcement' => $announcement->id
+                    ]
                 ],
                 'firstBanner'      => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcementData' => $announcement->toArray()

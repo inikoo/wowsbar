@@ -216,8 +216,7 @@ const onSave = () => {
     })
 }
 
-
-provide('announcementData', props.announcementData)
+    provide('announcementData', props.announcementData)
 
 </script>
 
@@ -274,9 +273,8 @@ provide('announcementData', props.announcementData)
                 </div>
 
                 <div v-else class="h-full w-full bg-white">
-                    <Promo1 :announcementData="announcementData" isEditable></Promo1>
+                    <Promo1 :announcementData="announcementData" isEditable />
 
-                    <pre>{{ announcementData }}</pre>
                     <!-- <iframe
                         :src="iframeSrc"
                         :title="props.title"
@@ -287,5 +285,7 @@ provide('announcementData', props.announcementData)
                 </div>
             </div>
         </div>
+
+        <pre>{{ props.announcementData }}</pre>
     </div>
 </template>
