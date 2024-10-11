@@ -5,7 +5,7 @@ import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import Footer1 from '@/Components/Workshop/Footer/Template/Footer1.vue'
 import PreviewWorkshop from "@/Layouts/BlankLayout.vue";
 import { SocketFooter } from "@/Composables/SocketWebBlock"
-import { debounce } from 'lodash'
+import { debounce, isEqual } from 'lodash'
 import axios from "axios";
 
 
@@ -39,9 +39,15 @@ const autoSave = async (data: Object) => {
     }
 }
 
-watch(()=> usedTemplates.data, (newVal) => {
-    if (newVal) debouncedSendUpdate(newVal)
-}, { deep: true })
+watch(
+  () => cloneDeep(usedTemplates.data), 
+  (newVal, oldVal) => {
+    if (!isEqual(newVal, oldVal)) {
+      debouncedSendUpdate(newVal);
+    }
+  },
+  { deep: true }
+);
 
 
 onMounted(() => {
