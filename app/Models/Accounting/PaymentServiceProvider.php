@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * App\Models\Accounting\PaymentServiceProvider
@@ -58,10 +60,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider withoutTrashed()
  * @mixin \Eloquent
  */
-class PaymentServiceProvider extends Model
+class PaymentServiceProvider extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
+    use InteractsWithMedia;
 
     protected $casts = [
         'data' => 'array',
