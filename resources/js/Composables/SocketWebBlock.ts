@@ -23,7 +23,6 @@ export const SocketFooter = () => {
 			send: (send = "") => {
 				const channelName = `footer.preview`
 				const chanel = window.Echo.join(channelName).whisper("otherIsNavigating", { data: send })
-				console.log("funcition",chanel)
 			},
 		},
 	}
