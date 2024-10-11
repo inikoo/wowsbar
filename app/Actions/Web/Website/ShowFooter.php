@@ -67,10 +67,7 @@ class ShowFooter
                             'label' => __('Publish'),
                             'route' => [
                                 'method'     => 'post',
-                                'name'       => 'grp.models.website.publish.footer',
-                                'parameters' => [
-                                    'website' => $website->id
-                                ],
+                                'name'       => 'customer.models.banner.workshop.footers.publish.footer',
                             ]
                         ], */
                     ],

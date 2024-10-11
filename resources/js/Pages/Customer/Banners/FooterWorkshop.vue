@@ -9,6 +9,8 @@ import ScreenView from "@/Components/ScreenView.vue"
 import { SocketFooter } from "@/Composables/SocketWebBlock"
 import { debounce } from 'lodash'
 import axios from 'axios'
+import { notify } from "@kyvg/vue3-notification"
+import Publish from '@/Components/Utils/PublishWorkshop.vue'
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -27,16 +29,36 @@ const props = defineProps<{
     autosaveRoute: routeType
 }>()
 
-console.log(props)
 const tabsBar = ref(0)
+const isLoading =ref(false)
 const usedTemplates = ref( props?.data?.data ? props.data.data :  footerTheme1)
-console.log('inii',usedTemplates)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
 const socketLayout = SocketFooter();
+const comment = ref('')
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
+
+const onPublish = async (popover: Function) => {
+    try {
+        isLoading.value = true
+        const response = await axios.post(route('customer.models.banner.workshop.footers.publish.footer'), {
+            comment: comment.value,
+            layout: usedTemplates.value
+        })
+        popover.close()
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred'
+        notify({
+            title: 'Something went wrong.',
+            text: errorMessage,
+            type: 'error',
+        })
+    } finally {
+        isLoading.value = false
+    }
+};
 
 
 const setIframeView = (view: String) => {
@@ -79,7 +101,12 @@ onMounted(()=>{
 
 <template>
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
+    <PageHeading :data="pageHead">
+        <template #other>
+            <Publish :isLoading="isLoading" :is_dirty="true" v-model="comment"
+                @onPublish="(popover) => onPublish(popover)" />
+        </template>
+    </PageHeading>
 
     <div class="h-[85vh] grid grid-flow-row-dense grid-cols-6">
         <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
