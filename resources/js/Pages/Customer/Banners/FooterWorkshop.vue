@@ -93,10 +93,10 @@ watch(usedTemplates, (newVal) => {
 }, { deep: true })
 
 onMounted(()=>{
-    if (socketLayout) socketLayout.actions.send({ 
-        previewMode: previewMode
-    })
+    if (socketLayout) socketLayout.actions.send({previewMode: previewMode})
 })
+
+console.log(props)
 </script>
 
 <template>

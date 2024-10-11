@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch, onUnmounted, reactive } from "vue";
 import { routeType } from "@/types/route"
 import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import Footer1 from '@/Components/Workshop/Footer/Template/Footer1.vue'
 import PreviewWorkshop from "@/Layouts/BlankLayout.vue";
 import { SocketFooter } from "@/Composables/SocketWebBlock"
+import { debounce } from 'lodash'
+import axios from "axios";
+
+
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { cloneDeep } from "lodash";
@@ -17,17 +21,33 @@ const props = defineProps<{
 }>()
 
 const socketLayout = SocketFooter();
+const usedTemplates = reactive({ data : props.footer.data ?  props.footer.data : footerTheme1.data })
+const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const ToolWorkshop = ref({
     previewMode: false,
-    usedTemplates: cloneDeep(props.footer.data)
 })
+
+
+const autoSave = async (data: Object) => {
+    try {
+        const response = await axios.patch(
+            route("customer.models.banner.workshop.footers.autosave.footer"),
+            { layout: data }
+        )
+    } catch (error: any) {
+        console.error('error', error)
+    }
+}
+
+watch(usedTemplates.data, (newVal) => {
+    console.log(newVal)
+    if (newVal) debouncedSendUpdate(newVal)
+}, { deep: true })
+
 
 onMounted(() => {
     if (socketLayout) socketLayout.actions.subscribe((value) => {
-        ToolWorkshop.value = {
-                ...ToolWorkshop.value,
-                usedTemplates: value.footer.data
-            }
+        usedTemplates.data = value.footer.data
     });
     const channel = window.Echo.join(`footer.preview`)
         .listenForWhisper("otherIsNavigating", (event: any) => {
@@ -38,11 +58,18 @@ onMounted(() => {
         })
 });
 
+
+onUnmounted(() => {
+    if (socketLayout) socketLayout.actions.unsubscribe();
+});
+
+
+console.log('preview',usedTemplates)
 </script>
 
 <template>
     <div class="p-4">
-        <Footer1 v-model="ToolWorkshop.usedTemplates.data.footer" :preview-mode="ToolWorkshop.previewMode" />
+        <Footer1 v-model="usedTemplates.data.data.footer" :preview-mode="ToolWorkshop.previewMode" />
     </div>
 </template>
 
