@@ -10,7 +10,6 @@ import { provide, reactive, ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
-import { Collapse } from 'vue-collapsed'
 import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/Promo1.vue'
 
 
@@ -21,6 +20,7 @@ import AnnouncementSideEditor from '@/Components/Workshop/Announcement/Announcem
 import { notify } from '@kyvg/vue3-notification'
 import ScreenView from '@/Components/ScreenView.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+
 library.add(faGlobe, faImage)
 
 const props = defineProps<{
@@ -37,6 +37,26 @@ const props = defineProps<{
     }
     announcementData: {}
 }>()
+
+const vvvv = async () => {
+    // const zzz = await axios.get('http://delivery.wowsbar.test/announcement.js');
+    fetch(`http://delivery.wowsbar.test/announcement/01J9T4KWNQJM9BMMPHKGKY0AVK`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // or response.text() if expecting plain text
+        })
+        .then(data => {
+            console.log('from fetch delivery', data); // Process the data
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+    // console.log("axios:", zzz)
+}
+vvvv()
 
 const selectedBlockOpenPanel = ref(true)
 const isLoading = ref<string | boolean>(false)
@@ -92,36 +112,36 @@ const sendBlockUpdate = async (block: {}) => {
     // }
     // console.log('on send block update')
 
-    router.patch(
-        route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
-        { layout: block.web_block.layout },
-        {
-            onStart: () => isSavingBlock.value = true,
-            onFinish: () => isSavingBlock.value = false,
-            onError: (error) => {
-                notify({
-                    title: trans('Something went wrong'),
-                    text: error.message,
-                    type: 'error',
-                })
-            },
-            preserveScroll: true
-        },
-    )
+    // router.post(
+    //     route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
+    //     { layout: block.web_block.layout },
+    //     {
+    //         onStart: () => isSavingBlock.value = true,
+    //         onFinish: () => isSavingBlock.value = false,
+    //         onError: (error) => {
+    //             notify({
+    //                 title: trans('Something went wrong'),
+    //                 text: error.message,
+    //                 type: 'error',
+    //             })
+    //         },
+    //         preserveScroll: true
+    //     },
+    // )
 }
 
-const sendOrderBlock = async (block: Object) => {
-    try {
-        const response = await router.post(
-            route(props.webpage.reorder_web_blocks_route.name, props.webpage.reorder_web_blocks_route.parameters),
-            { positions: block }
-        )
-        // const set = { ...response.data.data }
-        // data.value = set
-    } catch (error: any) {
-        console.error('error', error)
-    }
-}
+// const sendOrderBlock = async (block: Object) => {
+//     try {
+//         const response = await router.post(
+//             route(props.webpage.reorder_web_blocks_route.name, props.webpage.reorder_web_blocks_route.parameters),
+//             { positions: block }
+//         )
+//         // const set = { ...response.data.data }
+//         // data.value = set
+//     } catch (error: any) {
+//         console.error('error', error)
+//     }
+// }
 
 const isLoadingDelete = ref<string | null>(null)
 const sendDeleteBlock = async (block: {}) => {
@@ -222,7 +242,6 @@ provide('announcementData', props.announcementData)
                     @update="sendBlockUpdate"
                     @delete="sendDeleteBlock"
                     @add="addNewBlock"
-                    @order="sendOrderBlock"
                 />
             </div>
         </div>
@@ -255,7 +274,7 @@ provide('announcementData', props.announcementData)
                 </div>
 
                 <div v-else class="h-full w-full bg-white">
-                    <Promo1 :announcementData="announcementData"></Promo1>
+                    <Promo1 :announcementData="announcementData" isEditable></Promo1>
 
                     <pre>{{ announcementData }}</pre>
                     <!-- <iframe

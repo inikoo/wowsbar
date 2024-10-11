@@ -90,7 +90,7 @@ const openModalBlockList = () => {
 //     isModalBlocksList
 // })
 
-const selectedBlockOpenPanel = ref<string | null>(null)
+const selectedBlockOpenPanel = ref<string | null>('container')
 
 const announcementData = inject('announcementData', {})
 </script>

@@ -4,6 +4,7 @@ namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Models\Announcement;
 use Lorisleiva\Actions\Concerns\AsController;
+use Inertia\Inertia;
 
 class DeliverAnnouncement
 {
@@ -16,6 +17,13 @@ class DeliverAnnouncement
 
     public function htmlResponse(Announcement $announcement)
     {
-        return view('announcement', ['data' => $announcement]);
+        // return view('announcement', ['data' => $announcement]);
+        // return $announcement;
+        return Inertia::render(
+            'DeliverAnnouncement',
+            [
+                'announcement_data' => $announcement
+            ]
+        );
     }
 }
