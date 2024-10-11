@@ -21,7 +21,6 @@ const props = defineProps<{
     previewMode: Boolean
 }>();
 
-const toogle = ['bold', 'italic', 'underline', 'link', 'undo', 'redo']
 const editable = ref(!props.previewMode)
 const selectedData = ref(null)
 const selectedIndex = ref(null)
@@ -56,15 +55,15 @@ const subMenuitems = ref([
 ]);
 
 const onDrag = () => {
-    editable.value = false
-    editKey.value = uuidv4()
+    editable.value = false;
+    editKey.value = uuidv4();
 }
 
 const onDrop = () => {
-    editable.value = true
-    editKey.value = uuidv4()
-
+    editable.value = true;
+    editKey.value = uuidv4();
 }
+
 
 const addSubmenu = () => {
     if (selectedData.value.data) {
@@ -553,9 +552,4 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
             </div>
         </div>
     </div>
-
-
 </template>
-
-
-<style scss></style>

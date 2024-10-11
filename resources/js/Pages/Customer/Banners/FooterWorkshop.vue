@@ -38,6 +38,7 @@ const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
 const socketLayout = SocketFooter();
 const comment = ref('')
+const isIframeLoading = ref(true)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 
 const onPublish = async (popover: Function) => {
@@ -96,7 +97,17 @@ onMounted(()=>{
     if (socketLayout) socketLayout.actions.send({previewMode: previewMode})
 })
 
-console.log(props)
+
+const handleIframeError = () => {
+    console.error('Failed to load iframe content.');
+    isIframeLoading.value = false
+    notify({
+        title: 'Something went wrong in the preview.',
+        text: 'failed to load preview',
+        type: 'error',
+    })
+}
+
 </script>
 
 <template>
@@ -154,8 +165,13 @@ console.log(props)
                         </div>
                     </div>
 
-                    <iframe :src="iframeSrc" :title="props.title"
-                        :class="[iframeClass]" />
+                        <div v-if="isIframeLoading" class="loading-overlay">
+                         <div class="spinner"></div>
+                         </div>
+
+                         <iframe :src="iframeSrc" :title="props.title"
+                        :class="[iframeClass]" @error="handleIframeError"
+                        @load="isIframeLoading = false" />
                 </div>
                 <div v-else>
                     <EmptyState
@@ -174,4 +190,36 @@ console.log(props)
 </template>
 
 
-<style scss></style>
+<style scss>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+</style>

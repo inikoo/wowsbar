@@ -80,4 +80,5 @@ onUnmounted(() => {
 </template>
 
 
-<style scss></style>
+<style scoped>
+</style>
