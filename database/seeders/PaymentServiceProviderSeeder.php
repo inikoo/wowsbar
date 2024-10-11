@@ -8,6 +8,7 @@
 namespace Database\Seeders;
 
 use App\Actions\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
+use App\Actions\Helpers\Media\StoreMediaFromFile;
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Country;
 use Illuminate\Database\Seeder;
@@ -46,8 +47,17 @@ class PaymentServiceProviderSeeder extends Seeder
 
 
 
+            $imageName = $paymentServiceProvider->code.'.png';
+            $imagePath = storage_path('app/public/payment-providers/' . $imageName);
 
+            $imageData = [
+                'path'         => $imagePath,
+                'checksum'     => md5_file($imagePath),
+                'extension'    => 'image/png',
+                'originalName' => $imageName
+            ];
 
+            StoreMediaFromFile::run($paymentServiceProvider, $imageData, 'logo');
         });
     }
 }

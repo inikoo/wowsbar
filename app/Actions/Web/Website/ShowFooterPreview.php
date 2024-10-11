@@ -7,7 +7,6 @@
 
 namespace App\Actions\Web\Website;
 
-use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
 use App\Models\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
