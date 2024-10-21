@@ -97,8 +97,10 @@ const originUrl = location.origin
                         :icon="data.iconBis.icon" size="sm" class="" :class="data.iconBis.class"/> -->
                 </div>
                 <h2 :class="!data.noCapitalise? 'capitalize' : ''">{{ data.title }}</h2>
-                <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"/>
+                <slot name="iconRight">
+                    <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
+                        :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"/>
+                </slot>
             </div>
 
             <!-- Section: mini Tabs -->

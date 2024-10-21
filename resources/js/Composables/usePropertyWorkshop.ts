@@ -43,6 +43,6 @@ export const propertiesToHTMLStyle = (properties: any, xxx?: string[]) => {
         });
     }
 
-    console.log('htmlstyle', htmlStyle)
+    // console.log('htmlstyle', htmlStyle)
     return htmlStyle;
 }

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3'
-import { provide, reactive, ref } from 'vue'
+import { provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
@@ -20,6 +20,8 @@ import AnnouncementSideEditor from '@/Components/Workshop/Announcement/Announcem
 import { notify } from '@kyvg/vue3-notification'
 import ScreenView from '@/Components/ScreenView.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
+import { debounce } from 'lodash'
 
 library.add(faGlobe, faImage)
 
@@ -206,17 +208,35 @@ const sendDeleteBlock = async (block: {}) => {
 // };
 
 const isLoadingSave = ref(false)
-const onSave = () => {
+const saveCancelToken = ref<Function | null>(null)
+const onSave = (dataToSend: {}) => {
     router.post(route(props.store_route.name, props.store_route.parameters), {
         ...props.announcementData
     }, {
         onStart: () => isLoadingSave.value = true,
-        onFinish: () => isLoadingSave.value = false,
-        onError: (error) => console.error('======', error)
+        onFinish: () => {
+            isLoadingSave.value = false
+            saveCancelToken.value = null
+        },
+        onError: (error) => console.error('======', error),
+        onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel
     })
 }
 
-    provide('announcementData', props.announcementData)
+provide('announcementData', props.announcementData)
+
+const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailing: true })
+// watch(() => props.announcementData, (newVal) => {
+//     // console.log('vvvv', newVal)
+//     // if (newVal) {
+//     //     if (saveCancelToken.value) {
+//     //         console.log('eeee')
+//     //         saveCancelToken.value()
+//     //     }
+//     // }
+
+//     // xxx(toRaw(newVal))
+// }, { deep: true })
 
 </script>
 
@@ -224,6 +244,10 @@ const onSave = () => {
 
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
+        <template #iconRight v-if="isLoadingSave">
+            <LoadingIcon />
+        </template>
+
         <template #other>
             <Button @click="onSave" label="save" :loading="isLoadingSave" />
         </template>
