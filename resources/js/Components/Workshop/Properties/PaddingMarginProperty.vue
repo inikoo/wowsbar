@@ -10,6 +10,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faBorderTop, faBorderLeft, faBorderBottom, faBorderRight, faBorderOuter, faLink, faUnlink)
 
 const model = defineModel()
+const props = defineProps<{
+    scope?: string
+    additionalData: {
+        [key: string]: {
+            disabled: boolean
+            tooltip: string
+        }
+    }
+}>()
 
 const arePaddingValuesSame = (padding) => {
     if (!padding) return false
@@ -81,7 +90,7 @@ const changePaddingToSameValue = (newVal: number) => {
                     <Transition name="slide-to-up">
                         <div v-if="isPaddingUnitLinked">
                             <div class="grid grid-cols-5 items-center">
-                                <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="trans('Padding all')" class='' fixed-width aria-hidden='true' />
+                                <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="scope + ' ' + trans('all')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
                                     <PureInputNumber v-model="model.top.value" @update:modelValue="(newVal) => isPaddingUnitLinked ? changePaddingToSameValue(newVal) : false" class="" :suffix="model.unit" />
                                 </div>
@@ -90,27 +99,42 @@ const changePaddingToSameValue = (newVal: number) => {
 
                         <div v-else class="space-y-2">
                             <div class="grid grid-cols-5 items-center">
-                                <FontAwesomeIcon icon='fad fa-border-top' v-tooltip="trans('Padding top')" class='' fixed-width aria-hidden='true' />
+                                <FontAwesomeIcon icon='fad fa-border-top' v-tooltip="scope + ' ' + trans('top')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
                                     <PureInputNumber v-model="model.top.value" class="" :suffix="model.unit" />
                                 </div>
                             </div>
+                            
                             <div class="grid grid-cols-5 items-center">
-                                <FontAwesomeIcon icon='fad fa-border-bottom' v-tooltip="trans('Padding bottom')" class='' fixed-width aria-hidden='true' />
+                                <FontAwesomeIcon icon='fad fa-border-bottom' v-tooltip="scope + ' ' + trans('bottom')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
                                     <PureInputNumber v-model="model.bottom.value" class="" :suffix="model.unit" />
                                 </div>
                             </div>
+                            
                             <div class="grid grid-cols-5 items-center">
-                                <FontAwesomeIcon icon='fad fa-border-left' v-tooltip="trans('Padding left')" class='' fixed-width aria-hidden='true' />
+                                <FontAwesomeIcon icon='fad fa-border-left' v-tooltip="scope + ' ' + trans('left')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber v-model="model.left.value" class="" :suffix="model.unit" />
+                                    <PureInputNumber
+                                        v-model="model.left.value"
+                                        class=""
+                                        :suffix="model.unit"
+                                        :disabled="additionalData.left.disabled"
+                                        v-tooltip="additionalData.left.tooltip"
+                                    />
                                 </div>
                             </div>
+                            
                             <div class="grid grid-cols-5 items-center">
-                                <FontAwesomeIcon icon='fad fa-border-right' v-tooltip="trans('Padding right')" class='' fixed-width aria-hidden='true' />
+                                <FontAwesomeIcon icon='fad fa-border-right' v-tooltip="scope + ' ' + trans('right')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber v-model="model.right.value" class="" :suffix="model.unit" />
+                                    <PureInputNumber
+                                        v-model="model.right.value"
+                                        class=""
+                                        :suffix="model.unit"
+                                        :disabled="additionalData.right.disabled"
+                                        v-tooltip="additionalData.right.tooltip"
+                                    />
                                 </div>
                             </div>
                         </div>

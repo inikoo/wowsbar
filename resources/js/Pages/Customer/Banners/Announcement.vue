@@ -11,6 +11,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/Promo1.vue'
+import Information1 from '@/Components/Workshop/Announcement/Templates/Information/Information1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 
 
@@ -324,8 +325,8 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
                     <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
                 </div>
 
-                <div v-else class="h-full w-full bg-white">
-                    <Promo1 :announcementData="announcementData" isEditable />
+                <div v-else class="h-full w-full bg-white relative">
+                    <Information1 :announcementData="announcementData" isEditable />
 
                     <!-- <iframe
                         :src="iframeSrc"

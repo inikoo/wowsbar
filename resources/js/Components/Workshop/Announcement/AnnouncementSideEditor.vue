@@ -82,7 +82,7 @@ const toAbsoluteCenter = (block_properties: {}) => {
         <Collapse as="section" :when="selectedBlockOpenPanel === 'container'">
             <PanelProperties
                 v-model="announcementData.container_properties"
-                @update:modelValue="() => (console.log('zzz'), debouncedSendUpdate('element'))"
+                @update:modelValue="() => (console.log('zzz'), `debouncedSendUpdate('element')`)"
             />
         </Collapse>
     </div>

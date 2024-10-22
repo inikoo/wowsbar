@@ -7,6 +7,7 @@ import TextProperty from '@/Components/Workshop/Properties/TextProperty.vue'
 import DimensionProperty from '@/Components/Workshop/Properties/DimensionProperty.vue'
 import { trans } from 'laravel-vue-i18n'
 import Checkbox from 'primevue/checkbox';
+import { ref } from 'vue'
 
 const model = defineModel()
 
@@ -22,7 +23,6 @@ watch(compModel, () => {
 })
 
 
-
 </script>
 
 <template>
@@ -31,9 +31,16 @@ watch(compModel, () => {
     </div>
 
     <div class="p-4">
+        <!-- Horizontally Center -->
         <div class="flex items-center gap-x-3">
             <Checkbox v-model="model.isCenterHorizontal" inputId="centerHorizontal" name="centerHorizontal" binary />
-            <label for="centerHorizontal" class="cursor-pointer select-none">Horizontally Center </label>
+            <label for="centerHorizontal" class="cursor-pointer select-none">{{ trans('Horizontally Center') }} </label>
+        </div>
+
+        <!-- Flying -->
+        <div class="flex items-center gap-x-3">
+            <Checkbox :modelValue="model.position.type === 'absolute'" @update:modelValue="(newVal) => newVal ? model.position.type = 'absolute' : model.position.type = 'relative'"  inputId="isComponentFlying" name="isComponentFlying" binary />
+            <label for="isComponentFlying" class="cursor-pointer select-none">Flying</label>
         </div>
     </div>
     
@@ -63,13 +70,24 @@ watch(compModel, () => {
     <div v-if="model?.padding" class="border-t border-gray-300">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Padding') }}</div>
 
-        <PaddingMarginProperty v-model="model.padding" />
+        <PaddingMarginProperty v-model="model.padding" :scope="trans('Padding')" />
     </div>
 
     <div v-if="model?.margin" class="border-t border-gray-300">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Margin') }}</div>
 
-        <PaddingMarginProperty v-model="model.margin" />
+        <PaddingMarginProperty v-model="model.margin" :scope="trans('Margin')"
+            :additionalData="{
+                'right': {
+                    disabled: model.isCenterHorizontal,
+                    tooltip: trans('Disabled due the component is set to centered horizontally.')
+                },
+                'left': {
+                    disabled: model.isCenterHorizontal,
+                    tooltip: trans('Disabled due the component is set to centered horizontally.')
+                },
+            }"
+        />
     </div>
 
 </template>
