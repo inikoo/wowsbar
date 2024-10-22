@@ -35,7 +35,7 @@ const onDrag = (e, block_properties) => {
     // Update position based on the dragging
     block_properties.position.x = `${percentageLeft}%`
     block_properties.position.y = `${percentageTop}%`
-    
+
     // console.log('111', block_properties.position)
     // console.log('qqq', e)
     // position.value.left += e.delta[0]
@@ -51,8 +51,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5" :style="propertiesToHTMLStyle(announcementData.container_properties, {toRemove: ['position']})">
-        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 w-fit" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
+    <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, {toRemove: ['position']})">
+        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
             
         </div>
 
@@ -77,7 +77,7 @@ onMounted(() => {
         <button
             ref="_buttonClose"
             type="button"
-            class="flex flex-1 justify-end p-3"
+            class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
             :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
         >
             <span class="sr-only">Dismiss</span>

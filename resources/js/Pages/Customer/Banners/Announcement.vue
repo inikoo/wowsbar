@@ -11,10 +11,12 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/Promo1.vue'
+import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe, faImage } from '@fal'
+import { faThLarge } from '@fas'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
 import { notify } from '@kyvg/vue3-notification'
@@ -22,8 +24,9 @@ import ScreenView from '@/Components/ScreenView.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import { debounce } from 'lodash'
+import Modal from '@/Components/Utils/Modal.vue'
 
-library.add(faGlobe, faImage)
+library.add(faGlobe, faImage, faThLarge)
 
 const props = defineProps<{
     pageHead: {}
@@ -37,8 +40,22 @@ const props = defineProps<{
             parameters?: any[]
         }
     }
-    announcementData: {}
+    announcementData: {
+        close_button: {
+            size: string
+            text_color: string
+            block_properties: {
+                position: {
+                    x: string
+                    y: string
+                    type: string  // 'absolute' | 'relative'
+                }
+            }
+        }
+    }
+    announcement_list: {}
 }>()
+
 
 const vvvv = async () => {
     // const zzz = await axios.get('http://delivery.wowsbar.test/announcement.js');
@@ -60,15 +77,17 @@ const vvvv = async () => {
 }
 vvvv()
 
-const selectedBlockOpenPanel = ref(true)
-const isLoading = ref<string | boolean>(false)
-const comment = ref("")
-const openDrawer = ref<string | boolean>(false)
+const isModalOpen = ref(false)
+
+// const selectedBlockOpenPanel = ref(true)
+// const isLoading = ref<string | boolean>(false)
+// const comment = ref("")
+// const openDrawer = ref<string | boolean>(false)
 // const iframeSrc = ref(route('grp.websites.preview', [route().params['website'], route().params['webpage']]))
-const data = ref({ ...props.webpage })
-const iframeClass = ref('w-full h-full')
+// const data = ref({ ...props.webpage })
+// const iframeClass = ref('w-full h-full')
 const isIframeLoading = ref(false)
-const _WebpageSideEditor = ref(null)
+// const _WebpageSideEditor = ref(null)
 
 const isAddBlockLoading = ref<string | null>(null)
 const addNewBlock = async (block: Daum) => {
@@ -100,7 +119,7 @@ const addNewBlock = async (block: Daum) => {
     )
 }
 
-const isSavingBlock = ref(false)
+// const isSavingBlock = ref(false)
 const sendBlockUpdate = async (block: {}) => {
     // try {
     //     const response = router.patch(
@@ -254,23 +273,32 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
     </PageHeading>
 
 
-    <div class="grid grid-cols-5 h-[86.7vh]">
+    <div class="flex h-[86.7vh]">
         <!-- Section: Side editor -->
-        <div class="col-span-1 md:block hidden h-full p-2 ">
-            <div class="bg-amber-100 border border-gray-300 h-full py-2 px-3 rounded">
-                <AnnouncementSideEditor
-                    :isLoadingDelete
-                    :isAddBlockLoading
-                    :webBlockTypeCategories="webBlockTypeCategories"
-                    @update="sendBlockUpdate"
-                    @delete="sendDeleteBlock"
-                    @add="addNewBlock"
-                />
+        <div class="w-[400px] py-2 px-3">
+            <div class="w-full text-lg font-semibold flex items-center justify-between gap-3 border-b border-gray-300">
+                <div class="flex items-center gap-3">
+                    Announcement
+                </div>
+
+                <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'"
+                    @click="isModalOpen = true">
+                    <FontAwesomeIcon icon="fas fa-th-large" aria-hidden='true' />
+                </div>
             </div>
+
+            <AnnouncementSideEditor
+                :isLoadingDelete
+                :isAddBlockLoading
+                :webBlockTypeCategories="webBlockTypeCategories"
+                @update="sendBlockUpdate"
+                @delete="sendDeleteBlock"
+                @add="addNewBlock"
+            />
         </div>
 
         <!-- Section: Preview -->
-        <div v-if="true" class="md:col-span-4 col-span-5 h-full flex flex-col py-2 px-3">
+        <div v-if="true" class="w-full h-full flex flex-col py-2 px-3">
             <div class="flex justify-between">
                 <!-- <div class="py-1 px-2 cursor-pointer md:hidden block" title="Desktop view" v-tooltip="'Navigation'">
                     <FontAwesomeIcon :icon='faBars' aria-hidden='true' @click="()=>openDrawer = true" />
@@ -310,6 +338,21 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
             </div>
         </div>
 
-        <pre>{{ props.announcementData }}</pre>
+
+        <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+            isModalOpen
+            <!-- <HeaderListModal 
+                :onSelectBlock
+                :webBlockTypes="selectedWebBlock"
+                :currentTopbar="usedTemplates.topBar"
+            /> -->
+
+            <AnnouncementTemplateList
+                :announcementList
+                :onPickBlock="onPickBlock"
+                :webBlockTypes="webBlockTypeCategories"
+                scope="webpage"
+            />
+        </Modal>
     </div>
 </template>

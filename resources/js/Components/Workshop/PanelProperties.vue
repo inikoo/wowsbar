@@ -4,7 +4,9 @@ import BackgroundProperty from '@/Components/Workshop/Properties/BackgroundPrope
 import BorderProperty from '@/Components/Workshop/Properties/BorderProperty.vue'
 import PaddingMarginProperty from '@/Components/Workshop/Properties/PaddingMarginProperty.vue'
 import TextProperty from '@/Components/Workshop/Properties/TextProperty.vue'
+import DimensionProperty from '@/Components/Workshop/Properties/DimensionProperty.vue'
 import { trans } from 'laravel-vue-i18n'
+import Checkbox from 'primevue/checkbox';
 
 const model = defineModel()
 
@@ -13,7 +15,7 @@ const compModel = computed(() => {
     return JSON.stringify(model.value)
 })
 
-const emit = defineEmits();
+const emit = defineEmits()
 watch(compModel, () => {
     console.log('on change compModel')
     emit('update:modelValue', model.value)
@@ -25,7 +27,19 @@ watch(compModel, () => {
 
 <template>
     <div>
-        <!-- <pre>{{ model?.border }}</pre> -->
+        <!-- {{ model.isCenterHorizontal }} -->
+    </div>
+
+    <div class="p-4">
+        <div class="flex items-center gap-x-3">
+            <Checkbox v-model="model.isCenterHorizontal" inputId="centerHorizontal" name="centerHorizontal" binary />
+            <label for="centerHorizontal" class="cursor-pointer select-none">Horizontally Center </label>
+        </div>
+    </div>
+    
+    <div v-if="model?.dimension" class="border-t border-gray-300 bg-gray-100 pb-3">
+        <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Dimension') }}</div>
+        <DimensionProperty v-model="model.dimension" />
     </div>
 
     <div v-if="model?.background" class="border-t border-gray-300 pb-3">
@@ -59,5 +73,3 @@ watch(compModel, () => {
     </div>
 
 </template>
-
-<style scoped></style>

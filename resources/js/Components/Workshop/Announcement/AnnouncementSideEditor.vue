@@ -15,7 +15,6 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import debounce from 'lodash/debounce'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import Modal from "@/Components/Utils/Modal.vue"
-import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 
 // import { Root, Daum } from '@/types/webBlockTypes'
 // import { Root as RootWebpage } from '@/types/webpageTypes'
@@ -23,6 +22,8 @@ import { Collapse } from 'vue-collapsed'
 import { trans } from 'laravel-vue-i18n'
 import Editor from '@/Components/Editor/Editor.vue'
 import PureInputNumber from '@/Components/Pure/PureInputNumber.vue'
+import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
+import Moveable from "vue3-moveable"
 
 
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
@@ -34,65 +35,35 @@ const props = defineProps<{
     isAddBlockLoading: string | null
 }>()
 
-const emits = defineEmits<{
-    (e: 'add', value: Daum): void
-    (e: 'delete', value: Daum): void
-    (e: 'update', value: Daum): void
-    (e: 'order', value: Object): void
-    (e: 'openBlockList', value: Boolean): void
-}>()
-
-const isModalBlocksList = ref(false)
-const isLoading = ref<string | boolean>(false)
-
-const sendNewBlock = async (block: Daum) => {
-    emits('add', block)
-}
-
-const sendBlockUpdate = async (block: Daum) => {
-    emits('update', block)
-}
-
-// const sendOrderBlock = async (block: Object) => {
-//     emits('order', block)
-// }
-
-// const sendDeleteBlock = async (block: Daum) => {
-//     emits('delete', block)
-// }
-
-
-const debouncedSendUpdate = debounce((block) => sendBlockUpdate(block), 1000, { leading: false, trailing: true })
-const onUpdatedBlock = (block: Daum) => {
-    debouncedSendUpdate(block)
-}
-
-// const onChangeOrderBlock = () => {
-//     let payload = {}
-//     props.webpage.layout.web_blocks.map((item, index) => {
-//         payload[item.web_block.id] = { position: index }
-//     })
-//     sendOrderBlock(payload)
-// }
-
-const onPickBlock = async (block: Daum) => {
-    await sendNewBlock(block)
-    isModalBlocksList.value = false
-}
-
-const openModalBlockList = () => {
-    isModalBlocksList.value = !isModalBlocksList.value
-    emits('openBlockList', !isModalBlocksList.value)
-
-}
-
-// defineExpose({
-//     isModalBlocksList
-// })
-
 const selectedBlockOpenPanel = ref<string | null>('container')
 
 const announcementData = inject('announcementData', {})
+
+const _parentOfButtonClose = ref<Element | null>(null)
+const _buttonClose = ref<Element | null>(null)
+const onDrag = (e, block_properties) => {
+    const parentWidth = _parentOfButtonClose.value?.clientWidth || 0
+    const parentHeight = _parentOfButtonClose.value?.clientHeight || 0
+
+    const percentageLeft = e.left / parentWidth * 100
+    const percentageTop = e.top / parentHeight * 100
+    // console.log('kokok', percentageLeft)
+
+    // Update position based on the dragging
+    block_properties.position.x = `${percentageLeft}%`
+    block_properties.position.y = `${percentageTop}%`
+
+    // console.log('111', block_properties.position)
+    // console.log('qqq', e)
+    // position.value.left += e.delta[0]
+    // position.value.top += e.delta[1]
+    // calculatePercentagePosition()
+}
+
+const toAbsoluteCenter = (block_properties: {}) => {
+    block_properties.position.x = '50%'
+    block_properties.position.y = '50%'
+}
 </script>
 
 <template>
@@ -125,50 +96,55 @@ const announcementData = inject('announcementData', {})
 
         <Collapse as="section" :when="selectedBlockOpenPanel === 'content'">
             <div  class="border-t border-gray-300 pb-3">
-                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Text 1') }}</div>
-                <div class="">
+                <div class="flex justify-between items-center">
+                    <div class="w-full py-1 select-none text-sm">{{ trans('Text 1') }}</div>
+                </div>
+                <div class="mx-1 border border-gray-300">
                     <Editor v-model="announcementData.fields.text_1.text" />
                 </div>
             </div>
 
             <div  class="border-t border-gray-300 pb-3">
-                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Text 2') }}</div>
-                <div class="">
+                <div class="w-full py-1 select-none text-sm">{{ trans('Text 2') }}</div>
+                <div class="mx-1 border border-gray-300">
                     <Editor v-model="announcementData.fields.text_2.text" />
                 </div>
             </div>
 
+            <!-- Section: Close button -->
             <div  class="border-t border-gray-300 pb-3">
-                <div class="w-full py-1 px-2 select-none text-sm">{{ trans('Close button') }}</div>
-                <div class="mx-auto h-11 w-11 flex justify-center items-center rounded-md border border-gray-300">
-                    <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' fixed-width aria-hidden='true' />
+                <div class="flex justify-between items-center">
+                    <div class="w-full py-1 select-none text-sm">{{ trans('Close button') }}</div>
+                    <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div>
                 </div>
+                
 
-                <div class="px-3 mb-4">
-                    <div class="mb-2">
-                        <div class="text-xs">{{ trans('Position Y') }}</div>
+                <div ref="_parentOfButtonClose" class="relative w-full h-24 bg-gray-100 border border-gray-300">
+                    <div ref="_buttonClose" class="absolute -translate-x-1/2 -translate-y-1/2 mx-auto h-6 w-6 flex justify-center items-center rounded-sm border border-gray-300"
+                        :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
+                    >
+                        <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' size="xs" fixed-width aria-hidden='true' />
                     </div>
                     
-                    <PureInputNumber v-model="announcementData.fields.close_button.position_top" class="" suffix="%" />
                 </div>
 
-                <div class="px-3">
-                    <div class="mb-2">
-                        <div class="text-xs">{{ trans('Position X') }}</div>
-                    </div>
-                    
-                    <PureInputNumber v-model="announcementData.fields.close_button.position_left" class="" suffix="%" />
-                </div>
+                <Moveable
+                    :target="_buttonClose"
+                    :draggable="true"
+                    :snapGap="true"
+                    :throttleDrag="1"
+                    :edgeDraggable="false"
+                    :snappable="true"
+                    :snapDirections="{top: true, left: true, bottom: true, right: true }"
+                    :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
+                    :startDragRotate="0"
+                    :throttleDragRotate="0"
+                    @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
+                />
             </div>
         </Collapse>
     </div>
 
+    <!-- <pre>{{ announcementData.container_properties }}</pre> -->
 
-    <Modal :isOpen="isModalBlocksList" @onClose="openModalBlockList">
-        <AnnouncementTemplateList
-            :onPickBlock="onPickBlock"
-            :webBlockTypes="webBlockTypeCategories"
-            scope="webpage"
-        />
-    </Modal>
 </template>

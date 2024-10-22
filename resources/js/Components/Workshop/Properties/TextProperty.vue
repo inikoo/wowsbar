@@ -35,7 +35,7 @@ const fontFamilies = ([
             <div class="px-3 flex justify-between items-center mb-2">
                 <div class="text-xs">{{ trans('Color') }}</div>
                 <ColorPicker :color="model.color"
-                    @changeColor="(newColor) => model.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a}`"
+                    @changeColor="(newColor) => model.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a})`"
                     closeButton>
                     <template #button>
                         <div v-bind="$attrs"
