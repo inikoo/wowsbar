@@ -203,7 +203,7 @@ const fakeAnnouncementData = {
 const _parentComponent = ref(null)
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
-const closeIcon = '<svg class="svg-inline--fa fa-times fa-fw" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
+const closeIcon = '<svg style="display: inline-block;height:1em;vertical-align:-0.125em;text-align: center;overflow: visible;box-sizing: content-box;width: 1.25em;" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
 
 
 const onDrag = (e, block_properties) => {
@@ -228,14 +228,13 @@ const onDrag = (e, block_properties) => {
 onMounted(() => {
 
 })
-
-
 </script>
 
 <template>
     <pre>{{ propertiesToHTMLStyle(announcementData.container_properties) }}</pre>
-    <div ref="_parentComponent" class="mx-auto relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties)">
-        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="fakeAnnouncementData.text_1.text" :style="propertiesToHTMLStyle(fakeAnnouncementData.text_1.block_properties)">
+    {{ announcementData.container_properties }}
+    <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties)">
+        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
             
         </div>
 
@@ -251,7 +250,7 @@ onMounted(() => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, fakeAnnouncementData.text_1.block_properties)"
+            @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties)"
         />
         
         <!-- Close Button -->
@@ -259,7 +258,7 @@ onMounted(() => {
             ref="_buttonClose"
             type="button"
             class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
-            :style="propertiesToHTMLStyle(fakeAnnouncementData.close_button.block_properties)"
+            :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
         >
             <span class="sr-only">Dismiss</span>
             <span v-html="closeIcon"></span>
@@ -277,7 +276,7 @@ onMounted(() => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, fakeAnnouncementData.close_button.block_properties)"
+            @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
         />
     </div>
 

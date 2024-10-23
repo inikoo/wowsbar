@@ -12,7 +12,7 @@ import { faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText,
 import PanelProperties from '@/Components/Workshop/PanelProperties.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import debounce from 'lodash/debounce'
+import { debounce } from 'lodash'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import Modal from "@/Components/Utils/Modal.vue"
 
@@ -36,6 +36,7 @@ const props = defineProps<{
 }>()
 
 const selectedBlockOpenPanel = ref<string | null>('container')
+const isOnDrag = ref(false)
 
 const announcementData = inject('announcementData', {})
 
@@ -64,6 +65,15 @@ const toAbsoluteCenter = (block_properties: {}) => {
     block_properties.position.x = '50%'
     block_properties.position.y = '50%'
 }
+
+const toVerticalCenter = (block_properties: {}) => {
+    block_properties.position.y = '50%'
+}
+const toHorizontalCenter = (block_properties: {}) => {
+    block_properties.position.x = '50%'
+}
+
+const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
 </script>
 
 <template>
@@ -115,13 +125,18 @@ const toAbsoluteCenter = (block_properties: {}) => {
             <div  class="border-t border-gray-300 pb-3">
                 <div class="flex justify-between items-center">
                     <div class="w-full py-1 select-none text-sm">{{ trans('Close button') }}</div>
-                    <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div>
+                    <div class="flex gap-x-2 items-center">
+                        <!-- <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div> -->
+                        <div @click="() => toVerticalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Vertical center') }}</div>
+                        <div @click="() => toHorizontalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Horizontal center') }}</div>
+                    </div>
                 </div>
                 
 
                 <div ref="_parentOfButtonClose" class="relative w-full h-24 bg-gray-100 border border-gray-300">
                     <div ref="_buttonClose" class="absolute -translate-x-1/2 -translate-y-1/2 mx-auto h-6 w-6 flex justify-center items-center rounded-sm border border-gray-300"
                         :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
+                        :class="isOnDrag ? 'cursor-grabbing' : 'cursor-grab'"
                     >
                         <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' size="xs" fixed-width aria-hidden='true' />
                     </div>
@@ -139,6 +154,8 @@ const toAbsoluteCenter = (block_properties: {}) => {
                     :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
                     :startDragRotate="0"
                     :throttleDragRotate="0"
+                    @dragStart="() => isOnDrag = true"
+                    @dragEnd="() => debounceSetIsOnDrag()"
                     @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
                 />
             </div>

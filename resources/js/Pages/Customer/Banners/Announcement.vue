@@ -10,8 +10,8 @@ import { provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
-import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/Promo1.vue'
-import Information1 from '@/Components/Workshop/Announcement/Templates/Information/Information1.vue'
+import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
+import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 
 
@@ -26,6 +26,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import { debounce } from 'lodash'
 import Modal from '@/Components/Utils/Modal.vue'
+import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 
 library.add(faGlobe, faImage, faThLarge)
 
@@ -42,6 +43,13 @@ const props = defineProps<{
         }
     }
     announcementData: {
+        code: string
+        id: number
+        name: string
+        ulid: string
+        created_at: string
+        updated_at: string
+        icon: string
         close_button: {
             size: string
             text_color: string
@@ -257,7 +265,7 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
 
 //     // xxx(toRaw(newVal))
 // }, { deep: true })
-
+console.log('lpcxzlpcxlz', props.announcementData)
 </script>
 
 <template layout="CustomerApp">
@@ -326,7 +334,7 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
                 </div>
 
                 <div v-else class="h-full w-full bg-white relative">
-                    <Information1 :announcementData="announcementData" isEditable />
+                    <component :is="getAnnouncementComponent(announcementData.code)" :announcementData="announcementData" isEditable />
 
                     <!-- <iframe
                         :src="iframeSrc"
