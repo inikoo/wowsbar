@@ -39,7 +39,7 @@ watch(compModel, () => {
 
         <!-- Flying -->
         <div class="flex items-center gap-x-3">
-            <Checkbox :modelValue="model.position.type === 'absolute'" @update:modelValue="(newVal) => newVal ? model.position.type = 'absolute' : model.position.type = 'relative'"  inputId="isComponentFlying" name="isComponentFlying" binary />
+            <Checkbox :modelValue="model.position.type === 'fixed'" @update:modelValue="(newVal) => newVal ? model.position.type = 'fixed' : model.position.type = 'relative'"  inputId="isComponentFlying" name="isComponentFlying" binary />
             <label for="isComponentFlying" class="cursor-pointer select-none">Flying</label>
         </div>
     </div>

@@ -60,32 +60,26 @@ async function fetchAnnouncementData() {
             let iframeHeight
             let iframeTop
 
+            // Listening event from component (inside iframe)
             window.addEventListener('message', function(event) {
                 console.log('received message', event.data)
-                // if(event.data.height) {
-                //     iframeHeight = event.data.height; // Get the height sent from the iframe
-                //     iframeTop = event.data.y
-                //     // iframe.style.height = iframeHeight + 'px'; // Adjust the iframe height
-                //     // iframe.style.top = iframeTop
-                // }
 
+                // Emit from each component (AnnouncementInformation1)
                 if(event.data === 'close_button_click') {
-                    // Emit from each component
-                    console.log('onclick close')
+                    console.log('Close button clicked')
                     iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
-                    console.log(`xx`, iframe.style.top)
                 }
             });
 
+            // Set style for iframe
             for (const [key, value] of Object.entries(containerStyle)) {
                 iframe.style[key] = value;
             }
             
-            // iframe.onload = adjustIframeHeight;
-
+            // Insert iframe to first child of <body>
             const body = document.body;
-
             body.insertBefore(iframe, body.firstChild);
+
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
         }
@@ -109,9 +103,9 @@ fetchAnnouncementData();
 function propertiesToHTMLStyle(properties, xxx) {
     const htmlStyle = {
         position: properties.position?.type || 'static',
-        left: properties.isCenterHorizontal && properties.position.type === 'absolute' ? '50%' : properties.position?.x || '0px', 
+        left: properties.isCenterHorizontal && properties.position.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
         top: properties.position?.y || '0px',
-        transform: properties.isCenterHorizontal && properties.position.type === 'absolute' ? 'translateX(-50%)' : '',
+        transform: properties.isCenterHorizontal && properties.position.type === 'fixed' ? 'translateX(-50%)' : '',
 
         height: (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
         width: (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',

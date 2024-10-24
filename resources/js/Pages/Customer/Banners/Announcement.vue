@@ -339,8 +339,14 @@ const _parentComponent = ref(null)
                     <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
                 </div>
 
-                <div v-else class="h-full w-full bg-white relative qwezxc">
-                    <div ref="_parentComponent" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})">
+                <div v-else class="h-full w-full bg-white relative">
+                    <div
+                        ref="_parentComponent"
+                        :style="{
+                            ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
+                            position: announcementData.container_properties.position.type === 'fixed' ? 'absolute' : announcementData.container_properties.position.type
+                        }"
+                    >
                         <component
                             :is="getAnnouncementComponent(announcementData.code)"
                             :announcementData="announcementData"
@@ -348,14 +354,6 @@ const _parentComponent = ref(null)
                             :_parentComponent
                         />
                     </div>
-
-                    <!-- <iframe
-                        :src="iframeSrc"
-                        :title="props.title"
-                        :class="[iframeClass, isIframeLoading ? 'hidden' : '']"
-                        @error="handleIframeError"
-                        @load="isIframeLoading = false"
-                    /> -->
                 </div>
             </div>
         </div>
