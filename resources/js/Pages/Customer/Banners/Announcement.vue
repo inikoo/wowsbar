@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3'
-import { provide, reactive, ref, toRaw, watch } from 'vue'
+import { inject, provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
@@ -27,6 +27,7 @@ import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import { debounce } from 'lodash'
 import Modal from '@/Components/Utils/Modal.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
+import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 
 library.add(faGlobe, faImage, faThLarge)
 
@@ -266,6 +267,11 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
 //     // xxx(toRaw(newVal))
 // }, { deep: true })
 console.log('lpcxzlpcxlz', props.announcementData)
+
+
+const isOnPublishState = inject('isOnPublishState')
+const styleToRemove = isOnPublishState ? ['top'] : null
+const _parentComponent = ref(null)
 </script>
 
 <template layout="CustomerApp">
@@ -333,8 +339,15 @@ console.log('lpcxzlpcxlz', props.announcementData)
                     <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
                 </div>
 
-                <div v-else class="h-full w-full bg-white relative">
-                    <component :is="getAnnouncementComponent(announcementData.code)" :announcementData="announcementData" isEditable />
+                <div v-else class="h-full w-full bg-white relative qwezxc">
+                    <div ref="_parentComponent" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})">
+                        <component
+                            :is="getAnnouncementComponent(announcementData.code)"
+                            :announcementData="announcementData"
+                            isEditable
+                            :_parentComponent
+                        />
+                    </div>
 
                     <!-- <iframe
                         :src="iframeSrc"

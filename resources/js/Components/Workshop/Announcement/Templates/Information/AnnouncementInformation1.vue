@@ -4,7 +4,7 @@ import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { onMounted, ref } from "vue"
+import { inject, onMounted, ref } from "vue"
 library.add(faTimes)
 const props = defineProps<{
     announcementData: {
@@ -15,8 +15,12 @@ const props = defineProps<{
 
         }
     }
+    _parentComponent: Element
     isEditable?: boolean
 }>()
+
+const isOnPublishState = inject('isOnPublishState')
+const styleToRemove = isOnPublishState ? ['top'] : null
 
 const fakeContainerData = {
     "id": null,
@@ -200,40 +204,35 @@ const fakeAnnouncementData = {
     }
 }
 
-const _parentComponent = ref(null)
+// const _parentComponent = ref(null)
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
 const closeIcon = '<svg style="display: inline-block;height:1em;vertical-align:-0.125em;text-align: center;overflow: visible;box-sizing: content-box;width: 1.25em;" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
 
 
 const onDrag = (e, block_properties) => {
-    const parentWidth = _parentComponent.value?.clientWidth
-    const parentHeight = _parentComponent.value?.clientHeight
+    const parentWidth = props._parentComponent?.clientWidth
+    const parentHeight = props._parentComponent?.clientHeight
 
     const percentageLeft = e.left / parentWidth * 100
     const percentageTop = e.top / parentHeight * 100
-    // console.log('kokok', percentageLeft)
 
     // Update position based on the dragging
     block_properties.position.x = `${percentageLeft}%`
     block_properties.position.y = `${percentageTop}%`
-
-    // console.log('111', block_properties.position)
-    // console.log('qqq', e)
-    // position.value.left += e.delta[0]
-    // position.value.top += e.delta[1]
-    // calculatePercentagePosition()
 }
 
 onMounted(() => {
 
 })
+
+const onClickClose = () => {
+    window.parent.postMessage('close_button_click', '*');
+}
 </script>
 
 <template>
-    <pre>{{ propertiesToHTMLStyle(announcementData.container_properties) }}</pre>
-    {{ announcementData.container_properties }}
-    <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties)">
+    <!-- <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})"> -->
         <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
             
         </div>
@@ -255,6 +254,7 @@ onMounted(() => {
         
         <!-- Close Button -->
         <button
+            @click="() => onClickClose()"
             ref="_buttonClose"
             type="button"
             class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
@@ -278,6 +278,6 @@ onMounted(() => {
             :throttleDragRotate="0"
             @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
         />
-    </div>
+    <!-- </div> -->
 
 </template>

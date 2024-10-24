@@ -119,8 +119,8 @@ const changePaddingToSameValue = (newVal: number) => {
                                         v-model="model.left.value"
                                         class=""
                                         :suffix="model.unit"
-                                        :disabled="additionalData.left.disabled"
-                                        v-tooltip="additionalData.left.tooltip"
+                                        :disabled="additionalData?.left?.disabled"
+                                        v-tooltip="additionalData?.left?.tooltip"
                                     />
                                 </div>
                             </div>
@@ -132,8 +132,8 @@ const changePaddingToSameValue = (newVal: number) => {
                                         v-model="model.right.value"
                                         class=""
                                         :suffix="model.unit"
-                                        :disabled="additionalData.right.disabled"
-                                        v-tooltip="additionalData.right.tooltip"
+                                        :disabled="additionalData?.right?.disabled"
+                                        v-tooltip="additionalData?.right?.tooltip"
                                     />
                                 </div>
                             </div>
