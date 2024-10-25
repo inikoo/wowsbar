@@ -8,6 +8,7 @@
 namespace App\Actions\Traits;
 
 use App\Actions\Media\Media\UpdateIsAnimatedMedia;
+use App\Models\AnnouncementTemplate;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
 use App\Models\Mail\EmailTemplate;
@@ -22,14 +23,14 @@ trait WIthSaveUploadedImage
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      */
     public function saveUploadedImage(
-        Website|Organisation|OrganisationUser|User|EmailTemplate $model,
+        Website|Organisation|OrganisationUser|User|EmailTemplate|AnnouncementTemplate $model,
         string $collection,
         string $field,
         string $imagePath,
         string $originalFilename,
         string $extension = null,
         array $properties = []
-    ): Website|Organisation|OrganisationUser|User|EmailTemplate {
+    ): Website|Organisation|OrganisationUser|User|EmailTemplate|AnnouncementTemplate {
         $checksum = md5_file($imagePath);
 
 

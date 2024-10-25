@@ -17,7 +17,6 @@ class PaymentServiceProviderResource extends JsonResource
         $paymentServiceProvider=$this;
 
         return [
-
             'code'            => $paymentServiceProvider->code,
             'name'            => $paymentServiceProvider->name,
             'logo'            => $paymentServiceProvider->getFirstMediaUrl('logo'),

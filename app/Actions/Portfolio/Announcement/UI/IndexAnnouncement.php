@@ -242,7 +242,7 @@ class IndexAnnouncement extends InertiaAction
                     ],
                 ],
                 'firstBanner'      => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
-                
+
 
                 // 'data' => BannersResource::collection($banners),
             ]
