@@ -1,41 +1,87 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, inject } from 'vue';
 import { faPresentation, faCube, faText, faImage, faImages, faPaperclip, faShoppingBasket, faStar, faHandHoldingBox, faBoxFull, faBars, faBorderAll, faLocationArrow} from "@fal"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n"
 
-import { Root, Daum } from "@/types/webBlockTypes"
+// import { Root, Daum } from "@/types/webBlockTypes"
+// import AnnouncementInformation1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
+// import AnnouncementPromo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
+import axios from 'axios'
+import { notify } from '@kyvg/vue3-notification'
+import Image from '@/Components/Image.vue'
+import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
+
+
 
 library.add(faPresentation, faCube, faText, faImage, faImages, faPaperclip, faShoppingBasket, faStar, faHandHoldingBox, faBoxFull, faBars, faBorderAll, faLocationArrow)
 const props = withDefaults(defineProps<{
-    onPickBlock: Function
-    webBlockTypes: Root
-    scope?: String /* all|website|webpage */
+    // onPickBlock: Function
+    // webBlockTypes: Root
+    // scope?: String /* all|website|webpage */
 }>(), {
     scope: "all",
 })
 
-const data = ref<Daum[]>([])
+const announcementData = inject('announcementData', {})
 
-// Define active item state
-const active = ref<Daum>(props.webBlockTypes.data[0]);
+const announcements_list = ref(null)
 
-// Function to set active item
-const setActiveId = (value: Daum) => {
-    active.value = value;
-};
+// const fake_templates = [
+//     {
+//         "name": "Information 1",
+//         "code": "announcement-information-1",
+//         "source": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ0dFe77K2Mbmiz_7_nq5b9tL_HSnRfh4fbg&s',
+//         "description": "This is information 1",
+//         "category": "information",
+//                 component: AnnouncementInformation1
+//     },
+//     {
+//         "name": "Promo 1",
+//         "code": "announcement-promo-1",
+//         "description": "This is Promo 1",
+//         "source": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_jQLYDfXfErKtmy_JLVAyIYfo_Xg8WejCkA&s',
+//         "category": "promo",
+//         component: AnnouncementPromo1
+//     }
+// ]
 
-// Filter webBlockTypes based on scope and save in data
-onMounted(() => {
-    if (props.scope === 'all') {
-        data.value = props.webBlockTypes.data; // Use all items if scope is 'all'
-    } else {
-        // Filter based on scope (e.g., 'website', 'webpage', etc.)
-        data.value = props.webBlockTypes.data.filter(item => item.scope === props.scope);
+
+const onSelectTemplate = (template, templateCode) => {
+    console.log('template', template)
+    console.log('core announce data', announcementData)
+
+    announcementData.code = templateCode
+    announcementData.container_properties = template.container
+
+    // console.log('onSelectTempalte', announcementData)
+}
+
+const fetchAnnouncementList = async () => {
+    try {
+        const response = await axios.get(
+            route('customer.banners.announcement.templates.index'),
+        )
+
+        console.log('respo', response.data)
+        announcements_list.value = response.data.data
+        // templates.value = Object.values(response.data)
+        // loadingState.value = false
+    } catch (error) {
+        console.log(error)
+        notify({
+            title: trans("Something went wrong."),
+            text: trans("Failed to fetch announcement templates."),
+            type: "error"
+        });
+        // loadingState.value = false
     }
-    active.value = data.value[0] || null; // Set default active item from filtered data
-});
+}
+
+onMounted(() => {
+    fetchAnnouncementList()
+})
 
 </script>
 
@@ -44,31 +90,48 @@ onMounted(() => {
         <nav class="w-1/5 bg-gray-100 py-4" aria-label="Sidebar">
             <ul role="list" class="space-y-1">
             
-                <li v-for="item in data"
+                <li v-for="item in ['promo', 'information']"
                     :key="item.id"
-                    :class="[item.id === active.id ? 'bg-white text-indigo-600' : 'hover:bg-white/50 hover:text-indigo-600']"
-                    @click="setActiveId(item)"
+                    :class="[item.id === true ? 'bg-white text-indigo-600' : 'hover:bg-white/50 hover:text-indigo-600']"
+                    @click="false"
                     class="group flex items-center gap-x-2 p-3 text-sm font-semibold cursor-pointer"
                 >
                     <FontAwesomeIcon v-if="item.icon" :icon='item.icon' class='text-sm text-gray-400' fixed-width aria-hidden='true' />
-                    {{ item.name }}
+                    {{ item }}
                 </li>
             </ul>
         </nav>
 
         <div class="flex-1 p-4">
-            <section aria-labelledby="products-heading" class="h-full mx-auto w-full sm:px-6 lg:px-8 overflow-y-auto">
+            <section aria-labelledby="products-heading" class="h-full mx-auto w-full sm:px-6 lg:px-8">
                 <TransitionGroup tag="div" name="zzz"
-                    class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 gap-x-4 overflow-y-auto overflow-x-hidden">
-                    <template v-if="active.webBlockTypes.length">
-                        <div v-for="block in active.webBlockTypes" :key="block.code" @click="() => onPickBlock(block)"
-                            class="group flex items-center gap-x-2 relative border border-gray-300 px-3 py-2 rounded cursor-pointer hover:bg-gray-100">
-                            <div class="flex items-center justify-center">
-                                <FontAwesomeIcon :icon='block.data.icon' class='' fixed-width aria-hidden='true' />
+                    class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 gap-x-4">
+                    <template v-if="announcements_list?.length">
+                        <div
+                            v-for="(announ, idxAnnoun) in announcements_list"
+                            :key="idxAnnoun"
+                            @click="() => false"
+                            class="isolate relative min-h-10 h-20 max-h-24 min-w-20 w-auto border rounded cursor-pointer transition-all"
+                            :class="[
+                                announ.code == announcementData.code ? 'bg-indigo-500' : 'hover:bg-gray-100'
+                            ]"
+                        >
+                            <Image :src="announ.source" />
+                            
+                            <component
+                                :is="getAnnouncementComponent(announ.code)"
+                                isToSelectOnly
+                                @templateClicked="(dataTemplate) => onSelectTemplate(dataTemplate, announ.code)"
+                                class="z-50"
+                            />
+
+                            <div class="flex items-end absolute h-1/2 bottom-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent w-full truncate text-xs pl-1 pb-1 text-white">
+                                {{ announ.code }}
                             </div>
-                            <h3 class="text-sm font-medium">
-                                {{ block.name }}
-                            </h3>
+                            
+                            <!-- <h3 class="text-sm font-medium">
+                                {{ announ.name }}
+                            </h3> -->
                         </div>
                     </template>
 
