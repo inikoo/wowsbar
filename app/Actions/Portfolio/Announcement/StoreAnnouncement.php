@@ -51,6 +51,7 @@ class StoreAnnouncement
     public function rules(): array
     {
         return [
+            'code'                 => ['required', 'string'],
             'name'                 => ['required', 'string', 'max:255'],
             'icon'                 => ['required', 'string'],
             'fields'               => ['required', 'array'],

@@ -44,6 +44,7 @@ class UpdateAnnouncement
     public function rules(): array
     {
         return [
+            'code'                 => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array']
         ];
