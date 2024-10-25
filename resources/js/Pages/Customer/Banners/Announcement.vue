@@ -10,13 +10,13 @@ import { inject, provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
-import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
-import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
+// import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
+// import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage } from '@fal'
+import { faGlobe, faImage, faExternalLink } from '@fal'
 import { faThLarge } from '@fas'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
@@ -29,7 +29,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 
-library.add(faGlobe, faImage, faThLarge)
+library.add(faGlobe, faImage, faExternalLink, faThLarge)
 
 const props = defineProps<{
     pageHead: {}
@@ -67,25 +67,25 @@ const props = defineProps<{
 }>()
 
 
-const vvvv = async () => {
-    // const zzz = await axios.get('http://delivery.wowsbar.test/announcement.js');
-    fetch(`http://delivery.wowsbar.test/announcement/01J9T4KWNQJM9BMMPHKGKY0AVK`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json(); // or response.text() if expecting plain text
-        })
-        .then(data => {
-            console.log('from fetch delivery', data); // Process the data
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+// const vvvv = async () => {
+//     // const zzz = await axios.get('http://delivery.wowsbar.test/announcement.js');
+//     fetch(`http://delivery.wowsbar.test/announcement/01J9T4KWNQJM9BMMPHKGKY0AVK`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok ' + response.statusText);
+//             }
+//             return response.json(); // or response.text() if expecting plain text
+//         })
+//         .then(data => {
+//             console.log('from fetch delivery', data); // Process the data
+//         })
+//         .catch(error => {
+//             console.error('There was a problem with the fetch operation:', error);
+//         });
 
-    // console.log("axios:", zzz)
-}
-vvvv()
+//     // console.log("axios:", zzz)
+// }
+// vvvv()
 
 const isModalOpen = ref(false)
 
@@ -327,10 +327,15 @@ const _parentComponent = ref(null)
                 <!-- Section: Screenview -->
                 <div class="flex">
                     <ScreenView @screenView="setIframeView" />
-                    <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'"
-                        @click="openFullScreenPreview">
-                        <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' />
-                    </div>
+                    <a
+                        :href="`http://delivery.wowsbar.test/announcement/${announcementData.ulid}?iframe=true`"
+                        target="_blank"
+                        class="py-1 px-2 cursor-pointer"
+                        title="Desktop view"
+                        v-tooltip="'Preview'"
+                    >
+                        <FontAwesomeIcon icon='fal fa-external-link' aria-hidden='true' />
+                    </a>
                 </div>
             </div>
 
@@ -344,7 +349,7 @@ const _parentComponent = ref(null)
                         ref="_parentComponent"
                         :style="{
                             ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
-                            position: announcementData.container_properties.position.type === 'fixed' ? 'absolute' : announcementData.container_properties.position.type
+                            position: announcementData.container_properties?.position?.type === 'fixed' ? 'absolute' : announcementData.container_properties?.position?.type
                         }"
                     >
                         <component
