@@ -13,9 +13,10 @@ return new class () extends Migration {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
 
-            $table->string('code')->unique()->index();
+            $table->string('code')->index();
             $table->string('ulid')->unique()->index();
             $table->string('name');
+            $table->string('title');
             $table->string('icon')->nullable();
             $table->jsonb('fields');
             $table->jsonb('container_properties');
