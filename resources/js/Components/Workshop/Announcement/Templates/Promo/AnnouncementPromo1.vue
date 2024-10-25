@@ -30,7 +30,6 @@ const _text_1 = ref(null)
 const _buttonClose = ref(null)
 
 const defaultContainerData = {
-    "id": null,
     "link": {
         "href": "#",
         "target": "_blank"
@@ -304,7 +303,7 @@ const onClickClose = () => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
+            @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties, _parentComponent)"
         />
     </template>
 

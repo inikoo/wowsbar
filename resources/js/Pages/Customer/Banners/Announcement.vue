@@ -28,6 +28,7 @@ import { debounce } from 'lodash'
 import Modal from '@/Components/Utils/Modal.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
+import { routeType } from '@/types/route'
 
 library.add(faGlobe, faImage, faExternalLink, faThLarge)
 
@@ -35,7 +36,7 @@ const props = defineProps<{
     pageHead: {}
     title: string
     data: {},
-    store_route: {},
+    store_route: routeType,
     firstBanner?: {
         text: string
         createRoute: {
@@ -239,17 +240,20 @@ const sendDeleteBlock = async (block: {}) => {
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = (dataToSend: {}) => {
-    router.post(route(props.store_route.name, props.store_route.parameters), {
-        ...props.announcementData
-    }, {
-        onStart: () => isLoadingSave.value = true,
-        onFinish: () => {
-            isLoadingSave.value = false
-            saveCancelToken.value = null
-        },
-        onError: (error) => console.error('======', error),
-        onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel
-    })
+    // console.log('onSave', route(props.store_route.name, props.store_route.parameters))
+    router.post(
+        route(props.store_route.name, props.store_route.parameters),
+        props.announcementData,
+        {
+            onStart: () => isLoadingSave.value = true,
+            onFinish: () => {
+                isLoadingSave.value = false
+                saveCancelToken.value = null
+            },
+            onError: (error) => console.error('======', error),
+            onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel
+        }
+    )
 }
 
 provide('announcementData', props.announcementData)

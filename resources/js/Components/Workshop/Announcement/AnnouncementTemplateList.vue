@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, toRaw } from 'vue';
 import { faPresentation, faCube, faText, faImage, faImages, faPaperclip, faShoppingBasket, faStar, faHandHoldingBox, faBoxFull, faBars, faBorderAll, faLocationArrow} from "@fal"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -48,14 +48,58 @@ const announcements_list = ref(null)
 // ]
 
 
+function mergeData(data1: {}, data2: {}) {
+    // const data1a = toRaw(data1)
+    // const data2a = toRaw(data2)
+
+    console.log('data1', data1)
+
+    // for (const key in data2a) {
+    //     console.log('keey', key)
+    //     if (data1a.hasOwnProperty(key)) {
+    //         if (data2a[key].text) {
+    //             data1a[key].text = data2a[key].text;
+    //         }
+    //     } else {
+    //         data1a[key] = data2a[key];
+    //     }
+    // }
+
+    for (const key in data2) {
+        console.log('keey', key)
+        if (data1.hasOwnProperty(key)) {
+            // Only replace properties other than .text
+            for (const prop in data2[key]) {
+                if (prop !== 'text') {
+                    data1[key][prop] = data2[key][prop];
+                }
+            }
+        } else {
+            // If key doesn't exist in data1, add it entirely
+            data1[key] = data2[key];
+        }
+    }
+
+    console.log('data 111', data1)
+    // return data1a;
+}
+
 const onSelectTemplate = (template, templateCode) => {
-    console.log('template', template)
-    console.log('core announce data', announcementData)
+    console.log('template', template.fields)
+    console.log('core announce data', announcementData.fields)
 
     announcementData.code = templateCode
-    announcementData.container_properties = template.container
+    
 
-    // console.log('onSelectTempalte', announcementData)
+    mergeData(announcementData.container_properties, template.container)
+    // announcementData.container_properties = mergedContainer
+
+    console.log('onSelectTempalte', announcementData)
+
+    mergeData(announcementData.fields, template.fields)
+    // announcementData.fields = mergedFields
+
+    console.log('onSelectTempalte', announcementData)
 }
 
 const fetchAnnouncementList = async () => {
@@ -82,6 +126,7 @@ const fetchAnnouncementList = async () => {
 onMounted(() => {
     fetchAnnouncementList()
 })
+
 
 </script>
 
@@ -116,6 +161,7 @@ onMounted(() => {
                                 announ.code == announcementData.code ? 'bg-indigo-500' : 'hover:bg-gray-100'
                             ]"
                         >
+                        {{ announcementData.code }}
                             <Image :src="announ.source" />
                             
                             <component
