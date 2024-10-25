@@ -53,6 +53,18 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, xxx?: {toRemo
     return htmlStyle;
 }
 
+export const onDrag = (e, block_properties, _parentComponent) => {
+    const parentWidth = _parentComponent.clientWidth
+    const parentHeight = _parentComponent.clientHeight
+
+    const percentageLeft = e.left / parentWidth * 100
+    const percentageTop = e.top / parentHeight * 100
+
+    // Update position based on the dragging
+    block_properties.position.x = `${percentageLeft}%`
+    block_properties.position.y = `${percentageTop}%`
+}
+
 
 export interface BlockProperties {
     position: {
