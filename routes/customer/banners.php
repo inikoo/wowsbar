@@ -54,8 +54,8 @@ Route::name('banners.')->prefix('cms')->group(function () {
 
 Route::name('announcement.')->prefix('announcement')->group(function () {
     Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
-    Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
     Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
+    Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
     // Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('create');
     // Route::prefix('{banner}')->group(function () {
     //     Route::get('', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBanner::class)->name('show');
