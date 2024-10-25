@@ -1,11 +1,13 @@
 <script setup lang='ts'>
 import Moveable from "vue3-moveable"
-import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
+import { propertiesToHTMLStyle, onDrag } from '@/Composables/usePropertyWorkshop'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { inject, onMounted, ref } from "vue"
+import { closeIcon } from '@/Composables/useAnnouncement'
 library.add(faTimes)
+
 const props = defineProps<{
     announcementData: {
         fields: {
@@ -17,12 +19,17 @@ const props = defineProps<{
     }
     _parentComponent: Element
     isEditable?: boolean
+    isToSelectOnly?: boolean
+}>()
+
+const emits = defineEmits<{
+    (e: 'templateClicked'): void
 }>()
 
 const isOnPublishState = inject('isOnPublishState')
 const styleToRemove = isOnPublishState ? ['top'] : null
 
-const fakeContainerData = {
+const defaultContainerData = {
     "id": null,
     "link": {
         "href": "#",
@@ -92,7 +99,7 @@ const fakeContainerData = {
     "position": {
         "x": "0%",
         "y": "20px",
-        "type": "absolute"
+        "type": "fixed"
     },
     "dimension": {
         "width": {
@@ -118,7 +125,7 @@ const fakeContainerData = {
     "isCenterHorizontal": true
 }
 
-const fakeAnnouncementData = {
+const defaultFieldsData = {
     "text_1": {
         "text": "<strong class=\"font-semibold\">GeneriCon 2023</strong><svg viewBox=\"0 0 2 2\" class=\"mx-2 inline h-0.5 w-0.5 fill-current\" aria-hidden=\"true\"><circle cx=\"1\" cy=\"1\" r=\"1\" /></svg>Join us in Denver from June 7 – 9 to see what’s coming next&nbsp;<span aria-hidden=\"true\">&rarr;</span>",
         "block_properties": {
@@ -193,8 +200,10 @@ const fakeAnnouncementData = {
     },
     "close_button": {
         "size": "0.5",
-        "text_color": "rgba(0, 0, 0, 0.5)",
         "block_properties": {
+            "text": {
+                "color": "rgba(0, 0, 0, 0.5)",
+            },
             "position": {
                 "x": "97%",
                 "y": "50%",
@@ -207,20 +216,7 @@ const fakeAnnouncementData = {
 // const _parentComponent = ref(null)
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
-const closeIcon = '<svg style="display: inline-block;height:1em;vertical-align:-0.125em;text-align: center;overflow: visible;box-sizing: content-box;width: 1.25em;" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
-
-
-const onDrag = (e, block_properties) => {
-    const parentWidth = props._parentComponent?.clientWidth
-    const parentHeight = props._parentComponent?.clientHeight
-
-    const percentageLeft = e.left / parentWidth * 100
-    const percentageTop = e.top / parentHeight * 100
-
-    // Update position based on the dragging
-    block_properties.position.x = `${percentageLeft}%`
-    block_properties.position.y = `${percentageTop}%`
-}
+// const closeIcon = '<svg style="display: inline-block;height:1em;vertical-align:-0.125em;text-align: center;overflow: visible;box-sizing: content-box;width: 1.25em;" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
 
 onMounted(() => {
 
@@ -229,55 +225,60 @@ onMounted(() => {
 const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
+
 </script>
 
 <template>
     <!-- <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})"> -->
-        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
+        <template v-if="!isToSelectOnly">
+            <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
             
-        </div>
-
-        <Moveable
-            v-if="isEditable"
-            :target="_text_1"
-            :draggable="true"
-            :snapGap="true"
-            :throttleDrag="1"
-            :edgeDraggable="false"
-            :snappable="true"
-            :snapDirections="{top: true, left: true, bottom: true, right: true }"
-            :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
-            :startDragRotate="0"
-            :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties)"
-        />
-        
-        <!-- Close Button -->
-        <button
-            @click="() => onClickClose()"
-            ref="_buttonClose"
-            type="button"
-            class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
-            :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
-        >
-            <span class="sr-only">Dismiss</span>
-            <span v-html="closeIcon"></span>
-        </button>
-
-        <Moveable
-            v-if="isEditable"
-            :target="_buttonClose"
-            :draggable="true"
-            :snapGap="true"
-            :throttleDrag="1"
-            :edgeDraggable="false"
-            :snappable="true"
-            :snapDirections="{top: true, left: true, bottom: true, right: true }"
-            :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
-            :startDragRotate="0"
-            :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
-        />
+            </div>
+            <Moveable
+                v-if="isEditable"
+                :target="_text_1"
+                :draggable="true"
+                :snapGap="true"
+                :throttleDrag="1"
+                :edgeDraggable="false"
+                :snappable="true"
+                :snapDirections="{top: true, left: true, bottom: true, right: true }"
+                :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
+                :startDragRotate="0"
+                :throttleDragRotate="0"
+                @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties, _parentComponent)"
+            />
+            
+            <!-- Close Button -->
+            <button
+                @click="() => onClickClose()"
+                ref="_buttonClose"
+                type="button"
+                class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
+                :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
+            >
+                <span class="sr-only">Dismiss</span>
+                <span v-html="closeIcon"></span>
+            </button>
+            <Moveable
+                v-if="isEditable"
+                :target="_buttonClose"
+                :draggable="true"
+                :snapGap="true"
+                :throttleDrag="1"
+                :edgeDraggable="false"
+                :snappable="true"
+                :snapDirections="{top: true, left: true, bottom: true, right: true }"
+                :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
+                :startDragRotate="0"
+                :throttleDragRotate="0"
+                @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
+            />
+        </template>
     <!-- </div> -->
-
+    <div
+        v-else @click="() => emits('templateClicked', {container: defaultContainerData, fields: defaultFieldsData})"
+        class="inset-0 absolute"
+    >
+    </div>
 </template>

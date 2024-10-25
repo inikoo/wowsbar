@@ -1,11 +1,13 @@
 <script setup lang='ts'>
 import Moveable from "vue3-moveable"
-import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
+import { propertiesToHTMLStyle, onDrag } from '@/Composables/usePropertyWorkshop'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { onMounted, ref } from "vue"
+import { closeIcon } from '@/Composables/useAnnouncement'
 library.add(faTimes)
+
 const props = defineProps<{
     announcementData: {
         fields: {
@@ -15,49 +17,256 @@ const props = defineProps<{
 
         }
     }
+    _parentComponent: Element
     isEditable?: boolean
+    isToSelectOnly?: boolean
 }>()
 
-const _parentComponent = ref(null)
+const emits = defineEmits<{
+    (e: 'templateClicked'): void
+}>()
+
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
-const closeIcon = '<svg class="svg-inline--fa fa-times fa-fw" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path class="" fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>'
 
-
-const onDrag = (e, block_properties) => {
-    const parentWidth = _parentComponent.value?.clientWidth
-    const parentHeight = _parentComponent.value?.clientHeight
-
-    const percentageLeft = e.left / parentWidth * 100
-    const percentageTop = e.top / parentHeight * 100
-    // console.log('kokok', percentageLeft)
-
-    // Update position based on the dragging
-    block_properties.position.x = `${percentageLeft}%`
-    block_properties.position.y = `${percentageTop}%`
-
-    // console.log('111', block_properties.position)
-    // console.log('qqq', e)
-    // position.value.left += e.delta[0]
-    // position.value.top += e.delta[1]
-    // calculatePercentagePosition()
+const defaultContainerData = {
+    "id": null,
+    "link": {
+        "href": "#",
+        "target": "_blank"
+    },
+    "border": {
+        "top": {
+            "value": 0
+        },
+        "left": {
+            "value": 0
+        },
+        "unit": "px",
+        "color": "rgba(243, 243, 243, 1)",
+        "right": {
+            "value": 0
+        },
+        "bottom": {
+            "value": 0
+        },
+        "rounded": {
+            "unit": "px",
+            "topleft": {
+                "value": 0
+            },
+            "topright": {
+                "value": 0
+            },
+            "bottomleft": {
+                "value": 0
+            },
+            "bottomright": {
+                "value": 0
+            }
+        }
+    },
+    "margin": {
+        "top": {
+            "value": 0
+        },
+        "left": {
+            "value": 0
+        },
+        "unit": "px",
+        "right": {
+            "value": 0
+        },
+        "bottom": {
+            "value": 0
+        }
+    },
+    "padding": {
+        "top": {
+            "value": 20
+        },
+        "left": {
+            "value": 20
+        },
+        "unit": "px",
+        "right": {
+            "value": 20
+        },
+        "bottom": {
+            "value": 20
+        }
+    },
+    "position": {
+        "x": "0%",
+        "y": "20px",
+        "type": "fixed"
+    },
+    "dimension": {
+        "width": {
+            "unit": "%",
+            "value": 100
+        },
+        "height": {
+            "unit": "px",
+            "value": "50"
+        }
+    },
+    "background": {
+        "type": "color",
+        "color": "linear-gradient(90deg, rgba(221,245,254,1) 0%, rgba(252,247,255,1) 16%, rgba(255,252,246,1) 35%, rgba(248,240,255,1) 57%, rgba(255,250,246,1) 83%)",
+        "image": {
+            "original": null
+        }
+    },
+    "text": {
+        "color": "rgba(10,10,10,1)",
+        "fontFamily": "Raleway"
+    },
+    "isCenterHorizontal": false
 }
 
-onMounted(() => {
+const defaultFieldsData = {
+    "text_1": {
+        "text": "<p>Pure Ingredients, Pure Health: <strong>20% Off</strong> on Organic Goods!</p>",
+        "block_properties": {
+            "position": {
+                "x": "50%",
+                "y": "50%",
+                "type": "absolute"
+            }
+        }
+    },
+    "text_2": {
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet nisi at elit venenatis fringilla. Cras ut semper quam, sit.</p>",
+        "block_properties": {
+            "position": {
+                "x": "20%",
+                "y": "30%",
+                "type": "absolute"
+            }
+        }
+    },
+    "button_1": {
+        "link": {
+            "type" : "internal",
+            "url": "https://ancientwisdom.biz/showroom",
+            "id": 9,
+            "workshop_route" : ""
+        },
+        "text": '<span style="font-size: 10px"><strong>Claim Now!</strong></span>',
+        "container": {
+            "properties": {
+                "text": {
+                    "color": "rgba(255, 255, 255, 1)",
+                    "fontFamily": null
+                },
+                "background": {
+                    "type": "color",
+                    "color": "rgba(20,20,20,1)",
+                    "image": {
+                        "original": null
+                    }
+                },
+                "padding": {
+                    "unit": "px",
+                    "top": {
+                        "value": 3
+                    },
+                    "left": {
+                        "value": 15
+                    },
+                    "right": {
+                        "value": 15
+                    },
+                    "bottom": {
+                        "value": 3
+                    }
+                },
+                "margin": {
+                    "unit": "px",
+                    "top": {
+                        "value": 0
+                    },
+                    "left": {
+                        "value": 0
+                    },
+                    "right": {
+                        "value": 0
+                    },
+                    "bottom": {
+                        "value": 0
+                    }
+                },
+                "border": {
+                    "color": "#000000",
+                    "unit": "px",
+                    "rounded": {
+                        "unit": "px",
+                        "topright": {
+                            "value": 4
+                        },
+                        "topleft": {
+                            "value": 4
+                        },
+                        "bottomright": {
+                            "value": 4
+                        },
+                        "bottomleft": {
+                            "value": 4
+                        }
+                    },
+                    "top": {
+                        "value": 0
+                    },
+                    "left": {
+                        "value": 0
+                    },
+                    "right": {
+                        "value": 0
+                    },
+                    "bottom": {
+                        "value": 0
+                    }
+                }
+            }
+        }
+    },
+    "close_button": {
+        "size": "0.5",
+        "block_properties": {
+            "text": {
+                "color": "rgba(0, 0, 0, 0.5)",
+            },
+            "position": {
+                "x": "97%",
+                "y": "50%",
+                "type": "absolute"
+            }
+        }
+    }
+}
 
-})
-
+const onClickClose = () => {
+    window.parent.postMessage('close_button_click', '*');
+}
 
 </script>
 
 <template>
-    <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, {toRemove: ['position']})">
-        <div ref="_text_1" class="-translate-x-1/2 -translate-y-1/2 text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
-            
+    <template v-if="!isToSelectOnly">
+        <div class="flex gap-x-4 items-center justify-center w-full">
+            <div ref="_text_1" class="text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties, {toRemove: ['position', 'top', 'left']})">
+    
+            </div>
+            <button
+                @click="() => onClickClose()"
+                v-html="announcementData.fields.button_1.text"
+                class="inline-flex items-center"
+                :style="propertiesToHTMLStyle(announcementData.fields?.button_1?.container?.properties)"
+            >
+            </button>
         </div>
-
-        <!-- <pre>{{ propertiesToHTMLStyle(announcementData.fields.text_1.block_properties) }}</pre> -->
-
+        
         <Moveable
             v-if="isEditable"
             :target="_text_1"
@@ -70,20 +279,19 @@ onMounted(() => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties)"
+            @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties, _parentComponent)"
         />
-        
+    
         <!-- Close Button -->
         <button
             ref="_buttonClose"
             type="button"
-            class="flex flex-1 justify-end p-2 -translate-x-1/2 -translate-y-1/2"
+            class="p-2 -translate-x-1/2 -translate-y-1/2"
             :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
         >
             <span class="sr-only">Dismiss</span>
             <span v-html="closeIcon"></span>
         </button>
-
         <Moveable
             v-if="isEditable"
             :target="_buttonClose"
@@ -98,6 +306,12 @@ onMounted(() => {
             :throttleDragRotate="0"
             @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
         />
+    </template>
+
+    <div
+        v-else @click="() => emits('templateClicked', {container: defaultContainerData, fields: defaultFieldsData})"
+        class="inset-0 absolute"
+    >
     </div>
 
 </template>
