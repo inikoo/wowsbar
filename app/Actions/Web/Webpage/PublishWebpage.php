@@ -71,7 +71,6 @@ class PublishWebpage
 
         $compiledLayout = $snapshot->compiledLayout();
 
-
         $updateData = [
             'live_snapshot_id'   => $snapshot->id,
             'compiled_layout'    => $compiledLayout,

@@ -58,7 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  * @property-read Model|\Eloquent $parent
  * @property-read SalesStats|null $salesStats
- * @property-read Shop $shop
+ * @property-read Shop|null $shop
  * @property-read \App\Models\Catalogue\ProductStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
  * @method static Builder|Product newModelQuery()

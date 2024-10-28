@@ -140,6 +140,8 @@ class Snapshot extends Model
             case 'Website':
             case 'Webpage':
                 return Arr::get($this->layout, 'html');
+            case 'Announcement':
+                return $this->layout;
             default:
                 return [];
         }

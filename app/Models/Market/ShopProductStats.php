@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $shop_product_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Market\ShopProduct $product
+ * @property-read \App\Models\Market\ShopProduct|null $product
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProductStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProductStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProductStats query()

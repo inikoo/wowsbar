@@ -69,12 +69,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $home_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read mixed $condition
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read \App\Models\Web\Webpage|null $home
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count
- * @property-read Snapshot $liveSnapshot
+ * @property-read Snapshot|null $liveSnapshot
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count

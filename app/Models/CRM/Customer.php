@@ -80,7 +80,7 @@ use Spatie\Tags\HasTags;
  * @property-read int|null $audits_count
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
- * @property-read Currency $currency
+ * @property-read Currency|null $currency
  * @property-read Collection<int, CustomerUser> $customerUsers
  * @property-read int|null $customer_users_count
  * @property-read Collection<int, \App\Models\CRM\CustomerWebpage> $customerWebpages

@@ -52,7 +52,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_success_status_invoiced
  * @property int $number_prospects_dont_contact_me
  * @property int $number_portfolio_webpages
- * @property-read \App\Models\Portfolio\PortfolioWebsite $website
+ * @property-read \App\Models\Portfolio\PortfolioWebsite|null $website
  * @method static Builder|PortfolioWebsiteStats newModelQuery()
  * @method static Builder|PortfolioWebsiteStats newQuery()
  * @method static Builder|PortfolioWebsiteStats query()

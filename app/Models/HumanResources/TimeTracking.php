@@ -23,8 +23,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $subject_type Employee|Guest
  * @property int $subject_id
  * @property int|null $workplace_id
- * @property \Carbon\Carbon|null $starts_at
- * @property \Carbon\Carbon|null $ends_at
+ * @property \Illuminate\Support\Carbon|null $starts_at
+ * @property \Illuminate\Support\Carbon|null $ends_at
  * @property int|null $start_clocking_id
  * @property int|null $end_clocking_id
  * @property \Illuminate\Support\Carbon|null $created_at
