@@ -51,7 +51,6 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         Route::delete('', DeletePortfolioWebsite::class)->name('delete');
         Route::post('banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('banner.store');
         Route::post('interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
-        Route::post('/', [StoreAnnouncement::class, 'inCustomer'])->name('announcement.store');
     });
 });
 
@@ -60,6 +59,7 @@ Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('from-gallery', [StoreBanner::class, 'fromGallery'])->name('store.from-gallery');
 
     Route::prefix('announcements')->name('announcement.')->group(function () {
+        Route::post('/', [StoreAnnouncement::class, 'inCustomer'])->name('store');
         Route::post('{announcement}/publish', [PublishAnnouncement::class, 'inCustomer'])->name('publish');
         Route::post('{announcement}', [UpdateAnnouncement::class, 'inCustomer'])->name('update');
         Route::post('{announcement}/reset', [ResetAnnouncement::class, 'inCustomer'])->name('reset');

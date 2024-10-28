@@ -12,9 +12,11 @@ use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreAnnouncement
 {
@@ -55,6 +57,13 @@ class StoreAnnouncement
         );
 
         return $announcement;
+    }
+
+    public function htmlResponse(Announcement $announcement): Response
+    {
+        return Inertia::location(route('customer.banners.announcements.show', [
+            'announcement' => $announcement->ulid
+        ]));
     }
 
     public function authorize(ActionRequest $request): bool

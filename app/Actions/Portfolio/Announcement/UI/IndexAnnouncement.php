@@ -11,16 +11,13 @@ use App\Actions\InertiaAction;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Http\Resources\Portfolio\BannersResource;
+use App\Http\Resources\Portfolio\AnnouncementsResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Announcement;
 use App\Models\CRM\Customer;
-use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Query\JoinClause;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -65,50 +62,9 @@ class IndexAnnouncement extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Banner::class);
-        $queryBuilder->select(
-            'banners.slug',
-            'banners.state',
-            'banners.name',
-            'banners.image_id',
-            'banners.date'
-        );
-
-        $queryBuilder->join('banner_stats', 'banner_stats.banner_id', 'banners.id')
-            ->addSelect('banner_stats.number_views');
-
-        if (class_basename($parent) == 'PortfolioWebsite') {
-            $queryBuilder->leftJoin('banner_portfolio_website', 'banner_portfolio_website.banner_id', 'banners.id')
-                ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
-        } else {
-
-            $websites = DB::table('banner_portfolio_website')
-                ->select(
-                    'banner_id',
-                    DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites')
-                )
-                ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
-                ->groupBy('banner_portfolio_website.banner_id');
-
-            $queryBuilder->joinSub($websites, 'websites', function (JoinClause $join) {
-                $join->on('banners.id', '=', 'websites.banner_id');
-            });
-            $queryBuilder->addSelect('websites');
-        }
-
-        foreach ($this->getElementGroups() as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
-
+        $queryBuilder = QueryBuilder::for(Announcement::class);
 
         return $queryBuilder
-            ->defaultSort('-date')
-            ->allowedSorts(['name', 'date', 'number_views'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -128,57 +84,12 @@ class IndexAnnouncement extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->getElementGroups() as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
-            }
-
-            $action = null;
-
-            $description = null;
-            if ($canEdit) {
-                if (customer()->portfolioStats->number_portfolio_websites == 0) {
-                    $description = __('Before creating your first banner you need a website').' 😉';
-
-                    $action = [
-                        'type'    => 'button',
-                        'style'   => 'primary',
-                        'tooltip' => __('new website'),
-                        'label'   => __('website'),
-                        'route'   => [
-                            'name' => 'customer.portfolio.websites.create',
-                        ]
-                    ];
-                }
-            }
-
-            $emptyState = [
-                'title'       => __('No banners found'),
-                'count'       => customer()->portfolioStats->number_banners,
-                'description' => $description,
-                'action'      => $action
-            ];
-
-
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
-                ->withEmptyState($emptyState)
                 ->withExportLinks($exportLinks)
-                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
-                ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'number_views', label: __('views'), sortable: true)
-                ->column(key: 'image_thumbnail', label: ['fal', 'fa-image']);
-            if (class_basename($parent) != 'PortfolioWebsite') {
-                $table->column(key: 'websites', label: __('websites'));
-            }
-
-
-            $table->column(key: 'date', label: __('date'), sortable: true)
-                ->defaultSort('-date');
+                ->column(key: 'code', label: __('code'), sortable: true)
+                ->column(key: 'name', label: __('name'), sortable: true);
         };
     }
 
@@ -209,39 +120,34 @@ class IndexAnnouncement extends InertiaAction
         return $this->handle($this->parent);
     }
 
-
-    public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
+    public function htmlResponse(LengthAwarePaginator $announcements, ActionRequest $request): Response
     {
-        $scope     = $this->parent;
-        $container = null;
-
-
-        if (class_basename($scope) == 'PortfolioWebsite') {
-            $container = [
-                'icon'    => ['fal', 'fa-globe'],
-                'tooltip' => __('website'),
-                'label'   => Str::possessive($scope->name)
-            ];
-        }
-
-
         return Inertia::render(
             'Banners/Announcements',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->getName(),
-                    $request->route()->parameters
-                ),
-                'title'       => __('Announcement'),
+                'breadcrumbs' => [],
+                'title'       => __('Announcements'),
                 'pageHead'    => [
-                    'title'     => __('Announcement'),
-                    'container' => $container,
+                    'title'     => __('Announcements'),
                     'iconRight' => [
-                        // 'title' => __('banner'),
-                        'icon'  => 'fal fa-sign'
+                         'title' => __('announcements'),
+                        'icon'   => 'fal fa-sign'
                     ],
+                    'actions'   =>
+                        [
+                            [
+                                'type'    => 'button',
+                                'style'   => 'create',
+                                'tooltip' => __('new announcement'),
+                                'label'   => __('announcement'),
+                                'route'   => [
+                                    'name'       => 'customer.banners.announcements.create',
+                                    'parameters' => []
+                                ]
+                            ]
+                        ]
                 ],
-                'data' => BannersResource::collection($banners),
+                'data' => AnnouncementsResource::collection($announcements)
             ]
         )->table(
             $this->tableStructure(

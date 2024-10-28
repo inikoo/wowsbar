@@ -9,28 +9,17 @@ import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe,faImage } from '@fal'
-import TableBanners from "@/Components/Tables/TableBanners.vue"
-import FirstBannerWidget from '@/Components/EmptyState/FirstBannerWidget.vue'
-
-
-library.add(faGlobe,faImage)
+import TableBanners from "@/Components/Tables/TableBanners.vue";
+import TableAnnouncements from "@/Components/Tables/TableAnnouncements.vue";
+import {Banner} from "@/types/banner";
 
 const props = defineProps<{
-    pageHead: object
+    pageHead: {}
     title: string
-    data: object
-    firstBanner?: {
-        text: string
-        createRoute: {
-            name: string
-            parameters?: any[]
-        }
-    }
+    data: {}
 }>()
 
-const isOpen = ref(false)
+const isModalOpen = ref(false)
 </script>
 
 <template layout="CustomerApp">
@@ -38,7 +27,5 @@ const isOpen = ref(false)
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 
-    <FirstBannerWidget v-if="firstBanner" :data="firstBanner" />
-    <TableBanners v-else :data="data" />
+    <TableAnnouncements :data="data" />
 </template>
-
