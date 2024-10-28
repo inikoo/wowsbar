@@ -52,7 +52,7 @@ function mergeData(data1: {}, data2: {}) {
     // const data1a = toRaw(data1)
     // const data2a = toRaw(data2)
 
-    console.log('data1', data1)
+    // console.log('data1', data1)
 
     // for (const key in data2a) {
     //     console.log('keey', key)
@@ -66,7 +66,7 @@ function mergeData(data1: {}, data2: {}) {
     // }
 
     for (const key in data2) {
-        console.log('keey', key)
+        // console.log('keey', key)
         if (data1.hasOwnProperty(key)) {
             // Only replace properties other than .text
             for (const prop in data2[key]) {
@@ -80,13 +80,13 @@ function mergeData(data1: {}, data2: {}) {
         }
     }
 
-    console.log('data 111', data1)
+    // console.log('data 111', data1)
     // return data1a;
 }
 
 const onSelectTemplate = (template, templateCode) => {
-    console.log('template', template.fields)
-    console.log('core announce data', announcementData.fields)
+    console.log('template', template.container)
+    console.log('core announce data', announcementData.container_properties)
 
     announcementData.code = templateCode
     
@@ -94,12 +94,12 @@ const onSelectTemplate = (template, templateCode) => {
     mergeData(announcementData.container_properties, template.container)
     // announcementData.container_properties = mergedContainer
 
-    console.log('onSelectTempalte', announcementData)
+    // console.log('onSelectTempalte', announcementData)
 
     mergeData(announcementData.fields, template.fields)
     // announcementData.fields = mergedFields
 
-    console.log('onSelectTempalte', announcementData)
+    // console.log('onSelectTempalte', announcementData)
 }
 
 const fetchAnnouncementList = async () => {
@@ -161,7 +161,7 @@ onMounted(() => {
                                 announ.code == announcementData.code ? 'bg-indigo-500' : 'hover:bg-gray-100'
                             ]"
                         >
-                        {{ announcementData.code }}
+                        <!-- {{ announcementData.code }} -->
                             <Image :src="announ.source" />
                             
                             <component
