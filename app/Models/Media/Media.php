@@ -39,7 +39,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property int|null $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $extension
+ * @property-read mixed $human_readable_size
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
+ * @property-read mixed $original_url
+ * @property-read mixed $preview_url
+ * @property-read mixed $type
  * @method static MediaCollection<int, static> all($columns = ['*'])
  * @method static MediaCollection<int, static> get($columns = ['*'])
  * @method static Builder|Media newModelQuery()

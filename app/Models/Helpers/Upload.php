@@ -34,7 +34,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\UploadRecord> $records
  * @property-read int|null $records_count
- * @property-read OrganisationUser $user
+ * @property-read OrganisationUser|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Upload newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Upload query()

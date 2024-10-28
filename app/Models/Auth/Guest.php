@@ -55,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Auth\OrganisationUser|null $organisationUser
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Task> $tasks
  * @property-read int|null $tasks_count
+ * @property-read TimeTracking|null $timeTracking
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Auth\GuestFactory factory($count = null, $state = [])
  * @method static Builder|Guest newModelQuery()

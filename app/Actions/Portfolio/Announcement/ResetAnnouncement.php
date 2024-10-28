@@ -15,7 +15,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UpdateAnnouncement
+class ResetAnnouncement
 {
     use AsAction;
     use WithAttributes;
@@ -27,31 +27,13 @@ class UpdateAnnouncement
     private string $scope;
     private Customer $customer;
 
-    public function handle(Announcement $announcement, array $modelData): void
+
+    public function handle(Announcement $announcement): void
     {
-        $snapshot = $announcement->unpublishedSnapshot;
-
-        $snapshot->update(
-            [
-                'layout' => [
-                    'channel_properties'  => $modelData['channel_properties'],
-                    'fields'              => $modelData['fields']
-                ]
-            ]
-        );
-
-        $isDirty = true;
-        if ($announcement->published_checksum == md5(json_encode($snapshot->layout))) {
-            $isDirty = false;
-        }
-
-        $announcement->update(
-            [
-                'is_dirty' => $isDirty
-            ]
-        );
-
-        $this->update($announcement, $modelData);
+        $this->update($announcement, [
+            'unpublished_snapshot_id' => $announcement->live_snapshot_id,
+            'is_dirty'                => false
+        ]);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -63,21 +45,11 @@ class UpdateAnnouncement
         return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
-    public function rules(): array
-    {
-        return [
-            'code'                 => ['sometimes', 'string'],
-            'fields'               => ['sometimes', 'array'],
-            'container_properties' => ['sometimes', 'array']
-        ];
-    }
-
     public function inCustomer(Announcement $announcement, ActionRequest $request): void
     {
         $this->scope    = 'customer';
         $this->customer = $request->get('customer');
-        $request->validate();
 
-        $this->handle($announcement, $request->validated());
+        $this->handle($announcement);
     }
 }

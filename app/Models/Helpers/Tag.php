@@ -27,6 +27,7 @@ use Spatie\Tags\Tag as BaseTag;
  * @property string|null $tag_slug
  * @property string|null $label
  * @property-read \App\Models\Helpers\TagCrmStats|null $crmStats
+ * @property-read mixed $translations
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|Tag containing(string $name, $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
@@ -35,6 +36,8 @@ use Spatie\Tags\Tag as BaseTag;
  * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
+ * @method static Builder|Tag whereJsonContainsLocale(string $column, string $locale, ?mixed $value, string $operand = '=')
+ * @method static Builder|Tag whereJsonContainsLocales(string $column, array $locales, ?mixed $value, string $operand = '=')
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLabel($value)
  * @method static Builder|Tag whereLocale(string $column, string $locale)
  * @method static Builder|Tag whereLocales(string $column, array $locales)

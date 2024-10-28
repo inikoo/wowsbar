@@ -79,7 +79,7 @@ use Spatie\Tags\HasTags;
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read \App\Models\Assets\Country $country
+ * @property-read \App\Models\Assets\Country|null $country
  * @property-read Customer|null $customer
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner

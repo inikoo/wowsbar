@@ -26,11 +26,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property TransactionStateEnum $state
  * @property TransactionStatusEnum $status
  * @property TransactionTypeEnum $type
- * @property-read Customer $customer
+ * @property-read Customer|null $customer
  * @property-read Model|\Eloquent $item
  * @property-read \App\Models\OMS\Order|null $order
  * @property-write mixed $quantity
- * @property-read Shop $shop
+ * @property-read Shop|null $shop
  * @method static Builder|Transaction newModelQuery()
  * @method static Builder|Transaction newQuery()
  * @method static Builder|Transaction onlyTrashed()

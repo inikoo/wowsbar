@@ -10,6 +10,8 @@ use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Media\Media\ImageGenerator;
+use App\Actions\Portfolio\Announcement\PublishAnnouncement;
+use App\Actions\Portfolio\Announcement\ResetAnnouncement;
 use App\Actions\Portfolio\Announcement\UpdateAnnouncement;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -56,7 +58,9 @@ Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('from-gallery', [StoreBanner::class, 'fromGallery'])->name('store.from-gallery');
 
     Route::prefix('announcements')->name('announcement.')->group(function () {
+        Route::post('{announcement}/publish', [PublishAnnouncement::class, 'inCustomer'])->name('publish');
         Route::post('{announcement}', [UpdateAnnouncement::class, 'inCustomer'])->name('update');
+        Route::post('{announcement}/reset', [ResetAnnouncement::class, 'inCustomer'])->name('reset');
     });
 
     Route::name('workshop.')->prefix('workshop')

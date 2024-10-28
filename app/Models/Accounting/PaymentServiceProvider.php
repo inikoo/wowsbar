@@ -37,6 +37,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Country> $countries
  * @property-read int|null $countries_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\Payment> $payments
  * @property-read int|null $payments_count
  * @property-read \App\Models\Accounting\PaymentServiceProviderStats|null $stats

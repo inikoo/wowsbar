@@ -78,8 +78,20 @@ class ShowAnnouncement extends InertiaAction
                         'icon'  => 'fal fa-sign'
                     ],
                 ],
-                'store_route' => [
+                'publish_route' => [
+                    'name'        => 'customer.models.banner.announcement.publish',
+                    'parameters'  => [
+                        'announcement' => $announcement->id
+                    ]
+                ],
+                'update_route' => [
                     'name'        => 'customer.models.banner.announcement.update',
+                    'parameters'  => [
+                        'announcement' => $announcement->id
+                    ]
+                ],
+                'reset_route' => [
+                    'name'        => 'customer.models.banner.announcement.reset',
                     'parameters'  => [
                         'announcement' => $announcement->id
                     ]
