@@ -7,10 +7,12 @@
 
 namespace App\Actions\Portfolio\Announcement;
 
+use App\Actions\Helpers\Snapshot\StoreWebpageSnapshot;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -31,12 +33,29 @@ class StoreAnnouncement
     public function handle(Customer|PortfolioWebsite $parent, array $modelData): Announcement
     {
         $this->parent = $parent;
-        $customer     = customer();
 
         data_set($modelData, 'ulid', Str::ulid());
 
-        /** @var Banner $banner */
-        return Announcement::create($modelData);
+        $announcement = Announcement::create($modelData);
+
+        $snapshot = StoreWebpageSnapshot::run(
+        $announcement,
+        [
+            'layout' => [
+                'channel_properties'  => '',
+                'fields'              => ''
+            ]
+        ],
+        );
+
+        $announcement->update(
+            [
+                'unpublished_snapshot_id' => $snapshot->id,
+                'fields'                  => Arr::get($snapshot->layout, 'fields'),
+                'container_properties'    => Arr::get($snapshot->layout, 'container_properties'),
+            ]
+        );
+        return $announcement;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -57,11 +76,6 @@ class StoreAnnouncement
             'fields'               => ['required', 'array'],
             'container_properties' => ['required', 'array']
         ];
-    }
-
-    public function htmlResponse(Announcement $announcement): \Illuminate\Http\Response
-    {
-        //
     }
 
     public function inCustomer(ActionRequest $request): Announcement

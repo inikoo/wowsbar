@@ -12,6 +12,7 @@ use App\Actions\Auth\User\StoreUser;
 use App\Actions\Media\Media\ImageGenerator;
 use App\Actions\Portfolio\Announcement\PublishAnnouncement;
 use App\Actions\Portfolio\Announcement\ResetAnnouncement;
+use App\Actions\Portfolio\Announcement\StoreAnnouncement;
 use App\Actions\Portfolio\Announcement\UpdateAnnouncement;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -50,6 +51,7 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         Route::delete('', DeletePortfolioWebsite::class)->name('delete');
         Route::post('banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('banner.store');
         Route::post('interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
+        Route::post('/', [StoreAnnouncement::class, 'inCustomer'])->name('announcement.store');
     });
 });
 
