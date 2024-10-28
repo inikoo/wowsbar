@@ -220,7 +220,8 @@ const _parentComponent = ref(null)
 
                 <!-- Section: Screenview -->
                 <div class="flex">
-                    <ScreenView @screenView="setIframeView" />
+                    <ScreenView @screenView="false" />
+                    
                     <a
                         :href="`http://delivery.wowsbar.test/announcement/${announcementData.ulid}?iframe=true`"
                         target="_blank"
@@ -249,6 +250,7 @@ const _parentComponent = ref(null)
                         <component
                             :is="getAnnouncementComponent(announcementData.code)"
                             :announcementData="announcementData"
+                            :key="announcementData.code"
                             isEditable
                             :_parentComponent
                         />
@@ -265,12 +267,10 @@ const _parentComponent = ref(null)
                 :currentTopbar="usedTemplates.topBar"
             /> -->
 
-            <AnnouncementTemplateList
-                :announcementList
-                :onPickBlock="onPickBlock"
-                :webBlockTypes="webBlockTypeCategories"
-                scope="webpage"
-            />
+            <div class="h-[500px]">
+                <AnnouncementTemplateList
+                />
+            </div>
         </Modal>
 
     </div>

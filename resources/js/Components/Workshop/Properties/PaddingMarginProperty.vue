@@ -12,7 +12,7 @@ library.add(faBorderTop, faBorderLeft, faBorderBottom, faBorderRight, faBorderOu
 const model = defineModel()
 const props = defineProps<{
     scope?: string
-    additionalData: {
+    additionalData?: {
         [key: string]: {
             disabled: boolean
             tooltip: string

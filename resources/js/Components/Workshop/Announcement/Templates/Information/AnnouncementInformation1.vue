@@ -209,6 +209,11 @@ const defaultFieldsData = {
         }
     }
 }
+const componentDefaultData = {
+    code: 'announcement-information-1',
+    fields: defaultFieldsData,
+    container_properties: defaultContainerData
+}
 
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
@@ -272,7 +277,7 @@ const onClickClose = () => {
         </template>
     <!-- </div> -->
     <div
-        v-else @click="() => emits('templateClicked', {container: defaultContainerData, fields: defaultFieldsData})"
+        v-else @click="() => emits('templateClicked', componentDefaultData)"
         class="inset-0 absolute"
     >
     </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, inject, toRaw } from 'vue';
+import { ref, onMounted, inject, toRaw, isProxy } from 'vue';
 import { faPresentation, faCube, faText, faImage, faImages, faPaperclip, faShoppingBasket, faStar, faHandHoldingBox, faBoxFull, faBars, faBorderAll, faLocationArrow} from "@fal"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -12,6 +12,9 @@ import axios from 'axios'
 import { notify } from '@kyvg/vue3-notification'
 import Image from '@/Components/Image.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import { AnnouncementData } from '@/types/Announcement'
+import Checkbox from 'primevue/checkbox'
 
 
 
@@ -24,9 +27,13 @@ const props = withDefaults(defineProps<{
     scope: "all",
 })
 
-const announcementData = inject('announcementData', {})
+const announcementData = inject<AnnouncementData | null>('announcementData', null)
+console.log('qqq', announcementData)
 
-const announcements_list = ref(null)
+const announcements_list = ref<AnnouncementData[] | null>(null)
+const currentTopbarCode = ref(null)
+const selectedTemplate = ref(announcementData || null)
+const isSelectFullTemplate = ref(false)
 
 // const fake_templates = [
 //     {
@@ -84,24 +91,27 @@ function mergeData(data1: {}, data2: {}) {
     // return data1a;
 }
 
-const onSelectTemplate = (template, templateCode) => {
-    console.log('template', template.container)
-    console.log('core announce data', announcementData.container_properties)
-
-    announcementData.code = templateCode
+const onSubmitTemplate = (template) => {
+    // console.log('template', template)
+    // console.log('core announce data', isProxy(announcementData))
+    if(isSelectFullTemplate.value) {
+        announcementData.code = template.code
+        announcementData.fields = template.fields
+        announcementData.container_properties = template?.container_properties
+    } else {
+        announcementData.code = template.code
     
+        // mergeData(announcementData.container_properties, template.container)
+        announcementData.container_properties = template.container_properties
+    
+        mergeData(announcementData.fields, template.fields)
+    }
 
-    mergeData(announcementData.container_properties, template.container)
-    // announcementData.container_properties = mergedContainer
-
-    // console.log('onSelectTempalte', announcementData)
-
-    mergeData(announcementData.fields, template.fields)
-    // announcementData.fields = mergedFields
 
     // console.log('onSelectTempalte', announcementData)
 }
 
+// Method: fetch announcement list
 const fetchAnnouncementList = async () => {
     try {
         const response = await axios.get(
@@ -110,8 +120,6 @@ const fetchAnnouncementList = async () => {
 
         console.log('respo', response.data)
         announcements_list.value = response.data.data
-        // templates.value = Object.values(response.data)
-        // loadingState.value = false
     } catch (error) {
         console.log(error)
         notify({
@@ -131,7 +139,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex border rounded-xl overflow-hidden">
+
+    <div class="flex justify-between items-center mb-2 border-b border-gray-200 pb-2">
+        <div class="text-2xl font-medium">
+            Announcement Templates
+        </div>
+        <div>
+            <Button @click="() => onSubmitTemplate(selectedTemplate)" label="Submit" :disabled="!selectedTemplate" />
+        </div>
+    </div>
+
+    <div class="h-full flex gap-x-8 border rounded-xl overflow-hidden">
         <nav class="w-1/5 bg-gray-100 py-4" aria-label="Sidebar">
             <ul role="list" class="space-y-1">
             
@@ -147,7 +165,61 @@ onMounted(() => {
             </ul>
         </nav>
 
-        <div class="flex-1 p-4">
+
+        <section class="h-full mx-auto w-full pr-8 overflow-y-auto py-4">
+            <div class="relative grid gap-y-8 gap-x-4 overflow-y-auto overflow-x-hidden">
+                <div v-for="announcement in announcements_list"
+                    :key="announcement.code"
+                    class="cursor-pointer overflow-hidden h-fit group flex flex-col gap-x-2 relative isolate"
+                    
+                >
+                    <div class="mb-1 w-fit"
+                        :class="announcement.code === currentTopbarCode ? 'text-indigo-500 font-semibold shadow-xl' : 'bg-white'"
+                    >
+                        <div v-if="announcement.icon" class="flex items-center justify-center">
+                            <FontAwesomeIcon :icon='announcement.icon' class='' fixed-width aria-hidden='true' />
+                        </div>
+
+                        <h3 class="text-sm">
+                            {{ announcement.code }} <span v-if="announcement.code === announcementData?.code">(active)</span>
+                        </h3>
+                    </div>
+
+                    <div
+                        class="group relative min-h-16 max-h-20 w-full aspect-[4/1] overflow-hidden flex items-center bg-gray-100 justify-center rounded cursor-pointer"
+                        :class="[
+                            announcement.code == selectedTemplate?.code ? 'border border-indigo-500' : 'border border-gray-300 hover:border-indigo-500'
+                        ]"
+                    >
+                        <div class="w-auto shadow-md">
+                            <Image :src="announcement.source" class="object-contain"/>
+                        </div>
+
+                        <!-- Checkbox: Full template -->
+                        <div @click="() => isSelectFullTemplate = !isSelectFullTemplate"
+                            class="z-40 text-gray-400 hover:text-gray-700 items-center gap-x-3 absolute top-1.5 right-3"
+                            :class="isSelectFullTemplate ? 'flex' : 'hidden group-hover:flex'"
+                        >
+                            <Checkbox :modelValue="isSelectFullTemplate" inputId="selectFullTempalte" name="selectFullTempalte" binary />
+                            <span class="cursor-pointer select-none">{{ trans('Full template') }} </span>
+                        </div>
+                    </div>
+
+                    <!-- Component: clickable -->
+                    <component
+                        :is="getAnnouncementComponent(announcement.code)"
+                        isToSelectOnly
+                        @templateClicked="(dataTemplate: {}) => (selectedTemplate = dataTemplate)"
+                        class="z-30"
+                    />
+
+                    
+                </div>
+            </div>
+        </section>
+
+
+        <!-- <div class="flex-1 p-4">
             <section aria-labelledby="products-heading" class="h-full mx-auto w-full sm:px-6 lg:px-8">
                 <TransitionGroup tag="div" name="zzz"
                     class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 gap-x-4">
@@ -161,23 +233,18 @@ onMounted(() => {
                                 announ.code == announcementData.code ? 'bg-indigo-500' : 'hover:bg-gray-100'
                             ]"
                         >
-                        <!-- {{ announcementData.code }} -->
                             <Image :src="announ.source" />
                             
                             <component
                                 :is="getAnnouncementComponent(announ.code)"
                                 isToSelectOnly
-                                @templateClicked="(dataTemplate) => onSelectTemplate(dataTemplate, announ.code)"
+                                @templateClicked="(dataTemplate) => onSubmitTemplate(dataTemplate, announ.code)"
                                 class="z-50"
                             />
 
                             <div class="flex items-end absolute h-1/2 bottom-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent w-full truncate text-xs pl-1 pb-1 text-white">
                                 {{ announ.code }}
                             </div>
-                            
-                            <!-- <h3 class="text-sm font-medium">
-                                {{ announ.name }}
-                            </h3> -->
                         </div>
                     </template>
 
@@ -186,7 +253,7 @@ onMounted(() => {
                     </div>
                 </TransitionGroup>
             </section>
-        </div>
+        </div> -->
     </div>
 </template>
 
