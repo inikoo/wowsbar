@@ -52,7 +52,7 @@ Route::name('banners.')->prefix('cms')->group(function () {
     });
 });
 
-Route::name('announcement.')->prefix('announcement')->group(function () {
+Route::name('announcement.')->prefix('announcements')->group(function () {
     Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
     Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
     Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');

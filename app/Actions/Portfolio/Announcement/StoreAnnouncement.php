@@ -7,12 +7,10 @@
 
 namespace App\Actions\Portfolio\Announcement;
 
-use App\Actions\Helpers\Snapshot\StoreWebpageSnapshot;
+use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
-use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\PortfolioWebsite;
-use Illuminate\Support\Arr;
+use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -25,36 +23,37 @@ class StoreAnnouncement
 
     private bool $asAction = false;
 
-    private Customer|PortfolioWebsite $parent;
+    private Customer $parent;
     private string $scope;
     private Customer $customer;
 
+    public $commandSignature = 'announcement:create {customer}';
 
-    public function handle(Customer|PortfolioWebsite $parent, array $modelData): Announcement
+    public function handle(Customer $parent, array $modelData): Announcement
     {
         $this->parent = $parent;
 
         data_set($modelData, 'ulid', Str::ulid());
 
-        $announcement = Announcement::create($modelData);
+        /** @var Announcement $announcement */
+        $announcement = $parent->announcements()->create($modelData);
 
-        $snapshot = StoreWebpageSnapshot::run(
-        $announcement,
-        [
-            'layout' => [
-                'channel_properties'  => '',
-                'fields'              => ''
-            ]
-        ],
+        $snapshot = StoreAnnouncementSnapshot::run(
+            $announcement,
+            [
+                'layout' => [
+                    'container_properties'  => null,
+                    'fields'                => null
+                ]
+            ],
         );
 
         $announcement->update(
             [
-                'unpublished_snapshot_id' => $snapshot->id,
-                'fields'                  => Arr::get($snapshot->layout, 'fields'),
-                'container_properties'    => Arr::get($snapshot->layout, 'container_properties'),
+                'unpublished_snapshot_id' => $snapshot->id
             ]
         );
+
         return $announcement;
     }
 
@@ -70,11 +69,7 @@ class StoreAnnouncement
     public function rules(): array
     {
         return [
-            'code'                 => ['required', 'string'],
-            'name'                 => ['required', 'string', 'max:255'],
-            'icon'                 => ['required', 'string'],
-            'fields'               => ['required', 'array'],
-            'container_properties' => ['required', 'array']
+            'name'                 => ['required', 'string', 'max:255']
         ];
     }
 
@@ -89,14 +84,22 @@ class StoreAnnouncement
         return $this->handle($parent, $request->validated());
     }
 
-    public function action(PortfolioWebsite $portfolioWebsite, array $objectData): Announcement
+    public function asCommand(Command $command)
     {
-        $this->customer = $portfolioWebsite->customer;
-        data_set($objectData, 'portfolio_website_id', $portfolioWebsite->id);
+        $customer = Customer::where('slug', $command->argument('customer'))->first();
+
+        $this->handle($customer, [
+            'name' => "Vika Announcement's"
+        ]);
+    }
+
+    public function action(Customer $customer, array $objectData): Announcement
+    {
+        $this->customer = $customer;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
 
         $validatedData = $this->validateAttributes();
-        return $this->handle($portfolioWebsite, $validatedData);
+        return $this->handle($customer, $validatedData);
     }
 }

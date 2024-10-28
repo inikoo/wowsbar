@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap(
             [
                 'Organisation'           => 'App\Models\SysAdmin\Organisation',
+                'Announcement'           => 'App\Models\Announcement',
                 'User'                   => 'App\Models\Auth\User',
                 'PortfolioWebsite'       => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'                 => 'App\Models\Portfolio\Banner',

@@ -226,7 +226,7 @@ class IndexAnnouncement extends InertiaAction
 
 
         return Inertia::render(
-            'Banners/Announcement',
+            'Banners/Announcements',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -241,10 +241,7 @@ class IndexAnnouncement extends InertiaAction
                         'icon'  => 'fal fa-sign'
                     ],
                 ],
-                'firstBanner'      => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
-
-
-                // 'data' => BannersResource::collection($banners),
+                'data' => BannersResource::collection($banners),
             ]
         )->table(
             $this->tableStructure(
