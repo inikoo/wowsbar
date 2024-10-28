@@ -29,10 +29,6 @@ import Moveable from "vue3-moveable"
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
 
 const props = defineProps<{
-    webpage: RootWebpage
-    webBlockTypeCategories: Root
-    isLoadingDelete: string | null
-    isAddBlockLoading: string | null
 }>()
 
 const selectedBlockOpenPanel = ref<string | null>('container')

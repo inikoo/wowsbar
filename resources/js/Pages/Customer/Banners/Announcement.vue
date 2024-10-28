@@ -44,7 +44,7 @@ const props = defineProps<{
             parameters?: any[]
         }
     }
-    announcementData: {
+    announcement_data: {
         code: string
         id: number
         name: string
@@ -100,112 +100,6 @@ const isModalOpen = ref(false)
 const isIframeLoading = ref(false)
 // const _WebpageSideEditor = ref(null)
 
-const isAddBlockLoading = ref<string | null>(null)
-const addNewBlock = async (block: Daum) => {
-    // try {
-    //     const response = router.post(
-    //         route(props.webpage.add_web_block_route.name, props.webpage.add_web_block_route.parameters),
-    //         { web_block_type_id: block.id }
-    //     )
-    //     const set = { ...response.data.data }
-    //     data.value = set
-    // } catch (error: any) {
-    //     console.error('error', error)
-    // }
-    // isAddBlockLoading.value = null
-    router.post(
-        route(props.webpage.add_web_block_route.name, props.webpage.add_web_block_route.parameters),
-        { web_block_type_id: block.id },
-        {
-            onStart: () => isAddBlockLoading.value = 'addBlock' + block.id,
-            onFinish: () => isAddBlockLoading.value = null,
-            onError: (error) => {
-                notify({
-                    title: trans('Something went wrong'),
-                    text: error.message,
-                    type: 'error',
-                })
-            }
-        }
-    )
-}
-
-// const isSavingBlock = ref(false)
-const sendBlockUpdate = async (block: {}) => {
-    // try {
-    //     const response = router.patch(
-    //         route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
-    //         { layout: block.web_block.layout }
-    //     )
-    //     const set = { ...response.data.data }
-    //     data.value = set
-    // } catch (error: any) {
-    //     console.error('error', error)
-    // }
-    // console.log('on send block update')
-
-    // router.post(
-    //     route(props.webpage.update_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
-    //     { layout: block.web_block.layout },
-    //     {
-    //         onStart: () => isSavingBlock.value = true,
-    //         onFinish: () => isSavingBlock.value = false,
-    //         onError: (error) => {
-    //             notify({
-    //                 title: trans('Something went wrong'),
-    //                 text: error.message,
-    //                 type: 'error',
-    //             })
-    //         },
-    //         preserveScroll: true
-    //     },
-    // )
-}
-
-// const sendOrderBlock = async (block: Object) => {
-//     try {
-//         const response = await router.post(
-//             route(props.webpage.reorder_web_blocks_route.name, props.webpage.reorder_web_blocks_route.parameters),
-//             { positions: block }
-//         )
-//         // const set = { ...response.data.data }
-//         // data.value = set
-//     } catch (error: any) {
-//         console.error('error', error)
-//     }
-// }
-
-const isLoadingDelete = ref<string | null>(null)
-const sendDeleteBlock = async (block: {}) => {
-    // console.log('block', block)
-    // isLoading.value = 'deleteBlock' + block.id
-    // try {
-    //     const response = await axios.delete(
-    //         route(props.webpage.delete_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id })
-    //     )
-    //     const set = { ...response.data.data }
-    //     data.value = set
-    // } catch (error: any) {
-    //     console.error('error', error)
-    // }
-
-    router.delete(
-        route(props.webpage.delete_model_has_web_blocks_route.name, { modelHasWebBlocks: block.id }),
-        {
-            onStart: () => isLoadingDelete.value = 'deleteBlock' + block.id,
-            onFinish: () => isLoadingDelete.value = null,
-            onError: (error) => {
-                notify({
-                    title: trans('Something went wrong'),
-                    text: error.message,
-                    type: 'error',
-                })
-            }
-        }
-    )
-    // isLoading.value = false
-}
-
 
 // const onPublish = async (action: {}, popover: {}) => {
 //     try {
@@ -251,12 +145,15 @@ const onSave = (dataToSend: {}) => {
                 saveCancelToken.value = null
             },
             onError: (error) => console.error('======', error),
-            onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel
+            onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel,
+            preserveState: true,
+            preserveScroll: true
         }
     )
 }
 
-provide('announcementData', props.announcementData)
+const announcementData = ref(props.announcement_data)
+provide('announcementData', announcementData.value)
 
 const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailing: true })
 // watch(() => props.announcementData, (newVal) => {
@@ -270,12 +167,12 @@ const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailin
 
 //     // xxx(toRaw(newVal))
 // }, { deep: true })
-console.log('lpcxzlpcxlz', props.announcementData)
 
 
 const isOnPublishState = inject('isOnPublishState')
 const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
+
 </script>
 
 <template layout="CustomerApp">
@@ -306,14 +203,7 @@ const _parentComponent = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor
-                :isLoadingDelete
-                :isAddBlockLoading
-                :webBlockTypeCategories="webBlockTypeCategories"
-                @update="sendBlockUpdate"
-                @delete="sendDeleteBlock"
-                @add="addNewBlock"
-            />
+            <AnnouncementSideEditor />
         </div>
 
         <!-- Section: Preview -->
@@ -365,11 +255,10 @@ const _parentComponent = ref(null)
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 
 
         <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-            isModalOpen
             <!-- <HeaderListModal 
                 :onSelectBlock
                 :webBlockTypes="selectedWebBlock"
@@ -383,5 +272,6 @@ const _parentComponent = ref(null)
                 scope="webpage"
             />
         </Modal>
+
     </div>
 </template>

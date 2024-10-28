@@ -85,7 +85,7 @@ class ShowAnnouncement extends InertiaAction
                     ]
                 ],
                 'firstBanner'       => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
-                'announcementData'  => $announcement->toArray(),
+                'announcement_data'  => $announcement->toArray(),
                 'announcement_list' => []
             ]
         );
