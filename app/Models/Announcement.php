@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Actions\Utils\Abbreviate;
 use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Announcement
@@ -63,7 +60,6 @@ use Spatie\Sluggable\SlugOptions;
 class Announcement extends Model
 {
     use HasFactory;
-    use HasSlug;
 
     protected $guarded = [];
 
@@ -77,17 +73,6 @@ class Announcement extends Model
         'container_properties' => '{}',
         'fields'               => '{}'
     ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom(function () {
-                return Abbreviate::run(string:$this->name);
-            })
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('code')
-            ->slugsShouldBeNoLongerThan(16);
-    }
 
     public function snapshots(): MorphMany
     {
