@@ -57,15 +57,20 @@ const autoSave = async (data: Object) => {
     )
 }
 
-watch(usedTemplates.data.data.footer, 
+/* watch(usedTemplates.data.data.footer, 
   (newVal) => {
     if (saveCancelToken.value) {
         saveCancelToken.value()
     }
+    console.log('fgfgfg',saveCancelToken.value)
       debouncedSendUpdate({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}  });
   },
   { deep: true }
-);
+); */
+
+const updateData = (newVal) => {
+    autoSave({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}});
+}
 
 
 onMounted(() => {
@@ -93,6 +98,7 @@ onUnmounted(() => {
         <Footer1 
             v-model="usedTemplates.data.data.footer" 
             :preview-mode="ToolWorkshop.previewMode"
+            @update:model-value="updateData"
         />
     </div>
 </template>

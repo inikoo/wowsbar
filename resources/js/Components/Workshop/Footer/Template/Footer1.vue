@@ -21,6 +21,10 @@ const props = defineProps<{
     previewMode: Boolean
 }>();
 
+const emits = defineEmits<{
+    (e: 'update:modelValue', value: string | number): void
+}>()
+
 const editable = ref(!props.previewMode)
 const selectedData = ref(null)
 const selectedIndex = ref(null)
@@ -62,6 +66,7 @@ const onDrag = () => {
 const onDrop = () => {
     editable.value = true;
     editKey.value = uuidv4();
+    emits('update:modelValue', props.modelValue)
 }
 
 
@@ -81,15 +86,17 @@ const addSubmenu = () => {
             }
         ]
     }
-
+    emits('update:modelValue', props.modelValue)
 }
 
 const deleteMenu = () => {
     selectedColumn.value.splice(selectedIndex.value, 1)
+    emits('update:modelValue', props.modelValue)
 }
 
 const deleteSubMenu = () => {
     selectedData.value.data.splice(selectedIndex.value, 1)
+    emits('update:modelValue', props.modelValue)
 }
 
 const onRightClickMenu = (event, data, column, index) => {
@@ -120,6 +127,7 @@ const addMenuToColumn = (data) => {
             ],
         },
     )
+    emits('update:modelValue', props.modelValue)
 }
 
 watch(() => props.previewMode, (newStatus, oldStatus) => {

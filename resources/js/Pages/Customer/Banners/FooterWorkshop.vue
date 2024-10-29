@@ -111,7 +111,6 @@ watch(usedTemplates, (newVal) => {
     if (saveCancelToken.value) {
         saveCancelToken.value()
     }
-
     if (newVal) debouncedSendUpdate(newVal)
 
 }, { deep: true })
