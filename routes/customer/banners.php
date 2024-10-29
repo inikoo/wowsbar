@@ -7,6 +7,7 @@
 
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
+use App\Actions\Portfolio\Announcement\UI\CreateAnnouncement;
 use App\Actions\Portfolio\Announcement\UI\ShowAnnouncement;
 use App\Actions\Portfolio\AnnouncementTemplate\UI\IndexAnnouncementTemplates;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
@@ -52,8 +53,9 @@ Route::name('banners.')->prefix('cms')->group(function () {
     });
 });
 
-Route::name('announcement.')->prefix('announcement')->group(function () {
+Route::name('announcements.')->prefix('announcements')->group(function () {
     Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
+    Route::get('create', [CreateAnnouncement::class, 'inCustomer'])->name('create');
     Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
     Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
     // Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('create');

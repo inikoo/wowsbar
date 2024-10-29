@@ -11,6 +11,7 @@ use App\Actions\Utils\Abbreviate;
 use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
+use App\Models\Announcement;
 use App\Models\Assets\Currency;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
@@ -306,6 +307,11 @@ class Customer extends Model implements HasMedia, Auditable
     public function appointment(): HasMany
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class);
     }
 
     public function scopedProspects(): MorphMany

@@ -131,8 +131,8 @@ class GetLayout
                 'scope'     => 'announcement',
                 'icon'      => ['fal', 'fa-sign'],
                 'label'     => __('Announcement'),
-                'route'     => 'customer.banners.announcement.index',
-                'root'      => 'customer.banners.announcement.index',
+                'route'     => 'customer.banners.announcements.index',
+                'root'      => 'customer.banners.announcements.index',
                 // 'topMenu' => [
                 //     'subSections' => [
 
