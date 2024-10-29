@@ -24,7 +24,7 @@ const props = defineProps<{
 const saveCancelToken = ref<Function | null>(null)
 const socketLayout = SocketFooter();
 const usedTemplates = reactive({ data : props.footer.data ?  {...props.footer.data} : footerTheme1 })
-const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
+const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: false, trailing: true })
 const ToolWorkshop = ref({
     previewMode: false,
 })
@@ -69,7 +69,7 @@ const autoSave = async (data: Object) => {
 ); */
 
 const updateData = (newVal) => {
-    autoSave({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}});
+    debouncedSendUpdate({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}  });
 }
 
 
