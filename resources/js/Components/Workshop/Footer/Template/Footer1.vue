@@ -102,7 +102,7 @@ const onRightClickMenu = (event, data, column, index) => {
 const onRightClickSubMenu = (event, data, column, index) => {
     selectedData.value = data;
     selectedIndex.value = index,
-        selectedColumn.value = column
+    selectedColumn.value = column
     subMenu.value.show(event);
 };
 
@@ -111,7 +111,6 @@ const selectAllEditor = (editor: any) => {
 }
 
 const addMenuToColumn = (data) => {
-    console.log(data)
     data.push(
         {
             name: "New Menu",
