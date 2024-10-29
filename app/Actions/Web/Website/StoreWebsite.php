@@ -76,6 +76,11 @@ class StoreWebsite
                 ]
             ]
         );
+
+        $website->footer()->create([
+            'compiled_layout' => $footerSnapshot->compiledLayout()
+        ]);
+
         SetInitialWebsiteLogo::dispatch($website);
         $website->webStats()->create();
 
