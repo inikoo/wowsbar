@@ -18,6 +18,7 @@ use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasLogo;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\WebsiteFooter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -194,6 +195,11 @@ class Website extends Model implements Auditable, HasMedia
     public function webStats(): HasOne
     {
         return $this->hasOne(WebsiteStats::class);
+    }
+
+    public function footer(): HasOne
+    {
+        return $this->hasOne(WebsiteFooter::class, 'website_id');
     }
 
     public function shop(): BelongsTo
