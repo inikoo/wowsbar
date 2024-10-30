@@ -21,11 +21,14 @@ const props = defineProps<{
     previewMode: Boolean
 }>();
 
+const emits = defineEmits<{
+    (e: 'update:modelValue', value: string | number): void
+}>()
+
 const editable = ref(!props.previewMode)
 const selectedData = ref(null)
 const selectedIndex = ref(null)
 const selectedColumn = ref(null)
-const editKey = ref(uuidv4())
 const menu = ref();
 const subMenu = ref();
 const Menuitems = ref([
@@ -56,12 +59,11 @@ const subMenuitems = ref([
 
 const onDrag = () => {
     editable.value = false;
-    editKey.value = uuidv4();
 }
 
 const onDrop = () => {
     editable.value = true;
-    editKey.value = uuidv4();
+    emits('update:modelValue', props.modelValue)
 }
 
 
@@ -81,15 +83,17 @@ const addSubmenu = () => {
             }
         ]
     }
-
+    emits('update:modelValue', props.modelValue)
 }
 
 const deleteMenu = () => {
     selectedColumn.value.splice(selectedIndex.value, 1)
+    emits('update:modelValue', props.modelValue)
 }
 
 const deleteSubMenu = () => {
     selectedData.value.data.splice(selectedIndex.value, 1)
+    emits('update:modelValue', props.modelValue)
 }
 
 const onRightClickMenu = (event, data, column, index) => {
@@ -102,7 +106,7 @@ const onRightClickMenu = (event, data, column, index) => {
 const onRightClickSubMenu = (event, data, column, index) => {
     selectedData.value = data;
     selectedIndex.value = index,
-        selectedColumn.value = column
+    selectedColumn.value = column
     subMenu.value.show(event);
 };
 
@@ -111,7 +115,6 @@ const selectAllEditor = (editor: any) => {
 }
 
 const addMenuToColumn = (data) => {
-    console.log(data)
     data.push(
         {
             name: "New Menu",
@@ -121,6 +124,7 @@ const addMenuToColumn = (data) => {
             ],
         },
     )
+    emits('update:modelValue', props.modelValue)
 }
 
 watch(() => props.previewMode, (newStatus, oldStatus) => {
@@ -149,7 +153,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <div class="w-fit"
                                             @contextmenu="onRightClickMenu($event, item, modelValue.column['column_1']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
-                                                <Editor v-model="item.name" :editable="editable" :key="editKey"
+                                                <Editor v-model="item.name" :editable="editable"
                                                     @onEditClick="selectAllEditor" />
                                             </span>
                                         </div>
@@ -170,7 +174,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                         <div class="w-full"
                                                             @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_1']['data'], subIndex)">
                                                             <span class="text-sm block">
-                                                                <Editor v-model="sub.name" :key="editKey"
+                                                                <Editor v-model="sub.name"
                                                                     @onEditClick="selectAllEditor" />
                                                             </span>
                                                         </div>

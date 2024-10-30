@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted} from 'vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
@@ -28,7 +28,7 @@ const props = defineProps<{
     }
     autosaveRoute: routeType
 }>()
-
+console.log(props)
 const tabsBar = ref(0)
 const isLoading =ref(false)
 const usedTemplates = ref( props?.data?.data ? props.data.data :  footerTheme1)
@@ -40,6 +40,7 @@ const socketLayout = SocketFooter();
 const comment = ref('')
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
+const saveCancelToken = ref<Function | null>(null)
 
 const onPublish = async (popover: Function) => {
     try {
@@ -73,14 +74,31 @@ const setIframeView = (view: String) => {
 }
 
 const autoSave = async (data: Object) => {
-    try {
-        const response = await axios.patch(
-            route("customer.models.banner.workshop.footers.autosave.footer"),
-            { layout: data }
-        )
-    } catch (error: any) {
-        console.error('error', error)
-    }
+    router.patch(
+        route("customer.models.banner.workshop.footers.autosave.footer"),
+        { layout: data },
+        {
+            onFinish: () => {
+                saveCancelToken.value = null
+            },
+            onCancelToken: (cancelToken) => {
+                saveCancelToken.value = cancelToken.cancel
+            },
+            onCancel: () => {
+                console.log('The saving progress canceled.')
+            },
+            onError: (error) => {
+                notify({
+                    title: trans('Something went wrong.'),
+                    text: error.message,
+                    type: 'error',
+                })
+            },
+            preserveScroll: true,
+            preserveState: true,
+        }
+    )
+
 }
 
 watch(previewMode, (newVal) => {
@@ -90,12 +108,16 @@ watch(previewMode, (newVal) => {
 }, { deep: true })
 
 watch(usedTemplates, (newVal) => {
+    if (saveCancelToken.value) {
+        saveCancelToken.value()
+    }
     if (newVal) debouncedSendUpdate(newVal)
+
 }, { deep: true })
 
-onMounted(()=>{
+/* onMounted(()=>{
     if (socketLayout) socketLayout.actions.send({ previewMode: previewMode.value })
-})
+}) */
 
 
 const handleIframeError = () => {
