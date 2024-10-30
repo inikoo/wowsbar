@@ -24,6 +24,7 @@ import Editor from '@/Components/Editor/Editor.vue'
 import PureInputNumber from '@/Components/Pure/PureInputNumber.vue'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import Moveable from "vue3-moveable"
+import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 
 
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
@@ -80,7 +81,7 @@ const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
         </Collapse>
     </div>
 
-    <div class="rounded overflow-hidden bg-white">
+    <div class="rounded bg-white">
         <div @click="() => selectedBlockOpenPanel === 'content' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'content'"
             class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
             <div class="select-none font-semibold">{{ trans('Content') }}</div>
@@ -108,22 +109,34 @@ const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
             <div  class="border-t border-gray-300 pb-3">
                 <div class="flex justify-between items-center">
                     <div class="w-full py-1 select-none text-sm">{{ trans('Close button') }}</div>
-                    <div class="flex gap-x-2 items-center">
-                        <!-- <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div> -->
-                        <div @click="() => toVerticalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Vertical center') }}</div>
-                        <div @click="() => toHorizontalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Horizontal center') }}</div>
+                    <div>
+                        <ColorPicker
+                            class="h-5 w-5 rounded shadow-lg border border-gray-300"
+                            closeButton
+                            :color="announcementData.fields.close_button.block_properties.text.color"
+                            @changeColor="(newColor) => announcementData.fields.close_button.block_properties.text.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a})`"
+                        />
+                            <!-- {{ announcementData.fields.close_button.block_properties.text.color }} -->
                     </div>
                 </div>
                 
 
-                <div ref="_parentOfButtonClose" class="relative w-full h-24 bg-gray-100 border border-gray-300">
-                    <div ref="_buttonClose" class="absolute -translate-x-1/2 -translate-y-1/2 mx-auto h-6 w-6 flex justify-center items-center rounded-sm border border-gray-300"
-                        :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
-                        :class="isOnDrag ? 'cursor-grabbing' : 'cursor-grab'"
-                    >
-                        <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' size="xs" fixed-width aria-hidden='true' />
-                    </div>
+                <div>
+                    <div ref="_parentOfButtonClose" class="relative w-full h-24 bg-gray-100 border border-gray-300">
+                        <div ref="_buttonClose" class="absolute -translate-x-1/2 -translate-y-1/2 mx-auto h-6 w-6 flex justify-center items-center rounded-sm border border-gray-300"
+                            :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
+                            :class="isOnDrag ? 'cursor-grabbing' : 'cursor-grab'"
+                        >
+                            <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' size="xs" fixed-width aria-hidden='true' />
+                        </div>
                     
+                    </div>
+
+                    <div class="flex gap-x-2 items-center justify-between">
+                        <!-- <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div> -->
+                        <div @click="() => toVerticalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Vertical center') }}</div>
+                        <div @click="() => toHorizontalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Horizontal center') }}</div>
+                    </div>
                 </div>
 
                 <Moveable
