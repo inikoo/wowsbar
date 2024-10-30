@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<{
     toogle: () => [
         'heading', 'fontSize', 'bold', 'italic', 'underline', 'bulletList',
         'orderedList', 'blockquote', 'divider', 'alignLeft', 'alignRight',
-        'alignCenter', 'link', 'undo', 'redo', 'highlight', 'color', 'clear'
+        'alignCenter', 'link', 'undo', 'redo', 'highlight', 'color', 'clear', "unLink"
     ]
 })
 
@@ -63,6 +63,7 @@ const toggleList = ref([
     { key: 'alignRight', icon: 'fal fa-align-right', action: () => onActionClick('alignRight'), active: { textAlign: 'right' } },
     { key: 'alignCenter', icon: 'fal fa-align-center', action: () => onActionClick('alignCenter'), active: { textAlign: 'center' } },
     { key: 'link', icon: 'fal fa-link', action: () => onActionClick('link'), active: 'link' },
+/*     { key: 'unLink', icon: 'fal fa-unlink', action: () => onActionClick('unsetLink')}, */
     { key: 'undo', icon: 'far fa-undo-alt', action: () => onActionClick('undo'), active: 'undo' },
     { key: 'redo', icon: 'far fa-redo-alt', action: () => onActionClick('redo'), active: 'redo' },
     /*     { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' }, */
@@ -75,7 +76,6 @@ const editor = useEditor({
     content: props.modelValue,
     editable: props.editable,
     onUpdate: ({ editor }) => {
-        console.log('iniii')
         emits('update:modelValue', editor.getHTML())
     },
     extensions: [
