@@ -22,7 +22,7 @@ const props = defineProps<{
 
 const saveCancelToken = ref<Function | null>(null)
 const socketLayout = SocketFooter();
-const usedTemplates = reactive({ data : props.footer.data ?  {...props.footer.data} : footerTheme1 })
+const usedTemplates = reactive( props.footer ?  props.footer : footerTheme1 )
 const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: false, trailing: true })
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
@@ -53,19 +53,10 @@ const autoSave = async (data: Object) => {
     )
 }
 
-/* watch(usedTemplates.data.data.footer, 
-  (newVal) => {
-    if (saveCancelToken.value) {
-        saveCancelToken.value()
-    }
-    console.log('fgfgfg',saveCancelToken.value)
-      debouncedSendUpdate({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}  });
-  },
-  { deep: true }
-); */
+
 
 const updateData = (newVal) => {
-    debouncedSendUpdate({...usedTemplates.data, data : {footer : newVal, bluprint : usedTemplates.data.data.bluprint}  });
+    debouncedSendUpdate({...usedTemplates.data, data : {fieldValue : newVal }  });
 }
 
 
@@ -92,12 +83,13 @@ onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
 });
 
+console.log('inii',usedTemplates)
 </script>
 
 <template>
     <div class="p-4">
         <Footer1 
-            v-model="usedTemplates.data.data.footer" 
+            v-model="usedTemplates.data.data.fieldValue" 
             :preview-mode="previewMode"
             @update:model-value="updateData"
         />

@@ -14,6 +14,7 @@ import axios from 'axios'
 import { debounce } from 'lodash'
 import Publish from '@/Components/Publish.vue'
 import ScreenView from "@/Components/ScreenView.vue"
+import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 
 
 import { routeType } from "@/types/route"
@@ -46,10 +47,7 @@ const iframeSrc = ref(route('grp.websites.footer.preview', [route().params['webs
 const socketLayout = SocketHeaderFooter(route().params['website']);
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 
-const onPickTemplate = (footer: Object) => {
-    isModalOpen.value = false
-    usedTemplates.value = footer
-}
+
 
 const onPublish = async (action: routeType, popover: Function) => {
    /*  try {
@@ -119,6 +117,7 @@ onMounted(() => {
     if (socketLayout) socketLayout.actions.send({ previewMode: previewMode })
 });
 
+console.log('ddd',usedTemplates.value)
 </script>
 
 <template>

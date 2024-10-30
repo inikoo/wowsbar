@@ -32,13 +32,13 @@ watch(compModel, () => {
 
     <div class="p-4">
         <!-- Horizontally Center -->
-        <div v-if="model.isCenterHorizontal"  class="flex items-center gap-x-3">
+        <div v-if="model?.isCenterHorizontal"  class="flex items-center gap-x-3">
             <Checkbox v-model="model.isCenterHorizontal" inputId="centerHorizontal" name="centerHorizontal" binary />
             <label for="centerHorizontal" class="cursor-pointer select-none">{{ trans('Horizontally Center') }} </label>
         </div>
 
         <!-- Flying -->
-        <div v-if="model.position" class="flex items-center gap-x-3">
+        <div v-if="model?.position" class="flex items-center gap-x-3">
             <Checkbox :modelValue="model.position.type === 'fixed'" @update:modelValue="(newVal) => newVal ? model.position.type = 'fixed' : model.position.type = 'relative'"  inputId="isComponentFlying" name="isComponentFlying" binary />
             <label for="isComponentFlying" class="cursor-pointer select-none">Flying</label>
         </div>

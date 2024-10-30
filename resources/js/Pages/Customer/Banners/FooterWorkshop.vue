@@ -32,7 +32,7 @@ const props = defineProps<{
 console.log(props)
 const tabsBar = ref(0)
 const isLoading =ref(false)
-const usedTemplates = ref(props?.data?.data ? props.data.data :  footerTheme1)
+const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
@@ -43,6 +43,7 @@ const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
 
+console.log('ssss',usedTemplates.value,props.data)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
@@ -152,7 +153,7 @@ const handleIframeError = () => {
         <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
                 <div class="w-[15%] bg-slate-200 ">
-                    <div v-for="(tab, index) in usedTemplates?.data.bluprint"
+                    <div v-for="(tab, index) in usedTemplates?.bluprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
                         :class="[tabsBar == tab.key ? 'bg-gray-300/70' : 'hover:bg-gray-200/60']" v-tooltip="tab.name">
@@ -161,8 +162,8 @@ const handleIframeError = () => {
                     </div>
                 </div>
                 <div class="w-[85%]">
-                    <SideEditor v-model="usedTemplates.data.footer"
-                        :bluprint="usedTemplates.data.bluprint[tabsBar].bluprint" />
+                    <SideEditor v-model="usedTemplates.data.fieldValue"
+                        :bluprint="usedTemplates.bluprint[tabsBar].bluprint" />
                 </div>
             </div>
 
