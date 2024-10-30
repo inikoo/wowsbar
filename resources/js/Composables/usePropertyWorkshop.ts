@@ -10,10 +10,10 @@ import { Image } from "@/types/Image"
 
 export const propertiesToHTMLStyle = (properties: BlockProperties, xxx?: {toRemove: string[]}) => {
     const htmlStyle = {
-        position: properties.position?.type || 'static',
-        left: properties.isCenterHorizontal && properties.position.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
-        top: properties.position?.y || '0px',
-        transform: properties.isCenterHorizontal && properties.position.type === 'fixed' ? 'translateX(-50%)' : '',
+        position: properties?.position?.type || 'static',
+        left: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? '50%' : properties?.position?.x || '0px', 
+        top: properties?.position?.y || '0px',
+        transform: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? 'translateX(-50%)' : '',
 
         height: (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
         width: (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',
@@ -27,8 +27,8 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, xxx?: {toRemo
 
         marginTop: (properties?.margin?.top?.value || 0) + properties?.margin?.unit,
         marginBottom: (properties?.margin?.bottom?.value || 0) + properties?.margin?.unit,
-        marginRight: properties.isCenterHorizontal ? 'auto' : (properties?.margin?.right?.value || 0) + properties?.margin?.unit,
-        marginLeft: properties.isCenterHorizontal ? 'auto' : (properties?.margin?.left?.value || 0) + properties?.margin?.unit,
+        marginRight: properties?.isCenterHorizontal ? 'auto' : (properties?.margin?.right?.value || 0) + properties?.margin?.unit,
+        marginLeft: properties?.isCenterHorizontal ? 'auto' : (properties?.margin?.left?.value || 0) + properties?.margin?.unit,
 
         background: properties?.background?.type === 'color' ? properties?.background?.color : properties?.background?.image,
 
