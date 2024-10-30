@@ -16,7 +16,7 @@ import AnnouncementTemplateList from '@/Components/Workshop/Announcement/Announc
 
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage, faExternalLink } from '@fal'
+import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt } from '@fal'
 import { faThLarge } from '@fas'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
@@ -30,13 +30,12 @@ import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import { routeType } from '@/types/route'
 
-library.add(faGlobe, faImage, faExternalLink, faThLarge)
+library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faThLarge)
 
 const props = defineProps<{
     pageHead: {}
     title: string
     data: {},
-    store_route: routeType,
     firstBanner?: {
         text: string
         createRoute: {
@@ -65,6 +64,11 @@ const props = defineProps<{
         }
     }
     announcement_list: {}
+    routes_list: {
+        publish_route: routeType
+        update_route: routeType
+        reset_route: routeType
+    }
 }>()
 
 
@@ -133,11 +137,62 @@ const isIframeLoading = ref(false)
 
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
-const onSave = (dataToSend: {}) => {
-    // console.log('onSave', route(props.store_route.name, props.store_route.parameters))
+const onSave = () => {
     router.post(
-        route(props.store_route.name, props.store_route.parameters),
-        props.announcementData,
+        route(props.routes_list.update_route.name, props.routes_list.update_route.parameters),
+        announcementData.value,
+        {
+            onStart: () => isLoadingSave.value = true,
+            onFinish: () => {
+                isLoadingSave.value = false
+                saveCancelToken.value = null
+            },
+            onSuccess: () => {
+                notify({
+                    title: 'Success',
+                    text: 'Data Announcement saved',
+                    type: 'success',
+                })
+            },
+            onError: (error) => {
+                notify({
+                    title: 'Something went wrong',
+                    text: 'Failed to save Announcement data',
+                    type: 'error',
+                })
+            },
+            onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel,
+            preserveState: true,
+            preserveScroll: true
+        }
+    )
+}
+const onPublish = () => {
+    router.post(
+        route(props.routes_list.publish_route.name, props.routes_list.publish_route.parameters),
+        announcementData.value,
+        {
+            onStart: () => isLoadingSave.value = true,
+            onFinish: () => {
+                isLoadingSave.value = false
+                saveCancelToken.value = null
+            },
+            onError: (error) => {
+                notify({
+                    title: 'Something went wrong',
+                    text: error.message,
+                    type: 'error',
+                })
+            },
+            preserveState: true,
+            preserveScroll: true
+        }
+    )
+}
+const onReset = () => {
+    router.post(
+        route(props.routes_list.reset_route.name, props.routes_list.reset_route.parameters),
+        announcementData.value,
         {
             onStart: () => isLoadingSave.value = true,
             onFinish: () => {
@@ -155,21 +210,22 @@ const onSave = (dataToSend: {}) => {
 const announcementData = ref(props.announcement_data)
 provide('announcementData', announcementData.value)
 
-const xxx = debounce((newVal) => onSave(newVal), 1000, { leading: false, trailing: true })
-// watch(() => props.announcementData, (newVal) => {
-//     // console.log('vvvv', newVal)
-//     // if (newVal) {
-//     //     if (saveCancelToken.value) {
-//     //         console.log('eeee')
-//     //         saveCancelToken.value()
-//     //     }
-//     // }
+// If fieldvalue have changes, then auto save
+watch(announcementData, (newVal) => {
+    if (newVal) {
+        // If still on progress saving, cancel the save
+        if (saveCancelToken.value) {
+            saveCancelToken.value()
+        }
 
-//     // xxx(toRaw(newVal))
-// }, { deep: true })
+        xxx()
+    }
+}, { deep: true })
+
+const xxx = debounce(() => onSave(), 1000, { leading: false, trailing: true })
 
 
-const isOnPublishState = inject('isOnPublishState')
+const isOnPublishState = inject('isOnPublishState', false)
 const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
 
@@ -184,7 +240,11 @@ const _parentComponent = ref(null)
         </template>
 
         <template #other>
-            <Button @click="onSave" label="save" :loading="isLoadingSave" />
+            <div class="flex gap-x-2">
+                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave" :style="'negative'" icon="fal fa-undo-alt" />
+                <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
+                <Button @click="onPublish" label="Publish" :loading="isLoadingSave" iconRight="fal fa-rocket-launch"/>
+            </div>
         </template>
     </PageHeading>
 
@@ -194,7 +254,7 @@ const _parentComponent = ref(null)
         <div class="w-[400px] py-2 px-3">
             <div class="w-full text-lg font-semibold flex items-center justify-between gap-3 border-b border-gray-300">
                 <div class="flex items-center gap-3">
-                    Announcement
+                    {{ trans('Announcement') }}
                 </div>
 
                 <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'"
@@ -203,7 +263,7 @@ const _parentComponent = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor />
+            <AnnouncementSideEditor v-if="1" />
         </div>
 
         <!-- Section: Preview -->
@@ -255,23 +315,25 @@ const _parentComponent = ref(null)
                             :_parentComponent
                         />
                     </div>
+                    <!-- <br>
+                    <br>
+                    <pre>{{ announcementData }}</pre> -->
                 </div>
             </div>
+        </div>
     </div>
 
+    
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+        <!-- <HeaderListModal 
+            :onSelectBlock
+            :webBlockTypes="selectedWebBlock"
+            :currentTopbar="usedTemplates.topBar"
+        /> -->
 
-        <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-            <!-- <HeaderListModal 
-                :onSelectBlock
-                :webBlockTypes="selectedWebBlock"
-                :currentTopbar="usedTemplates.topBar"
-            /> -->
-
-            <div class="h-[500px]">
-                <AnnouncementTemplateList
-                />
-            </div>
-        </Modal>
-
-    </div>
+        <div class="h-[500px]">
+            <AnnouncementTemplateList
+            />
+        </div>
+    </Modal>
 </template>

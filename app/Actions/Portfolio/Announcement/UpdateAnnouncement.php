@@ -34,7 +34,7 @@ class UpdateAnnouncement
         $snapshot->update(
             [
                 'layout' => [
-                    'channel_properties'  => $modelData['channel_properties'],
+                    'container_properties'  => $modelData['container_properties'],
                     'fields'              => $modelData['fields']
                 ]
             ]

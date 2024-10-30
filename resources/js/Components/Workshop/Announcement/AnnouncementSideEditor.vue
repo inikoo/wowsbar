@@ -31,7 +31,7 @@ library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faTe
 const props = defineProps<{
 }>()
 
-const selectedBlockOpenPanel = ref<string | null>('container')
+const selectedBlockOpenPanel = ref<string | null>('content')
 const isOnDrag = ref(false)
 
 const announcementData = inject('announcementData', {})
@@ -44,22 +44,10 @@ const onDrag = (e, block_properties) => {
 
     const percentageLeft = e.left / parentWidth * 100
     const percentageTop = e.top / parentHeight * 100
-    // console.log('kokok', percentageLeft)
 
     // Update position based on the dragging
     block_properties.position.x = `${percentageLeft}%`
     block_properties.position.y = `${percentageTop}%`
-
-    // console.log('111', block_properties.position)
-    // console.log('qqq', e)
-    // position.value.left += e.delta[0]
-    // position.value.top += e.delta[1]
-    // calculatePercentagePosition()
-}
-
-const toAbsoluteCenter = (block_properties: {}) => {
-    block_properties.position.x = '50%'
-    block_properties.position.y = '50%'
 }
 
 const toVerticalCenter = (block_properties: {}) => {
@@ -88,7 +76,6 @@ const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
         <Collapse as="section" :when="selectedBlockOpenPanel === 'container'">
             <PanelProperties
                 v-model="announcementData.container_properties"
-                @update:modelValue="() => (console.log('zzz'), `debouncedSendUpdate('element')`)"
             />
         </Collapse>
     </div>

@@ -11,7 +11,7 @@ library.add(faTimes)
 
 const props = defineProps<{
     announcementData?: AnnouncementData
-    _parentComponent: Element
+    _parentComponent?: Element
     isEditable?: boolean
     isToSelectOnly?: boolean
 }>()
@@ -254,9 +254,16 @@ const onClickClose = () => {
 <template>
     <template v-if="!isToSelectOnly">
         <div class="flex gap-x-4 items-center justify-center w-full">
-            <div ref="_text_1" class="text-sm leading-6 whitespace-nowrap absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, {toRemove: ['position', 'top', 'left']})">
+            <div
+                v-if="announcementData?.fields?.text_1"
+                ref="_text_1"
+                class="text-sm leading-6 whitespace-nowrap absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                v-html="announcementData?.fields.text_1.text"
+                :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
+            >
     
             </div>
+
             <button
                 v-if="announcementData?.fields?.button_1?.text"
                 @click="() => onClickClose()"
@@ -267,7 +274,7 @@ const onClickClose = () => {
             </button>
         </div>
         
-        <Moveable
+        <!-- <Moveable
             v-if="isEditable"
             :target="_text_1"
             :draggable="true"
@@ -280,7 +287,7 @@ const onClickClose = () => {
             :startDragRotate="0"
             :throttleDragRotate="0"
             @drag="(e) => onDrag(e, announcementData?.fields.text_1.block_properties, _parentComponent)"
-        />
+        /> -->
     
         <!-- Close Button -->
         <button

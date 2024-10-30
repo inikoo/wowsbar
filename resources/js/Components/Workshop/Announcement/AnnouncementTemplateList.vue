@@ -115,7 +115,7 @@ const onSubmitTemplate = (template) => {
 const fetchAnnouncementList = async () => {
     try {
         const response = await axios.get(
-            route('customer.banners.announcement.templates.index'),
+            route('customer.banners.announcements.templates.index'),
         )
 
         console.log('respo', response.data)

@@ -78,23 +78,25 @@ class ShowAnnouncement extends InertiaAction
                         'icon'  => 'fal fa-sign'
                     ],
                 ],
-                'publish_route' => [
-                    'name'        => 'customer.models.banner.announcement.publish',
-                    'parameters'  => [
-                        'announcement' => $announcement->id
-                    ]
-                ],
-                'update_route' => [
-                    'name'        => 'customer.models.banner.announcement.update',
-                    'parameters'  => [
-                        'announcement' => $announcement->id
-                    ]
-                ],
-                'reset_route' => [
-                    'name'        => 'customer.models.banner.announcement.reset',
-                    'parameters'  => [
-                        'announcement' => $announcement->id
-                    ]
+                'routes_list'   => [
+                    'publish_route' => [
+                        'name'        => 'customer.models.banner.announcement.publish',
+                        'parameters'  => [
+                            'announcement' => $announcement->id
+                        ]
+                    ],
+                    'update_route' => [
+                        'name'        => 'customer.models.banner.announcement.update',
+                        'parameters'  => [
+                            'announcement' => $announcement->id
+                        ]
+                    ],
+                    'reset_route' => [
+                        'name'        => 'customer.models.banner.announcement.reset',
+                        'parameters'  => [
+                            'announcement' => $announcement->id
+                        ]
+                    ],
                 ],
                 'firstBanner'        => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'  => $announcement->toArray(),
