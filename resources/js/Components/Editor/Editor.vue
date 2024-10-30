@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, defineExpose } from 'vue'
+import { ref, onMounted, nextTick, defineExpose, watch } from 'vue'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import TextStyle from '@tiptap/extension-text-style'
@@ -165,6 +165,16 @@ const onActionClick = (key: string, option: string = '') => {
     }
 }
 
+// To watch if parent change the props
+watch(() => props.modelValue, (newValue, oldValue) => {
+    const isSame = newValue === oldValue;
+
+    if (isSame) {
+        return;
+    }
+
+    editor.value?.commands.setContent(newValue, false)
+})
 
 
 const setLink = () => {
@@ -211,6 +221,7 @@ defineExpose({
         </section>
         <EditorContent @click="onEditorClick" :editor="editor" :class="type == 'basic' ? 'basic-content' : ''" />
     </div>
+    
     <div v-else id="blockTextContent">
         <div v-html="modelValue" />
     </div>
