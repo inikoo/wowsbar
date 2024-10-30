@@ -30,6 +30,7 @@ const ToolWorkshop = ref({
 })
 
 
+
 const autoSave = async (data: Object) => {
     router.patch(
         route("customer.models.banner.workshop.footers.autosave.footer"),

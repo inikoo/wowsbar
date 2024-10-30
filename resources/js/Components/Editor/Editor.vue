@@ -75,6 +75,7 @@ const editor = useEditor({
     content: props.modelValue,
     editable: props.editable,
     onUpdate: ({ editor }) => {
+        console.log('iniii')
         emits('update:modelValue', editor.getHTML())
     },
     extensions: [
