@@ -520,7 +520,7 @@ console.log('ppp',props)
                             <div v-for="payment in modelValue.PaymentData.data" :key="payment.key"
                                 class="w-full md:w-1/3 px-4 mb-8">
                                 <div class="flex items-center justify-center md:justify-start space-x-4">
-                                    <img :src="payment.image" :alt="payment.name" class="px-1 h-4">
+                                    <img :src="payment.image" :alt="payment.name" class="px-1 h-5 w-full">
                                 </div>
                             </div>
                         </div>

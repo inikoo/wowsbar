@@ -20,12 +20,79 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: {}): void
 }>();
 
+const FeOptions = [
+    {
+        name: "Accounts",
+        image: "/ImagePayments/accounts.png",
+        value: "accounts",
+    },
+    {
+        name: "Bank",
+        image: "/ImagePayments/bank.png",
+        value: "bank",
+    },
+    {
+        name: "btree",
+        image: "/ImagePayments/btree.png",
+        value: "btree",
+    },
+    {
+        name: "Cash",
+        image: "/ImagePayments/cash.png",
+        value: "Cash",
+    },
+    {
+        name: "Checkout",
+        image: "/ImagePayments/checkout.png",
+        value: "Checkout",
+    },
+    {
+        name: "Cond",
+        image: "/ImagePayments/cond.png",
+        value: "cond",
+    },
+    {
+        name: "Hokodo",
+        image: "/ImagePayments/hokodo.png",
+        value: "hokodo",
+    },
+    {
+        name: "Pastpay",
+        image: "/ImagePayments/pastpay.png",
+        value: "pastpay",
+    },
+    {
+        name: "sofort",
+        image: "/ImagePayments/sofort.png",
+        value: "sofort",
+    },
+    {
+        name: "Worldpay",
+        image: "/ImagePayments/worldpay.png",
+        value: "Worldpay",
+    },
+    {
+        name: "Paypal",
+        image: "/ImagePayments/paypal.png",
+        value: "paypal",
+    },
+    {
+        name: "Mastercard",
+        image: "/ImagePayments/mastercard.png",
+        value: "mastercard",
+    },
+    {
+        name: "Visa",
+        image: "/ImagePayments/visa.png",
+        value: "visa",
+    },
+]
+
 const GetPayment = async () => {
     try {
         const response = await axios.get(
             route('customer.accounting.payment-service-providers.index'),
         )
-        console.log(response)
          if (response && response.data && response.data.data) {
              const ini = response.data.data.map((item) => ({
                  name: item.name,
@@ -85,7 +152,7 @@ onMounted(() => {
     <div class="p-4">
         <div v-for="(item, index) of modelValue.data" :key="index" class="p-1">
             <div class="flex">
-                <Multiselect :modelValue="item" :options="payments" :object="true" :canClear="false" :caret="false"
+                <Multiselect :modelValue="item" :options="FeOptions" :object="true" :canClear="false" :caret="false"
                     @update:modelValue="value => updatePayment(index, value)">
                     <template v-slot:singlelabel="{ value }">
                         <div class="flex items-center rounded-lg w-full p-2 m-2 mr-0">
