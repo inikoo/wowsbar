@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted} from 'vue'
+import { ref, watch, IframeHTMLAttributes} from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -11,6 +11,7 @@ import { debounce } from 'lodash'
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 import Publish from '@/Components/Utils/PublishWorkshop.vue'
+import ProgressSpinner from 'primevue/progressspinner';
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -31,17 +32,18 @@ const props = defineProps<{
 console.log(props)
 const tabsBar = ref(0)
 const isLoading =ref(false)
-const usedTemplates = ref( props?.data?.data ? props.data.data :  footerTheme1)
+const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
-const openFullScreenPreview = () => window.open(iframeSrc.value, '_blank')
+const openFullScreenPreview = () => window.open(iframeSrc + '?fullscreen=true', '_blank');
 const socketLayout = SocketFooter();
 const comment = ref('')
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
 
+console.log('ssss',usedTemplates.value,props.data)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
@@ -102,9 +104,10 @@ const autoSave = async (data: Object) => {
 }
 
 watch(previewMode, (newVal) => {
-    if (socketLayout) socketLayout.actions.send({ 
+    /* if (socketLayout) socketLayout.actions.send({ 
         previewMode: newVal, 
-    })
+    }) */
+    sendToIframe({key: 'previewMode', value: newVal})
 }, { deep: true })
 
 watch(usedTemplates, (newVal) => {
@@ -114,6 +117,11 @@ watch(usedTemplates, (newVal) => {
     if (newVal) debouncedSendUpdate(newVal)
 
 }, { deep: true })
+
+const _iframe = ref<IframeHTMLAttributes | null>(null)
+const sendToIframe = (data: any) => {
+    _iframe.value?.contentWindow.postMessage(data, '*')
+}
 
 /* onMounted(()=>{
     if (socketLayout) socketLayout.actions.send({ previewMode: previewMode.value })
@@ -145,7 +153,7 @@ const handleIframeError = () => {
         <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
                 <div class="w-[15%] bg-slate-200 ">
-                    <div v-for="(tab, index) in usedTemplates?.data.bluprint"
+                    <div v-for="(tab, index) in usedTemplates?.bluprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
                         :class="[tabsBar == tab.key ? 'bg-gray-300/70' : 'hover:bg-gray-200/60']" v-tooltip="tab.name">
@@ -154,8 +162,8 @@ const handleIframeError = () => {
                     </div>
                 </div>
                 <div class="w-[85%]">
-                    <SideEditor v-model="usedTemplates.data.footer"
-                        :bluprint="usedTemplates.data.bluprint[tabsBar].bluprint" />
+                    <SideEditor v-model="usedTemplates.data.fieldValue"
+                        :bluprint="usedTemplates.bluprint[tabsBar].bluprint" />
                 </div>
             </div>
 
@@ -187,12 +195,12 @@ const handleIframeError = () => {
                         </div>
                     </div>
                         <div v-if="isIframeLoading" class="loading-overlay">
-                         <div class="spinner"></div>
+                            <ProgressSpinner />
                          </div>
 
                          <iframe :src="iframeSrc" :title="props.title"
                         :class="[iframeClass]" @error="handleIframeError"
-                        @load="isIframeLoading = false" />
+                        @load="isIframeLoading = false" ref="_iframe"/>
                 </div>
                 <div v-else>
                     <EmptyState

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, defineExpose } from 'vue'
+import { ref, onMounted, nextTick, defineExpose, watch } from 'vue'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import TextStyle from '@tiptap/extension-text-style'
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<{
     toogle: () => [
         'heading', 'fontSize', 'bold', 'italic', 'underline', 'bulletList',
         'orderedList', 'blockquote', 'divider', 'alignLeft', 'alignRight',
-        'alignCenter', 'link', 'undo', 'redo', 'highlight', 'color', 'clear'
+        'alignCenter', 'link', 'undo', 'redo', 'highlight', 'color', 'clear', "unLink"
     ]
 })
 
@@ -63,6 +63,7 @@ const toggleList = ref([
     { key: 'alignRight', icon: 'fal fa-align-right', action: () => onActionClick('alignRight'), active: { textAlign: 'right' } },
     { key: 'alignCenter', icon: 'fal fa-align-center', action: () => onActionClick('alignCenter'), active: { textAlign: 'center' } },
     { key: 'link', icon: 'fal fa-link', action: () => onActionClick('link'), active: 'link' },
+/*     { key: 'unLink', icon: 'fal fa-unlink', action: () => onActionClick('unsetLink')}, */
     { key: 'undo', icon: 'far fa-undo-alt', action: () => onActionClick('undo'), active: 'undo' },
     { key: 'redo', icon: 'far fa-redo-alt', action: () => onActionClick('redo'), active: 'redo' },
     /*     { key: 'highlight', icon: 'fal fa-paint-brush-alt', action: () => onActionClick('highlight'), active: 'highlightcolor' }, */
@@ -165,6 +166,16 @@ const onActionClick = (key: string, option: string = '') => {
     }
 }
 
+// To watch if parent change the props
+watch(() => props.modelValue, (newValue, oldValue) => {
+    const isSame = newValue === oldValue;
+
+    if (isSame) {
+        return;
+    }
+
+    editor.value?.commands.setContent(newValue, false)
+})
 
 
 const setLink = () => {
@@ -211,6 +222,7 @@ defineExpose({
         </section>
         <EditorContent @click="onEditorClick" :editor="editor" :class="type == 'basic' ? 'basic-content' : ''" />
     </div>
+    
     <div v-else id="blockTextContent">
         <div v-html="modelValue" />
     </div>

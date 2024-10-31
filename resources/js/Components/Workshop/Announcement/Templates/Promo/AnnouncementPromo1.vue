@@ -6,24 +6,18 @@ import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { onMounted, ref } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
+import { AnnouncementData } from "@/types/Announcement"
 library.add(faTimes)
 
 const props = defineProps<{
-    announcementData: {
-        fields: {
-
-        }
-        container_properties: {
-
-        }
-    }
-    _parentComponent: Element
+    announcementData?: AnnouncementData
+    _parentComponent?: Element
     isEditable?: boolean
     isToSelectOnly?: boolean
 }>()
 
 const emits = defineEmits<{
-    (e: 'templateClicked'): void
+    (e: 'templateClicked',  template: AnnouncementData): void
 }>()
 
 const _text_1 = ref(null)
@@ -245,6 +239,12 @@ const defaultFieldsData = {
     }
 }
 
+const componentDefaultData = {
+    code: 'announcement-promo-1',
+    fields: defaultFieldsData,
+    container_properties: defaultContainerData
+}
+
 const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
@@ -254,19 +254,27 @@ const onClickClose = () => {
 <template>
     <template v-if="!isToSelectOnly">
         <div class="flex gap-x-4 items-center justify-center w-full">
-            <div ref="_text_1" class="text-sm leading-6 whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties, {toRemove: ['position', 'top', 'left']})">
+            <div
+                v-if="announcementData?.fields?.text_1"
+                ref="_text_1"
+                class="text-sm leading-6 whitespace-nowrap absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                v-html="announcementData?.fields.text_1.text"
+                :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
+            >
     
             </div>
+
             <button
+                v-if="announcementData?.fields?.button_1?.text"
                 @click="() => onClickClose()"
-                v-html="announcementData.fields.button_1.text"
+                v-html="announcementData?.fields.button_1.text"
                 class="inline-flex items-center"
-                :style="propertiesToHTMLStyle(announcementData.fields?.button_1?.container?.properties)"
+                :style="propertiesToHTMLStyle(announcementData?.fields?.button_1?.container?.properties)"
             >
             </button>
         </div>
         
-        <Moveable
+        <!-- <Moveable
             v-if="isEditable"
             :target="_text_1"
             :draggable="true"
@@ -278,15 +286,16 @@ const onClickClose = () => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.text_1.block_properties, _parentComponent)"
-        />
+            @drag="(e) => onDrag(e, announcementData?.fields.text_1.block_properties, _parentComponent)"
+        /> -->
     
         <!-- Close Button -->
         <button
             ref="_buttonClose"
+            @click="() => onClickClose()"
             type="button"
             class="p-2 -translate-x-1/2 -translate-y-1/2"
-            :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
+            :style="propertiesToHTMLStyle(announcementData?.fields.close_button.block_properties)"
         >
             <span class="sr-only">Dismiss</span>
             <span v-html="closeIcon"></span>
@@ -303,12 +312,12 @@ const onClickClose = () => {
             :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
             :startDragRotate="0"
             :throttleDragRotate="0"
-            @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties, _parentComponent)"
+            @drag="(e) => onDrag(e, announcementData?.fields.close_button.block_properties, _parentComponent)"
         />
     </template>
 
     <div
-        v-else @click="() => emits('templateClicked', {container: defaultContainerData, fields: defaultFieldsData})"
+        v-else @click="() => emits('templateClicked', componentDefaultData)"
         class="inset-0 absolute"
     >
     </div>
