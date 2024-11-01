@@ -337,3 +337,15 @@ const _parentComponent = ref(null)
         </div>
     </Modal>
 </template>
+
+<style lang="scss">
+
+.moveable-control-box {
+
+}
+
+.moveable-control.moveable-origin {
+    visibility: hidden !important;
+}
+
+</style>

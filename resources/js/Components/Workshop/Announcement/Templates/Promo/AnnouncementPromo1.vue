@@ -253,11 +253,12 @@ const onClickClose = () => {
 
 <template>
     <template v-if="!isToSelectOnly">
-        <div class="flex gap-x-4 items-center justify-center w-full">
+        <div class="flex gap-x-4 items-center justify-center w-full absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+        >
             <div
                 v-if="announcementData?.fields?.text_1"
                 ref="_text_1"
-                class="text-sm leading-6 whitespace-nowrap absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                class="text-sm leading-6 whitespace-nowrap "
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
             >
@@ -269,10 +270,12 @@ const onClickClose = () => {
                 @click="() => onClickClose()"
                 v-html="announcementData?.fields.button_1.text"
                 class="inline-flex items-center"
-                :style="propertiesToHTMLStyle(announcementData?.fields?.button_1?.container?.properties)"
+                :style="propertiesToHTMLStyle(announcementData?.fields.button_1?.container?.properties)"
             >
             </button>
         </div>
+
+        <!-- <pre>{{defaultFieldsData?.button_1?.container?.properties}}</pre> -->
         
         <!-- <Moveable
             v-if="isEditable"
