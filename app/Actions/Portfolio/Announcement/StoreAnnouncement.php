@@ -61,7 +61,7 @@ class StoreAnnouncement
 
     public function htmlResponse(Announcement $announcement): Response
     {
-        return Inertia::location(route('customer.banners.announcements.show', [
+        return Inertia::location(route('customer.portfolio.announcements.show', [
             'announcement' => $announcement->ulid
         ]));
     }

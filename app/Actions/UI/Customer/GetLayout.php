@@ -45,10 +45,15 @@ class GetLayout
                     'name' => 'customer.portfolio.websites.index',
                 ]
             ],
-
+            [
+                'icon'  => ['fal', 'fa-sign'],
+                'label' => __('Announcement'),
+                'root'  => 'customer.portfolio.announcements.index',
+                'route' => [
+                    'name' => 'customer.portfolio.announcements.index'
+                ]
+            ]
         ];
-
-
 
         // Nav: Social Accounts
         if ($customerUser->hasPermissionTo('portfolio.social.view')) {
@@ -127,60 +132,59 @@ class GetLayout
 
 
             ];
-            $websiteSubNav['announcement'] = [
-                'scope'     => 'announcement',
-                'icon'      => ['fal', 'fa-sign'],
-                'label'     => __('Announcement'),
-                'route'     => 'customer.banners.announcements.index',
-                'root'      => 'customer.banners.announcements.index',
-                // 'topMenu' => [
-                //     'subSections' => [
+            //            $websiteSubNav['announcement'] = [
+            //                'scope'     => 'announcement',
+            //                'icon'      => ['fal', 'fa-sign'],
+            //                'label'     => __('Announcement'),
+            //                'route'     => 'customer.banners.announcements.index',
+            //                'root'      => 'customer.banners.announcements.index',
+            // 'topMenu' => [
+            //     'subSections' => [
 
-                //         [
-                //             'icon'  => ['fal', 'fa-chart-network'],
-                //             'route' => [
-                //                 'name' => 'customer.banners.dashboard',
-                //             ]
-                //         ],
-                //         [
-                //             'icon'  => ['fal', 'fa-sign'],
-                //             'label' => __('banners'),
-                //             'route' => [
-                //                 'name' => 'customer.banners.banners.index',
-                //             ]
-                //         ],
+            //         [
+            //             'icon'  => ['fal', 'fa-chart-network'],
+            //             'route' => [
+            //                 'name' => 'customer.banners.dashboard',
+            //             ]
+            //         ],
+            //         [
+            //             'icon'  => ['fal', 'fa-sign'],
+            //             'label' => __('banners'),
+            //             'route' => [
+            //                 'name' => 'customer.banners.banners.index',
+            //             ]
+            //         ],
 
-                //         [
-                //             'icon'  => ['fal', 'fa-globe'],
-                //             'label' => __('websites'),
-                //             'route' => [
-                //                 'name' => 'customer.banners.websites.index',
-                //             ]
-                //         ],
-                //         /*
-                //         [
-                //             'icon'  => ['fal', 'fa-photo-video'],
-                //             'label' => __('gallery'),
-                //             'route' => [
-                //                 'name' => 'customer.banners.gallery',
-                //             ]
-                //         ],
-                //         */
-                //     ],
+            //         [
+            //             'icon'  => ['fal', 'fa-globe'],
+            //             'label' => __('websites'),
+            //             'route' => [
+            //                 'name' => 'customer.banners.websites.index',
+            //             ]
+            //         ],
+            //         /*
+            //         [
+            //             'icon'  => ['fal', 'fa-photo-video'],
+            //             'label' => __('gallery'),
+            //             'route' => [
+            //                 'name' => 'customer.banners.gallery',
+            //             ]
+            //         ],
+            //         */
+            //     ],
 
-                // ]
+            // ]
 
 
-            ];
-            $websiteSubNav['footer'] = [
-                'scope'     => 'footer',
-                'icon'      => ['fal', 'fa-sign'],
-                'label'     => __('Footer'),
-                'route'     => 'customer.banners.workshop.footers.index',
-                'root'      => 'customer.banners.workshop.footers.index',
-            ];
+            //            ];
+            /*            $websiteSubNav['footer'] = [
+                            'scope'     => 'footer',
+                            'icon'      => ['fal', 'fa-sign'],
+                            'label'     => __('Footer'),
+                            'route'     => 'customer.banners.workshop.footers.index',
+                            'root'      => 'customer.banners.workshop.footers.index',
+                        ];*/
         }
-
 
         if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0 and false) {
             $websiteSubNav['prospects'] = [
@@ -243,7 +247,6 @@ class GetLayout
         }
 
 
-
         // Websites
         if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {
             $navigation['websites'] = [
@@ -254,7 +257,7 @@ class GetLayout
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],
-                'subNav'  => $websiteSubNav,
+                'subNav' => $websiteSubNav,
             ];
         }
 

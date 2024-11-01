@@ -104,9 +104,9 @@ const onSubmitTemplate = (template) => {
         announcementData.container_properties = template?.container_properties
     } else {
         announcementData.code = template.code
-    
+
         announcementData.container_properties = template.container_properties
-    
+
         mergeData(announcementData.fields, template.fields)
     }
 
@@ -117,7 +117,7 @@ const onSubmitTemplate = (template) => {
 const fetchAnnouncementList = async () => {
     try {
         const response = await axios.get(
-            route('customer.banners.announcements.templates.index'),
+            route('customer.portfolio.announcements.templates.index'),
         )
 
         console.log('respo', response.data)
@@ -154,7 +154,7 @@ onMounted(() => {
     <div class="h-full flex gap-x-8 border rounded-xl overflow-hidden">
         <nav class="w-1/5 bg-gray-100 py-4" aria-label="Sidebar">
             <ul role="list" class="space-y-1">
-            
+
                 <li v-for="item in ['promo', 'information']"
                     :key="item.id"
                     :class="[item.id === true ? 'bg-white text-indigo-600' : 'hover:bg-white/50 hover:text-indigo-600']"
@@ -173,7 +173,7 @@ onMounted(() => {
                 <div v-for="announcement in announcements_list"
                     :key="announcement.code"
                     class="cursor-pointer overflow-hidden h-fit group flex flex-col gap-x-2 relative isolate"
-                    
+
                 >
                     <div class="mb-1 w-fit"
                         :class="announcement.code === currentTopbarCode ? 'text-indigo-500 font-semibold shadow-xl' : 'bg-white'"
@@ -215,7 +215,7 @@ onMounted(() => {
                         class="z-30"
                     />
 
-                    
+
                 </div>
             </div>
         </section>
@@ -236,7 +236,7 @@ onMounted(() => {
                             ]"
                         >
                             <Image :src="announ.source" />
-                            
+
                             <component
                                 :is="getAnnouncementComponent(announ.code)"
                                 isToSelectOnly

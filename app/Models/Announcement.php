@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
+use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,12 +67,15 @@ class Announcement extends Model
     protected $casts   = [
         "container_properties" => "array",
         "fields"               => "array",
-        'state'                => AnnouncementStateEnum::class
+        "settings"             => "array",
+        'state'                => AnnouncementStateEnum::class,
+        'status'               => AnnouncementStatusEnum::class
     ];
 
     protected $attributes = [
-        'container_properties' => '{}',
-        'fields'               => '{}'
+        'container_properties'   => '{}',
+        'fields'                 => '{}',
+        'settings'               => '{}'
     ];
 
     public function snapshots(): MorphMany
