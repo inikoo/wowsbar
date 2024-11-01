@@ -12,7 +12,7 @@ class WebsiteFooter extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $guarded = [];
 
     public function website(): BelongsTo
     {
