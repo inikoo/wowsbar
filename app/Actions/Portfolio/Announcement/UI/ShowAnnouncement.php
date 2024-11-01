@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\Announcement\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -63,7 +64,7 @@ class ShowAnnouncement extends InertiaAction
         }
 
         $resetRoute = [];
-        if ($announcement->unpublishedSnapshot) {
+        if ($announcement->unpublishedSnapshot->state !== SnapshotStateEnum::LIVE) {
             $resetRoute = [
                 'reset_route' => [
                     'name'        => 'customer.models.banner.announcement.reset',

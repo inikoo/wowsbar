@@ -9,21 +9,18 @@ namespace App\Enums\Portfolio\Announcement;
 
 use App\Enums\EnumHelperTrait;
 
-enum AnnouncementStateEnum: string
+enum AnnouncementStatusEnum: string
 {
     use EnumHelperTrait;
 
-    case IN_PROCESS = 'in-process';
-    case READY      = 'ready';
-    case CLOSED     = 'closed';
-
+    case INACTIVE  = 'inactive';
+    case ACTIVE    = 'active';
 
     public static function labels(): array
     {
         return [
-            'in-process' => __('In construction'),
-            'ready'      => __('Ready'),
-            'closed'     => __('Closed'),
+            'inactive'    => __('Inactive'),
+            'active'      => __('Active')
         ];
     }
 }
