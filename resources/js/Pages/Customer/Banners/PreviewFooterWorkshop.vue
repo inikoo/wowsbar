@@ -83,6 +83,7 @@ onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
 });
 
+console.log('sss',props)
 </script>
 
 <template>
