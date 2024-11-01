@@ -218,10 +218,6 @@ const componentDefaultData = {
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
 
-onMounted(() => {
-
-})
-
 const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }

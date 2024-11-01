@@ -27,6 +27,10 @@ const props = withDefaults(defineProps<{
     scope: "all",
 })
 
+const emits = defineEmits<{
+    (e: 'afterSubmit'): void
+}>()
+
 const announcementData = inject<AnnouncementData | null>('announcementData', null)
 console.log('qqq', announcementData)
 
@@ -92,23 +96,21 @@ function mergeData(data1: {}, data2: {}) {
 }
 
 const onSubmitTemplate = (template) => {
-    // console.log('template', template)
+    console.log('template', template.fields)
     // console.log('core announce data', isProxy(announcementData))
-    if(isSelectFullTemplate.value) {
+    if(isSelectFullTemplate.value || !announcementData?.code) {
         announcementData.code = template.code
         announcementData.fields = template.fields
         announcementData.container_properties = template?.container_properties
     } else {
         announcementData.code = template.code
     
-        // mergeData(announcementData.container_properties, template.container)
         announcementData.container_properties = template.container_properties
     
         mergeData(announcementData.fields, template.fields)
     }
 
-
-    // console.log('onSelectTempalte', announcementData)
+    emits('afterSubmit')
 }
 
 // Method: fetch announcement list
@@ -196,7 +198,7 @@ onMounted(() => {
                         </div>
 
                         <!-- Checkbox: Full template -->
-                        <div @click="() => isSelectFullTemplate = !isSelectFullTemplate"
+                        <div v-if="!announcement.code" @click="() => isSelectFullTemplate = !isSelectFullTemplate"
                             class="z-40 text-gray-400 hover:text-gray-700 items-center gap-x-3 absolute top-1.5 right-3"
                             :class="isSelectFullTemplate ? 'flex' : 'hidden group-hover:flex'"
                         >
