@@ -18,8 +18,9 @@ import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
+import { faThLarge } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload)
+library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
 
 const props = defineProps<{
     pageHead: TSPageHeading
@@ -28,8 +29,10 @@ const props = defineProps<{
         footer: Object
     }
     autosaveRoute: routeType
+    web_blocks : {
+        data : Array<any>
+    }
 }>()
-console.log(props)
 const tabsBar = ref(0)
 const isLoading =ref(false)
 const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
@@ -43,7 +46,6 @@ const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
 
-console.log('ssss',usedTemplates.value,props.data)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
@@ -129,7 +131,6 @@ const sendToIframe = (data: any) => {
 
 
 const handleIframeError = () => {
-    console.error('Failed to load iframe content.');
     isIframeLoading.value = false
     notify({
         title: 'Something went wrong in the preview.',
@@ -137,7 +138,7 @@ const handleIframeError = () => {
         type: 'error',
     })
 }
-
+console.log('aas',props)
 </script>
 
 <template>
@@ -153,7 +154,7 @@ const handleIframeError = () => {
         <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
                 <div class="w-[15%] bg-slate-200 ">
-                    <div v-for="(tab, index) in usedTemplates?.bluprint"
+                    <div v-for="(tab, index) in usedTemplates?.blueprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
                         :class="[tabsBar == tab.key ? 'bg-gray-300/70' : 'hover:bg-gray-200/60']" v-tooltip="tab.name">
@@ -163,7 +164,7 @@ const handleIframeError = () => {
                 </div>
                 <div class="w-[85%]">
                     <SideEditor v-model="usedTemplates.data.fieldValue"
-                        :bluprint="usedTemplates.bluprint[tabsBar].bluprint" />
+                        :blueprint="usedTemplates.blueprint[tabsBar].blueprint" />
                 </div>
             </div>
 
@@ -191,7 +192,11 @@ const handleIframeError = () => {
                                 <span aria-hidden="true" :class="previewMode ? 'translate-x-3' : 'translate-x-0'"
                                     class="pointer-events-none inline-block h-full w-1/2 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out">
                                 </span>
-                            </Switch>                       
+                            </Switch> 
+                            
+                            <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'">
+                                <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' />
+                            </div>
                         </div>
                     </div>
                         <div v-if="isIframeLoading" class="loading-overlay">
