@@ -62,6 +62,18 @@ class ShowAnnouncement extends InertiaAction
             ];
         }
 
+        $resetRoute = [];
+        if ($announcement->unpublishedSnapshot) {
+            $resetRoute = [
+                'reset_route' => [
+                    'name'        => 'customer.models.banner.announcement.reset',
+                    'parameters'  => [
+                        'announcement' => $announcement->id
+                    ]
+                ],
+            ];
+        }
+
         return Inertia::render(
             'Banners/Announcement',
             [
@@ -91,12 +103,7 @@ class ShowAnnouncement extends InertiaAction
                             'announcement' => $announcement->id
                         ]
                     ],
-                    'reset_route' => [
-                        'name'        => 'customer.models.banner.announcement.reset',
-                        'parameters'  => [
-                            'announcement' => $announcement->id
-                        ]
-                    ],
+                    ...$resetRoute
                 ],
                 'firstBanner'        => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'  => $announcement->toArray(),

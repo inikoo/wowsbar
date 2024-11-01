@@ -43,7 +43,6 @@ class StoreWebsite
         /** @var Website $website */
         $website = $shop->website()->create($modelData);
 
-
         $headerSnapshot = StoreWebsiteSnapshot::run(
             $website,
             [

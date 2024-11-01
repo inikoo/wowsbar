@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::table('announcements', function (Blueprint $table) {
             $table->string('code')->nullable()->change();
-            $table->dropUnique(['code']);
+            $table->dropUnique('code');
         });
     }
 
