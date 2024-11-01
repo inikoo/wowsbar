@@ -8,8 +8,8 @@
 import { Image } from "@/types/Image"
 
 
-export const propertiesToHTMLStyle = (properties: BlockProperties, xxx?: {toRemove: string[]}) => {
-    const htmlStyle = {
+export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { toRemove?: string[], onlySelect?: string[] }) => {
+    let htmlStyle = {
         position: properties?.position?.type || 'static',
         left: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? '50%' : properties?.position?.x || '0px', 
         top: properties?.position?.y || '0px',
@@ -43,9 +43,18 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, xxx?: {toRemo
         borderTopLeftRadius: `${properties?.border?.rounded?.topleft?.value}${properties?.border?.rounded?.unit}`,
     }
 
-    if(xxx?.toRemove) {
-        xxx.toRemove.forEach((item: string) => {
-            delete htmlStyle[item]
+    if (options?.onlySelect) {
+        // Select only specified keys in onlySelect
+        htmlStyle = Object.keys(htmlStyle)
+            .filter(key => options.onlySelect!.includes(key))
+            .reduce((obj, key) => {
+                obj[key] = htmlStyle[key];
+                return obj;
+            }, {} as typeof htmlStyle);
+    } else if (options?.toRemove) {
+        // Remove specified keys in toRemove
+        options.toRemove.forEach((item: string) => {
+            delete htmlStyle[item];
         });
     }
 
