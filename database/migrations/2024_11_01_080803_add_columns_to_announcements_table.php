@@ -16,6 +16,7 @@ return new class () extends Migration {
                 $table->string('schedule_at')->nullable();
                 $table->string('schedule_finish_at')->nullable();
                 $table->string('status')->default(AnnouncementStatusEnum::INACTIVE->value);
+                $table->jsonb('settings');
             });
         });
     }
