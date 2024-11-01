@@ -17,6 +17,8 @@ enum PortfolioWebsiteTabsEnum: string
 
     case SHOWCASE               = 'showcase';
     case CMS                    = 'cms';
+    case FOOTER                 = 'footer';
+    case HEADER                 = 'header';
     // case SEO                    = 'seo';
     //case GOOGLE_ADS             = 'google_ads';
     // case LEADS                  = 'leads';
@@ -40,6 +42,14 @@ enum PortfolioWebsiteTabsEnum: string
             PortfolioWebsiteTabsEnum::CMS => [
                 'title' => __('CMS'),
                 'icon'  => 'fal fa-object-group',
+            ],
+            PortfolioWebsiteTabsEnum::FOOTER => [
+                'title' => __('Footer'),
+                'icon'  => 'fal fa-football-ball',
+            ],
+            PortfolioWebsiteTabsEnum::HEADER => [
+                'title' => __('Header'),
+                'icon'  => 'fal fa-heading',
             ],
             /*
             PortfolioWebsiteTabsEnum::LEADS => [

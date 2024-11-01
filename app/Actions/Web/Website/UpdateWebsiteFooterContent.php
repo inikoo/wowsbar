@@ -34,6 +34,10 @@ class UpdateWebsiteFooterContent
             $isDirty = false;
         }
 
+        $website->footer()->update([
+            'compiled_layout' => $snapshot->layout
+        ]);
+
         $website->update(
             [
                 'footer_is_dirty' => $isDirty

@@ -69,6 +69,12 @@ class PublishWebsiteMarginal
                 "compiled_layout->$marginal"      => $snapshot->layout,
                 "published_{$marginal}_checksum"  => md5(json_encode($snapshot->layout)),
             ];
+
+            if ($marginal === 'footer') {
+                $website->footer()->create([
+                    'compiled_layout' => $snapshot->layout
+                ]);
+            }
         } else {
             $updateData = [
                 "compiled_layout->$marginal"     => $snapshot->layout

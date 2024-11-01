@@ -8,7 +8,9 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
+use App\Http\Resources\Web\WebBlockTypesResource;
 use App\Models\Market\Shop;
+use App\Models\Web\WebBlockType;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
 use Inertia\Inertia;
@@ -87,7 +89,8 @@ class ShowFooter
                     ]
                 ],
 
-                'data' => GetWebsiteWorkshopFooter::run($website),
+                'data'       => GetWebsiteWorkshopFooter::run($website),
+                'web_blocks' => WebBlockTypesResource::collection(WebBlockType::all())
             ]
         );
     }
