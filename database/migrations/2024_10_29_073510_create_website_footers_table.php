@@ -16,8 +16,6 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
 
-            $table->unsignedSmallInteger('webpage_id')->index();
-            $table->foreign('webpage_id')->references('id')->on('webpages');
             $table->unsignedSmallInteger('unpublished_footer_snapshot_id')->nullable()->index();
             $table->unsignedSmallInteger('live_footer_snapshot_id')->nullable()->index();
 

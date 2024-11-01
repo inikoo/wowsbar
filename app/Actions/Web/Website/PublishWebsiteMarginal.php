@@ -71,7 +71,7 @@ class PublishWebsiteMarginal
             ];
 
             if ($marginal === 'footer') {
-                $website->footer()->create([
+                $website->footer()->update([
                     'compiled_layout' => $snapshot->layout
                 ]);
             }

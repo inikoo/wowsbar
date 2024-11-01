@@ -14,6 +14,10 @@ class WebsiteFooter extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'compiled_layout' => 'array'
+    ];
+
     public function website(): BelongsTo
     {
         return $this->belongsTo(Website::class);
