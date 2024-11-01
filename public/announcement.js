@@ -29,10 +29,13 @@ function iframeStyle(iframeElement) {
 
 async function fetchAnnouncementData() {
     if (ulid) {
+        const domainName = window.location.hostname
+        console.log('domain', domainName)
         try {
-            const announcementData = await fetch(`http://delivery.wowsbar.test/announcement/${ulid}`, {
+            const announcementData = await fetch(`https://${domainName}/announcement/${ulid}`, {
                 headers: {
-                    'Accept':'application/json'
+                    'Accept':'application/json',
+                    "Content-Type": "application/json",
                 }
             })
                 .then(response => {
@@ -48,7 +51,7 @@ async function fetchAnnouncementData() {
             // createElementAfterBody();
 
             const iframe = document.createElement('iframe');
-            iframe.src = `http://delivery.wowsbar.test/announcement/${ulid}`;
+            iframe.src = `https://${domainName}/announcement/${ulid}`;
             iframeStyle(iframe)
 
             // console.log('zzzz', iframe?.contentWindow)

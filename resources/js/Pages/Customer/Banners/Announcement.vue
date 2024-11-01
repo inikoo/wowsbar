@@ -29,6 +29,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import { routeType } from '@/types/route'
+import EmptyState from '@/Components/Utils/EmptyState.vue'
 
 library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faThLarge)
 
@@ -71,71 +72,9 @@ const props = defineProps<{
     }
 }>()
 
-
-// const vvvv = async () => {
-//     // const zzz = await axios.get('http://delivery.wowsbar.test/announcement.js');
-//     fetch(`http://delivery.wowsbar.test/announcement/01J9T4KWNQJM9BMMPHKGKY0AVK`)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok ' + response.statusText);
-//             }
-//             return response.json(); // or response.text() if expecting plain text
-//         })
-//         .then(data => {
-//             console.log('from fetch delivery', data); // Process the data
-//         })
-//         .catch(error => {
-//             console.error('There was a problem with the fetch operation:', error);
-//         });
-
-//     // console.log("axios:", zzz)
-// }
-// vvvv()
-
 const isModalOpen = ref(false)
-
-// const selectedBlockOpenPanel = ref(true)
-// const isLoading = ref<string | boolean>(false)
-// const comment = ref("")
-// const openDrawer = ref<string | boolean>(false)
-// const iframeSrc = ref(route('grp.websites.preview', [route().params['website'], route().params['webpage']]))
-// const data = ref({ ...props.webpage })
-// const iframeClass = ref('w-full h-full')
-const isIframeLoading = ref(false)
-// const _WebpageSideEditor = ref(null)
-
-
-// const onPublish = async (action: {}, popover: {}) => {
-//     try {
-//         // Ensure action is defined and has necessary properties
-//         if (!action || !action.method || !action.name || !action.parameters) {
-//             throw new Error('Invalid action parameters')
-//         }
-
-//         isLoading.value = true
-
-//         // Make sure route and axios are defined and used correctly
-//         const response = await axios[action.method](route(action.name, action.parameters), {
-//             comment: comment.value,
-//             publishLayout: { blocks: data.value.layout }
-//         })
-//         popover.close()
-
-//     } catch (error) {
-//         // Ensure the error is logged properly
-//         console.error('Error:', error)
-//         const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred'
-//         notify({
-//             title: 'Something went wrong.',
-//             text: errorMessage,
-//             type: 'error',
-//         })
-//     } finally {
-//         isLoading.value = false
-//     }
-// };
-
 const isLoadingSave = ref(false)
+
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
     router.post(
@@ -263,7 +202,7 @@ const _parentComponent = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor v-if="1" />
+            <AnnouncementSideEditor v-if="announcementData.code" />
         </div>
 
         <!-- Section: Preview -->
@@ -299,8 +238,9 @@ const _parentComponent = ref(null)
                     <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
                 </div>
 
-                <div v-else class="h-full w-full bg-white relative">
+                <div class="h-full w-full bg-white relative">
                     <div
+                        v-if="announcementData.code"
                         ref="_parentComponent"
                         :style="{
                             ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
@@ -314,6 +254,14 @@ const _parentComponent = ref(null)
                             isEditable
                             :_parentComponent
                         />
+                    </div>
+
+                    <div v-else class="text-center">
+                        <EmptyState :data="{ title: trans('No Announcement selected')}" />
+                        <div class="mx-auto mt-4">
+                            <Button @click="() => isModalOpen = true" :style="'tertiary'" label="Select from template" />
+                        </div>
+
                     </div>
                     <!-- <br>
                     <br>
@@ -333,7 +281,20 @@ const _parentComponent = ref(null)
 
         <div class="h-[500px]">
             <AnnouncementTemplateList
+                @afterSubmit="() => isModalOpen = false"
             />
         </div>
     </Modal>
 </template>
+
+<style lang="scss">
+
+.moveable-control-box {
+
+}
+
+.moveable-control.moveable-origin {
+    visibility: hidden !important;
+}
+
+</style>
