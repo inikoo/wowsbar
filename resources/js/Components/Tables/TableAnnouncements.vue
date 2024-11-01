@@ -19,7 +19,7 @@ const props = defineProps<{
 
 function announcementRoute(announcement) {
     return route(
-        'customer.banners.announcements.show',
+        'customer.portfolio.announcements.show',
         [announcement.ulid]);
 }
 </script>

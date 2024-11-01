@@ -45,10 +45,15 @@ class GetLayout
                     'name' => 'customer.portfolio.websites.index',
                 ]
             ],
-
+            [
+                'icon'  => ['fal', 'fa-sign'],
+                'label' => __('Announcement'),
+                'root'  => 'customer.portfolio.announcements.index',
+                'route' => [
+                    'name' => 'customer.portfolio.announcements.index'
+                ]
+            ]
         ];
-
-
 
         // Nav: Social Accounts
         if ($customerUser->hasPermissionTo('portfolio.social.view')) {
@@ -181,7 +186,6 @@ class GetLayout
                         ];*/
         }
 
-
         if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0 and false) {
             $websiteSubNav['prospects'] = [
                 'scope'   => 'prospects',
@@ -243,7 +247,6 @@ class GetLayout
         }
 
 
-
         // Websites
         if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {
             $navigation['websites'] = [
@@ -254,7 +257,7 @@ class GetLayout
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],
-                'subNav'  => $websiteSubNav,
+                'subNav' => $websiteSubNav,
             ];
         }
 

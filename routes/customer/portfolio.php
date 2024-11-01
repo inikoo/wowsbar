@@ -6,6 +6,10 @@
  */
 
 
+use App\Actions\Portfolio\Announcement\UI\CreateAnnouncement;
+use App\Actions\Portfolio\Announcement\UI\IndexAnnouncement;
+use App\Actions\Portfolio\Announcement\UI\ShowAnnouncement;
+use App\Actions\Portfolio\AnnouncementTemplate\UI\IndexAnnouncementTemplates;
 use App\Actions\Portfolio\PortfolioSocialAccount\DeletePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\CreatePortfolioSocialAccountAds;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\ShowPortfolioSocialAccountAds;
@@ -57,3 +61,10 @@ Route::get('/social-accounts/{portfolioSocialAccount}/post/{post}/edit', EditPor
 
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/create', CreatePortfolioSocialAccountAds::class)->name('social-accounts.ads.create');
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/{ads}', ShowPortfolioSocialAccountAds::class)->name('social-accounts.ads.show');
+
+Route::name('announcements.')->prefix('announcements')->group(function () {
+    Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
+    Route::get('create', [CreateAnnouncement::class, 'inCustomer'])->name('create');
+    Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
+    Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
+});
