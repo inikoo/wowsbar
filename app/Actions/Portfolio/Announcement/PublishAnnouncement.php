@@ -70,11 +70,12 @@ class PublishAnnouncement
             'fields'                  => Arr::get($snapshot->layout, 'fields'),
             'container_properties'    => Arr::get($snapshot->layout, 'container_properties'),
             'published_checksum'      => md5(json_encode($snapshot->layout)),
-            'state'                   => AnnouncementStateEnum::LIVE,
+            'state'                   => AnnouncementStateEnum::READY,
+            'settings'                => Arr::get($snapshot->layout, 'settings')
         ];
 
         if ($announcement->state == AnnouncementStateEnum::IN_PROCESS or $announcement->state == AnnouncementStateEnum::READY) {
-            $updateData['live_at'] = now();
+            $updateData['ready_at'] = now();
         }
 
         $this->update($announcement, $updateData);

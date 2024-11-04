@@ -35,7 +35,8 @@ class UpdateAnnouncement
             [
                 'layout' => [
                     'container_properties'  => $modelData['container_properties'],
-                    'fields'                => $modelData['fields']
+                    'fields'                => $modelData['fields'],
+                    'settings'              => $modelData['settings']
                 ]
             ]
         );

@@ -12,11 +12,11 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('announcements', function (Blueprint $table) {
-            $table->after('published_checksum', function ($table) {
+            $table->after('published_checksum', function (Blueprint $table) {
                 $table->string('schedule_at')->nullable();
                 $table->string('schedule_finish_at')->nullable();
                 $table->string('status')->default(AnnouncementStatusEnum::INACTIVE->value);
-                $table->jsonb('settings');
+                $table->jsonb('settings')->default('{}');
             });
         });
     }
