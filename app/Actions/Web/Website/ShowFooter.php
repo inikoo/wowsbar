@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Portfolio\PortfolioWebsite\Traits\HasPortfolioWebsiteSubNavigation;
 use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
 use App\Http\Resources\Web\WebBlockTypesResource;
 use App\Models\Market\Shop;
@@ -21,6 +22,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class ShowFooter
 {
     use AsAction;
+    use HasPortfolioWebsiteSubNavigation;
 
 
     private Website $website;
@@ -38,6 +40,8 @@ class ShowFooter
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
+        $subNavigation = $this->getSubNavigation($request);
+
         return Inertia::render(
             'Banners/FooterWorkshop',
             [
@@ -73,6 +77,7 @@ class ShowFooter
                             ]
                         ], */
                     ],
+                    'subNavigation'    => $subNavigation,
                 ],
 
                 'uploadImageRoute' => [
@@ -100,9 +105,9 @@ class ShowFooter
         return true;
     }
 
-    public function asController(ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): Website
     {
-        $this->parent = $request->get('website');
+        $this->parent = $website;
 
         return $this->parent;
     }
