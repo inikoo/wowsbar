@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website\UI;
 
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\Website;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -15,10 +16,10 @@ class GetWebsiteWorkshopFooter
 {
     use AsAction;
 
-    public function handle(Website $website): array
+    public function handle(PortfolioWebsite $portfolioWebsite): array
     {
         return [
-           'data'=> Arr::get($website->compiled_layout, 'footer')
+           'data'=> Arr::get($portfolioWebsite->compiled_layout, 'footer')
         ];
     }
 }
