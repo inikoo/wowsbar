@@ -1,13 +1,13 @@
 export const footerTheme1 = {
     code: "FooterTheme1",
     name: "Footer 1",
-    bluprint: [
+    blueprint: [
         {
             key: "body",
             icon: "far fa-line-columns",
             name: "Body",
             type: "body",
-            bluprint: [
+            blueprint: [
                 {
                     key: ["container", "properties"],
                     name: "Body",
@@ -20,7 +20,7 @@ export const footerTheme1 = {
             icon: "far fa-money-bill",
             name: "Payments",
             type: "payment_templates",
-            bluprint: [
+            blueprint: [
                 {
                     key: "PaymentData",
                     name: "Payments",
@@ -33,7 +33,7 @@ export const footerTheme1 = {
             icon: "far fa-icons",
             name: "Social Media",
             type: "socialMedia",
-            bluprint: [
+            blueprint: [
                 {
                     key: "socialData",
                     name: "Social Media",

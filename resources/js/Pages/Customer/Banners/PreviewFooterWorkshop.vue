@@ -19,10 +19,10 @@ const props = defineProps<{
     footer: Object
     autosaveRoute: routeType
 }>()
-
+console.log('sds',props)
 const saveCancelToken = ref<Function | null>(null)
 const socketLayout = SocketFooter();
-const usedTemplates = reactive( props.footer ?  props.footer : footerTheme1 )
+const usedTemplates = reactive( props.footer.data ?  props.footer.data : footerTheme1 )
 const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: false, trailing: true })
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
@@ -56,7 +56,7 @@ const autoSave = async (data: Object) => {
 
 
 const updateData = (newVal) => {
-    debouncedSendUpdate({...usedTemplates.data, data : {fieldValue : newVal }  });
+    debouncedSendUpdate({...usedTemplates , data : {fieldValue : newVal }  });
 }
 
 
@@ -83,13 +83,13 @@ onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
 });
 
-console.log('inii',usedTemplates)
+console.log('sss',props)
 </script>
 
 <template>
     <div class="p-4">
         <Footer1 
-            v-model="usedTemplates.data.data.fieldValue" 
+            v-model="usedTemplates.data.fieldValue" 
             :preview-mode="previewMode"
             @update:model-value="updateData"
         />

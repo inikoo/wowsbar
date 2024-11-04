@@ -23,7 +23,7 @@ library.add(faAngleDown, faAngleUp)
 
 const props = defineProps<{
     modelValue: any,
-    bluprint: Array
+    blueprint: Array
     uploadImageRoute?: routeType
 }>()
 
@@ -75,7 +75,7 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
 
 <template>
     <Accordion>
-        <AccordionPanel v-for="(field, index) of bluprint" :key="index" :value="index" @click="openPanel = index">
+        <AccordionPanel v-for="(field, index) of blueprint" :key="index" :value="index" @click="openPanel = index">
             <AccordionHeader>
                 <div>
                     <Icon :data="field.icon" />
