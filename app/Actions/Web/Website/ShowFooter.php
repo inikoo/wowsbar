@@ -8,9 +8,11 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Portfolio\PortfolioWebsite\Traits\HasPortfolioWebsiteSubNavigation;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
 use App\Http\Resources\Web\WebBlockTypesResource;
 use App\Models\Market\Shop;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\WebBlockType;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
@@ -27,18 +29,18 @@ class ShowFooter
 
     private Website $website;
 
-    private Webpage|Website $parent;
+    private Webpage|Website|PortfolioWebsite $parent;
 
     private Shop $scope;
 
     public bool $asAction = false;
 
-    public function handle(Website $website): Website
+    public function handle(PortfolioWebsite $website): PortfolioWebsite
     {
         return $website;
     }
 
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
         $subNavigation = $this->getSubNavigation($request);
 
@@ -51,7 +53,7 @@ class ShowFooter
                 ),
                 'title'       => __('footer'),
                 'pageHead'    => [
-                    'title'    => $website->code,
+                    'title'    => $portfolioWebsite->name,
                     'icon'     => [
                         'title' => __('footer'),
                         'icon'  => 'fal fa-browser'
@@ -83,18 +85,18 @@ class ShowFooter
                 'uploadImageRoute' => [
                     'name'       => 'grp.models.website.footer.images.store',
                     'parameters' => [
-                        'website' => $website->id
+                        'website' => $portfolioWebsite->id
                     ]
                 ],
 
                 'autosaveRoute' => [
                     'name'       => 'grp.models.website.autosave.footer',
                     'parameters' => [
-                        'website' => $website->id
+                        'website' => $portfolioWebsite->id
                     ]
                 ],
 
-                'data'       => GetWebsiteWorkshopFooter::run($website),
+                'data'       => GetWebsiteWorkshopFooter::run($portfolioWebsite),
                 'web_blocks' => WebBlockTypesResource::collection(WebBlockType::all())
             ]
         );
@@ -105,16 +107,57 @@ class ShowFooter
         return true;
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->parent = $website;
+        $this->parent = $portfolioWebsite;
 
         return $this->parent;
     }
 
-    public function getBreadcrumbs($routeName, $routeParameters): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = 'Footer'): array
     {
-        return [];
+        $headCrumb = function (string $type, PortfolioWebsite $portfolioWebsite, array $routeParameters, string $suffix) {
+            return [
+                [
+                    'type'           => $type,
+                    'modelWithIndex' => [
+                        'index' => [
+                            'route' => $routeParameters['index'],
+                            'label' => __('websites')
+                        ],
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $portfolioWebsite->slug,
+                        ],
+
+                    ],
+                    'simple'         => [
+                        'route' => $routeParameters['model'],
+                        'label' => $portfolioWebsite->slug
+                    ],
+                    'suffix'         => '('.$suffix.')'
+                ],
+            ];
+        };
+
+        return array_merge(
+            ShowPortfolio::make()->getBreadcrumbs(),
+            $headCrumb(
+                'modelWithIndex',
+                PortfolioWebsite::firstWhere('slug', $routeParameters['portfolioWebsite']),
+                [
+                    'index' => [
+                        'name'       => 'customer.banners.websites.index',
+                        'parameters' => []
+                    ],
+                    'model' => [
+                        'name'       => 'customer.banners.websites.show',
+                        'parameters' => $routeParameters
+                    ]
+                ],
+                $suffix
+            ),
+        );
     }
 
 }
