@@ -69,6 +69,7 @@ class UpdateAnnouncement
         return [
             'code'                 => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
+            'settings'             => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array']
         ];
     }
