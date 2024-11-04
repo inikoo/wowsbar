@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { inject, ref } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown } from '@fal'
 // import draggable from "vuedraggable"
 import PanelProperties from '@/Components/Workshop/PanelProperties.vue'
@@ -30,6 +30,9 @@ import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
 
 const props = defineProps<{
+}>()
+const emits = defineEmits<{
+    (e: 'onMounted'): void
 }>()
 
 const selectedBlockOpenPanel = ref<string | null>('content')
@@ -59,6 +62,11 @@ const toHorizontalCenter = (block_properties: {}) => {
 }
 
 const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
+
+onMounted(() => {
+    emits('onMounted')
+})
+
 </script>
 
 <template>

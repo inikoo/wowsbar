@@ -13,6 +13,7 @@ import { trans } from 'laravel-vue-i18n'
 // import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
 // import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
+import AnnouncementSettings from '@/Components/Workshop/Announcement/AnnouncementSettings.vue'
 
 
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -31,12 +32,6 @@ import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import { routeType } from '@/types/route'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
-import Select from 'primevue/select'
-import InputText from 'primevue/inputtext'
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
-import Tag from '@/Components/Tag.vue'
 
 library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faThLarge)
 
@@ -53,23 +48,36 @@ const props = defineProps<{
     }
     announcement_data: {
         code: string
-        id: number
-        name: string
-        ulid: string
+        container_properties: {
+            
+        }
         created_at: string
-        updated_at: string
-        icon: string
-        close_button: {
-            size: string
-            text_color: string
-            block_properties: {
-                position: {
-                    x: string
-                    y: string
-                    type: string  // 'absolute' | 'relative'
+        fields: {
+            close_button: {
+                size: string
+                text_color: string
+                block_properties: {
+                    position: {
+                        x: string
+                        y: string
+                        type: string  // 'absolute' | 'relative'
+                    }
                 }
             }
+            
         }
+        id: number
+        icon?: string
+        name: string
+        schedule_at?: string
+        schedule_finish_at?: string
+        settings: {
+
+        }
+        state: string
+        status: string
+        ulid: string
+        updated_at: string
     }
     announcement_list: {}
     routes_list: {
@@ -79,9 +87,13 @@ const props = defineProps<{
     }
 }>()
 
-const isModalOpen = ref(false)
-const isLoadingSave = ref(false)
+const announcementData = ref(props.announcement_data)
+console.log('ann', announcementData.value)
+provide('announcementData', announcementData.value)
 
+const isModalOpen = ref(false)
+
+const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
     router.post(
@@ -92,13 +104,6 @@ const onSave = () => {
             onFinish: () => {
                 isLoadingSave.value = false
                 saveCancelToken.value = null
-            },
-            onSuccess: () => {
-                notify({
-                    title: 'Success',
-                    text: 'Data Announcement saved',
-                    type: 'success',
-                })
             },
             onError: (error) => {
                 notify({
@@ -122,6 +127,13 @@ const onPublish = () => {
             onFinish: () => {
                 isLoadingSave.value = false
                 saveCancelToken.value = null
+            },
+            onSuccess: () => {
+                notify({
+                    title: 'Success',
+                    text: 'Data Announcement saved',
+                    type: 'success',
+                })
             },
             onError: (error) => {
                 notify({
@@ -153,8 +165,6 @@ const onReset = () => {
     )
 }
 
-const announcementData = ref(props.announcement_data)
-provide('announcementData', announcementData.value)
 
 // If fieldvalue have changes, then auto save
 watch(announcementData, (newVal) => {
@@ -175,47 +185,31 @@ const isOnPublishState = inject('isOnPublishState', false)
 const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
 
-const isLoadingTab = ref<string | null>(null)
+const isLoadingComponent = ref<string | null>(null)
 const selectedTab = ref('Setting')
 const changeTab = async (category: string) => {
-    isLoadingTab.value = category
+    isLoadingComponent.value = category
     selectedTab.value = category
-    await nextTick()
-    isLoadingTab.value = null
 }
 
-const announcementSetting = ref({
-    target: {
-        type: 'all', // 'specific'
-        specific: [
-            {
-                will: 'show', // 'hide'
-                when: 'contain', // 'matches'
-                url: 'blog/subpage'
+// const announcementSetting = ref()
+
+onMounted(() => {
+    if (Array.isArray(announcementData.value?.settings) && announcementData.value?.settings?.length === 0) {
+        announcementData.value.settings = {
+            target: {
+                type: 'all', // 'specific'
+                specific: [
+                    {
+                        will: 'show', // 'hide'
+                        when: 'contain', // 'matches'
+                        url: 'blog/subpage'
+                    }
+                ]
             }
-        ]
+        }
     }
 })
-const specificNew = ref({
-    will: 'show', // 'hide'
-    when: 'contain', // 'matches'
-    url: ''
-})
-const addSpecificPage = () => {
-    announcementSetting.value.target.specific.push(specificNew.value)
-
-    specificNew.value = {
-        will: 'show',
-        when: 'contain',
-        url: ''
-    }
-}
-const onDeleteSpecific = (specIndex: number) => {
-    remove(announcementSetting.value.target.specific, (item, index) => {
-        return index == specIndex
-    })
-
-}
 </script>
 
 <template layout="CustomerApp">
@@ -228,8 +222,7 @@ const onDeleteSpecific = (specIndex: number) => {
 
         <template #other>
             <div class="flex gap-x-2">
-                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave"
-                    :style="'negative'" icon="fal fa-undo-alt" />
+                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave" :style="'negative'" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
                 <Button @click="onPublish" label="Publish" :loading="isLoadingSave" iconRight="fal fa-rocket-launch" />
             </div>
@@ -239,17 +232,17 @@ const onDeleteSpecific = (specIndex: number) => {
     <div class="mx-auto max-w-md px-2 sm:px-0 my-4">
         <!-- {{ selectedTab }} -->
         <TabGroup>
-            <TabList class="flex space-x-1 rounded-xl bg-indigo-500 p-1">
+            <TabList class="flex space-x-1 rounded-xl bg-slate-600 p-1">
                 <Tab v-for="category in ['Workshop', 'Setting']" as="template" :key="category" v-slot="{ selected }"
-                    @click="async () => changeTab(category)">
+                    @click="async () => selectedTab === category ? '' : changeTab(category)">
                     <button :class="[
                         'px-8 w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                         selected
-                            ? 'bg-white text-blue-700 shadow'
+                            ? 'bg-white text-slate-700 shadow'
                             : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
                         ]">
                         {{ category }}
-                        <LoadingIcon v-if="isLoadingTab === category" />
+                        <LoadingIcon v-if="isLoadingComponent === category" />
                     </button>
                 </Tab>
             </TabList>
@@ -272,7 +265,7 @@ const onDeleteSpecific = (specIndex: number) => {
                 </div>
             </div>
 
-            <AnnouncementSideEditor v-if="announcementData.code" />
+            <AnnouncementSideEditor v-if="announcementData.code" @onMounted="() => isLoadingComponent = null" />
         </div>
 
         <!-- Section: Preview -->
@@ -333,95 +326,11 @@ const onDeleteSpecific = (specIndex: number) => {
     <div v-if="selectedTab == 'Setting'">
         <div class="max-w-4xl mx-auto px-4">
             <!-- Section: Target -->
-            <fieldset class="mb-6">
-                <legend class="text-xl font-semibold ">Target</legend>
-                <p class="text-sm/6 text-gray-600">
-                    Select where the Announcement will be displayed
-                </p>
-                <div class="mt-2">
-                    <div class="flex items-center gap-x-3">
-                        <input v-model="announcementSetting.target.type" value="all" id="push-everything" name="push-notifications" type="radio"
-                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                        <label for="push-everything"
-                            class="cursor-pointer block font-medium ">All pages</label>
-                    </div>
-                    <div class="flex items-center gap-x-3">
-                        <input v-model="announcementSetting.target.type" value="specific" id="push-email" name="push-notifications" type="radio"
-                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                        <label for="push-email" class="cursor-pointer block font-medium ">
-                            Specific page
-                        </label>
+            <AnnouncementSettings
+                @onMounted="() => isLoadingComponent = null"
+            />
 
-                    </div>
-
-                    <!-- Section: Target specific -->
-                    <div v-if="announcementSetting.target.type == 'specific'" class="mt-2 space-y-4">
-                        <div class="flex gap-x-4 items-center">
-                            <div>The announcement should</div>
-                            <div class="w-24">
-                                <Select v-model="specificNew.will" :options="['show', 'hide']" placeholder="Select a City" class="w-full" />
-                            </div>
-                            <div>if URL:</div>
-                        </div>
-
-                        <div>
-                            <div class="flex gap-x-2">
-                                <div class="w-32">
-                                    <Select v-model="specificNew.when" :options="['contain', 'matches']" placeholder="When?" class="w-full" />
-                                </div>
-                                <div class="min-w-80 w-fit max-w-96">
-                                    <InputGroup v-show="specificNew.when === 'matches'">
-                                        <InputGroupAddon>awa.test/</InputGroupAddon>
-                                        <InputText type="text" v-model="specificNew.url" placeholder="blog/subpage" />
-                                    </InputGroup>
-                                    <InputText v-show="specificNew.when === 'contain'" v-model="specificNew.url" fluid type="text" placeholder="blog/subpage" />
-                                </div>
-                                <Button @click="() => addSpecificPage()" :style="'secondary'" label="Add" :disabled="!specificNew.url" />
-                            </div>
-
-                            <div class="text-xs italic mt-2 text-gray-500">
-                                <FontAwesomeIcon icon='fal fa-info-circle' class='text-sm' fixed-width aria-hidden='true' />
-                                Put '*' to select the subpages as well (example: blog/subpage/* will affect blog/subpage/aromatheraphy/diffuser/lavender)
-                            </div>
-                        </div>
-
-                        <!-- Section: Show URL list -->
-                        <div v-if="announcementSetting.target.specific.filter(item => item.will === 'show').length">
-                            <div>Show:</div>
-                            <TransitionGroup name="list" tag="ul" class="bg-slate-200 px-2 py-2 rounded">
-                                <template v-for="(spec, specIndex) in announcementSetting.target.specific" :key="`specshow${specIndex}`">
-                                    <li v-if="spec.will === 'show'">
-                                        <template v-if="spec.when === 'contain'">If <span class="italic">contain</span> <span class="font-bold">{{ spec.url }}</span> in the <Tag label="URL" /></template>
-                                        <template v-if="spec.when === 'matches'">If <Tag label="URL" /><span class="italic">matches</span> in <span class="font-bold">{{ spec.url }}</span> </template>
-                                        <div @click="() => onDeleteSpecific(specIndex)" class="px-1 py-px inline cursor-pointer text-red-300 hover:text-red-500">
-                                            <FontAwesomeIcon icon='fal fa-times' class='' fixed-width aria-hidden='true' />
-                                        </div>
-                                    </li>
-                                </template>
-                            </TransitionGroup>
-                        </div>
-
-                        <!-- Section: Hide URL list -->
-                        <div v-if="announcementSetting.target.specific.filter(item => item.will === 'hide').length">
-                            <div>Hide:</div>
-                            <TransitionGroup name="list" tag="ul" class="bg-slate-200 px-2 py-2 rounded">
-                                <template v-for="(spec, specIndex) in announcementSetting.target.specific" :key="`spechide${specIndex}`">
-                                    <li v-if="spec.will === 'hide'">
-                                        <template v-if="spec.when === 'contain'">If <span class="italic">contain</span> <span class="font-bold">{{ spec.url }}</span> in the <Tag label="URL" /></template>
-                                        <template v-if="spec.when === 'matches'">If <Tag label="URL" /><span class="italic">matches</span> in <span class="font-bold">{{ spec.url }}</span> </template>
-                                        <div @click="() => onDeleteSpecific(specIndex)" class="px-1 py-px inline cursor-pointer text-red-300 hover:text-red-500">
-                                            <FontAwesomeIcon icon='fal fa-times' class='' fixed-width aria-hidden='true' />
-                                        </div>
-                                    </li>
-                                </template>
-                            </TransitionGroup>
-                        </div>
-
-                    </div>
-                </div>
-            </fieldset>
-
-            <div v-if="false" class="space-y-12">
+            <!-- <div v-if="false" class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-base/7 font-semibold text-gray-900">Profile</h2>
                     <p class="mt-1 text-sm/6 text-gray-600">
@@ -609,7 +518,7 @@ const onDeleteSpecific = (specIndex: number) => {
                         
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
