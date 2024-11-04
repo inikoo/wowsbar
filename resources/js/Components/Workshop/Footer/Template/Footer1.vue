@@ -140,7 +140,7 @@ console.log('ppp',props)
         <div class="">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8">
                 <div class="px-4 md:px-0 grid gap-y-2 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.column['column_1']['data']" group="row" itemKey="id" :animation="200"
+                    <draggable :list="modelValue.columns['column_1']['data']" group="row" itemKey="id" :animation="200"
                         handle=".handle" @start="onDrag" @end="onDrop"
                         class="px-4 md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
@@ -151,7 +151,7 @@ console.log('ppp',props)
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-fit"
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.column['column_1']['data'], index)">
+                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_1']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :editable="editable"
                                                     @onEditClick="selectAllEditor" @update:model-value="(e)=> {item.name = e, emits('update:modelValue', modelValue)}" />
@@ -172,7 +172,7 @@ console.log('ppp',props)
                                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                             class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                         <div class="w-full"
-                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_1']['data'], subIndex)">
+                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_1']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :editable="editable"  @update:model-value="(e)=>{sub.name = e ,emits('update:modelValue', modelValue)}"
                                                                     @onEditClick="selectAllEditor" />
@@ -198,7 +198,7 @@ console.log('ppp',props)
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-fit"
-                                                        @contextmenu="onRightClickMenu($event, item, modelValue.column['column_1']['data'], index)">
+                                                        @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_1']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :editable="editable"  @update:model-value="(e)=> {item.name = e, emits('update:modelValue', modelValue)}"
                                                                  @onEditClick="selectAllEditor" />
@@ -229,7 +229,7 @@ console.log('ppp',props)
                                                                         v-if="!previewMode"
                                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                                     <div class="w-full"
-                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_1']['data'], subIndex)">
+                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_1']['data'], subIndex)">
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"  @update:model-value="(e)=>{sub.name = e ,emits('update:modelValue', modelValue)}"
                                                                                 :editable="editable" 
@@ -253,7 +253,7 @@ console.log('ppp',props)
                             </div>
                         </template>
                     </draggable>
-                    <div v-if="editable" @click="addMenuToColumn(modelValue.column['column_1']['data'])"
+                    <div v-if="editable" @click="addMenuToColumn(modelValue.columns['column_1']['data'])"
                         class="border border-dashed w-[80%] p-2 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all duration-300 ease-in-out cursor-pointer transform hover:scale-105 hidden hidden md:flex">
                         <FontAwesomeIcon :icon="['fas', 'plus']" class="text-blue-600 text-2xl"></FontAwesomeIcon>
                         <span class="text-gray-700 font-semibold text-lg">Add Menu</span>
@@ -262,7 +262,7 @@ console.log('ppp',props)
 
 
                 <div class="px-4 md:px-0 grid gap-y-2 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.column['column_2']['data']" group="row" itemKey="id" :animation="200"
+                    <draggable :list="modelValue.columns['column_2']['data']" group="row" itemKey="id" :animation="200"
                         handle=".handle" @start="onDrag" @end="onDrop"
                         class="px-4 md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
@@ -273,7 +273,7 @@ console.log('ppp',props)
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full"
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
+                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_2']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :editable="editable"  @update:model-value="(e)=>{item.name = e ,emits('update:modelValue', modelValue)}"
                                                     @onEditClick="selectAllEditor" />
@@ -294,7 +294,7 @@ console.log('ppp',props)
                                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                             class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                         <div class="w-full"
-                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_2']['data'], subIndex)">
+                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_2']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :editable="editable" @update:model-value="(e)=>{sub.name = e ,emits('update:modelValue', modelValue)}"
                                                                      @onEditClick="selectAllEditor" />
@@ -321,7 +321,7 @@ console.log('ppp',props)
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-fit"
-                                                        @contextmenu="onRightClickMenu($event, item, modelValue.column['column_2']['data'], index)">
+                                                        @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_2']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :editable="editable"  @update:model-value="(e)=>{item.name = e ,emits('update:modelValue', modelValue)}"
                                                                  @onEditClick="selectAllEditor" />
@@ -352,7 +352,7 @@ console.log('ppp',props)
                                                                         v-if="!previewMode"
                                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                                     <div class="w-full"
-                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_2']['data'], subIndex)">
+                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_2']['data'], subIndex)">
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"
                                                                                 :toogle="['link']" :editable="editable"
@@ -377,7 +377,7 @@ console.log('ppp',props)
                             </div>
                         </template>
                     </draggable>
-                    <div v-if="editable" @click="addMenuToColumn(modelValue.column['column_2']['data'])"
+                    <div v-if="editable" @click="addMenuToColumn(modelValue.columns['column_2']['data'])"
                         class="border border-dashed w-[80%] p-2 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all duration-300 ease-in-out cursor-pointer transform hover:scale-105 hidden md:flex">
                         <FontAwesomeIcon :icon="['fas', 'plus']" class="text-blue-600 text-2xl"></FontAwesomeIcon>
                         <span class="text-gray-700 font-semibold text-lg">Add Menu</span>
@@ -385,7 +385,7 @@ console.log('ppp',props)
                 </div>
 
                 <div class="px-4 md:px-0 grid gap-y-2 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.column['column_3']['data']" group="row" itemKey="id" :animation="200"
+                    <draggable :list="modelValue.columns['column_3']['data']" group="row" itemKey="id" :animation="200"
                         handle=".handle" @start="onDrag" @end="onDrop"
                         class="hidden md:block px-4 md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
@@ -395,7 +395,7 @@ console.log('ppp',props)
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full"
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.column['column_3']['data'], index)">
+                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_3']['data'], index)">
                                             <span class="text-xl font-semibold w-fit leading-6">
                                                 <Editor v-model="item.name" :editable="editable" 
                                                     @onEditClick="selectAllEditor"  @update:model-value="(e)=>{item.name = e ,emits('update:modelValue', modelValue)}"/>
@@ -416,7 +416,7 @@ console.log('ppp',props)
                                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                             class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                         <div class="w-full"
-                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_3']['data'], subIndex)">
+                                                            @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_3']['data'], subIndex)">
                                                             <span class="text-sm block">
                                                                 <Editor v-model="sub.name" :editable="editable"   @update:model-value="(e)=>{sub.name = e ,emits('update:modelValue', modelValue)}"
                                                                      @onEditClick="selectAllEditor" />
@@ -443,7 +443,7 @@ console.log('ppp',props)
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle text-xl text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-fit"
-                                                        @contextmenu="onRightClickMenu($event, item, modelValue.column['column_3']['data'], index)">
+                                                        @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_3']['data'], index)">
                                                         <span class="text-xl font-semibold leading-6">
                                                             <Editor v-model="item.name" :editable="editable"  @update:model-value="(e)=>{item.name = e ,emits('update:modelValue', modelValue)}"
                                                                 @onEditClick="selectAllEditor" />
@@ -474,7 +474,7 @@ console.log('ppp',props)
                                                                         v-if="!previewMode"
                                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                                     <div class="w-full"
-                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.column['column_3']['data'], subIndex)">
+                                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_3']['data'], subIndex)">
                                                                         <span class="text-sm block">
                                                                             <Editor v-model="sub.name"   @update:model-value="(e)=>{sub.name = e ,emits('update:modelValue', props.modelValue)}"
                                                                                 :editable="editable" 
@@ -498,7 +498,7 @@ console.log('ppp',props)
                             </div>
                         </template>
                     </draggable>
-                    <div v-if="editable" @click="addMenuToColumn(modelValue.column['column_3']['data'])"
+                    <div v-if="editable" @click="addMenuToColumn(modelValue.columns['column_3']['data'])"
                         class="border border-dashed w-[80%] p-2 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:bg-gray-50 transition-all duration-300 ease-in-out cursor-pointer transform hover:scale-105 hidden md:flex">
                         <FontAwesomeIcon :icon="['fas', 'plus']" class="text-blue-600 text-2xl"></FontAwesomeIcon>
                         <span class="text-gray-700 font-semibold text-lg">Add Menu</span>
@@ -517,7 +517,7 @@ console.log('ppp',props)
                 <div class="flex flex-col flex-col-reverse gap-y-6 md:block">
                     <div>
                         <div class="flex flex-wrap -mx-4">
-                            <div v-for="payment in modelValue.PaymentData.data" :key="payment.key"
+                            <div v-for="payment in modelValue.paymentData.data" :key="payment.key"
                                 class="w-full md:w-1/3 px-4 mb-8">
                                 <div class="flex items-center justify-center md:justify-start space-x-4">
                                     <img :src="payment.image" :alt="payment.name" class="px-1 h-5 w-full">
@@ -526,11 +526,11 @@ console.log('ppp',props)
                         </div>
                         <address
                             class="mt-10 md:mt-0 not-italic mb-4 text-center md:text-left text-xs md:text-sm text-gray-300">
-                            <Editor v-model="modelValue.column.column_4.data.textBox1" :editable="editable"  @update:model-value="(e)=>{modelValue.column.column_4.data.textBox1 = e, emits('update:modelValue', modelValue)}"/>
+                            <Editor v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"  @update:model-value="(e)=>{modelValue.columns.column_4.data.textBox1 = e, emits('update:modelValue', modelValue)}"/>
                         </address>
 
                         <div class="flex justify-center gap-x-8 text-gray-300 md:block">
-                            <Editor v-model="modelValue.column.column_4.data.textBox2" :editable="editable"  @update:model-value="(e)=>{modelValue.column.column_4.data.textBox2 = e ,emits('update:modelValue', modelValue)}"/>
+                            <Editor v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"  @update:model-value="(e)=>{modelValue.columns.column_4.data.textBox2 = e ,emits('update:modelValue', modelValue)}"/>
                         </div>
                         <div
                             class="hidden md:block mb-6 md:mb-5 bg-[#9c7c64] md:bg-transparent text-center md:text-left pt-4 pb-6 space-y-4 md:py-0 md:space-y-0">
@@ -545,7 +545,7 @@ console.log('ppp',props)
                         class="border-b border-gray-500 md:border-none flex items-center space-x-2 px-5 pb-4 md:pb-0 md:px-0">
                         <i class="text-4xl md:text-3xl fab fa-whatsapp text-green-500"></i>
                         <span class="w-10/12 md:w-full md:text-sm">
-                            <Editor v-model="modelValue.column.column_4.data.textBox3" :editable="editable" @update:model-value="(e)=>{modelValue.column.column_4.data.textBox3 = e ,emits('update:modelValue', modelValue)}" />
+                            <Editor v-model="modelValue.columns.column_4.data.textBox3" :editable="editable" @update:model-value="(e)=>{modelValue.columns.column_4.data.textBox3 = e ,emits('update:modelValue', modelValue)}" />
                         </span>
                     </div>
                 </div>

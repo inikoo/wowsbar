@@ -1,0 +1,565 @@
+{
+	"scope": "website",
+	"slug": "top-bar-3",
+	"code": "top-bar-3",
+	"name": "Topbar Awesome",
+	"component": "topbar",
+	"blueprint": [
+		{
+			"name": "Container",
+			"icon": {
+				"icon": "fal fa-rectangle-wide",
+				"tooltip": "Container"
+			},
+			"key": [
+				"container",
+				"properties"
+			],
+			"type": [
+				"properties"
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Title",
+			"icon": {
+				"icon": "fal fa-text",
+				"tooltip": "Text"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"main_title",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"main_title",
+						"text"
+					],
+					"type": [
+						"editorhtml"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Greeting",
+			"icon": {
+				"icon": "fal fa-text",
+				"tooltip": "Text"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"greeting",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"greeting",
+						"text"
+					],
+					"type": [
+						"editorhtml"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Login",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			
+			"replaceForm": [
+				{
+					"key": [
+						"button_1",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_1"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Register",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"button_2",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_2"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Button 3",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"button_3",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_3"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Button 4",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"button_4",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_4"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Button 5",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"button_5",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_5"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		},
+		{
+			"name": "Button 6",
+			"icon": {
+				"icon": "far fa-dot-circle",
+				"tooltip": "Action"
+			},
+			"replaceForm": [
+				{
+					"key": [
+						"button_6",
+						"visible"
+					],
+					"type": [
+						"VisibleLoggedIn"
+					]
+				},
+				{
+					"key": [
+						"button_6"
+					],
+					"type": [
+						"button"
+					]
+				}
+			],
+			"props_data": {}
+		}
+	],
+	"data": {
+		"fieldValue": {
+			"key": "Topheader",
+			"container": {
+				"properties": {
+					"background": {
+						"type": "color",
+						"color": "linear-gradient(to right, rgb(204, 251, 241), rgb(99, 102, 241))",
+						"image": {
+							"original": null
+						}
+					},
+					"text": {
+						"color": "rgba(10,10,10,1)",
+						"fontFamily": "Comfortaa"
+					}
+				}
+			},
+			"main_title": {
+				"text": "<p><strong>Pure Ingredients, Pure Health: 20% Off on Organic Goods!</strong></p>",
+				"visible": "all"
+			},
+			"button_1": {
+				"link": {
+					"type" : "external",
+					"url": "ancientwisdom.biz/login.sys",
+					"id": null,
+					"workshop_route" : ""
+				},
+				"text": "Login",
+				"visible": "logout",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(20, 20, 20, 1)"
+						},
+						"border": {
+							"top": {
+								"value": 0
+							},
+							"left": {
+								"value": 0
+							},
+							"unit": "px",
+							"color": "rgba(20, 20, 20, 1)",
+							"right": {
+								"value": 0
+							},
+							"bottom": {
+								"value": 0
+							},
+							"rounded": {
+								"unit": "px",
+								"topleft": {
+									"value": 0
+								},
+								"topright": {
+									"value": 0
+								},
+								"bottomleft": {
+									"value": 0
+								},
+								"bottomright": {
+									"value": 0
+								}
+							}
+						},
+						"margin": {
+							"top": {
+								"value": 0
+							},
+							"left": {
+								"value": 0
+							},
+							"unit": "px",
+							"right": {
+								"value": 0
+							},
+							"bottom": {
+								"value": 0
+							}
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						},
+						"background": {
+							"type": "color",
+							"color": "rgba(10, 10, 10, 0)",
+							"image": {
+								"original": null
+							}
+						}
+					}
+				}
+			},
+			"button_2": {
+				"link": {
+					"type" : "external",
+					"url": "ancientwisdom.biz/register.sys",
+					"id": null,
+					"workshop_route" : ""
+				},
+				"text": "Register",
+				"visible": "logout",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(10, 10, 10, 1)"
+						},
+						"border": {
+							"top": {
+								"value": 0
+							},
+							"left": {
+								"value": 0
+							},
+							"unit": "px",
+							"color": "rgba(10, 10, 10, 1)",
+							"right": {
+								"value": 0
+							},
+							"bottom": {
+								"value": 0
+							},
+							"rounded": {
+								"unit": "px",
+								"topleft": {
+									"value": 5
+								},
+								"topright": {
+									"value": 5
+								},
+								"bottomleft": {
+									"value": 5
+								},
+								"bottomright": {
+									"value": 5
+								}
+							}
+						},
+						"margin": {
+							"top": {
+								"value": 0
+							},
+							"left": {
+								"value": 0
+							},
+							"unit": "px",
+							"right": {
+								"value": 0
+							},
+							"bottom": {
+								"value": 0
+							}
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						},
+						"background": {
+							"type": "color",
+							"color": "rgba(10, 10, 10, 0)",
+							"image": {
+								"original": null
+							}
+						}
+					}
+				}
+			},
+			"button_3": {
+				"link": {
+					"type" : "internal",
+					"url": "https://ancientwisdom.biz/login",
+					"id": 12,
+					"workshop_route" : ""
+				},
+				"text": "{{ cartNumber }} items",
+				"visible": "login",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(10, 10, 10, 1)"
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						}
+					}
+				}
+			},
+			"button_4": {
+				"link": {
+					"type" : "external",
+					"url": "ancientwisdom.biz/favourites.sys",
+					"id": null,
+					"workshop_route" : ""
+				},
+				"text": "{{ favouritesCount }}",
+				"visible": "login",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(10, 10, 10, 1)"
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						}
+					}
+				}
+			},
+			"button_5": {
+				"link": {
+					"type" : "external",
+					"url": "ancientwisdom.biz/profile.sys",
+					"id": null,
+					"workshop_route" : ""
+				},
+				"text": "<strong>{{name}}<strong>",
+				"visible": "login",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(10, 10, 10, 1)"
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						}
+					}
+				}
+			},
+			"button_6": {
+				"link": {
+					"type" : "external",
+					"url": "ancientwisdom.biz/logout.sys",
+					"id": null,
+					"workshop_route" : ""
+				},
+				"text": "Log out",
+				"visible": "login",
+				"container": {
+					"properties": {
+						"text": {
+							"color": "rgba(10, 10, 10, 1)"
+						},
+						"padding": {
+							"top": {
+								"value": 5
+							},
+							"left": {
+								"value": 20
+							},
+							"unit": "px",
+							"right": {
+								"value": 20
+							},
+							"bottom": {
+								"value": 5
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
