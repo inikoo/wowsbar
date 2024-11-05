@@ -92,6 +92,7 @@ class PortfolioWebsite extends Model implements Auditable
     protected $casts = [
         'data'             => 'array',
         'integration_data' => 'array',
+        'compiled_layout'  => 'array',
         'integration'      => PortfolioWebsiteIntegrationEnum::class
     ];
 
