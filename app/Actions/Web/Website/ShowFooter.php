@@ -45,7 +45,7 @@ class ShowFooter
         $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
-            'Banners/FooterWorkshop',
+            'Footer/FooterWorkshop',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

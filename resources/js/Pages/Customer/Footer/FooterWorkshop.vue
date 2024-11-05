@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes} from 'vue'
+import { ref, watch, IframeHTMLAttributes } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -12,6 +12,10 @@ import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 import Publish from '@/Components/Utils/PublishWorkshop.vue'
 import ProgressSpinner from 'primevue/progressspinner';
+import Dialog from 'primevue/dialog';
+import ListBlock from '@/Components/ListBlock.vue'
+import Image from '@/Components/Image.vue'
+
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -29,20 +33,20 @@ const props = defineProps<{
         footer: Object
     }
     autosaveRoute: routeType
-    web_blocks : {
-        data : Array<any>
+    web_blocks: {
+        data: Array<any>
     }
 }>()
 
 const tabsBar = ref(0)
-const isLoading =ref(false)
+const isLoading = ref(false)
 const usedTemplates = ref(footerTheme1)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc + '?fullscreen=true', '_blank');
-const socketLayout = SocketFooter();
 const comment = ref('')
+const visible = ref(false);
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
@@ -109,7 +113,7 @@ watch(previewMode, (newVal) => {
     /* if (socketLayout) socketLayout.actions.send({ 
         previewMode: newVal, 
     }) */
-    sendToIframe({key: 'previewMode', value: newVal})
+    sendToIframe({ key: 'previewMode', value: newVal })
 }, { deep: true })
 
 watch(usedTemplates, (newVal) => {
@@ -138,10 +142,11 @@ const handleIframeError = () => {
         type: 'error',
     })
 }
-console.log('aas',props)
+console.log('aas', props)
 </script>
 
 <template>
+
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other>
@@ -192,20 +197,19 @@ console.log('aas',props)
                                 <span aria-hidden="true" :class="previewMode ? 'translate-x-3' : 'translate-x-0'"
                                     class="pointer-events-none inline-block h-full w-1/2 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out">
                                 </span>
-                            </Switch> 
-                            
+                            </Switch>
+
                             <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'">
-                                <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' />
+                                <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' @click="visible = true" />
                             </div>
                         </div>
                     </div>
-                        <div v-if="isIframeLoading" class="loading-overlay">
-                            <ProgressSpinner />
-                         </div>
+                    <div v-if="isIframeLoading" class="loading-overlay">
+                        <ProgressSpinner />
+                    </div>
 
-                         <iframe :src="iframeSrc" :title="props.title"
-                        :class="[iframeClass]" @error="handleIframeError"
-                        @load="isIframeLoading = false" ref="_iframe"/>
+                    <iframe :src="iframeSrc" :title="props.title" :class="[iframeClass]" @error="handleIframeError"
+                        @load="isIframeLoading = false" ref="_iframe" />
                 </div>
                 <div v-else>
                     <EmptyState
@@ -221,6 +225,20 @@ console.log('aas',props)
             </div>
         </div>
     </div>
+
+
+    <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <ListBlock :onSelectBlock="(e)=>console.log(e)" :webBlockTypes="web_blocks.data" >
+            <template #image="{ block }">
+                <div @click="() => console.log(block)"
+                    class="min-h-16 w-full aspect-[2/1] overflow-hidden flex items-center bg-gray-100 justify-center border border-gray-300 hover:border-indigo-500 rounded cursor-pointer">
+                    <div class="w-auto shadow-md">
+                        <Image :src="block.screenshot" class="object-contain" />
+                    </div>
+                </div>
+            </template>    
+        </ListBlock>
+    </Dialog>
 </template>
 
 
