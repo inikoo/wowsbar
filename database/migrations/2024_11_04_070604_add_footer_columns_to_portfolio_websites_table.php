@@ -15,10 +15,9 @@ return new class () extends Migration {
             $table->after('name', function () use ($table) {
                 $table->string('state')->default(PortfolioWebsiteStateEnum::IN_PROCESS->value)->index();
                 $table->boolean('status')->default(false);
-                $table->jsonb('settings');
-                $table->jsonb('data');
-                $table->jsonb('layout');
-                $table->jsonb('compiled_layout');
+                $table->jsonb('settings')->nullable();
+                $table->jsonb('layout')->nullable();
+                $table->jsonb('compiled_layout')->nullable();
                 $table->unsignedSmallInteger('unpublished_header_snapshot_id')->nullable()->index();
                 $table->unsignedSmallInteger('live_header_snapshot_id')->nullable()->index();
                 $table->string('published_header_checksum')->nullable()->index();
