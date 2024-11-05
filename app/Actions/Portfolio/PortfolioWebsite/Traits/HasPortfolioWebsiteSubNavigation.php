@@ -4,8 +4,8 @@ namespace App\Actions\Portfolio\PortfolioWebsite\Traits;
 
 use Lorisleiva\Actions\ActionRequest;
 
-trait HasPortfolioWebsiteSubNavigation {
-
+trait HasPortfolioWebsiteSubNavigation
+{
     public function getSubNavigation(ActionRequest $request): array
     {
         $meta = [];

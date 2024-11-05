@@ -96,6 +96,13 @@ class ShowFooter
                     ]
                 ],
 
+                'publishRoute' => [
+                    'name'       => 'customer.models.portfolio-website.footers.publish',
+                    'parameters' => [
+                        'website' => $portfolioWebsite->id
+                    ]
+                ],
+
                 'data'       => GetWebsiteWorkshopFooter::run($portfolioWebsite),
                 'web_blocks' => WebBlockTypesResource::collection(WebBlockType::all())
             ]

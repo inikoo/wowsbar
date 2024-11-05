@@ -33,6 +33,7 @@ const props = defineProps<{
         footer: Object
     }
     autosaveRoute: routeType
+    publishRoute: routeType
     web_blocks: {
         data: Array<any>
     }
@@ -54,7 +55,7 @@ const saveCancelToken = ref<Function | null>(null)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
-        const response = await axios.post(route('customer.models.banner.workshop.footers.publish.footer'), {
+        const response = await axios.post(route(props.publishRoute.name, props.publishRoute.parameters), {
             comment: comment.value,
             layout: usedTemplates.value
         })
@@ -84,7 +85,7 @@ const setIframeView = (view: String) => {
 
 const autoSave = async (data: Object) => {
     router.patch(
-        route("customer.models.banner.workshop.footers.autosave.footer"),
+        route(props.publishRoute.name, props.publishRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
@@ -110,8 +111,8 @@ const autoSave = async (data: Object) => {
 }
 
 watch(previewMode, (newVal) => {
-    /* if (socketLayout) socketLayout.actions.send({ 
-        previewMode: newVal, 
+    /* if (socketLayout) socketLayout.actions.send({
+        previewMode: newVal,
     }) */
     sendToIframe({ key: 'previewMode', value: newVal })
 }, { deep: true })
@@ -236,7 +237,7 @@ console.log('aas', props)
                         <Image :src="block.screenshot" class="object-contain" />
                     </div>
                 </div>
-            </template>    
+            </template>
         </ListBlock>
     </Dialog>
 </template>
