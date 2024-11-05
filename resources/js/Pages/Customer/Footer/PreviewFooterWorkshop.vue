@@ -8,7 +8,7 @@ import { SocketFooter } from "@/Composables/SocketWebBlock"
 import { debounce } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
-
+import { getComponent } from "@/Composables/Website/getComponentsFooters"
 
 
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
@@ -29,7 +29,7 @@ const previewMode = ref(route().params['fullscreen'] ? true : false)
 
 const autoSave = async (data: Object) => {
     router.patch(
-        route("customer.models.banner.workshop.footers.autosave.footer"),
+        route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
@@ -60,7 +60,7 @@ const updateData = (newVal) => {
 
 onMounted(() => {
     if (socketLayout) socketLayout.actions.subscribe((value) => {
-        usedTemplates.data = value.footer.data
+        Object.assign(usedTemplates, value.footer.data);
     });
     window.addEventListener('message', (event) => {
         if (event.data.key === 'previewMode') {
@@ -78,11 +78,17 @@ onUnmounted(() => {
 
 <template>
     <div class="p-4">
-        <Footer1 
+        <component 
+            :is="getComponent(usedTemplates.code)"
             v-model="usedTemplates.data.fieldValue" 
             :preview-mode="previewMode"
             @update:model-value="updateData"
         />
+       <!--  <Footer1 
+            v-model="usedTemplates.data.fieldValue" 
+            :preview-mode="previewMode"
+            @update:model-value="updateData"
+        /> -->
     </div>
 </template>
 

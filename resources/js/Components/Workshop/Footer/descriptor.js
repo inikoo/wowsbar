@@ -13,6 +13,16 @@ export const footerTheme1 = {
                     name: "Body",
                     type: "body",
                 },
+                {
+                    key: ["phone","phone"],
+                    name: "Phone",
+                    type: "text",
+                },
+                {
+                    key: ["email"],
+                    name: "Email",
+                    type: "text",
+                },
             ],
         },
         {
@@ -404,20 +414,15 @@ export const footerTheme1 = {
                     }
                 ]
             },
-            topFooter : [
-                {
-                    type : 'image',
-                    value : "art/logo/logo.png"
-                },
-                {
-                    type : 'text',
-                    value : "+44 (0) 1142 729 165"
-                },
-                {
-                    type : 'text',
-                    value : "care@ancientwisdom.biz"
-                },
-            ]
+           phone : {
+                phone : "+44 (0) 1142 729 165",
+                openHours :"Monday-Friday 8am-4pm GMT"
+           },
+           email : "care@ancientwisdom.biz",
+           logo :  {
+            src : "art/logo/logo.png",
+            alt : ""
+           }
         }
     },
 };

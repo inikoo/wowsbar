@@ -167,7 +167,7 @@ const onActionClick = (key: string, option: string = '') => {
 }
 
 // To watch if parent change the props
-watch(() => props.modelValue, (newValue, oldValue) => {
+/* watch(() => props.modelValue, (newValue, oldValue) => {
     const isSame = newValue === oldValue;
 
     if (isSame) {
@@ -176,7 +176,7 @@ watch(() => props.modelValue, (newValue, oldValue) => {
 
     editor.value?.commands.setContent(newValue, false)
 })
-
+ */
 
 const setLink = () => {
     const previousUrl = editor.value?.getAttributes('link').href
@@ -232,7 +232,7 @@ defineExpose({
 <style lang="scss">
 /* Basic editor styles */
 .ProseMirror p {
-    width: fit-content !important;
+    width: 100% !important;
 }
 
 .ProseMirror {

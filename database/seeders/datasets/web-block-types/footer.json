@@ -14,6 +14,32 @@
                     "key": ["container", "properties"],
                     "name": "Body",
                     "type": "body"
+                },
+                {
+                    "key": ["phone"],
+                    "name": "Phone",
+                    "replaceForm": [
+                        {
+                            "key": ["phone", "number"],
+                            "name": "Phone",
+                            "type": ["text"]
+                        },
+                        {
+                            "key": ["phone", "openHours"],
+                            "name": "Open Hours",
+                            "type": ["text"]
+                        }
+                    ]
+                },
+                {
+                    "key": ["email"],
+                    "name": "Email",
+                    "type": "text"
+                },
+                {
+                    "key": ["logo"],
+                    "name": "Logo",
+                    "type": "upload_image"
                 }
             ]
         },
@@ -34,10 +60,10 @@
             "key": "socialData",
             "icon": "far fa-icons",
             "name": "Social Media",
-            "type": "socialMedia",
+            "type": "socialmedia",
             "blueprint": [
                 {
-                    "key": "socialMedia",
+                    "key": "socialmedia",
                     "name": "Social Media",
                     "type": "socialMedia"
                 }
@@ -45,7 +71,7 @@
         }
     ],
     "data": {
-        "fieldValue" : {
+        "fieldValue": {
             "columns": {
                 "column_1": {
                     "types": "links",
@@ -263,8 +289,8 @@
                     "types": "sideBar",
                     "key": "4",
                     "data": {
-                        "textBox1": "Ancient Wisdom Marketing Ltd. Affinity Park, Europa Drive Sheffield, S9 1XT",
-                        "textBox2": "<p>Vat No: GB764298589  </br> Reg. No: 04108870</p></span>",
+                        "textBox1": "<p style='text-align: center; color: rgb(255,255,255)'>Ancient Wisdom Marketing Ltd. Affinity Park, Europa Drive Sheffield, S9 1XT</p>",
+                        "textBox2": "<p style='text-align: center; color: rgb(255,255,255)'>Vat No: GB764298589  </br> Reg. No: 04108870</p>",
                         "textBox3": "Subscribe to the WhatsApp messages and benefit from exclusive discounts."
                     },
                     "name": "Column 4"
@@ -349,10 +375,7 @@
             "copyright": "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
             "socialmedia": [
                 {
-                    "icon": [
-                        "fab",
-                        "facebook-f"
-                    ],
+                    "icon": ["fab", "facebook-f"],
                     "link": "https://www.facebook.com/AncientWisdom.biz",
                     "label": "Facebook"
                 },
@@ -386,40 +409,35 @@
                 "data": [
                     {
                         "name": "Pastpay",
-                        "image": "/art/payments/pastpay.png",
+                        "image": "/art/payments/pastpay.png?v=2",
                         "value": "Pastpay"
                     },
                     {
                         "name": "Paypal",
-                        "image": "/art/payments/paypal.png",
+                        "image": "/art/payments/paypal.png?v=2",
                         "value": "Paypal"
                     },
                     {
                         "name": "Mastercard",
-                        "image": "/art/mastercard.png",
+                        "image": "/art/payments/mastercard.png?v=2",
                         "value": "Mastercard"
                     },
                     {
                         "name": "Visa",
-                        "image": "/art/payments/visa.png",
+                        "image": "/art/payments/visa.png?v=2",
                         "value": "Visa"
                     }
                 ]
             },
-            "topFooter" : [
-                {
-                    "type" : "image",
-                    "value" : "art/logo/logo.png"
-                },
-                {
-                    "type" : "text",
-                    "value" : "+44 (0) 1142 729 165"
-                },
-                {
-                    "type" : "text",
-                    "value" : "care@ancientwisdom.biz"
-                }
-            ]
+            "phone": {
+                "number": "+44 (0) 1142 729 165",
+                "openHours": "Monday-Friday 8am-4pm GMT"
+            },
+            "email": "care@ancientwisdom.biz",
+            "logo": {
+                "source": "art/logo/logo.png",
+                "alt": "Ancient Wisdom"
+            }
         }
     }
 }

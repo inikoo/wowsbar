@@ -519,7 +519,7 @@ console.log('ppp', props)
                     class="md:hidden mb-6 md:mb-5 bg-[#9c7c64] md:bg-transparent text-center md:text-left pt-4 pb-6 space-y-4 md:py-0 md:space-y-0">
                     <h2 class=" tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
                     <div class="flex md:space-x-6 md:mb-4 justify-around md:justify-start">
-                        <a v-for="item of modelValue.socialData" target="_blank" :key="item.icon"
+                        <a v-for="item of modelValue.socialmedia" target="_blank" :key="item.icon"
                             :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
                     </div>
                 </div>
@@ -535,15 +535,16 @@ console.log('ppp', props)
                             </div>
                         </div>
                         <address
-                            class="mt-10 md:mt-0 not-italic mb-4 text-center md:text-left text-xs md:text-sm text-gray-300">
+                            class="mt-10 md:mt-0 mb-4">
                             <Editor v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox1 = e, emits('update:modelValue', modelValue) }" />
                         </address>
 
-                        <div class="flex justify-center gap-x-8 text-gray-300 md:block">
+                        <address
+                        class="mt-10 md:mt-0 mb-4 w-full">
                             <Editor v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox2 = e, emits('update:modelValue', modelValue) }" />
-                        </div>
+                        </address>
                         <div
                             class="hidden md:block mb-6 md:mb-5 bg-[#9c7c64] md:bg-transparent text-center md:text-left pt-4 pb-6 space-y-4 md:py-0 md:space-y-0">
                             <h2 class=" tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
