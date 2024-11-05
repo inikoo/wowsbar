@@ -23,7 +23,7 @@ const props = defineProps<{
 
 const saveCancelToken = ref<Function | null>(null)
 const socketLayout = SocketFooter();
-const usedTemplates = reactive(footerTheme1)
+const usedTemplates = reactive(props.footer.data)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: false, trailing: true })
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
