@@ -38,10 +38,10 @@ const props = defineProps<{
         data: Array<any>
     }
 }>()
-
+console.log('ui',props)
 const tabsBar = ref(0)
 const isLoading = ref(false)
-const usedTemplates = ref(footerTheme1)
+const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
 const previewMode = ref(false)
 const iframeSrc = route("customer.banners.workshop.footers.preview")
 const iframeClass = ref('w-full h-full')
@@ -143,7 +143,7 @@ const handleIframeError = () => {
         type: 'error',
     })
 }
-console.log('aas', props)
+
 </script>
 
 <template>
