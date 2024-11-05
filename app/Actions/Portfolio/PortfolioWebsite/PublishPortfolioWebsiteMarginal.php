@@ -118,13 +118,11 @@ class PublishPortfolioWebsiteMarginal
         return "🚀";
     }
 
-    public function footer(ActionRequest $request): string
+    public function footer(PortfolioWebsite $portfolioWebsite, ActionRequest $request): string
     {
-        $website =  $request->get('website');
-
-        $this->isAction = true;
         $request->validate();
-        $this->handle($website, 'footer', $request->validated());
+
+        $this->handle($portfolioWebsite, 'footer', $request->validated());
 
         return "🚀";
     }
