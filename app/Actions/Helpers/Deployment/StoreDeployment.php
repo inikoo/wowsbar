@@ -11,6 +11,7 @@ use App\Models\Announcement;
 use App\Models\Helpers\Deployment;
 use App\Models\Mail\EmailTemplate;
 use App\Models\Portfolio\Banner;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -19,7 +20,7 @@ class StoreDeployment
 {
     use AsAction;
 
-    public function handle(Banner|Website|Webpage|EmailTemplate|Announcement $model, array $modelData): Deployment
+    public function handle(Banner|Website|Webpage|EmailTemplate|Announcement|PortfolioWebsite $model, array $modelData): Deployment
     {
         /** @var Deployment $deployment */
         $deployment=$model->deployments()->create($modelData);

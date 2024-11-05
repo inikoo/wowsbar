@@ -90,7 +90,7 @@ class ShowFooter
                 ],
 
                 'autosaveRoute' => [
-                    'name'       => 'grp.models.website.autosave.footer',
+                    'name'       => 'customer.models.portfolio-website.footers.autosave',
                     'parameters' => [
                         'website' => $portfolioWebsite->id
                     ]

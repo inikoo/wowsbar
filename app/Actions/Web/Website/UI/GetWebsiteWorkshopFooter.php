@@ -16,7 +16,7 @@ class GetWebsiteWorkshopFooter
 {
     use AsAction;
 
-    public function handle(PortfolioWebsite $portfolioWebsite): array
+    public function handle(Website|PortfolioWebsite $portfolioWebsite): array
     {
         return [
            'data'=> Arr::get($portfolioWebsite->compiled_layout, 'footer')

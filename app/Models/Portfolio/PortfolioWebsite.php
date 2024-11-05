@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
+use App\Models\Helpers\Snapshot;
 use App\Models\Leads\Prospect;
 use App\Models\SysAdmin\Division;
 use App\Models\Traits\HasHistory;
@@ -110,6 +111,11 @@ class PortfolioWebsite extends Model implements Auditable
     public function stats(): HasOne
     {
         return $this->hasOne(PortfolioWebsiteStats::class);
+    }
+
+    public function snapshots(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
     }
 
     public function crawlers(): HasMany
