@@ -2,6 +2,7 @@
     "code": "FooterTheme1",
     "scope": "website",
     "name": "Footer 1",
+    "component": "footer",
     "blueprint": [
         {
             "key": "body",
@@ -360,7 +361,7 @@
                 }
             },
             "copyright": "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
-            "socialMedia": [
+            "socialmedia": [
                 {
                     "icon": [
                         "fab",

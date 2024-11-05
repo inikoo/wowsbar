@@ -35,7 +35,7 @@ export const footerTheme1 = {
             type: "socialMedia",
             blueprint: [
                 {
-                    key: "socialMedia",
+                    key: "socialmedia",
                     name: "Social Media",
                     type: "socialMedia",
                 },
@@ -359,7 +359,7 @@ export const footerTheme1 = {
                 }
             },
             copyright: "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
-            socialMedia: [
+            socialmedia: [
                 {
                     icon: [
                         "fab",

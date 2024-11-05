@@ -28,7 +28,7 @@ class ShowFooterPreview
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/PreviewFooterWorkshop',
+            'Footer/PreviewFooterWorkshop',
             [
                 'footer'        => [
                     'data' => Arr::get($website->compiled_layout, 'footer')
