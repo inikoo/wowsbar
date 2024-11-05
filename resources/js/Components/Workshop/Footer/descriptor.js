@@ -22,7 +22,7 @@ export const footerTheme1 = {
             type: "payment_templates",
             blueprint: [
                 {
-                    key: "PaymentData",
+                    key: "paymentData",
                     name: "Payments",
                     type: "payment_templates",
                 },
@@ -35,7 +35,7 @@ export const footerTheme1 = {
             type: "socialMedia",
             blueprint: [
                 {
-                    key: "socialData",
+                    key: "socialMedia",
                     name: "Social Media",
                     type: "socialMedia",
                 },
@@ -44,8 +44,9 @@ export const footerTheme1 = {
     ],
     data: {
         fieldValue: {
-            column: {
+            columns: {
                 column_1: {
+                    types : "links",
                     key: "1",
                     data: [
                         {
@@ -56,7 +57,7 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/contact.sys\">Contact Us</a></p>"
                                 }
                             ],
-                            name: "<p>Help</p>"
+                            name: "<p style='font-size: 15px'><strong>Help</strong></p>"
                         },
                         {
                             id: 5,
@@ -78,7 +79,7 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/shipping.sys\">Delivery</a></p>"
                                 }
                             ],
-                            name: "About AW"
+                            name: "<p style='font-size: 15px'><strong>About AW</strong></p>"
                         },
                         {
                             id: 10,
@@ -88,7 +89,7 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/showroom\">Book Showroom Appointment</a></p>"
                                 }
                             ],
-                            name: "Showroom"
+                            name: "<p style='font-size: 15px'><strong>Showroom</strong></p>" 
                         },
                         {
                             id: 12,
@@ -102,7 +103,7 @@ export const footerTheme1 = {
                                     name: "care@ancientwisdom.biz"
                                 }
                             ],
-                            name: "Customer Service"
+                            name: "<p style='font-size: 15px'><strong>Customer Service</strong></p>"
                         },
                         {
                             id: 15,
@@ -116,12 +117,13 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/reviews\">Reviews</a></p>"
                                 }
                             ],
-                            name: "Reviews"
+                            name: "<p style='font-size: 15px'><strong>Reviews</strong></p>"
                         }
                     ],
                     name: "Column 1"
                 },
                 column_2: {
+                    types : "links",
                     key: "2",
                     data: [
                         {
@@ -140,7 +142,7 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/pastpay\">Buy Now, Pay Later</a></p>"
                                 }
                             ],
-                            name: "<p>Why Choose AW?</p>"
+                            name: "<p style='font-size: 15px'><strong>Why Choose AW?</strong></p>"
                         },
                         {
                             id: 24,
@@ -162,7 +164,7 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://blog.ancientwisdom.biz/\">David's Travel Blog</a></p>"
                                 }
                             ],
-                            name: "Discover"
+                            name: "<p style='font-size: 15px'><strong>Discover</strong></p>"
                         },
                         {
                             id: 29,
@@ -176,17 +178,18 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/cookies\">Cookies Policy</a></p>"
                                 }
                             ],
-                            name: "Legal"
+                            name: "<p style='font-size: 15px'><strong>Legal</strong></p>"
                         },
                         {
                             id: 16,
                             data: [],
-                            name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/faq\">FAQ</a></p>"
+                            name: "<p style='font-size: 15px'><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/faq\"><strong>FAQ</strong></a></p>"
                         }
                     ],
                     name: "Column 2"
                 },
                 column_3: {
+                    types : "links",
                     key: "3",
                     data: [
                         {
@@ -194,18 +197,18 @@ export const footerTheme1 = {
                             data: [
                                 {
                                     id: 34,
-                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-dropship.com/\">DROPSHIPPING</a></p>"
+                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-dropship.com/\">Dropshipping</a></p>"
                                 },
                                 {
                                     id: 35,
-                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-fulfilment.co.uk/\">FULFILMENT</a></p>"
+                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-fulfilment.co.uk/\">Fullfilment</a></p>"
                                 },
                                 {
                                     id: 36,
-                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-advantage.com\">DIGITAL MARKETING</a></p>"
+                                    name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-advantage.com\">Digital Marketing</a></p>"
                                 }
                             ],
-                            name: "Our Services"
+                            name: "<p style='font-size: 15px'><strong>Our Services</strong></p>"
                         },
                         {
                             id: 37,
@@ -263,12 +266,13 @@ export const footerTheme1 = {
                                     name: "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.it/\">AW - Italy</a></p>"
                                 }
                             ],
-                            name: "AW Partners"
+                            name: "<p style='font-size: 15px'><strong>AW Partners</strong></p>"
                         }
                     ],
                     name: "Column 3"
                 },
                 column_4: {
+                    types : "sideBar",
                     key: "4",
                     data: {
                         textBox1: "Ancient Wisdom Marketing Ltd. Affinity Park, Europa Drive Sheffield, S9 1XT",
@@ -354,8 +358,8 @@ export const footerTheme1 = {
                     }
                 }
             },
-            copyRight: "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
-            socialData: [
+            copyright: "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
+            socialMedia: [
                 {
                     icon: [
                         "fab",
@@ -390,26 +394,26 @@ export const footerTheme1 = {
                     label: "Linkedin"
                 }
             ],
-            PaymentData: {
+            paymentData: {
                 data: [
                     {
                         name: "Pastpay",
-                        image: "/ImagePayments/pastpay.png",
+                        image: "/art/pastpay.png",
                         value: "Pastpay"
                     },
                     {
                         name: "Paypal",
-                        image: "/ImagePayments/paypal.png",
+                        image: "/art/paypal.png",
                         value: "Paypal"
                     },
                     {
                         name: "Mastercard",
-                        image: "/ImagePayments/mastercard.png",
+                        image: "/art/mastercard.png",
                         value: "Mastercard"
                     },
                     {
                         name: "Visa",
-                        image: "/ImagePayments/visa.png",
+                        image: "/art/visa.png",
                         value: "Visa"
                     }
                 ]

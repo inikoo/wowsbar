@@ -28,6 +28,7 @@ use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Portfolio\Uploads\DownloadPortfolioWebsiteUploadsTemplate;
 use App\Actions\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Actions\Web\Website\ShowFooter;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', ['uses' => ShowPortfolio::class, 'icon' => 'briefcase', 'label' => 'portfolio'])->name('dashboard');
@@ -41,9 +42,10 @@ Route::prefix('websites')->name('websites.')->group(function () {
         Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses(ShowPortfolioWebsite::class)->name('show');
         Route::get('/edit', EditPortfolioWebsite::class)->name('edit');
         Route::get('/delete', RemovePortfolioWebsite::class)->withTrashed()->name('remove');
+
+        Route::get('footer', ShowFooter::class)->name('footer');
     });
 });
-
 
 Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
 Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWebsiteUploadsTemplate::class)->name('website.uploads.template.download');

@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
+use App\Actions\Portfolio\PortfolioWebsite\Traits\HasPortfolioWebsiteSubNavigation;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
@@ -32,6 +33,7 @@ class ShowPortfolioWebsite extends InertiaAction
     use WithInertia;
     use WithFirstBanner;
     use WithActionButtons;
+    use HasPortfolioWebsiteSubNavigation;
 
 
     private Customer|Banner $parent;
@@ -136,57 +138,6 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return $inertia;
-    }
-
-
-    public function getSubNavigation(ActionRequest $request): array
-    {
-        $meta = [];
-
-
-        $meta[] = [
-            'href'     => [
-                'name'       => 'customer.portfolio.websites.show',
-                'parameters' => array_merge(
-                    $request->route()->originalParameters(),
-                    [
-                        '_query' => [
-                            'tab' => 'prospects'
-                        ]
-                    ]
-                )
-            ],
-
-            'label'    => __('Website'),
-            'leftIcon' => [
-                'icon'    => 'fal fa-globe',
-                'tooltip' => __('website')
-            ]
-        ];
-
-        $meta[] = [
-            'href'     => [
-                'name'       => 'customer.seo.dashboard',
-                'parameters' => array_merge(
-                    $request->route()->originalParameters(),
-                    [
-                        '_query' => [
-                            'tab' => 'prospects'
-                        ]
-                    ]
-                )
-            ],
-            'number'   => 3,
-            'label'    => __('Webpages'),
-            'leftIcon' => [
-                'icon'    => 'fal fa-browser',
-                'tooltip' => __('webpages')
-            ]
-        ];
-
-
-
-        return $meta;
     }
 
 
