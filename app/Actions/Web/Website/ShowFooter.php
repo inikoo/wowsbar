@@ -89,6 +89,13 @@ class ShowFooter
                     ]
                 ],
 
+                'previewRoute' => [
+                    'name'       => 'customer.portfolio.websites.footer.preview',
+                    'parameters' => [
+                        'portfolioWebsite' => $portfolioWebsite->slug
+                    ]
+                ],
+
                 'autosaveRoute' => [
                     'name'       => 'customer.models.portfolio-website.footers.autosave',
                     'parameters' => [

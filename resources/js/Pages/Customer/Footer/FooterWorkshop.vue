@@ -34,6 +34,7 @@ const props = defineProps<{
     }
     autosaveRoute: routeType
     publishRoute: routeType
+    previewRoute: routeType
     web_blocks: {
         data: Array<any>
     }
@@ -43,7 +44,7 @@ const tabsBar = ref(0)
 const isLoading = ref(false)
 const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
 const previewMode = ref(false)
-const iframeSrc = route("customer.banners.workshop.footers.preview")
+const iframeSrc = route(props.previewRoute.name, props.previewRoute.parameters)
 const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc + '?fullscreen=true', '_blank');
 const comment = ref('')
