@@ -23,67 +23,67 @@ const emits = defineEmits<{
 const FeOptions = [
     {
         name: "Accounts",
-        image: "/ImagePayments/accounts.png",
+        image: "/art/accounts.png",
         value: "accounts",
     },
     {
         name: "Bank",
-        image: "/ImagePayments/bank.png",
+        image: "/art/bank.png",
         value: "bank",
     },
     {
         name: "btree",
-        image: "/ImagePayments/btree.png",
+        image: "/art/btree.png",
         value: "btree",
     },
     {
         name: "Cash",
-        image: "/ImagePayments/cash.png",
+        image: "/art/cash.png",
         value: "Cash",
     },
     {
         name: "Checkout",
-        image: "/ImagePayments/checkout.png",
+        image: "/art/checkout.png",
         value: "Checkout",
     },
     {
         name: "Cond",
-        image: "/ImagePayments/cond.png",
+        image: "/art/cond.png",
         value: "cond",
     },
     {
         name: "Hokodo",
-        image: "/ImagePayments/hokodo.png",
+        image: "/art/hokodo.png",
         value: "hokodo",
     },
     {
         name: "Pastpay",
-        image: "/ImagePayments/pastpay.png",
+        image: "/art/pastpay.png",
         value: "pastpay",
     },
     {
         name: "sofort",
-        image: "/ImagePayments/sofort.png",
+        image: "/art/sofort.png",
         value: "sofort",
     },
     {
         name: "Worldpay",
-        image: "/ImagePayments/worldpay.png",
+        image: "/art/worldpay.png",
         value: "Worldpay",
     },
     {
         name: "Paypal",
-        image: "/ImagePayments/paypal.png",
+        image: "/art/paypal.png",
         value: "paypal",
     },
     {
         name: "Mastercard",
-        image: "/ImagePayments/mastercard.png",
+        image: "/art/mastercard.png",
         value: "mastercard",
     },
     {
         name: "Visa",
-        image: "/ImagePayments/visa.png",
+        image: "/art/visa.png",
         value: "visa",
     },
 ]

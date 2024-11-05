@@ -23,7 +23,7 @@
             "type": "payment_templates",
             "blueprint": [
                 {
-                    "key": "PaymentData",
+                    "key": "paymentData",
                     "name": "Payments",
                     "type": "payment_templates"
                 }
@@ -36,7 +36,7 @@
             "type": "socialMedia",
             "blueprint": [
                 {
-                    "key": "socialData",
+                    "key": "socialMedia",
                     "name": "Social Media",
                     "type": "socialMedia"
                 }
@@ -360,7 +360,7 @@
                 }
             },
             "copyright": "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
-            "socialData": [
+            "socialMedia": [
                 {
                     "icon": [
                         "fab",

@@ -22,7 +22,7 @@ export const footerTheme1 = {
             type: "payment_templates",
             blueprint: [
                 {
-                    key: "PaymentData",
+                    key: "paymentData",
                     name: "Payments",
                     type: "payment_templates",
                 },
@@ -35,7 +35,7 @@ export const footerTheme1 = {
             type: "socialMedia",
             blueprint: [
                 {
-                    key: "socialData",
+                    key: "socialMedia",
                     name: "Social Media",
                     type: "socialMedia",
                 },
@@ -359,7 +359,7 @@ export const footerTheme1 = {
                 }
             },
             copyright: "Copyright © 2024 Aurora. All rights reserved. Terms of Use Privacy Policy",
-            socialData: [
+            socialMedia: [
                 {
                     icon: [
                         "fab",
