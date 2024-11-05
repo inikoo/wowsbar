@@ -85,21 +85,21 @@ class ShowFooter
                 'uploadImageRoute' => [
                     'name'       => 'grp.models.website.footer.images.store',
                     'parameters' => [
-                        'website' => $portfolioWebsite->id
+                        'portfolioWebsite' => $portfolioWebsite->id
                     ]
                 ],
 
                 'autosaveRoute' => [
                     'name'       => 'customer.models.portfolio-website.footers.autosave',
                     'parameters' => [
-                        'website' => $portfolioWebsite->id
+                        'portfolioWebsite' => $portfolioWebsite->id
                     ]
                 ],
 
                 'publishRoute' => [
                     'name'       => 'customer.models.portfolio-website.footers.publish',
                     'parameters' => [
-                        'website' => $portfolioWebsite->id
+                        'portfolioWebsite' => $portfolioWebsite->id
                     ]
                 ],
 
