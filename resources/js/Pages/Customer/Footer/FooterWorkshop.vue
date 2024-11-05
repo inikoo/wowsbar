@@ -15,6 +15,8 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Dialog from 'primevue/dialog';
 import ListBlock from '@/Components/ListBlock.vue'
 import Image from '@/Components/Image.vue'
+import EmptyState from '@/Components/Utils/EmptyState.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 
 
 import { routeType } from "@/types/route"
@@ -24,6 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { faThLarge } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import ListItem from '@tiptap/extension-list-item'
 library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
 
 const props = defineProps<{
@@ -39,10 +42,9 @@ const props = defineProps<{
         data: Array<any>
     }
 }>()
-console.log('ui',props)
 const tabsBar = ref(0)
 const isLoading = ref(false)
-const usedTemplates = ref(props.data.data ? props.data.data : footerTheme1)
+const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)
 const iframeSrc = route(props.previewRoute.name, props.previewRoute.parameters)
 const iframeClass = ref('w-full h-full')
@@ -145,6 +147,11 @@ const handleIframeError = () => {
     })
 }
 
+const pickTemplate = (template) =>{
+    usedTemplates.value = template
+    visible.value = false
+}
+
 </script>
 
 <template>
@@ -157,10 +164,10 @@ const handleIframeError = () => {
         </template>
     </PageHeading>
 
-    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-6">
-        <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
+    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-8">
+        <div v-if="usedTemplates?.data" class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
-                <div class="w-[15%] bg-slate-200 ">
+                <div class="w-fit bg-slate-200 ">
                     <div v-for="(tab, index) in usedTemplates?.blueprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
@@ -169,7 +176,7 @@ const handleIframeError = () => {
                             aria-hidden='true' />
                     </div>
                 </div>
-                <div class="w-[85%]">
+                <div class="w-full">
                     <SideEditor v-model="usedTemplates.data.fieldValue"
                         :blueprint="usedTemplates.blueprint[tabsBar].blueprint" />
                 </div>
@@ -177,7 +184,7 @@ const handleIframeError = () => {
 
         </div>
 
-        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-5' : 'col-span-6'">
+        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-6' : 'col-span-8'">
             <div class="h-full w-full bg-white">
                 <div v-if="usedTemplates?.data" class="w-full h-full">
                     <div class="flex justify-between bg-slate-200 border border-b-gray-300">
@@ -219,7 +226,7 @@ const handleIframeError = () => {
                         <template #button-empty-state>
                             <div class="mt-4 block">
                                 <Button type="secondary" label="Templates" icon="fas fa-th-large"
-                                    @click="isModalOpen = true"></Button>
+                                    @click="visible = true"></Button>
                             </div>
                         </template>
                     </EmptyState>
@@ -229,10 +236,10 @@ const handleIframeError = () => {
     </div>
 
 
-    <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-        <ListBlock :onSelectBlock="(e)=>console.log(e)" :webBlockTypes="web_blocks.data" >
+    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <ListBlock :onSelectBlock="pickTemplate" :webBlockTypes="web_blocks.data.filter((item)=>item.component == 'footer')" >
             <template #image="{ block }">
-                <div @click="() => console.log(block)"
+                <div @click="() => pickTemplate(block)"
                     class="min-h-16 w-full aspect-[2/1] overflow-hidden flex items-center bg-gray-100 justify-center border border-gray-300 hover:border-indigo-500 rounded cursor-pointer">
                     <div class="w-auto shadow-md">
                         <Image :src="block.screenshot" class="object-contain" />
