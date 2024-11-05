@@ -85,7 +85,7 @@ const setIframeView = (view: String) => {
 
 const autoSave = async (data: Object) => {
     router.patch(
-        route(props.publishRoute.name, props.publishRoute.parameters),
+        route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
