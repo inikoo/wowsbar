@@ -473,7 +473,7 @@ console.log('ppp', props)
             </div>
         </div>
 
-        <div class="mb-6 md:mb-5 text-center md:text-left pt-4 pb-6 space-y-4 md:py-0">
+     <!--    <div class="mb-6 md:mb-5 text-center md:text-left pt-4 pb-6 space-y-4 md:py-0">
             <h2 class="text-xl text-center tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
             <div class="flex md:gap-x-6 md:mb-4 justify-center">
                 <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
@@ -485,7 +485,21 @@ console.log('ppp', props)
                         @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <div class="mt-8 border-0 border-t border-solid border-gray-700 flex flex-col md:flex-row-reverse justify-between pt-6 items-center gap-y-8">
+                <div class="grid gap-y-2 text-center md:text-left">
+                    <div class="flex gap-x-6 justify-center">
+                        <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
+                        :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
+                    </div>
+                </div>
+
+                <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
+                    <Editor v-model="modelValue.copyright" :editable="editable"
+                    @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
+                </div>
+            </div>
 
 
     </div>
