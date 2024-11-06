@@ -29,6 +29,8 @@ use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\Stor
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UpdatePortfolioSocialAccountPost;
 use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UpdatePortfolioSocialAccount;
+use App\Actions\Portfolio\PortfolioWebsite\ActivateFooterPortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\DeactivateFooterPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\PublishPortfolioWebsiteMarginal;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
@@ -56,6 +58,9 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         Route::name('footers.')->prefix('footers')->group(function () {
             Route::patch('autosave/footer', [PublishPortfolioWebsiteMarginal::class, 'footer'])->name('autosave');
             Route::post('publish/footer', [PublishPortfolioWebsiteMarginal::class, 'footer'])->name('publish');
+
+            Route::patch('activate', ActivateFooterPortfolioWebsite::class)->name('activate');
+            Route::patch('deactivate', DeactivateFooterPortfolioWebsite::class)->name('deactivate');
         });
     });
 });
