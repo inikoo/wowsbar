@@ -108,7 +108,11 @@ const editor = useEditor({
         FontSize.configure({
             types: ['textStyle'],
         }),
-        Link,
+        Link.configure({
+          openOnClick: false,
+          defaultProtocol: 'https',
+          
+        }),
     ],
 })
 

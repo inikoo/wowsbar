@@ -79,6 +79,7 @@ onUnmounted(() => {
 <template>
     <div class="p-4">
         <component 
+            v-if="usedTemplates?.code"
             :is="getComponent(usedTemplates.code)"
             v-model="usedTemplates.data.fieldValue" 
             :preview-mode="previewMode"

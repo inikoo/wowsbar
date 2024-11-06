@@ -27,7 +27,7 @@ const openIndex = ref<number | null>(null); // Track the currently open disclosu
 const icons = [
     { 
         label: "Facebook",
-        value: ['fab', 'facebook-f'],
+        value: "fab fa-facebook-f",
     },
     { 
         label: "Instagram",

@@ -148,6 +148,7 @@ const handleIframeError = () => {
 }
 
 const pickTemplate = (template) =>{
+    console.log(template)
     usedTemplates.value = template
     visible.value = false
 }
