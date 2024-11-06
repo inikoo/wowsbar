@@ -86,6 +86,26 @@ const FeOptions = [
         image: "/art/payments/visa.png?v=2",
         value: "visa",
     },
+    {
+        name: "Paypal",
+        image: "/art/payments/paypal-white.png?v=2",
+        value: "paypal-white",
+    },
+    {
+        name: "Pastpay",
+        image: "/art/payments/pastpay-white.png?v=2",
+        value: "Pastpay-white",
+    },
+    {
+        name: "Mastercard",
+        image: "/art/payments/mastercard-white.png?v=2",
+        value: "mastercard-white",
+    },
+    {
+        name: "Visa",
+        image: "/art/payments/visa-white.png?v=2",
+        value: "visa-white",
+    },
 ]
 
 /* const GetPayment = async () => {
@@ -108,7 +128,6 @@ const FeOptions = [
     }
 } */
 
-const payments = ref([])
 
 
 const addPayments = () => {

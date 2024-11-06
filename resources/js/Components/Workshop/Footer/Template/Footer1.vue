@@ -453,7 +453,7 @@ console.log('ppp', props)
                         </div>
 
                         <div class="flex flex-col items-center gap-y-6 mt-12">
-                            <div v-for="payment of modelValue.paymentData" :key="payment.key">
+                            <div v-for="payment of modelValue.paymentData.data" :key="payment.key">
                                 <img :src="payment.image" :alt="payment.alt"
                                     class="h-auto max-h-7 md:max-h-8 max-w-full w-fit">
                             </div>

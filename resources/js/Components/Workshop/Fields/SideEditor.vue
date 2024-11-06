@@ -9,6 +9,7 @@ import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
 import UploadImage from '@/Components/UploadImage.vue';
+import ArrayPhone from "@/Components/Workshop/Fields/ArrayPhone.vue"
 
 
 import Payments from '@/Components/Workshop/Fields/Payment.vue'
@@ -41,7 +42,8 @@ const getComponent = (componentName: string) => {
         'socialMedia': socialMedia,
         'footerColumn': FooterColumn,
         'body': PanelProperties,
-        "upload_image" : UploadImage
+        "upload_image" : UploadImage,
+        "arrayPhone" : ArrayPhone
     }
 
     return components[componentName]
