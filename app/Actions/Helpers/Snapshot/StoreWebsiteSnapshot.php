@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Snapshot;
 
 use App\Models\Helpers\Snapshot;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\Website;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -16,7 +17,7 @@ class StoreWebsiteSnapshot
 {
     use AsAction;
 
-    public function handle(Website $website, array $modelData): Snapshot
+    public function handle(Website|PortfolioWebsite $website, array $modelData): Snapshot
     {
         data_set(
             $modelData,

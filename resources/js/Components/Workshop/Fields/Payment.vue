@@ -23,72 +23,72 @@ const emits = defineEmits<{
 const FeOptions = [
     {
         name: "Accounts",
-        image: "/art/accounts.png",
+        image: "/art/payments/accounts.png?v=2",
         value: "accounts",
     },
     {
         name: "Bank",
-        image: "/art/bank.png",
+        image: "/art/payments/bank.png?v=2",
         value: "bank",
     },
     {
         name: "btree",
-        image: "/art/btree.png",
+        image: "/art/payments/btree.png?v=2",
         value: "btree",
     },
     {
         name: "Cash",
-        image: "/art/cash.png",
+        image: "/art/payments/cash.png?v=2",
         value: "Cash",
     },
     {
         name: "Checkout",
-        image: "/art/checkout.png",
+        image: "/art/payments/checkout.png?v=2",
         value: "Checkout",
     },
     {
         name: "Cond",
-        image: "/art/cond.png",
+        image: "/art/payments/cond.png?v=2",
         value: "cond",
     },
     {
         name: "Hokodo",
-        image: "/art/hokodo.png",
+        image: "/art/payments/hokodo.png?v=2",
         value: "hokodo",
     },
     {
         name: "Pastpay",
-        image: "/art/pastpay.png",
+        image: "/art/payments/pastpay.png?v=2",
         value: "pastpay",
     },
     {
         name: "sofort",
-        image: "/art/sofort.png",
+        image: "/art/payments/sofort.png?v=2",
         value: "sofort",
     },
     {
         name: "Worldpay",
-        image: "/art/worldpay.png",
+        image: "/art/payments/worldpay.png?v=2",
         value: "Worldpay",
     },
     {
         name: "Paypal",
-        image: "/art/paypal.png",
+        image: "/art/payments/paypal.png?v=2",
         value: "paypal",
     },
     {
         name: "Mastercard",
-        image: "/art/mastercard.png",
+        image: "/art/payments/mastercard.png?v=2",
         value: "mastercard",
     },
     {
         name: "Visa",
-        image: "/art/visa.png",
+        image: "/art/payments/visa.png?v=2",
         value: "visa",
     },
 ]
 
-const GetPayment = async () => {
+/* const GetPayment = async () => {
     try {
         const response = await axios.get(
             route('customer.accounting.payment-service-providers.index'),
@@ -106,7 +106,7 @@ const GetPayment = async () => {
     } catch (error: any) {
         console.error('error', error)
     }
-}
+} */
 
 const payments = ref([])
 
@@ -117,7 +117,7 @@ const addPayments = () => {
         {
             name: "checkout",
             value: "checkout",
-            image: "https://www.linqto.com/wp-content/uploads/2023/04/logo_2021-11-05_19-04-11.530.png",
+            image: "https://www.linqto.com/wp-content/uploads/2023/04/logo_2021-11-05_19-04-11.530.png?v=2",
         },
     );
     emits('update:modelValue', { data: data });
@@ -141,11 +141,11 @@ const deleteSocial = (event, index) => {
     emits('update:modelValue', { data: set });
 }
 
-onMounted(() => {
+/* onMounted(() => {
     GetPayment()
 });
 
-
+ */
 </script>
 
 <template>

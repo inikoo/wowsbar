@@ -8,6 +8,7 @@ import Accordion from 'primevue/accordion'
 import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
+import UploadImage from '@/Components/UploadImage.vue';
 
 
 import Payments from '@/Components/Workshop/Fields/Payment.vue'
@@ -39,7 +40,8 @@ const getComponent = (componentName: string) => {
         'payment_templates': Payments,
         'socialMedia': socialMedia,
         'footerColumn': FooterColumn,
-        'body': PanelProperties
+        'body': PanelProperties,
+        "upload_image" : UploadImage
     }
 
     return components[componentName]
@@ -95,6 +97,7 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
                     <template v-if="field.replaceForm">
                         <template v-for="form in field.replaceForm">
                             <!-- If multi type -->
+                            <div class="my-2 text-xs font-semibold">{{ form?.name }}</div>
                             <template v-if="isArray(form.type)">
                                 <component v-for="(type, indexType) in form.type" :is="getComponent(type)"
                                     :modelValue="getFormValue(modelValue, form.key)"
@@ -104,6 +107,7 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
 
                             <template v-else>
                                 <!-- If single type -->
+                                <div class="my-2 text-xs font-semibold">{{ form?.name }}</div>
                                 <component :is="getComponent(form.type)" :key="form.key"
                                     :modelValue="getFormValue(modelValue, form.key)"
                                     @update:modelValue="newValue => setFormValue(modelValue, form.key, newValue)"
@@ -116,6 +120,7 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
                     <template v-else>
                         <template v-if="isArray(field.type)">
                             <!-- If multi type -->
+                            <div class="my-2 text-xs font-semibold">{{ field?.name }}</div>
                             <component v-for="(type, indexType) in field.type" :is="getComponent(type)"
                                 :modelValue="getFormValue(modelValue, field.key)"
                                 @update:modelValue="newValue => setFormValue(modelValue, field.key, newValue)"
@@ -124,6 +129,7 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
 
                         <template v-else>
                             <!-- If single type -->
+                            <div class="my-2 text-xs font-semibold">{{ field?.name }}</div>
                             <component :is="getComponent(field.type)" :key="field.key"
                                 :modelValue="getFormValue(modelValue, field.key)"
                                 @update:modelValue="newValue => setFormValue(modelValue, field.key, newValue)"
@@ -149,16 +155,16 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
 }
 
 :deep(.p-accordionpanel.p-accordionpanel-active > .p-accordionheader) {
-    background-color: #800080 !important;
+    background-color: #475569 !important;
     /* Ungu */
     color: white !important;
     /* Warna teks */
-    margin-bottom: 12px !important;
+    margin-bottom: 0px !important;
     border-radius: 0 !important;
 }
 
 :deep(.p-accordionpanel.p-accordionpanel-active > .p-accordionheader:hover) {
-    background-color: #800080 !important;
+    background-color: #475569 !important;
     /* Ungu saat hover */
     color: white !important;
     border-radius: 0 !important;

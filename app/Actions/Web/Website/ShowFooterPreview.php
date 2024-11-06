@@ -7,7 +7,7 @@
 
 namespace App\Actions\Web\Website;
 
-use App\Models\Web\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -20,33 +20,31 @@ class ShowFooterPreview
 
     public bool $asAction = false;
 
-    public function handle(Website $website): Website
+    public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
-        return $website;
+        return $portfolioWebsite;
     }
 
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/PreviewFooterWorkshop',
+            'Footer/PreviewFooterWorkshop',
             [
                 'footer'        => [
-                    'data' => Arr::get($website->compiled_layout, 'footer')
+                    'data' => Arr::get($portfolioWebsite->compiled_layout, 'footer')
                 ],
                 'autosaveRoute' => [
-                    'name'       => '',
+                    'name'       => 'customer.models.portfolio-website.footers.autosave',
                     'parameters' => [
-                        'website' => null
-                    ],
-                ]
+                        'portfolioWebsite' => $portfolioWebsite->id
+                    ]
+                ],
             ]
         );
     }
 
-    public function asController(ActionRequest $request): Website
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $website = $request->get('website');
-
-        return $website;
+        return $portfolioWebsite;
     }
 }

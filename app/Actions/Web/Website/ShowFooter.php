@@ -45,7 +45,7 @@ class ShowFooter
         $subNavigation = $this->getSubNavigation($request);
 
         return Inertia::render(
-            'Banners/FooterWorkshop',
+            'Footer/FooterWorkshop',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -85,14 +85,28 @@ class ShowFooter
                 'uploadImageRoute' => [
                     'name'       => 'grp.models.website.footer.images.store',
                     'parameters' => [
-                        'website' => $portfolioWebsite->id
+                        'portfolioWebsite' => $portfolioWebsite->id
+                    ]
+                ],
+
+                'previewRoute' => [
+                    'name'       => 'customer.portfolio.websites.footer.preview',
+                    'parameters' => [
+                        'portfolioWebsite' => $portfolioWebsite->slug
                     ]
                 ],
 
                 'autosaveRoute' => [
-                    'name'       => 'grp.models.website.autosave.footer',
+                    'name'       => 'customer.models.portfolio-website.footers.autosave',
                     'parameters' => [
-                        'website' => $portfolioWebsite->id
+                        'portfolioWebsite' => $portfolioWebsite->id
+                    ]
+                ],
+
+                'publishRoute' => [
+                    'name'       => 'customer.models.portfolio-website.footers.publish',
+                    'parameters' => [
+                        'portfolioWebsite' => $portfolioWebsite->id
                     ]
                 ],
 

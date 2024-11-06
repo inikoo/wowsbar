@@ -5,9 +5,10 @@ import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import Footer1 from '@/Components/Workshop/Footer/Template/Footer1.vue'
 import PreviewWorkshop from "@/Layouts/BlankLayout.vue";
 import { SocketFooter } from "@/Composables/SocketWebBlock"
-import { debounce, isEqual } from 'lodash'
+import { debounce } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
+import { getComponent } from "@/Composables/Website/getComponentsFooters"
 
 
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
@@ -19,16 +20,16 @@ const props = defineProps<{
     footer: Object
     autosaveRoute: routeType
 }>()
-console.log('sds',props)
+
 const saveCancelToken = ref<Function | null>(null)
 const socketLayout = SocketFooter();
-const usedTemplates = reactive(footerTheme1 )
+const usedTemplates = reactive(props.footer.data)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: false, trailing: true })
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
 const autoSave = async (data: Object) => {
     router.patch(
-        route("customer.models.banner.workshop.footers.autosave.footer"),
+        route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
@@ -53,31 +54,20 @@ const autoSave = async (data: Object) => {
     )
 }
 
-
-
 const updateData = (newVal) => {
     debouncedSendUpdate({...usedTemplates , data : {fieldValue : newVal }  });
 }
 
-
 onMounted(() => {
     if (socketLayout) socketLayout.actions.subscribe((value) => {
-        usedTemplates.data = value.footer.data
+        Object.assign(usedTemplates, value.footer.data);
     });
     window.addEventListener('message', (event) => {
         if (event.data.key === 'previewMode') {
             previewMode.value = event.data.value
         }
     });
-   /*  const channel = window.Echo.join(`footer.preview`)
-        .listenForWhisper("otherIsNavigating", (event: any) => {
-            ToolWorkshop.value = {
-                ...ToolWorkshop.value,
-                previewMode: event.data.previewMode,
-            }
-        }) */
 });
-
 
 onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
@@ -88,11 +78,17 @@ onUnmounted(() => {
 
 <template>
     <div class="p-4">
-        <Footer1 
+        <component 
+            :is="getComponent(usedTemplates.code)"
             v-model="usedTemplates.data.fieldValue" 
             :preview-mode="previewMode"
             @update:model-value="updateData"
         />
+       <!--  <Footer1 
+            v-model="usedTemplates.data.fieldValue" 
+            :preview-mode="previewMode"
+            @update:model-value="updateData"
+        /> -->
     </div>
 </template>
 

@@ -9,6 +9,8 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
+use App\Models\Helpers\Deployment;
+use App\Models\Helpers\Snapshot;
 use App\Models\Leads\Prospect;
 use App\Models\SysAdmin\Division;
 use App\Models\Traits\HasHistory;
@@ -17,6 +19,7 @@ use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -89,6 +92,7 @@ class PortfolioWebsite extends Model implements Auditable
     protected $casts = [
         'data'             => 'array',
         'integration_data' => 'array',
+        'compiled_layout'  => 'array',
         'integration'      => PortfolioWebsiteIntegrationEnum::class
     ];
 
@@ -112,6 +116,11 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
+    public function snapshots(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
+    }
+
     public function crawlers(): HasMany
     {
         return $this->hasMany(Crawl::class);
@@ -127,4 +136,23 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasMany(PortfolioWebpage::class);
     }
 
+    public function unpublishedHeaderSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_header_snapshot_id');
+    }
+
+    public function unpublishedFooterSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_footer_snapshot_id');
+    }
+
+    public function liveSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
+    }
 }

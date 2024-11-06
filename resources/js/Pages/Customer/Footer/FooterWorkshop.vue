@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes} from 'vue'
+import { ref, watch, IframeHTMLAttributes } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -12,6 +12,12 @@ import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
 import Publish from '@/Components/Utils/PublishWorkshop.vue'
 import ProgressSpinner from 'primevue/progressspinner';
+import Dialog from 'primevue/dialog';
+import ListBlock from '@/Components/ListBlock.vue'
+import Image from '@/Components/Image.vue'
+import EmptyState from '@/Components/Utils/EmptyState.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -20,6 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { faThLarge } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import ListItem from '@tiptap/extension-list-item'
 library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
 
 const props = defineProps<{
@@ -29,20 +36,21 @@ const props = defineProps<{
         footer: Object
     }
     autosaveRoute: routeType
-    web_blocks : {
-        data : Array<any>
+    publishRoute: routeType
+    previewRoute: routeType
+    web_blocks: {
+        data: Array<any>
     }
 }>()
-
 const tabsBar = ref(0)
-const isLoading =ref(false)
-const usedTemplates = ref(footerTheme1)
+const isLoading = ref(false)
+const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)
-const iframeSrc = route("customer.banners.workshop.footers.preview")
+const iframeSrc = route(props.previewRoute.name, props.previewRoute.parameters)
 const iframeClass = ref('w-full h-full')
 const openFullScreenPreview = () => window.open(iframeSrc + '?fullscreen=true', '_blank');
-const socketLayout = SocketFooter();
 const comment = ref('')
+const visible = ref(false);
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
@@ -50,7 +58,7 @@ const saveCancelToken = ref<Function | null>(null)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
-        const response = await axios.post(route('customer.models.banner.workshop.footers.publish.footer'), {
+        const response = await axios.post(route(props.publishRoute.name, props.publishRoute.parameters), {
             comment: comment.value,
             layout: usedTemplates.value
         })
@@ -80,7 +88,7 @@ const setIframeView = (view: String) => {
 
 const autoSave = async (data: Object) => {
     router.patch(
-        route("customer.models.banner.workshop.footers.autosave.footer"),
+        route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
@@ -106,10 +114,10 @@ const autoSave = async (data: Object) => {
 }
 
 watch(previewMode, (newVal) => {
-    /* if (socketLayout) socketLayout.actions.send({ 
-        previewMode: newVal, 
+    /* if (socketLayout) socketLayout.actions.send({
+        previewMode: newVal,
     }) */
-    sendToIframe({key: 'previewMode', value: newVal})
+    sendToIframe({ key: 'previewMode', value: newVal })
 }, { deep: true })
 
 watch(usedTemplates, (newVal) => {
@@ -138,10 +146,16 @@ const handleIframeError = () => {
         type: 'error',
     })
 }
-console.log('aas',props)
+
+const pickTemplate = (template) =>{
+    usedTemplates.value = template
+    visible.value = false
+}
+
 </script>
 
 <template>
+
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other>
@@ -150,10 +164,10 @@ console.log('aas',props)
         </template>
     </PageHeading>
 
-    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-6">
-        <div v-if="usedTemplates?.data" class="col-span-1 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
+    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-8">
+        <div v-if="usedTemplates?.data" class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
             <div class="flex h-full">
-                <div class="w-[15%] bg-slate-200 ">
+                <div class="w-fit bg-slate-200 ">
                     <div v-for="(tab, index) in usedTemplates?.blueprint"
                         class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
                         :title="tab.name" @click="tabsBar = index"
@@ -162,7 +176,7 @@ console.log('aas',props)
                             aria-hidden='true' />
                     </div>
                 </div>
-                <div class="w-[85%]">
+                <div class="w-full">
                     <SideEditor v-model="usedTemplates.data.fieldValue"
                         :blueprint="usedTemplates.blueprint[tabsBar].blueprint" />
                 </div>
@@ -170,7 +184,7 @@ console.log('aas',props)
 
         </div>
 
-        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-5' : 'col-span-6'">
+        <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-6' : 'col-span-8'">
             <div class="h-full w-full bg-white">
                 <div v-if="usedTemplates?.data" class="w-full h-full">
                     <div class="flex justify-between bg-slate-200 border border-b-gray-300">
@@ -192,20 +206,19 @@ console.log('aas',props)
                                 <span aria-hidden="true" :class="previewMode ? 'translate-x-3' : 'translate-x-0'"
                                     class="pointer-events-none inline-block h-full w-1/2 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out">
                                 </span>
-                            </Switch> 
-                            
+                            </Switch>
+
                             <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'">
-                                <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' />
+                                <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' @click="visible = true" />
                             </div>
                         </div>
                     </div>
-                        <div v-if="isIframeLoading" class="loading-overlay">
-                            <ProgressSpinner />
-                         </div>
+                    <div v-if="isIframeLoading" class="loading-overlay">
+                        <ProgressSpinner />
+                    </div>
 
-                         <iframe :src="iframeSrc" :title="props.title"
-                        :class="[iframeClass]" @error="handleIframeError"
-                        @load="isIframeLoading = false" ref="_iframe"/>
+                    <iframe :src="iframeSrc" :title="props.title" :class="[iframeClass]" @error="handleIframeError"
+                        @load="isIframeLoading = false" ref="_iframe" />
                 </div>
                 <div v-else>
                     <EmptyState
@@ -213,7 +226,7 @@ console.log('aas',props)
                         <template #button-empty-state>
                             <div class="mt-4 block">
                                 <Button type="secondary" label="Templates" icon="fas fa-th-large"
-                                    @click="isModalOpen = true"></Button>
+                                    @click="visible = true"></Button>
                             </div>
                         </template>
                     </EmptyState>
@@ -221,6 +234,20 @@ console.log('aas',props)
             </div>
         </div>
     </div>
+
+
+    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <ListBlock :onSelectBlock="pickTemplate" :webBlockTypes="web_blocks.data.filter((item)=>item.component == 'footer')" >
+            <template #image="{ block }">
+                <div @click="() => pickTemplate(block)"
+                    class="min-h-16 w-full aspect-[2/1] overflow-hidden flex items-center bg-gray-100 justify-center border border-gray-300 hover:border-indigo-500 rounded cursor-pointer">
+                    <div class="w-auto shadow-md">
+                        <Image :src="block.screenshot" class="object-contain" />
+                    </div>
+                </div>
+            </template>
+        </ListBlock>
+    </Dialog>
 </template>
 
 

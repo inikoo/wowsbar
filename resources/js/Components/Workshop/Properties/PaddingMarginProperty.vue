@@ -86,7 +86,7 @@ const changePaddingToSameValue = (newVal: number) => {
             </div>
 
             <div class="pl-2 pr-4 flex items-center relative">
-                <div class="relative">
+                <div class="relative w-full">
                     <Transition name="slide-to-up">
                         <div v-if="isPaddingUnitLinked">
                             <div class="grid grid-cols-5 items-center">

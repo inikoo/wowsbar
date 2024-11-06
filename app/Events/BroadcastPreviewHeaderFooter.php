@@ -8,6 +8,7 @@
 namespace App\Events;
 
 use App\Actions\Web\Website\UI\GetWebsiteWorkshopFooter;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\Website;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -22,9 +23,9 @@ class BroadcastPreviewHeaderFooter implements ShouldBroadcast
     use SerializesModels;
 
     public array $data;
-    public Website $website;
+    public Website|PortfolioWebsite $website;
 
-    public function __construct(Website $website)
+    public function __construct(Website|PortfolioWebsite $website)
     {
         $this->website = $website;
     }

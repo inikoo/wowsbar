@@ -78,5 +78,9 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
         <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="mt-4 block">
             <Button size="xs" :style="data?.action.style" :icon="data?.action.icon" :label="data?.action.tooltip" />
         </Link>
+
+        <slot name="button-empty-state">
+        </slot>
+        
     </div>
 </template>
