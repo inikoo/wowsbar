@@ -68,7 +68,19 @@ class ShowFooter
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        /* [
+                        [
+                            'type'  => 'button',
+                            'style' => 'secondary',
+                            'label' => __(!$portfolioWebsite->footer_status ? 'Activate' : 'Deactivate'),
+                            'route' => [
+                                'method'     => 'patch',
+                                'name'       => "customer.models.portfolio-website.footers." . (!$portfolioWebsite->footer_status ? 'activate' : 'deactivate'),
+                                'parameters' => [
+                                    'portfolioWebsite' => $portfolioWebsite->id
+                                ],
+                            ]
+                        ],
+                         /*[
                             'type'  => 'button',
                             'style' => 'primary',
                             'icon'  => ["fas", "fa-rocket"],
@@ -77,7 +89,7 @@ class ShowFooter
                                 'method'     => 'post',
                                 'name'       => 'customer.models.banner.workshop.footers.publish.footer',
                             ]
-                        ], */
+                        ],*/
                     ],
                     'subNavigation'    => $subNavigation,
                 ],

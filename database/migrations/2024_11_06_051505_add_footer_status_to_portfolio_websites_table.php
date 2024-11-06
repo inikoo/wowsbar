@@ -11,7 +11,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('portfolio_websites', function (Blueprint $table) {
-            $table->boolean('footer_status')->default(false)->after('status');
+            $table->boolean('footer_status')->default(true)->after('status');
         });
     }
 

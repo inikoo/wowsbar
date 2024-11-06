@@ -86,6 +86,19 @@ class ShowPortfolioWebsite extends InertiaAction
                         'icon'  => 'fal fa-globe'
                     ],
                     'actions' => [
+                        [
+                            'type'    => 'button',
+                            'style'   => 'primary',
+                            'label'   => __('Footer'),
+                            'icon'    => 'fal fa-football-ball',
+                            'tooltip' => __('footer'),
+                            'route'   => [
+                                'name'       => 'customer.portfolio.websites.footer',
+                                'parameters' => array_merge(
+                                    $request->route()->originalParameters()
+                                )
+                            ]
+                        ],
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

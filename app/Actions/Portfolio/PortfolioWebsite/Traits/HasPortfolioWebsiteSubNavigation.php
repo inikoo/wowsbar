@@ -51,20 +51,6 @@ trait HasPortfolioWebsiteSubNavigation
             ]
         ];
 
-        $meta[] = [
-            'href'     => [
-                'name'       => 'customer.portfolio.websites.footer',
-                'parameters' => array_merge(
-                    $request->route()->originalParameters()
-                )
-            ],
-            'label'    => __('Footer'),
-            'leftIcon' => [
-                'icon'    => 'fal fa-football-ball',
-                'tooltip' => __('footer')
-            ]
-        ];
-
         return $meta;
     }
 }
