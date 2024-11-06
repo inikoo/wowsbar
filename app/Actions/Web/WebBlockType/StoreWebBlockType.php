@@ -24,7 +24,6 @@ class StoreWebBlockType
         /** @var WebBlockType $webBlockType */
 
         $webBlockType = WebBlockType::create($modelData);
-        dd($webBlockType->blueprint);
         $webBlockType->stats()->create();
         return $webBlockType;
     }
