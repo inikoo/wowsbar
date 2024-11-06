@@ -58,6 +58,7 @@ class SeedWebBlockTypes
 
 
             $webBlockType = WebBlockType::where('code', Arr::get($webBlockTypeData, 'code'))->first();
+
             if ($webBlockType) {
                 $webBlockType = UpdateWebBlockType::run($webBlockType, $webBlockTypeData);
             } else {
