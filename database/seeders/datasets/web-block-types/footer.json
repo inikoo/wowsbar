@@ -25,10 +25,7 @@
                             "type": ["arrayPhone"]
                         },
                         {
-                            "key": [
-                                "phone",
-                                "caption"
-                            ],
+                            "key": ["phone", "caption"],
                             "name": "caption",
                             "type": ["text"]
                         }
@@ -36,7 +33,7 @@
                 },
                 {
                     "key": ["whatsapp"],
-                    "name": "whatsapp",
+                    "name": "Whatsapp",
                     "replaceForm": [
                         {
                             "key": ["whatsapp", "number"],
@@ -44,12 +41,12 @@
                             "type": ["text"]
                         },
                         {
-                            "key": ["whatsapp","caption"],
+                            "key": ["whatsapp", "caption"],
                             "name": "caption",
                             "type": ["text"]
                         },
                         {
-                            "key": ["whatsapp","message"],
+                            "key": ["whatsapp", "message"],
                             "name": "message",
                             "type": ["text"]
                         }
@@ -84,10 +81,9 @@
             "key": "socialData",
             "icon": "far fa-icons",
             "name": "Social Media",
-            "type": "socialmedia",
             "blueprint": [
                 {
-                    "key": "socialmedia",
+                    "key": "socialMedia",
                     "name": "Social Media",
                     "type": "socialMedia"
                 }
@@ -107,6 +103,10 @@
                                 {
                                     "id": 2,
                                     "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/contact.sys\">Contact Us</a></p>"
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/faq\">FAQ</a></p>"
                                 }
                             ],
                             "name": "<p style='font-size: 18px'><strong>Help</strong></p>"
@@ -423,29 +423,31 @@
                     "type": "Linkedin"
                 }
             ],
-            "paymentData": [
-                {
-                    "name": "Pastpay",
-                    "image": "/art/payments/pastpay-white.png?v=2",
-                    "value": "Pastpay"
-                },
-                {
-                    "name": "Paypal",
-                    "image": "/art/payments/paypal-white.png?v=2",
-                    "value": "Paypal"
-                },
+            "paymentData": {
+                "data": [
+                    {
+                        "name": "Pastpay",
+                        "image": "/art/payments/pastpay-white.png?v=2",
+                        "value": "Pastpay"
+                    },
+                    {
+                        "name": "Paypal",
+                        "image": "/art/payments/paypal-white.png?v=2",
+                        "value": "Paypal"
+                    },
 
-                {
-                    "name": "Visa",
-                    "image": "/art/payments/visa-white.png?v=2",
-                    "value": "Visa"
-                },
-                {
-                    "name": "Mastercard",
-                    "image": "/art/payments/mastercard-white.png?v=2",
-                    "value": "Mastercard"
-                }
-            ],
+                    {
+                        "name": "Visa",
+                        "image": "/art/payments/visa-white.png?v=2",
+                        "value": "Visa"
+                    },
+                    {
+                        "name": "Mastercard",
+                        "image": "/art/payments/mastercard-white.png?v=2",
+                        "value": "Mastercard"
+                    }
+                ]
+            },
             "whatsapp": {
                 "number": "+34 602 580 257",
                 "caption": "Whatsapp",

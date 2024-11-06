@@ -26,27 +26,27 @@ const openIndex = ref<number | null>(null); // Track the currently open disclosu
 
 const icons = [
     { 
-        label: "Facebook",
+        type: "Facebook",
         value: "fab fa-facebook-f",
     },
     { 
-        label: "Instagram",
+        type: "Instagram",
         value: "fab fa-instagram",
     },
     { 
-        label: "Tik Tok",
+        type: "Tik Tok",
         value: "fab fa-tiktok",
     },
     { 
-        label: "Pinterest",
+        type: "Pinterest",
         value: "fab fa-pinterest",
     },
     { 
-        label: "Youtube",
+        type: "Youtube",
         value: "fab fa-youtube",
     },
     { 
-        label: "Linkedin",
+        type: "Linkedin",
         value: "fab fa-linkedin-in",
     },
 ];
@@ -55,7 +55,7 @@ const add = () => {
     let data = cloneDeep(props.modelValue);
     data.push(
         { 
-            label: "Facebook",
+            type: "Facebook",
             icon : ['fab', 'facebook-f'],
             link : ""
         }
@@ -66,7 +66,7 @@ const add = () => {
 const changeIcon = (icon, data, index) => {
     let set = cloneDeep(props.modelValue);
     set[index] = {
-        label: icon.label,
+        type: icon.type,
         icon: icon.value,
         link: data.link
     }
@@ -101,7 +101,7 @@ const handleDisclosureToggle = (index) => {
             <div class="relative">
                 <button @click="handleDisclosureToggle(index)" :class="openIndex === index ? 'rounded-t-lg' : 'rounded-lg'"
                     class="flex w-full justify-between bg-slate-200  px-4 py-2 text-left text-sm font-medium hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
-                    <span class="font-medium text-sm">{{ item.label }}</span>
+                    <span class="font-medium text-sm">{{ item.type }}</span>
                     <FontAwesomeIcon :icon="['fas', 'times']" class="text-red-500 p-1" @click="(e)=>deleteSocial(e,index)" />
                 </button>
                 
@@ -112,17 +112,12 @@ const handleDisclosureToggle = (index) => {
                             <Button type="dashed" @click="toggle" :full="true" ><FontAwesomeIcon :icon="item.icon" /></Button>
                             <Popover ref="op">
                                 <div class="grid grid-cols-3 gap-6 p-1">
-                                    <div v-for="icon in icons" :key="icon.label" @click="()=>changeIcon(icon,item,index)" class="cursor-pointer flex flex-col items-center p-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
+                                    <div v-for="icon in icons" :key="icon.type" @click="()=>changeIcon(icon,item,index)" class="cursor-pointer flex flex-col items-center p-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
                                         <FontAwesomeIcon :icon="icon.value" class="text-xl mb-2"></FontAwesomeIcon>
-                                        <span class="text-xs font-medium text-gray-700">{{ icon.label }}</span>
+                                        <span class="text-xs font-medium text-gray-700">{{ icon.type }}</span>
                                     </div>
                                 </div>
                             </Popover>
-                        </div>
-
-                        <div class="p-1">
-                            <span class="text-xs my-2"> Label : </span>
-                            <PureInput v-model="item.label" placeholder="Label" />
                         </div>
 
                         <div class="p-1">
