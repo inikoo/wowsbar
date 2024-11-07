@@ -98,7 +98,8 @@ class PortfolioWebsite extends Model implements Auditable
 
     protected $attributes = [
         'data'             => '{}',
-        'integration_data' => '{}'
+        'integration_data' => '{}',
+        'footer_status'    => false
     ];
 
     protected $guarded = [];
