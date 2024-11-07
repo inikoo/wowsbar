@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes } from 'vue'
+import { ref, watch, IframeHTMLAttributes,onMounted, onUnmounted  } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -126,11 +126,19 @@ const handleIframeError = () => {
 }
 
 const pickTemplate = (template) =>{
-    console.log(template)
     isIframeLoading.value = true
     usedTemplates.value = template
     visible.value = false
 }
+
+const handleIframeMessage = (event: MessageEvent) => {
+    if (event.origin !== window.location.origin) return;
+    const { data } = event;
+    if (data.key === 'autosave') {
+       usedTemplates.value =  data.value
+       autoSave(data.value)
+    }
+};
 
 watch(previewMode, (newVal) => {
     sendToIframe({ key: 'previewMode', value: newVal })
@@ -143,6 +151,14 @@ watch(usedTemplates, (newVal) => {
     if (newVal) debouncedSendUpdate(newVal)
 
 }, { deep: true })
+
+onMounted(() => {
+    window.addEventListener('message', handleIframeMessage);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('message', handleIframeMessage);
+});
 
 </script>
 

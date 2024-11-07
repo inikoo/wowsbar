@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref, onUnmounted, reactive } from "vue";
 import { routeType } from "@/types/route"
-import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
-import Footer1 from '@/Components/Workshop/Footer/Template/Footer1.vue'
 import PreviewWorkshop from "@/Layouts/BlankLayout.vue";
 import { SocketFooter } from "@/Composables/SocketWebBlock"
 import { debounce } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
 import { getComponent } from "@/Composables/Website/getComponentsFooters"
-
+import { trans } from 'laravel-vue-i18n'
 
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -28,12 +26,14 @@ const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: 
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
 const autoSave = async (data: Object) => {
-    router.patch(
+    sendMessageToParent('autosave',usedTemplates)
+    /* router.patch(
         route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
         {
             onFinish: () => {
                 saveCancelToken.value = null
+                sendMessageToParent('autosave',usedTemplates)
             },
             onCancelToken: (cancelToken) => {
                 saveCancelToken.value = cancelToken.cancel
@@ -51,7 +51,7 @@ const autoSave = async (data: Object) => {
             preserveScroll: true,
             preserveState: true,
         }
-    )
+    ) */
 }
 
 const updateData = (newVal) => {
@@ -73,6 +73,13 @@ onUnmounted(() => {
     if (socketLayout) socketLayout.actions.unsubscribe();
 });
 
+const sendMessageToParent = (key: string, value: any) => {
+    // Ensure the data is JSON-serializable
+    const serializableValue = JSON.parse(JSON.stringify(value));
+    window.parent.postMessage({ key, value: serializableValue }, '*');
+};
+
+
 
 </script>
 
@@ -85,11 +92,6 @@ onUnmounted(() => {
             :preview-mode="previewMode"
             @update:model-value="updateData"
         />
-       <!--  <Footer1 
-            v-model="usedTemplates.data.fieldValue" 
-            :preview-mode="previewMode"
-            @update:model-value="updateData"
-        /> -->
     </div>
 </template>
 
