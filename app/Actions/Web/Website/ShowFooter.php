@@ -122,8 +122,9 @@ class ShowFooter
                     ]
                 ],
 
-                'data'       => GetWebsiteWorkshopFooter::run($portfolioWebsite),
-                'web_blocks' => WebBlockTypesResource::collection(WebBlockType::all())
+                'footer_status' => $portfolioWebsite->footer_status,
+                'data'          => GetWebsiteWorkshopFooter::run($portfolioWebsite),
+                'web_blocks'    => WebBlockTypesResource::collection(WebBlockType::all())
             ]
         );
     }

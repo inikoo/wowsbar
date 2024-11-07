@@ -161,16 +161,18 @@ class Customer extends Model implements HasMedia, Auditable
     use HasTags;
 
     protected $casts = [
-        'data'        => 'array',
-        'location'    => 'array',
-        'state'       => CustomerStateEnum::class,
-        'status'      => CustomerStatusEnum::class,
-        'trade_state' => CustomerTradeStateEnum::class
+        'data'             => 'array',
+        'integration_data' => 'array',
+        'location'         => 'array',
+        'state'            => CustomerStateEnum::class,
+        'status'           => CustomerStatusEnum::class,
+        'trade_state'      => CustomerTradeStateEnum::class
     ];
 
     protected $attributes = [
-        'data'     => '{}',
-        'location' => '{}',
+        'data'             => '{}',
+        'location'         => '{}',
+        'integration_data' => '{}',
     ];
 
     protected $guarded = [];
