@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue';
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import InputText from 'primevue/inputtext';
+import { isArray } from 'lodash';
 
 const props = defineProps<{
     modelValue: any[],
@@ -10,7 +11,7 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 
 // Deep clone modelValue to keep a local reference
-const items = ref([...props.modelValue]);
+const items = ref(isArray(props.modelValue) ? [...props.modelValue] : []);
 
 // Watch for changes in the local items array and emit updates
 watch(items, (newVal) => {

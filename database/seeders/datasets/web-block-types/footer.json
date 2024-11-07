@@ -1,93 +1,70 @@
 {
     "code": "FooterTheme1",
     "scope": "website",
-    "name": "Footer 1",
+    "name": "Ancient Wisdom",
     "component": "footer",
     "blueprint": [
         {
-            "key": "body",
-            "icon": "far fa-line-columns",
+            "key": ["container", "properties"],
             "name": "Body",
-            "type": "body",
-            "blueprint": [
+            "type": "body"
+        },
+        {
+            "key": ["phone"],
+            "name": "Phone",
+            "replaceForm": [
                 {
-                    "key": ["container", "properties"],
-                    "name": "Body",
-                    "type": "body"
-                },
-                {
-                    "key": ["phone"],
+                    "key": ["phone", "numbers"],
                     "name": "Phone",
-                    "replaceForm": [
-                        {
-                            "key": ["phone", "number"],
-                            "name": "Phone",
-                            "type": ["arrayPhone"]
-                        },
-                        {
-                            "key": ["phone", "caption"],
-                            "name": "caption",
-                            "type": ["text"]
-                        }
-                    ]
+                    "type": ["arrayPhone"]
                 },
                 {
-                    "key": ["whatsapp"],
-                    "name": "Whatsapp",
-                    "replaceForm": [
-                        {
-                            "key": ["whatsapp", "number"],
-                            "name": "Phone",
-                            "type": ["text"]
-                        },
-                        {
-                            "key": ["whatsapp", "caption"],
-                            "name": "caption",
-                            "type": ["text"]
-                        },
-                        {
-                            "key": ["whatsapp", "message"],
-                            "name": "message",
-                            "type": ["text"]
-                        }
-                    ]
-                },
-                {
-                    "key": ["email"],
-                    "name": "Email",
-                    "type": "text"
-                },
-                {
-                    "key": ["logo"],
-                    "name": "Logo",
-                    "type": "upload_image"
+                    "key": ["phone", "caption"],
+                    "name": "caption",
+                    "type": ["text"]
                 }
             ]
         },
         {
-            "key": "PaymentData",
-            "icon": "far fa-money-bill",
+            "key": ["whatsapp"],
+            "name": "Whatsapp",
+            "replaceForm": [
+                {
+                    "key": ["whatsapp", "number"],
+                    "name": "Phone",
+                    "type": ["text"]
+                },
+                {
+                    "key": ["whatsapp", "caption"],
+                    "name": "caption",
+                    "type": ["text"]
+                },
+                {
+                    "key": ["whatsapp", "message"],
+                    "name": "message",
+                    "type": ["text"]
+                }
+            ]
+        },
+        {
+            "key": ["email"],
+            "name": "Email",
+            "type": "text"
+        },
+        {
+            "key": ["logo"],
+            "name": "Logo",
+            "type": "upload_image"
+        },
+        {
+            "key": "paymentData",
             "name": "Payments",
-            "type": "payment_templates",
-            "blueprint": [
-                {
-                    "key": "paymentData",
-                    "name": "Payments",
-                    "type": "payment_templates"
-                }
-            ]
+            "type": "payment_templates"
         },
         {
-            "key": "socialData",
-            "icon": "far fa-icons",
+            "key": "socialMedia",
             "name": "Social Media",
-            "blueprint": [
-                {
-                    "key": "socialMedia",
-                    "name": "Social Media",
-                    "type": "socialMedia"
-                }
-            ]
+            "type": "socialMedia"
         }
     ],
     "data": {
@@ -316,81 +293,19 @@
             },
             "container": {
                 "properties": {
-                    "text": {
-                        "color": "#FFFFFF",
-                        "fontFamily": null
-                    },
-                    "border": {
-                        "top": {
-                            "value": 0
-                        },
-                        "left": {
-                            "value": 0
-                        },
-                        "unit": "px",
-                        "color": "#000000",
-                        "right": {
-                            "value": 0
-                        },
-                        "bottom": {
-                            "value": 0
-                        },
-                        "rounded": {
-                            "unit": "px",
-                            "topleft": {
-                                "value": 0
-                            },
-                            "topright": {
-                                "value": 0
-                            },
-                            "bottomleft": {
-                                "value": 0
-                            },
-                            "bottomright": {
-                                "value": 0
-                            }
-                        }
-                    },
-                    "margin": {
-                        "top": {
-                            "value": 0
-                        },
-                        "left": {
-                            "value": 0
-                        },
-                        "unit": "px",
-                        "right": {
-                            "value": 0
-                        },
-                        "bottom": {
-                            "value": 0
-                        }
-                    },
-                    "padding": {
-                        "top": {
-                            "value": 20
-                        },
-                        "left": {
-                            "value": 28
-                        },
-                        "unit": "px",
-                        "right": {
-                            "value": 28
-                        },
-                        "bottom": {
-                            "value": 38
-                        }
-                    },
-                    "background": {
+                      "text": {
+                        "fontFamily": "Inter, sans-serif"
+                      },
+                      "background": {
                         "type": "color",
                         "color": "rgba(0, 0, 0, 1)",
                         "image": {
-                            "original": null
+                          "original": null
                         }
+                      }
                     }
-                }
             },
-            "copyright": "Copyright © 2024 AW Artisan S.L,. All rights reserved.",
+            "copyright": "<p>Copyright © 2024 Ancient Wisdom Marketing. All rights reserved. Terms of Use <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/privacy_policy\">Privacy Policy</a></p>",
             "socialMedia": [
                 {
                     "icon": "fab fa-facebook-f",
@@ -449,15 +364,15 @@
                 ]
             },
             "whatsapp": {
-                "number": "+34 602 580 257",
+                "number": null,
                 "caption": "Whatsapp",
                 "message": "Hello i want to order"
             },
             "phone": {
-                "number": ["+34 952 254 337"],
+                "numbers": ["+44 (0)1142 729 165"],
                 "caption": "Monday-Friday 8am-4pm CET"
             },
-            "email": "trade@awartisan.eu",
+            "email": "care@ancientwisdom.biz",
             "logo": {
                 "source": "/art/logo/logo.png",
                 "alt": "AW Artisan"

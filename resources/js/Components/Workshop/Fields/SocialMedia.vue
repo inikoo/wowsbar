@@ -23,7 +23,6 @@ const emits = defineEmits<{
 
 const op = ref();
 const openIndex = ref<number | null>(null); // Track the currently open disclosure
-
 const icons = [
     { 
         type: "Facebook",
@@ -56,7 +55,7 @@ const add = () => {
     data.push(
         { 
             type: "Facebook",
-            icon : ['fab', 'facebook-f'],
+            icon : "fab fa-facebook-f",
             link : ""
         }
     );

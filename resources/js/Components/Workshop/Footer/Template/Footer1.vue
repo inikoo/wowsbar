@@ -11,10 +11,11 @@ import { getStyles } from '@/Composables/getStyles';
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faShieldAlt, faPlus, faTrash, faAngleUp, faAngleDown, faTriangle } from "@fas"
-import { faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faBars } from '@fal'
+import Logo from '@/Components/Forms/Fields/Logo.vue';
 
-library.add(faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faBars, faPlus, faTrash)
+library.add(faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faBars, faPlus, faTrash, faWhatsapp)
 
 const props = defineProps<{
     modelValue: object,
@@ -136,26 +137,29 @@ console.log('ppp', props)
 </script>
 
 <template>
-    <div id="app" class="-mx-2 md:mx-0 pb-24 pt-4 md:pt-8 md:px-16"
+    <div id="app" class="-mx-2 md:mx-0 pb-24 pt-4 md:pt-8 md:px-16 text-white"
         :style="getStyles(modelValue?.container?.properties)">
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
-            <div class="flex-1 flex justify-center md:justify-start ">
-                <img :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+            <div class="flex-1 flex items-center justify-center md:justify-start ">
+                <img v-if="modelValue.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16">
             </div>
 
-            <div class="hidden flex-1 md:flex justify-center ">
-
+            <div v-if="modelValue?.email " class="flex-1 flex justify-center md:justify-start items-center">
+                <a style="font-size: 17px">{{ modelValue?.email }}</a>
             </div>
 
-            <div class="flex-1 flex justify-center md:justify-start items-center">
-                <a style="font-size: 17px"> {{ modelValue.email }}</a>
+            <div v-if="modelValue?.whatsapp?.number" class="flex-1 flex gap-x-1.5 justify-center md:justify-start items-center">
+                <a class="flex gap-x-2 items-center">
+                    <FontAwesomeIcon class="text-[#00EE52]" icon="fab fa-whatsapp" style="font-size: 22px" />
+                    <span style="font-size: 17px">{{ modelValue?.whatsapp?.number }}</span>
+                </a>
             </div>
 
             <div class="flex-1 flex flex-col items-center md:items-end justify-center">
-                <a style="font-size: 17px">
-                    {{ modelValue.phone.number }}
+                <a v-for="phone of modelValue.phone.numbers" style="font-size: 17px">
+                    {{ phone }}
                 </a>
 
                 <span class="" style="font-size: 15px">{{ modelValue.phone.caption }}</span>
@@ -219,7 +223,7 @@ console.log('ppp', props)
 
                                 <!--  mobile  -->
                                 <div class="block md:hidden">
-                                    <Disclosure v-slot="{ open }">
+                                    <Disclosure v-slot="{ open }" class="m-2">
                                         <div :class="open ? 'bg-[rgba(240,240,240,0.15)] rounded' : ''">
                                             <DisclosureButton
                                                 class="p-2 md:p-0 transition-all flex justify-between cursor-default  w-full">
@@ -311,7 +315,7 @@ console.log('ppp', props)
 
                                 <!--  mobile  -->
                                 <div class="block md:hidden">
-                                    <Disclosure v-slot="{ open }">
+                                    <Disclosure v-slot="{ open }"  class="m-2">
                                         <div :class="open ? 'bg-[rgba(240,240,240,0.15)] rounded' : ''">
                                             <DisclosureButton
                                                 class="p-2 md:p-0 transition-all flex justify-between cursor-default  w-full">
@@ -354,8 +358,8 @@ console.log('ppp', props)
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
-                                 <!--  desktop -->
-                                 <div
+                                <!--  desktop -->
+                                <div
                                     class="hidden md:block grid grid-cols-1 md:cursor-default space-y-1 border-b pb-2 md:border-none">
                                     <div class="flex text-xl font-semibold w-fit leading-6">
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
@@ -402,7 +406,7 @@ console.log('ppp', props)
 
                                 <!--  mobile  -->
                                 <div class="block md:hidden">
-                                    <Disclosure v-slot="{ open }">
+                                    <Disclosure v-slot="{ open }"  class="m-2">
                                         <div :class="open ? 'bg-[rgba(240,240,240,0.15)] rounded' : ''">
                                             <DisclosureButton
                                                 class="p-2 md:p-0 transition-all flex justify-between cursor-default  w-full">
@@ -473,33 +477,21 @@ console.log('ppp', props)
             </div>
         </div>
 
-     <!--    <div class="mb-6 md:mb-5 text-center md:text-left pt-4 pb-6 space-y-4 md:py-0">
-            <h2 class="text-xl text-center tracking-wider font-semibold md:mt-8 md:mb-4">Get Social with Us!</h2>
-            <div class="flex md:gap-x-6 md:mb-4 justify-center">
-                <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
-                    :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
-            </div>
-            <div  class="text-[10px] md:text-base mt-8 pb-2 pt-2 md:pb-0 md:pt-4 text-center">
-                <div>
-                    <Editor v-model="modelValue.copyright" :editable="editable"
-                        @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
-                </div>
-            </div>
-        </div> -->
 
-        <div class="mt-8 border-0 border-t border-solid border-gray-700 flex flex-col md:flex-row-reverse justify-between pt-6 items-center gap-y-8">
-                <div class="grid gap-y-2 text-center md:text-left">
-                    <div class="flex gap-x-6 justify-center">
-                        <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
+        <div
+            class="mt-8 border-0 border-t border-solid border-gray-700 flex flex-col md:flex-row-reverse justify-between pt-6 items-center gap-y-8">
+            <div class="grid gap-y-2 text-center md:text-left">
+                <div class="flex gap-x-6 justify-center">
+                    <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
                         :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
-                    </div>
-                </div>
-
-                <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
-                    <Editor v-model="modelValue.copyright" :editable="editable"
-                    @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
                 </div>
             </div>
+
+            <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
+                <Editor v-model="modelValue.copyright" :editable="editable"
+                    @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
+            </div>
+        </div>
 
 
     </div>
