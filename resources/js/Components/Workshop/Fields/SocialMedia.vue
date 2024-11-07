@@ -9,9 +9,9 @@ import PureInput from '@/Components/Pure/PureInput.vue'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faShieldAlt, faTimes } from "@fas"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
-library.add(faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faTimes)
+library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faTimes)
 
 const props = defineProps<{
     modelValue: any,
@@ -26,7 +26,7 @@ const openIndex = ref<number | null>(null); // Track the currently open disclosu
 const icons = [
     { 
         type: "Facebook",
-        value: "fab fa-facebook-f",
+        value: "fab fa-facebook",
     },
     { 
         type: "Instagram",

@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* To prevent address italic in Footer workshop */
+address {
+    font-style: normal !important;
+}
 
 .specialUnderlineCustomer {
     @apply bg-gradient-to-t from-lime-300 to-lime-200

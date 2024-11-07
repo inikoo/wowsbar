@@ -218,8 +218,14 @@ onUnmounted(() => {
                         <ProgressSpinner />
                     </div>
 
-                    <iframe :src="iframeSrc" :title="props.title" :class="[iframeClass]" @error="handleIframeError"
-                        @load="isIframeLoading = false" ref="_iframe" />
+                    <iframe
+                        :src="iframeSrc"
+                        :title="props.title"
+                        :class="[iframeClass]"
+                        @error="handleIframeError"
+                        @load="isIframeLoading = false"
+                        ref="_iframe"
+                    />
                 </div>
                 <div v-else>
                     <EmptyState
@@ -254,8 +260,8 @@ onUnmounted(() => {
 </template>
 
 
-<style scss>
-.loading-overlay {
+<style scoped lang="scss">
+:deep(.loading-overlay) {
     position: fixed;
     top: 0;
     left: 0;
@@ -268,7 +274,7 @@ onUnmounted(() => {
     z-index: 1000;
 }
 
-.spinner {
+:deep(.spinner) {
     border: 4px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top: 4px solid #3498db;
