@@ -69,6 +69,11 @@ class PublishPortfolioWebsiteMarginal
                 "compiled_layout->$marginal"      => $snapshot->layout,
                 "published_{$marginal}_checksum"  => md5(json_encode($snapshot->layout)),
             ];
+
+            if ($marginal === 'footer' && $portfolioWebsite->footer_status && Arr::exists($portfolioWebsite->customer->integration_data, 'account')) {
+                DeployPortfolioWebsiteFooterToAurora::run($portfolioWebsite, $snapshot->layout);
+            }
+
         } else {
             $updateData = [
                 "compiled_layout->$marginal"     => $snapshot->layout

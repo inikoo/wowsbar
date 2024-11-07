@@ -41,4 +41,8 @@ return [
         'property_id'       => env('ANALYTICS_PROPERTY_ID')
     ],
 
+    'aurora' => [
+        'api_key' => env('AURORA_API_KEY')
+    ]
+
 ];
