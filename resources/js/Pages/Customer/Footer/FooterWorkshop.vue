@@ -16,7 +16,6 @@ import Image from '@/Components/Image.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
-
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 
@@ -39,8 +38,6 @@ const props = defineProps<{
         data: Array<any>
     }
 }>()
-console.log('sss',props.web_blocks)
-const tabsBar = ref(0)
 const isLoading = ref(false)
 const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)
@@ -91,6 +88,7 @@ const autoSave = async (data: Object) => {
         {
             onFinish: () => {
                 saveCancelToken.value = null
+                isIframeLoading.value = false
             },
             onCancelToken: (cancelToken) => {
                 saveCancelToken.value = cancelToken.cancel
@@ -111,30 +109,12 @@ const autoSave = async (data: Object) => {
     )
 }
 
-watch(previewMode, (newVal) => {
-    /* if (socketLayout) socketLayout.actions.send({
-        previewMode: newVal,
-    }) */
-    sendToIframe({ key: 'previewMode', value: newVal })
-}, { deep: true })
 
-watch(usedTemplates, (newVal) => {
-    if (saveCancelToken.value) {
-        saveCancelToken.value()
-    }
-    if (newVal) debouncedSendUpdate(newVal)
-
-}, { deep: true })
 
 const _iframe = ref<IframeHTMLAttributes | null>(null)
 const sendToIframe = (data: any) => {
     _iframe.value?.contentWindow.postMessage(data, '*')
 }
-
-/* onMounted(()=>{
-    if (socketLayout) socketLayout.actions.send({ previewMode: previewMode.value })
-}) */
-
 
 const handleIframeError = () => {
     isIframeLoading.value = false
@@ -147,9 +127,22 @@ const handleIframeError = () => {
 
 const pickTemplate = (template) =>{
     console.log(template)
+    isIframeLoading.value = true
     usedTemplates.value = template
     visible.value = false
 }
+
+watch(previewMode, (newVal) => {
+    sendToIframe({ key: 'previewMode', value: newVal })
+}, { deep: true })
+
+watch(usedTemplates, (newVal) => {
+    if (saveCancelToken.value) {
+        saveCancelToken.value()
+    }
+    if (newVal) debouncedSendUpdate(newVal)
+
+}, { deep: true })
 
 </script>
 
