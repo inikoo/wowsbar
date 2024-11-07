@@ -74,7 +74,6 @@ onMounted(() => {
                 router.reload({
                     only: ['footer'],
                     onSuccess: () => {
-                        console.log(toRaw(props.footer.data))
                         Object.assign(usedTemplates, toRaw(props.footer.data));
                     }
                 });

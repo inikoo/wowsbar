@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faShieldAlt, faPlus, faTrash, faAngleUp, faAngleDown, faTriangle } from "@fas"
 import { faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faBars } from '@fal'
+import { cloneDeep } from 'lodash';
 
 library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faBars, faPlus, faTrash, faWhatsapp)
 
@@ -63,7 +64,7 @@ const onDrag = () => {
 
 const onDrop = () => {
     editable.value = true;
-    emits('update:modelValue',{...props.modelValue})
+/*     emits('update:modelValue', cloneDeep({...props.modelValue})); */
 }
 
 
@@ -176,6 +177,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                         handle=".handle" 
                         @start="onDrag" 
                         @end="onDrop"
+                        @update:model-value="(e)=>{modelValue.columns['column_1']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
@@ -199,7 +201,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </ContextMenu>
                                     </div>
                                     <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
-                                        handle=".handle-sub" @start="onDrag" @end="onDrop">
+                                        handle=".handle-sub" @start="onDrag" @end="onDrop" @update:model-value="(e)=>{item.data = e, emits('update:modelValue', modelValue) }">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">
@@ -266,8 +268,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 </div>
                 <!--  column 2 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable v-model="modelValue.columns['column_2']['data']" group="row" itemKey="id" :animation="200"
-                        handle=".handle" @start="onDrag" @end="onDrop"
+                    <draggable v-model="modelValue.columns['column_2']['data']" group="row" itemKey="id"  :animation="200"
+                        handle=".handle" @start="onDrag" @end="onDrop"  @update:model-value="(e)=>{modelValue.columns['column_2']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
@@ -291,7 +293,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </ContextMenu>
                                     </div>
                                     <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
-                                        handle=".handle-sub" @start="onDrag" @end="onDrop">
+                                        handle=".handle-sub" @start="onDrag" @end="onDrop" @update:model-value="(e)=>{item.data = e, emits('update:modelValue', modelValue) }">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">
@@ -358,7 +360,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <!--  column 3 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
                     <draggable v-model="modelValue.columns['column_3']['data']" group="row" itemKey="id" :animation="200"
-                        handle=".handle" @start="onDrag" @end="onDrop"
+                        handle=".handle" @start="onDrag" @end="onDrop"  @update:model-value="(e)=>{modelValue.columns['column_3']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
@@ -382,7 +384,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </ContextMenu>
                                     </div>
                                     <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
-                                        handle=".handle-sub" @start="onDrag" @end="onDrop">
+                                        handle=".handle-sub" @start="onDrag" @end="onDrop" @update:model-value="(e)=>{item.data = e, emits('update:modelValue', modelValue)}">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">

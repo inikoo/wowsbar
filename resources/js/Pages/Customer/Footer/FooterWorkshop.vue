@@ -35,6 +35,7 @@ const props = defineProps<{
     autosaveRoute: routeType
     publishRoute: routeType
     previewRoute: routeType
+    footer_status : Boolean
     web_blocks: {
         data: Array<any>
     }
@@ -171,7 +172,7 @@ onUnmounted(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other>
-            <Publish :isLoading="isLoading" :is_dirty="true" v-model="comment"
+            <Publish v-if="footer_status" :isLoading="isLoading" :is_dirty="true" v-model="comment"
                 @onPublish="(popover) => onPublish(popover)" />
         </template>
     </PageHeading>
