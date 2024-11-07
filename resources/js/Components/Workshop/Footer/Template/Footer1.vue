@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faShieldAlt, faPlus, faTrash, faAngleUp, faAngleDown, faTriangle } from "@fas"
 import { faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faBars } from '@fal'
-import Logo from '@/Components/Forms/Fields/Logo.vue';
 
 library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faBars, faPlus, faTrash, faWhatsapp)
 
@@ -64,7 +63,7 @@ const onDrag = () => {
 
 const onDrop = () => {
     editable.value = true;
-    emits('update:modelValue', props.modelValue)
+    emits('update:modelValue',{...props.modelValue})
 }
 
 
@@ -100,7 +99,7 @@ const deleteSubMenu = () => {
 const onRightClickMenu = (event, data, column, index) => {
     selectedData.value = data;
     selectedIndex.value = index,
-        selectedColumn.value = column
+    selectedColumn.value = column
     menu.value.show(event);
 };
 
@@ -132,7 +131,6 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
     editable.value = !newStatus
 });
 
-console.log('ppp', props)
 
 </script>
 
@@ -170,8 +168,14 @@ console.log('ppp', props)
             <div class=" grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-8">
                 <!--  column 1 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.columns['column_1']['data']" group="row" itemKey="id" :animation="200"
-                        handle=".handle" @start="onDrag" @end="onDrop"
+                    <draggable 
+                        v-model="modelValue.columns['column_1']['data']" 
+                        group="row" 
+                        itemKey="id" 
+                        :animation="200"
+                        handle=".handle" 
+                        @start="onDrag" 
+                        @end="onDrop"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
@@ -194,7 +198,7 @@ console.log('ppp', props)
                                             </template>
                                         </ContextMenu>
                                     </div>
-                                    <draggable :list="item.data" group="sub-row" itemKey="id" :animation="200"
+                                    <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
                                         handle=".handle-sub" @start="onDrag" @end="onDrop">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
@@ -262,7 +266,7 @@ console.log('ppp', props)
                 </div>
                 <!--  column 2 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.columns['column_2']['data']" group="row" itemKey="id" :animation="200"
+                    <draggable v-model="modelValue.columns['column_2']['data']" group="row" itemKey="id" :animation="200"
                         handle=".handle" @start="onDrag" @end="onDrop"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
@@ -286,7 +290,7 @@ console.log('ppp', props)
                                             </template>
                                         </ContextMenu>
                                     </div>
-                                    <draggable :list="item.data" group="sub-row" itemKey="id" :animation="200"
+                                    <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
                                         handle=".handle-sub" @start="onDrag" @end="onDrop">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
@@ -353,7 +357,7 @@ console.log('ppp', props)
                 </div>
                 <!--  column 3 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable :list="modelValue.columns['column_3']['data']" group="row" itemKey="id" :animation="200"
+                    <draggable v-model="modelValue.columns['column_3']['data']" group="row" itemKey="id" :animation="200"
                         handle=".handle" @start="onDrag" @end="onDrop"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
@@ -377,7 +381,7 @@ console.log('ppp', props)
                                             </template>
                                         </ContextMenu>
                                     </div>
-                                    <draggable :list="item.data" group="sub-row" itemKey="id" :animation="200"
+                                    <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
                                         handle=".handle-sub" @start="onDrag" @end="onDrop">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">

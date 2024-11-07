@@ -141,7 +141,7 @@ const handleIframeMessage = (event: MessageEvent) => {
             saveCancelToken.value()
         }
         usedTemplates.value = data.value
-        autoSave(data.value)
+       /*  autoSave(data.value) */
     }
 };
 
@@ -168,7 +168,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other>

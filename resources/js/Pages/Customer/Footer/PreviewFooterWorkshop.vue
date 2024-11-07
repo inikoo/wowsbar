@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, onUnmounted, reactive } from "vue";
+import { onMounted, ref, onUnmounted, reactive, toRaw } from "vue";
 import { routeType } from "@/types/route"
 import PreviewWorkshop from "@/Layouts/BlankLayout.vue";
 import { SocketFooter } from "@/Composables/SocketWebBlock"
@@ -26,7 +26,8 @@ const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: 
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
 const autoSave = async (data: Object) => {
-    sendMessageToParent('autosave', usedTemplates)
+    console.log(data)
+    sendMessageToParent('autosave', data)
     /* router.patch(
         route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
@@ -55,7 +56,8 @@ const autoSave = async (data: Object) => {
 }
 
 const updateData = (newVal) => {
-    debouncedSendUpdate({ ...usedTemplates, data: { fieldValue: newVal } });
+    autoSave({ ...usedTemplates, data: { fieldValue: newVal } })
+   /*  debouncedSendUpdate({ ...usedTemplates, data: { fieldValue: newVal } }); */
 }
 
 onMounted(() => {
@@ -68,10 +70,12 @@ onMounted(() => {
                 previewMode.value = event.data.value
             }
             if (event.data.key === 'reload') {
+                console.log('reload')
                 router.reload({
                     only: ['footer'],
                     onSuccess: () => {
-                        Object.assign(usedTemplates, props.footer.data);
+                        console.log(toRaw(props.footer.data))
+                        Object.assign(usedTemplates, toRaw(props.footer.data));
                     }
                 });
             }
