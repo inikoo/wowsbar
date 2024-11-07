@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
 class DeactivateFooterPortfolioWebsite
@@ -17,6 +18,10 @@ class DeactivateFooterPortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
+        if ($portfolioWebsite->footer_status && Arr::exists($portfolioWebsite->customer->integration_data, 'account')) {
+            DeployPortfolioWebsiteFooterToAurora::run($portfolioWebsite);
+        }
+
         return $this->update($portfolioWebsite, [
             'footer_status' => false
         ]);
