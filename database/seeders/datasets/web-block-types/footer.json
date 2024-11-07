@@ -1,93 +1,70 @@
 {
     "code": "FooterTheme1",
     "scope": "website",
-    "name": "Footer 1",
+    "name": "Ancient Wisdom",
     "component": "footer",
     "blueprint": [
         {
-            "key": "body",
-            "icon": "far fa-line-columns",
+            "key": ["container", "properties"],
             "name": "Body",
-            "type": "body",
-            "blueprint": [
+            "type": "body"
+        },
+        {
+            "key": ["phone"],
+            "name": "Phone",
+            "replaceForm": [
                 {
-                    "key": ["container", "properties"],
-                    "name": "Body",
-                    "type": "body"
-                },
-                {
-                    "key": ["phone"],
+                    "key": ["phone", "numbers"],
                     "name": "Phone",
-                    "replaceForm": [
-                        {
-                            "key": ["phone", "number"],
-                            "name": "Phone",
-                            "type": ["arrayPhone"]
-                        },
-                        {
-                            "key": ["phone", "caption"],
-                            "name": "caption",
-                            "type": ["text"]
-                        }
-                    ]
+                    "type": ["arrayPhone"]
                 },
                 {
-                    "key": ["whatsapp"],
-                    "name": "Whatsapp",
-                    "replaceForm": [
-                        {
-                            "key": ["whatsapp", "number"],
-                            "name": "Phone",
-                            "type": ["text"]
-                        },
-                        {
-                            "key": ["whatsapp", "caption"],
-                            "name": "caption",
-                            "type": ["text"]
-                        },
-                        {
-                            "key": ["whatsapp", "message"],
-                            "name": "message",
-                            "type": ["text"]
-                        }
-                    ]
-                },
-                {
-                    "key": ["email"],
-                    "name": "Email",
-                    "type": "text"
-                },
-                {
-                    "key": ["logo"],
-                    "name": "Logo",
-                    "type": "upload_image"
+                    "key": ["phone", "caption"],
+                    "name": "caption",
+                    "type": ["text"]
                 }
             ]
         },
         {
-            "key": "PaymentData",
-            "icon": "far fa-money-bill",
+            "key": ["whatsapp"],
+            "name": "Whatsapp",
+            "replaceForm": [
+                {
+                    "key": ["whatsapp", "number"],
+                    "name": "Phone",
+                    "type": ["text"]
+                },
+                {
+                    "key": ["whatsapp", "caption"],
+                    "name": "caption",
+                    "type": ["text"]
+                },
+                {
+                    "key": ["whatsapp", "message"],
+                    "name": "message",
+                    "type": ["text"]
+                }
+            ]
+        },
+        {
+            "key": ["email"],
+            "name": "Email",
+            "type": "text"
+        },
+        {
+            "key": ["logo"],
+            "name": "Logo",
+            "type": "upload_image"
+        },
+        {
+            "key": "paymentData",
             "name": "Payments",
-            "type": "payment_templates",
-            "blueprint": [
-                {
-                    "key": "paymentData",
-                    "name": "Payments",
-                    "type": "payment_templates"
-                }
-            ]
+            "type": "payment_templates"
         },
         {
-            "key": "socialData",
-            "icon": "far fa-icons",
+            "key": "socialMedia",
             "name": "Social Media",
-            "blueprint": [
-                {
-                    "key": "socialMedia",
-                    "name": "Social Media",
-                    "type": "socialMedia"
-                }
-            ]
+            "type": "socialMedia"
         }
     ],
     "data": {
@@ -102,60 +79,60 @@
                             "data": [
                                 {
                                     "id": 2,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/contact.sys\">Contact Us</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/contact.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Contact Us</span></span></a></p>"
                                 },
                                 {
                                     "id": 3,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/faq\">FAQ</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/faq\"><span style=\"color: #ffffff\">FAQ</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Help</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Help</strong></span></p>"
                         },
                         {
                             "id": 5,
                             "data": [
                                 {
                                     "id": 6,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/about.sys\">AW Beginning</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/about.sys\"><span style=\"color: #ffffff\">AW Beginning</span></a></p>"
                                 },
                                 {
                                     "id": 7,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/ethics\">Business Ethics</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/ethics\"><span style=\"color: #ffffff\">Business Ethics</span></a></p>"
                                 },
                                 {
                                     "id": 8,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/about.sys\">Our Brands</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/about.sys\"><span style=\"color: #ffffff\">Our Brands</span></a></p>"
                                 },
                                 {
                                     "id": "277a0d8d-30e1-4b34-84b3-64c35bf936a2",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/shipping.sys\">Delivery</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/shipping.sys\"><span style=\"color: #ffffff\">Delivery</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>About AW</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>About AW</strong></span></p>"
                         },
                         {
                             "id": 10,
                             "data": [
                                 {
                                     "id": 11,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/showroom\">Book Showroom Appointment</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/showroom\"><span style=\"color: #ffffff\">Book Showroom Appointment</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Showroom</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Showroom</strong></span></p>"
                         },
                         {
                             "id": 15,
                             "data": [
                                 {
                                     "id": "97067fc9-0064-4d02-8700-0c130a827687",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.reviews.co.uk/company-reviews/store/ancient-wisdom-marketing-ltd\">Customer Reviews</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.reviews.co.uk/company-reviews/store/ancient-wisdom-marketing-ltd\"><span style=\"color: #ffffff\">Customer Reviews</span></a></p>"
                                 },
                                 {
                                     "id": "92d16f93-378c-4d0d-b943-768e8f8fda12",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/reviews\">Reviews</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/reviews\"><span style=\"color: #ffffff\">Reviews</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Reviews</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Reviews</strong></span></p>"
                         }
                     ],
                     "name": "Column 1"
@@ -169,54 +146,54 @@
                             "data": [
                                 {
                                     "id": 18,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/no_minimum_order\">No Minimum Order</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/no_minimum_order\"><span style=\"color: #ffffff\">No Minimum Order</span></a></p>"
                                 },
                                 {
                                     "id": 19,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/first_order_bonus\">First Order Bonus</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/first_order_bonus\"><span style=\"color: #ffffff\">First Order Bonus</span></a></p>"
                                 },
                                 {
                                     "id": 20,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/pastpay\">Buy Now, Pay Later</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/pastpay\"><span style=\"color: #ffffff\">Buy Now, Pay Later</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Why Choose AW?</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Why Choose AW?</strong></span></p>"
                         },
                         {
                             "id": 24,
                             "data": [
                                 {
                                     "id": 25,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/catalogue.sys\">Catalogue - Live Stock Feeds</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/catalogue.sys\"><span style=\"color: #ffffff\">Catalogue - Live Stock Feeds</span></a></p>"
                                 },
                                 {
                                     "id": 26,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/21anniversary\">AW History &amp; The Phoenix Effect</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/21anniversary\"><span style=\"color: #ffffff\">AW History &amp; The Phoenix Effect</span></a></p>"
                                 },
                                 {
                                     "id": 27,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw.gifts/\">Distribution Centre in Europe</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw.gifts/\"><span style=\"color: #ffffff\">Distribution Centre in Europe</span></a></p>"
                                 },
                                 {
                                     "id": 28,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://blog.ancientwisdom.biz/\">David's Travel Blog</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://blog.ancientwisdom.biz/\"><span style=\"color: #ffffff\">David's Travel Blog</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Discover</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Discover</strong></span></p>"
                         },
                         {
                             "id": 29,
                             "data": [
                                 {
                                     "id": 30,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/tac.sys\">Terms &amp; Conditions</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/tac.sys\"><span style=\"color: #ffffff\">Terms &amp; Conditions</span></a></p>"
                                 },
                                 {
                                     "id": 32,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/cookies\">Cookies Policy</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/cookies\"><span style=\"color: #ffffff\">Cookies Policy</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Legal</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Legal</strong></span></p>"
                         }
                     ],
                     "name": "Column 2"
@@ -230,76 +207,76 @@
                             "data": [
                                 {
                                     "id": 34,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-dropship.com/\">Dropshipping</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-dropship.com/\"><span style=\"color: #ffffff\">Dropshipping</span></a></p>"
                                 },
                                 {
                                     "id": 35,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-fulfilment.co.uk/\">Fullfilment</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-fulfilment.co.uk/\"><span style=\"color: #ffffff\">Fullfilment</span></a></p>"
                                 },
                                 {
                                     "id": 36,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-advantage.com\">Digital Marketing</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-advantage.com\"><span style=\"color: #ffffff\">Digital Marketing</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>Our Services</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>Our Services</strong></span></p>"
                         },
                         {
                             "id": 37,
                             "data": [
                                 {
                                     "id": 38,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.agnesandcat.org/\">Agnes + Cat</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.agnesandcat.org/\"><span style=\"color: #ffffff\">Agnes + Cat</span></a></p>"
                                 },
                                 {
                                     "id": 40,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.pt/\">AW - Aromatics</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.pt/\"><span style=\"color: #ffffff\">AW - Aromatics</span></a></p>"
                                 },
                                 {
                                     "id": 41,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.pt/\">AW - Portugal</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.pt/\"><span style=\"color: #ffffff\">AW - Portugal</span></a></p>"
                                 },
                                 {
                                     "id": 42,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.de/\">AW - Germany</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.de/\"><span style=\"color: #ffffff\">AW - Germany</span></a></p>"
                                 },
                                 {
                                     "id": 43,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.sk/\">AW - Slovakia</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.sk/\"><span style=\"color: #ffffff\">AW - Slovakia</span></a></p>"
                                 },
                                 {
                                     "id": 44,
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.es/\">AW - España</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.es/\"><span style=\"color: #ffffff\">AW - España</span></a></p>"
                                 },
                                 {
                                     "id": "649115d9-025b-407a-800c-c2ca4ad90f26",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.fr/\">AW - France</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.fr/\"><span style=\"color: #ffffff\">AW - France</span></a></p>"
                                 },
                                 {
                                     "id": "3d83d686-108d-49d1-a93f-fd1540aa5e69",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.pl/\">AW - Poland</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.pl/\"><span style=\"color: #ffffff\">AW - Poland</span></a></p>"
                                 },
                                 {
                                     "id": "c295bdf9-ed7c-438d-b269-0ca673f4cf4e",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.at/\">AW - Austria</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.at/\"><span style=\"color: #ffffff\">AW - Austria</span></a></p>"
                                 },
                                 {
                                     "id": "53075962-36ba-4c78-b86c-d04cf86305f6",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.eu/\">AW - Europe</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.eu/\"><span style=\"color: #ffffff\">AW - Europe</span></a></p>"
                                 },
                                 {
                                     "id": "7b3d3dfc-f9b3-4dd5-8c2c-bf97e446d021",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.ro/\">AW - Romania</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.ro/\"><span style=\"color: #ffffff\">AW - Romania</span></a></p>"
                                 },
                                 {
                                     "id": "d1fa9a87-fd68-4696-a7a0-58706ec3ac5f",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.cz/\">AW - Czechia</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.cz/\"><span style=\"color: #ffffff\">AW - Czechia</span></a></p>"
                                 },
                                 {
                                     "id": "b3617234-25ed-496b-8166-6bc3edb7d5a0",
-                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.it/\">AW - Italy</a></p>"
+                                    "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awgifts.it/\"><span style=\"color: #ffffff\">AW - Italy</span></a></p>"
                                 }
                             ],
-                            "name": "<p style='font-size: 18px'><strong>AW Partners</strong></p>"
+                            "name": "<p><span style='color: #ffffff; font-size: 16px'><strong>AW Partners</strong></span></p>"
                         }
                     ],
                     "name": "Column 3"
@@ -316,81 +293,19 @@
             },
             "container": {
                 "properties": {
-                    "text": {
-                        "color": "#FFFFFF",
-                        "fontFamily": null
-                    },
-                    "border": {
-                        "top": {
-                            "value": 0
-                        },
-                        "left": {
-                            "value": 0
-                        },
-                        "unit": "px",
-                        "color": "#000000",
-                        "right": {
-                            "value": 0
-                        },
-                        "bottom": {
-                            "value": 0
-                        },
-                        "rounded": {
-                            "unit": "px",
-                            "topleft": {
-                                "value": 0
-                            },
-                            "topright": {
-                                "value": 0
-                            },
-                            "bottomleft": {
-                                "value": 0
-                            },
-                            "bottomright": {
-                                "value": 0
-                            }
-                        }
-                    },
-                    "margin": {
-                        "top": {
-                            "value": 0
-                        },
-                        "left": {
-                            "value": 0
-                        },
-                        "unit": "px",
-                        "right": {
-                            "value": 0
-                        },
-                        "bottom": {
-                            "value": 0
-                        }
-                    },
-                    "padding": {
-                        "top": {
-                            "value": 20
-                        },
-                        "left": {
-                            "value": 28
-                        },
-                        "unit": "px",
-                        "right": {
-                            "value": 28
-                        },
-                        "bottom": {
-                            "value": 38
-                        }
-                    },
-                    "background": {
+                      "text": {
+                        "fontFamily": "Inter, sans-serif"
+                      },
+                      "background": {
                         "type": "color",
                         "color": "rgba(0, 0, 0, 1)",
                         "image": {
-                            "original": null
+                          "original": null
                         }
+                      }
                     }
-                }
             },
-            "copyright": "Copyright © 2024 AW Artisan S.L,. All rights reserved.",
+            "copyright": "<p>Copyright © 2024 Ancient Wisdom Marketing. All rights reserved. Terms of Use <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.ancientwisdom.biz/privacy_policy\">Privacy Policy</a></p>",
             "socialMedia": [
                 {
                     "icon": "fab fa-facebook-f",
@@ -449,16 +364,15 @@
                 ]
             },
             "whatsapp": {
-                "number": "+34 602 580 257",
+                "number": null,
                 "caption": "Whatsapp",
                 "message": "Hello i want to order"
             },
             "phone": {
-                "number": ["+34 952 254 337"],
-
+                "numbers": ["+44 (0)1142 729 165"],
                 "caption": "Monday-Friday 8am-4pm CET"
             },
-            "email": "trade@awartisan.eu",
+            "email": "care@ancientwisdom.biz",
             "logo": {
                 "source": "/art/logo/logo.png",
                 "alt": "AW Artisan"

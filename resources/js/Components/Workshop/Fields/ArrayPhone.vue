@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue';
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import InputText from 'primevue/inputtext';
+import { isArray } from 'lodash';
 
 const props = defineProps<{
     modelValue: any[],
@@ -10,21 +11,29 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 
 // Deep clone modelValue to keep a local reference
-const items = ref([...props.modelValue]);
+// const items = ref(isArray(props.modelValue) ? [...props.modelValue] : []);
 
 // Watch for changes in the local items array and emit updates
-watch(items, (newVal) => {
-    emit('update:modelValue', newVal);
-}, { deep: true });
+// watch(items, (newVal) => {
+//     emit('update:modelValue', newVal);
+// }, { deep: true });
+
+// watch(
+//     () => props.modelValue,
+//     (newValue) => {
+//        console.log('inii')
+//     },
+//     { deep: true, immediate: true } // Immediate to apply initially, deep for nested changes
+// );
 
 // Function to add a new item
 const addItem = () => {
-    items.value.push(''); // Add an empty string as a new item
+    props.modelValue.push(''); // Add an empty string as a new item
 };
 
 // Function to remove an item by index
 const removeItem = (index: number) => {
-    items.value.splice(index, 1);
+    props.modelValue.splice(index, 1);
 };
 </script>
 
@@ -32,10 +41,10 @@ const removeItem = (index: number) => {
     <div class="p-6 max-w-md mx-auto bg-white">
         
         <!-- Input fields with delete button -->
-        <div v-for="(item, index) in items" :key="index" class="flex items-center mb-3 space-x-2">
+        <div v-for="(item, index) in modelValue" :key="index" class="flex items-center mb-3 space-x-2">
             <InputText 
                 type="text" 
-                v-model="items[index]" 
+                v-model="modelValue[index]" 
                 placeholder="Enter value" 
                 class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             />

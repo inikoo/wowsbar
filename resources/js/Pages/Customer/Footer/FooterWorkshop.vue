@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes } from 'vue'
+import { ref, watch, IframeHTMLAttributes, onMounted, onUnmounted } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
-import { footerTheme1 } from '@/Components/Workshop/Footer/descriptor'
 import SideEditor from '@/Components/Workshop/Fields/SideEditor.vue';
 import ScreenView from "@/Components/ScreenView.vue"
-import { SocketFooter } from "@/Composables/SocketWebBlock"
 import { debounce } from 'lodash'
 import axios from 'axios'
 import { notify } from "@kyvg/vue3-notification"
@@ -17,7 +15,7 @@ import ListBlock from '@/Components/ListBlock.vue'
 import Image from '@/Components/Image.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-
+import { trans } from 'laravel-vue-i18n'
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -26,7 +24,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { faThLarge } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import ListItem from '@tiptap/extension-list-item'
 library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
 
 const props = defineProps<{
@@ -42,7 +39,6 @@ const props = defineProps<{
         data: Array<any>
     }
 }>()
-const tabsBar = ref(0)
 const isLoading = ref(false)
 const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)
@@ -93,6 +89,8 @@ const autoSave = async (data: Object) => {
         {
             onFinish: () => {
                 saveCancelToken.value = null
+                isIframeLoading.value = false
+                sendToIframe({ key: 'reload', value: {} })
             },
             onCancelToken: (cancelToken) => {
                 saveCancelToken.value = cancelToken.cancel
@@ -113,10 +111,41 @@ const autoSave = async (data: Object) => {
     )
 }
 
+
+
+const _iframe = ref<IframeHTMLAttributes | null>(null)
+const sendToIframe = (data: any) => {
+    _iframe.value?.contentWindow.postMessage(data, '*')
+}
+
+const handleIframeError = () => {
+    isIframeLoading.value = false
+    notify({
+        title: 'Something went wrong in the preview.',
+        text: 'failed to load preview',
+        type: 'error',
+    })
+}
+
+const pickTemplate = (template) => {
+    isIframeLoading.value = true
+    usedTemplates.value = template
+    visible.value = false
+}
+
+const handleIframeMessage = (event: MessageEvent) => {
+    if (event.origin !== window.location.origin) return;
+    const { data } = event;
+    if (data.key === 'autosave') {
+        if (saveCancelToken.value) {
+            saveCancelToken.value()
+        }
+        usedTemplates.value = data.value
+        autoSave(data.value)
+    }
+};
+
 watch(previewMode, (newVal) => {
-    /* if (socketLayout) socketLayout.actions.send({
-        previewMode: newVal,
-    }) */
     sendToIframe({ key: 'previewMode', value: newVal })
 }, { deep: true })
 
@@ -128,30 +157,13 @@ watch(usedTemplates, (newVal) => {
 
 }, { deep: true })
 
-const _iframe = ref<IframeHTMLAttributes | null>(null)
-const sendToIframe = (data: any) => {
-    _iframe.value?.contentWindow.postMessage(data, '*')
-}
+onMounted(() => {
+    window.addEventListener('message', handleIframeMessage);
+});
 
-/* onMounted(()=>{
-    if (socketLayout) socketLayout.actions.send({ previewMode: previewMode.value })
-}) */
-
-
-const handleIframeError = () => {
-    isIframeLoading.value = false
-    notify({
-        title: 'Something went wrong in the preview.',
-        text: 'failed to load preview',
-        type: 'error',
-    })
-}
-
-const pickTemplate = (template) =>{
-    console.log(template)
-    usedTemplates.value = template
-    visible.value = false
-}
+onUnmounted(() => {
+    window.removeEventListener('message', handleIframeMessage);
+});
 
 </script>
 
@@ -165,24 +177,12 @@ const pickTemplate = (template) =>{
         </template>
     </PageHeading>
 
-    <div class="h-[85vh] grid grid-flow-row-dense grid-cols-8">
-        <div v-if="usedTemplates?.data" class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300">
-            <div class="flex h-full">
-                <div class="w-fit bg-slate-200 ">
-                    <div v-for="(tab, index) in usedTemplates?.blueprint"
-                        class="py-2 px-3 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
-                        :title="tab.name" @click="tabsBar = index"
-                        :class="[tabsBar == tab.key ? 'bg-gray-300/70' : 'hover:bg-gray-200/60']" v-tooltip="tab.name">
-                        <FontAwesomeIcon :icon="tab.icon" :class="[tabsBar == index ? 'text-indigo-300' : '']"
-                            aria-hidden='true' />
-                    </div>
-                </div>
-                <div class="w-full">
-                    <SideEditor v-model="usedTemplates.data.fieldValue"
-                        :blueprint="usedTemplates.blueprint[tabsBar].blueprint" />
-                </div>
+    <div class="h-[82vh] grid grid-flow-row-dense grid-cols-8 overflow-hidden">
+        <div v-if="usedTemplates?.data"
+            class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
+            <div class="w-full">
+                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint" />
             </div>
-
         </div>
 
         <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-6' : 'col-span-8'">
@@ -237,8 +237,10 @@ const pickTemplate = (template) =>{
     </div>
 
 
-    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-        <ListBlock :onSelectBlock="pickTemplate" :webBlockTypes="web_blocks.data.filter((item)=>item.component == 'footer')" >
+    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }"
+        :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <ListBlock :onSelectBlock="pickTemplate"
+            :webBlockTypes="web_blocks.data.filter((item) => item.component == 'footer')">
             <template #image="{ block }">
                 <div @click="() => pickTemplate(block)"
                     class="min-h-16 w-full aspect-[2/1] overflow-hidden flex items-center bg-gray-100 justify-center border border-gray-300 hover:border-indigo-500 rounded cursor-pointer">

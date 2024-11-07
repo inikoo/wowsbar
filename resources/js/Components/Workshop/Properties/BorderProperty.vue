@@ -139,35 +139,33 @@ const iconRoundedCorner = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" 
             <!-- Border -->
             <div class="pl-2 pr-4 flex items-center relative mb-3">
                 <Transition name="slide-to-up">
-                    <div v-if="isBorderSameValue">
-                        <div class="grid grid-cols-5 items-center">
+                    <div v-if="isBorderSameValue" class="grid grid-cols-5 items-center w-full">
                             <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="trans('Padding all')" class='' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.top.value" @update:modelValue="(newVal) => isBorderSameValue ? changeBorderValueToSame(newVal) : false" class="" suffix="px" />
                             </div>
-                        </div>
                     </div>
 
-                    <div v-else class="space-y-2">
-                        <div class="grid grid-cols-5 items-center justify-center">
+                    <div v-else class="space-y-2 w-full">
+                        <div class="grid grid-cols-5 items-center w-full justify-center">
                             <FontAwesomeIcon icon='fad fa-border-top' v-tooltip="trans('Border top')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.top.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <FontAwesomeIcon icon='fad fa-border-bottom' v-tooltip="trans('Border bottom')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.bottom.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <FontAwesomeIcon icon='fad fa-border-left' v-tooltip="trans('Border left')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.left.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <FontAwesomeIcon icon='fad fa-border-right' v-tooltip="trans('Border right')" class='mx-auto' fixed-width aria-hidden='true' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.right.value" class="" suffix="px" />
@@ -197,33 +195,33 @@ const iconRoundedCorner = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" 
             <!-- Rounded -->
             <div class="pl-2 pr-4 flex items-center relative">
                 <Transition name="slide-to-up">
-                    <div v-if="isRoundedSameValue" class="grid grid-cols-5 items-center">
+                    <div v-if="isRoundedSameValue" class="grid grid-cols-5 items-center w-full">
                         <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="trans('Padding all')" class='' fixed-width aria-hidden='true' />
-                        <div class="col-span-4">
+                        <div class="col-span-4 w-full">
                             <PureInputNumber v-model="model.rounded.topright.value" @update:modelValue="(newVal) => isRoundedSameValue ? changeRoundedValueToSame(newVal) : false" class="" suffix="px" />
                         </div>
                     </div>
 
-                    <div v-else class="space-y-2">
-                        <div class="grid grid-cols-5 items-center justcen">
+                    <div v-else class="space-y-2 w-full">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <div v-html="iconRoundedCorner" v-tooltip="trans('Corner top right')" class='h-5 w-5 mx-auto' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.rounded.topright.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <div v-html="iconRoundedCorner" v-tooltip="trans('Corner top left')" class='h-5 w-5 mx-auto -rotate-90' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.rounded.topleft.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <div v-html="iconRoundedCorner" v-tooltip="trans('Corner bottom right')" class='h-5 w-5 mx-auto rotate-90' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.rounded.bottomright.value" class="" suffix="px" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-5 items-center">
+                        <div class="grid grid-cols-5 items-center w-full">
                             <div v-html="iconRoundedCorner" v-tooltip="trans('Corner bottom left')" class='h-5 w-5 mx-auto rotate-180' />
                             <div class="col-span-4">
                                 <PureInputNumber v-model="model.rounded.bottomleft.value" class="" suffix="px" />
