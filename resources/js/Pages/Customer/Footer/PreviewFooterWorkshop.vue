@@ -26,7 +26,7 @@ const debouncedSendUpdate = debounce((data) => autoSave(data), 5000, { leading: 
 const previewMode = ref(route().params['fullscreen'] ? true : false)
 
 const autoSave = async (data: Object) => {
-    sendMessageToParent('autosave',usedTemplates)
+    sendMessageToParent('autosave', usedTemplates)
     /* router.patch(
         route(props.autosaveRoute.name, props.autosaveRoute.parameters),
         { layout: data },
@@ -55,29 +55,38 @@ const autoSave = async (data: Object) => {
 }
 
 const updateData = (newVal) => {
-    debouncedSendUpdate({...usedTemplates , data : {fieldValue : newVal }  });
+    debouncedSendUpdate({ ...usedTemplates, data: { fieldValue: newVal } });
 }
 
 onMounted(() => {
-    if (socketLayout) socketLayout.actions.subscribe((value) => {
+    /* if (socketLayout) socketLayout.actions.subscribe((value) => {
         Object.assign(usedTemplates, value.footer.data);
-    });
-    window.addEventListener('message', (event) => {
-        if (event.data.key === 'previewMode') {
-            previewMode.value = event.data.value
-        }
-    });
-});
+    }); */
 
-onUnmounted(() => {
-    if (socketLayout) socketLayout.actions.unsubscribe();
-});
+        window.addEventListener('message', (event) => {
+            if (event.data.key === 'previewMode') {
+                previewMode.value = event.data.value
+            }
+            if (event.data.key === 'reload') {
+                router.reload({
+                    only: ['footer'],
+                    onSuccess: () => {
+                        Object.assign(usedTemplates, props.footer.data);
+                    }
+                });
+            }
+        });
+    });
 
-const sendMessageToParent = (key: string, value: any) => {
-    // Ensure the data is JSON-serializable
-    const serializableValue = JSON.parse(JSON.stringify(value));
-    window.parent.postMessage({ key, value: serializableValue }, '*');
-};
+    onUnmounted(() => {
+        if (socketLayout) socketLayout.actions.unsubscribe();
+    });
+
+    const sendMessageToParent = (key: string, value: any) => {
+        // Ensure the data is JSON-serializable
+        const serializableValue = JSON.parse(JSON.stringify(value));
+        window.parent.postMessage({ key, value: serializableValue }, '*');
+    };
 
 
 
@@ -85,16 +94,10 @@ const sendMessageToParent = (key: string, value: any) => {
 
 <template>
     <div class="p-4">
-        <component 
-            v-if="usedTemplates?.code"
-            :is="getComponent(usedTemplates.code)"
-            v-model="usedTemplates.data.fieldValue" 
-            :preview-mode="previewMode"
-            @update:model-value="updateData"
-        />
+        <component v-if="usedTemplates?.code" :is="getComponent(usedTemplates.code)"
+            v-model="usedTemplates.data.fieldValue" :preview-mode="previewMode" @update:model-value="updateData" />
     </div>
 </template>
 
 
-<style scoped>
-</style>
+<style scoped></style>

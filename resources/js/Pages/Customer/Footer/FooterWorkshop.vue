@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes,onMounted, onUnmounted  } from 'vue'
+import { ref, watch, IframeHTMLAttributes, onMounted, onUnmounted } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -15,6 +15,7 @@ import ListBlock from '@/Components/ListBlock.vue'
 import Image from '@/Components/Image.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { trans } from 'laravel-vue-i18n'
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -89,6 +90,7 @@ const autoSave = async (data: Object) => {
             onFinish: () => {
                 saveCancelToken.value = null
                 isIframeLoading.value = false
+                sendToIframe({ key: 'reload', value: {} })
             },
             onCancelToken: (cancelToken) => {
                 saveCancelToken.value = cancelToken.cancel
@@ -125,7 +127,7 @@ const handleIframeError = () => {
     })
 }
 
-const pickTemplate = (template) =>{
+const pickTemplate = (template) => {
     isIframeLoading.value = true
     usedTemplates.value = template
     visible.value = false
@@ -135,8 +137,11 @@ const handleIframeMessage = (event: MessageEvent) => {
     if (event.origin !== window.location.origin) return;
     const { data } = event;
     if (data.key === 'autosave') {
-       usedTemplates.value =  data.value
-       autoSave(data.value)
+        if (saveCancelToken.value) {
+            saveCancelToken.value()
+        }
+        usedTemplates.value = data.value
+        autoSave(data.value)
     }
 };
 
@@ -173,11 +178,11 @@ onUnmounted(() => {
     </PageHeading>
 
     <div class="h-[82vh] grid grid-flow-row-dense grid-cols-8 overflow-hidden">
-        <div v-if="usedTemplates?.data" class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
-                <div class="w-full">
-                    <SideEditor v-model="usedTemplates.data.fieldValue"
-                        :blueprint="usedTemplates.blueprint" />
-                </div>
+        <div v-if="usedTemplates?.data"
+            class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
+            <div class="w-full">
+                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint" />
+            </div>
         </div>
 
         <div class="bg-gray-100 h-full" :class="usedTemplates?.data ? 'col-span-6' : 'col-span-8'">
@@ -232,8 +237,10 @@ onUnmounted(() => {
     </div>
 
 
-    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-        <ListBlock :onSelectBlock="pickTemplate" :webBlockTypes="web_blocks.data.filter((item)=>item.component == 'footer')" >
+    <Dialog v-model:visible="visible" modal header="List Template" :style="{ width: '50rem' }"
+        :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <ListBlock :onSelectBlock="pickTemplate"
+            :webBlockTypes="web_blocks.data.filter((item) => item.component == 'footer')">
             <template #image="{ block }">
                 <div @click="() => pickTemplate(block)"
                     class="min-h-16 w-full aspect-[2/1] overflow-hidden flex items-center bg-gray-100 justify-center border border-gray-300 hover:border-indigo-500 rounded cursor-pointer">
