@@ -169,39 +169,39 @@ const deleteSocial = (event, index) => {
 
 <template>
     <div class="p-4">
-        <div v-for="(item, index) of modelValue.data" :key="index" class="p-1">
-            <div class="flex">
-                <Multiselect :modelValue="item" :options="FeOptions" :object="true" :canClear="false" :caret="false"
-                    @update:modelValue="value => updatePayment(index, value)">
-                    <template v-slot:singlelabel="{ value }">
-                        <div class="flex items-center rounded-lg w-full p-2 m-2 mr-0">
-                            <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
-                                :src="value.image" alt="avatar">
-                            <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
-                                {{ value.name }}
+        <template v-if="modelValue?.data">
+            <div v-for="(item, index) of modelValue.data" :key="index" class="p-1">
+                <div class="flex">
+                    <Multiselect :modelValue="item" :options="FeOptions" :object="true" :canClear="false" :caret="false"
+                        @update:modelValue="value => updatePayment(index, value)">
+                        <template v-slot:singlelabel="{ value }">
+                            <div class="flex items-center rounded-lg w-full p-2 m-2 mr-0">
+                                <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
+                                    :src="value.image" alt="avatar">
+                                <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
+                                    {{ value.name }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <FontAwesomeIcon :icon="['fas', 'trash']"
-                                class="text-red-500 hover:text-red-600 cursor-pointer p-3 transition-transform transform hover:scale-110"
-                                @click="(e) => deleteSocial(e, index)" />
-                        </div>
-                    </template>
-
-                    <template v-slot:option="{ option }">
-                        <div
-                            class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
-                            <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
-                                :src="option.image" alt="avatar">
-                            <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
-                                {{ option.name }}
+                            <div class="flex items-center justify-center">
+                                <FontAwesomeIcon :icon="['fas', 'trash']"
+                                    class="text-red-500 hover:text-red-600 cursor-pointer p-3 transition-transform transform hover:scale-110"
+                                    @click="(e) => deleteSocial(e, index)" />
                             </div>
-                        </div>
-                    </template>
-                </Multiselect>
+                        </template>
+                        <template v-slot:option="{ option }">
+                            <div
+                                class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
+                                <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
+                                    :src="option.image" alt="avatar">
+                                <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
+                                    {{ option.name }}
+                                </div>
+                            </div>
+                        </template>
+                    </Multiselect>
+                </div>
             </div>
-
-        </div>
+        </template>
         <Button type="dashed" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2"
             @click="addPayments" />
     </div>

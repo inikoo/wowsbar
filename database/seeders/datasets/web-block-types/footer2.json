@@ -79,11 +79,11 @@
                       "data": [
                         {
                           "id": 2,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/contact.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Contact Us</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"contact_us/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Contact Us</span></a></p></span>"
                         },
                         {
                           "id": 16,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/faq\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">FAQ</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"faq/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">FAQ</span></a></p></span>"
                         }
                       ],
                       "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Help</strong></p></span>"
@@ -93,32 +93,14 @@
                       "data": [
                         {
                           "id": 6,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/about.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW Beginning</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"about_us/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">About us</span></a></p></span>"
                         },
                         {
                           "id": 7,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/ethics\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Business Ethics</span></a></p></span>"
-                        },
-                        {
-                          "id": 8,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/brands\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Our Brands</span></a></p></span>"
-                        },
-                        {
-                          "id": "277a0d8d-30e1-4b34-84b3-64c35bf936a2",
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/shipping.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Delivery</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"ethics/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Business Ethics</span></a></p></span>"
                         }
                       ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>About AW</strong></p></span>"
-                    },
-                    {
-                      "id": 10,
-                      "data": [
-                        {
-                          "id": 11,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/showroom\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Book Showroom Appointment</span></a></p></span>"
-                        }
-                      ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Showroom</strong></p></span>"
+                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Information</strong></p></span>"
                     }
                   ],
                   "name": "Column 1"
@@ -132,43 +114,35 @@
                       "data": [
                         {
                           "id": 19,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/first_order_bonus.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">First Order Bonus</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"first_order_bonus/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">First Order Bonus</span></a></p></span>"
                         },
                         {
                           "id": 20,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/pastpay\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Buy Now, Pay Later</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"pastpay/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Buy Now, Pay Later</span></a></p></span>"
                         }
                       ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Why Choose AW Artisan?</strong></p></span>"
+                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Promo</strong></p></span>"
                     },
                     {
                       "id": 24,
                       "data": [
                         {
-                          "id": 26,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/21anniversary\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW History &amp; The Phoenix Effect</span></a></p></span>"
-                        },
-                        {
-                          "id": 27,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.aw.gifts/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Distribution Centre in Europe</span></a></p></span>"
-                        },
-                        {
                           "id": 28,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"http://blog.ancientwisdom.biz/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">David's Travel Blog</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"blog/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Blog</span></a></p></span>"
                         }
                       ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Discover</strong></p></span>"
+                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Articles</strong></p></span>"
                     },
                     {
                       "id": 29,
                       "data": [
                         {
                           "id": 30,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/tac.sys\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Terms &amp; Conditions</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"tac/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Terms &amp; Conditions</span></a></p></span>"
                         },
                         {
                           "id": 32,
-                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.eu/cookies\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Cookies Policy</span></a></p></span>"
+                          "name": "<p><a rel=\"noopener noreferrer nofollow\" href=\"cookies/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Cookies Policy</span></a></p></span>"
                         }
                       ],
                       "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Legal</strong></p></span>"
@@ -185,40 +159,10 @@
                       "data": [
                         {
                           "id": 34,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-dropship.com/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Dropshipping</span></a></p></span>"
-                        },
-                        {
-                          "id": 35,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-fulfilment.eu/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Fullfilment</span></a></p></span>"
-                        },
-                        {
-                          "id": 36,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.aw-advantage.com\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Digital Marketing</span></a></p></span>"
+                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"dropshipping/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">Dropshipping</span></a></p></span>"
                         }
                       ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Our Services</strong></p></span>"
-                    },
-                    {
-                      "id": 37,
-                      "data": [
-                        {
-                          "id": 44,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.es/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW - España</span></a></p></span>"
-                        },
-                        {
-                          "id": 41,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.pt/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW - Portugal</span></a></p></span>"
-                        },
-                        {
-                          "id": 42,
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.de/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW - Germany</span></a></p></span>"
-                        },
-                        {
-                          "id": "649115d9-025b-407a-800c-c2ca4ad90f26",
-                          "name": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.awartisan.fr/\"><span style=\"color: #ffffff\"><span style=\"color: #ffffff\">AW - France</span></a></p></span>"
-                        }
-                      ],
-                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Discover the AW Family</strong></p></span>"
+                      "name": "<span><p style='color: #ffffff; font-size: 16px'><strong>Services</strong></p></span>"
                     }
                   ],
                   "name": "Column 3"
@@ -227,9 +171,9 @@
                   "types": "sideBar",
                   "key": "4",
                   "data": {
-                    "textBox1": "<p style='text-align: center; color: rgb(255,255,255)'>AW Artisan S.L, Castelao Street 40-42 P.I. Guadalhorce, 29004 Málaga - Spain</p>",
-                    "textBox2": "<p style='text-align: center; color: rgb(255,255,255)'>Vat No: ESB93657658  </br> EROI: ESB93657658</p>",
-                    "textBox3": "Subscribe to the WhatsApp messages and benefit from exclusive discounts."
+                    "textBox1": "<p style='text-align: center; color: rgb(255,255,255)'>Pantai Lembeng 5 Street, Ketewel, Gianyar, Bali 80582</p>",
+                    "textBox2": "<p style='text-align: center; color: rgb(255,255,255)'></p>",
+                    "textBox3": "<p>Business partnership? <a href=\"contact_us/\">Contact us</a> now</p>"
                   },
                   "name": "Column 4"
                 }
@@ -241,28 +185,28 @@
                       },
                       "background": {
                         "type": "color",
-                        "color": "rgba(0, 0, 0, 1)",
+                        "color": "rgba(20, 20, 20, 1)",
                         "image": {
                           "original": null
                         }
                       }
                     }
             },
-            "copyright": "Copyright © 2024 AW Artisan S.L,. All rights reserved.",
+            "copyright": "Copyright © 2024 Company, All rights reserved.",
             "socialMedia": [
               {
                 "icon": "fab fa-facebook",
-                "link": "https://www.facebook.com/people/AW-Artisan-Europe/100077247259428/",
+                "link": "https://www.facebook.com/",
                 "type": "facebook"
               },
               {
                 "icon": "fab fa-instagram",
-                "link": "https://www.instagram.com/awartisaneurope/?hl=en",
+                "link": "https://www.instagram.com/",
                 "type": "instagram"
               },
               {
                 "icon": "fab fa-pinterest",
-                "link": "https://es.pinterest.com/awartisane/",
+                "link": "https://pinterest.com/",
                 "type": "pinterest"
               }
             ],
@@ -291,18 +235,18 @@
                 ]
               },
             "whatsapp": {
-                "number": "+34 602 580 257",
+                "number": "+1 234 56789",
                 "caption": "Whatsapp",
                 "message": "Hello i want to order"
             },
             "phone": {
-                "numbers": ["+34 952 254 337"],
+                "numbers": ["+1 2345 6789"],
                 "caption": "Monday-Friday 8am-4pm CET"
             },
-            "email": "trade@awartisan.eu",
+            "email": "example@mail.com",
             "logo": {
-                "source": "/art/logo/logo.png",
-                "alt": "AW Artisan"
+                "source": "/art/wowsbar-white.png",
+                "alt": "Company logo"
             }
         }
     }
