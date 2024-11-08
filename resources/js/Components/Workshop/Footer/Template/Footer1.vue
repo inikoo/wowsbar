@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 
-import Editor from "@/Components/Editor/Editor.vue"
+import Editor from "@/Components/Editor/EditorV2.vue"
 import draggable from "vuedraggable";
 import { v4 as uuidv4 } from 'uuid';
 import ContextMenu from 'primevue/contextmenu';
@@ -187,11 +187,10 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                 <!--  desktop -->
                                 <div
                                     class="hidden md:block grid grid-cols-1 md:cursor-default space-y-1 border-b pb-2 md:border-none">
-                                    <div class="flex text-xl font-semibold w-fit leading-6">
+                                    <div class="flex text-xl font-semibold  leading-6" @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_1']['data'], index)">
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
-                                        <div
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_1']['data'], index)">
+                                        <div class="w-full">
                                             <Editor v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
@@ -208,16 +207,13 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">
-                                                <div class="flex items-center">
+                                                <div class="flex items-center w-full"  @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_1']['data'], subIndex)">
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
-                                                    <div class="w-full"
-                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_1']['data'], subIndex)">
-                                                        <span class="text-sm block">
+                                                    <div class="w-full">
                                                             <Editor v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
-                                                        </span>
                                                     </div>
                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
                                                         <template #itemicon="item">
@@ -271,19 +267,25 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 </div>
                 <!--  column 2 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable v-model="modelValue.columns['column_2']['data']" group="row" itemKey="id"  :animation="200"
-                        handle=".handle" @start="onDrag" @end="onDrop"  @update:model-value="(e)=>{modelValue.columns['column_2']['data'] = e, emits('update:modelValue', modelValue) }"
+                     <draggable 
+                        v-model="modelValue.columns['column_2']['data']" 
+                        group="row" 
+                        itemKey="id" 
+                        :animation="200"
+                        handle=".handle" 
+                        @start="onDrag" 
+                        @end="onDrop"
+                        @update:model-value="(e)=>{modelValue.columns['column_1']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
                                 <!--  desktop -->
                                 <div
                                     class="hidden md:block grid grid-cols-1 md:cursor-default space-y-1 border-b pb-2 md:border-none">
-                                    <div class="flex text-xl font-semibold w-fit leading-6">
+                                    <div class="flex text-xl font-semibold  leading-6" @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_2']['data'], index)">
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
-                                        <div
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_2']['data'], index)">
+                                        <div class="w-full">
                                             <Editor v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
@@ -300,16 +302,13 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">
-                                                <div class="flex items-center">
+                                                <div class="flex items-center w-full"  @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_2']['data'], subIndex)">
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
-                                                    <div class="w-full"
-                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_2']['data'], subIndex)">
-                                                        <span class="text-sm block">
+                                                    <div class="w-full">
                                                             <Editor v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
-                                                        </span>
                                                     </div>
                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
                                                         <template #itemicon="item">
@@ -324,7 +323,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
 
                                 <!--  mobile  -->
                                 <div class="block md:hidden">
-                                    <Disclosure v-slot="{ open }"  class="m-2">
+                                    <Disclosure v-slot="{ open }" class="m-2">
                                         <div :class="open ? 'bg-[rgba(240,240,240,0.15)] rounded' : ''">
                                             <DisclosureButton
                                                 class="p-2 md:p-0 transition-all flex justify-between cursor-default  w-full">
@@ -351,6 +350,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </div>
                                     </Disclosure>
                                 </div>
+
                             </div>
                         </template>
                     </draggable>
@@ -362,19 +362,25 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 </div>
                 <!--  column 3 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
-                    <draggable v-model="modelValue.columns['column_3']['data']" group="row" itemKey="id" :animation="200"
-                        handle=".handle" @start="onDrag" @end="onDrop"  @update:model-value="(e)=>{modelValue.columns['column_3']['data'] = e, emits('update:modelValue', modelValue) }"
+                    <draggable 
+                        v-model="modelValue.columns['column_1']['data']" 
+                        group="row" 
+                        itemKey="id" 
+                        :animation="200"
+                        handle=".handle" 
+                        @start="onDrag" 
+                        @end="onDrop"
+                        @update:model-value="(e)=>{modelValue.columns['column_3']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
                                 <!--  desktop -->
                                 <div
                                     class="hidden md:block grid grid-cols-1 md:cursor-default space-y-1 border-b pb-2 md:border-none">
-                                    <div class="flex text-xl font-semibold w-fit leading-6">
+                                    <div class="flex text-xl font-semibold  leading-6" @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_3']['data'], index)">
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
-                                        <div
-                                            @contextmenu="onRightClickMenu($event, item, modelValue.columns['column_3']['data'], index)">
+                                        <div class="w-full">
                                             <Editor v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
@@ -387,20 +393,17 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </ContextMenu>
                                     </div>
                                     <draggable v-model="item.data" group="sub-row" itemKey="id" :animation="200"
-                                        handle=".handle-sub" @start="onDrag" @end="onDrop" @update:model-value="(e)=>{item.data = e, emits('update:modelValue', modelValue)}">
+                                        handle=".handle-sub" @start="onDrag" @end="onDrop" @update:model-value="(e)=>{item.data = e, emits('update:modelValue', modelValue) }">
                                         <template #item="{ element: sub, index: subIndex }"
                                             class="hidden md:block space-y-3">
                                             <div class="flex w-full items-center gap- mt-2">
-                                                <div class="flex items-center">
+                                                <div class="flex items-center w-full"  @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_3']['data'], subIndex)">
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
-                                                    <div class="w-full"
-                                                        @contextmenu="onRightClickSubMenu($event, item, modelValue.columns['column_3']['data'], subIndex)">
-                                                        <span class="text-sm block">
+                                                    <div class="w-full">
                                                             <Editor v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
-                                                        </span>
                                                     </div>
                                                     <ContextMenu ref="subMenu" :model="subMenuitems">
                                                         <template #itemicon="item">
@@ -415,7 +418,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
 
                                 <!--  mobile  -->
                                 <div class="block md:hidden">
-                                    <Disclosure v-slot="{ open }"  class="m-2">
+                                    <Disclosure v-slot="{ open }" class="m-2">
                                         <div :class="open ? 'bg-[rgba(240,240,240,0.15)] rounded' : ''">
                                             <DisclosureButton
                                                 class="p-2 md:p-0 transition-all flex justify-between cursor-default  w-full">
@@ -442,6 +445,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         </div>
                                     </Disclosure>
                                 </div>
+
                             </div>
                         </template>
                     </draggable>
