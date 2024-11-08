@@ -146,7 +146,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
         :style="getStyles(modelValue?.container?.properties)">
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
-            <div  class="flex-1 flex items-center justify-center md:justify-start ">
+            <div  class="relative group flex-1 flex items-center justify-center md:justify-start ">
                 <img v-if="modelValue?.logo?.source && !isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
                 <Image v-else-if="modelValue?.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
@@ -182,7 +182,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
 
                 <span class="" style="font-size: 15px">{{ modelValue.phone.caption }}</span>
                 
-                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'phone'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>

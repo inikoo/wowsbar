@@ -16,6 +16,7 @@ import Image from '@/Components/Image.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -24,6 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
 import { faThLarge } from '@fas';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
 
 const props = defineProps<{
@@ -39,6 +41,8 @@ const props = defineProps<{
     web_blocks: {
         data: Array<any>
     }
+    is_published: boolean
+    route_toggle_activated: routeType
 }>()
 console.log(props.web_blocks)
 const isLoading = ref(false)
@@ -187,15 +191,64 @@ onUnmounted(() => {
 });
 
 
-
+const isActivated = ref(false)
+const cancelTokenActivate = ref<Function | null>(null)
+const onClickToggleActivate = async (newVal: boolean) => {
+    if(cancelTokenActivate.value) {
+        cancelTokenActivate.value()
+    }
+    isActivated.value = newVal
+    router[props.route_toggle_activated.method || 'patch'](
+        route(props.route_toggle_activated.name, props.route_toggle_activated.parameters),
+        { is_published: newVal },
+        {
+            onCancelToken: (cancelToken) => {
+                cancelTokenActivate.value = cancelToken.cancel
+            },
+            onFinish: () => {
+                isActivated.value = props.is_published
+                cancelTokenActivate.value = null
+            },
+            onSuccess: () => {
+                notify({
+                    title: trans('Gotcha!'),
+                    text: trans('Successfully set the status'),
+                    type: 'success',
+                })
+            },
+            onError: () => {
+                notify({
+                    title: trans('Something went wrong'),
+                    text: trans('Failed to update the status'),
+                    type: 'error',
+                })
+            },
+        }
+    )
+}
 </script>
 
 <template>
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
+        <template #iconRight>
+            <!--  -->
+            <ToggleSwitch
+                v-tooltip="trans('Activated/deactivated the Footer')"
+                :modelValue="isActivated"
+                @update:modelValue="(newVal) => onClickToggleActivate(newVal)"
+            />
+            <LoadingIcon v-if="cancelTokenActivate" />
+        </template>
+
         <template #other>
-            <Publish v-if="footer_status" :isLoading="isLoading" :is_dirty="true" v-model="comment"
-                @onPublish="(popover) => onPublish(popover)" />
+            <Publish
+                v-if="footer_status"
+                :isLoading="isLoading"
+                :is_dirty="true"
+                v-model="comment"
+                @onPublish="(popover) => onPublish(popover)"
+            />
         </template>
     </PageHeading>
 
