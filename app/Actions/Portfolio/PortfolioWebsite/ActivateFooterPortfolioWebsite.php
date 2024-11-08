@@ -19,7 +19,7 @@ class ActivateFooterPortfolioWebsite
     public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
         if (Arr::exists($portfolioWebsite->customer->integration_data, 'account')) {
-            DeployPortfolioWebsiteFooterToAurora::run($portfolioWebsite, $portfolioWebsite->layout);
+            DeployPortfolioWebsiteFooterToAurora::run($portfolioWebsite, Arr::get($portfolioWebsite->compiled_layout, 'footer'));
         }
 
         return $this->update($portfolioWebsite, [
