@@ -12,6 +12,7 @@ use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Leads\Prospect;
+use App\Models\Media\Media;
 use App\Models\SysAdmin\Division;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -23,8 +24,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 
 /**
@@ -79,7 +83,7 @@ use Spatie\Sluggable\HasSlug;
  * @method static Builder|PortfolioWebsite withoutTrashed()
  * @mixin \Eloquent
  */
-class PortfolioWebsite extends Model implements Auditable
+class PortfolioWebsite extends Model implements Auditable, HasMedia
 {
     use HasSlug;
     use SoftDeletes;
@@ -88,6 +92,7 @@ class PortfolioWebsite extends Model implements Auditable
     use BelongsToCustomer;
     use HasHistory;
     use IsWebsitePortfolio;
+    use InteractsWithMedia;
 
     protected $casts = [
         'data'             => 'array',
@@ -155,5 +160,15 @@ class PortfolioWebsite extends Model implements Auditable
     public function deployments(): MorphMany
     {
         return $this->morphMany(Deployment::class, 'model');
+    }
+
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'image_id');
+    }
+
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Media::class, 'model', 'model_has_media');
     }
 }

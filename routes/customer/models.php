@@ -35,6 +35,7 @@ use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\PublishPortfolioWebsiteMarginal;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UploadImagesToPortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
 use App\Actions\Web\Website\PublishWebsiteMarginal;
 
@@ -54,6 +55,8 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         Route::delete('', DeletePortfolioWebsite::class)->name('delete');
         Route::post('banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('banner.store');
         Route::post('interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
+        Route::post('images', UploadImagesToPortfolioWebsite::class)->name('images.store');
+
 
         Route::name('footers.')->prefix('footers')->group(function () {
             Route::patch('autosave/footer', [PublishPortfolioWebsiteMarginal::class, 'footer'])->name('autosave');
