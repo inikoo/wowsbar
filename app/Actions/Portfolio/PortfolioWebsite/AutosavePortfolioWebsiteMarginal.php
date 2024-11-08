@@ -24,22 +24,7 @@ class AutosavePortfolioWebsiteMarginal
     public function handle(PortfolioWebsite $portfolioWebsite, string $marginal, array $modelData): void
     {
         $layout      = Arr::get($modelData, 'layout');
-        $firstCommit = true;
-
-        /*        $snapshot = StoreWebsiteSnapshot::run(
-                    $portfolioWebsite,
-                    [
-                        'state'          => SnapshotStateEnum::UNPUBLISHED,
-                        'published_at'   => now(),
-                        'layout'         => $layout,
-                        'scope'          => $marginal,
-                        'first_commit'   => $firstCommit,
-                        'comment'        => Arr::get($modelData, 'comment'),
-                        'publisher_id'   => Arr::get($modelData, 'publisher_id'),
-                        'publisher_type' => Arr::get($modelData, 'publisher_type'),
-                    ],
-                );*/
-
+        
         if (in_array($marginal, ['header', 'footer'])) {
             $updateData = [
                 "compiled_layout->$marginal"      => $layout,
@@ -51,10 +36,10 @@ class AutosavePortfolioWebsiteMarginal
                 "compiled_layout->$marginal"     => $layout
             ];
         }
-
+       
         $portfolioWebsite->update($updateData);
 
-        BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite);
+       /*  BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite); */
     }
 
     public function authorize(ActionRequest $request): bool
