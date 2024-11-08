@@ -2,20 +2,16 @@
 import { ref, watch, computed } from "vue"
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
-import GalleryManagement from "@/Components/Utils/GalleryManagement/GalleryManagement.vue"
 import Image from "@/Components/Image.vue"
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
-import Slider from 'primevue/slider';
 import { notify } from "@kyvg/vue3-notification"
 import axios from "axios"
-import Modal from "@/Components/Utils/Modal.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faPhotoVideo, faLink } from "@fal"
 import { routeType } from "@/types/route"
-import { cloneDeep } from "lodash"
+import { cloneDeep, isObject } from "lodash"
+import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
+import Modal from '@/Components/Utils/Modal.vue'
 
 library.add(faImage, faPhotoVideo, faLink)
 
@@ -58,7 +54,6 @@ const onUpload = async () => {
 		)
 		const updatedModelValue = { ...props.modelValue, source: cloneDeep(response.data.data[0].source) }
 		emits("update:modelValue", updatedModelValue)
-		onSave()
 	} catch (error) {
 		notify({
 			title: "Failed",
@@ -92,10 +87,10 @@ const drop = (e) => {
 
 // Handle gallery image selection
 const onPickImage = (e) => {
+	console.log(e)
 	isOpenGalleryImages.value = false
-	const updatedModelValue = { ...props.modelValue, source: cloneDeep(e[0].source) }
+	const updatedModelValue = { ...props.modelValue, source: cloneDeep(e.data[0].source) }
 	emits("update:modelValue", updatedModelValue)
-	onSave()
 }
 
 // Open file input
@@ -103,10 +98,6 @@ const onClickButton = () => {
 	fileInput.value?.click()
 }
 
-// Auto-save function
-function onSave() {
-	emits("autoSave")
-}
 
 // Watch for specific changes in modelValue and auto-save
 watch(
@@ -123,7 +114,7 @@ watch(
 <template>
 	<div>
 		<button type="submit" @click="onClickButton"
-			class="flex w-full justify-center bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+			class="flex w-full justify-center bg-[#475569] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FCD34D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 			Upload Image
 		</button>
 	</div>
@@ -131,7 +122,7 @@ watch(
 	<div>
 		<div class="w-full h-full space-y-2" @dragover="dragOver" @dragleave="dragLeave" @drop="drop">
 			<div
-				class="relative mt-2 flex justify-center border-dashed border border-indigo-400 shadow-lg px-6 py-5 bg-gradient-to-r hover:bg-gray-400/20">
+				class="relative mt-2 flex justify-center border-dashed border border-[#475569] shadow-lg px-6 py-5 bg-gradient-to-r hover:bg-gray-400/20">
 				<label for="fileInput"
 					class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-0">
 					<input type="file" multiple name="file" id="fileInput" class="sr-only" ref="fileInput"
@@ -150,9 +141,12 @@ watch(
 					</div>
 				</div>
 				<div v-else>
-					<Image :src=" modelValue?.source"
+					<Image v-if="isObject(modelValue.source)" :src=" modelValue?.source"
 						class="w-full object-cover h-full object-center group-hover:opacity-75">
 					</Image>
+					<img v-else="isObject(modelValue.source)" :src="modelValue?.source"
+						class="w-full object-cover h-full object-center group-hover:opacity-75">
+					</img>
 
 					<div class="absolute top-0 right-0 m-2">
 						<Button id="gallery" :style="`tertiary`" :icon="'fal fa-photo-video'" size="xs"
@@ -161,7 +155,7 @@ watch(
 				</div>
 			</div>
 		</div>
-        <div class="text-xs text-gray-400 mt-3">200 x 100 (recomended)</div>
+		<div class="text-xs text-gray-400 mt-3">200 x 100 (recomended)</div>
 	</div>
 
 
@@ -173,11 +167,18 @@ watch(
 	</div>
 
 
-	<!-- Modal and Gallery Management -->
-<!-- 	<Modal :isOpen="isOpenGalleryImages" @onClose="() => (isOpenGalleryImages = false)" width="w-3/4">
-		<GalleryManagement :maxSelected="1" :tabs="['images_uploaded', 'stock_images']"
-			:closePopup="() => (isOpenGalleryImages = false)" @submitSelectedImages="onPickImage" />
-	</Modal> -->
+	<!-- Modal: Gallery -->
+	<Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
+		<div>
+			<GalleryImages 
+				:addImage="onPickImage" 
+				:closeModal="() => isOpenGalleryImages = false"
+				:imagesUploadRoute="uploadRoutes"
+				:multiple="false"
+			/>
+		</div>
+	</Modal>
+
 </template>
 
 <style scoped></style>

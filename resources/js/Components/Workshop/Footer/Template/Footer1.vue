@@ -7,13 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 import ContextMenu from 'primevue/contextmenu';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { getStyles } from '@/Composables/getStyles';
+import Image from '@/Components/Image.vue';
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faShieldAlt, faPlus, faTrash, faAngleUp, faAngleDown, faTriangle } from "@fas"
 import { faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faBars } from '@fal'
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isObject } from 'lodash';
 
 library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedinIn, faShieldAlt, faBars, faPlus, faTrash, faWhatsapp)
 
@@ -141,8 +142,10 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
             <div class="flex-1 flex items-center justify-center md:justify-start ">
-                <img v-if="modelValue.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
-                    class="h-auto max-h-20 w-auto min-w-16">
+                <img v-if="isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                    class="h-auto max-h-20 w-auto min-w-16"/>
+                <Image v-else :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                    class="h-auto max-h-20 w-auto min-w-16"/>
             </div>
 
             <div v-if="modelValue?.email " class="flex-1 flex justify-center md:justify-start items-center">

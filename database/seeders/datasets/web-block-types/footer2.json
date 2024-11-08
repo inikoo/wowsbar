@@ -1,7 +1,7 @@
 {
     "code": "FooterTheme2",
     "scope": "website",
-    "name": "AW - Artisan",
+    "name": "New - Footer",
     "component": "footer",
     "blueprint": [
         {
@@ -172,7 +172,7 @@
                   "key": "4",
                   "data": {
                     "textBox1": "<p style='text-align: center; color: rgb(255,255,255)'>Pantai Lembeng 5 Street, Ketewel, Gianyar, Bali 80582</p>",
-                    "textBox2": "<p style='text-align: center; color: rgb(255,255,255)'></p>",
+                    "textBox2": "<p style='text-align: center; color: rgb(255,255,255)'>VAT:</p>",
                     "textBox3": "<p>Business partnership? <a href=\"contact_us/\">Contact us</a> now</p>"
                   },
                   "name": "Column 4"
