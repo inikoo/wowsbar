@@ -275,7 +275,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                         handle=".handle" 
                         @start="onDrag" 
                         @end="onDrop"
-                        @update:model-value="(e)=>{modelValue.columns['column_1']['data'] = e, emits('update:modelValue', modelValue) }"
+                        @update:model-value="(e)=>{modelValue.columns['column_2']['data'] = e, emits('update:modelValue', modelValue) }"
                         class="md:px-0 grid grid-cols-1 gap-y-2 md:gap-y-6 h-fit">
                         <template #item="{ element: item, index: index }">
                             <div>
@@ -363,7 +363,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <!--  column 3 -->
                 <div class="md:px-0 grid gap-y-3 md:gap-y-6 h-fit">
                     <draggable 
-                        v-model="modelValue.columns['column_1']['data']" 
+                        v-model="modelValue.columns['column_3']['data']" 
                         group="row" 
                         itemKey="id" 
                         :animation="200"
