@@ -30,6 +30,7 @@ import { Color } from '@tiptap/extension-color'
 import FontSize from 'tiptap-extension-font-size'
 /* import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue' */
 import ColorPicker from 'primevue/colorpicker';
+import Popover from 'primevue/popover'
 
 import {
     faUndo,
@@ -83,13 +84,12 @@ const emits = defineEmits<{
     (e: 'onEditClick', value: any): void
 }>()
 
+const op = ref();
 const _bubbleMenu = ref(null)
 const showDialog = ref(false)
 const contentResult = ref<string>()
 const currentLinkInDialog = ref<string | undefined>()
-const showLinkDialogCustom = ref<boolean>()
 const showAddYoutubeDialog = ref<boolean>(false)
-const showAddTableDialog = ref<boolean>(false)
 const showAddImageDialog = ref<boolean>(false)
 const showLinkDialog = ref<boolean>()
 
@@ -208,6 +208,11 @@ defineExpose({
     editor : editorInstance
 })
 
+const toggle = (event: any) => {
+    op.value.toggle(event);
+}
+
+
 </script>
 
 <template>
@@ -228,27 +233,21 @@ defineExpose({
                     </TiptapToolbarButton>
                 </TiptapToolbarGroup>
                 <TiptapToolbarGroup>
-                    <TiptapToolbarButton
-                        v-if="toogle.includes('heading')" 
-                        label="Heading 1"
+                    <TiptapToolbarButton v-if="toogle.includes('heading')" label="Heading 1"
                         :is-active="editorInstance?.isActive('heading', { level: 1 })"
                         @click="editorInstance?.chain().focus().toggleHeading({ level: 1 }).run()"
                         class="toolbar-button">
                         <FontAwesomeIcon :icon="faH1" class="h-5 w-5" />
                     </TiptapToolbarButton>
 
-                    <TiptapToolbarButton
-                        v-if="toogle.includes('heading')" 
-                        label="Heading 2"
+                    <TiptapToolbarButton v-if="toogle.includes('heading')" label="Heading 2"
                         :is-active="editorInstance?.isActive('heading', { level: 2 })"
                         @click="editorInstance?.chain().focus().toggleHeading({ level: 2 }).run()"
                         class="toolbar-button">
                         <FontAwesomeIcon :icon="faH2" class="h-5 w-5" />
                     </TiptapToolbarButton>
 
-                    <TiptapToolbarButton
-                        v-if="toogle.includes('heading')" 
-                        label="Heading 3"
+                    <TiptapToolbarButton v-if="toogle.includes('heading')" label="Heading 3"
                         :is-active="editorInstance?.isActive('heading', { level: 3 })"
                         @click="editorInstance?.chain().focus().toggleHeading({ level: 3 }).run()"
                         class="toolbar-button">
@@ -263,20 +262,15 @@ defineExpose({
                             <span id="tiptapfontsize" class="text-black">
                                 {{ editorInstance?.getAttributes('textStyle').fontSize || 'Text size' }}
                             </span>
-                            <FontAwesomeIcon 
-                                v-if="editorInstance?.getAttributes('textStyle').fontSize"
-                                @click="editorInstance?.chain().focus().unsetFontSize().run()"
-                                icon="fal fa-times" 
-                                class="text-red-500 ml-2 cursor-pointer" 
-                                aria-hidden="true" />
+                            <FontAwesomeIcon v-if="editorInstance?.getAttributes('textStyle').fontSize"
+                                @click="editorInstance?.chain().focus().unsetFontSize().run()" icon="fal fa-times"
+                                class="text-red-500 ml-2 cursor-pointer" aria-hidden="true" />
                         </div>
 
                         <div
                             class="w-min h-32 overflow-y-auto text-black cursor-pointer overflow-hidden hidden group-hover:block absolute left-0 right-0 border border-gray-500 rounded bg-white z-[1]">
-                            <div
-                                v-for="fontsize in ['8', '9', '12', '14', '16', '20', '24', '28', '36', '44', '52', '64']"
-                                :key="fontsize"
-                                class="px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-100"
+                            <div v-for="fontsize in ['8', '9', '12', '14', '16', '20', '24', '28', '36', '44', '52', '64']"
+                                :key="fontsize" class="px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-100"
                                 :class="{ 'bg-indigo-600 text-white': parseInt(editorInstance?.getAttributes('textStyle').fontSize, 10) === parseInt(fontsize) }"
                                 @click="editorInstance?.chain().focus().setFontSize(fontsize + 'px').run()">
                                 {{ fontsize }}
@@ -309,8 +303,10 @@ defineExpose({
                     </TiptapToolbarButton>
 
                     <TiptapToolbarButton v-if="toogle.includes('color')" label="Text Color">
-                        <ColorPicker v-model="editorInstance.getAttributes('textStyle').color" style="z-index: 99;"
-                            @update:model-value="color => editorInstance?.chain().focus().setColor(`#${color}`).run()" />
+                        <input type="color" class="w-8 h-8" @input="editorInstance.chain().focus().setColor($event.target.value).run()"
+                        :value="editorInstance.getAttributes('textStyle').color" >
+                        <!--  <ColorPicker v-model="editorInstance.getAttributes('textStyle').color" style="z-index: 99;"
+                            @update:model-value="color => editorInstance?.chain().focus().setColor(`#${color}`).run()" /> -->
                     </TiptapToolbarButton>
 
                     <!-- <ColorPicker v-if="toogle.includes('highlight')" :color="editorInstance?.getAttributes('highlight').color"
@@ -359,14 +355,6 @@ defineExpose({
                         :is-active="editorInstance?.isActive('link')">
                         <FontAwesomeIcon :icon="faLink" class="h-5 w-5" />
                     </TiptapToolbarButton>
-                    <TiptapToolbarButton v-if="toogle.includes('image')" label="Image"
-                        @click="showAddImageDialog = true">
-                        <FontAwesomeIcon :icon="faImage" class="h-5 w-5" />
-                    </TiptapToolbarButton>
-                    <TiptapToolbarButton v-if="toogle.includes('video')" label="Youtube Video"
-                        @click="() => { showAddYoutubeDialog = true, showDialog = true }">
-                        <FontAwesomeIcon :icon="faFileVideo" class="h-5 w-5" />
-                    </TiptapToolbarButton>
                     <TiptapToolbarButton v-if="toogle.includes('blockquote')" label="Blockquote"
                         :is-active="editorInstance?.isActive('blockquote')"
                         @click="editorInstance?.chain().focus().toggleBlockquote().run()">
@@ -385,13 +373,13 @@ defineExpose({
                 <EditorContent @click="onEditorClick" :editor="editorInstance" />
             </slot>
         </div>
-    
+
         <TiptapLinkDialog v-if="showLinkDialog" :show="showLinkDialog" :current-url="currentLinkInDialog"
             @close="() => { showLinkDialog = false; showDialog = false; }" @update="updateLink" />
         <TiptapVideoDialog v-if="showAddYoutubeDialog" :show="showAddYoutubeDialog" @insert="insertYoutubeVideo"
             @close="() => { showAddYoutubeDialog = false; showDialog = false; }" />
     </div>
-      
+
     <div v-else id="blockTextContent">
         <div v-html="modelValue" />
     </div>
