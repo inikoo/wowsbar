@@ -14,26 +14,29 @@ import { trans } from 'laravel-vue-i18n'
 // import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 import AnnouncementSettings from '@/Components/Workshop/Announcement/AnnouncementSettings.vue'
-
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle } from '@fal'
-import { faThLarge } from '@fas'
+import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown } from '@fal'
+import { faThLarge, faSquare } from '@fas'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
 import { notify } from '@kyvg/vue3-notification'
 import ScreenView from '@/Components/ScreenView.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
-import { debounce, remove } from 'lodash'
+import { debounce, remove, set } from 'lodash'
 import Modal from '@/Components/Utils/Modal.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import { routeType } from '@/types/route'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import VueDatePicker from '@vuepic/vue-datepicker';
+import { useFormatTime } from '@/Composables/useFormatTime'
+import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 
-library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faThLarge)
+library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faSquare, faThLarge)
 
 const props = defineProps<{
     pageHead: {}
@@ -210,6 +213,19 @@ onMounted(() => {
         }
     }
 })
+
+
+const newDate = new Date()
+const publishStartDate = ref(newDate.setDate(newDate.getDate() + 2))
+const publishEndDate = ref(newDate.setDate(newDate.getDate() + 9))
+
+const isModalPublish = ref(false)
+const settingPublish = ref({
+    start_type: 'instant',  // 'scheduled'
+    end_type: newDate.setDate(newDate.getDate() + 2),  // 'unlimited'
+})
+
+
 </script>
 
 <template layout="CustomerApp">
@@ -224,23 +240,41 @@ onMounted(() => {
             <div class="flex gap-x-2">
                 <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave" :style="'negative'" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
-                <Button @click="onPublish" label="Publish" :loading="isLoadingSave" iconRight="fal fa-rocket-launch" />
+                <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" />
+                <div class="flex items-center">
+                    <Button @click="onPublish" label="Publish now" :loading="isLoadingSave" iconRight="fal fa-rocket-launch" class="rounded-r-none" />
+                    
+                    <Button @click="() => isModalPublish = true" :loading="isLoadingSave" class="rounded-l-none pl-2 pr-2">
+                        <template #icon>
+                            <div>
+                                <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
+                            </div>
+                        </template>
+                    </Button>
+                </div>
             </div>
         </template>
     </PageHeading>
 
+    <!-- Section: Tab selector -->
     <div class="mx-auto max-w-md px-2 sm:px-0 my-4">
         <!-- {{ selectedTab }} -->
         <TabGroup>
             <TabList class="flex space-x-1 rounded-xl bg-slate-600 p-1">
-                <Tab v-for="category in ['Workshop', 'Setting']" as="template" :key="category" v-slot="{ selected }"
-                    @click="async () => selectedTab === category ? '' : changeTab(category)">
+                <Tab
+                    v-for="category in ['Workshop', 'Setting']"
+                    as="template"
+                    :key="category"
+                    v-slot="{ selected }"
+                    @click="async () => selectedTab === category ? '' : changeTab(category)"
+                >
                     <button :class="[
                         'px-8 w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                         selected
                             ? 'bg-white text-slate-700 shadow'
                             : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
-                        ]">
+                        ]"
+                    >
                         {{ category }}
                         <LoadingIcon v-if="isLoadingComponent === category" />
                     </button>
@@ -330,208 +364,113 @@ onMounted(() => {
                 @onMounted="() => isLoadingComponent = null"
             />
 
-            <!-- <div v-if="false" class="space-y-12">
-                <div class="border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Profile</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">
-                        This information will be displayed publicly so be careful what you share.
-                    </p>
-
-                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-4">
-                            <label for="username" class="block text-sm/6 font-medium text-gray-900">Username</label>
-                            <div class="mt-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <span
-                                        class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
-                                    <input type="text" name="username" id="username" autocomplete="username"
-                                        class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm/6"
-                                        placeholder="janesmith" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="about" class="block text-sm/6 font-medium text-gray-900">About</label>
-                            <div class="mt-2">
-                                <textarea id="about" name="about" rows="3"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                            <p class="mt-3 text-sm/6 text-gray-600">Write a few sentences about yourself.</p>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="photo" class="block text-sm/6 font-medium text-gray-900">Photo</label>
-                            <div class="mt-2 flex items-center gap-x-3">
-                                <UserCircleIcon class="h-12 w-12 text-gray-300" aria-hidden="true" />
-                                <button type="button"
-                                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change</button>
-                            </div>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Cover
-                                photo</label>
-                            <div
-                                class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                <div class="text-center">
-                                    <PhotoIcon class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                                    <div class="mt-4 flex text-sm/6 text-gray-600">
-                                        <label for="file-upload"
-                                            class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                            <span>Upload a file</span>
-                                            <input id="file-upload" name="file-upload" type="file" class="sr-only" />
-                                        </label>
-                                        <p class="pl-1">or drag and drop</p>
-                                    </div>
-                                    <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Personal Information</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">Use a permanent address where you can receive mail.</p>
-
-                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-3">
-                            <label for="first-name" class="block text-sm/6 font-medium text-gray-900">First name</label>
-                            <div class="mt-2">
-                                <input type="text" name="first-name" id="first-name" autocomplete="given-name"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-3">
-                            <label for="last-name" class="block text-sm/6 font-medium text-gray-900">Last name</label>
-                            <div class="mt-2">
-                                <input type="text" name="last-name" id="last-name" autocomplete="family-name"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-4">
-                            <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
-                            <div class="mt-2">
-                                <input id="email" name="email" type="email" autocomplete="email"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-3">
-                            <label for="country" class="block text-sm/6 font-medium text-gray-900">Country</label>
-                            <div class="mt-2">
-                                <select id="country" name="country" autocomplete="country-name"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm/6">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="street-address" class="block text-sm/6 font-medium text-gray-900">Street
-                                address</label>
-                            <div class="mt-2">
-                                <input type="text" name="street-address" id="street-address"
-                                    autocomplete="street-address"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2 sm:col-start-1">
-                            <label for="city" class="block text-sm/6 font-medium text-gray-900">City</label>
-                            <div class="mt-2">
-                                <input type="text" name="city" id="city" autocomplete="address-level2"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="region" class="block text-sm/6 font-medium text-gray-900">State /
-                                Province</label>
-                            <div class="mt-2">
-                                <input type="text" name="region" id="region" autocomplete="address-level1"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="postal-code" class="block text-sm/6 font-medium text-gray-900">ZIP / Postal
-                                code</label>
-                            <div class="mt-2">
-                                <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Notifications</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">We'll always let you know about important changes, but you
-                        pick what else you want to hear about.</p>
-
-                    <div class="mt-10 space-y-10">
-                        <fieldset>
-                            <legend class="text-sm/6 font-semibold text-gray-900">By Email</legend>
-                            <div class="mt-6 space-y-6">
-                                <div class="relative flex gap-x-3">
-                                    <div class="flex h-6 items-center">
-                                        <input id="comments" name="comments" type="checkbox"
-                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                    </div>
-                                    <div class="text-sm/6">
-                                        <label for="comments" class="font-medium text-gray-900">Comments</label>
-                                        <p class="text-gray-500">Get notified when someones posts a comment on a
-                                            posting.</p>
-                                    </div>
-                                </div>
-                                <div class="relative flex gap-x-3">
-                                    <div class="flex h-6 items-center">
-                                        <input id="candidates" name="candidates" type="checkbox"
-                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                    </div>
-                                    <div class="text-sm/6">
-                                        <label for="candidates" class="font-medium text-gray-900">Candidates</label>
-                                        <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
-                                    </div>
-                                </div>
-                                <div class="relative flex gap-x-3">
-                                    <div class="flex h-6 items-center">
-                                        <input id="offers" name="offers" type="checkbox"
-                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                    </div>
-                                    <div class="text-sm/6">
-                                        <label for="offers" class="font-medium text-gray-900">Offers</label>
-                                        <p class="text-gray-500">Get notified when a candidate accepts or rejects an
-                                            offer.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 
 
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-        <!-- <HeaderListModal 
-            :onSelectBlock
-            :webBlockTypes="selectedWebBlock"
-            :currentTopbar="usedTemplates.topBar"
-        /> -->
-
         <div class="h-[500px]">
             <AnnouncementTemplateList @afterSubmit="() => isModalOpen = false" />
+        </div>
+    </Modal>
+
+    <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]">
+        <div class="grid grid-cols-2 h-[500px] divide-x divide-gray-300 ">
+            <fieldset>
+                <legend class="text-sm/6 font-semibold ">Set publish start date</legend>
+                <div class="mt-6 space-y-6">
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="instant"
+                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
+                            :checked="settingPublish.start_type ==  'instant'"
+                            id="inp-publish-now"
+                            name="inp-publish-now"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label for="inp-publish-now" class="block text-sm/6 font-medium cursor-pointer ">Publish now</label>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="scheduled"
+                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
+                            :checked="settingPublish.start_type ==  'scheduled'"
+                            id="inp-publish-schedule"
+                            name="inp-publish-schedule"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <!-- <label for="inp-publish-schedule" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
+                        <VueDatePicker
+                            v-model="publishStartDate"
+                            time-picker-inline
+                            auto-apply
+                            :min-date="new Date()"
+                            :clearable="false"
+                            class="w-fit"
+                        >
+                            <template #trigger>
+                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.start_type !==  'scheduled'">
+                                    {{ useFormatTime(publishStartDate, {formatTime: 'hm'}) }}
+                                </Button>
+                            </template>
+                        </VueDatePicker>
+
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset class="px-4">
+                <legend class="text-sm/6 font-semibold ">Set finish date</legend>
+                <div class="mt-6 space-y-6">
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="instant"
+                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
+                            :checked="settingPublish.end_type ==  'instant'"
+                            id="inp-finish-unlimited"
+                            name="inp-finish-unlimited"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="scheduled"
+                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
+                            :checked="settingPublish.end_type ==  'scheduled'"
+                            id="inp-finish-scheduled"
+                            name="inp-finish-scheduled"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <!-- <label for="inp-finish-scheduled" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
+                        <VueDatePicker
+                            v-model="publishEndDate"
+                            time-picker-inline
+                            auto-apply
+                            :min-date="new Date()"
+                            :clearable="false"
+                            class="w-fit"
+                        >
+                            <template #trigger>
+                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.end_type !==  'scheduled'">
+                                    {{ useFormatTime(publishEndDate, {formatTime: 'hm'}) }}
+                                </Button>
+                            </template>
+                        </VueDatePicker>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="qwezxc">
+            <PureTextarea />
         </div>
     </Modal>
 </template>
@@ -548,25 +487,6 @@ onMounted(() => {
 
 :deep(.p-select-label) {
     padding-right: 0px !important;
-}
-
-
-.list-move, /* apply transition to moving elements */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-.list-leave-active {
-  position: absolute;
 }
 
 </style>

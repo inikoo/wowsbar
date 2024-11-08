@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, ref, watch } from 'vue'
 
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import InputText from 'primevue/inputtext';
@@ -20,6 +20,7 @@ import { isArray, set as setLodash } from 'lodash'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faAngleDown, faAngleUp } from '@far';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import Icon from '@/Components/Icon.vue';
 library.add(faAngleDown, faAngleUp)
 
 
@@ -75,14 +76,24 @@ const setFormValue = (mValue: Object, fieldKeys: string | string[], newVal) => {
     onUpdateValue()
 }
 
+const openFieldWorkshop = inject('openFieldWorkshop', null)
+watch(() => openFieldWorkshop?.value, (value) => {
+    console.log('child openFieldWorkshop', value)
+    if (value) {
+        openPanel.value = props.blueprint?.findIndex(item => item.key?.includes(value))
+    }
+})
+
 </script>
 
 <template>
-    <Accordion>
-        <AccordionPanel v-for="(field, index) of blueprint" :key="index" :value="index" @click="openPanel = index">
+    <!-- <pre>{{ blueprint }}</pre> -->
+     <!-- <pre>{{ blueprint }}</pre> -->
+    <Accordion v-model:value="openPanel">
+        <AccordionPanel v-for="(field, index) of blueprint" :key="index" :value="index">
             <AccordionHeader>
                 <div>
-                    <Icon :data="field.icon" />
+                    <Icon v-if="field?.icon" :data="field.icon" />
                     {{ field.name }}
                 </div>
             </AccordionHeader>

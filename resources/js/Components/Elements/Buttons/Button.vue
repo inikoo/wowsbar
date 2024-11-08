@@ -57,7 +57,7 @@ else if (props.style == 'secondary' || props.style == 'edit') {
         styleClass = 'border border-gray-300 text-gray-600 bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-none'
     }
 } 
-else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-200/70'
+else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-200/70 disabled:text-gray-400 disabled:bg-gray-200/90'
 else if (props.style == 'rainbow') styleClass = 'bg-indigo-500 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 
 else if (props.style == 'delete' || props.style == 'negative' || props.style == 'cancel') styleClass = 'border border-red-400 text-red-500 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
