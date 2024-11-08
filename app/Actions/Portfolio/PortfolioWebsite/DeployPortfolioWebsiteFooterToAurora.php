@@ -17,7 +17,7 @@ class DeployPortfolioWebsiteFooterToAurora
 {
     use WithActionUpdate;
 
-    public function handle(PortfolioWebsite $portfolioWebsite, array $footer = []): Response
+    public function handle(PortfolioWebsite $portfolioWebsite, array $footer = null): Response
     {
         $key     = config('services.aurora.api_key');
         $website = parse_url($portfolioWebsite->url, PHP_URL_HOST);
