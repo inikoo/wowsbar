@@ -32,7 +32,6 @@ const props = defineProps<{
     data: {
         footer: Object
     }
-    uploadImageRoute:routeType
     autosaveRoute: routeType
     publishRoute: routeType
     previewRoute: routeType
@@ -53,7 +52,7 @@ const visible = ref(false);
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
-console.log(props)
+
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
@@ -151,6 +150,11 @@ const handleIframeMessage = (event: MessageEvent) => {
 
         openFieldWorkshop.value = event.data.openFieldWorkshop
         console.log('field', openFieldWorkshop.value)
+    }
+    
+    // Tell Footer that the he in the Workshop
+    if (event?.data?.key === 'isFooterInWorkshop') {
+        sendToIframe({ key: 'isWorkshop', value: true })
     }
 
     if (data.key === 'autosave') {

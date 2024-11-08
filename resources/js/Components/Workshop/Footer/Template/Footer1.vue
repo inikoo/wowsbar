@@ -22,6 +22,7 @@ library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedi
 const props = defineProps<{
     modelValue: object,
     previewMode: Boolean
+    isWorkshop: boolean  // true, if this component is appear in Wowsbar Workshop
 }>();
 
 const emits = defineEmits<{
@@ -151,14 +152,14 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <Image v-else-if="modelValue?.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
                 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
 
             <div v-if="modelValue?.email" class="relative group flex-1 flex justify-center md:justify-start items-center">
                 <a style="font-size: 17px">{{ modelValue?.email }}</a>
-                <div @click="() => iframeToParent({openFieldWorkshop: 'email'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-1 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'email'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-1 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -169,7 +170,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                     <span style="font-size: 17px">{{ modelValue?.whatsapp?.number }}</span>
                 </a>
 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'whatsapp'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-0 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'whatsapp'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-0 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -181,7 +182,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
 
                 <span class="" style="font-size: 15px">{{ modelValue.phone.caption }}</span>
                 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -210,7 +211,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                          <Editor :key="editorKey"  v-model="item.name" :editable="editable"
+                                          <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey"  v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -230,7 +231,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                          <Editor :key="editorKey"  v-model="sub.name" :editable="editable"
+                                                          <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey"  v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -305,7 +306,8 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                           <Editor :key="editorKey" v-model="item.name" :editable="editable"
+                                           <Editor :key="editorKey" :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="item.name" :editable="editable"
+                                                class=""
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -325,7 +327,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                           <Editor :key="editorKey" v-model="sub.name" :editable="editable"
+                                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -400,7 +402,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                           <Editor :key="editorKey" v-model="item.name" :editable="editable"
+                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -420,7 +422,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                           <Editor :key="editorKey" v-model="sub.name" :editable="editable"
+                                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -479,12 +481,12 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <div class="flex flex-col flex-col-reverse gap-y-6 md:block">
                     <div>
                         <address class="mt-10 md:mt-0 mb-4">
-                           <Editor :key="editorKey" v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
+                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox1 = e, emits('update:modelValue', modelValue) }" />
                         </address>
 
                         <div class="mt-10 md:mt-0 mb-4 w-full">
-                           <Editor :key="editorKey" v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
+                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox2 = e, emits('update:modelValue', modelValue) }" />
                         </div>
 
@@ -494,7 +496,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                     class="h-auto max-h-7 md:max-h-8 max-w-full w-fit">
                             </div>
                             
-                            <div @click="() => iframeToParent({openFieldWorkshop: 'paymentData'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
+                            <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'paymentData'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
                                 <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                             </div>
                         </div>
@@ -521,14 +523,14 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                     <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
                         :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
                         
-                    <div @click="() => iframeToParent({openFieldWorkshop: 'socialMedia'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
+                    <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'socialMedia'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
                         <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                     </div>
                 </div>
             </div>
 
             <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
-               <Editor :key="editorKey" v-model="modelValue.copyright" :editable="editable"
+               <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.copyright" :editable="editable"
                     @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
             </div>
         </div>
