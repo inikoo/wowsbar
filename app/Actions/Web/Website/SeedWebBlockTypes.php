@@ -66,18 +66,18 @@ class SeedWebBlockTypes
             }
 
 
-            /*$imagePath = 'web-block-types/screenshots/'.$webBlockType->code.'.png';
+            $imagePath = 'web-block-types/screenshots/'.$webBlockType->code.'.png';
             if (Storage::disk('datasets')->exists($imagePath)) {
                 SaveModelImage::run(
                     $webBlockType,
                     [
-                        'path' => Storage::disk('datasets')->path($imagePath),
+                        'path'         => Storage::disk('datasets')->path($imagePath),
                         'originalName' => $webBlockType->code.'.png',
 
                     ],
                     'screenshot'
                 );
-            }*/
+            }
         }
     }
 

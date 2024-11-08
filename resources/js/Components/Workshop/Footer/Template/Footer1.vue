@@ -29,6 +29,7 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: string | number): void
 }>()
 
+const editorKey = ref(uuidv4())
 const editable = ref(!props.previewMode)
 const selectedData = ref(null)
 const selectedIndex = ref(null)
@@ -62,10 +63,12 @@ const subMenuitems = ref([
 ]);
 
 const onDrag = () => {
+    editorKey.value = uuidv4()
     editable.value = false;
 }
 
 const onDrop = () => {
+    editorKey.value = uuidv4()
     editable.value = true;
 /*     emits('update:modelValue', cloneDeep({...props.modelValue})); */
 }
@@ -143,10 +146,10 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
         :style="getStyles(modelValue?.container?.properties)">
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
-            <div class="group relative flex-1 flex items-center justify-center md:justify-start ">
-                <img v-if="!isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+            <div  class="flex-1 flex items-center justify-center md:justify-start ">
+                <img v-if="modelValue?.logo?.source && !isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
-                <Image v-else :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                <Image v-else-if="modelValue?.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
                 
                 <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
@@ -208,7 +211,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="item.name" :editable="editable"
+                                          <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey"  v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -228,7 +231,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="sub.name" :editable="editable"
+                                                          <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey"  v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -303,7 +306,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="item.name" :editable="editable"
+                                           <Editor :key="editorKey" :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="item.name" :editable="editable"
                                                 class=""
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
@@ -324,7 +327,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="sub.name" :editable="editable"
+                                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -399,7 +402,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="item.name" :editable="editable"
+                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -419,7 +422,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="sub.name" :editable="editable"
+                                                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -478,12 +481,12 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <div class="flex flex-col flex-col-reverse gap-y-6 md:block">
                     <div>
                         <address class="mt-10 md:mt-0 mb-4">
-                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
+                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox1 = e, emits('update:modelValue', modelValue) }" />
                         </address>
 
                         <div class="mt-10 md:mt-0 mb-4 w-full">
-                            <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
+                           <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox2 = e, emits('update:modelValue', modelValue) }" />
                         </div>
 
@@ -527,7 +530,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
             </div>
 
             <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
-                <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" v-model="modelValue.copyright" :editable="editable"
+               <Editor :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''" :key="editorKey" v-model="modelValue.copyright" :editable="editable"
                     @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
             </div>
         </div>

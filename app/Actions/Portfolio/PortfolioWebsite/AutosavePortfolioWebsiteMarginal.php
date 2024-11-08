@@ -7,12 +7,10 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Events\BroadcastPreviewHeaderFooter;
-use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
@@ -26,54 +24,22 @@ class AutosavePortfolioWebsiteMarginal
     public function handle(PortfolioWebsite $portfolioWebsite, string $marginal, array $modelData): void
     {
         $layout      = Arr::get($modelData, 'layout');
-        $firstCommit = true;
-
-        if ($portfolioWebsite->snapshots()->exists()) {
-            $firstCommit = false;
-        }
-
-
-        /** @var Snapshot $snapshot */
-        $snapshot = StoreWebsiteSnapshot::run(
-            $portfolioWebsite,
-            [
-                'state'          => SnapshotStateEnum::UNPUBLISHED,
-                'published_at'   => now(),
-                'layout'         => $layout,
-                'scope'          => $marginal,
-                'first_commit'   => $firstCommit,
-                'comment'        => Arr::get($modelData, 'comment'),
-                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
-                'publisher_type' => Arr::get($modelData, 'publisher_type'),
-            ],
-        );
-
-        StoreDeployment::run(
-            $portfolioWebsite,
-            [
-                'scope'          => $marginal,
-                'snapshot_id'    => $snapshot->id,
-                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
-                'publisher_type' => Arr::get($modelData, 'publisher_type'),
-            ]
-        );
-
+        
         if (in_array($marginal, ['header', 'footer'])) {
             $updateData = [
-                "live_{$marginal}_snapshot_id"    => $snapshot->id,
-                "compiled_layout->$marginal"      => $snapshot->layout,
-                "published_{$marginal}_checksum"  => md5(json_encode($snapshot->layout)),
+                "compiled_layout->$marginal"      => $layout,
+                "published_{$marginal}_checksum"  => md5(json_encode($layout)),
             ];
 
         } else {
             $updateData = [
-                "compiled_layout->$marginal"     => $snapshot->layout
+                "compiled_layout->$marginal"     => $layout
             ];
         }
-
+       
         $portfolioWebsite->update($updateData);
 
-        BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite);
+       /*  BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite); */
     }
 
     public function authorize(ActionRequest $request): bool

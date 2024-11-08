@@ -40,6 +40,7 @@ const props = defineProps<{
         data: Array<any>
     }
 }>()
+console.log(props.web_blocks)
 const isLoading = ref(false)
 const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)

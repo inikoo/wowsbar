@@ -186,7 +186,8 @@ const toggleAdd = (event: any) => {
             <div class="grid grid-cols-5 gap-6">
                 <div v-for="icon of FeOptions" :key="icon.value" class="pr-4">
                 <div @click="()=>addPayments(icon)"
-                    class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
+                    :class="icon.value.includes('white') ? 'bg-black text-white': 'bg-gray-200'"
+                    class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-2 m-2">
                     <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
                         :src="icon.image" alt="avatar">
                     <div class="ml-4 truncate" style="max-width: 150px;"> 
