@@ -31,6 +31,7 @@ use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\Upda
 use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UpdatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\ActivateFooterPortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\AutosavePortfolioWebsiteMarginal;
 use App\Actions\Portfolio\PortfolioWebsite\DeactivateFooterPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\PublishPortfolioWebsiteMarginal;
@@ -58,9 +59,8 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         Route::post('interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
         Route::post('images', UploadImagesToPortfolioWebsite::class)->name('images.store');
 
-
         Route::name('footers.')->prefix('footers')->group(function () {
-            Route::patch('autosave/footer', [PublishPortfolioWebsiteMarginal::class, 'footer'])->name('autosave');
+            Route::patch('autosave/footer', [AutosavePortfolioWebsiteMarginal::class, 'footer'])->name('autosave');
             Route::post('publish/footer', [PublishPortfolioWebsiteMarginal::class, 'footer'])->name('publish');
 
             Route::patch('activate', ActivateFooterPortfolioWebsite::class)->name('activate');
