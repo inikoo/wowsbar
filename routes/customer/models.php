@@ -21,6 +21,7 @@ use App\Actions\Portfolio\Banner\StoreBanner;
 use App\Actions\Portfolio\Banner\UpdateBanner;
 use App\Actions\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
+use App\Actions\Portfolio\Gallery\DeleteUploadedImage;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
@@ -101,6 +102,7 @@ Route::prefix('/banner')->name('banner.')->group(function () {
 });
 
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
+Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
 
 Route::post('/user', StoreUser::class)->name('user.store');
 Route::patch('/user/{customerUser:id}', UpdateCustomerUser::class)->name('user.update');

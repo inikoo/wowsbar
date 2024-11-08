@@ -101,6 +101,10 @@ class ShowFooter
                     ]
                 ],
 
+                'removeImageRoute' => [
+                    'name' => 'customer.models.images.remove'
+                ],
+
                 'previewRoute' => [
                     'name'       => 'customer.portfolio.websites.footer.preview',
                     'parameters' => [
