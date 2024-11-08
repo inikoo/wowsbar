@@ -22,6 +22,7 @@ library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedi
 const props = defineProps<{
     modelValue: object,
     previewMode: Boolean
+    isWorkshop: boolean  // true, if this component is appear in Wowsbar Workshop
 }>();
 
 const emits = defineEmits<{
@@ -148,14 +149,14 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <Image v-else :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
                 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
 
             <div v-if="modelValue?.email" class="relative group flex-1 flex justify-center md:justify-start items-center">
                 <a style="font-size: 17px">{{ modelValue?.email }}</a>
-                <div @click="() => iframeToParent({openFieldWorkshop: 'email'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-1 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'email'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-1 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -166,7 +167,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                     <span style="font-size: 17px">{{ modelValue?.whatsapp?.number }}</span>
                 </a>
 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'whatsapp'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-0 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'whatsapp'})" class="p-1 absolute -left-2 -top-2 text-yellow-500 cursor-pointer group-hover:top-0 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -178,7 +179,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
 
                 <span class="" style="font-size: 15px">{{ modelValue.phone.caption }}</span>
                 
-                <div @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
+                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
                     <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
@@ -491,7 +492,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                     class="h-auto max-h-7 md:max-h-8 max-w-full w-fit">
                             </div>
                             
-                            <div @click="() => iframeToParent({openFieldWorkshop: 'paymentData'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
+                            <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'paymentData'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
                                 <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                             </div>
                         </div>
@@ -518,7 +519,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                     <a v-for="item of modelValue.socialMedia" target="_blank" :key="item.icon"
                         :href="item.link"><font-awesome-icon :icon="item.icon" class="text-2xl" /></a>
                         
-                    <div @click="() => iframeToParent({openFieldWorkshop: 'socialMedia'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
+                    <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'socialMedia'})" class="p-1 absolute -left-0 -top-12 text-yellow-500 cursor-pointer group-hover:-top-8 opacity-0 group-hover:opacity-100 transition-all">
                         <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
                     </div>
                 </div>
