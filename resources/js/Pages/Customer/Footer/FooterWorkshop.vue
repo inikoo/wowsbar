@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, IframeHTMLAttributes, onMounted, onUnmounted } from 'vue'
+import { ref, watch, IframeHTMLAttributes, onMounted, onUnmounted, provide } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -134,9 +134,23 @@ const pickTemplate = (template) => {
     visible.value = false
 }
 
+const openFieldWorkshop = ref(null)
+provide('openFieldWorkshop', openFieldWorkshop)
 const handleIframeMessage = (event: MessageEvent) => {
     if (event.origin !== window.location.origin) return;
     const { data } = event;
+
+    // Open field on side editor
+    if (event?.data?.openFieldWorkshop) {
+        if(openFieldWorkshop.value == event.data.openFieldWorkshop) {
+            console.log('same', openFieldWorkshop.value)
+            openFieldWorkshop.value = null
+        }
+
+        openFieldWorkshop.value = event.data.openFieldWorkshop
+        console.log('field', openFieldWorkshop.value)
+    }
+
     if (data.key === 'autosave') {
         if (saveCancelToken.value) {
             saveCancelToken.value()
@@ -165,6 +179,8 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('message', handleIframeMessage);
 });
+
+
 
 </script>
 
