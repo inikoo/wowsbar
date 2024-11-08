@@ -211,7 +211,7 @@ defineExpose({
 </script>
 
 <template>
-    <div id="tiptap" class="divide-y divide-gray-400">
+    <div v-if="editable" id="tiptap" class="divide-y divide-gray-400">
         <BubbleMenu ref="_bubbleMenu" :editor="editorInstance" :tippy-options="{ duration: 100 }"
             v-if="editorInstance && !showDialog">
             <section id="tiptap-toolbar" class="bg-gray-100 rounded-xl border border-gray-300 divide-x divide-gray-400">
@@ -390,6 +390,10 @@ defineExpose({
             @close="() => { showLinkDialog = false; showDialog = false; }" @update="updateLink" />
         <TiptapVideoDialog v-if="showAddYoutubeDialog" :show="showAddYoutubeDialog" @insert="insertYoutubeVideo"
             @close="() => { showAddYoutubeDialog = false; showDialog = false; }" />
+    </div>
+      
+    <div v-else id="blockTextContent">
+        <div v-html="modelValue" />
     </div>
 </template>
 

@@ -25,6 +25,7 @@ class AutosavePortfolioWebsiteMarginal
 
     public function handle(PortfolioWebsite $portfolioWebsite, string $marginal, array $modelData): void
     {
+
         $layout      = Arr::get($modelData, 'layout');
         $firstCommit = true;
 
@@ -48,15 +49,6 @@ class AutosavePortfolioWebsiteMarginal
             ],
         );
 
-        StoreDeployment::run(
-            $portfolioWebsite,
-            [
-                'scope'          => $marginal,
-                'snapshot_id'    => $snapshot->id,
-                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
-                'publisher_type' => Arr::get($modelData, 'publisher_type'),
-            ]
-        );
 
         if (in_array($marginal, ['header', 'footer'])) {
             $updateData = [

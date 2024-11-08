@@ -28,6 +28,7 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: string | number): void
 }>()
 
+const editorKey = ref(uuidv4())
 const editable = ref(!props.previewMode)
 const selectedData = ref(null)
 const selectedIndex = ref(null)
@@ -61,10 +62,12 @@ const subMenuitems = ref([
 ]);
 
 const onDrag = () => {
+    editorKey.value = uuidv4()
     editable.value = false;
 }
 
 const onDrop = () => {
+    editorKey.value = uuidv4()
     editable.value = true;
 /*     emits('update:modelValue', cloneDeep({...props.modelValue})); */
 }
@@ -207,7 +210,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor v-model="item.name" :editable="editable"
+                                          <Editor :key="editorKey"  v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -227,7 +230,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor v-model="sub.name" :editable="editable"
+                                                          <Editor :key="editorKey"  v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -302,7 +305,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor v-model="item.name" :editable="editable"
+                                           <Editor :key="editorKey" v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -322,7 +325,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor v-model="sub.name" :editable="editable"
+                                                           <Editor :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -397,7 +400,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                         <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                             class="handle text-white cursor-grab pr-3 mr-2" />
                                         <div class="w-full">
-                                            <Editor v-model="item.name" :editable="editable"
+                                           <Editor :key="editorKey" v-model="item.name" :editable="editable"
                                                 @onEditClick="selectAllEditor"
                                                 @update:model-value="(e) => { item.name = e, emits('update:modelValue', modelValue) }" />
 
@@ -417,7 +420,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                                     <FontAwesomeIcon icon="fal fa-bars" v-if="!previewMode"
                                                         class="handle-sub text-sm text-white cursor-grab pr-3 mr-2" />
                                                     <div class="w-full">
-                                                            <Editor v-model="sub.name" :editable="editable"
+                                                           <Editor :key="editorKey" v-model="sub.name" :editable="editable"
                                                                 @update:model-value="(e) => { sub.name = e, emits('update:modelValue', modelValue) }"
                                                                 @onEditClick="selectAllEditor" />
                                                     </div>
@@ -476,12 +479,12 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                 <div class="flex flex-col flex-col-reverse gap-y-6 md:block">
                     <div>
                         <address class="mt-10 md:mt-0 mb-4">
-                            <Editor v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
+                           <Editor :key="editorKey" v-model="modelValue.columns.column_4.data.textBox1" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox1 = e, emits('update:modelValue', modelValue) }" />
                         </address>
 
                         <div class="mt-10 md:mt-0 mb-4 w-full">
-                            <Editor v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
+                           <Editor :key="editorKey" v-model="modelValue.columns.column_4.data.textBox2" :editable="editable"
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox2 = e, emits('update:modelValue', modelValue) }" />
                         </div>
 
@@ -525,7 +528,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
             </div>
 
             <div id="footer_copyright" class="text-[14px] md:text-[12px] text-center">
-                <Editor v-model="modelValue.copyright" :editable="editable"
+               <Editor :key="editorKey" v-model="modelValue.copyright" :editable="editable"
                     @update:model-value="(e) => { modelValue.copyright = e, emits('update:modelValue', props.modelValue) }" />
             </div>
         </div>
