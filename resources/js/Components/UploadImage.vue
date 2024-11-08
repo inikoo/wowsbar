@@ -144,7 +144,7 @@ watch(
 					<Image v-if="isObject(modelValue.source)" :src=" modelValue?.source"
 						class="w-full object-cover h-full object-center group-hover:opacity-75">
 					</Image>
-					<img v-else="isObject(modelValue.source)" :src="modelValue?.source"
+					<img v-else="modelValue.source" :src="modelValue?.source"
 						class="w-full object-cover h-full object-center group-hover:opacity-75">
 					</img>
 

@@ -142,7 +142,7 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
             <div class="flex-1 flex items-center justify-center md:justify-start ">
-                <img v-if="isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                <img v-if="!isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
                 <Image v-else :src="modelValue.logo.source" :alt="modelValue.logo.alt"
                     class="h-auto max-h-20 w-auto min-w-16"/>
