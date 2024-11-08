@@ -7,11 +7,15 @@
 
 namespace App\Models\Web;
 
+use App\Actions\Helpers\Images\GetPictureSources;
 use App\Enums\Organisation\Web\WebBlockType\WebBlockTypeScopeEnum;
+use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -80,5 +84,22 @@ class WebBlockType extends Model implements HasMedia
         return $this->hasMany(WebBlock::class);
     }
 
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'image_id');
+    }
 
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Media::class, 'model', 'model_has_media');
+    }
+
+    public function imageSources($width = 0, $height = 0)
+    {
+        if ($this->image) {
+            $avatarThumbnail = $this->image->getImage()->resize($width, $height);
+            return GetPictureSources::run($avatarThumbnail);
+        }
+        return null;
+    }
 }

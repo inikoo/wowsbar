@@ -31,7 +31,7 @@ class WebBlockTypesResource extends JsonResource
             'data'        => $webBlockType->data,
             'created_at'  => $webBlockType->created_at,
             'updated_at'  => $webBlockType->updated_at,
-            // 'screenshot'  => $webBlockType->imageSources(),
+            'screenshot'  => $webBlockType->imageSources(),
             'visibility'  => ['in' => true, 'out' => true],
             'show'        => true,
             'component'   => Arr::get($webBlockType->data, 'component'),

@@ -13,7 +13,6 @@ use App\Models\HumanResources\Employee;
 use App\Models\SysAdmin\Organisation;
 use App\Models\Web\WebBlockType;
 use Lorisleiva\Actions\Concerns\AsAction;
-use stdClass;
 
 class SaveModelImage
 {
@@ -39,18 +38,13 @@ class SaveModelImage
             return $model;
         }
 
-        $organisation_id = $model->organisation_id;
-
-
         if ($media) {
             $model->updateQuietly(['image_id' => $media->id]);
 
             $model->images()->sync(
                 [
                     $media->id => [
-                        'organisation_id' => $organisation_id,
-                        'scope'           => $scope,
-                        'data'            => json_encode(new stdClass())
+                        'scope'           => $scope
                     ]
                 ]
             );
