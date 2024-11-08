@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Multiselect from "@vueform/multiselect"
 import { cloneDeep } from 'lodash'
-import axios from 'axios'
+import Popover from 'primevue/popover'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faShieldAlt, faTimes, faTrash } from "@fas"
@@ -19,7 +19,7 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'update:modelValue', value: {}): void
 }>();
-
+const _addop = ref();
 const FeOptions = [
     {
         name: "Accounts",
@@ -108,38 +108,17 @@ const FeOptions = [
     },
 ]
 
-/* const GetPayment = async () => {
-    try {
-        const response = await axios.get(
-            route('customer.accounting.payment-service-providers.index'),
-        )
-         if (response && response.data && response.data.data) {
-             const ini = response.data.data.map((item) => ({
-                 name: item.name,
-                 value: item.name,
-                 image: item.logo
-             }))
-             payments.value = ini
-         } else {
-             console.error('Invalid response format', response)
-         }
-    } catch (error: any) {
-        console.error('error', error)
-    }
-} */
-
-
-
-const addPayments = () => {
+const addPayments = (value) => {
     let data = cloneDeep(props.modelValue.data);
     data.push(
         {
-            name: "checkout",
-            value: "checkout",
-            image: "https://www.linqto.com/wp-content/uploads/2023/04/logo_2021-11-05_19-04-11.530.png?v=2",
+            name: value.name,
+            value: value.name,
+            image: value.image
         },
     );
     emits('update:modelValue', { data: data });
+    _addop.value.hide();
 };
 
 const updatePayment = (index: number, value: any) => {
@@ -160,11 +139,10 @@ const deleteSocial = (event, index) => {
     emits('update:modelValue', { data: set });
 }
 
-/* onMounted(() => {
-    GetPayment()
-});
+const toggleAdd = (event: any) => {
+    _addop.value.toggle(event);
+}
 
- */
 </script>
 
 <template>
@@ -203,7 +181,21 @@ const deleteSocial = (event, index) => {
             </div>
         </template>
         <Button type="dashed" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2"
-            @click="addPayments" />
+            @click="toggleAdd" />
+        <Popover ref="_addop">
+            <div class="grid grid-cols-5 gap-6">
+                <div v-for="icon of FeOptions" :key="icon.value" class="pr-4">
+                <div @click="()=>addPayments(icon)"
+                    class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
+                    <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
+                        :src="icon.image" alt="avatar">
+                    <div class="ml-4 truncate" style="max-width: 150px;"> 
+                        {{ icon.name }}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </Popover>
     </div>
 </template>
 
