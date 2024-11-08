@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import { cloneDeep } from 'lodash'
 import Popover from 'primevue/popover';
 import PureInput from '@/Components/Pure/PureInput.vue'
@@ -22,44 +21,46 @@ const emits = defineEmits<{
 }>();
 
 const op = ref();
+const _addop = ref();
 const openIndex = ref<number | null>(null); // Track the currently open disclosure
 const icons = [
-    { 
+    {
         type: "Facebook",
         value: "fab fa-facebook",
     },
-    { 
+    {
         type: "Instagram",
         value: "fab fa-instagram",
     },
-    { 
+    {
         type: "Tik Tok",
         value: "fab fa-tiktok",
     },
-    { 
+    {
         type: "Pinterest",
         value: "fab fa-pinterest",
     },
-    { 
+    {
         type: "Youtube",
         value: "fab fa-youtube",
     },
-    { 
+    {
         type: "Linkedin",
         value: "fab fa-linkedin-in",
     },
 ];
 
-const add = () => {
-    let data = cloneDeep(props.modelValue);
-    data.push(
-        { 
-            type: "Facebook",
-            icon : "fab fa-facebook-f",
-            link : ""
+const AddItem = (icon) => {
+    let set = cloneDeep(props.modelValue);
+    set.push(
+        {
+            type: icon.type,
+            icon: icon.value,
+            link: ""
         }
     );
-    emits('update:modelValue',  data );
+    emits('update:modelValue', set);
+    _addop.value.hide();
 };
 
 const changeIcon = (icon, data, index) => {
@@ -69,19 +70,23 @@ const changeIcon = (icon, data, index) => {
         icon: icon.value,
         link: data.link
     }
-    emits('update:modelValue',set);
+    emits('update:modelValue', set);
 }
 
 const deleteSocial = (event, index) => {
     event.stopPropagation();
     event.preventDefault();
     let set = cloneDeep(props.modelValue);
-    set.splice(index,1)
-    emits('update:modelValue',set);
+    set.splice(index, 1)
+    emits('update:modelValue', set);
 }
 
-const toggle = (event : any) => {
+const toggle = (event: any) => {
     op.value[0].toggle(event);
+}
+
+const toggleAdd = (event: any) => {
+    _addop.value.toggle(event);
 }
 
 const handleDisclosureToggle = (index) => {
@@ -98,20 +103,25 @@ const handleDisclosureToggle = (index) => {
     <div class="p-4">
         <div v-for="(item, index) of modelValue" :key="index" class="p-1">
             <div class="relative">
-                <button @click="handleDisclosureToggle(index)" :class="openIndex === index ? 'rounded-t-lg' : 'rounded-lg'"
+                <button @click="handleDisclosureToggle(index)"
+                    :class="openIndex === index ? 'rounded-t-lg' : 'rounded-lg'"
                     class="flex w-full justify-between bg-slate-200  px-4 py-2 text-left text-sm font-medium hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                     <span class="font-medium text-sm">{{ item.type }}</span>
-                    <FontAwesomeIcon :icon="['fas', 'times']" class="text-red-500 p-1" @click="(e)=>deleteSocial(e,index)" />
+                    <FontAwesomeIcon :icon="['fas', 'times']" class="text-red-500 p-1"
+                        @click="(e) => deleteSocial(e, index)" />
                 </button>
-                
+
                 <div v-if="openIndex === index" class="px-4 pb-2 pt-4 text-sm text-gray-500 bg-slate-100 rounded-b-lg">
                     <div>
                         <div class="p-1">
                             <span class="text-xs my-2"> Icon : </span>
-                            <Button type="dashed" @click="toggle" :full="true" ><FontAwesomeIcon :icon="item.icon" /></Button>
+                            <Button type="dashed" @click="toggle" :full="true">
+                                <FontAwesomeIcon :icon="item.icon" />
+                            </Button>
                             <Popover ref="op">
                                 <div class="grid grid-cols-3 gap-6 p-1">
-                                    <div v-for="icon in icons" :key="icon.type" @click="()=>changeIcon(icon,item,index)" class="cursor-pointer flex flex-col items-center p-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
+                                    <div v-for="icon in icons" :key="icon.type" @click="() => changeIcon(icon, item, index)"
+                                        class="cursor-pointer flex flex-col items-center p-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
                                         <FontAwesomeIcon :icon="icon.value" class="text-xl mb-2"></FontAwesomeIcon>
                                         <span class="text-xs font-medium text-gray-700">{{ icon.type }}</span>
                                     </div>
@@ -127,7 +137,16 @@ const handleDisclosureToggle = (index) => {
                 </div>
             </div>
         </div>
-        <Button type="dashed" icon="fal fa-plus" label="Add Social Media" full size="s" class="mt-2" @click="add" />
+        <Button type="dashed" icon="fal fa-plus" label="Add Social Media" full size="s" class="mt-2" @click="toggleAdd" />
+        <Popover ref="_addop">
+            <div class="grid grid-cols-3 gap-6 p-1">
+                <div v-for="icon in icons" :key="icon.type" @click="() => AddItem(icon)"
+                    class="cursor-pointer flex flex-col items-center p-4 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
+                    <FontAwesomeIcon :icon="icon.value" class="text-xl mb-2"></FontAwesomeIcon>
+                    <span class="text-xs font-medium text-gray-700">{{ icon.type }}</span>
+                </div>
+            </div>
+        </Popover>
     </div>
 </template>
 

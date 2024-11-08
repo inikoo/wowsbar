@@ -32,6 +32,7 @@ const props = defineProps<{
     data: {
         footer: Object
     }
+    uploadImageRoute:routeType
     autosaveRoute: routeType
     publishRoute: routeType
     previewRoute: routeType
@@ -51,7 +52,7 @@ const visible = ref(false);
 const isIframeLoading = ref(false)
 const debouncedSendUpdate = debounce((data) => autoSave(data), 1000, { leading: false, trailing: true })
 const saveCancelToken = ref<Function | null>(null)
-
+console.log(props)
 const onPublish = async (popover: Function) => {
     try {
         isLoading.value = true
@@ -197,7 +198,7 @@ onUnmounted(() => {
         <div v-if="usedTemplates?.data"
             class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
             <div class="w-full">
-                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint" />
+                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint" :uploadImageRoute="uploadImageRoute"/>
             </div>
         </div>
 

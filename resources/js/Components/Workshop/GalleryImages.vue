@@ -23,13 +23,15 @@ const props = withDefaults(defineProps<{
     addImage: Function,
     closeModal: Function,
     imagesUploadRoute: routeType
+    canUploadImage:boolean
     ratio?: {
         w: number
         h: number
     },
     multiple: boolean
 }>(), {
-    multiple: true  // able to select multiple files
+    multiple: true,  // able to select multiple files
+    canUploadImage:true
 })
 
 const galleryStore = ref(useGalleryStore())
@@ -206,7 +208,7 @@ const addComponent =  (element) => {
                 <span class="leading-none">Close</span>
             </div>
         </Button>
-        <Button :style="`secondary`" class="relative">
+        <Button :style="`secondary`" class="relative" v-if="canUploadImage">
             <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
             <span>{{ trans("Add Images") }}</span>
             <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />

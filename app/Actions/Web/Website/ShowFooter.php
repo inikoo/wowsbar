@@ -95,10 +95,14 @@ class ShowFooter
                 ],
 
                 'uploadImageRoute' => [
-                    'name'       => 'grp.models.website.footer.images.store',
+                    'name'       => 'customer.models.portfolio-website.images.store',
                     'parameters' => [
                         'portfolioWebsite' => $portfolioWebsite->id
                     ]
+                ],
+
+                'removeImageRoute' => [
+                    'name' => 'customer.models.images.remove'
                 ],
 
                 'previewRoute' => [

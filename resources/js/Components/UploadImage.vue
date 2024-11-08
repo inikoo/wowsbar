@@ -93,6 +93,12 @@ const onPickImage = (e) => {
 	emits("update:modelValue", updatedModelValue)
 }
 
+const DeleteImage = () => {
+	isOpenGalleryImages.value = false
+	const updatedModelValue = { ...props.modelValue, source: null }
+	emits("update:modelValue", updatedModelValue)
+}
+
 // Open file input
 const onClickButton = () => {
 	fileInput.value?.click()
@@ -148,9 +154,11 @@ watch(
 						class="w-full object-cover h-full object-center group-hover:opacity-75">
 					</img>
 
-					<div class="absolute top-0 right-0 m-2">
+					<div class="absolute top-0 right-0 m-2 flex gap-2">
 						<Button id="gallery" :style="`tertiary`" :icon="'fal fa-photo-video'" size="xs"
 							class="relative hover:text-gray-700" @click="isOpenGalleryImages = true" />
+						<Button id="gallery" :style="`red`" :icon="['far', 'fa-trash-alt']" size="xs"
+							class="relative hover:text-gray-700" @click="DeleteImage" />
 					</div>
 				</div>
 			</div>
@@ -175,6 +183,7 @@ watch(
 				:closeModal="() => isOpenGalleryImages = false"
 				:imagesUploadRoute="uploadRoutes"
 				:multiple="false"
+				:canUploadImage="false"
 			/>
 		</div>
 	</Modal>
