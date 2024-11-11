@@ -112,7 +112,6 @@ const onClickButton = () => {
 watch(
   () => props.modelValue,
   (newValue) => {
-    console.log("Model value changed", newValue)
     emits("autoSave")
   },
   { deep: true }

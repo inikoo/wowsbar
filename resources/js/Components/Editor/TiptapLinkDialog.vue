@@ -36,7 +36,8 @@ function update() {
 onMounted(() => {
   inputLinkRef.value = props.currentUrl?.href ?? "";
   if(props.currentUrl?.target == "_self") target.value =  { label: "Open in the same tab", value: "_self" };
-  else  target.value = { label: "Open in a new tab", value: "_blank" }
+  else if(props.currentUrl?.target == "_blank") target.value = { label: "Open in a new tab", value: "_blank" }
+  else target.value =  { label: "Open in the same tab", value: "_self" };
 });
 </script>
 
