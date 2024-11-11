@@ -77,11 +77,6 @@ const FeOptions = [
         value: "paypal",
     },
     {
-        name: "Mastercard",
-        image: "/art/payments/mastercard.png?v=2",
-        value: "mastercard",
-    },
-    {
         name: "Visa",
         image: "/art/payments/visa.png?v=2",
         value: "visa",
