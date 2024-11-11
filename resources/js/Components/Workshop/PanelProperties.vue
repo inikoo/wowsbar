@@ -9,6 +9,10 @@ import { trans } from 'laravel-vue-i18n'
 import Checkbox from 'primevue/checkbox';
 import { ref } from 'vue'
 
+const props = defineProps<{
+    background?:string
+}>();
+
 const model = defineModel()
 
 const compModel = computed(() => {

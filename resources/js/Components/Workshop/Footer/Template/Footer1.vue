@@ -146,14 +146,12 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
         :style="getStyles(modelValue?.container?.properties)">
         <div
             class="w-full flex flex-col md:flex-row gap-4 md:gap-8 pt-2 pb-4 md:pb-6 mb-4 md:mb-10 border-0 border-b border-solid border-gray-700">
-            <div  class="relative group flex-1 flex items-center justify-center md:justify-start ">
-                <img v-if="modelValue?.logo?.source && !isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
-                    class="h-auto max-h-20 w-auto min-w-16" style="height: 100px; width: 200px;"/>
-                <Image v-else-if="modelValue?.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
-                    class="h-[100px] w-[200px]"/>
-                <div v-if="isWorkshop" @click="() => iframeToParent({openFieldWorkshop: 'logo'})" class="p-1 absolute -left-0 -top-2 text-yellow-500 cursor-pointer group-hover:-top-4 opacity-0 group-hover:opacity-100 transition-all">
-                    <FontAwesomeIcon icon='fas fa-arrow-square-left' class='' fixed-width aria-hidden='true' />
-                </div>
+            <div class="flex-1 flex items-center justify-center md:justify-start ">
+                    <img v-if="modelValue?.logo?.source && !isObject(modelValue.logo?.source)" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                    class="h-auto max-h-20 w-auto min-w-16"/>
+                    <img v-else :src="modelValue?.logo?.source?.original" :alt="modelValue.logo.alt" class="tw-h-auto tw-max-h-20 tw-w-auto tw-min-w-16">
+                    <!-- <Image imageCover v-else-if="modelValue?.logo?.source" :src="modelValue.logo.source" :alt="modelValue.logo.alt"
+                    class="h-auto max-h-20 w-auto min-w-16 w-fit h-fit"/> -->
             </div>
 
             <div v-if="modelValue?.email" class="relative group flex-1 flex justify-center md:justify-start items-center">

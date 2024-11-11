@@ -20,6 +20,7 @@ const props = withDefaults(
 	defineProps<{
 		modelValue: any
 		uploadRoutes: routeType
+		background?:string
 	}>(),
 	{}
 )
@@ -130,7 +131,7 @@ watch(
 	<div>
 		<div class="w-full h-full space-y-2" @dragover="dragOver" @dragleave="dragLeave" @drop="drop">
 			<div
-				class="relative mt-2 flex justify-center border-dashed border border-[#475569] shadow-lg px-6 py-5 bg-gradient-to-r hover:bg-gray-400/20">
+				class="relative mt-2 flex justify-center border-dashed border border-[#475569] shadow-lg px-6 py-5" :style="{backgroundColor:background}">
 				<label for="fileInput"
 					class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-0">
 					<input type="file" multiple name="file" id="fileInput" class="sr-only" ref="fileInput"

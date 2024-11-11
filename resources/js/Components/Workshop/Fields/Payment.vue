@@ -14,6 +14,7 @@ library.add(faFacebookF, faInstagram, faTiktok, faPinterest, faYoutube, faLinked
 
 const props = defineProps<{
     modelValue: any,
+    background?: string
 }>();
 
 const emits = defineEmits<{
@@ -149,8 +150,8 @@ const toggleAdd = (event: any) => {
                         @update:modelValue="value => updatePayment(index, value)">
                         <template v-slot:singlelabel="{ value }">
                             <div class="flex items-center rounded-lg w-full p-2 m-2 mr-0">
-                                <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
-                                    :src="value.image" alt="avatar">
+                                <img class="w-12 h-12  p-1 object-contain object-center group-hover:opacity-75"
+                                    :src="value.image" alt="avatar" :style="{ backgroundColor: background }">
                                 <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
                                     {{ value.name }}
                                 </div>
@@ -165,7 +166,7 @@ const toggleAdd = (event: any) => {
                             <div
                                 class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full bg-gray-200 p-2 m-2">
                                 <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
-                                    :src="option.image" alt="avatar">
+                                    :src="option.image" alt="avatar" :style="{ backgroundColor: background }">
                                 <div class="ml-4 truncate" style="max-width: 150px;"> <!-- Set max width to truncate -->
                                     {{ option.name }}
                                 </div>
@@ -180,15 +181,14 @@ const toggleAdd = (event: any) => {
         <Popover ref="_addop">
             <div class="grid grid-cols-5 gap-6">
                 <div v-for="icon of FeOptions" :key="icon.value" class="pr-4">
-                <div @click="()=>addPayments(icon)"
-                    :class="icon.value.includes('white') ? 'bg-black text-white': 'bg-gray-200'"
-                    class="flex items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-2 m-2">
-                    <img class="w-12 h-12 rounded-full object-contain object-center group-hover:opacity-75"
-                        :src="icon.image" alt="avatar">
-                    <div class="ml-4 truncate" style="max-width: 150px;"> 
-                        {{ icon.name }}
+                    <div @click="() => addPayments(icon)" :style="{ backgroundColor: background }"
+                        class="flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
+                        <img class="w-12 h-12 rounded-full object-contain object-center mb-2 group-hover:opacity-75"
+                            :src="icon.image" alt="avatar">
+                        <div class="text-center truncate" style="max-width: 150px;">
+                            {{ icon.name }}
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </Popover>

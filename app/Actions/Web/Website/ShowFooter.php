@@ -52,6 +52,7 @@ class ShowFooter
                     $request->route()->originalParameters()
                 ),
                 'title'       => __('footer'),
+                'url'          =>  $portfolioWebsite->url,
                 'pageHead'    => [
                     'title'    => $portfolioWebsite->name,
                     'icon'     => [

@@ -16,6 +16,7 @@ library.add(faFacebook, faInstagram, faTiktok, faPinterest, faYoutube, faLinkedi
 
 const props = defineProps<{
     modelValue: any,
+    background?:string
 }>();
 
 const emits = defineEmits<{
