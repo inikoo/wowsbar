@@ -88,9 +88,7 @@ const op = ref();
 const _bubbleMenu = ref(null)
 const showDialog = ref(false)
 const contentResult = ref<string>()
-const currentLinkInDialog = ref<string | undefined>()
-const showAddYoutubeDialog = ref<boolean>(false)
-const showAddImageDialog = ref<boolean>(false)
+const currentLinkInDialog = ref<Object | undefined>()
 const showLinkDialog = ref<boolean>()
 
 const editorInstance = useEditor({
@@ -167,12 +165,12 @@ const editorInstance = useEditor({
 
 
 function openLinkDialog() {
-    currentLinkInDialog.value = editorInstance.value?.getAttributes("link").href
+    currentLinkInDialog.value = editorInstance.value?.getAttributes("link")
     showLinkDialog.value = true
     showDialog.value = true;
 }
 
-function updateLink(value?: string) {
+function updateLink(value?: string, target_data = '_self') {
     if (!value) {
         editorInstance.value
             ?.chain()
@@ -187,7 +185,7 @@ function updateLink(value?: string) {
         ?.chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: value })
+        .setLink({ href: value , target: target_data })
         .run()
 }
 
@@ -376,8 +374,6 @@ const toggle = (event: any) => {
 
         <TiptapLinkDialog v-if="showLinkDialog" :show="showLinkDialog" :current-url="currentLinkInDialog"
             @close="() => { showLinkDialog = false; showDialog = false; }" @update="updateLink" />
-        <TiptapVideoDialog v-if="showAddYoutubeDialog" :show="showAddYoutubeDialog" @insert="insertYoutubeVideo"
-            @close="() => { showAddYoutubeDialog = false; showDialog = false; }" />
     </div>
 
     <div v-else id="blockTextContent">
