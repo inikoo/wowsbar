@@ -12,9 +12,11 @@ import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import {Website} from "@/types/website"
 import {faCheckCircle as fasCheckCircle} from '@fas'
+import {faDraftingCompass} from '@fal'
 import {library} from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(fasCheckCircle)
+library.add(fasCheckCircle, faDraftingCompass)
 
 const props = defineProps<{
     data: {
@@ -51,6 +53,18 @@ const selectedWebsite = ref({
         <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1 specialUnderlineCustomer">
                 {{ website['name'] }}
+            </Link>
+        </template>
+
+        <!-- Footer -->
+        <template #cell(footer)="{ item: website }">
+            <Link
+                :href="route('customer.portfolio.websites.footer', [website.slug])"
+                class="specialUnderlineCustomer"
+            >
+                <FontAwesomeIcon icon='fal fa-drafting-compass' class='' fixed-width aria-hidden='true' />
+                Footer's Workshop
+
             </Link>
         </template>
 

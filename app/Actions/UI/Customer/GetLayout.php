@@ -248,12 +248,12 @@ class GetLayout
 
 
         // Websites
-        if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {
+        if ($customerUser->hasAnyPermission(['portfolio.view', 'portfolio.footer.view', 'portfolio.banners.view'])) {
             $navigation['websites'] = [
                 'scope'   => 'websites',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
-                'route'   => $customerUser->hasPermissionTo('portfolio') ? 'customer.portfolio.websites.index' : null,
+                'route'   =>  'customer.portfolio.websites.index',
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],

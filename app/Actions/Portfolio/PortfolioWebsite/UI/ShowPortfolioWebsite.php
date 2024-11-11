@@ -49,8 +49,9 @@ class ShowPortfolioWebsite extends InertiaAction
     {
         $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
         $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canEditFooter = $request->get('customerUser')->hasPermissionTo('portfolio.footer.edit');
 
-        return $request->get('customerUser')->hasPermissionTo('portfolio.view');
+        return $request->get('customerUser')->hasAnyPermission(['portfolio.view', 'portfolio.footer.view', 'portfolio.banners.view']);
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
@@ -86,19 +87,19 @@ class ShowPortfolioWebsite extends InertiaAction
                         'icon'  => 'fal fa-globe'
                     ],
                     'actions' => [
-                        [
+                        $this->canEditFooter ? [
                             'type'    => 'button',
                             'style'   => 'primary',
                             'label'   => __('Footer'),
-                            'icon'    => 'fal fa-football-ball',
-                            'tooltip' => __('footer'),
+                            'icon'    => 'fal fa-shoe-prints',
+                            'tooltip' => __('Footer Workshop'),
                             'route'   => [
                                 'name'       => 'customer.portfolio.websites.footer',
                                 'parameters' => array_merge(
                                     $request->route()->originalParameters()
                                 )
                             ]
-                        ],
+                        ] : null,
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],

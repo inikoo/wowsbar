@@ -12,6 +12,24 @@
         ]
     },
     {
+        "name":"footer",
+        "permissions": [
+            "portfolio.footer"
+        ]
+    },
+    {
+        "name":"header",
+        "permissions": [
+            "portfolio.header"
+        ]
+    },
+    {
+        "name":"announcements",
+        "permissions": [
+            "portfolio.announcements"
+        ]
+    },
+    {
         "name":"banners",
         "permissions": [
            "portfolio.banners"

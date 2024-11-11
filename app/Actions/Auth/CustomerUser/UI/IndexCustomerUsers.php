@@ -191,13 +191,13 @@ class IndexCustomerUsers extends InertiaAction
         )->table(
             $this->tableStructure(
                 prefix: 'users',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.users.index'
-                        ]
-                    ]
-                ]
+                // exportLinks: [
+                //     'export' => [
+                //         'route' => [
+                //             'name' => 'export.users.index'
+                //         ]
+                //     ]
+                // ]
             )
         )->table(IndexCustomerUserRequestLogs::make()->tableStructure(parent:$customer))
         ->table(IndexCustomerHistory::make()->tableStructure('history'));

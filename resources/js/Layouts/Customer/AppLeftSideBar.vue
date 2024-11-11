@@ -92,7 +92,9 @@ const handleToggleLeftbar = () => {
                     >
                         <!-- Navigation -->
 
-                        <Link v-if="item.route"  :href="route(item.route)"
+                        <Link
+                            :component="item.route ? Link : 'div'"
+                            :href="item.route ? route(item.route) : '#'"
                             class="flex items-center group text-sm font-medium py-2"
                             :class="[
                                 itemKey === layout.currentModule
@@ -107,7 +109,7 @@ const handleToggleLeftbar = () => {
                                 aria-hidden="true"
                                 class="ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon" fixed-width />
-                            <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+                            <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ item.label }}</span>
                             <!-- <span >{{ itemKey }} -- {{ item.scope }} -- {{ Object.values(layout.navigation)[0].scope }}</span> -->
                         </Link>
 
