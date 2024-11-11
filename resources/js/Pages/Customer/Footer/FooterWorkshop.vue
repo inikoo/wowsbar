@@ -242,6 +242,13 @@ const onClickToggleActivate = async (newVal: boolean) => {
         </template>
 
         <template #other>
+            <div class="flex items-center">
+                <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden text-xs select-none ring-1 ring-gray-300">
+                    <div @click="isActivated = false" class="py-1.5 px-2 flex justify-center capitalize transition-all duration-200 ease-in-out" :class="[!isActivated ? 'bg-gray-600 text-gray-100' : 'bg-gray-200/70 text-gray-400 hover:bg-gray-300/70']">{{ trans('Deactivate') }}</div>
+                    <div @click="isActivated = true" class="py-1.5 px-2 flex justify-center capitalize transition-all duration-200 ease-in-out" :class="[isActivated ? 'bg-gray-600 text-gray-100' : 'bg-gray-200/70 text-gray-400 hover:bg-gray-300/70']">{{ trans('Activate') }}</div>
+                </div>
+            </div>
+
             <Publish
                 v-if="footer_status"
                 :isLoading="isLoading"

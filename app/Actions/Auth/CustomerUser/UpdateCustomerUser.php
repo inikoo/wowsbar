@@ -55,15 +55,21 @@ class UpdateCustomerUser
 
         $customerUser->refresh();
 
-
+        $roles = [];
         foreach (Arr::get($modelData, 'roles', []) as $roleName) {
 
             $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
             if ($role) {
-
-                $customerUser->assignRole($role);
+                $roles[] = $role->id;
             }
+            // $roles[] = $role->id;
+            // if ($role) {
+
+            //     $customerUser->assignRole($roles);
+            // }
         }
+
+        $customerUser->syncRoles($roles);
 
 
         $user = UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password', 'reset_password']));

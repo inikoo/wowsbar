@@ -17,9 +17,9 @@ import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.v
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 import FirstBannerWidget from "@/Components/EmptyState/FirstBannerWidget.vue";
 
-import {faSign, faGlobe,faObjectGroup} from '@fal'
+import {faSign, faGlobe,faObjectGroup, faShoePrints} from '@fal'
 
-library.add(faSign, faGlobe,faObjectGroup)
+library.add(faSign, faGlobe,faObjectGroup, faShoePrints)
 
 const props = defineProps<{
     title: string,

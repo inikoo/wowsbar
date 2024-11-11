@@ -29,9 +29,10 @@ class IndexPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.view');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
 
-        return $request->get('customerUser')->hasPermissionTo('portfolio.view');
+        return $request->get('customerUser')->hasAnyPermission(['portfolio.view', 'portfolio.footer.view', 'portfolio.banners.view']);
+
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -89,10 +90,11 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'leads', label: __('Leads'))
-                ->column(key: 'seo', label: __('SEO'))
-                ->column(key: 'ppc', label: __('Google Ads'))
-                ->column(key: 'banners', label: __('banners'))
+                ->column(key: 'footer', label: __('footer'), sortable: true)
+                // ->column(key: 'leads', label: __('Leads'))
+                // ->column(key: 'seo', label: __('SEO'))
+                // ->column(key: 'ppc', label: __('Google Ads'))
+                // ->column(key: 'banners', label: __('banners'))
                 ->defaultSort('slug');
         };
     }

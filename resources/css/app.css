@@ -18,6 +18,7 @@ address {
     [background-size:100%_0.2em]
     motion-safe:transition-all motion-safe:duration-200
     hover:[background-size:100%_100%]
+    transition-all
     focus:[background-size:100%_100%] px-1;
 }
 

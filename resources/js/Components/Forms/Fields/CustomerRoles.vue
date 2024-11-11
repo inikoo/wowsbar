@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { get } from 'lodash'
-import { reactive, watch, ref, watchEffect } from 'vue'
+import { reactive, watch, ref, watchEffect, onMounted } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faLock } from '@fal'
+import { faLock, faInfoCircle } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faLock)
+library.add(faLock, faInfoCircle)
 
 const props = defineProps<{
     form?: any
@@ -27,7 +27,7 @@ const optionsRoles1 = ref(
 
 const optionsRoles2 = ref(
     {
-        label: 'Portfolio',
+        label: 'All permissions',
         name: 'portfolio',
         value: props.form[props.fieldName].includes("portfolio"),
         disabled: false
@@ -38,33 +38,51 @@ const optionsRoles3 = reactive([
     {
         label: 'Banners',
         name: 'banners',
-        value: props.form[props.fieldName].includes("super-admin"),
+        value: props.form[props.fieldName].includes("banners"),
         disabled: false
     },
     {
-        label: 'Social',
-        name: 'social',
-        value: props.form[props.fieldName].includes("social"),
+        label: 'Footer',
+        name: 'footer',
+        value: props.form[props.fieldName].includes("footer"),
         disabled: false
     },
     {
-        label: 'SEO',
-        name: 'seo',
-        value: props.form[props.fieldName].includes("seo"),
+        label: 'Header',
+        name: 'header',
+        value: props.form[props.fieldName].includes("header"),
         disabled: false
     },
     {
-        label: 'PPC',
-        name: 'ppc',
-        value: props.form[props.fieldName].includes("ppc"),
+        label: 'Announcement',
+        name: 'announcements',
+        value: props.form[props.fieldName].includes("announcements"),
         disabled: false
     },
-    {
-        label: 'Prospects',
-        name: 'prospects',
-        value: props.form[props.fieldName].includes("prospects"),
-        disabled: false
-    }
+    // {
+    //     label: 'Social',
+    //     name: 'social',
+    //     value: props.form[props.fieldName].includes("social"),
+    //     disabled: false
+    // },
+    // {
+    //     label: 'SEO',
+    //     name: 'seo',
+    //     value: props.form[props.fieldName].includes("seo"),
+    //     disabled: false
+    // },
+    // {
+    //     label: 'PPC',
+    //     name: 'ppc',
+    //     value: props.form[props.fieldName].includes("ppc"),
+    //     disabled: false
+    // },
+    // {
+    //     label: 'Prospects',
+    //     name: 'prospects',
+    //     value: props.form[props.fieldName].includes("prospects"),
+    //     disabled: false
+    // }
 ])
 
 watch(() => optionsRoles1.value.value, () => {
@@ -86,6 +104,11 @@ watchEffect(() => {
 // When checkbox is updated then clear the error
 watch([optionsRoles1, optionsRoles2, optionsRoles3], () => {
     props.form.errors[props.fieldName] = ""
+})
+
+onMounted(() => {
+    optionsRoles1.value.value ? optionsRoles2.value.value = true : ''
+    optionsRoles2.value.value ? optionsRoles3.map(item => item.value = true) : ''
 })
 </script>
 
@@ -119,6 +142,7 @@ watch([optionsRoles1, optionsRoles2, optionsRoles3], () => {
                                 :class="[optionsRoles1.value ? 'text-gray-400' : 'text-gray-500 hover:text-gray-600']"
                             >
                                 {{ optionsRoles2.label }}
+                                <!-- <FontAwesomeIcon v-tooltip="'Included Footer, Header, and Announcement'" icon='fal fa-info-circle' class='' fixed-width aria-hidden='true' /> -->
                             </label>
                         </td>
                         <td class="whitespace-nowrap px-3 text-sm text-gray-500">
@@ -127,7 +151,7 @@ watch([optionsRoles1, optionsRoles2, optionsRoles3], () => {
                                     :name="optionsRoles2.name" type="checkbox"
                                     :titles="`I'm Interested in ${optionsRoles2.label}`"
                                     :disabled="optionsRoles1.value"
-                                    class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
+                                    class="h-5 w-5 rounded cursor-pointer disabled:text-green-300 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
                                 />
                                 <FontAwesomeIcon v-if="optionsRoles1.value" icon='fal fa-lock' class='' aria-hidden='true' />
                             </div>
@@ -148,7 +172,7 @@ watch([optionsRoles1, optionsRoles2, optionsRoles3], () => {
                                     :name="option.name" type="checkbox"
                                     :titles="`I'm Interested in ${option.label}`"
                                     :disabled="optionsRoles2.value"
-                                    class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
+                                    class="h-5 w-5 rounded cursor-pointer disabled:text-green-300 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
                                 />
                                 <FontAwesomeIcon v-if="optionsRoles2.value" icon='fal fa-lock' class='' aria-hidden='true' />
                             </div>
