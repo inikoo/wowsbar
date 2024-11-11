@@ -70,7 +70,7 @@ const splitRoles = (word: string) => {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: user }">
-            <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user.slug">
+            <Link :href="userRoute(user)" class="w-full h-full py-2 specialUnderlineCustomer" :id="user.slug">
                 {{ user.slug }}
             </Link>
         </template>
@@ -82,14 +82,16 @@ const splitRoles = (word: string) => {
         </template>
 
         <template #cell(status)="{ item: user }">
-            <Tag :theme="setThemeStatus(user.status)" :key="user.id">{{ user.status }}</Tag>
+            <Tag :theme="setThemeStatus(user.status)" :key="user.id" :label="user.status" />
         </template>
 
         <template #cell(roles)="{ item: user }">
             <div class="flex gap-x-1 flex-wrap gap-y-1">
-                <Tag v-for="role in splitRoles(user.roles)" :theme="setThemeRoles(role)" :key="user.id">
-                    {{ role }}
-                </Tag>
+                <Tag v-for="role in splitRoles(user.roles)"
+                    :theme="setThemeRoles(role)"
+                    :key="user.id"
+                    :label="role"
+                />
             </div>
         </template>
     </Table>
