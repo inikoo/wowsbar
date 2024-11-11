@@ -44,7 +44,7 @@ const props = defineProps<{
     is_published: boolean
     route_toggle_activated: routeType
 }>()
-console.log(props.web_blocks)
+
 const isLoading = ref(false)
 const usedTemplates = ref(props.data.data)
 const previewMode = ref(false)
@@ -95,8 +95,11 @@ const autoSave = async (data: Object) => {
         {
             onFinish: () => {
                 saveCancelToken.value = null
-                isIframeLoading.value = false
                 sendToIframe({ key: 'reload', value: {} })
+                if(isIframeLoading.value){
+                    isIframeLoading.value = false
+                    location.reload();
+                }
             },
             onCancelToken: (cancelToken) => {
                 saveCancelToken.value = cancelToken.cancel
