@@ -18,7 +18,7 @@ class DeactivateFooterPortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
-        if ($portfolioWebsite->footer_status && Arr::exists($portfolioWebsite->customer->integration_data, 'account')) {
+        if (Arr::exists($portfolioWebsite->customer->integration_data, 'account')) {
             DeployPortfolioWebsiteFooterToAurora::run($portfolioWebsite);
         }
 

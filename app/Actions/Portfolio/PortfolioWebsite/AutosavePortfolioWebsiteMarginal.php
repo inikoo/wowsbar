@@ -7,9 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Events\BroadcastPreviewHeaderFooter;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Arr;
@@ -24,7 +22,7 @@ class AutosavePortfolioWebsiteMarginal
     public function handle(PortfolioWebsite $portfolioWebsite, string $marginal, array $modelData): void
     {
         $layout      = Arr::get($modelData, 'layout');
-        
+
         if (in_array($marginal, ['header', 'footer'])) {
             $updateData = [
                 "compiled_layout->$marginal"      => $layout,
@@ -36,10 +34,10 @@ class AutosavePortfolioWebsiteMarginal
                 "compiled_layout->$marginal"     => $layout
             ];
         }
-       
+
         $portfolioWebsite->update($updateData);
 
-       /*  BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite); */
+        /*  BroadcastPreviewHeaderFooter::dispatch($portfolioWebsite); */
     }
 
     public function authorize(ActionRequest $request): bool
