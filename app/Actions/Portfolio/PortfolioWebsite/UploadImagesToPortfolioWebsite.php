@@ -60,7 +60,8 @@ class UploadImagesToPortfolioWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
+        return $request->get('customerUser')->hasAnyPermission(['portfolio.view', 'portfolio.footer.view', 'portfolio.banners.view']);
+        /* return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit"); */
     }
 
     public function rules(): array

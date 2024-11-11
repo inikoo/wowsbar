@@ -53,8 +53,11 @@ const onUpload = async () => {
 			}
 		)
 		const updatedModelValue = { ...props.modelValue, source: cloneDeep(response.data.data[0].source) }
+		addedFiles.value = []
 		emits("update:modelValue", updatedModelValue)
 	} catch (error) {
+		addedFiles.value = []
+		console.log(error)
 		notify({
 			title: "Failed",
 			text: "Error while uploading data",

@@ -39,6 +39,7 @@ const props = defineProps<{
     publishRoute: routeType
     previewRoute: routeType
     footer_status : Boolean
+    uploadImageRoute : routeType
     web_blocks: {
         data: Array<any>
     }
