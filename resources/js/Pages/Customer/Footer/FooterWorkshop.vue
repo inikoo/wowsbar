@@ -22,11 +22,12 @@ import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload } from '@far';
+import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faCheckCircle } from '@far';
 import { faThLarge } from '@fas';
+import { faCircle } from '@fal';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
-library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge)
+library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge, faCircle, faCheckCircle)
 
 const props = defineProps<{
     pageHead: TSPageHeading
@@ -200,9 +201,11 @@ onUnmounted(() => {
 });
 
 
-const isActivated = ref(false)
+const isActivated = ref(props.footer_status)
 const cancelTokenActivate = ref<Function | null>(null)
 const onClickToggleActivate = async (newVal: boolean) => {
+    if (isActivated.value === newVal) return
+
     if(cancelTokenActivate.value) {
         cancelTokenActivate.value()
     }
@@ -240,28 +243,30 @@ const onClickToggleActivate = async (newVal: boolean) => {
 <template>
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #iconRight>
-            <!--  -->
-            <ToggleSwitch
-                v-tooltip="trans('Activated/deactivated the Footer')"
-                :modelValue="isActivated"
-                @update:modelValue="(newVal) => onClickToggleActivate(newVal)"
-            />
-            <LoadingIcon v-if="cancelTokenActivate" />
-        </template>
 
         <template #other>
             <div class="flex items-center">
-                <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden text-xs select-none ring-1 ring-gray-300">
-                    <div @click="isActivated = false" class="py-1.5 px-2 flex justify-center capitalize transition-all duration-200 ease-in-out" :class="[!isActivated ? 'bg-gray-600 text-gray-100' : 'bg-gray-200/70 text-gray-400 hover:bg-gray-300/70']">{{ trans('Deactivate') }}</div>
-                    <div @click="isActivated = true" class="py-1.5 px-2 flex justify-center capitalize transition-all duration-200 ease-in-out" :class="[isActivated ? 'bg-gray-600 text-gray-100' : 'bg-gray-200/70 text-gray-400 hover:bg-gray-300/70']">{{ trans('Activate') }}</div>
+                <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden select-none ring-1 ring-gray-300">
+                    <div @click="onClickToggleActivate(false)" class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all" :class="[!isActivated ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
+                        {{ trans('Inactive') }}
+                        <LoadingIcon v-if="!isActivated && cancelTokenActivate" size="sm" />
+                        <FontAwesomeIcon v-else-if="!isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                    </div>
+                    <div @click="onClickToggleActivate(true)" class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all" :class="[isActivated ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
+                        {{ trans('Active') }}
+                        <LoadingIcon v-if="isActivated && cancelTokenActivate" size="sm" />
+                        <FontAwesomeIcon v-else-if="isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                    </div>
                 </div>
             </div>
 
             <Publish
-                v-if="footer_status"
                 :isLoading="isLoading"
+                :isDisabled="!footer_status"
                 :is_dirty="true"
+                v-tooltip="!footer_status ? trans('Set footer to active to publish') : trans('Publish the footer')"
                 v-model="comment"
                 @onPublish="(popover) => onPublish(popover)"
             />
