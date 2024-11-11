@@ -55,3 +55,4 @@ _ide_helper.php
 /.env.wowsbar.staging.deploy
 /copy_prod_db_to_staging.sh
 push.sh
+/prod.dump
