@@ -28,12 +28,13 @@ const props = defineProps<{
     modelValue: any,
     blueprint: Array
     uploadImageRoute?: routeType
+    background?: String
 }>()
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string | number): void
 }>()
-
+console.log('side',props)
 const openPanel = ref(0)
 
 const getComponent = (componentName: string) => {
@@ -115,7 +116,7 @@ watch(() => openFieldWorkshop?.value, (value) => {
                                 <component v-for="(type, indexType) in form.type" :is="getComponent(type)"
                                     :modelValue="getFormValue(modelValue, form.key)"
                                     @update:modelValue="newValue => setFormValue(modelValue, form.key, newValue)"
-                                    :uploadRoutes="uploadImageRoute" v-bind="form?.props_data" />
+                                    :uploadRoutes="uploadImageRoute" v-bind="{...form?.props_data, background}" />
                             </template>
 
                             <template v-else>
@@ -124,7 +125,7 @@ watch(() => openFieldWorkshop?.value, (value) => {
                                 <component :is="getComponent(form.type)" :key="form.key"
                                     :modelValue="getFormValue(modelValue, form.key)"
                                     @update:modelValue="newValue => setFormValue(modelValue, form.key, newValue)"
-                                    :uploadRoutes="uploadImageRoute" v-bind="form?.props_data" />
+                                    :uploadRoutes="uploadImageRoute"  v-bind="{...form?.props_data, background}" />
                             </template>
                         </template>
                     </template>
@@ -137,7 +138,7 @@ watch(() => openFieldWorkshop?.value, (value) => {
                             <component v-for="(type, indexType) in field.type" :is="getComponent(type)"
                                 :modelValue="getFormValue(modelValue, field.key)"
                                 @update:modelValue="newValue => setFormValue(modelValue, field.key, newValue)"
-                                :uploadRoutes="uploadImageRoute" v-bind="field?.props_data" />
+                                :uploadRoutes="uploadImageRoute"  v-bind="{...form?.props_data, background}" />
                         </template>
 
                         <template v-else>
@@ -146,7 +147,7 @@ watch(() => openFieldWorkshop?.value, (value) => {
                             <component :is="getComponent(field.type)" :key="field.key"
                                 :modelValue="getFormValue(modelValue, field.key)"
                                 @update:modelValue="newValue => setFormValue(modelValue, field.key, newValue)"
-                                :uploadRoutes="uploadImageRoute" v-bind="field?.props_data" />
+                                :uploadRoutes="uploadImageRoute" v-bind="{...form?.props_data, background}" />
                         </template>
                     </template>
 

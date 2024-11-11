@@ -9,6 +9,7 @@ library.add(faAngleDown, faAngleUp )
 
 const props = defineProps<{
     modelValue: any,
+    background?:string
 }>();
 
 const emits = defineEmits<{

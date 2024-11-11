@@ -22,16 +22,17 @@ import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faCheckCircle } from '@far';
+import { faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faCheckCircle, faExpandWide } from '@far';
 import { faThLarge } from '@fas';
 import { faCircle } from '@fal';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
-library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge, faCircle, faCheckCircle)
+library.add(faExternalLink, faLineColumns, faIcons, faMoneyBill, faUpload, faDownload, faThLarge, faCircle, faCheckCircle, faExpandWide )
 
 const props = defineProps<{
     pageHead: TSPageHeading
     title: string
+    url : string
     data: {
         footer: Object
     }
@@ -241,35 +242,47 @@ const onClickToggleActivate = async (newVal: boolean) => {
 </script>
 
 <template>
+
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
+        <template #iconRight>
+            <a :href="url" target="_blank">
+                <div class="text-sm text-gray-400 pt-2">
+                    <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' class="mr-1" />
+                    {{ url }}
+                </div>
+            </a>
+        </template>
 
         <template #other>
             <div class="flex items-center">
                 <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden select-none ring-1 ring-gray-300">
-                    <div @click="onClickToggleActivate(false)" class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all" :class="[!isActivated ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
+                    <div @click="onClickToggleActivate(false)"
+                        class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
+                        :class="[!isActivated ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
                         {{ trans('Inactive') }}
                         <LoadingIcon v-if="!isActivated && cancelTokenActivate" size="sm" />
-                        <FontAwesomeIcon v-else-if="!isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
-                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else-if="!isActivated" icon='far fa-check-circle' size="sm" class=''
+                            fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class=''
+                            fixed-width aria-hidden='true' />
                     </div>
-                    <div @click="onClickToggleActivate(true)" class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all" :class="[isActivated ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
+                    <div @click="onClickToggleActivate(true)"
+                        class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
+                        :class="[isActivated ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
                         {{ trans('Active') }}
                         <LoadingIcon v-if="isActivated && cancelTokenActivate" size="sm" />
-                        <FontAwesomeIcon v-else-if="isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
-                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else-if="isActivated" icon='far fa-check-circle' size="sm" class=''
+                            fixed-width aria-hidden='true' />
+                        <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class=''
+                            fixed-width aria-hidden='true' />
                     </div>
                 </div>
             </div>
 
-            <Publish
-                :isLoading="isLoading"
-                :isDisabled="!footer_status"
-                :is_dirty="true"
+            <Publish :isLoading="isLoading" :isDisabled="!footer_status" :is_dirty="true"
                 v-tooltip="!footer_status ? trans('Set footer to active to publish') : trans('Publish the footer')"
-                v-model="comment"
-                @onPublish="(popover) => onPublish(popover)"
-            />
+                v-model="comment" @onPublish="(popover) => onPublish(popover)" />
         </template>
     </PageHeading>
 
@@ -277,7 +290,8 @@ const onClickToggleActivate = async (newVal: boolean) => {
         <div v-if="usedTemplates?.data"
             class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
             <div class="w-full">
-                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint" :uploadImageRoute="uploadImageRoute"/>
+                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint"
+                    :uploadImageRoute="uploadImageRoute" :background="usedTemplates.data?.fieldValue?.container?.properties?.background?.color"/>
             </div>
         </div>
 
@@ -289,8 +303,11 @@ const onClickToggleActivate = async (newVal: boolean) => {
                             <ScreenView @screenView="setIframeView" />
                             <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'"
                                 @click="openFullScreenPreview">
-                                <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' />
+                                <FontAwesomeIcon :icon='faExpandWide' aria-hidden='true' />
                             </div>
+                            <a class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'" :href="url" target="_blank">
+                                <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' />
+                            </a>
                         </div>
                         <div class="flex items-center gap-2">
                             <div class="text-xs" :class="[
@@ -314,14 +331,8 @@ const onClickToggleActivate = async (newVal: boolean) => {
                         <ProgressSpinner />
                     </div>
 
-                    <iframe
-                        :src="iframeSrc"
-                        :title="props.title"
-                        :class="[iframeClass]"
-                        @error="handleIframeError"
-                        @load="isIframeLoading = false"
-                        ref="_iframe"
-                    />
+                    <iframe :src="iframeSrc" :title="props.title" :class="[iframeClass]" @error="handleIframeError"
+                        @load="isIframeLoading = false" ref="_iframe" />
                 </div>
                 <div v-else>
                     <EmptyState

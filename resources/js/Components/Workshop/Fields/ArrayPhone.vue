@@ -6,6 +6,7 @@ import { isArray } from 'lodash';
 
 const props = defineProps<{
     modelValue: any[],
+    background?:string
 }>();
 
 const emit = defineEmits(['update:modelValue']);
