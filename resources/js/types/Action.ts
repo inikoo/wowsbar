@@ -8,10 +8,12 @@ export interface Action {
     style?: string
     route?: routeType
     tooltip?: string
+    fullLoading?: boolean
     
     buttonGroup?: {
         // If type = buttonGroup
         icon?: string | string[]
+        fullLoading?: boolean
         label?: string
         iconRight?: string | string[]
         style?: string
