@@ -141,7 +141,7 @@ class IndexAnnouncement extends InertiaAction
                                 'tooltip' => __('new announcement'),
                                 'label'   => __('announcement'),
                                 'route'   => [
-                                    'name'       => 'customer.portfolio.announcements.index',
+                                    'name'       => 'customer.portfolio.announcements.create',
                                     'parameters' => []
                                 ]
                             ]

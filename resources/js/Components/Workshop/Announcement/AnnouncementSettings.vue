@@ -44,9 +44,88 @@ onMounted(() => {
     emits('onMounted')
 })
 
+const announcementScheduled = ref({
+    type: 'now', // 'scheduled'
+    scheduled: {
+        start_date: '',
+        finish_date: '',
+    }
+})
+
 </script>
 
 <template>
+    <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
+        <div class="text-xl font-semibold">Publish</div>
+        <p class="text-sm/6 text-gray-600">
+            When you will publish your Announcement?
+        </p>
+
+        <div class="">
+            <div class="flex items-center gap-x-3">
+                <input
+                    value="all"
+                    @input="(val: string) => set(announcementDataSettings, 'target.type', val.target.value)"
+                    :checked="announcementDataSettings?.target?.type ==  'all'"
+                    id="publish-now"
+                    name="publish-now"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label for="publish-now" class="cursor-pointer block font-medium ">Now</label>
+            </div>
+
+            <div class="flex items-center gap-x-3">
+                <input
+                    value="specific"
+                    @input="(val: string) => set(announcementDataSettings, 'target.type', val.target.value)"
+                    :checked="announcementDataSettings?.target?.type ==  'specific'"
+                    id="publish-schedule"
+                    name="publish-schedule"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label for="publish-schedule" class="cursor-pointer block font-medium ">
+                    Scheduled Post
+                </label>
+            </div>
+        </div>
+
+        <p class="mt-2 text-sm/6 text-gray-600">
+            When the announcement finish?
+        </p>
+
+        <div class="">
+            <div class="flex items-center gap-x-3">
+                <input
+                    value="all"
+                    @input="(val: string) => set(announcementDataSettings, 'target.type', val.target.value)"
+                    :checked="announcementDataSettings?.target?.type ==  'all'"
+                    id="publish-now"
+                    name="publish-now"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label for="publish-now" class="cursor-pointer block font-medium ">Until I deactivated</label>
+            </div>
+
+            <div class="flex items-center gap-x-3">
+                <input
+                    value="specific"
+                    @input="(val: string) => set(announcementDataSettings, 'target.type', val.target.value)"
+                    :checked="announcementDataSettings?.target?.type ==  'specific'"
+                    id="publish-schedule"
+                    name="publish-schedule"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+                <label for="publish-schedule" class="cursor-pointer block font-medium ">
+                    Scheduled the finish
+                </label>
+            </div>
+        </div>
+    </fieldset>
+
     <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
         <div class="text-xl font-semibold">Page</div>
         <p class="text-sm/6 text-gray-600">
