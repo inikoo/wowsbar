@@ -70,7 +70,7 @@ const splitRoles = (word: string) => {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: user }">
-            <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user.slug">
+            <Link :href="userRoute(user)" class="w-full h-full py-2 specialUnderlineCustomer" :id="user.slug">
                 {{ user.slug }}
             </Link>
         </template>

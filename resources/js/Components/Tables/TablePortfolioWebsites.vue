@@ -60,7 +60,7 @@ const selectedWebsite = ref({
         <template #cell(footer)="{ item: website }">
             <Link
                 :href="route('customer.portfolio.websites.footer', [website.slug])"
-                class="specialUnderlineCustomer"
+                class="secondaryLinkCustomer py-1.5"
             >
                 <FontAwesomeIcon icon='fal fa-drafting-compass' class='' fixed-width aria-hidden='true' />
                 Footer's Workshop
