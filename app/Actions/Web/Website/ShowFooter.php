@@ -143,7 +143,8 @@ class ShowFooter
 
     public function authorize(ActionRequest $request): bool
     {
-        return true;
+        return $request->get('customerUser')->hasAnyPermission(['portfolio.footer.edit']);
+
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
