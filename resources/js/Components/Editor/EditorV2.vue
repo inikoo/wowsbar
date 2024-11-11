@@ -56,7 +56,11 @@ import {
     faPaintBrushAlt,
     faText
 } from "@far"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+import { faTimes } from "@fal"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faTimes)
 
 import TiptapLinkDialog from "@/Components/Editor/TiptapLinkDialog.vue"
 import TiptapVideoDialog from "@/Components/Editor/TiptapVideoDialog.vue"
