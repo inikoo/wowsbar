@@ -66,6 +66,11 @@ const onPublish = async (popover: Function) => {
             layout: usedTemplates.value
         })
         popover.close()
+        notify({
+            title: 'Success Publish',
+            text: "Please reload the url of the Published footer",
+            type: 'success',
+        })
     } catch (error) {
         const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred'
         notify({
