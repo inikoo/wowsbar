@@ -16,7 +16,8 @@ library.add(faSpinnerThird, faAsterisk, faRocketLaunch)
 const props = defineProps<{
     modelValue: string
     is_dirty: Boolean
-    isLoading: true
+    isLoading: boolean
+    isDisabled: boolean
 }>()
 
 const compRandomKey = computed(() => {
@@ -41,7 +42,9 @@ const emits = defineEmits<{
                 <!-- Style: Compare the hash from current data with hash from empty data -->
                 <Button v-if="!isOpen"
                     :label="'Publish'"
-                    :style="!is_dirty
+                    :style="isDisabled
+                        ? 'disabled'
+                        : !is_dirty
                             ? 'disabled'
                             :  'primary'"
                     :key="!is_dirty ? compRandomKey : uuidv4()"
