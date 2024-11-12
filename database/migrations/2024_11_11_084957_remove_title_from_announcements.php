@@ -13,7 +13,7 @@ return new class extends Migration
             if (Schema::hasColumn('announcements', 'code')) {
                 $table->dropColumn('code');
             }
-            $table->string('template_code')->index();
+            $table->string('template_code')->nullable();
 
         });
     }

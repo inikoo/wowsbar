@@ -17,6 +17,7 @@ import EmptyState from '@/Components/Utils/EmptyState.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
 import ToggleSwitch from 'primevue/toggleswitch'
+import Footer1Blueprint from '@/Components/Workshop/Footer/Template/Footer1Blueprint';
 
 import { routeType } from "@/types/route"
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
@@ -193,6 +194,15 @@ watch(usedTemplates, (newVal) => {
 
 }, { deep: true })
 
+const getBlueprint = (componentName: string) => {
+    const components: Component = {
+        'FooterTheme2': Footer1Blueprint.blueprint,
+        'FooterTheme1': Footer1Blueprint.blueprint,
+    }
+    return components[componentName]
+}
+
+
 onMounted(() => {
     window.addEventListener('message', handleIframeMessage);
 });
@@ -200,7 +210,6 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('message', handleIframeMessage);
 });
-
 
 const isActivated = ref(props.footer_status)
 const cancelTokenActivate = ref<Function | null>(null)
@@ -290,7 +299,7 @@ const onClickToggleActivate = async (newVal: boolean) => {
         <div v-if="usedTemplates?.data"
             class="col-span-2 bg-[#F9F9F9] flex flex-col h-full border-r border-gray-300 overflow-auto">
             <div class="w-full">
-                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="usedTemplates.blueprint"
+                <SideEditor v-model="usedTemplates.data.fieldValue" :blueprint="getBlueprint(usedTemplates.code)"
                     :uploadImageRoute="uploadImageRoute" :background="usedTemplates.data?.fieldValue?.container?.properties?.background?.color"/>
             </div>
         </div>

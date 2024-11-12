@@ -29,10 +29,11 @@ function iframeStyle(iframeElement) {
 
 async function fetchAnnouncementData() {
     if (ulid) {
-        const domainName = window.location.hostname
-        console.log('domain', domainName)
+        // const domainName = window.location.hostname
+        // console.log('domain', domainName)
+        console.log('fetchAnnouncementData')
         try {
-            const announcementData = await fetch(`https://${domainName}/announcement/${ulid}`, {
+            const announcementData = await fetch(`https://delivery-staging.wowsbar.com/announcement/${ulid}?iframe=true`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
@@ -42,6 +43,7 @@ async function fetchAnnouncementData() {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
+                    console.log('resresrespon', response)
                     return response.json();
                 });
             
@@ -51,7 +53,7 @@ async function fetchAnnouncementData() {
             // createElementAfterBody();
 
             const iframe = document.createElement('iframe');
-            iframe.src = `https://${domainName}/announcement/${ulid}`;
+            iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
             iframeStyle(iframe)
 
             // console.log('zzzz', iframe?.contentWindow)

@@ -84,11 +84,14 @@ class ShowAnnouncement extends InertiaAction
                 ),
                 'title'       => __('Announcement'),
                 'pageHead'    => [
-                    'title'     => __('Announcement'),
+                    'model'     => __('Announcement'),
+                    'title'     => $announcement->name,
                     'container' => $container,
-                    'iconRight' => [
-                        // 'title' => __('banner'),
+                    'icon' => [
                         'icon'  => 'fal fa-sign'
+                    ],
+                    'iconRight' => [
+                        'icon'  => 'fal fa-seedling'
                     ],
                 ],
                 'routes_list'   => [
@@ -108,7 +111,15 @@ class ShowAnnouncement extends InertiaAction
                 ],
                 'firstBanner'        => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'  => $announcement->toArray(),
-                'announcement_list'  => []
+                'announcement_list'  => [],
+                'isAnnouncementPublished' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                'isAnnouncementActive' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                // 'route_toggle_activated'    => [   // TODO
+                //     'name'  => 'customer.models.banner.announcement.toggle',
+                //     'parameters'    => [
+                //         'announcement' => $announcement->id
+                //     ]
+                // ]
             ]
         );
     }
