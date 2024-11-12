@@ -8,6 +8,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\BypassCors;
 use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\DetectWebsite;
 use App\Http\Middleware\EncryptCookies;
@@ -64,7 +65,7 @@ class Kernel extends HttpKernel
 
     protected $middlewareGroups = [
 
-        'api' => [
+        'api'      => [
             ForceJsonResponse::class,
             EnsureFrontendRequestsAreStateful::class,
             SubstituteBindings::class,
@@ -83,6 +84,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleDeliveryInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            BypassCors::class
         ],
         'org-web'  => [
             EncryptCookies::class,
@@ -125,14 +127,14 @@ class Kernel extends HttpKernel
         ],
 
 
-        'broadcast'  => [
+        'broadcast' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-           'auth:broadcasting'
+            'auth:broadcasting'
         ],
 
     ];
@@ -153,6 +155,7 @@ class Kernel extends HttpKernel
         'throttle'            => ThrottleRequests::class,
         'verified'            => EnsureEmailIsVerified::class,
         'org-reset-pass'      => ResetOrganisationUserPasswordMiddleware::class,
-        'customer-reset-pass' => ResetUserPasswordMiddleware::class
+        'customer-reset-pass' => ResetUserPasswordMiddleware::class,
+        'bypass-cors'         => BypassCors::class
     ];
 }
