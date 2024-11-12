@@ -105,9 +105,8 @@ const toggleEdit = (event: Event, index : Number) => {
                         </div>
                     </div>
                 </div>
+            </Popover>
             </div>
-        </template>
-
         <Button type="dashed" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2" @click="toggleAdd" />
         
         <Popover ref="_addop">
