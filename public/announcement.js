@@ -33,7 +33,7 @@ async function fetchAnnouncementData() {
         // console.log('domain', domainName)
         console.log('fetchAnnouncementData')
         try {
-            const announcementData = await fetch(`https://www.ancientwisdom.biz/ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement/01JCF2XA53CWTS6J36G4WSV3GM?iframe=true`, {
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement/01JCF2XA53CWTS6J36G4WSV3GM?iframe=true`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
