@@ -39,7 +39,7 @@ console.log('dsadsa', withIframe)
         <!-- <pre>{{announcement_data.container_properties.position.y}}</pre> -->
         <component
             id="announcement_delivery_component"
-            :is="getAnnouncementComponent(announcement_data.code)"
+            :is="getAnnouncementComponent(announcement_data.template_code)"
             :announcementData="announcement_data"
         />
     </div>
@@ -47,7 +47,7 @@ console.log('dsadsa', withIframe)
     <component
         v-else
         id="announcement_delivery_component"
-        :is="getAnnouncementComponent(announcement_data.code)"
+        :is="getAnnouncementComponent(announcement_data.template_code)"
         :announcementData="announcement_data"
     />
     

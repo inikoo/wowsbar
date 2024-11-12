@@ -255,7 +255,9 @@ const onClickClose = () => {
             >
                 <span class="sr-only">Dismiss</span>
                 <span v-html="closeIcon"></span>
+                
             </button>
+
             <Moveable
                 v-if="isEditable"
                 :target="_buttonClose"
