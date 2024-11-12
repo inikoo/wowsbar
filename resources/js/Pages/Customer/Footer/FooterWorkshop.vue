@@ -301,8 +301,7 @@ const onClickToggleActivate = async (newVal: boolean) => {
                     <div class="flex justify-between bg-slate-200 border border-b-gray-300">
                         <div class="flex">
                             <ScreenView @screenView="setIframeView" />
-                            <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'"
-                                @click="openFullScreenPreview">
+                            <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'" @click="openFullScreenPreview">
                                 <FontAwesomeIcon :icon='faExpandWide' aria-hidden='true' />
                             </div>
                             <a class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'" :href="url" target="_blank">
@@ -313,14 +312,14 @@ const onClickToggleActivate = async (newVal: boolean) => {
                             <div class="text-xs" :class="[
                                 previewMode ? 'text-slate-600' : 'text-slate-300'
                             ]">Preview</div>
-                            <Switch @click="previewMode = !previewMode" :class="[
+                            <div @click="previewMode = !previewMode" :class="[
                                 previewMode ? 'bg-slate-600' : 'bg-slate-300'
                             ]"
                                 class="pr-1 relative inline-flex h-3 w-6 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                                 <span aria-hidden="true" :class="previewMode ? 'translate-x-3' : 'translate-x-0'"
                                     class="pointer-events-none inline-block h-full w-1/2 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out">
                                 </span>
-                            </Switch>
+                            </div>
 
                             <div class="py-1 px-2 cursor-pointer" title="template" v-tooltip="'Template'">
                                 <FontAwesomeIcon :icon="faThLarge" aria-hidden='true' @click="visible = true" />

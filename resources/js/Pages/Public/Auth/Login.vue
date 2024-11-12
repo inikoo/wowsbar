@@ -54,8 +54,10 @@ const submitResetPassword = () => {
 }
 
 const submit = () => {
-    isLoading.value = true
     form.post(route('public.login'), {
+        onStart: () => {
+            isLoading.value = true
+        },
         onFinish: () => {
             form.reset('password')
         },
@@ -63,15 +65,15 @@ const submit = () => {
             emits('onSuccessLogin')
         },
         onError: (errors: any) => {
+            isLoading.value = false
             notify({
-                title: "Login failed.",
+                title: trans("Login failed"),
                 text: errors.message,
                 type: "error"
             })
         },
 
     })
-    isLoading.value = false
 }
 
 const condition: Ref<string | boolean> = ref(false)
@@ -111,14 +113,19 @@ const condition: Ref<string | boolean> = ref(false)
                     </div>
                 </div>
 
+                <Button
+                    type="submit"
+                    id="submit"
+                    :loading="isLoading"
+                    full
+                    label="Login"
+                >
+                    <!-- {{ isLoading }} -->
+                    <!-- <FontAwesomeIcon icon="fad fa-spinner-third"
+                        class="ml-2 h-5 w-5 animate-spin opacity-0"
+                        :class="{ 'opacity-100': isLoading }" /> -->
+                </Button>
                 <div>
-                    <button type="submit" id="submit"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                        {{ trans('Login') }}
-                        <FontAwesomeIcon icon="fad fa-spinner-third"
-                            class="ml-2 h-5 w-5 animate-spin opacity-0"
-                            :class="{ 'opacity-100': isLoading }" />
-                    </button>
                 </div>
 
                 <div>
@@ -130,6 +137,7 @@ const condition: Ref<string | boolean> = ref(false)
                     </p>
                 </div>
             </form>
+
             <!-- Forgot Password: if click the 'forgot password' -->
             <div v-show="condition === 'forgotPassword'" class="space-y-4">
                 <div class="flex items-center gap-x-1 text-gray-500 cursor-pointer hover:text-gray-700"

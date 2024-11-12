@@ -65,7 +65,7 @@ class ShowFooter
                             'style' => 'exit',
                             'label' => __('Exit workshop'),
                             'route' => [
-                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
+                                'name'       => preg_replace('/footer$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
