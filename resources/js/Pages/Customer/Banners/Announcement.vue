@@ -395,8 +395,11 @@ const onClickToggleActivate = async (newVal: boolean) => {
                             ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
                             position: announcementData.container_properties?.position?.type === 'fixed' ? 'absolute' : announcementData.container_properties?.position?.type
                         }">
-                        <component :is="getAnnouncementComponent(announcementData.template_code)"
-                            :announcementData="announcementData" :key="announcementData.template_code" isEditable
+                        <component
+                            :is="getAnnouncementComponent(announcementData.template_code)"
+                            :announcementData="announcementData"
+                            :key="announcementData.template_code"
+                            isEditable
                             :_parentComponent />
                     </div>
 

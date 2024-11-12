@@ -17,7 +17,7 @@ const props = defineProps<{
 
         }
     }
-    _parentComponent: Element
+    _parentComponent?: Element
     isEditable?: boolean
     isToSelectOnly?: boolean
 }>()
