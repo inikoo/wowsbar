@@ -45,14 +45,14 @@ class GetLayout
                     'name' => 'customer.portfolio.websites.index',
                 ]
             ],
-            [
-                'icon'  => ['fal', 'fa-sign'],
-                'label' => __('Announcement'),
-                'root'  => 'customer.portfolio.announcements.index',
-                'route' => [
-                    'name' => 'customer.portfolio.announcements.index'
-                ]
-            ]
+            // [
+            //     'icon'  => ['fal', 'fa-sign'],
+            //     'label' => __('Announcement'),
+            //     'root'  => 'customer.portfolio.announcements.index',
+            //     'route' => [
+            //         'name' => 'customer.portfolio.announcements.index'
+            //     ]
+            // ]
         ];
 
         // Nav: Social Accounts
