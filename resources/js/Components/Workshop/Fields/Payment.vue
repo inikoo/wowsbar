@@ -32,6 +32,7 @@ const FeOptions = [
     { name: "btree", image: "/art/payments/btree.png?v=2", value: "btree" },
     { name: "Cash", image: "/art/payments/cash.png?v=2", value: "Cash" },
     { name: "Checkout", image: "/art/payments/checkout.png?v=2", value: "Checkout" },
+    { name: "Checkout (White)", image: "/art/payments/checkout_white.png", value: "checkout-white" },
     { name: "Cond", image: "/art/payments/cond.png?v=2", value: "cond" },
     { name: "Hokodo", image: "/art/payments/hokodo.png?v=2", value: "hokodo" },
     { name: "Pastpay", image: "/art/payments/pastpay.png?v=2", value: "pastpay" },
