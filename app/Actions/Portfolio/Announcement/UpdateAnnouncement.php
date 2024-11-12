@@ -67,7 +67,7 @@ class UpdateAnnouncement
     public function rules(): array
     {
         return [
-            'code'                 => ['sometimes', 'string'],
+            'template_code'        => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'settings'             => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array']

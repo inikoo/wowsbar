@@ -20,6 +20,7 @@ import Icon from "@/Components/Icon.vue";
 import SubNavigation from "@//Components/Navigation/SubNavigation.vue";
 import { Action as ActionTS } from "@/types/Action"
 import { routeType } from '@/types/route'
+import { useTruncate } from "@/Composables/useTruncate"
 
 interface Icon {
     icon: string[] | string
@@ -96,11 +97,25 @@ const originUrl = location.origin
                     <!-- <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
                         :icon="data.iconBis.icon" size="sm" class="" :class="data.iconBis.class"/> -->
                 </div>
-                <h2 :class="!data.noCapitalise? 'capitalize' : ''">{{ data.title }}</h2>
-                <slot name="iconRight">
-                    <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
-                        :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"/>
-                </slot>
+
+                <div class="flex flex-col sm:flex-row gap-y-1.5 gap-x-3 items-center ">
+                    <h2 :class="data.noCapitalise ? '' : 'capitalize'" class="flex gap-x-2 items-center">
+                        <span v-if="data.model" class="text-gray-400 font-medium">{{ data.model }}</span>
+                        <span class="">{{ useTruncate(data.title, 30) }}</span>
+                    </h2>
+
+                    <!-- Section: After Title -->
+                    <slot name="afterTitle">
+                        <div v-if="data.iconRight || data.afterTitle" class="flex gap-x-2 items-center">
+                            <FontAwesomeIcon v-if="data.iconRight" v-tooltip="data.iconRight.tooltip || ''"
+                                :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"
+                                aria-hidden="true" />
+                            <div v-if="data.afterTitle" class="text-gray-400 font-normal text-lg leading-none">
+                                {{ data.afterTitle.label }}
+                            </div>
+                        </div>
+                    </slot>
+                </div>
             </div>
 
             <!-- Section: mini Tabs -->

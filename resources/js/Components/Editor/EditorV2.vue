@@ -31,6 +31,7 @@ import FontSize from 'tiptap-extension-font-size'
 /* import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue' */
 import ColorPicker from 'primevue/colorpicker';
 import Popover from 'primevue/popover'
+import Placeholder from '@tiptap/extension-placeholder'
 
 import {
     faUndo,
@@ -64,6 +65,7 @@ library.add(faTimes)
 
 import TiptapLinkDialog from "@/Components/Editor/TiptapLinkDialog.vue"
 import TiptapVideoDialog from "@/Components/Editor/TiptapVideoDialog.vue"
+import { trans } from "laravel-vue-i18n"
 
 
 const props = withDefaults(defineProps<{
@@ -128,6 +130,9 @@ const editorInstance = useEditor({
         Document,
         Text,
         History,
+        Placeholder.configure({
+            placeholder: props.placeholder || trans('Type something here'),
+        }),
         Heading.configure({
             levels: [1, 2, 3],
         }),

@@ -88,7 +88,7 @@ class IndexAnnouncement extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks)
-                ->column(key: 'code', label: __('code'), sortable: true)
+                ->column(key: 'ulid', label: __('ulid'))
                 ->column(key: 'name', label: __('name'), sortable: true);
         };
     }

@@ -17,8 +17,9 @@ import AnnouncementSettings from '@/Components/Workshop/Announcement/Announcemen
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown } from '@fal'
+import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle } from '@fal'
 import { faThLarge, faSquare } from '@fas'
+import { faCheckCircle } from '@far'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
 import { notify } from '@kyvg/vue3-notification'
@@ -36,12 +37,12 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import { useFormatTime } from '@/Composables/useFormatTime'
 import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 
-library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faSquare, faThLarge)
+library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faSquare, faThLarge, faCheckCircle)
 
 const props = defineProps<{
     pageHead: {}
     title: string
-    data: {},
+    // data: {},
     firstBanner?: {
         text: string
         createRoute: {
@@ -88,6 +89,9 @@ const props = defineProps<{
         update_route: routeType
         reset_route: routeType
     }
+    isAnnouncementPublished: boolean
+    isAnnouncementActive: boolean
+    route_toggle_activated: routeType
 }>()
 
 const announcementData = ref(props.announcement_data)
@@ -109,9 +113,10 @@ const onSave = () => {
                 saveCancelToken.value = null
             },
             onError: (error) => {
+                console.log('ewew', error)
                 notify({
-                    title: 'Something went wrong',
-                    text: 'Failed to save Announcement data',
+                    title: trans('Something went wrong'),
+                    text: trans('Failed to save Announcement data'),
                     type: 'error',
                 })
             },
@@ -226,6 +231,43 @@ const settingPublish = ref({
 })
 
 
+const isActivated = ref(props.isAnnouncementActive)
+const cancelTokenActivate = ref<Function | null>(null)
+const onClickToggleActivate = async (newVal: boolean) => {
+    if (isActivated.value === newVal) return
+
+    if(cancelTokenActivate.value) {
+        cancelTokenActivate.value()
+    }
+    isActivated.value = newVal
+    router[props.route_toggle_activated.method || 'patch'](
+        route(props.route_toggle_activated.name, props.route_toggle_activated.parameters),
+        { is_published: newVal },
+        {
+            onCancelToken: (cancelToken) => {
+                cancelTokenActivate.value = cancelToken.cancel
+            },
+            onFinish: () => {
+                isActivated.value = props.isAnnouncementPublished
+                cancelTokenActivate.value = null
+            },
+            onSuccess: () => {
+                notify({
+                    title: trans('Gotcha!'),
+                    text: trans('Successfully set the status'),
+                    type: 'success',
+                })
+            },
+            onError: () => {
+                notify({
+                    title: trans('Something went wrong'),
+                    text: trans('Failed to update the status'),
+                    type: 'error',
+                })
+            },
+        }
+    )
+}
 </script>
 
 <template layout="CustomerApp">
@@ -240,7 +282,29 @@ const settingPublish = ref({
             <div class="flex gap-x-2">
                 <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave" :style="'negative'" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
-                <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" />
+                <!-- <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" /> -->
+
+                <div v-if="route_toggle_activated" class="flex items-center">
+                    <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden select-none ring-1 ring-gray-300">
+                        <div @click="onClickToggleActivate(false)"
+                            class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
+                            :class="[!isActivated ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
+                            {{ trans('Inactive') }}
+                            <LoadingIcon v-if="!isActivated && cancelTokenActivate" size="sm" />
+                            <FontAwesomeIcon v-else-if="!isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                            <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        </div>
+                        <div @click="onClickToggleActivate(true)"
+                            class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
+                            :class="[isActivated ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
+                            {{ trans('Active') }}
+                            <LoadingIcon v-if="isActivated && cancelTokenActivate" size="sm" />
+                            <FontAwesomeIcon v-else-if="isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                            <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex items-center">
                     <Button @click="onPublish" label="Publish now" :loading="isLoadingSave" iconRight="fal fa-rocket-launch" class="rounded-r-none" />
                     
@@ -299,7 +363,7 @@ const settingPublish = ref({
                 </div>
             </div>
 
-            <AnnouncementSideEditor v-if="announcementData.code" @onMounted="() => isLoadingComponent = null" />
+            <AnnouncementSideEditor v-if="announcementData.template_code" @onMounted="() => isLoadingComponent = null" />
         </div>
 
         <!-- Section: Preview -->
@@ -326,17 +390,13 @@ const settingPublish = ref({
             </div>
 
             <div class="border-2 h-full w-full">
-                <div v-if="isIframeLoading" class="flex justify-center items-center w-full h-64 p-12 bg-white">
-                    <FontAwesomeIcon icon="fad fa-spinner-third" class="animate-spin w-6" aria-hidden="true" />
-                </div>
-
                 <div class="h-full w-full bg-white relative">
-                    <div v-if="announcementData.code" ref="_parentComponent" :style="{
+                    <div v-if="announcementData.template_code" ref="_parentComponent" :style="{
                             ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
                             position: announcementData.container_properties?.position?.type === 'fixed' ? 'absolute' : announcementData.container_properties?.position?.type
                         }">
-                        <component :is="getAnnouncementComponent(announcementData.code)"
-                            :announcementData="announcementData" :key="announcementData.code" isEditable
+                        <component :is="getAnnouncementComponent(announcementData.template_code)"
+                            :announcementData="announcementData" :key="announcementData.template_code" isEditable
                             :_parentComponent />
                     </div>
 
@@ -375,10 +435,10 @@ const settingPublish = ref({
     </Modal>
 
     <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]">
-        <div class="grid grid-cols-2 h-[500px] divide-x divide-gray-300 ">
-            <fieldset>
-                <legend class="text-sm/6 font-semibold ">Set publish start date</legend>
-                <div class="mt-6 space-y-6">
+        <div class="grid grid-cols-1 h-fit gap-y-4 ">
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">Start date</div>
+                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
                     <div class="flex items-center gap-x-3">
                         <input
                             value="instant"
@@ -389,7 +449,7 @@ const settingPublish = ref({
                             type="radio"
                             class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
-                        <label for="inp-publish-now" class="block text-sm/6 font-medium cursor-pointer ">Publish now</label>
+                        <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
                     </div>
                     
                     <div class="flex items-center gap-x-3">
@@ -423,9 +483,9 @@ const settingPublish = ref({
                 </div>
             </fieldset>
 
-            <fieldset class="px-4">
-                <legend class="text-sm/6 font-semibold ">Set finish date</legend>
-                <div class="mt-6 space-y-6">
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">Finish date</div>
+                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
                     <div class="flex items-center gap-x-3">
                         <input
                             value="instant"
@@ -467,10 +527,23 @@ const settingPublish = ref({
                     </div>
                 </div>
             </fieldset>
+
+            
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">Description</div>
+                <PureTextarea
+                    :placeholder="trans('My first publish')"
+                    inputClass="bg-gray-50"
+                />
+            </fieldset>
+
+            <Button
+                label="Publish"
+                full
+            />
         </div>
 
-        <div class="qwezxc">
-            <PureTextarea />
+        <div class="mt-4">
         </div>
     </Modal>
 </template>

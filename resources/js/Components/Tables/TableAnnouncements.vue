@@ -26,9 +26,9 @@ function announcementRoute(announcement) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(code)="{ item: announcement }">
-            <Link :href="announcementRoute(announcement)" :id="announcement['ulid']" class="specialUnderlineCustomer py-4 px-2 whitespace-nowrap">
-                {{announcement['code']}}
+        <template #cell(ulid)="{ item: announcement }">
+            <Link :href="announcementRoute(announcement)" :id="announcement['ulid']" class="specialUnderlineCustomer py-1 px-2 whitespace-nowrap">
+                {{announcement['ulid']}}
             </Link>
         </template>
 

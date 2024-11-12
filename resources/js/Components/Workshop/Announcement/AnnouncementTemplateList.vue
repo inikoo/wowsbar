@@ -99,7 +99,7 @@ const onSubmitTemplate = (template) => {
     console.log('template', template.fields)
     // console.log('core announce data', isProxy(announcementData))
     if(isSelectFullTemplate.value || !announcementData?.code) {
-        announcementData.code = template.code
+        announcementData.template_code = template.code
         announcementData.fields = template.fields
         announcementData.container_properties = template?.container_properties
     } else {

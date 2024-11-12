@@ -105,10 +105,11 @@ const toggleEdit = (event: Event, index : Number) => {
                         </div>
                     </div>
                 </div>
-            </Popover>
-        </div>
+            </div>
+        </template>
 
         <Button type="dashed" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2" @click="toggleAdd" />
+        
         <Popover ref="_addop">
             <div class="grid grid-cols-5 gap-6">
                 <div v-for="icon in FeOptions" :key="icon.value" class="pr-4">
@@ -116,7 +117,7 @@ const toggleEdit = (event: Event, index : Number) => {
                         class="flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
                         <img class="w-12 h-12 rounded-full object-contain object-center mb-2 group-hover:opacity-75"
                             :src="icon.image" alt="avatar">
-                        <div class="text-center truncate" style="max-width: 150px;">
+                        <div class="text-center truncate text-white" style="max-width: 150px;">
                             {{ icon.name }}
                         </div>
                     </div>
