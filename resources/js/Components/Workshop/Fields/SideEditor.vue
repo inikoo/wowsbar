@@ -34,7 +34,7 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string | number): void
 }>()
-console.log('side',props)
+
 const openPanel = ref(0)
 
 const getComponent = (componentName: string) => {

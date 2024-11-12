@@ -270,7 +270,7 @@ const toggle = (event: any) => {
                                 {{ editorInstance?.getAttributes('textStyle').fontSize || 'Text size' }}
                             </span>
                             <FontAwesomeIcon v-if="editorInstance?.getAttributes('textStyle').fontSize"
-                                @click="editorInstance?.chain().focus().unsetFontSize().run()" icon="fal fa-times"
+                                @click="editorInstance?.chain().focus().unsetFontSize().run()" :icon="faTimes"
                                 class="text-red-500 ml-2 cursor-pointer" aria-hidden="true" />
                         </div>
 
