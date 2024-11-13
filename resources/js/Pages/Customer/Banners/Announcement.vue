@@ -274,7 +274,7 @@ const onClickToggleActivate = async (newVal: boolean) => {
 
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #iconRight v-if="isLoadingSave">
+        <template #afterTitle v-if="isLoadingSave">
             <LoadingIcon />
         </template>
 

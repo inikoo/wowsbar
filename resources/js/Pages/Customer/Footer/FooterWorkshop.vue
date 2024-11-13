@@ -254,11 +254,11 @@ const onClickToggleActivate = async (newVal: boolean) => {
 
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #iconRight>
-            <a :href="url" target="_blank">
+        <template #afterTitle>
+            <a :href="url" target="_blank" class="group">
                 <div class="text-sm text-gray-400 pt-2">
                     <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' class="mr-1" />
-                    {{ url }}
+                    <span class="group-hover:text-gray-600">{{ url }}</span>
                 </div>
             </a>
         </template>
@@ -310,10 +310,10 @@ const onClickToggleActivate = async (newVal: boolean) => {
                     <div class="flex justify-between bg-slate-200 border border-b-gray-300">
                         <div class="flex">
                             <ScreenView @screenView="setIframeView" />
-                            <div class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'" @click="openFullScreenPreview">
+                            <div class="py-1 px-2 cursor-pointer" v-tooltip="trans('Preview')" @click="openFullScreenPreview">
                                 <FontAwesomeIcon :icon='faExpandWide' aria-hidden='true' />
                             </div>
-                            <a class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'" :href="url" target="_blank">
+                            <a class="py-1 px-2 cursor-pointer" v-tooltip="trans('Open website')" :href="url" target="_blank">
                                 <FontAwesomeIcon :icon='faExternalLink' aria-hidden='true' />
                             </a>
                         </div>
