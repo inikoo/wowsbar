@@ -31,7 +31,7 @@ const FeOptions = [
     { name: "Payments group 1 (MVPP)", image: "/art/payments/all_payments.png", value: "all_payments" },
     { name: "Bank", image: "/art/payments/bank.png?v=3", value: "bank" },
     { name: "btree", image: "/art/payments/btree.png?v=2", value: "btree" },
-    { name: "Cash", image: "/art/payments/cash.png?v=3", value: "Cash" },
+    { name: "Cash", image: "/art/payments/Cash.png?v=3", value: "Cash" },
     { name: "Checkout", image: "/art/payments/checkout.png?v=2", value: "Checkout" },
     { name: "Checkout (white)", image: "/art/payments/checkout_white.png?v=1", value: "checkout-white" },
     { name: "Cod", image: "/art/payments/cond.png?v=2", value: "cond" },
