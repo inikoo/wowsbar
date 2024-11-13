@@ -49,11 +49,9 @@ const FeOptions = [
     { name: "Visa", image: "/art/payments/visa.png?v=2", value: "visa" },
     { name: "Visa", image: "/art/payments/visa-white.png?v=2", value: "visa-white" },
     { name: "Worldpay", image: "/art/payments/worldpay.png?v=3", value: "Worldpay" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Mastercard &  Paypal", image: "/art/payments/master_paypal.png?v=2", value: "master-paypal" },
-    { name: "PastPay & Visa", image: "/art/payments/past_pay_visa.png?v=2", value: "past_pay_visa" },
-    { name: "Secure payment (white)", image: "/art/payments/secure_payment_white.png?v=2", value: "secure_payment_white" },
+    { name: "Mastercard &  Paypal", image: "/art/payments/master_paypal.png", value: "master-paypal" },
+    { name: "PastPay & Visa", image: "/art/payments/past_pay_visa.png", value: "past_pay_visa" },
+    { name: "Secure payment (white)", image: "/art/payments/secure_payment_white.png", value: "secure_payment_white" },
 ];
 
 const addPayments = (value: { name: string, image: string }) => {
