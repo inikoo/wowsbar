@@ -500,14 +500,14 @@ watch(() => props.previewMode, (newStatus, oldStatus) => {
                                 @update:model-value="(e) => { modelValue.columns.column_4.data.textBox2 = e, emits('update:modelValue', modelValue) }" />
                         </div>
 
-                        <div class="w-full">
+                        <div class="w-full mt-12">
                             <Editor
                                 :class="isWorkshop ? 'hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-text' : ''"
                                 :key="editorKey" v-model="modelValue.paymentData.label" :editable="editable"
                                 @update:model-value="(e) => { modelValue.paymentData.label = e, emits('update:modelValue', modelValue) }" />
                         </div>
 
-                        <div class="group relative flex flex-col items-center gap-y-6 mt-8">
+                        <div class="group relative flex flex-col items-center gap-y-6 mt-4">
                             <div v-for="payment of modelValue.paymentData.data" :key="payment.key">
                                 <img :src="payment.image" :alt="payment.alt"
                                     class="h-auto max-h-7 md:max-h-8 max-w-full w-fit">
