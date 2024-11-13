@@ -34,7 +34,7 @@ const FeOptions = [
     { name: "Cash", image: "/art/payments/cash.png?v=3", value: "Cash" },
     { name: "Checkout", image: "/art/payments/checkout.png?v=2", value: "Checkout" },
     { name: "Checkout (white)", image: "/art/payments/checkout_white.png?v=1", value: "checkout-white" },
-    { name: "Cond", image: "/art/payments/cond.png?v=2", value: "cond" },
+    { name: "Cod", image: "/art/payments/cond.png?v=2", value: "cond" },
     { name: "Hokodo", image: "/art/payments/hokodo.png?v=2", value: "hokodo" },
     { name: "Sofort", image: "/art/payments/sofort.png?v=3", value: "sofort" },
     { name: "Paypal", image: "/art/payments/paypal.png?v=3", value: "paypal" },
@@ -44,7 +44,7 @@ const FeOptions = [
     { name: "Secure Checkout", image: "/art/payments/secure_checkout.png", value: "secure_checkout" },
     { name: "Secure Checkout (center)", image: "/art/payments/secure_checkout_center.png", value: "secure_checkout_center" },
     { name: "Secure Payment", image: "/art/payments/secure_payment.png", value: "secure_payment" },
-    { name: "Mastercard", image: "/art/payments/mastercard.png?v=2", value: "mastercard-white" },
+    { name: "Mastercard", image: "/art/payments/mastercard-white.png?v=2", value: "mastercard-white" },
     { name: "Mastercard (white)", image: "/art/payments/mastercard-white-1.png?v=2", value: "mastercard-white-1" },
     { name: "Visa", image: "/art/payments/visa.png?v=2", value: "visa" },
     { name: "Visa", image: "/art/payments/visa-white.png?v=2", value: "visa-white" },
@@ -87,7 +87,7 @@ const toggleEdit = (event: Event, index : Number) => {
     <div class="p-4">
         <div v-for="(item, index) in modelValue" :key="index" class="p-2 flex justify-center">
             <div @click="(e)=>toggleEdit(e,index)" :style="{ backgroundColor: props.background || '#f9f9f9' }"
-                class="relative flex flex-col items-center border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-xs p-4 m-2 transform hover:-translate-y-1">
+                class="hover:ring-2 hover:ring-offset-2 hover:ring-gray-600 cursor-pointer relative flex flex-col items-center border border-gray-300 rounded-lg w-full max-w-xs p-4 m-2">
                 <!-- Delete Button -->
                 <button @click="(e) => deleteSocial(e, index)"
                     class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-sm text-xs  p-1 focus:outline-none shadow-md transition-all duration-200"
@@ -99,10 +99,10 @@ const toggleEdit = (event: Event, index : Number) => {
                     alt="avatar" />
             </div>
             <Popover ref="_editop">
-                <div class="grid grid-cols-5 gap-6">
+                <div class="grid grid-cols-5 gap-6 h-[500px] overflow-y-auto">
                     <div v-for="icon in FeOptions" :key="icon.value" class="pr-4">
                         <div @click="() => updatePayment(index,icon)" :style="{ backgroundColor: props.background }"
-                            class="flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
+                            class="cursor-pointer flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
                             <img class="w-12 h-12 rounded-full object-contain object-center mb-2 group-hover:opacity-75"
                                 :src="icon.image" alt="avatar">
                             <div class="text-center truncate" style="max-width: 150px;">
@@ -113,16 +113,18 @@ const toggleEdit = (event: Event, index : Number) => {
                 </div>
             </Popover>
             </div>
-        <Button type="dashed" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2" @click="toggleAdd" />
+        <Button :style="'tertiary'" icon="fal fa-plus" label="Add Payments Method" full size="s" class="mt-2" @click="toggleAdd" />
         
+        <!-- Section: Popup -->
         <Popover ref="_addop">
-            <div class="grid grid-cols-5 gap-6">
+            <div class="grid grid-cols-5 gap-6 h-[500px] overflow-y-auto">
                 <div v-for="icon in FeOptions" :key="icon.value" class="pr-4">
                     <div @click="() => addPayments(icon)" :style="{ backgroundColor: props.background }"
-                        class="flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
+                        class="relative cursor-pointer hover:ring-2 hover:ring-offset-2 hover:ring-gray-600 flex flex-col items-center border-2 border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow w-full p-4 m-2">
                         <img class="w-12 h-12 rounded-full object-contain object-center mb-2 group-hover:opacity-75"
-                            :src="icon.image" alt="avatar">
-                        <div class="text-center truncate text-white" style="max-width: 150px;">
+                            :src="icon.image" alt="payment image">
+                        <div class="absolute bg-gradient-to-t from-gray-800/70 to-gray-800/0 w-full h-1/2 bottom-0" />
+                        <div class="z-10 text-center truncate text-white" style="max-width: 150px;">
                             {{ icon.name }}
                         </div>
                     </div>
