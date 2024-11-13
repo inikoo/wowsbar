@@ -27,23 +27,28 @@ const _addop = ref(null);
 const _editop = ref(null);
 
 const FeOptions = [
-    { name: "Accounts", image: "/art/payments/accounts.png?v=2", value: "accounts" },
-    { name: "Bank", image: "/art/payments/bank.png?v=2", value: "bank" },
+    { name: "Accounts", image: "/art/payments/accounts.png?v=3", value: "accounts" },
+    { name: "Payments group 1 (MVPP)", image: "/art/payments/all_payments.png", value: "all_payments" },
+    { name: "Bank", image: "/art/payments/bank.png?v=3", value: "bank" },
     { name: "btree", image: "/art/payments/btree.png?v=2", value: "btree" },
-    { name: "Cash", image: "/art/payments/cash.png?v=2", value: "Cash" },
+    { name: "Cash", image: "/art/payments/cash.png?v=3", value: "Cash" },
     { name: "Checkout", image: "/art/payments/checkout.png?v=2", value: "Checkout" },
-    { name: "Checkout (White)", image: "/art/payments/checkout_white.png", value: "checkout-white" },
+    { name: "Checkout (white)", image: "/art/payments/checkout_white.png?v=1", value: "checkout-white" },
     { name: "Cond", image: "/art/payments/cond.png?v=2", value: "cond" },
     { name: "Hokodo", image: "/art/payments/hokodo.png?v=2", value: "hokodo" },
-    { name: "Pastpay", image: "/art/payments/pastpay.png?v=2", value: "pastpay" },
-    { name: "sofort", image: "/art/payments/sofort.png?v=2", value: "sofort" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Paypal", image: "/art/payments/paypal.png?v=2", value: "paypal" },
-    { name: "Visa", image: "/art/payments/visa.png?v=2", value: "visa" },
+    { name: "Sofort", image: "/art/payments/sofort.png?v=3", value: "sofort" },
+    { name: "Paypal", image: "/art/payments/paypal.png?v=3", value: "paypal" },
     { name: "Paypal", image: "/art/payments/paypal-white.png?v=2", value: "paypal-white" },
+    { name: "Pastpay", image: "/art/payments/pastpay.png?v=2", value: "pastpay" },
     { name: "Pastpay", image: "/art/payments/pastpay-white.png?v=2", value: "Pastpay-white" },
-    { name: "Mastercard", image: "/art/payments/mastercard-white.png?v=2", value: "mastercard-white" },
+    { name: "Secure Checkout", image: "/art/payments/secure_checkout.png", value: "secure_checkout" },
+    { name: "Secure Checkout (center)", image: "/art/payments/secure_checkout_center.png", value: "secure_checkout_center" },
+    { name: "Secure Payment", image: "/art/payments/secure_payment.png", value: "secure_payment" },
+    { name: "Mastercard", image: "/art/payments/mastercard.png?v=2", value: "mastercard-white" },
+    { name: "Mastercard (white)", image: "/art/payments/mastercard-white-1.png?v=2", value: "mastercard-white-1" },
+    { name: "Visa", image: "/art/payments/visa.png?v=2", value: "visa" },
     { name: "Visa", image: "/art/payments/visa-white.png?v=2", value: "visa-white" },
+    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
 ];
 
 const addPayments = (value: { name: string, image: string }) => {
