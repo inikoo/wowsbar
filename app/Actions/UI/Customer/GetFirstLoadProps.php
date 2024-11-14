@@ -96,6 +96,7 @@ class GetFirstLoadProps
             },
 
             'firebaseAuthToken' => $firebaseAuthToken,
+            'environment' => app()->environment(),
 
 
         ];

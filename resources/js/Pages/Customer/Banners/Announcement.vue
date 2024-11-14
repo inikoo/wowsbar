@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import { inject, nextTick, onMounted, provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -268,6 +268,19 @@ const onClickToggleActivate = async (newVal: boolean) => {
         }
     )
 }
+
+const getDeliveryUrl = () => {
+    console.log(usePage().props.environment)
+    if (usePage().props.environment === 'local') {
+        return `http://delivery.wowsbar.test/announcement/${announcementData.ulid}?iframe=true`
+    } else if (usePage().props.environment === 'staging') {
+        return `https://delivery-staging.wowsbar.com/announcement/${announcementData.ulid}?iframe=true`
+    } else if (usePage().props.environment === 'production') {
+        return `https://delivery.wowsbar.com/announcement/${announcementData.ulid}?iframe=true`
+    }
+
+    return '#'
+}
 </script>
 
 <template layout="CustomerApp">
@@ -382,7 +395,7 @@ const onClickToggleActivate = async (newVal: boolean) => {
                 <div class="flex">
                     <ScreenView @screenView="false" />
 
-                    <a :href="`http://delivery.wowsbar.test/announcement/${announcementData.ulid}?iframe=true`"
+                    <a :href="getDeliveryUrl()"
                         target="_blank" class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'">
                         <FontAwesomeIcon icon='fal fa-external-link' aria-hidden='true' />
                     </a>

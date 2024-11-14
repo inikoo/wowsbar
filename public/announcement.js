@@ -6,6 +6,7 @@ const scriptUrl = new URL(document.currentScript.src);
 
 // Extract the `ulid` from the query parameters
 const ulid = scriptUrl.searchParams.get('ulid');
+const deliveryUrl = scriptUrl.searchParams.get('delivery');
 
 // Use the ulid as needed
 console.log('ULID:', ulid);
@@ -29,11 +30,12 @@ function iframeStyle(iframeElement) {
 
 async function fetchAnnouncementData() {
     if (ulid) {
-        // const domainName = window.location.hostname
+        const fullUrl = window.location.href
         // console.log('domain', domainName)
         console.log('fetchAnnouncementData')
         try {
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement/01JCF2XA53CWTS6J36G4WSV3GM?iframe=true`, {
+            // Fetch: Announcement JSON
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${deliveryUrl}/announcement/${ulid}`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
@@ -105,7 +107,7 @@ fetchAnnouncementData();
 //     document.body.appendChild(script)
 
 
-function propertiesToHTMLStyle(properties, xxx) {
+function propertiesToHTMLStyle(properties, options) {
     const htmlStyle = {
         position: properties.position?.type || 'static',
         left: properties.isCenterHorizontal && properties.position.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
@@ -140,8 +142,8 @@ function propertiesToHTMLStyle(properties, xxx) {
         borderTopLeftRadius: `${properties?.border?.rounded?.topleft?.value}${properties?.border?.rounded?.unit}`,
     }
 
-    if(xxx?.toRemove) {
-        xxx.toRemove.forEach((item) => {
+    if(options?.toRemove) {
+        options.toRemove.forEach((item) => {
             delete htmlStyle[item]
         });
     }
