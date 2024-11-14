@@ -29,6 +29,7 @@ async function fetchAnnouncementData() {
     if (ulid) {
         const fullUrl = window.location.href
         // console.log('domain', domainName)
+        console.log('deliveryUrl', deliveryUrl)
         console.log('fetchAnnouncementData')
         try {
             // Fetch: Announcement JSON

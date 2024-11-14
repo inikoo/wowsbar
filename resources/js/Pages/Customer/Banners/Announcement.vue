@@ -202,22 +202,6 @@ const changeTab = async (category: string) => {
 
 // const announcementSetting = ref()
 
-onMounted(() => {
-    if (Array.isArray(announcementData.value?.settings) && announcementData.value?.settings?.length === 0) {
-        announcementData.value.settings = {
-            target: {
-                type: 'all', // 'specific'
-                specific: [
-                    {
-                        will: 'show', // 'hide'
-                        when: 'contain', // 'matches'
-                        url: 'blog/subpage'
-                    }
-                ]
-            }
-        }
-    }
-})
 
 
 const newDate = new Date()

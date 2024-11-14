@@ -67,7 +67,6 @@ class Announcement extends Model
     protected $casts   = [
         "container_properties" => "array",
         "fields"               => "array",
-        "settings"             => "array",
         'state'                => AnnouncementStateEnum::class,
         'status'               => AnnouncementStatusEnum::class
     ];
@@ -77,6 +76,12 @@ class Announcement extends Model
         'fields'                 => '{}',
         'settings'               => '{}'
     ];
+
+    public function getSettingsAttribute($value)
+    {
+        // To remain empty object {}, instead of convert it to empty array []
+        return json_decode($value) ?: (object)[];
+    }
 
     public function snapshots(): MorphMany
     {
