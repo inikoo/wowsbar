@@ -1,7 +1,4 @@
 
-// const abab = "<div>Hello from luigi.js</div>"
-// document.body.innerHTML = abab
-
 const scriptUrl = new URL(document.currentScript.src);
 
 // Extract the `ulid` from the query parameters

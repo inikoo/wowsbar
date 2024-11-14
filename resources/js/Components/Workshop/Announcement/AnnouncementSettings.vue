@@ -67,7 +67,7 @@ const getAnnouncementScriptUrl = () => {
         xxx = `https://delivery.wowsbar.com`
     }
 
-    return window.location.origin + `/announcement.js?ulid=${announcementData.ulid}&delivery=${xxx}`
+    return window.location.origin + `/announcement.min.js?ulid=${announcementData.ulid}&delivery=${xxx}`
 }
 </script>
 
