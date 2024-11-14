@@ -31,6 +31,7 @@ class PortfolioWebsiteResource extends JsonResource
             'slug' => $portfolioWebsite->slug,
             'name' => $portfolioWebsite->name,
             'url'  => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
+            'announcement'  => '-'
         ], $divisions);
     }
 }
