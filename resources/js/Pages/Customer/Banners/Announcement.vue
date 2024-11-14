@@ -272,11 +272,11 @@ const onClickToggleActivate = async (newVal: boolean) => {
 const getDeliveryUrl = () => {
     console.log(usePage().props.environment)
     if (usePage().props.environment === 'local') {
-        return `http://delivery.wowsbar.test/announcement/${announcementData.ulid}?iframe=true`
+        return `http://delivery.wowsbar.test/announcement/${announcementData.value.ulid}?iframe=true`
     } else if (usePage().props.environment === 'staging') {
-        return `https://delivery-staging.wowsbar.com/announcement/${announcementData.ulid}?iframe=true`
+        return `https://delivery-staging.wowsbar.com/announcement/${announcementData.value.ulid}?iframe=true`
     } else if (usePage().props.environment === 'production') {
-        return `https://delivery.wowsbar.com/announcement/${announcementData.ulid}?iframe=true`
+        return `https://delivery.wowsbar.com/announcement/${announcementData.value.ulid}?iframe=true`
     }
 
     return '#'

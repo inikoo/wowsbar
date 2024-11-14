@@ -36,7 +36,7 @@ watch(compModel, () => {
 
     <div class="p-4">
         <!-- Horizontally Center -->
-        <div v-if="model?.isCenterHorizontal"  class="flex items-center gap-x-3">
+        <div class="flex items-center gap-x-3">
             <Checkbox v-model="model.isCenterHorizontal" inputId="centerHorizontal" name="centerHorizontal" binary />
             <label for="centerHorizontal" class="cursor-pointer select-none">{{ trans('Horizontally Center') }} </label>
         </div>

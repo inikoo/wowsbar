@@ -58,7 +58,6 @@ const announcementScheduled = ref({
 })
 
 const getAnnouncementScriptUrl = () => {
-    // console.log(usePage().props.environment)
     let xxx
     if (usePage().props.environment === 'local') {
         xxx = `delivery.wowsbar.test`
