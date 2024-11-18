@@ -88,8 +88,9 @@ class IndexAnnouncement extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks)
-                ->column(key: 'ulid', label: __('ulid'))
-                ->column(key: 'name', label: __('name'), sortable: true);
+                ->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'show_pages', label: __('Show'))
+                ->column(key: 'hide_pages', label: __('Show'));
         };
     }
 

@@ -31,7 +31,7 @@ const FeOptions = [
     { name: "Payments group 1 (MVPP)", image: "/art/payments/all_payments.png", value: "all_payments" },
     { name: "Bank", image: "/art/payments/bank.png?v=3", value: "bank" },
     { name: "btree", image: "/art/payments/btree.png?v=2", value: "btree" },
-    { name: "Cash", image: "/art/payments/Cash.png?v=3", value: "Cash" },
+    { name: "Cash", image: "/art/payments/cash.png?v=4", value: "Cash" },
     { name: "Checkout", image: "/art/payments/checkout.png?v=2", value: "Checkout" },
     { name: "Checkout (white)", image: "/art/payments/checkout_white.png?v=1", value: "checkout-white" },
     { name: "Cod", image: "/art/payments/cond.png?v=2", value: "cond" },
@@ -48,12 +48,10 @@ const FeOptions = [
     { name: "Mastercard (white)", image: "/art/payments/mastercard-white-1.png?v=2", value: "mastercard-white-1" },
     { name: "Visa", image: "/art/payments/visa.png?v=2", value: "visa" },
     { name: "Visa", image: "/art/payments/visa-white.png?v=2", value: "visa-white" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Worldpay", image: "/art/payments/worldpay.png?v=2", value: "Worldpay" },
-    { name: "Mastercard &  Paypal", image: "/art/payments/master_paypal.png?v=2", value: "master-paypal" },
-    { name: "PastPay & Visa", image: "/art/payments/past_pay_visa.png?v=2", value: "past_pay_visa" },
-    { name: "Secure payment (white)", image: "/art/payments/secure_payment_white.png?v=2", value: "secure_payment_white" },
+    { name: "Worldpay", image: "/art/payments/worldpay.png?v=3", value: "Worldpay" },
+    { name: "Mastercard &  Paypal", image: "/art/payments/master_paypal.png", value: "master-paypal" },
+    { name: "PastPay & Visa", image: "/art/payments/past_pay_visa.png", value: "past_pay_visa" },
+    { name: "Secure payment (white)", image: "/art/payments/secure_payment_white.png", value: "secure_payment_white" },
 ];
 
 const addPayments = (value: { name: string, image: string }) => {

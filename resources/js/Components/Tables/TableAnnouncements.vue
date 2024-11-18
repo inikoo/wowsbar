@@ -26,14 +26,14 @@ function announcementRoute(announcement) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(ulid)="{ item: announcement }">
+        <template #cell(name)="{ item: announcement }">
             <Link :href="announcementRoute(announcement)" :id="announcement['ulid']" class="specialUnderlineCustomer py-1 px-2 whitespace-nowrap">
-                {{announcement['ulid']}}
+                {{announcement['name']}}
             </Link>
         </template>
 
-        <template #cell(name)="{ item: announcement }">
+        <!-- <template #cell(name)="{ item: announcement }">
             {{announcement['name']}}
-        </template>
+        </template> -->
     </Table>
 </template>

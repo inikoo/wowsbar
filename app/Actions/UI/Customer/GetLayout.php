@@ -88,7 +88,7 @@ class GetLayout
 
         if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites > 0) {
 
-            $websiteSubNav['banners'] = [
+            $navigation['banners'] = [
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-sign'],
                 'label'   => __('Banners'),
