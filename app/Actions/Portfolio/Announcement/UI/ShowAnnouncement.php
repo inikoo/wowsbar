@@ -9,7 +9,6 @@ namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
@@ -139,23 +138,22 @@ class ShowAnnouncement extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type'   => 'simple',
-                    'simple' => [
-                        'route' => $routeParameters,
-                        'label' => __('banners'),
-                        'icon'  => 'fal fa-bars'
-                    ],
-                ],
+                    'type'          => 'creatingModel',
+                    'creatingModel' => [
+                        'label' => __("creating announcement"),
+                    ]
+                ]
             ];
         };
 
         return match ($routeName) {
-            'customer.banners.banners.index' =>
+            'customer.portfolio.websites.announcements.show' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                IndexAnnouncement::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.banners.index'
+                        'name'       => 'customer.portfolio.websites.announcements.show',
+                        'parameters' => $routeParameters
                     ]
                 ),
             ),

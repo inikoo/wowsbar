@@ -177,7 +177,8 @@ class IndexAnnouncement extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.websites.announcements.index' =>
+            'customer.portfolio.websites.announcements.index',
+            'customer.portfolio.websites.announcements.show'=>
             array_merge(
                 IndexPortfolioWebsites::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
