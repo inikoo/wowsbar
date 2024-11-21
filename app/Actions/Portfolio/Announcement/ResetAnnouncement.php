@@ -45,10 +45,10 @@ class ResetAnnouncement
         return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
-    public function inCustomer(Announcement $announcement, ActionRequest $request): void
+    public function asController(PortfolioWebsite $portfolioWebsite, Announcement $announcement, ActionRequest $request): void
     {
-        $this->scope    = 'customer';
-        $this->customer = $request->get('customer');
+        $this->scope    = 'portfolio-website';
+        $this->parent = $portfolioWebsite;
 
         $this->handle($announcement);
     }

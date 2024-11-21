@@ -46,6 +46,13 @@ Route::prefix('websites')->name('websites.')->group(function () {
 
         Route::get('footer', ShowFooter::class)->name('footer');
         Route::get('footer/preview', ShowFooterPreview::class)->name('footer.preview');
+
+        Route::name('announcements.')->prefix('announcements')->group(function () {
+            Route::get('', [IndexAnnouncement::class, 'inPortfolioWebsite'])->name('index');
+            Route::get('create', [CreateAnnouncement::class, 'inPortfolioWebsite'])->name('create');
+            Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
+            Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inPortfolioWebsite'])->name('show');
+        });
     });
 });
 
@@ -65,10 +72,3 @@ Route::get('/social-accounts/{portfolioSocialAccount}/post/{post}/edit', EditPor
 
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/create', CreatePortfolioSocialAccountAds::class)->name('social-accounts.ads.create');
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/{ads}', ShowPortfolioSocialAccountAds::class)->name('social-accounts.ads.show');
-
-Route::name('announcements.')->prefix('announcements')->group(function () {
-    Route::get('', [IndexAnnouncement::class, 'inCustomer'])->name('index');
-    Route::get('create', [CreateAnnouncement::class, 'inCustomer'])->name('create');
-    Route::get('templates', IndexAnnouncementTemplates::class)->name('templates.index');
-    Route::get('{announcement:ulid}', [ShowAnnouncement::class, 'inCustomer'])->name('show');
-});

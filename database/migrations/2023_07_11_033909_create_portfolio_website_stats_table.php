@@ -23,7 +23,6 @@ return new class () extends Migration {
             $table=$this->bannerStats($table);
             $table=$this->prospectsStats($table);
             $table->timestampsTz();
-
         });
     }
 

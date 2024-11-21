@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteIntegrationEnum;
+use App\Models\Announcement;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Leads\Prospect;
@@ -130,6 +131,11 @@ class PortfolioWebsite extends Model implements Auditable, HasMedia
     public function crawlers(): HasMany
     {
         return $this->hasMany(Crawl::class);
+    }
+
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class);
     }
 
     public function scopedProspects(): MorphMany

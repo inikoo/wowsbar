@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Announcement;
 
 use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Models\Announcement;
-use App\Models\CRM\Customer;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -25,13 +25,12 @@ class StoreAnnouncement
 
     private bool $asAction = false;
 
-    private Customer $parent;
+    private PortfolioWebsite $parent;
     private string $scope;
-    private Customer $customer;
 
-    public $commandSignature = 'announcement:create {customer}';
+    public $commandSignature = 'announcement:create {portfolioWebsite}';
 
-    public function handle(Customer $parent, array $modelData): Announcement
+    public function handle(PortfolioWebsite $parent, array $modelData): Announcement
     {
         $this->parent = $parent;
 
@@ -61,7 +60,8 @@ class StoreAnnouncement
 
     public function htmlResponse(Announcement $announcement): Response
     {
-        return Inertia::location(route('customer.portfolio.announcements.show', [
+        return Inertia::location(route('customer.portfolio.websites.announcements.show', [
+            'portfolioWebsite' => $announcement->portfolioWebsite->slug,
             'announcement' => $announcement->ulid
         ]));
     }
@@ -82,33 +82,32 @@ class StoreAnnouncement
         ];
     }
 
-    public function inCustomer(ActionRequest $request): Announcement
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Announcement
     {
-        $this->scope    = 'customer';
-        $this->customer = $request->get('customer');
+        $this->scope    = 'portfolio-website';
+        $this->parent = $portfolioWebsite;
 
-        $parent = customer();
         $request->validate();
 
-        return $this->handle($parent, $request->validated());
+        return $this->handle($portfolioWebsite, $request->validated());
     }
 
     public function asCommand(Command $command)
     {
-        $customer = Customer::where('slug', $command->argument('customer'))->first();
+        $customer = PortfolioWebsite::where('slug', $command->argument('portfolio-website'))->first();
 
         $this->handle($customer, [
             'name' => "Vika Announcement's"
         ]);
     }
 
-    public function action(Customer $customer, array $objectData): Announcement
+    public function action(PortfolioWebsite $portfolioWebsite, array $objectData): Announcement
     {
-        $this->customer = $customer;
+        $this->parent = $portfolioWebsite;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
 
         $validatedData = $this->validateAttributes();
-        return $this->handle($customer, $validatedData);
+        return $this->handle($portfolioWebsite, $validatedData);
     }
 }

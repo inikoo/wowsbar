@@ -50,6 +50,14 @@ class ShowAnnouncement extends InertiaAction
         return $this->handle($announcement);
     }
 
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Announcement $announcement, ActionRequest $request): Announcement
+    {
+        $this->initialisation($request);
+        $this->parent = $portfolioWebsite;
+
+        return $this->handle($announcement);
+    }
+
     public function htmlResponse(Announcement $announcement, ActionRequest $request): Response
     {
         $scope     = $this->parent;

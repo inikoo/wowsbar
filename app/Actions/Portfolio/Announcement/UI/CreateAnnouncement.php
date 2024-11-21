@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,7 +29,14 @@ class CreateAnnouncement extends InertiaAction
         return $this->handle(customer(), $request);
     }
 
-    public function handle(Customer $parent, ActionRequest $request): Response
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response|RedirectResponse
+    {
+        $this->initialisation($request);
+
+        return $this->handle($portfolioWebsite, $request);
+    }
+
+    public function handle(Customer|PortfolioWebsite $parent, ActionRequest $request): Response
     {
         $fields = [];
 
