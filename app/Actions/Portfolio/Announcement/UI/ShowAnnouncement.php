@@ -104,14 +104,16 @@ class ShowAnnouncement extends InertiaAction
                 ],
                 'routes_list'   => [
                     'publish_route' => [
-                        'name'        => 'customer.models.banner.announcement.publish',
+                        'name'        => 'customer.models.portfolio-website.announcement.publish',
                         'parameters'  => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement' => $announcement->id
                         ]
                     ],
                     'update_route' => [
-                        'name'        => 'customer.models.banner.announcement.update',
+                        'name'        => 'customer.models.portfolio-website.announcement.update',
                         'parameters'  => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement' => $announcement->id
                         ]
                     ],

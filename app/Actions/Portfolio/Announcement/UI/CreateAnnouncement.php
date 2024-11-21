@@ -83,7 +83,7 @@ class CreateAnnouncement extends InertiaAction
                                 'name' => 'customer.models.banner.announcement.store'
                             ],
                             default => [
-                                'name'       => 'customer.models.portfolio-website.banner.store',
+                                'name'       => 'customer.models.portfolio-website.announcement.store',
                                 'parameters' => [
                                     'portfolioWebsite' => $parent->id,
                                 ]
