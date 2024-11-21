@@ -53,8 +53,7 @@ const component = computed(() => {
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead">
-    </PageHeading>
+    <PageHeading :data="pageHead" />
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]" />
 </template>

@@ -15,6 +15,7 @@ import {faCheckCircle as fasCheckCircle} from '@fas'
 import {faDraftingCompass} from '@fal'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { trans } from 'laravel-vue-i18n'
 
 library.add(fasCheckCircle, faDraftingCompass)
 
@@ -65,6 +66,14 @@ const selectedWebsite = ref({
                 <FontAwesomeIcon icon='fal fa-drafting-compass' class='' fixed-width aria-hidden='true' />
                 Footer's Workshop
 
+            </Link>
+        </template>
+
+        <!-- Announcements -->
+        <template #cell(announcements)="{ item: website }">
+            <Link :href="route('customer.portfolio.websites.announcements.index', [website.slug])" class="secondaryLinkCustomer py-1.5">
+                <!-- <FontAwesomeIcon icon='fas fa-check-circle' class='' fixed-width aria-hidden='true' /> -->
+                {{ website.announcements }} {{ website.announcements > 1 ? trans('Announcements') : trans('Announcement') }}
             </Link>
         </template>
 

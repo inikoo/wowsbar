@@ -63,7 +63,7 @@ class IndexPortfolioWebsites extends InertiaAction
         return $queryBuilder
             ->defaultSort('portfolio_websites.name')
             ->with(['stats'])
-            ->allowedSorts(['slug', 'name', 'url'])
+            ->allowedSorts(['slug', 'name', 'url', 'announcements'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -91,7 +91,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
                 ->column(key: 'footer', label: __('footer'), sortable: true)
-                ->column(key: 'announcements', label: __('Announcements'))
+                ->column(key: 'announcements', label: __('Announcements'), sortable: true)
                 // ->column(key: 'seo', label: __('SEO'))
                 // ->column(key: 'ppc', label: __('Google Ads'))
                 // ->column(key: 'banners', label: __('banners'))

@@ -130,8 +130,10 @@ class IndexAnnouncement extends InertiaAction
                 'title'       => __('Announcements'),
                 'pageHead'    => [
                     'title'     => __('Announcements'),
+                    'icon'  => 'fal fa-globe',
+                    'model'     => $this->parent->name,
                     'iconRight' => [
-                         'title' => __('announcements'),
+                        'title' => __('announcements'),
                         'icon'   => 'fal fa-sign'
                     ],
                     'actions'   =>
@@ -144,7 +146,7 @@ class IndexAnnouncement extends InertiaAction
                                 'route'   => [
                                     'name'       => 'customer.portfolio.websites.announcements.create',
                                     'parameters' => [
-                                        'portfolioWebsite' => $this->parent->id
+                                        'portfolioWebsite' => $this->parent->slug
                                     ]
                                 ]
                             ]
