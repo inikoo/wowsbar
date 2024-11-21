@@ -6,6 +6,7 @@ use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
 use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -95,5 +96,10 @@ class Announcement extends Model
     public function deployments(): MorphMany
     {
         return $this->morphMany(Deployment::class, 'model');
+    }
+
+    public function portfolioWebsite(): BelongsTo
+    {
+        return $this->belongsTo(PortfolioWebsite::class);
     }
 }

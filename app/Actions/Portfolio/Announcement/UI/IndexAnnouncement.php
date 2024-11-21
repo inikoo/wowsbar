@@ -62,7 +62,7 @@ class IndexAnnouncement extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Announcement::class);
+        $queryBuilder = QueryBuilder::for($parent->announcements());
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])
@@ -142,8 +142,10 @@ class IndexAnnouncement extends InertiaAction
                                 'tooltip' => __('new announcement'),
                                 'label'   => __('announcement'),
                                 'route'   => [
-                                    'name'       => 'customer.portfolio.announcements.create',
-                                    'parameters' => []
+                                    'name'       => 'customer.portfolio.websites.announcements.create',
+                                    'parameters' => [
+                                        'portfolioWebsite' => $this->parent->id
+                                    ]
                                 ]
                             ]
                         ]

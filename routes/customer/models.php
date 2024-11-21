@@ -66,19 +66,19 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
             Route::patch('activate', ActivateFooterPortfolioWebsite::class)->name('activate');
             Route::patch('deactivate', DeactivateFooterPortfolioWebsite::class)->name('deactivate');
         });
+
+        Route::prefix('announcements')->name('announcement.')->group(function () {
+            Route::post('/', StoreAnnouncement::class)->name('store');
+            Route::post('{announcement}/publish', PublishAnnouncement::class)->name('publish');
+            Route::post('{announcement}', UpdateAnnouncement::class)->name('update');
+            Route::post('{announcement}/reset', ResetAnnouncement::class)->name('reset');
+        });
     });
 });
 
 Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('', [StoreBanner::class, 'inCustomer'])->name('store');
     Route::post('from-gallery', [StoreBanner::class, 'fromGallery'])->name('store.from-gallery');
-
-    Route::prefix('announcements')->name('announcement.')->group(function () {
-        Route::post('/', [StoreAnnouncement::class, 'inCustomer'])->name('store');
-        Route::post('{announcement}/publish', [PublishAnnouncement::class, 'inCustomer'])->name('publish');
-        Route::post('{announcement}', [UpdateAnnouncement::class, 'inCustomer'])->name('update');
-        Route::post('{announcement}/reset', [ResetAnnouncement::class, 'inCustomer'])->name('reset');
-    });
 
     Route::name('workshop.')->prefix('workshop')
         ->group(function () {

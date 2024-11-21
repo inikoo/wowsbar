@@ -19,8 +19,8 @@ const props = defineProps<{
 
 function announcementRoute(announcement) {
     return route(
-        'customer.portfolio.announcements.show',
-        [announcement.ulid]);
+        'customer.portfolio.websites.announcements.show',
+        [route().params['portfolioWebsite'], announcement.ulid]);
 }
 </script>
 
