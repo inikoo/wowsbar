@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * App\Models\Announcement
  *
  * @property int $id
- * @property string $code
  * @property string $ulid
  * @property string $name
  * @property string|null $icon
@@ -32,8 +31,16 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property string|null $published_checksum
  * @property AnnouncementStateEnum $state
  * @property bool $is_dirty
+ * @property int|null $customer_id
+ * @property string|null $schedule_at
+ * @property string|null $schedule_finish_at
+ * @property AnnouncementStatusEnum $status
+ * @property mixed $settings
+ * @property string|null $template_code
+ * @property int|null $portfolio_website_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
+ * @property-read PortfolioWebsite|null $portfolioWebsite
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read Snapshot|null $unpublishedSnapshot
@@ -41,9 +48,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement query()
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereClosedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereContainerProperties($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereId($value)
@@ -51,9 +58,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereLiveAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereLiveSnapshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePortfolioWebsiteId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePublishedChecksum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereReadyAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereScheduleAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereScheduleFinishAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereTemplateCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUlid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUnpublishedSnapshotId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUpdatedAt($value)

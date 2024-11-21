@@ -51,9 +51,9 @@ class ShowFooter
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title'       => __('footer'),
-                'url'          =>  $portfolioWebsite->url,
-                'pageHead'    => [
+                'title'        => __('footer'),
+                'url'          => $portfolioWebsite->url,
+                'pageHead'     => [
                     'title'    => $portfolioWebsite->name,
                     'icon'     => [
                         'title' => __('footer'),
@@ -95,7 +95,7 @@ class ShowFooter
                     'subNavigation'    => $subNavigation,
                 ],
 
-                'is_published' => $portfolioWebsite->footer_status,
+                'is_published'           => $portfolioWebsite->footer_status,
                 'route_toggle_activated' => [
                     'name'       => 'customer.models.portfolio-website.footers.' . (!$portfolioWebsite->footer_status ? 'activate' : 'deactivate'),
                     'parameters' => [

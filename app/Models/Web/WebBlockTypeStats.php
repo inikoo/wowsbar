@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- *
+ * App\Models\Web\WebBlockTypeStats
  *
  * @property int $id
  * @property int $web_block_type_id
@@ -21,9 +21,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Web\WebBlockType $webBlockType
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WebBlockTypeStats newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WebBlockTypeStats newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WebBlockTypeStats query()
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats query()
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereNumberOrganisations($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereNumberWebpages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereNumberWebsites($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebBlockTypeStats whereWebBlockTypeId($value)
  * @mixin \Eloquent
  */
 class WebBlockTypeStats extends Model

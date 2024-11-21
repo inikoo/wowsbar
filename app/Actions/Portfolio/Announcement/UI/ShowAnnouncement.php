@@ -95,7 +95,7 @@ class ShowAnnouncement extends InertiaAction
                     'model'     => __('Announcement'),
                     'title'     => $announcement->name,
                     'container' => $container,
-                    'icon' => [
+                    'icon'      => [
                         'icon'  => 'fal fa-sign'
                     ],
                     'iconRight' => [
@@ -107,23 +107,23 @@ class ShowAnnouncement extends InertiaAction
                         'name'        => 'customer.models.portfolio-website.announcement.publish',
                         'parameters'  => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
-                            'announcement' => $announcement->id
+                            'announcement'     => $announcement->id
                         ]
                     ],
                     'update_route' => [
                         'name'        => 'customer.models.portfolio-website.announcement.update',
                         'parameters'  => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
-                            'announcement' => $announcement->id
+                            'announcement'     => $announcement->id
                         ]
                     ],
                     ...$resetRoute
                 ],
-                'firstBanner'        => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
-                'announcement_data'  => $announcement->toArray(),
-                'announcement_list'  => [],
+                'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
+                'announcement_data'       => $announcement->toArray(),
+                'announcement_list'       => [],
                 'isAnnouncementPublished' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
-                'isAnnouncementActive' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                'isAnnouncementActive'    => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
                 // 'route_toggle_activated'    => [   // TODO
                 //     'name'  => 'customer.models.banner.announcement.toggle',
                 //     'parameters'    => [

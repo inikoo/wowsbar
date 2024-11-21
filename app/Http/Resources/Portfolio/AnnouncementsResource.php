@@ -24,9 +24,9 @@ class AnnouncementsResource extends JsonResource
         $announcement = $this;
 
         return [
-            'ulid'               => $announcement->ulid,
-            'code'               => $announcement->code,
-            'name'               => $announcement->name,
+            'ulid'                     => $announcement->ulid,
+            'code'                     => $announcement->code,
+            'name'                     => $announcement->name,
             'show_pages'               => $announcement->name,
             'hide_pages'               => $announcement->name,
         ];

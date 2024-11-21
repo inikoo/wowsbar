@@ -75,6 +75,10 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property int|null $prospects_sender_email_id
+ * @property string $integration
+ * @property array|null $integration_data
+ * @property-read Collection<int, Announcement> $announcements
+ * @property-read int|null $announcements_count
  * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
  * @property-read int|null $appointment_count
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
@@ -126,6 +130,8 @@ use Spatie\Tags\HasTags;
  * @method static Builder|Customer whereIdentityDocumentNumber($value)
  * @method static Builder|Customer whereIdentityDocumentType($value)
  * @method static Builder|Customer whereImageId($value)
+ * @method static Builder|Customer whereIntegration($value)
+ * @method static Builder|Customer whereIntegrationData($value)
  * @method static Builder|Customer whereLanguageId($value)
  * @method static Builder|Customer whereLocation($value)
  * @method static Builder|Customer whereName($value)

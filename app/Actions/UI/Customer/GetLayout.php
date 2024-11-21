@@ -253,7 +253,7 @@ class GetLayout
                 'scope'   => 'websites',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
-                'route'   =>  'customer.portfolio.websites.index',
+                'route'   => 'customer.portfolio.websites.index',
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],

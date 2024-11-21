@@ -48,7 +48,7 @@ class ResetAnnouncement
     public function asController(PortfolioWebsite $portfolioWebsite, Announcement $announcement, ActionRequest $request): void
     {
         $this->scope    = 'portfolio-website';
-        $this->parent = $portfolioWebsite;
+        $this->parent   = $portfolioWebsite;
 
         $this->handle($announcement);
     }

@@ -73,6 +73,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read mixed $condition
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
+ * @property-read WebsiteFooter|null $footer
  * @property-read \App\Models\Web\Webpage|null $home
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count

@@ -52,12 +52,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_success_status_invoiced
  * @property int $number_prospects_dont_contact_me
  * @property int $number_portfolio_webpages
+ * @property int $number_announcements
  * @property-read \App\Models\Portfolio\PortfolioWebsite|null $website
  * @method static Builder|PortfolioWebsiteStats newModelQuery()
  * @method static Builder|PortfolioWebsiteStats newQuery()
  * @method static Builder|PortfolioWebsiteStats query()
  * @method static Builder|PortfolioWebsiteStats whereCreatedAt($value)
  * @method static Builder|PortfolioWebsiteStats whereId($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberAnnouncements($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannerSnapshots($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBanners($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateHistoric($value)

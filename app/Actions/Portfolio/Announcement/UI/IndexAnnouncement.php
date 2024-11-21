@@ -13,7 +13,6 @@ use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Portfolio\AnnouncementsResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
@@ -130,10 +129,10 @@ class IndexAnnouncement extends InertiaAction
                 'title'       => __('Announcements'),
                 'pageHead'    => [
                     'title'     => __('Announcements'),
-                    'icon'  => 'fal fa-globe',
+                    'icon'      => 'fal fa-globe',
                     'model'     => $this->parent->name,
                     'iconRight' => [
-                        'title' => __('announcements'),
+                        'title'  => __('announcements'),
                         'icon'   => 'fal fa-sign'
                     ],
                     'actions'   =>

@@ -47,8 +47,8 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
-        $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canEdit       = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canDelete     = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
         $this->canEditFooter = $request->get('customerUser')->hasPermissionTo('portfolio.footer.edit');
 
         return $request->get('customerUser')->hasAnyPermission(['portfolio.view', 'portfolio.footer.view', 'portfolio.banners.view']);

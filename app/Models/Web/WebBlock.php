@@ -20,10 +20,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
- *
+ * App\Models\Web\WebBlock
  *
  * @property int $id
- * @property int $group_id
  * @property int $web_block_type_id
  * @property string|null $checksum
  * @property array $layout
@@ -31,17 +30,30 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $migration_checksum
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Collection> $collections
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\ExternalLink> $externalLinks
+ * @property-read Collection<int, \App\Models\Web\ExternalLink> $externalLinks
+ * @property-read int|null $external_links_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
+ * @property-read int|null $images_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $productCategories
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
+ * @property-read int|null $media_count
+ * @property-read Collection<int, ProductCategory> $productCategories
+ * @property-read int|null $product_categories_count
+ * @property-read Collection<int, Product> $products
+ * @property-read int|null $products_count
  * @property-read \App\Models\Web\WebBlockType $webBlockType
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Webpage> $webpages
- * @method static Builder<static>|WebBlock newModelQuery()
- * @method static Builder<static>|WebBlock newQuery()
- * @method static Builder<static>|WebBlock query()
+ * @property-read Collection<int, \App\Models\Web\Webpage> $webpages
+ * @property-read int|null $webpages_count
+ * @method static Builder|WebBlock newModelQuery()
+ * @method static Builder|WebBlock newQuery()
+ * @method static Builder|WebBlock query()
+ * @method static Builder|WebBlock whereChecksum($value)
+ * @method static Builder|WebBlock whereCreatedAt($value)
+ * @method static Builder|WebBlock whereData($value)
+ * @method static Builder|WebBlock whereId($value)
+ * @method static Builder|WebBlock whereLayout($value)
+ * @method static Builder|WebBlock whereMigrationChecksum($value)
+ * @method static Builder|WebBlock whereUpdatedAt($value)
+ * @method static Builder|WebBlock whereWebBlockTypeId($value)
  * @mixin \Eloquent
  */
 class WebBlock extends Model implements HasMedia
