@@ -12,6 +12,7 @@ use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
+use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Snapshot;
@@ -76,7 +77,20 @@ class PublishAnnouncement
 
         if ($announcement->state == AnnouncementStateEnum::IN_PROCESS or $announcement->state == AnnouncementStateEnum::READY) {
             $updateData['ready_at'] = now();
+            $updateData['live_at'] = now();
         }
+
+        if($scheduleAt = Arr::get($modelData, 'schedule_at')) {
+            $updateData['schedule_at'] = $scheduleAt;
+            $updateData['live_at'] = $scheduleAt;
+        }
+
+        if($scheduleFinishAt = Arr::get($modelData, 'schedule_finish_at')) {
+            $updateData['schedule_finish_at'] = $scheduleFinishAt;
+            $updateData['closed_at'] = $scheduleFinishAt;
+        }
+
+        ActivateAnnouncement::dispatch($announcement)->delay($updateData['live_at']);
 
         $this->update($announcement, $updateData);
     }
