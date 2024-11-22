@@ -11,6 +11,7 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -31,7 +32,8 @@ class ResetAnnouncement
     public function handle(Announcement $announcement): void
     {
         $this->update($announcement, [
-            'unpublished_snapshot_id' => $announcement->live_snapshot_id,
+            'fields'                  => Arr::get($announcement->liveSnapshot->layout, 'fields'),
+            'container_properties'    => Arr::get($announcement->liveSnapshot->layout, 'container_properties'),
             'is_dirty'                => false
         ]);
     }

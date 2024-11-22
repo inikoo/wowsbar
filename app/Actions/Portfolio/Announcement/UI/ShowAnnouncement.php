@@ -70,17 +70,15 @@ class ShowAnnouncement extends InertiaAction
             ];
         }
 
-        $resetRoute = [];
-        if ($announcement->unpublishedSnapshot->state !== SnapshotStateEnum::LIVE) {
-            $resetRoute = [
-                'reset_route' => [
-                    'name'        => 'customer.models.banner.announcement.reset',
-                    'parameters'  => [
-                        'announcement' => $announcement->id
-                    ]
-                ],
-            ];
-        }
+        $resetRoute = [
+            'reset_route' => [
+                'name'       => 'customer.models.portfolio-website.announcement.reset',
+                'parameters' => [
+                    'portfolioWebsite' => $announcement->portfolio_website_id,
+                    'announcement'     => $announcement->id
+                ]
+            ],
+        ];
 
         return Inertia::render(
             'Banners/Announcement',
@@ -89,29 +87,29 @@ class ShowAnnouncement extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('Announcement'),
-                'pageHead'    => [
+                'title'    => __('Announcement'),
+                'pageHead' => [
                     'model'     => __('Announcement'),
                     'title'     => $announcement->name,
                     'container' => $container,
                     'icon'      => [
-                        'icon'  => 'fal fa-sign'
+                        'icon' => 'fal fa-sign'
                     ],
                     'iconRight' => [
-                        'icon'  => 'fal fa-seedling'
+                        'icon' => 'fal fa-seedling'
                     ],
                 ],
-                'routes_list'   => [
+                'routes_list' => [
                     'publish_route' => [
-                        'name'        => 'customer.models.portfolio-website.announcement.publish',
-                        'parameters'  => [
+                        'name'       => 'customer.models.portfolio-website.announcement.publish',
+                        'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
                         ]
                     ],
                     'update_route' => [
-                        'name'        => 'customer.models.portfolio-website.announcement.update',
-                        'parameters'  => [
+                        'name'       => 'customer.models.portfolio-website.announcement.update',
+                        'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
                         ]
