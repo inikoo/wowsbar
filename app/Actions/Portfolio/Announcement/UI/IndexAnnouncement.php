@@ -8,12 +8,11 @@
 namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Portfolio\AnnouncementsResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
@@ -126,15 +125,15 @@ class IndexAnnouncement extends InertiaAction
         return Inertia::render(
             'Banners/Announcements',
             [
-                'breadcrumbs' => [],
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName(), $request->route()->originalParameters()),
                 'title'       => __('Announcements'),
                 'pageHead'    => [
                     'title'     => __('Announcements'),
-                    'icon'  => 'fal fa-globe',
+                    'icon'      => 'fal fa-globe',
                     'model'     => $this->parent->name,
                     'iconRight' => [
-                        'title' => __('announcements'),
-                        'icon'   => 'fal fa-sign'
+                        'title'  => __('announcements'),
+                        'icon'   => 'fal fa-bullhorn'
                     ],
                     'actions'   =>
                         [
@@ -170,7 +169,7 @@ class IndexAnnouncement extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('banners'),
+                        'label' => __('announcements'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
@@ -178,12 +177,14 @@ class IndexAnnouncement extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.banners.index' =>
+            'customer.portfolio.websites.announcements.index',
+            'customer.portfolio.websites.announcements.show'=>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                IndexPortfolioWebsites::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.banners.index'
+                        'name'       => 'customer.portfolio.websites.announcements.index',
+                        'parameters' => $routeParameters
                     ]
                 ),
             ),

@@ -48,6 +48,26 @@ use Spatie\Sluggable\HasSlug;
  * @property string|null $delete_comment
  * @property PortfolioWebsiteIntegrationEnum $integration
  * @property array|null $integration_data
+ * @property string $state
+ * @property bool $status
+ * @property mixed|null $settings
+ * @property mixed|null $layout
+ * @property array|null $compiled_layout
+ * @property int|null $unpublished_header_snapshot_id
+ * @property int|null $live_header_snapshot_id
+ * @property string|null $published_header_checksum
+ * @property bool $header_is_dirty
+ * @property int|null $unpublished_footer_snapshot_id
+ * @property int|null $live_footer_snapshot_id
+ * @property string|null $published_footer_checksum
+ * @property bool $footer_is_dirty
+ * @property int|null $current_layout_id
+ * @property int|null $logo_id
+ * @property string|null $launched_at
+ * @property string|null $closed_at
+ * @property bool $footer_status
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Announcement> $announcements
+ * @property-read int|null $announcements_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
@@ -55,29 +75,59 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Crawl> $crawlers
  * @property-read int|null $crawlers_count
  * @property-read \App\Models\CRM\Customer $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
+ * @property-read int|null $deployments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Division> $divisions
  * @property-read int|null $divisions_count
+ * @property-read Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
+ * @property-read int|null $images_count
+ * @property-read Snapshot|null $liveSnapshot
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebpage> $portfolioWebpages
  * @property-read int|null $portfolio_webpages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
+ * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read Snapshot|null $unpublishedFooterSnapshot
+ * @property-read Snapshot|null $unpublishedHeaderSnapshot
  * @method static Builder|PortfolioWebsite dProspects()
  * @method static \Database\Factories\Portfolio\PortfolioWebsiteFactory factory($count = null, $state = [])
  * @method static Builder|PortfolioWebsite newModelQuery()
  * @method static Builder|PortfolioWebsite newQuery()
  * @method static Builder|PortfolioWebsite onlyTrashed()
  * @method static Builder|PortfolioWebsite query()
+ * @method static Builder|PortfolioWebsite whereClosedAt($value)
+ * @method static Builder|PortfolioWebsite whereCompiledLayout($value)
  * @method static Builder|PortfolioWebsite whereCreatedAt($value)
+ * @method static Builder|PortfolioWebsite whereCurrentLayoutId($value)
  * @method static Builder|PortfolioWebsite whereCustomerId($value)
  * @method static Builder|PortfolioWebsite whereData($value)
  * @method static Builder|PortfolioWebsite whereDeleteComment($value)
  * @method static Builder|PortfolioWebsite whereDeletedAt($value)
+ * @method static Builder|PortfolioWebsite whereFooterIsDirty($value)
+ * @method static Builder|PortfolioWebsite whereFooterStatus($value)
+ * @method static Builder|PortfolioWebsite whereHeaderIsDirty($value)
  * @method static Builder|PortfolioWebsite whereId($value)
  * @method static Builder|PortfolioWebsite whereIntegration($value)
  * @method static Builder|PortfolioWebsite whereIntegrationData($value)
+ * @method static Builder|PortfolioWebsite whereLaunchedAt($value)
+ * @method static Builder|PortfolioWebsite whereLayout($value)
+ * @method static Builder|PortfolioWebsite whereLiveFooterSnapshotId($value)
+ * @method static Builder|PortfolioWebsite whereLiveHeaderSnapshotId($value)
+ * @method static Builder|PortfolioWebsite whereLogoId($value)
  * @method static Builder|PortfolioWebsite whereName($value)
+ * @method static Builder|PortfolioWebsite wherePublishedFooterChecksum($value)
+ * @method static Builder|PortfolioWebsite wherePublishedHeaderChecksum($value)
+ * @method static Builder|PortfolioWebsite whereSettings($value)
  * @method static Builder|PortfolioWebsite whereShopId($value)
  * @method static Builder|PortfolioWebsite whereSlug($value)
+ * @method static Builder|PortfolioWebsite whereState($value)
+ * @method static Builder|PortfolioWebsite whereStatus($value)
+ * @method static Builder|PortfolioWebsite whereUnpublishedFooterSnapshotId($value)
+ * @method static Builder|PortfolioWebsite whereUnpublishedHeaderSnapshotId($value)
  * @method static Builder|PortfolioWebsite whereUpdatedAt($value)
  * @method static Builder|PortfolioWebsite whereUrl($value)
  * @method static Builder|PortfolioWebsite withTrashed()

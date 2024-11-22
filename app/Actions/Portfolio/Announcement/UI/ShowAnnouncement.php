@@ -9,7 +9,6 @@ namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
@@ -71,17 +70,15 @@ class ShowAnnouncement extends InertiaAction
             ];
         }
 
-        $resetRoute = [];
-        if ($announcement->unpublishedSnapshot->state !== SnapshotStateEnum::LIVE) {
-            $resetRoute = [
-                'reset_route' => [
-                    'name'        => 'customer.models.banner.announcement.reset',
-                    'parameters'  => [
-                        'announcement' => $announcement->id
-                    ]
-                ],
-            ];
-        }
+        $resetRoute = [
+            'reset_route' => [
+                'name'       => 'customer.models.portfolio-website.announcement.reset',
+                'parameters' => [
+                    'portfolioWebsite' => $announcement->portfolio_website_id,
+                    'announcement'     => $announcement->id
+                ]
+            ],
+        ];
 
         return Inertia::render(
             'Banners/Announcement',
@@ -90,40 +87,40 @@ class ShowAnnouncement extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('Announcement'),
-                'pageHead'    => [
+                'title'    => __('Announcement'),
+                'pageHead' => [
                     'model'     => __('Announcement'),
                     'title'     => $announcement->name,
                     'container' => $container,
-                    'icon' => [
-                        'icon'  => 'fal fa-sign'
+                    'icon'      => [
+                        'icon' => 'fal fa-sign'
                     ],
                     'iconRight' => [
-                        'icon'  => 'fal fa-seedling'
+                        'icon' => 'fal fa-seedling'
                     ],
                 ],
-                'routes_list'   => [
+                'routes_list' => [
                     'publish_route' => [
-                        'name'        => 'customer.models.portfolio-website.announcement.publish',
-                        'parameters'  => [
+                        'name'       => 'customer.models.portfolio-website.announcement.publish',
+                        'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
-                            'announcement' => $announcement->id
+                            'announcement'     => $announcement->id
                         ]
                     ],
                     'update_route' => [
-                        'name'        => 'customer.models.portfolio-website.announcement.update',
-                        'parameters'  => [
+                        'name'       => 'customer.models.portfolio-website.announcement.update',
+                        'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
-                            'announcement' => $announcement->id
+                            'announcement'     => $announcement->id
                         ]
                     ],
                     ...$resetRoute
                 ],
-                'firstBanner'        => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
-                'announcement_data'  => $announcement->toArray(),
-                'announcement_list'  => [],
+                'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
+                'announcement_data'       => $announcement->toArray(),
+                'announcement_list'       => [],
                 'isAnnouncementPublished' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
-                'isAnnouncementActive' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                'isAnnouncementActive'    => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
                 // 'route_toggle_activated'    => [   // TODO
                 //     'name'  => 'customer.models.banner.announcement.toggle',
                 //     'parameters'    => [
@@ -139,23 +136,22 @@ class ShowAnnouncement extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type'   => 'simple',
-                    'simple' => [
-                        'route' => $routeParameters,
-                        'label' => __('banners'),
-                        'icon'  => 'fal fa-bars'
-                    ],
-                ],
+                    'type'          => 'creatingModel',
+                    'creatingModel' => [
+                        'label' => __("creating announcement"),
+                    ]
+                ]
             ];
         };
 
         return match ($routeName) {
-            'customer.banners.banners.index' =>
+            'customer.portfolio.websites.announcements.show' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                IndexAnnouncement::make()->getBreadcrumbs($routeName, $routeParameters),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.banners.index'
+                        'name'       => 'customer.portfolio.websites.announcements.show',
+                        'parameters' => $routeParameters
                     ]
                 ),
             ),

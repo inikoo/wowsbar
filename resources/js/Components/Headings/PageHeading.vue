@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faMailBulk,faSign,faEdit, faWindowMaximize, faFootballBall, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling, faTrashAlt as falTrashAlt, faPencil as falPencil, faCodeBranch, faTags} from '@fal'
+import { faMailBulk, faBullhorn,faSign,faEdit, faWindowMaximize, faFootballBall, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling, faTrashAlt as falTrashAlt, faPencil as falPencil, faCodeBranch, faTags} from '@fal'
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from '@far'
 import { faPlus } from '@fas'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -28,7 +28,7 @@ interface Icon {
 
 library.add(faMailBulk,faEdit, faWindowMaximize, faRocketLaunch, faFootballBall, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
-    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign, falTrashAlt, falPencil, faCodeBranch, faTags
+    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign, falTrashAlt, falPencil, faCodeBranch, faTags, faBullhorn
 )
 
 const props = defineProps<{

@@ -62,7 +62,7 @@ class StoreAnnouncement
     {
         return Inertia::location(route('customer.portfolio.websites.announcements.show', [
             'portfolioWebsite' => $announcement->portfolioWebsite->slug,
-            'announcement' => $announcement->ulid
+            'announcement'     => $announcement->ulid
         ]));
     }
 
@@ -85,7 +85,7 @@ class StoreAnnouncement
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Announcement
     {
         $this->scope    = 'portfolio-website';
-        $this->parent = $portfolioWebsite;
+        $this->parent   = $portfolioWebsite;
 
         $request->validate();
 
@@ -103,7 +103,7 @@ class StoreAnnouncement
 
     public function action(PortfolioWebsite $portfolioWebsite, array $objectData): Announcement
     {
-        $this->parent = $portfolioWebsite;
+        $this->parent   = $portfolioWebsite;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
 

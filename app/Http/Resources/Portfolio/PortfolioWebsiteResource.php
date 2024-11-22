@@ -27,10 +27,10 @@ class PortfolioWebsiteResource extends JsonResource
         }
 
         return array_merge([
-            'id'   => $portfolioWebsite->id,
-            'slug' => $portfolioWebsite->slug,
-            'name' => $portfolioWebsite->name,
-            'url'  => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
+            'id'             => $portfolioWebsite->id,
+            'slug'           => $portfolioWebsite->slug,
+            'name'           => $portfolioWebsite->name,
+            'url'            => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
             'announcements'  => $portfolioWebsite->stats->number_announcements
         ], $divisions);
     }
