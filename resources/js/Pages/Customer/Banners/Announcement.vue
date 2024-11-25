@@ -126,14 +126,17 @@ const onSave = () => {
         }
     )
 }
+
+
+const isLoadingFinish = ref(false)
 const onPublish = () => {
     router.post(
         route(props.routes_list.publish_route.name, props.routes_list.publish_route.parameters),
         announcementData.value,
         {
-            onStart: () => isLoadingSave.value = true,
+            onStart: () => isLoadingFinish.value = true,
             onFinish: () => {
-                isLoadingSave.value = false
+                isLoadingFinish.value = false
                 saveCancelToken.value = null
             },
             onSuccess: () => {
@@ -155,14 +158,17 @@ const onPublish = () => {
         }
     )
 }
-const onReset = () => {
+
+// Method: Reset data
+const isLoadingReset = ref(false)
+const onReset = async () => {
     router.post(
         route(props.routes_list.reset_route.name, props.routes_list.reset_route.parameters),
         announcementData.value,
         {
-            onStart: () => isLoadingSave.value = true,
+            onStart: () => isLoadingReset.value = true,
             onFinish: () => {
-                isLoadingSave.value = false
+                isLoadingReset.value = false
                 saveCancelToken.value = null
             },
             onError: (error) => console.error('======', error),
@@ -271,13 +277,13 @@ const getDeliveryUrl = () => {
 
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <template #afterTitle v-if="isLoadingSave">
+        <!-- <template #afterTitle v-if="isLoadingSave">
             <LoadingIcon />
-        </template>
+        </template> -->
 
         <template #other>
             <div class="flex gap-x-2">
-                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingSave" :style="'negative'" icon="fal fa-undo-alt" />
+                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingReset" :style="'negative'" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
                 <!-- <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" /> -->
 
@@ -303,9 +309,9 @@ const getDeliveryUrl = () => {
                 </div>
 
                 <div class="flex items-center">
-                    <Button @click="onPublish" label="Publish now" :loading="isLoadingSave" iconRight="fal fa-rocket-launch" class="rounded-r-none" />
+                    <Button @click="onPublish" label="Publish now" :loading="isLoadingFinish" iconRight="fal fa-rocket-launch" class="rounded-r-none" />
                     
-                    <Button @click="() => isModalPublish = true" :loading="isLoadingSave" class="rounded-l-none pl-2 pr-2">
+                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" class="rounded-l-none pl-2 pr-2">
                         <template #icon>
                             <div>
                                 <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />

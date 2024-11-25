@@ -70,15 +70,15 @@ class ShowAnnouncement extends InertiaAction
             ];
         }
 
-        $resetRoute = [
-            'reset_route' => [
-                'name'       => 'customer.models.portfolio-website.announcement.reset',
-                'parameters' => [
-                    'portfolioWebsite' => $announcement->portfolio_website_id,
-                    'announcement'     => $announcement->id
-                ]
-            ],
-        ];
+        // $resetRoute = [
+        //     'reset_route' => [
+        //         'name'       => 'customer.models.portfolio-website.announcement.reset',
+        //         'parameters' => [
+        //             'portfolioWebsite' => $announcement->portfolio_website_id,
+        //             'announcement'     => $announcement->id
+        //         ]
+        //     ],
+        // ];
 
         return Inertia::render(
             'Banners/Announcement',
@@ -114,7 +114,13 @@ class ShowAnnouncement extends InertiaAction
                             'announcement'     => $announcement->id
                         ]
                     ],
-                    ...$resetRoute
+                    'reset_route' => [
+                        'name'       => 'customer.models.portfolio-website.announcement.reset',
+                        'parameters' => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
+                            'announcement'     => $announcement->id
+                        ]
+                    ]
                 ],
                 'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'       => $announcement->toArray(),
