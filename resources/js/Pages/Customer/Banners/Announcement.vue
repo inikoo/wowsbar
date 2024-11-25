@@ -43,13 +43,6 @@ const props = defineProps<{
     pageHead: {}
     title: string
     // data: {},
-    firstBanner?: {
-        text: string
-        createRoute: {
-            name: string
-            parameters?: any[]
-        }
-    }
     announcement_data: {
         code: string
         container_properties: {
@@ -83,23 +76,25 @@ const props = defineProps<{
         ulid: string
         updated_at: string
     }
-    announcement_list: {}
+    // announcement_list: {}
     routes_list: {
         publish_route: routeType
         update_route: routeType
         reset_route: routeType
     }
-    isAnnouncementPublished: boolean
-    isAnnouncementActive: boolean
+    is_announcement_published: boolean
+    is_announcement_active: boolean
     route_toggle_activated: routeType
+    is_announcement_dirty?: boolean
 }>()
 
 const announcementData = ref(props.announcement_data)
-console.log('ann', announcementData.value)
+// console.log('ann', announcementData.value)
 provide('announcementData', announcementData.value)
 
 const isModalOpen = ref(false)
 
+// Method: Save announcement
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
@@ -128,6 +123,7 @@ const onSave = () => {
 }
 
 
+// Method: Publish announcement
 const isLoadingFinish = ref(false)
 const onPublish = () => {
     router.post(
@@ -171,7 +167,13 @@ const onReset = async () => {
                 isLoadingReset.value = false
                 saveCancelToken.value = null
             },
-            onError: (error) => console.error('======', error),
+            onError: (error) => {
+                notify({
+                    title: 'Something went wrong',
+                    text: error.message,
+                    type: 'error',
+                })
+            },
             onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel,
             preserveState: true,
             preserveScroll: true
@@ -199,6 +201,7 @@ const isOnPublishState = inject('isOnPublishState', false)
 const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
 
+// Section: Tabs
 const isLoadingComponent = ref<string | null>(null)
 const selectedTab = ref('Setting')
 const changeTab = async (category: string) => {
@@ -221,7 +224,7 @@ const settingPublish = ref({
 })
 
 
-const isActivated = ref(props.isAnnouncementActive)
+const isActivated = ref(props.is_announcement_active)
 const cancelTokenActivate = ref<Function | null>(null)
 const onClickToggleActivate = async (newVal: boolean) => {
     if (isActivated.value === newVal) return
@@ -238,7 +241,7 @@ const onClickToggleActivate = async (newVal: boolean) => {
                 cancelTokenActivate.value = cancelToken.cancel
             },
             onFinish: () => {
-                isActivated.value = props.isAnnouncementPublished
+                isActivated.value = props.is_announcement_published
                 cancelTokenActivate.value = null
             },
             onSuccess: () => {
@@ -283,7 +286,7 @@ const getDeliveryUrl = () => {
 
         <template #other>
             <div class="flex gap-x-2">
-                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingReset" :style="'negative'" icon="fal fa-undo-alt" />
+                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingReset" :style="'negative'" :disabled="!is_announcement_dirty" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
                 <!-- <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" /> -->
 
@@ -309,15 +312,14 @@ const getDeliveryUrl = () => {
                 </div>
 
                 <div class="flex items-center">
-                    <Button @click="onPublish" label="Publish now" :loading="isLoadingFinish" iconRight="fal fa-rocket-launch" class="rounded-r-none" />
-                    
-                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" class="rounded-l-none pl-2 pr-2">
+                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" class="rounded-r-none pl-2.5 pr-2.5">
                         <template #icon>
                             <div>
                                 <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
                             </div>
                         </template>
                     </Button>
+                    <Button @click="onPublish" label="Publish now" :loading="isLoadingFinish" iconRight="fal fa-rocket-launch" class="rounded-l-none" />
                 </div>
             </div>
         </template>

@@ -122,11 +122,12 @@ class ShowAnnouncement extends InertiaAction
                         ]
                     ]
                 ],
-                'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
+                'is_announcement_dirty'    => $announcement->is_dirty,
+                // 'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'       => $announcement->toArray(),
-                'announcement_list'       => [],
-                'isAnnouncementPublished' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
-                'isAnnouncementActive'    => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                // 'announcement_list'       => [],
+                'is_announcement_published' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                'is_announcement_active'    => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
                 // 'route_toggle_activated'    => [   // TODO
                 //     'name'  => 'customer.models.banner.announcement.toggle',
                 //     'parameters'    => [

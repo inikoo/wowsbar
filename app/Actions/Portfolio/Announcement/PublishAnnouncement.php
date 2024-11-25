@@ -72,7 +72,7 @@ class PublishAnnouncement
             'published_checksum'      => md5(json_encode($snapshot->layout)),
             'state'                   => AnnouncementStateEnum::READY,
             'settings'                => Arr::get($snapshot->layout, 'settings'),
-            'isDirty'                 => false
+            'is_dirty'                 => false
         ];
 
         if ($announcement->state == AnnouncementStateEnum::IN_PROCESS or $announcement->state == AnnouncementStateEnum::READY) {
