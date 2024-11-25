@@ -21,7 +21,7 @@ const props = defineProps<{
 
 <template>
     <!-- If banner is 'landscape' -->
-    <div v-if="data.type == 'landscape'">
+    <div v-if="data.type == 'landscape'" class="">
         <div v-if="data.published_snapshot" class="w-full bg-white flex items-center justify-between py-3 px-4">
             <div class="flex gap-x-2">
                 <div class="h-5 aspect-square rounded-full overflow-hidden ring-1 ring-gray-300">
@@ -36,7 +36,7 @@ const props = defineProps<{
                 Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago
             </div>
         </div>
-        <div class="aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-fit h-56 md:h-60">
+        <div class="aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-auto max-h-60">
             <SliderLandscape :data="data.compiled_layout" :production="true" />
         </div>
     </div>
