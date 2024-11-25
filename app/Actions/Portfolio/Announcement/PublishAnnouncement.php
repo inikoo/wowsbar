@@ -12,7 +12,6 @@ use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
-use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Snapshot;
@@ -72,22 +71,23 @@ class PublishAnnouncement
             'container_properties'    => Arr::get($snapshot->layout, 'container_properties'),
             'published_checksum'      => md5(json_encode($snapshot->layout)),
             'state'                   => AnnouncementStateEnum::READY,
-            'settings'                => Arr::get($snapshot->layout, 'settings')
+            'settings'                => Arr::get($snapshot->layout, 'settings'),
+            'isDirty'                 => false
         ];
 
         if ($announcement->state == AnnouncementStateEnum::IN_PROCESS or $announcement->state == AnnouncementStateEnum::READY) {
             $updateData['ready_at'] = now();
-            $updateData['live_at'] = now();
+            $updateData['live_at']  = now();
         }
 
-        if($scheduleAt = Arr::get($modelData, 'schedule_at')) {
+        if ($scheduleAt = Arr::get($modelData, 'schedule_at')) {
             $updateData['schedule_at'] = $scheduleAt;
-            $updateData['live_at'] = $scheduleAt;
+            $updateData['live_at']     = $scheduleAt;
         }
 
-        if($scheduleFinishAt = Arr::get($modelData, 'schedule_finish_at')) {
+        if ($scheduleFinishAt = Arr::get($modelData, 'schedule_finish_at')) {
             $updateData['schedule_finish_at'] = $scheduleFinishAt;
-            $updateData['closed_at'] = $scheduleFinishAt;
+            $updateData['closed_at']          = $scheduleFinishAt;
         }
 
         ActivateAnnouncement::dispatch($announcement)->delay($updateData['live_at']);

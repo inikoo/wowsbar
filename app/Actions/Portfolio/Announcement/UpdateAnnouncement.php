@@ -41,14 +41,9 @@ class UpdateAnnouncement
             ]
         );
 
-        $isDirty = true;
-        if ($announcement->published_checksum == md5(json_encode($snapshot->layout))) {
-            $isDirty = false;
-        }
-
         $announcement->update(
             [
-                'is_dirty' => $isDirty
+                'is_dirty' => true
             ]
         );
 
