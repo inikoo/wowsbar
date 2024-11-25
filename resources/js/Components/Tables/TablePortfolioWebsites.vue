@@ -12,12 +12,12 @@ import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import {Website} from "@/types/website"
 import {faCheckCircle as fasCheckCircle} from '@fas'
-import {faDraftingCompass} from '@fal'
+import {faDraftingCompass, faExternalLink} from '@fal'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { trans } from 'laravel-vue-i18n'
 
-library.add(fasCheckCircle, faDraftingCompass)
+library.add(fasCheckCircle, faDraftingCompass, faExternalLink)
 
 const props = defineProps<{
     data: {
@@ -67,6 +67,19 @@ const selectedWebsite = ref({
                 Footer's Workshop
 
             </Link>
+        </template>
+
+        <!-- URL -->
+        <template #cell(url)="{ item: website }">
+            <a
+                :href="`https://${website.url}`"
+                class="group space-x-1"
+                target="_blank"
+            >
+                <span class="secondaryLinkCustomer py-1.5">{{website.url}}</span>
+                <FontAwesomeIcon icon='fal fa-external-link' class='opacity-0 group-hover:opacity-80' fixed-width aria-hidden='true' />
+
+            </a>
         </template>
 
         <!-- Announcements -->
