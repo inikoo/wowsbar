@@ -82,6 +82,7 @@ class Announcement extends Model
     protected $casts   = [
         "container_properties" => "array",
         "fields"               => "array",
+        "settings"             => "array",
         'state'                => AnnouncementStateEnum::class,
         'status'               => AnnouncementStatusEnum::class
     ];
@@ -92,10 +93,27 @@ class Announcement extends Model
         'settings'               => '{}'
     ];
 
-    public function getSettingsAttribute($value)
+    public function extractSettings(array $data): array
     {
-        // To remain empty object {}, instead of convert it to empty array []
-        return json_decode($value) ?: (object)[];
+        $showPages = [];
+        $hidePages = [];
+
+        if ($data['target_pages']['type'] === 'all') {
+            $showPages = ['all'];
+        } elseif ($data['target_pages']['type'] === 'specific') {
+            foreach ($data['target_pages']['specific'] as $page) {
+                if ($page['will'] === 'show') {
+                    $showPages[] = $page['url'];
+                } elseif ($page['will'] === 'hide') {
+                    $hidePages[] = $page['url'];
+                }
+            }
+        }
+
+        return [
+            'show_pages' => $showPages,
+            'hide_pages' => $hidePages,
+        ];
     }
 
     public function snapshots(): MorphMany
