@@ -31,7 +31,7 @@ async function fetchAnnouncementData() {
         const path = window.location.pathname
         // console.log('domain', domainName)
         console.log('deliveryUrl', deliveryUrl)
-        console.log('fetchAnnouncementData')
+        // console.log('fetchAnnouncementData')
         try {
             // Fetch: Announcement JSON
             const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${deliveryUrl}/announcement/${ulid}`, {
@@ -44,12 +44,15 @@ async function fetchAnnouncementData() {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
-                    console.log('resresrespon', response)
-                    return response.json();
+                    const xxx = response.json()
+                    console.log('resresrespon', xxx)
+                    document.querySelector('#wowsbar_announcement').innerHTML = xxx
+                    console.log('resresrespon 111', xxx)
+                    return xxx;
                 });
 
-            console.log('======== new Announctment data', announcementData)
-            document.querySelector('#wowsbar_announcement').innerHTML = announcementData
+            console.log('======== new Announctment data', announcementData);
+            document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
             
             // const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
             // console.log('announcementData', containerStyle);
