@@ -25,7 +25,7 @@ const emits = defineEmits<{
 
 const announcementData = inject('announcementData', {})
 const announcementDataSettings = announcementData.settings
-console.log('kkkk', announcementData.settings)
+// console.log('kkkk', announcementData.settings)
 
 // Section: target_pages
 const specificNew = ref({
