@@ -1,12 +1,12 @@
 <script setup lang='ts'>
-import { inject, onMounted, ref, toRaw } from 'vue'
+import { inject, nextTick, onMounted, ref, toRaw } from 'vue'
 import Select from 'primevue/select'
 import InputText from 'primevue/inputtext'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import Tag from '@/Components/Tag.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { remove, set } from 'lodash'
+import { cloneDeep, get, remove, set } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useCopyText } from '@/Composables/useCopyText'
 import { usePage } from '@inertiajs/vue3'
@@ -15,6 +15,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 library.add(faLink)
 
+const props = defineProps<{
+    domain: string
+}>()
 
 const emits = defineEmits<{
     (e: 'onMounted'): void
@@ -22,24 +25,30 @@ const emits = defineEmits<{
 
 const announcementData = inject('announcementData', {})
 const announcementDataSettings = announcementData.settings
+console.log('kkkk', announcementData.settings)
 
-
+// Section: target_pages
 const specificNew = ref({
     will: 'show', // 'hide'
     when: 'contain', // 'matches'
     url: ''
 })
-const addSpecificPage = () => {
-    if (Array.isArray(announcementDataSettings?.target?.specific)) {
-        announcementDataSettings.target.specific.push({...specificNew.value})
+const addSpecificPage = async () => {
+    const newTargetPage = cloneDeep(specificNew.value)
+    
+    if (Array.isArray(announcementDataSettings?.target_pages?.specific)) {
+        announcementDataSettings.target_pages.specific.push(newTargetPage)
     } else {
-        set(announcementDataSettings, 'target_pages.specific', [toRaw(specificNew.value)])
+        set(announcementDataSettings, ['target_pages', 'specific'], [newTargetPage])
     }
 
+    console.log('opopop', get(announcementDataSettings, ['target_pages', 'specific']))
+    
+    await nextTick()
     specificNew.value.url = ''
 }
 const onDeleteSpecific = (specIndex: number) => {
-    remove(announcementDataSettings.target.specific, (item, index) => {
+    remove(announcementDataSettings.target_pages.specific, (item, index) => {
         return index == specIndex
     })
 
@@ -72,18 +81,18 @@ const announcementScheduled = ref({
     }
 })
 
-const getAnnouncementScriptUrl = () => {
-    let xxx
-    if (usePage().props.environment === 'local') {
-        xxx = `delivery.wowsbar.test`
-    } else if (usePage().props.environment === 'staging') {
-        xxx = `https://delivery-staging.wowsbar.com`
-    } else if (usePage().props.environment === 'production') {
-        xxx = `https://delivery.wowsbar.com`
-    }
+// const getAnnouncementScriptUrl = () => {
+//     let xxx
+//     if (usePage().props.environment === 'local') {
+//         xxx = `delivery.wowsbar.test`
+//     } else if (usePage().props.environment === 'staging') {
+//         xxx = `https://delivery-staging.wowsbar.com`
+//     } else if (usePage().props.environment === 'production') {
+//         xxx = `https://delivery.wowsbar.com`
+//     }
 
-    return window.location.origin + `/announcement.min.js?ulid=${announcementData.ulid}&delivery=${xxx}`
-}
+//     return window.location.origin + `/announcement.min.js?ulid=${announcementData.ulid}&delivery=${xxx}`
+// }
 
 const settingsUser = ref({
     authState: 'all', // 'logout' || 'all'
@@ -104,7 +113,7 @@ const settingsUser = ref({
 
     <!-- Section: Page -->
     <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
-        <div class="text-xl font-semibold">Page</div>
+        <div class="text-xl font-semibold">{{ trans("Page") }}</div>
         <p class="text-sm/6 text-gray-600">
             {{ trans("Select where the Announcement will be displayed") }}
         </p>
@@ -151,14 +160,30 @@ const settingsUser = ref({
                 <div>
                     <div class="flex gap-x-2">
                         <div class="w-32">
-                            <Select v-model="specificNew.when" :options="['contain', 'matches']" placeholder="When?" class="w-full" />
+                            <Select
+                                v-model="specificNew.when"
+                                :options="[
+                                    'contain',
+                                    // 'matches'
+                                ]"
+                                placeholder="When?"
+                                class="w-full"
+                            />
                         </div>
                         <div class="min-w-80 w-fit max-w-96">
                             <InputGroup v-show="specificNew.when === 'matches'">
-                                <InputGroupAddon>awa.test/</InputGroupAddon>
+                                <InputGroupAddon>{{ domain }}/</InputGroupAddon>
                                 <InputText @keydown.enter="() => specificNew.url ? addSpecificPage() : ''" type="text" v-model="specificNew.url" placeholder="blog/subpage" />
                             </InputGroup>
-                            <InputText @keydown.enter="() => specificNew.url ? addSpecificPage() : ''" v-show="specificNew.when === 'contain'" v-model="specificNew.url" fluid type="text" placeholder="blog/subpage" class="placeholder:text-gray-200"/>
+                            <InputText
+                                v-show="specificNew.when === 'contain'"
+                                @keydown.enter="() => specificNew.url ? addSpecificPage() : ''"
+                                v-model="specificNew.url"
+                                fluid
+                                type="text"
+                                placeholder="blog/subpage"
+                                class="placeholder:text-gray-200"
+                            />
                         </div>
                         <Button @click="() => addSpecificPage()" :style="'secondary'" label="Add" :disabled="!specificNew.url" />
                     </div>
@@ -205,7 +230,7 @@ const settingsUser = ref({
         </div>
     </fieldset>
 
-    <!-- Section: User -->
+    <!-- Section: target_users -->
     <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
         <div class="text-xl font-semibold">User</div>
         <p class="text-sm/6 text-gray-600">

@@ -123,6 +123,7 @@ class ShowAnnouncement extends InertiaAction
                     ]
                 ],
                 'is_announcement_dirty'    => $announcement->is_dirty,
+                'portfolio_website'         => $announcement->portfolioWebsite,
                 // 'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'       => $announcement->toArray(),
                 // 'announcement_list'       => [],

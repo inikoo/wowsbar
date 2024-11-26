@@ -86,6 +86,9 @@ const props = defineProps<{
     is_announcement_active: boolean
     route_toggle_activated: routeType
     is_announcement_dirty?: boolean
+    portfolio_website: {
+        url: string
+    }
 }>()
 
 const announcementData = ref(props.announcement_data)
@@ -429,6 +432,7 @@ const getDeliveryUrl = () => {
         <div class="max-w-4xl mx-auto px-4">
             <!-- Section: Target -->
             <AnnouncementSettings
+                :domain="portfolio_website.url"
                 @onMounted="() => isLoadingComponent = null"
             />
 
@@ -442,7 +446,7 @@ const getDeliveryUrl = () => {
         </div>
     </Modal>
 
-    <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]">
+    <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]" :overflowHidden="false">
         <div class="grid grid-cols-1 h-fit gap-y-4 ">
             <fieldset class="">
                 <div class="text-sm/6 font-semibold ">Start date</div>
