@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Portfolio\Announcement\UI\DeliverAnnouncement;
+use App\Actions\Portfolio\Announcement\UI\ShowCompiledAnnouncement;
 use App\Actions\Portfolio\Banner\UI\DeliverBanner;
 use App\Actions\Portfolio\Banner\UI\DeliverBannerExport;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +17,6 @@ Route::middleware(["delivery",])->group(function () {
 Route::middleware(["delivery",])->group(function () {
     Route::get('/banners-export/{ulid}', DeliverBannerExport::class)->name('banner-export');
 });
-Route::middleware(["delivery",])->group(function () {
-    Route::get('/announcement/{announcement:ulid}', DeliverAnnouncement::class)->name('announcement');
+Route::middleware(["delivery"])->group(function () {
+    Route::get('/announcement/{announcement:ulid}', ShowCompiledAnnouncement::class)->name('announcement');
 });
