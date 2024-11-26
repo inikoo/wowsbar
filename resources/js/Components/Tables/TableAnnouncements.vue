@@ -7,13 +7,14 @@
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue'
 import {useLocaleStore} from '@/Stores/locale'
-import {Banner} from "@/types/banner";
-import {Link} from "@inertiajs/vue3";
+import {Banner} from "@/types/banner"
+import {Link} from "@inertiajs/vue3"
+import Tag from '@/Components/Tag.vue'
 
 const locale = useLocaleStore()
 
 const props = defineProps<{
-    data: object,
+    data: {}
     tab?: string
 }>()
 
@@ -32,8 +33,21 @@ function announcementRoute(announcement) {
             </Link>
         </template>
 
-        <!-- <template #cell(name)="{ item: announcement }">
-            {{announcement['name']}}
-        </template> -->
+        <template #cell(show_pages)="{ item: announcement }">
+            <div class="flex flex-wrap gap-x-1 gap-y-1">
+                <template v-for="page in announcement.show_pages">
+                    <Tag :label="page" noHoverColor />
+                </template>
+            </div>
+        </template>
+
+        <template #cell(hide_pages)="{ item: announcement }">
+            <div class="flex flex-wrap gap-x-1 gap-y-1">
+                <template v-for="page in announcement.hide_pages">
+                    <Tag :label="page" noHoverColor />
+                </template>
+            </div>
+        </template>
+
     </Table>
 </template>

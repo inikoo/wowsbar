@@ -27,7 +27,8 @@ function iframeStyle(iframeElement) {
 
 async function fetchAnnouncementData() {
     if (ulid) {
-        const fullUrl = window.location.href
+        const domain = window.location.hostname
+        const path = window.location.pathname
         // console.log('domain', domainName)
         console.log('deliveryUrl', deliveryUrl)
         console.log('fetchAnnouncementData')
@@ -46,44 +47,47 @@ async function fetchAnnouncementData() {
                     console.log('resresrespon', response)
                     return response.json();
                 });
+
+            console.log('======== new Announctment data', announcementData)
+            document.querySelector('#wowsbar_announcement').innerHTML = announcementData
             
-            const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
-            console.log('announcementData', containerStyle);
+            // const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
+            // console.log('announcementData', containerStyle);
 
-            // createElementAfterBody();
+            // // createElementAfterBody();
 
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
-            iframeStyle(iframe)
+            // const iframe = document.createElement('iframe');
+            // iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
+            // iframeStyle(iframe)
 
-            // console.log('zzzz', iframe?.contentWindow)
-            // function adjustIframeHeight() {
-            //     iframe.style.height = iframe.contentWindow.document.body.clientHeight + 'px';
-            //     console.log('ffff', iframe.style.height)
+            // // console.log('zzzz', iframe?.contentWindow)
+            // // function adjustIframeHeight() {
+            // //     iframe.style.height = iframe.contentWindow.document.body.clientHeight + 'px';
+            // //     console.log('ffff', iframe.style.height)
+            // // }
+            
+            // let iframeHeight
+            // let iframeTop
+
+            // // Listening event from component (inside iframe)
+            // window.addEventListener('message', function(event) {
+            //     console.log('received message', event.data)
+
+            //     // Emit from each component (AnnouncementInformation1)
+            //     if(event.data === 'close_button_click') {
+            //         console.log('Close button clicked')
+            //         iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
+            //     }
+            // });
+
+            // // Set style for iframe
+            // for (const [key, value] of Object.entries(containerStyle)) {
+            //     iframe.style[key] = value;
             // }
             
-            let iframeHeight
-            let iframeTop
-
-            // Listening event from component (inside iframe)
-            window.addEventListener('message', function(event) {
-                console.log('received message', event.data)
-
-                // Emit from each component (AnnouncementInformation1)
-                if(event.data === 'close_button_click') {
-                    console.log('Close button clicked')
-                    iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
-                }
-            });
-
-            // Set style for iframe
-            for (const [key, value] of Object.entries(containerStyle)) {
-                iframe.style[key] = value;
-            }
-            
-            // Insert iframe to first child of <body>
-            const body = document.body;
-            body.insertBefore(iframe, body.firstChild);
+            // // Insert iframe to first child of <body>
+            // const body = document.body;
+            // body.insertBefore(iframe, body.firstChild);
 
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
