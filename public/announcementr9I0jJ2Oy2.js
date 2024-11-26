@@ -40,14 +40,14 @@ async function fetchAnnouncementData() {
                     "Content-Type": "application/json",
                 }
             })
-                .then(response => {
+                .then(async response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
-                    const xxx = response.json()
-                    console.log('resresrespon', xxx)
-                    document.querySelector('#wowsbar_announcement').innerHTML = xxx
-                    console.log('resresrespon 111', xxx)
+                    const xxx = await response.json();
+                    console.log('resresrespon', xxx);
+                    document.querySelector('#wowsbar_announcement').innerHTML = xxx;
+                    console.log('resresrespon 111', xxx);
                     return xxx;
                 });
 
