@@ -16,9 +16,18 @@ class ShowCompiledAnnouncement
     public function handle(Announcement $announcement, ActionRequest $request): ?Announcement
     {
         $referrer = $request->header('Referer');
+
+        if($request->get('r')) {
+            $referrer = $request->get('r');
+        }
+
         $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
 
         $targetType = Arr::get($announcement->settings, 'target_pages.type');
+
+        if(! str_contains($referrer, $announcement->portfolioWebsite->url)) {
+            return null;
+        }
 
         if($targetType === 'all') {
             return $announcement;
