@@ -68,7 +68,9 @@ class PublishAnnouncement
         $updateData = [
             'live_snapshot_id'        => $snapshot->id,
             'fields'                  => Arr::get($snapshot->layout, 'fields'),
-            'container_properties'    => Arr::get($snapshot->layout, 'container_properties'),
+            'container_properties'    => Arr::get($modelData, 'container_properties'),
+            'compiled_layout'         => Arr::get($modelData, 'compiled_layout'),
+            'text'                    => Arr::get($snapshot->layout, 'text'),
             'published_checksum'      => md5(json_encode($snapshot->layout)),
             'state'                   => AnnouncementStateEnum::READY,
             'settings'                => Arr::get($snapshot->layout, 'settings'),
@@ -109,7 +111,9 @@ class PublishAnnouncement
         return [
             'code'                 => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
-            'container_properties' => ['sometimes', 'array']
+            'container_properties' => ['sometimes', 'array'],
+            'compiled_layout' => ['sometimes', 'string'],
+            'text'          => ['sometimes', 'string']
         ];
     }
 

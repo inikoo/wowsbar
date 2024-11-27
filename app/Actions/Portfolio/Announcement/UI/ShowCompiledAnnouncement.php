@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Actions\Portfolio\Announcement\UI;
+
+use App\Models\Announcement;
+use Illuminate\Support\Arr;
+use Inertia\Response;
+use Lorisleiva\Actions\ActionRequest;
+use Lorisleiva\Actions\Concerns\AsController;
+use Inertia\Inertia;
+
+class ShowCompiledAnnouncement
+{
+    use AsController;
+
+    public function handle(Announcement $announcement, ActionRequest $request): ?Announcement
+    {
+        $referrer = $request->header('Referer');
+        $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
+
+        $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
+
+        $matchingPage = $specificPages->first(function ($page) use ($originPath) {
+            return match ($page['when']) {
+                'contain' => str_contains($originPath, $page['url']),
+                'exact' => $originPath === $page['url'],
+                default => false,
+            };
+        });
+
+        return $matchingPage && $matchingPage['will'] === 'show' ? $announcement : null;
+    }
+
+    public function htmlResponse(?Announcement $announcement): ?Response
+    {
+        if(!$announcement) {
+            return null;
+        }
+
+        return Inertia::render(
+            'DeliverAnnouncement',
+            [
+                'compiled_layout' => $announcement->compiled_layout,
+                'text' => $announcement->text
+            ]
+        );
+    }
+}
