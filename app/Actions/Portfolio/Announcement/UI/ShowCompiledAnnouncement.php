@@ -37,8 +37,18 @@ class ShowCompiledAnnouncement
         return $matchingPage && $matchingPage['will'] === 'show' ? $announcement : null;
     }
 
-    public function htmlResponse(?Announcement $announcement)
+    public function htmlResponse(?Announcement $announcement): ?Response
     {
-        return $announcement?->compiled_layout;
+        if(!$announcement) {
+            return null;
+        }
+
+        return Inertia::render(
+            'DeliverAnnouncement',
+            [
+                'compiled_layout' => $announcement->compiled_layout,
+                'container_properties' => $announcement->container_properties
+            ]
+        );
     }
 }

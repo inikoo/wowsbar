@@ -60,7 +60,7 @@ async function fetchAnnouncementData() {
                 }
             })
                 .then(async response => {
-                    const xxx = await response.text();
+                    const xxx = await response.json();
                     console.log('ar_web_wowsbar:', xxx);
 
                     if (!response.ok) {
@@ -76,7 +76,9 @@ async function fetchAnnouncementData() {
             // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
 
             const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
-            setInnerHTML(wowsbar_announcement, announcementData)
+
+            wowsbar_announcement.style.height=announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
+            setInnerHTML(wowsbar_announcement, announcementData.compiled_layout)
 
             
             
