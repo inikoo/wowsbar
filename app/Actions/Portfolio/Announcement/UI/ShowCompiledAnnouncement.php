@@ -18,6 +18,12 @@ class ShowCompiledAnnouncement
         $referrer = $request->header('Referer');
         $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
 
+        $targetType = Arr::get($announcement->settings, 'target_pages.type');
+
+        if($targetType === 'all') {
+            return $announcement;
+        }
+
         $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
 
         $matchingPage = $specificPages->first(function ($page) use ($originPath) {
@@ -31,18 +37,8 @@ class ShowCompiledAnnouncement
         return $matchingPage && $matchingPage['will'] === 'show' ? $announcement : null;
     }
 
-    public function htmlResponse(?Announcement $announcement): ?Response
+    public function htmlResponse(?Announcement $announcement)
     {
-        if(!$announcement) {
-            return null;
-        }
-
-        return Inertia::render(
-            'DeliverAnnouncement',
-            [
-                'compiled_layout' => $announcement->compiled_layout,
-                'text' => $announcement->text
-            ]
-        );
+        return $announcement?->compiled_layout;
     }
 }
