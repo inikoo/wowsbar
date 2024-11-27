@@ -41,19 +41,21 @@ async function fetchAnnouncementData() {
                 }
             })
                 .then(async response => {
-                    console.log('response announce', response)
+                    console.log('response announce', await response.text())
+                    const xxx = await response.text();
+                    console.log('resresrespon', xxx);
+
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
-                    const xxx = await response.json();
-                    console.log('resresrespon', xxx);
-                    document.querySelector('#wowsbar_announcement').innerHTML = response;
-                    console.log('resresrespon 111', xxx);
+
+                    document.querySelector('#wowsbar_announcement').innerHTML = xxx;
+
                     return xxx;
                 });
 
             console.log('======== new Announctment data', announcementData);
-            document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
+            // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
             
             // const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
             // console.log('announcementData', containerStyle);
@@ -94,7 +96,7 @@ async function fetchAnnouncementData() {
             // body.insertBefore(iframe, body.firstChild);
 
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('Someting went wrong:', error);
         }
     } else {
         console.log("ulid is not exist");
