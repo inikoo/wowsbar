@@ -21,6 +21,7 @@ function iframeStyle(iframeElement, ulidAnnouncement) {
 function setInnerHTML(elm, htmlValue) {
     elm.innerHTML = htmlValue;
     
+    // Replace <script> from innerHTML to become <script> from javascript (so it will executed)
     Array.from(elm.querySelectorAll("script"))
         .forEach( oldScriptEl => {
             const newScriptEl = document.createElement("script");
@@ -79,8 +80,6 @@ async function fetchAnnouncementData() {
 
             
             
-            const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
-            console.log('announcementData', containerStyle);
 
             // createElementAfterBody();
 
@@ -97,21 +96,30 @@ async function fetchAnnouncementData() {
             let iframeHeight
             let iframeTop
 
-            // Listening event from component (inside iframe)
-            window.addEventListener('message', function(event) {
-                console.log('received message', event.data)
 
-                // Emit from each component (AnnouncementInformation1)
-                if(event.data === 'close_button_click') {
-                    console.log('Close button clicked')
-                    iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
+            if (announcementData?.container_properties) {
+                const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
+                console.log('Container style:', containerStyle);
+
+                // Set style for iframe
+                for (const [key, value] of Object.entries(containerStyle)) {
+                    iframe.style[key] = value;
                 }
-            });
 
-            // Set style for iframe
-            for (const [key, value] of Object.entries(containerStyle)) {
-                iframe.style[key] = value;
+                // Listening event from component (inside iframe)
+                window.addEventListener('message', function(event) {
+                    console.log('received message', event.data)
+
+                    // Emit from each component (AnnouncementInformation1)
+                    if(event.data === 'close_button_click') {
+                        console.log('Close button clicked')
+                        iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
+                    }
+                });
+            } else {
+                console.error('No container properties found');
             }
+
             
             // Insert iframe to first child of <body>
             const body = document.body;
