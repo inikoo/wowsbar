@@ -17,6 +17,25 @@ function iframeStyle(iframeElement, ulidAnnouncement) {
     iframeElement.frameBorder = "0"
 }
 
+// To render HTML that contain <script></script>
+function setInnerHTML(elm, htmlValue) {
+    elm.innerHTML = htmlValue;
+    
+    Array.from(elm.querySelectorAll("script"))
+        .forEach( oldScriptEl => {
+            const newScriptEl = document.createElement("script");
+            
+            Array.from(oldScriptEl.attributes).forEach( attr => {
+                newScriptEl.setAttribute(attr.name, attr.value) 
+            });
+            
+            const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+            newScriptEl.appendChild(scriptText);
+            
+            oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+        });
+}
+
 
 async function fetchAnnouncementData() {
     const scriptUrl = new URL(document.currentScript.src);
@@ -53,7 +72,12 @@ async function fetchAnnouncementData() {
                 });
 
             console.log('======== new Announctment data', announcementData);
-            document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
+            // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
+
+            const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
+            setInnerHTML(wowsbar_announcement, announcementData)
+
+            
             
             const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
             console.log('announcementData', containerStyle);
@@ -116,9 +140,9 @@ fetchAnnouncementData();
 function propertiesToHTMLStyle(properties, options) {
     const htmlStyle = {
         position: properties.position?.type || 'static',
-        left: properties.isCenterHorizontal && properties.position.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
+        left: properties.isCenterHorizontal && properties.position?.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
         top: properties.position?.y || '0px',
-        transform: properties.isCenterHorizontal && properties.position.type === 'fixed' ? 'translateX(-50%)' : '',
+        transform: properties.isCenterHorizontal && properties.position?.type === 'fixed' ? 'translateX(-50%)' : '',
 
         height: (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
         width: (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',
