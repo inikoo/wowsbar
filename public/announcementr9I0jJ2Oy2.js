@@ -1,16 +1,9 @@
 
-const scriptUrl = new URL(document.currentScript.src);
-
-// Extract the `ulid` from the query parameters
-const ulid = scriptUrl.searchParams.get('ulid');
-const deliveryUrl = scriptUrl.searchParams.get('delivery');
-
-// Use the ulid as needed
-console.log('ULID:', ulid);
 
 
-function iframeStyle(iframeElement) {
-    iframeElement.id = `iframe-wowsbar-${ulid}`;
+
+function iframeStyle(iframeElement, ulidAnnouncement) {
+    iframeElement.id = `iframe-wowsbar-${ulidAnnouncement}`;
     iframeElement.setAttribute('allowTransparency', 'true');
     iframeElement.style.height = '0px'
     iframeElement.style.width = '100%';
@@ -24,14 +17,40 @@ function iframeStyle(iframeElement) {
     iframeElement.frameBorder = "0"
 }
 
+// To render HTML that contain <script></script>
+function setInnerHTML(elm, htmlValue) {
+    elm.innerHTML = htmlValue;
+    
+    // Replace <script> from innerHTML to become <script> from javascript (so it will executed)
+    Array.from(elm.querySelectorAll("script"))
+        .forEach( oldScriptEl => {
+            const newScriptEl = document.createElement("script");
+            
+            Array.from(oldScriptEl.attributes).forEach( attr => {
+                newScriptEl.setAttribute(attr.name, attr.value) 
+            });
+            
+            const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+            newScriptEl.appendChild(scriptText);
+            
+            oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+        });
+}
+
 
 async function fetchAnnouncementData() {
+    const scriptUrl = new URL(document.currentScript.src);
+
+    // Extract the `ulid` from the query parameters
+    const ulid = scriptUrl.searchParams.get('ulid');
+    const deliveryUrl = scriptUrl.searchParams.get('delivery');
+    console.log('ulid:', ulid, 'deliveryUrl:', deliveryUrl)
+    
+    const domain = window.location.hostname
+    const path = window.location.pathname
+    console.log('domain:', domain, 'path:', path)
+
     if (ulid) {
-        const domain = window.location.hostname
-        const path = window.location.pathname
-        // console.log('domain', domainName)
-        console.log('deliveryUrl', deliveryUrl)
-        console.log('fetchAnnouncementData')
         try {
             // Fetch: Announcement JSON
             const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${deliveryUrl}/announcement/${ulid}`, {
@@ -40,57 +59,74 @@ async function fetchAnnouncementData() {
                     "Content-Type": "application/json",
                 }
             })
-                .then(response => {
+                .then(async response => {
+                    const xxx = await response.text();
+                    console.log('ar_web_wowsbar:', xxx);
+
                     if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
+                        throw new Error('Network response was not ok ---- ' + response.statusText);
                     }
-                    console.log('resresrespon', response)
-                    return response.json();
+
+                    // document.querySelector('#wowsbar_announcement').innerHTML = xxx;
+
+                    return xxx;
                 });
 
-            console.log('======== new Announctment data', announcementData)
-            document.querySelector('#wowsbar_announcement').innerHTML = announcementData
+            console.log('======== new Announctment data', announcementData);
+            // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
+
+            const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
+            setInnerHTML(wowsbar_announcement, announcementData)
+
             
-            // const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
-            // console.log('announcementData', containerStyle);
-
-            // // createElementAfterBody();
-
-            // const iframe = document.createElement('iframe');
-            // iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
-            // iframeStyle(iframe)
-
-            // // console.log('zzzz', iframe?.contentWindow)
-            // // function adjustIframeHeight() {
-            // //     iframe.style.height = iframe.contentWindow.document.body.clientHeight + 'px';
-            // //     console.log('ffff', iframe.style.height)
-            // // }
             
-            // let iframeHeight
-            // let iframeTop
 
-            // // Listening event from component (inside iframe)
-            // window.addEventListener('message', function(event) {
-            //     console.log('received message', event.data)
+            // createElementAfterBody();
 
-            //     // Emit from each component (AnnouncementInformation1)
-            //     if(event.data === 'close_button_click') {
-            //         console.log('Close button clicked')
-            //         iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
-            //     }
-            // });
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
+            iframeStyle(iframe, ulid)
 
-            // // Set style for iframe
-            // for (const [key, value] of Object.entries(containerStyle)) {
-            //     iframe.style[key] = value;
+            // console.log('zzzz', iframe?.contentWindow)
+            // function adjustIframeHeight() {
+            //     iframe.style.height = iframe.contentWindow.document.body.clientHeight + 'px';
+            //     console.log('ffff', iframe.style.height)
             // }
             
-            // // Insert iframe to first child of <body>
-            // const body = document.body;
-            // body.insertBefore(iframe, body.firstChild);
+            let iframeHeight
+            let iframeTop
+
+
+            if (announcementData?.container_properties) {
+                const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
+                console.log('Container style:', containerStyle);
+
+                // Set style for iframe
+                for (const [key, value] of Object.entries(containerStyle)) {
+                    iframe.style[key] = value;
+                }
+
+                // Listening event from component (inside iframe)
+                window.addEventListener('message', function(event) {
+                    console.log('received message', event.data)
+
+                    // Emit from each component (AnnouncementInformation1)
+                    if(event.data === 'close_button_click') {
+                        console.log('Close button clicked')
+                        iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
+                    }
+                });
+            } else {
+                console.error('No container properties found');
+            }
+
+            
+            // Insert iframe to first child of <body>
+            const body = document.body;
+            body.insertBefore(iframe, body.firstChild);
 
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('Someting went wrong:', error);
         }
     } else {
         console.log("ulid is not exist");
@@ -112,9 +148,9 @@ fetchAnnouncementData();
 function propertiesToHTMLStyle(properties, options) {
     const htmlStyle = {
         position: properties.position?.type || 'static',
-        left: properties.isCenterHorizontal && properties.position.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
+        left: properties.isCenterHorizontal && properties.position?.type === 'fixed' ? '50%' : properties.position?.x || '0px', 
         top: properties.position?.y || '0px',
-        transform: properties.isCenterHorizontal && properties.position.type === 'fixed' ? 'translateX(-50%)' : '',
+        transform: properties.isCenterHorizontal && properties.position?.type === 'fixed' ? 'translateX(-50%)' : '',
 
         height: (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
         width: (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',
