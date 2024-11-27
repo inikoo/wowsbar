@@ -41,12 +41,13 @@ async function fetchAnnouncementData() {
                 }
             })
                 .then(async response => {
+                    console.log('response announce', response)
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
                     const xxx = await response.json();
                     console.log('resresrespon', xxx);
-                    document.querySelector('#wowsbar_announcement').innerHTML = xxx;
+                    document.querySelector('#wowsbar_announcement').innerHTML = response;
                     console.log('resresrespon 111', xxx);
                     return xxx;
                 });
