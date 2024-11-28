@@ -18,14 +18,15 @@ class ShowCompiledAnnouncement
     public function handle(ActionRequest $request): ?Announcement
     {
         $referrer = $request->get('domain');
-        $origin = $referrer ? preg_replace('/^www\./', '', parse_url($referrer, PHP_URL_HOST)) : null;
+        $origin = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
 
         $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
         $announcements = $portfolioWebsite->announcements;
 
-        $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
+        $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
+        $path = $path === '' ? null : $path;
 
-        $announcement = $announcements->map(function ($announcement) use ($referrer, $originPath) {
+        $announcement = $announcements->map(function ($announcement) use ($referrer, $path) {
             $targetType = Arr::get($announcement->settings, 'target_pages.type');
 
             if ($targetType === 'all') {
@@ -34,10 +35,10 @@ class ShowCompiledAnnouncement
 
             $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
 
-            $matchingPage = $specificPages->first(function ($page) use ($originPath) {
+            $matchingPage = $specificPages->first(function ($page) use ($path) {
                 return match ($page['when']) {
-                    'contain' => str_contains($originPath, $page['url']),
-                    'exact' => $originPath === $page['url'],
+                    'contain' => str_contains($path, $page['url']),
+                    'exact' => $path === $page['url'],
                     default => false,
                 };
             });
