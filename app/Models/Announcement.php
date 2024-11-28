@@ -98,7 +98,7 @@ class Announcement extends Model
         $showPages = [];
         $hidePages = [];
 
-        if(blank($data)) {
+        if (blank($data)) {
             return [
                 'show_pages' => [],
                 'hide_pages' => [],
