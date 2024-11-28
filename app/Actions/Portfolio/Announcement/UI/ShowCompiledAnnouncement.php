@@ -3,6 +3,8 @@
 namespace App\Actions\Portfolio\Announcement\UI;
 
 use App\Models\Announcement;
+use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -13,7 +15,7 @@ class ShowCompiledAnnouncement
 {
     use AsController;
 
-    public function handle(Announcement $announcement, ActionRequest $request): ?Announcement
+    public function handle(ActionRequest $request): ?Announcement
     {
         $referrer = $request->header('Referer');
 
@@ -21,43 +23,62 @@ class ShowCompiledAnnouncement
             $referrer = $request->get('r');
         }
 
+        $origin = $referrer ? parse_url($referrer, PHP_URL_HOST) : null;
+
+        $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%https://' . $origin . '%')->first();
+        $announcements = $portfolioWebsite->announcements;
+
         $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
 
-        $targetType = Arr::get($announcement->settings, 'target_pages.type');
+        $announcement = $announcements->map(function ($announcement) use ($referrer, $originPath) {
+            $targetType = Arr::get($announcement->settings, 'target_pages.type');
 
-        if(! str_contains($referrer, $announcement->portfolioWebsite->url)) {
+            if ($targetType === 'all') {
+                return $announcement;
+            }
+
+            $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
+
+            $matchingPage = $specificPages->first(function ($page) use ($originPath) {
+                return match ($page['when']) {
+                    'contain' => str_contains($originPath, $page['url']),
+                    'exact' => $originPath === $page['url'],
+                    default => false,
+                };
+            });
+
+            if ($matchingPage) {
+                return $announcement;
+            }
+
             return null;
-        }
-
-        if($targetType === 'all') {
-            return $announcement;
-        }
-
-        $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
-
-        $matchingPage = $specificPages->first(function ($page) use ($originPath) {
-            return match ($page['when']) {
-                'contain' => str_contains($originPath, $page['url']),
-                'exact' => $originPath === $page['url'],
-                default => false,
-            };
         });
 
-        return $matchingPage && $matchingPage['will'] === 'show' ? $announcement : null;
+        return $announcement->first();
     }
 
-    public function htmlResponse(?Announcement $announcement): ?Response
+    public function jsonResponse(?Announcement $announcement): ?JsonResponse
     {
         if(!$announcement) {
             return null;
         }
 
-        return Inertia::render(
-            'DeliverAnnouncement',
-            [
-                'compiled_layout' => $announcement->compiled_layout,
-                'container_properties' => $announcement->container_properties
-            ]
-        );
+        return response()->json([
+            'compiled_layout' => $announcement->compiled_layout,
+            'container_properties' => $announcement->container_properties,
+            'restrictions' => $this->hasRestrictions($announcement->settings)
+        ]);
+    }
+
+    public function hasRestrictions(array $data): bool
+    {
+        $targetPages = Arr::get($data, 'target_pages', []);
+        $targetUsers = Arr::get($data, 'target_users', []);
+
+        if ($targetPages['type'] === 'specific' || $targetUsers['auth_state'] === 'specific') {
+            return true;
+        }
+
+        return false;
     }
 }

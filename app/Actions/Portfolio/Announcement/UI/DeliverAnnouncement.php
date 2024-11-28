@@ -17,8 +17,6 @@ class DeliverAnnouncement
 
     public function htmlResponse(Announcement $announcement)
     {
-        // return view('announcement', ['data' => $announcement]);
-        // return $announcement;
         return Inertia::render(
             'DeliverAnnouncement',
             [
