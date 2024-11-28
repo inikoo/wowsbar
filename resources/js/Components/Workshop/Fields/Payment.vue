@@ -58,6 +58,8 @@ const FeOptions = [
     { name: "Mastercard &  Paypal", image: "/art/payments/master_paypal.png", value: "master-paypal" },
     { name: "PastPay & Visa", image: "/art/payments/past_pay_visa.png", value: "past_pay_visa" },
     { name: "Secure payment (white)", image: "/art/payments/secure_payment_white.png", value: "secure_payment_white" },
+    { name: "Ideal Black & white", image: "/art/payments/ideal_black_white.png", value: "ideal_black_white" },
+    { name: "Ideal", image: "/art/payments/ideal.png", value: "ideal" },
 ];
 
 const addPayments = (value: { name: string, image: string }) => {
