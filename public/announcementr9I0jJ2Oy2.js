@@ -2,8 +2,9 @@
 
 
 
-function iframeStyle(iframeElement, ulidAnnouncement) {
-    iframeElement.id = `iframe-wowsbar-${ulidAnnouncement}`;
+function iframeStyle(iframeElement) {
+    // iframeElement.id = `iframe-wowsbar-${ulidAnnouncement}`;
+    iframeElement.id = `iframe-wowsbar`;
     iframeElement.setAttribute('allowTransparency', 'true');
     iframeElement.style.height = '0px'
     iframeElement.style.width = '100%';
@@ -43,23 +44,29 @@ async function fetchAnnouncementData() {
 
     // Extract the `ulid` from the query parameters
     const ulid = scriptUrl.searchParams.get('ulid');
-    const deliveryUrl = scriptUrl.searchParams.get('delivery');
-    console.log('ulid:', ulid, 'deliveryUrl:', deliveryUrl)
+    const jsonUrl = scriptUrl.searchParams.get('json');  // https://delivery-staging.wowsbar.com/announcement
+    console.log('ulid:', ulid, 'jsonUrl:', jsonUrl)
     
-    const domain = window.location.hostname
+    let domain = window.location.hostname
     const path = window.location.pathname
     console.log('domain:', domain, 'path:', path)
+    
+    if (domain.startsWith('www.')) {
+        domain = domain.slice(4);
+    }
 
-    if (ulid) {
+    // if (ulid) {
         try {
+            console.log('> On try');
             // Fetch: Announcement JSON
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${deliveryUrl}/announcement/${ulid}`, {
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}/${domain}`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
                 }
             })
                 .then(async response => {
+                    console.log('> On response', response);
                     const xxx = await response.json();
                     console.log('ar_web_wowsbar:', xxx);
 
@@ -77,8 +84,16 @@ async function fetchAnnouncementData() {
 
             const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
 
-            wowsbar_announcement.style.height=announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
+            wowsbar_announcement.style.height = announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
             setInnerHTML(wowsbar_announcement, announcementData.compiled_layout)
+
+            const containerStyle1 = propertiesToHTMLStyle(announcementData.container_properties)
+            console.log('Container style:', containerStyle1);
+
+            // Set style for container, this will be not needed
+            for (const [key, value] of Object.entries(containerStyle1)) {
+                wowsbar_announcement.style[key] = value;
+            }
 
             
             
@@ -86,8 +101,9 @@ async function fetchAnnouncementData() {
             // createElementAfterBody();
 
             const iframe = document.createElement('iframe');
-            iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
-            iframeStyle(iframe, ulid)
+            // iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
+            // iframeStyle(iframe, ulid)
+            iframeStyle(iframe)
 
             // console.log('zzzz', iframe?.contentWindow)
             // function adjustIframeHeight() {
@@ -130,9 +146,9 @@ async function fetchAnnouncementData() {
         } catch (error) {
             console.error('Someting went wrong:', error);
         }
-    } else {
-        console.log("ulid is not exist");
-    }
+    // } else {
+    //     console.log("ulid is not exist");
+    // }
 }
 
 // Call the async function

@@ -59,6 +59,8 @@ class ShowCompiledAnnouncement
         }
 
         return response()->json([
+            'ulid'              => $announcement->ulid,
+            'fields'            => $announcement->fields,
             'compiled_layout' => $announcement->compiled_layout,
             'container_properties' => $announcement->container_properties,
             'restrictions' => $this->hasRestrictions($announcement->settings)
