@@ -42,10 +42,10 @@ watch(compModel, () => {
         </div>
 
         <!-- Flying -->
-        <div v-if="model?.position" class="flex items-center gap-x-3">
+        <!-- <div v-if="model?.position" class="flex items-center gap-x-3">
             <Checkbox :modelValue="model.position.type === 'fixed'" @update:modelValue="(newVal) => newVal ? model.position.type = 'fixed' : model.position.type = 'relative'"  inputId="isComponentFlying" name="isComponentFlying" binary />
             <label for="isComponentFlying" class="cursor-pointer select-none">Flying</label>
-        </div>
+        </div> -->
     </div>
     
     <div v-if="model?.dimension" class="border-t border-gray-300 bg-gray-100 pb-3">

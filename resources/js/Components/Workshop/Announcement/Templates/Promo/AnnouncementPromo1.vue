@@ -4,7 +4,7 @@ import { propertiesToHTMLStyle, onDrag } from '@/Composables/usePropertyWorkshop
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { onMounted, ref } from "vue"
+import { computed, ref } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
 import { AnnouncementData } from "@/types/Announcement"
 library.add(faTimes)
@@ -249,6 +249,29 @@ const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
 
+
+const dataToPublish = computed(() => {
+    return `<div class="tw-flex tw-gap-x-4 tw-items-center tw-justify-center tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-y-1/2 -tw-translate-x-1/2">
+        <div
+            class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
+            style="${JSON.stringify(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
+        >
+            ${props.announcementData?.fields?.text_1?.text || 'xxx'}
+        </div>
+    </div>`
+})
+
+defineExpose({
+    dataToPublish
+})
+    // <button
+    //     v-if="announcementData?.fields?.button_1?.text"
+    //     @click="() => onClickClose()"
+    //     class="inline-flex items-center"
+    //     style="${propertiesToHTMLStyle(props.announcementData?.fields.button_1?.container?.properties)}"
+    // >
+    //     ${props.announcementData?.fields?.button_1?.text}
+    // </button>
 </script>
 
 <template>

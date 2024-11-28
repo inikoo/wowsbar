@@ -101,7 +101,7 @@ const isModalOpen = ref(false)
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
-    router.post(
+    router[props.routes_list.update_route.method || ''](
         route(props.routes_list.update_route.name, props.routes_list.update_route.parameters),
         announcementData.value,
         {
@@ -129,9 +129,16 @@ const onSave = () => {
 // Method: Publish announcement
 const isLoadingFinish = ref(false)
 const onPublish = () => {
-    router.post(
+    const toPublish = {
+        ...announcementData.value,
+        compiled_layout: _component_template_Announcement.value?.dataToPublish || undefined,
+        text: 'xxx'
+    }
+    // console.log('toto', _component_template_Announcement.value?.dataToPublish)
+    // console.log('topub', toPublish)
+    router[props.routes_list.publish_route.method || 'patch'](
         route(props.routes_list.publish_route.name, props.routes_list.publish_route.parameters),
-        announcementData.value,
+        toPublish,
         {
             onStart: () => isLoadingFinish.value = true,
             onFinish: () => {
@@ -146,6 +153,7 @@ const onPublish = () => {
                 })
             },
             onError: (error) => {
+                console.log('error', error)
                 notify({
                     title: 'Something went wrong',
                     text: error.message,
@@ -161,7 +169,7 @@ const onPublish = () => {
 // Method: Reset data
 const isLoadingReset = ref(false)
 const onReset = async () => {
-    router.post(
+    router[props.routes_list.reset_route.method || 'delete'](
         route(props.routes_list.reset_route.name, props.routes_list.reset_route.parameters),
         announcementData.value,
         {
@@ -277,6 +285,8 @@ const getDeliveryUrl = () => {
 
     return '#'
 }
+
+const _component_template_Announcement = ref(null)
 </script>
 
 <template layout="CustomerApp">
@@ -408,7 +418,9 @@ const getDeliveryUrl = () => {
                             :announcementData="announcementData"
                             :key="announcementData.template_code"
                             isEditable
-                            :_parentComponent />
+                            :_parentComponent
+                            ref="_component_template_Announcement"
+                        />
                     </div>
 
                     <div v-else class="text-center">
@@ -558,6 +570,7 @@ const getDeliveryUrl = () => {
         <div class="mt-4">
         </div>
     </Modal>
+
 </template>
 
 <style lang="scss" scoped>

@@ -65,16 +65,23 @@ class PublishAnnouncement
             ]
         );
 
+        $compiled_layout = [];
+        if(Arr::exists($modelData, 'compiled_layout')) {
+            $compiled_layout = [
+                'compiled_layout'          => Arr::get($modelData, 'compiled_layout'),
+            ];
+        }
+
         $updateData = [
             'live_snapshot_id'         => $snapshot->id,
             'fields'                   => Arr::get($snapshot->layout, 'fields'),
             'container_properties'     => Arr::get($modelData, 'container_properties'),
-            'compiled_layout'          => Arr::get($modelData, 'compiled_layout'),
             'text'                     => Arr::get($snapshot->layout, 'text'),
             'published_checksum'       => md5(json_encode($snapshot->layout)),
             'state'                    => AnnouncementStateEnum::READY,
             'settings'                 => Arr::get($snapshot->layout, 'settings'),
-            'is_dirty'                 => false
+            'is_dirty'                 => false,
+            ...$compiled_layout
         ];
 
         if ($announcement->state == AnnouncementStateEnum::IN_PROCESS or $announcement->state == AnnouncementStateEnum::READY) {

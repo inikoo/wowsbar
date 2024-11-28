@@ -11,6 +11,7 @@ use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Models\Announcement;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
@@ -60,10 +61,10 @@ class StoreAnnouncement
 
     public function htmlResponse(Announcement $announcement): Response
     {
-        return Inertia::location(route('customer.portfolio.websites.announcements.show', [
+        return Redirect::route('customer.portfolio.websites.announcements.show', [
             'portfolioWebsite' => $announcement->portfolioWebsite->slug,
             'announcement'     => $announcement->ulid
-        ]));
+        ]);
     }
 
     public function authorize(ActionRequest $request): bool
