@@ -17,15 +17,10 @@ class ShowCompiledAnnouncement
 
     public function handle(ActionRequest $request): ?Announcement
     {
-        $referrer = $request->header('Referer');
+        $referrer = $request->get('domain');
+        $origin = $referrer ? preg_replace('/^www\./', '', parse_url($referrer, PHP_URL_HOST)) : null;
 
-        if($request->get('r')) {
-            $referrer = $request->get('r');
-        }
-
-        $origin = $referrer ? parse_url($referrer, PHP_URL_HOST) : null;
-
-        $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%https://' . $origin . '%')->first();
+        $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
         $announcements = $portfolioWebsite->announcements;
 
         $originPath = $referrer ? parse_url($referrer, PHP_URL_PATH) : null;
