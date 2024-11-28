@@ -98,6 +98,13 @@ class Announcement extends Model
         $showPages = [];
         $hidePages = [];
 
+        if (blank($data)) {
+            return [
+                'show_pages' => [],
+                'hide_pages' => [],
+            ];
+        }
+
         if ($data['target_pages']['type'] === 'all') {
             $showPages = ['all'];
         } elseif ($data['target_pages']['type'] === 'specific') {

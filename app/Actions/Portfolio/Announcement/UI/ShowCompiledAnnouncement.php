@@ -6,10 +6,8 @@ use App\Models\Announcement;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
-use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
-use Inertia\Inertia;
 
 class ShowCompiledAnnouncement
 {
@@ -18,10 +16,10 @@ class ShowCompiledAnnouncement
     public function handle(ActionRequest $request): ?Announcement
     {
         $referrer = $request->get('domain');
-        $origin = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
+        $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
 
         $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcements = $portfolioWebsite->announcements;
+        $announcements    = $portfolioWebsite->announcements;
 
         $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
         $path = $path === '' ? null : $path;
@@ -38,8 +36,8 @@ class ShowCompiledAnnouncement
             $matchingPage = $specificPages->first(function ($page) use ($path) {
                 return match ($page['when']) {
                     'contain' => str_contains($path, $page['url']),
-                    'exact' => $path === $page['url'],
-                    default => false,
+                    'exact'   => $path === $page['url'],
+                    default   => false,
                 };
             });
 
@@ -55,16 +53,16 @@ class ShowCompiledAnnouncement
 
     public function jsonResponse(?Announcement $announcement): ?JsonResponse
     {
-        if(!$announcement) {
+        if (!$announcement) {
             return null;
         }
 
         return response()->json([
-            'ulid'              => $announcement->ulid,
-            'fields'            => $announcement->fields,
-            'compiled_layout' => $announcement->compiled_layout,
+            'ulid'                 => $announcement->ulid,
+            'fields'               => $announcement->fields,
+            'compiled_layout'      => $announcement->compiled_layout,
             'container_properties' => $announcement->container_properties,
-            'restrictions' => $this->hasRestrictions($announcement->settings)
+            'restrictions'         => $this->hasRestrictions($announcement->settings)
         ]);
     }
 

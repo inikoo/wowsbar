@@ -69,9 +69,9 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
 
         Route::prefix('announcements')->name('announcement.')->group(function () {
             Route::post('/', StoreAnnouncement::class)->name('store');
-            Route::post('{announcement}/publish', PublishAnnouncement::class)->name('publish');
-            Route::post('{announcement}', UpdateAnnouncement::class)->name('update');
-            Route::post('{announcement}/reset', ResetAnnouncement::class)->name('reset');
+            Route::patch('{announcement}/publish', PublishAnnouncement::class)->name('publish');
+            Route::patch('{announcement}', UpdateAnnouncement::class)->name('update');
+            Route::delete('{announcement}/reset', ResetAnnouncement::class)->name('reset');
         });
     });
 });
