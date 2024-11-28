@@ -47,20 +47,26 @@ async function fetchAnnouncementData() {
     const jsonUrl = scriptUrl.searchParams.get('json');  // https://delivery-staging.wowsbar.com/announcement
     console.log('ulid:', ulid, 'jsonUrl:', jsonUrl)
     
-    const domain = window.location.hostname
+    let domain = window.location.hostname
     const path = window.location.pathname
     console.log('domain:', domain, 'path:', path)
+    
+    if (domain.startsWith('www.')) {
+        domain = domain.slice(4);
+    }
 
     // if (ulid) {
         try {
+            console.log('> On try');
             // Fetch: Announcement JSON
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}`, {
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}/${domain}`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
                 }
             })
                 .then(async response => {
+                    console.log('> On response', response);
                     const xxx = await response.json();
                     console.log('ar_web_wowsbar:', xxx);
 
