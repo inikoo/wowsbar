@@ -45,6 +45,7 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { t
         borderBottomRightRadius: `${properties?.border?.rounded?.bottomright?.value}${properties?.border?.rounded?.unit}`,
         borderBottomLeftRadius: `${properties?.border?.rounded?.bottomleft?.value}${properties?.border?.rounded?.unit}`,
         borderTopLeftRadius: `${properties?.border?.rounded?.topleft?.value}${properties?.border?.rounded?.unit}`,
+        boxSizing: 'border-box'
     }
 
     if (options?.onlySelect) {
