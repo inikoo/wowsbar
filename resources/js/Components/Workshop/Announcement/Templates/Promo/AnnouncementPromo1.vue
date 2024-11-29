@@ -249,23 +249,39 @@ const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
 
+const camelToKebab = (str: string) => {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+};
+
 const styleString = (styleObject: {}) => {
     if (!styleObject) return ''
-    
+
     return Object.entries(styleObject)
-    .map(([key, value]) => `${key}:${value}`)
+    .map(([key, value]) => `${camelToKebab(key)}:${value}`)
     .join(';')
 }
 
 const dataToPublish = computed(() => {
+
+    const text_1_element = props.announcementData?.fields?.text_1?.text ? `<div
+            class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
+            style="${styleString(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
+        >
+            ${props.announcementData?.fields?.text_1?.text}
+        </div>` : ''
+
+    const button_element = props.announcementData?.fields?.button_1?.text ? `<button
+        class="inline-flex items-center"
+        style="${styleString(propertiesToHTMLStyle(props.announcementData?.fields.button_1?.container?.properties))}"
+    >
+        ${props.announcementData?.fields.button_1.text}
+    </button>` : ''
+
+
     return `<div style="${styleString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="tw-flex tw-gap-x-4 tw-items-center tw-justify-center tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-y-1/2 -tw-translate-x-1/2">
-            <div
-                class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
-                style="${styleString(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
-            >
-                ${props.announcementData?.fields?.text_1?.text || 'xxx'}
-            </div>
+            ${text_1_element}
+            ${button_element}
         </div>
     </div>`
 })
