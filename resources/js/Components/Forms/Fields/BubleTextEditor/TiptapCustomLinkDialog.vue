@@ -99,7 +99,7 @@ const target = [
                 <PureInput v-model="form.content" />
             </div> -->
 
-            <div v-if="form.type === 'internal'">
+            <!-- <div v-if="form.type === 'internal'">
                 <div class="select-none text-sm text-gray-600 mb-2">Link</div>
                 <SelectQuery 
                     fieldName="id" 
@@ -114,9 +114,9 @@ const target = [
                     label="href" 
                     :onChange="onChangeLink"
                 />
-            </div>
+            </div> -->
 
-            <div v-if="form.type === 'external'">
+            <div >
                 <div class="select-none text-sm text-gray-600 mb-2">Link</div>
                 <PureInput v-model="form.href" />
             </div>

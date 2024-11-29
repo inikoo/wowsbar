@@ -4,7 +4,7 @@ import { trans } from "laravel-vue-i18n"
 import RadioButton from "primevue/radiobutton"
 import PureInput from "@/Components/Pure/PureInput.vue"
 import SelectQuery from "@/Components/SelectQuery.vue"
-import { set } from "lodash"
+import { get, set } from "lodash"
 
 
 interface Link {
@@ -15,53 +15,45 @@ interface Link {
 	target : string
 }
 
-const props = defineProps({
-    modelValue: {
-        type: Object,
-        required: true,
-    },
-});
+// const props = defineProps({
+//     modelValue: {
+//         type: Object,
+//         required: true,
+//     },
+// });
 
-const emit = defineEmits(['update:modelValue']);
-
-const localModel = ref({
-    type: 'external',
-	href: null,
-	workshop : null,
-	id : null,
-	target : "_self",
-	data : props.modelValue || {}
-});
+const modelValue = defineModel()
 
 
-const options = ref([
-	{ label: "Internal", value: "internal" },
-	{ label: "External", value: "external" },
-])
+
+// const options = ref([
+// 	{ label: "Internal", value: "internal" },
+// 	{ label: "External", value: "external" },
+// ])
 
 const targets = ref([
 	{ label: "In this Page", value: "_self" },
 	{ label: "New Page", value: "_blank" },
 ])
 
-watch(localModel, (newValue) => {
-	console.log('masukkk')
-	const data = {
-		type: newValue.type,
-		href: newValue.href,
-		workshop: newValue.workshop,
-		id: newValue.id,
-		target: newValue.target
-	}
-	emit('update:modelValue',data)
-},{deep : true})
+// watch(localModel, (newValue) => {
+// 	console.log('masukkk')
+// 	const data = {
+// 		type: newValue.type,
+// 		href: newValue.href,
+// 		workshop: newValue.workshop,
+// 		id: newValue.id,
+// 		target: newValue.target
+// 	}
+// 	emit('update:modelValue',data)
+// },{deep : true})
 
 
-onMounted(() => {
-    if (props.modelValue) {
-        localModel.value = { ...props.modelValue, data : props.modelValue };
-    }
-});
+// onMounted(() => {
+//     if (props.modelValue) {
+//         localModel.value = { ...props.modelValue, data : props.modelValue };
+//     }
+// });
 
 </script>
 
@@ -70,23 +62,23 @@ onMounted(() => {
 		<div>
 			<div class="text-gray-500 text-xs tracking-wide mb-2">{{ trans("Target") }}</div>
 			<div class="mb-3 border border-gray-300 rounded-md w-full px-4 py-2">
-				<div class="flex flex-wrap justify-between w-full">
+				<div class="flex flex-wrap justify-between w-full gap-x-6 gap-y-1">
 					<div v-for="(option, indexOption) in targets" class="flex items-center gap-2">
 						<RadioButton
-							:modelValue="localModel.target"
-							@update:modelValue="(e: string) => set(localModel, 'target', e)"
+							:modelValue="get(modelValue, 'target', undefined)"
+							@update:modelValue="(e: string) => set(modelValue, 'target', e)"
 							:inputId="`${option.value}${indexOption}`"
 							name="target"
 							size="small"
 							:value="option.value"
 						/>
-						<label @click="() => localModel.target = option.value" :for="`${option.value}${indexOption}`" class="cursor-pointer">{{ option.label }}</label>
+						<label @click="() => set(modelValue, 'target', option.value)" :for="`${option.value}${indexOption}`" class="cursor-pointer">{{ option.label }}</label>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div>
+		<!-- <div>
 			<div class="text-gray-500 text-xs tracking-wide mb-2">{{ trans("Type") }}</div>
 			<div class="mb-3 border border-gray-300 rounded-md w-full px-4 py-2">
 				<div class="flex flex-wrap justify-between w-full">
@@ -103,19 +95,19 @@ onMounted(() => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		
 		
 		<div>
 			<div class="my-2 text-gray-500 text-xs tracking-wide mb-2">{{ trans("Destination") }}</div>
 			<PureInput
-				v-if="localModel?.type == 'external'"
-				v-model="localModel.href"
+				:modelValue="get(modelValue, 'href', '')"
+				@update:modelValue="(e) => set(modelValue, 'href', e)"
 				placeholder="www.anotherwebsite.com/page"
 			/>
 			
-			<SelectQuery
+			<!-- <SelectQuery
 				v-if="localModel?.type == 'internal'"
 				:object="true"
 				fieldName="data"
@@ -129,7 +121,7 @@ onMounted(() => {
 						website: route().params['website'],
 					})
 				"
-				/>
+				/> -->
 		</div>
 	</div>
 </template>

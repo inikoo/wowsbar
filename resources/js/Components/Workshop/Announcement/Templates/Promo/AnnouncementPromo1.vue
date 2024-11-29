@@ -34,6 +34,32 @@ const fieldSideEditor = [
             {
                 key: ['container_properties'],
                 type: "properties"
+            },
+        ]
+    },
+    {
+        name: "Main title",
+        icon: {
+            icon: "fal fa-text",
+            tooltip: "Main title"
+        },
+        replaceForm: [
+            {
+                key: ['fields', 'text_1'],
+                type: "editorhtml"
+            }
+        ]
+    },
+    {
+        name: "Button",
+        icon: {
+            icon: "fal fa-hand-pointer",
+            tooltip: "Main title"
+        },
+        replaceForm: [
+            {
+                key: ['fields', 'button_1'],
+                type: "button"
             }
         ]
     },

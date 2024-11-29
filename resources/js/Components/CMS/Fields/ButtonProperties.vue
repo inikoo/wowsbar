@@ -123,13 +123,11 @@ const model = defineModel<ModelButtonProperties>()
 
     <div v-if="model?.container?.properties?.border" class="border-t border-gray-300">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Border') }}</div>
-
         <BorderProperty v-model="model.container.properties.border" />
     </div>
 
     <div v-if="model?.container?.properties?.padding" class="border-t border-gray-300">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Padding') }}</div>
-
         <PaddingMarginProperty v-model="model.container.properties.padding" />
     </div>
 
