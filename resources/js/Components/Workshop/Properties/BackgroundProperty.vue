@@ -13,6 +13,7 @@ import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPencil } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { get, set } from 'lodash';
 library.add(faPencil)
 
 interface BackgroundProperty {
@@ -23,9 +24,7 @@ interface BackgroundProperty {
     }
 }
 
-const model = defineModel<BackgroundProperty>({
-    required: true
-})
+const model = defineModel<BackgroundProperty>()
 
 const isOpenGallery = ref(false)
 
@@ -82,7 +81,13 @@ const routeList = {
                 </div>
             </div>
 
-            <PureRadio v-model="model.type" :options="[{ name: 'image'}]" by="name" key="image" />
+            <PureRadio
+                :modelValue="get(model, 'type', 'image')"
+                @update:modelValue="e => set(model, 'type', e)"
+                :options="[{ name: 'image'}]"
+                by="name"
+                key="image"
+            />
         </div>
         
         <!-- Background Color -->
@@ -95,7 +100,13 @@ const routeList = {
             />
             <!-- <div v-else class="h-8 w-8 rounded-md border border-gray-300 shadow" :style="{background: model.color}" /> -->
 
-            <PureRadio v-model="model.type" :options="[{ name: 'color'}]" by="name" key="color" />
+            <PureRadio
+                :modelValue="get(model, 'type', 'color')"
+                @update:modelValue="e => set(model, 'type', e)"
+                :options="[{ name: 'color'}]"
+                by="name"
+                key="color"
+            />
         </div>
     </div>
     

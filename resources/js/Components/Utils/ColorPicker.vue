@@ -32,8 +32,10 @@ interface Color {
 const props = withDefaults(defineProps<{
     color: string
     closeButton?: boolean
+    isEditable?: boolean
 }>(), {
-    color: 'rgba(0, 0, 0, 0)'
+    color: 'rgba(0, 0, 0, 0)',
+    isEditable: true
 })
 
 const emits = defineEmits<{
@@ -51,27 +53,40 @@ const opacityToHexCode = (opacity: number) => {
 </script>
 
 <template>
-        <div
-            v-bind="$attrs"
-            class="h-12 w-12 cursor-pointer"
-            :style="{ backgroundColor: color }"
-            @click="overlayPanel.show($event)"
-        ></div>
+    <div class="relative">
+        <!-- Toggle button -->
+        <div @click="overlayPanel?.show($event)">
+            <slot name="button">
+                <div
+                    v-bind="$attrs"
+                    class="h-12 w-12 cursor-pointer"
+                    :style="{ backgroundColor: color }"
+                />
+            </slot>
+        </div>
 
         <!-- OverlayPanel with ColorPicker -->
         <OverlayPanel ref="overlayPanel" class="shadow-lg rounded-md">
-           
-                <ColorPicker
-                    style="width: 220px;"
-                    theme="dark"
-                    :color="color"
-                    :sucker-hide="true"
-                    @changeColor="(e) => {emits('changeColor', {...e, hex: e.hex + opacityToHexCode(e.rgba.a)})}"
-                />
-                
-                <div @click="overlayPanel.hide()" class="absolute top-0 right-0 mt-1 mr-1">
-                    <FontAwesomeIcon icon="faTimes" class="text-gray-400 hover:text-gray-600 cursor-pointer" fixed-width aria-hidden="true" />
+            <div class="relative">
+                <slot name="before-main-picker">
+                    
+                </slot>
+
+                <div class="relative">
+                    <ColorPicker
+                        style="width: 220px;"
+                        theme="dark"
+                        :color="color"
+                        :sucker-hide="true"
+                        @changeColor="(e) => {emits('changeColor', {...e, hex: e.hex + opacityToHexCode(e.rgba.a)})}"
+                    />
+                    <div v-if="!isEditable" class="rounded absolute inset-0 bg-black/50" />
                 </div>
-            
+                
+                <div @click="overlayPanel?.hide()" class="absolute -top-5 -right-10 mt-1 mr-1">
+                    <FontAwesomeIcon icon="fal fa-times" class="text-red-400 hover:text-red-600 cursor-pointer" fixed-width aria-hidden="true" />
+                </div>
+            </div>
         </OverlayPanel>
+    </div>
 </template>

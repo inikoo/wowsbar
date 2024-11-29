@@ -32,6 +32,7 @@ const fieldSideEditor = [
         },
         replaceForm: [
             {
+                key: ['container_properties'],
                 type: "properties"
             }
         ]

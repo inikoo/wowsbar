@@ -105,7 +105,7 @@ onMounted(() => {
                         <component 
                             :is="getComponentProperties(form.type)" 
                             :key="form.key"
-                            :modelValue="getFormValue(modelValue, form.key)"
+                            :modelValue="getFormValue(announcementData, form.key)"
                             :uploadRoutes="uploadImageRoute" 
                             v-bind="form?.props_data" 
                             @update:modelValue="newValue => emits('update:modelValue',setFormValue(modelValue, form.key, newValue))"

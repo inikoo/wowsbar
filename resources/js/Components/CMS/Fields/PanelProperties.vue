@@ -28,46 +28,46 @@ const model = defineModel()
 
 <template>
     <div>
-        <!-- <pre>{{ model }}</pre> -->
+        <pre>{{ model.dimension }}</pre>
     </div>
     <!-- <div v-if="model?.buttons" class="border-t border-gray-300 bg-gray-100 pb-3">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Buttons') }}</div>
-        <ButtonsProperty v-model="model.buttons" />
+        <ButtonsProperty :modelValue="get(model, 'buttons', undefined)" @update:modelValue="(e) => set(model, 'buttons', e)" />
     </div>-->
 
     <div class="border-t border-gray-300 bg-gray-100 pb-3">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Dimension') }}</div>
-        <DimensionProperty :modelValue="get(model, 'dimension', undefined)" @update:modelValue="(e) => set(model, 'dimension', e)" />
+        <DimensionProperty :modelValue="get(model, 'dimension', undefined)" />
     </div>
 
-    <!-- <div class="border-t border-gray-300 bg-gray-100 pb-3">
+    <div class="border-t border-gray-300 bg-gray-100 pb-3">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Background') }}</div>
-        <BackgroundProperty v-model="model.background" />
+        <BackgroundProperty :modelValue="get(model, 'background', undefined)" />
     </div>
 
     <div class="border-t border-gray-300 bg-gray-100 pb-3">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Text') }}</div>
 
-        <TextProperty v-model="model.text" />
+        <TextProperty :modelValue="get(model, 'text', undefined)" />
     </div>
 
     <div class="border-t border-gray-300 bg-gray-100">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Border') }}</div>
 
-        <BorderProperty v-model="model.border" />
+        <BorderProperty :modelValue="get(model, 'border', undefined)" />
     </div>
 
     <div class="border-t border-gray-300 bg-gray-100">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Padding') }}</div>
 
-        <PaddingMarginProperty v-model="model.padding" />
+        <PaddingMarginProperty :modelValue="get(model, 'padding', undefined)" />
     </div>
 
     <div class="border-t border-gray-300 bg-gray-100">
         <div class="w-full text-center py-1 font-semibold select-none">{{ trans('Margin') }}</div>
 
-        <PaddingMarginProperty v-model="model.margin" />
-    </div> -->
+        <PaddingMarginProperty :modelValue="get(model, 'margin', undefined)" />
+    </div>
 
 </template>
 
