@@ -249,20 +249,25 @@ const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
 
+const styleString = (styleObject: {}) => {
+    if (!styleObject) return ''
+    
+    return Object.entries(styleObject)
+    .map(([key, value]) => `${key}:${value}`)
+    .join(';')
+}
 
 const dataToPublish = computed(() => {
-    return `
-    <div style="${JSON.stringify(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+    return `<div style="${styleString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="tw-flex tw-gap-x-4 tw-items-center tw-justify-center tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-y-1/2 -tw-translate-x-1/2">
             <div
                 class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
-                style="${JSON.stringify(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
+                style="${styleString(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
             >
                 ${props.announcementData?.fields?.text_1?.text || 'xxx'}
             </div>
         </div>
-    </div>
-    `
+    </div>`
 })
 
 defineExpose({

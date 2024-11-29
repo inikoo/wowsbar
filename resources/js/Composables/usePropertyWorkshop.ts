@@ -17,7 +17,7 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { t
         position: properties?.position?.type || 'static',
         left: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? '50%' : properties?.position?.x || '0px', 
         top: properties?.position?.y || '0px',
-        transform: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? 'translateX(-50%)' : '',
+        transform: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? 'translateX(-50%)' : undefined,
 
         height: (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
         width: (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',
