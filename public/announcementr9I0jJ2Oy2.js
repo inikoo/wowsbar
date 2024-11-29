@@ -20,7 +20,7 @@ function iframeStyle(iframeElement) {
 
 // To render HTML that contain <script></script>
 function setInnerHTML(elm, htmlValue) {
-    elm.innerHTML = htmlValue;
+    elm.replaceWith(htmlValue);
     
     // Replace <script> from innerHTML to become <script> from javascript (so it will executed)
     Array.from(elm.querySelectorAll("script"))
@@ -67,14 +67,12 @@ async function fetchAnnouncementData() {
             })
                 .then(async response => {
                     console.log('> On response', response);
-                    const xxx = await response.json();
-                    console.log('ar_web_wowsbar:', xxx);
 
                     if (!response.ok) {
                         throw new Error('Network response was not ok ---- ' + response.statusText);
                     }
 
-                    // document.querySelector('#wowsbar_announcement').innerHTML = xxx;
+                    const xxx = await response.json();
 
                     return xxx;
                 });
@@ -84,26 +82,35 @@ async function fetchAnnouncementData() {
 
             const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
 
-            wowsbar_announcement.style.height = announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
+            // wowsbar_announcement.style.height = announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
             setInnerHTML(wowsbar_announcement, announcementData.compiled_layout)
 
-            const containerStyle1 = propertiesToHTMLStyle(announcementData.container_properties)
-            console.log('Container style:', containerStyle1);
+            // const containerStyle1 = propertiesToHTMLStyle(announcementData.container_properties)
+            // console.log('Container style:', containerStyle1);
 
-            // Set style for container, this will be not needed
-            for (const [key, value] of Object.entries(containerStyle1)) {
-                wowsbar_announcement.style[key] = value;
-            }
+            // // Set style for container, this will be not needed
+            // for (const [key, value] of Object.entries(containerStyle1)) {
+            //     wowsbar_announcement.style[key] = value;
+            // }
 
+            window.addEventListener('message', function(event) {
+                console.log('received message', event.data)
+
+                // Emit from each component (AnnouncementInformation1)
+                if(event.data === 'close_button_click') {
+                    console.log('Close button clicked')
+                    iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
+                }
+            });
             
             
 
             // createElementAfterBody();
 
-            const iframe = document.createElement('iframe');
+            // const iframe = document.createElement('iframe');
             // iframe.src = `https://delivery-staging.wowsbar.com/announcement/${ulid}`;
             // iframeStyle(iframe, ulid)
-            iframeStyle(iframe)
+            // iframeStyle(iframe)
 
             // console.log('zzzz', iframe?.contentWindow)
             // function adjustIframeHeight() {
@@ -111,37 +118,29 @@ async function fetchAnnouncementData() {
             //     console.log('ffff', iframe.style.height)
             // }
             
-            let iframeHeight
-            let iframeTop
+            // let iframeHeight
+            // let iframeTop
 
 
-            if (announcementData?.container_properties) {
-                const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
-                console.log('Container style:', containerStyle);
+            // if (announcementData?.container_properties) {
+            //     const containerStyle = propertiesToHTMLStyle(announcementData.container_properties)
+            //     console.log('Container style:', containerStyle);
 
-                // Set style for iframe
-                for (const [key, value] of Object.entries(containerStyle)) {
-                    iframe.style[key] = value;
-                }
+            //     // Set style for iframe
+            //     for (const [key, value] of Object.entries(containerStyle)) {
+            //         iframe.style[key] = value;
+            //     }
 
-                // Listening event from component (inside iframe)
-                window.addEventListener('message', function(event) {
-                    console.log('received message', event.data)
-
-                    // Emit from each component (AnnouncementInformation1)
-                    if(event.data === 'close_button_click') {
-                        console.log('Close button clicked')
-                        iframe.style.top = `-${parseInt(containerStyle.height, 10) + parseInt(containerStyle.height, 10)}px`
-                    }
-                });
-            } else {
-                console.error('No container properties found');
-            }
+            //     // Listening event from component (inside iframe)
+                
+            // } else {
+            //     console.error('No container properties found');
+            // }
 
             
             // Insert iframe to first child of <body>
-            const body = document.body;
-            body.insertBefore(iframe, body.firstChild);
+            // const body = document.body;
+            // body.insertBefore(iframe, body.firstChild);
 
         } catch (error) {
             console.error('Someting went wrong:', error);
@@ -196,6 +195,7 @@ function propertiesToHTMLStyle(properties, options) {
         borderBottomRightRadius: `${properties?.border?.rounded?.bottomright?.value}${properties?.border?.rounded?.unit}`,
         borderBottomLeftRadius: `${properties?.border?.rounded?.bottomleft?.value}${properties?.border?.rounded?.unit}`,
         borderTopLeftRadius: `${properties?.border?.rounded?.topleft?.value}${properties?.border?.rounded?.unit}`,
+        boxSizing: 'border-box'
     }
 
     if(options?.toRemove) {
