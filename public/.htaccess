@@ -19,3 +19,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# Set MIME type for .js files
+# <IfModule mod_mime.c>
+#     AddType application/javascript .js
+# </IfModule>

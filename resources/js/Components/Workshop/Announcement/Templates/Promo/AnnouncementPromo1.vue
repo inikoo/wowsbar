@@ -23,6 +23,21 @@ const emits = defineEmits<{
 const _text_1 = ref(null)
 const _buttonClose = ref(null)
 
+const fieldSideEditor = [
+    {
+        name: "Container",
+        icon: {
+            icon: "fal fa-rectangle-wide",
+            tooltip: "Container"
+        },
+        replaceForm: [
+            {
+                type: "properties"
+            }
+        ]
+    },
+]
+
 const defaultContainerData = {
     "link": {
         "href": "#",
@@ -287,7 +302,8 @@ const dataToPublish = computed(() => {
 })
 
 defineExpose({
-    dataToPublish
+    dataToPublish,
+    fieldSideEditor
 })
     // <button
     //     v-if="announcementData?.fields?.button_1?.text"

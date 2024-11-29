@@ -36,20 +36,20 @@ class GetFirstLoadProps
         if ($user) {
             $language = $user->language;
 
-            $firebaseAuthToken = Cache::remember('org_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
-                try {
-                    $auth        = app('firebase.auth');
-                    $customToken = $auth
-                        ->createCustomToken('org-'.$user->id, [
-                            'scope' => 'organisation',
-                        ]);
-                    $auth->signInWithCustomToken($customToken);
-                    $token = $customToken->toString();
-                } catch (Exception) {
-                    $token='';
-                }
-                return  $token;
-            });
+            // $firebaseAuthToken = Cache::remember('org_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
+            //     try {
+            //         $auth        = app('firebase.auth');
+            //         $customToken = $auth
+            //             ->createCustomToken('org-'.$user->id, [
+            //                 'scope' => 'organisation',
+            //             ]);
+            //         $auth->signInWithCustomToken($customToken);
+            //         $token = $customToken->toString();
+            //     } catch (Exception) {
+            //         $token='';
+            //     }
+            //     return  $token;
+            // });
         } else {
             $language = Language::where('code', App::currentLocale())->first();
         }
@@ -72,7 +72,7 @@ class GetFirstLoadProps
                 return $user ? GetLayout::run($user) : null;
             },
             'organisation'      => OrganisationResource::make(Organisation::first())->getArray(),
-            'firebaseAuthToken' => $firebaseAuthToken,
+            // 'firebaseAuthToken' => $firebaseAuthToken,
 
         ];
     }

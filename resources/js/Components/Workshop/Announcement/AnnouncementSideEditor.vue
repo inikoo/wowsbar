@@ -12,7 +12,7 @@ import { faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText,
 import PanelProperties from '@/Components/Workshop/PanelProperties.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { debounce } from 'lodash'
+import { debounce, get } from 'lodash'
 import LoadingIcon from '@/Components/Utils/LoadingIcon.vue'
 import Modal from "@/Components/Utils/Modal.vue"
 
@@ -26,11 +26,26 @@ import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import Moveable from "vue3-moveable"
 import ColorPicker from '@/Components/Utils/ColorPicker.vue'
 
+import AccordionPanel from 'primevue/accordionpanel'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionContent from 'primevue/accordioncontent'
+import { getComponentProperties, getFormValue, setFormValue } from '@/Composables/useWorkshop';
+import Icon from '@/Components/Icon.vue';
+import Accordion from 'primevue/accordion';
 
 library.add(faBrowser, faDraftingCompass, faRectangleWide, faStars, faBars, faText, faChevronDown)
 
 const props = defineProps<{
+    blueprint?: {
+        name: string
+        icon: string
+        replaceForm: {
+            key: string
+            type: string  // 'properties' || 'text' || 'background'
+        }[]
+    }[]
 }>()
+
 const emits = defineEmits<{
     (e: 'onMounted'): void
 }>()
@@ -40,28 +55,28 @@ const isOnDrag = ref(false)
 
 const announcementData = inject('announcementData', {})
 
-const _parentOfButtonClose = ref<Element | null>(null)
-const _buttonClose = ref<Element | null>(null)
-const onDrag = (e, block_properties) => {
-    const parentWidth = _parentOfButtonClose.value?.clientWidth || 0
-    const parentHeight = _parentOfButtonClose.value?.clientHeight || 0
+// const _parentOfButtonClose = ref<Element | null>(null)
+// const _buttonClose = ref<Element | null>(null)
+// const onDrag = (e, block_properties) => {
+//     const parentWidth = _parentOfButtonClose.value?.clientWidth || 0
+//     const parentHeight = _parentOfButtonClose.value?.clientHeight || 0
 
-    const percentageLeft = e.left / parentWidth * 100
-    const percentageTop = e.top / parentHeight * 100
+//     const percentageLeft = e.left / parentWidth * 100
+//     const percentageTop = e.top / parentHeight * 100
 
-    // Update position based on the dragging
-    block_properties.position.x = `${percentageLeft}%`
-    block_properties.position.y = `${percentageTop}%`
-}
+//     // Update position based on the dragging
+//     block_properties.position.x = `${percentageLeft}%`
+//     block_properties.position.y = `${percentageTop}%`
+// }
 
-const toVerticalCenter = (block_properties: {}) => {
-    block_properties.position.y = '50%'
-}
-const toHorizontalCenter = (block_properties: {}) => {
-    block_properties.position.x = '50%'
-}
+// const toVerticalCenter = (block_properties: {}) => {
+//     block_properties.position.y = '50%'
+// }
+// const toHorizontalCenter = (block_properties: {}) => {
+//     block_properties.position.x = '50%'
+// }
 
-const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
+// const debounceSetIsOnDrag = debounce(() => isOnDrag.value = false, 50)
 
 onMounted(() => {
     emits('onMounted')
@@ -75,7 +90,35 @@ onMounted(() => {
         <Button icon="fas fa-plus" type="dashed" size="xs" @click="openModalBlockList" />
     </div> -->
 
-    <div class="rounded bg-white">
+
+    <Accordion >
+        <AccordionPanel v-for="(bprint, index) in blueprint" :key="index" :value="index">
+            <AccordionHeader>
+                <div>
+                    <Icon v-if="bprint.icon" :data="bprint.icon" />
+                    {{ get(bprint, 'name', 'No name') }}
+                </div>
+            </AccordionHeader>
+            <AccordionContent class="px-0">
+                <div class="">
+                    <div v-for="(form, index) of bprint.replaceForm.filter((item)=>item.type != 'hidden')" :key="form.key" class="">
+                        <component 
+                            :is="getComponentProperties(form.type)" 
+                            :key="form.key"
+                            :modelValue="getFormValue(modelValue, form.key)"
+                            :uploadRoutes="uploadImageRoute" 
+                            v-bind="form?.props_data" 
+                            @update:modelValue="newValue => emits('update:modelValue',setFormValue(modelValue, form.key, newValue))"
+                        />
+
+                    </div>
+                </div>
+            </AccordionContent>
+        </AccordionPanel>
+    </Accordion>
+
+
+    <div v-if="false" class="rounded bg-white">
         <div @click="() => selectedBlockOpenPanel === 'container' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'container'"
             class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
             <div class="select-none font-semibold">{{ trans('Container Settings') }}</div>
@@ -89,13 +132,14 @@ onMounted(() => {
         </Collapse>
     </div>
 
-    <div class="rounded bg-white">
+    <div v-if="false" class="rounded bg-white">
         <div @click="() => selectedBlockOpenPanel === 'content' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'content'"
             class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
             <div class="select-none font-semibold">{{ trans('Content') }}</div>
             <FontAwesomeIcon icon='fal fa-chevron-down' :class="selectedBlockOpenPanel === 'content' ? 'rotate-180' : ''" class="transition-all" fixed-width aria-hidden='true' />
         </div>
 
+        <!-- Collapsed: Content -->
         <Collapse as="section" :when="selectedBlockOpenPanel === 'content'">
             <div  class="border-t border-gray-300 pb-3">
                 <div class="flex justify-between items-center">
@@ -114,7 +158,7 @@ onMounted(() => {
             </div>
 
             <!-- Section: Close button -->
-            <div  class="border-t border-gray-300 pb-3">
+            <!-- <div  class="border-t border-gray-300 pb-3">
                 <div class="flex justify-between items-center">
                     <div class="w-full py-1 select-none text-sm">{{ trans('Close button') }}</div>
                     <div>
@@ -124,7 +168,6 @@ onMounted(() => {
                             :color="announcementData.fields.close_button.block_properties.text.color"
                             @changeColor="(newColor) => announcementData.fields.close_button.block_properties.text.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a})`"
                         />
-                            <!-- {{ announcementData.fields.close_button.block_properties.text.color }} -->
                     </div>
                 </div>
                 
@@ -141,7 +184,6 @@ onMounted(() => {
                     </div>
 
                     <div class="flex gap-x-2 items-center justify-between">
-                        <!-- <div @click="() => toAbsoluteCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Make center') }}</div> -->
                         <div @click="() => toVerticalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Vertical center') }}</div>
                         <div @click="() => toHorizontalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Horizontal center') }}</div>
                     </div>
@@ -162,7 +204,7 @@ onMounted(() => {
                     @dragEnd="() => debounceSetIsOnDrag()"
                     @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
                 />
-            </div>
+            </div> -->
         </Collapse>
     </div>
 

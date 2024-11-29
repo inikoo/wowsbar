@@ -43,28 +43,28 @@ class GetFirstLoadProps
 
 
         if ($customerUser) {
-            $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$customerUser->user->id, 3600, function () use ($customerUser) {
-                try {
-                    $auth     = app('firebase.auth');
-                    $customer = $customerUser->customer;
+            // $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$customerUser->user->id, 3600, function () use ($customerUser) {
+            //     try {
+            //         $auth     = app('firebase.auth');
+            //         $customer = $customerUser->customer;
 
 
 
-                    $customToken = $auth
-                        ->createCustomToken('wow-user-'.$customerUser->user->ulid, [
-                            'scope'                       => 'customer',
-                            'customer_ulid'               => $customer->ulid,
-                            'customer_user_ulid'          => $customerUser->user->ulid
-                        ]);
+            //         $customToken = $auth
+            //             ->createCustomToken('wow-user-'.$customerUser->user->ulid, [
+            //                 'scope'                       => 'customer',
+            //                 'customer_ulid'               => $customer->ulid,
+            //                 'customer_user_ulid'          => $customerUser->user->ulid
+            //             ]);
 
-                    $auth->signInWithCustomToken($customToken);
-                    $token = $customToken->toString();
-                } catch (Exception) {
-                    $token = '';
-                }
+            //         $auth->signInWithCustomToken($customToken);
+            //         $token = $customToken->toString();
+            //     } catch (Exception) {
+            //         $token = '';
+            //     }
 
-                return $token;
-            });
+            //     return $token;
+            // });
         }
 
 
@@ -95,7 +95,7 @@ class GetFirstLoadProps
                 }
             },
 
-            'firebaseAuthToken' => $firebaseAuthToken,
+            // 'firebaseAuthToken' => $firebaseAuthToken,
             'environment'       => app()->environment(),
 
 

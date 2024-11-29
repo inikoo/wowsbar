@@ -122,7 +122,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogLiveUsersMiddleware::class,
+            // LogLiveUsersMiddleware::class,
             LogCustomerUserRequestMiddleware::class
         ],
 

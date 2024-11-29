@@ -7,6 +7,7 @@ import { faBorderTop, faBorderLeft, faBorderBottom, faBorderRight, faBorderOuter
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faLink, faUnlink } from "@fal"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { get, set } from 'lodash';
 library.add(faBorderTop, faBorderLeft, faBorderBottom, faBorderRight, faBorderOuter, faLink, faUnlink, faArrowsAltV, faArrowsH )
 
 interface DimensionProperty {
@@ -21,7 +22,6 @@ interface DimensionProperty {
 }
 
 const model = defineModel<DimensionProperty>({
-    required: true
 })
 
 </script>
@@ -63,8 +63,12 @@ const model = defineModel<DimensionProperty>({
                                 <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="trans('Height')" class=''
                                     fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber v-model="model.height.value"
-                                        class="" :suffix="model?.height.unit" />
+                                    <PureInputNumber
+                                        :modelValue="get(model, 'height.value', 0)"
+                                        @update:model-value="e => set(model, 'height.value', e)"
+                                        class=""
+                                        :suffix="model?.height.unit"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -107,8 +111,12 @@ const model = defineModel<DimensionProperty>({
                                 <FontAwesomeIcon icon='fad fa-border-outer' v-tooltip="trans('Width')" class=''
                                     fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber v-model="model.width.value"
-                                        class="" :suffix="model?.width.unit" />
+                                    <PureInputNumber
+                                        :modelValue="get(model, 'width.value', 0)"
+                                        @update:model-value="e => set(model, 'width.value', e)"
+                                        class=""
+                                        :suffix="model?.width.unit"
+                                    />
                                 </div>
                             </div>
                         </div>

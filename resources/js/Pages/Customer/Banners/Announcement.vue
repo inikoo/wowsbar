@@ -381,7 +381,11 @@ const _component_template_Announcement = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor v-if="announcementData.template_code" @onMounted="() => isLoadingComponent = null" />
+            <AnnouncementSideEditor 
+                v-if="announcementData.template_code"
+                @onMounted="() => isLoadingComponent = null"
+                :blueprint="_component_template_Announcement?.fieldSideEditor"
+            />
         </div>
 
         <!-- Section: Preview -->
