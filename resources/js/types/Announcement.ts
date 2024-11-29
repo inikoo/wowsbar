@@ -20,4 +20,5 @@ export interface AnnouncementData {
     source: Image
     fields: AnnouncementFields
     container_properties: AnnouncementContainerProperties
+    compiled_layout?: string
 }

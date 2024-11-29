@@ -83,7 +83,22 @@ async function fetchAnnouncementData() {
             const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
 
             // wowsbar_announcement.style.height = announcementData.container_properties.dimension.height.value + announcementData.container_properties.dimension.height.unit
-            setInnerHTML(wowsbar_announcement, announcementData.compiled_layout)
+            // setInnerHTML(wowsbar_announcement, announcementData.compiled_layout)
+
+            // Create a temporary container to parse the HTML string
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = announcementData.compiled_layout;
+
+            // Extract and execute any <script> tags
+            const scripts = tempContainer.querySelectorAll('script');
+            scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                newScript.textContent = script.textContent; // Get the content of the script
+                document.head.appendChild(newScript); // Execute it by appending to <head> (or use <body> if preferred)
+            })
+
+            wowsbar_announcement.replaceWith(...tempContainer.childNodes)
+            
 
             // const containerStyle1 = propertiesToHTMLStyle(announcementData.container_properties)
             // console.log('Container style:', containerStyle1);

@@ -9,6 +9,10 @@ import { Image } from "@/types/Image"
 
 
 export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { toRemove?: string[], onlySelect?: string[] }) => {
+    if (!properties) {
+        return {};
+    }
+    
     let htmlStyle = {
         position: properties?.position?.type || 'static',
         left: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? '50%' : properties?.position?.x || '0px', 
