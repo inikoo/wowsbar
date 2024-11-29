@@ -41,6 +41,8 @@ class AnnouncementTemplateSeeder extends Seeder
                 imagePath: $file->getPathname(),
                 originalFilename: $file->getFilename()
             );
+
+            echo $code . " seeded \n";
         }
     }
 }
