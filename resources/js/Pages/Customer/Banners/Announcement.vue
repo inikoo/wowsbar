@@ -92,7 +92,7 @@ const props = defineProps<{
 }>()
 
 const announcementData = ref(props.announcement_data)
-// console.log('ann', announcementData.value)
+console.log('ann', announcementData.value)
 provide('announcementData', announcementData.value)
 
 const isModalOpen = ref(false)
@@ -127,11 +127,11 @@ const onSave = () => {
 
 
 // Method: Publish announcement
-const isLoadingFinish = ref(false)
+const isLoadingPublish = ref(false)
 const onPublish = () => {
     const toPublish = {
         ...announcementData.value,
-        compiled_layout: _component_template_Announcement.value?.dataToPublish || undefined,
+        compiled_layout: _component_template_Announcement.value?.compiled_layout || undefined,
         text: 'xxx'
     }
     // console.log('toto', _component_template_Announcement.value?.dataToPublish)
@@ -140,22 +140,22 @@ const onPublish = () => {
         route(props.routes_list.publish_route.name, props.routes_list.publish_route.parameters),
         toPublish,
         {
-            onStart: () => isLoadingFinish.value = true,
+            onStart: () => isLoadingPublish.value = true,
             onFinish: () => {
-                isLoadingFinish.value = false
+                isLoadingPublish.value = false
                 saveCancelToken.value = null
             },
             onSuccess: () => {
                 notify({
                     title: 'Success',
-                    text: 'Data Announcement saved',
+                    text: trans('Announcement is published'),
                     type: 'success',
                 })
             },
             onError: (error) => {
                 console.log('error', error)
                 notify({
-                    title: 'Something went wrong',
+                    title: trans('Something went wrong'),
                     text: error.message,
                     type: 'error',
                 })
@@ -328,14 +328,13 @@ const _component_template_Announcement = ref(null)
                 </div>
 
                 <div class="flex items-center">
-                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" class="rounded-r-none pl-2.5 pr-2.5">
-                        <template #icon>
-                            <div>
-                                <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
-                            </div>
-                        </template>
+                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" :style="'secondary'">
+                        <div>
+                            Publish & Setting
+                            <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
+                        </div>
                     </Button>
-                    <Button @click="onPublish" label="Publish now" :loading="isLoadingFinish" iconRight="fal fa-rocket-launch" class="rounded-l-none" />
+                    <!-- <Button @click="onPublish" label="Publish now" :loading="isLoadingPublish" iconRight="fal fa-rocket-launch" class="rounded-l-none" /> -->
                 </div>
             </div>
         </template>
@@ -448,12 +447,18 @@ const _component_template_Announcement = ref(null)
 
     <!-- Section: Setting -->
     <div v-if="selectedTab == 'Setting'">
-        <div class="max-w-4xl mx-auto px-4">
+        <div class="max-w-4xl mx-auto px-4 relative pt-4 pb-2">
             <!-- Section: Target -->
             <AnnouncementSettings
                 :domain="portfolio_website.url"
                 @onMounted="() => isLoadingComponent = null"
+                :onPublish
+                :isLoadingPublish
             />
+
+            <div v-if="isLoadingPublish" class="rounded-md bg-black/20 text-white text-[60px] absolute inset-0 flex items-center justify-center">
+                <LoadingIcon />
+            </div>
 
         </div>
     </div>
@@ -465,118 +470,6 @@ const _component_template_Announcement = ref(null)
         </div>
     </Modal>
 
-    <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]" :overflowHidden="false">
-        <div class="grid grid-cols-1 h-fit gap-y-4 ">
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Start date</div>
-                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="instant"
-                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
-                            :checked="settingPublish.start_type ==  'instant'"
-                            id="inp-publish-now"
-                            name="inp-publish-now"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
-                    </div>
-                    
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="scheduled"
-                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
-                            :checked="settingPublish.start_type ==  'scheduled'"
-                            id="inp-publish-schedule"
-                            name="inp-publish-schedule"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <!-- <label for="inp-publish-schedule" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
-                        <VueDatePicker
-                            v-model="publishStartDate"
-                            time-picker-inline
-                            auto-apply
-                            :min-date="new Date()"
-                            :clearable="false"
-                            class="w-fit"
-                        >
-                            <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.start_type !==  'scheduled'">
-                                    {{ useFormatTime(publishStartDate, {formatTime: 'hm'}) }}
-                                </Button>
-                            </template>
-                        </VueDatePicker>
-
-                    </div>
-
-                </div>
-            </fieldset>
-
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Finish date</div>
-                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="instant"
-                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
-                            :checked="settingPublish.end_type ==  'instant'"
-                            id="inp-finish-unlimited"
-                            name="inp-finish-unlimited"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
-                    </div>
-                    
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="scheduled"
-                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
-                            :checked="settingPublish.end_type ==  'scheduled'"
-                            id="inp-finish-scheduled"
-                            name="inp-finish-scheduled"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <!-- <label for="inp-finish-scheduled" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
-                        <VueDatePicker
-                            v-model="publishEndDate"
-                            time-picker-inline
-                            auto-apply
-                            :min-date="new Date()"
-                            :clearable="false"
-                            class="w-fit"
-                        >
-                            <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.end_type !==  'scheduled'">
-                                    {{ useFormatTime(publishEndDate, {formatTime: 'hm'}) }}
-                                </Button>
-                            </template>
-                        </VueDatePicker>
-                    </div>
-                </div>
-            </fieldset>
-
-            
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Description</div>
-                <PureTextarea
-                    :placeholder="trans('My first publish')"
-                    inputClass="bg-gray-50"
-                />
-            </fieldset>
-
-            <Button
-                label="Publish"
-                full
-            />
-        </div>
-
-        <div class="mt-4">
-        </div>
-    </Modal>
 
 </template>
 

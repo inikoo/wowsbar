@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { inject, nextTick, onMounted, ref, toRaw } from 'vue'
+import { inject, nextTick, onMounted, ref, toRaw, toRef } from 'vue'
 import Select from 'primevue/select'
 import InputText from 'primevue/inputtext'
 import InputGroup from 'primevue/inputgroup'
@@ -9,14 +9,19 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import { cloneDeep, get, remove, set } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useCopyText } from '@/Composables/useCopyText'
+import VueDatePicker from '@vuepic/vue-datepicker'
 import { usePage } from '@inertiajs/vue3'
 import { faLink } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
+import { useFormatTime } from '@/Composables/useFormatTime'
+import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 library.add(faLink)
 
 const props = defineProps<{
     domain: string
+    onPublish: Function
+    isLoadingPublish: boolean
 }>()
 
 const emits = defineEmits<{
@@ -24,7 +29,7 @@ const emits = defineEmits<{
 }>()
 
 const announcementData = inject('announcementData', {})
-const announcementDataSettings = announcementData.settings
+const announcementDataSettings = toRef(() => announcementData.settings)
 // console.log('kkkk', announcementData.settings)
 
 // Section: target_pages
@@ -33,53 +38,72 @@ const specificNew = ref({
     when: 'contain', // 'matches'
     url: ''
 })
+
+// Get date: today + 2 days
+const nexterday = new Date().setDate(new Date().getDate() + 2)
+
 const addSpecificPage = async () => {
     const newTargetPage = cloneDeep(specificNew.value)
     
-    if (Array.isArray(announcementDataSettings?.target_pages?.specific)) {
-        announcementDataSettings.target_pages.specific.push(newTargetPage)
+    if (Array.isArray(announcementDataSettings.value?.target_pages?.specific)) {
+        announcementDataSettings.value.target_pages.specific.push(newTargetPage)
     } else {
-        set(announcementDataSettings, ['target_pages', 'specific'], [newTargetPage])
+        set(announcementDataSettings.value, ['target_pages', 'specific'], [newTargetPage])
     }
 
-    console.log('opopop', get(announcementDataSettings, ['target_pages', 'specific']))
+    console.log('opopop', get(announcementDataSettings.value, ['target_pages', 'specific']))
     
     await nextTick()
     specificNew.value.url = ''
 }
 const onDeleteSpecific = (specIndex: number) => {
-    remove(announcementDataSettings.target_pages.specific, (item, index) => {
+    remove(announcementDataSettings.value.target_pages.specific, (item, index) => {
         return index == specIndex
     })
 
 }
 
-onMounted(() => {
+onMounted(async () => {
+    if (Array.isArray(announcementDataSettings.value) && announcementDataSettings.value.length === 0) {
+        // Convert from [] to {}
+        announcementData.settings = {}
+    }
+
     // Set default value target_pages
-    if (!announcementDataSettings.target_pages) {
-        set(announcementDataSettings, 'target_pages', {
+    if (!get(announcementDataSettings.value, 'target_pages.type', false)) {
+        set(announcementDataSettings.value, 'target_pages', {
             type: 'all', // 'specific'
             specific: []
         })
     }
 
     // Set default value target_users
-    if(!announcementDataSettings.target_users) {
-        set(announcementDataSettings, 'target_users', {
+    if(!get(announcementDataSettings.value, 'target_users.type', false)) {
+        set(announcementDataSettings.value, 'target_users', {
             auth_state: 'all', // 'login' || 'logout'
+        })
+    }
+
+    // Set default value publish_start
+    if(!get(announcementDataSettings.value, 'publish_start.type', false)) {
+        set(announcementDataSettings.value, 'publish_start', {
+            type: 'instant',
+            scheduled: null
+        })
+    }
+
+    // Set default value publish_finish
+    if(!get(announcementDataSettings.value, 'publish_finish.type', false)) {
+        set(announcementDataSettings.value, 'publish_finish', {
+            type: 'infinite',
+            scheduled: null
         })
     }
 
     emits('onMounted')
 })
 
-const announcementScheduled = ref({
-    type: 'now', // 'scheduled'
-    scheduled: {
-        start_date: '',
-        finish_date: '',
-    }
-})
+
 
 // const getAnnouncementScriptUrl = () => {
 //     let xxx
@@ -282,6 +306,129 @@ const settingsUser = ref({
                 </label>
 
             </div>
+        </div>
+    </fieldset>
+
+    <!-- Section: target_users -->
+    <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
+        <div class="text-xl font-semibold">Published</div>
+        <p class="text-sm/6 text-gray-600">
+            {{ trans("Select how announcement will published") }}
+        </p>
+        <div class="grid grid-cols-1 h-fit gap-y-4 ">
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">Start date</div>
+                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="instant"
+                            @input="(val: string) => set(announcementDataSettings, 'publish_start.type', val.target.value)"
+                            :checked="get(announcementDataSettings, 'publish_start.type', null) ==  'instant'"
+                            id="inp-publish-now"
+                            name="inp-publish-now"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="scheduled"
+                            @input="(val: string) => set(announcementDataSettings, 'publish_start.type', val.target.value)"
+                            :checked="get(announcementDataSettings, 'publish_start.type', null) ==  'scheduled'"
+                            id="inp-publish-schedule"
+                            name="inp-publish-schedule"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <!-- <label for="inp-publish-schedule" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
+                        <VueDatePicker
+                            :modelValue="get(announcementDataSettings, 'publish_start.scheduled', null)"
+                            @update:modelValue="(e) => set(announcementDataSettings, 'publish_start.scheduled', e)"
+                            time-picker-inline
+                            auto-apply
+                            :min-date="new Date()"
+                            :clearable="false"
+                            class="w-fit"
+                        >
+                            <template #trigger>
+                                <Button :style="'tertiary'" size="xs" :disabled="get(announcementDataSettings, 'publish_start.type', null) !==  'scheduled'">
+                                    {{ useFormatTime(get(announcementDataSettings, 'publish_start.scheduled') || nexterday, {formatTime: 'hm'}) }}
+                                </Button>
+                            </template>
+                        </VueDatePicker>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">Finish date</div>
+                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="infinite"
+                            @input="(val: string) => set(announcementDataSettings, 'publish_finish.type', val.target.value)"
+                            :checked="get(announcementDataSettings, 'publish_finish.type', null) ==  'infinite'"
+                            id="inp-finish-unlimited"
+                            name="inp-finish-unlimited"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-3">
+                        <input
+                            value="scheduled"
+                            @input="(val: string) => set(announcementDataSettings, 'publish_finish.type', val.target.value)"
+                            :checked="get(announcementDataSettings, 'publish_finish.type', null) ==  'scheduled'"
+                            id="inp-finish-scheduled"
+                            name="inp-finish-scheduled"
+                            type="radio"
+                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <!-- <label for="inp-finish-scheduled" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
+                        <VueDatePicker
+                            :modelValue="get(announcementDataSettings, 'publish_finish.scheduled', null)"
+                            @update:modelValue="(e) => set(announcementDataSettings, 'publish_finish.scheduled', e)"
+                            time-picker-inline
+                            auto-apply
+                            :min-date="new Date()"
+                            :clearable="false"
+                            class="w-fit"
+                        >
+                            <template #trigger>
+                                <Button :style="'tertiary'" size="xs" :disabled="get(announcementDataSettings, 'publish_finish.type', null) !==  'scheduled'">
+                                    {{ useFormatTime(get(announcementDataSettings, 'publish_finish.scheduled') || nexterday, {formatTime: 'hm'}) }}
+                                </Button>
+                            </template>
+                        </VueDatePicker>
+                    </div>
+                </div>
+            </fieldset>
+
+            
+            <fieldset class="">
+                <div class="text-sm/6 font-semibold ">{{ trans("Description") }}</div>
+                <PureTextarea
+                    :modelValue="get(announcementData, 'published_message', '')"
+                    @update:modelValue="(e) => set(announcementData, 'published_message', e)"
+                    :placeholder="trans('My first publish')"
+                    inputClass="bg-gray-50"
+                />
+            </fieldset>
+
+            <Button
+                @click="() => onPublish()"
+                label="Publish"
+                icon="fal fa-rocket-launch"
+                full
+                size="xl"
+                :disabled="isLoadingPublish"
+            />
+            
+            <!-- <pre>{{announcementDataSettings}}</pre> -->
         </div>
     </fieldset>
 </template>
