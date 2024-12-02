@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 /**
  * App\Models\Announcement
@@ -122,13 +121,6 @@ class Announcement extends Model
             'show_pages' => $showPages,
             'hide_pages' => $hidePages,
         ];
-    }
-
-    protected function settings(): Attribute
-    {
-        return Attribute::make(
-            get: fn (array $value) => $value === [] ? new \stdClass() : $value,
-        );
     }
 
     public function snapshots(): MorphMany
