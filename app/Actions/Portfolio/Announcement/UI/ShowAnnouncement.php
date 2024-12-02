@@ -143,26 +143,48 @@ class ShowAnnouncement extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        $headCrumb = function (array $routeParameters = []) {
+        $headCrumb = function (Announcement $announcement, array $routeParameters, string $suffix = '') {
             return [
                 [
-                    'type'          => 'creatingModel',
-                    'creatingModel' => [
-                        'label' => __("creating announcement"),
-                    ]
-                ]
+                    'type'           => 'simple',
+                    'modelWithIndex' => [
+                        'index' => [
+                            'route' => $routeParameters['index'],
+                            'label' => __('customer websites')
+                        ],
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $announcement->name,
+                        ],
+
+                    ],
+                    'simple'         => [
+                        'route' => $routeParameters['model'],
+                        'label' => $announcement->name
+                    ],
+                    'suffix'         => $suffix
+                ],
             ];
         };
 
         return match ($routeName) {
             'customer.portfolio.websites.announcements.show' =>
             array_merge(
-                IndexAnnouncement::make()->getBreadcrumbs($routeName, $routeParameters),
+                IndexAnnouncement::make()->getBreadcrumbs($routeName, [
+                    'portfolioWebsite' => $routeParameters['portfolioWebsite']
+                ]),
                 $headCrumb(
+                    $routeParameters['announcement'],
                     [
-                        'name'       => 'customer.portfolio.websites.announcements.show',
-                        'parameters' => $routeParameters
-                    ]
+                        'index' => [
+                            'name'       => 'customer.portfolio.websites.announcements.index',
+                            'parameters' => $routeParameters['portfolioWebsite']
+                        ],
+                        'model' => [
+                            'name'       => 'customer.portfolio.websites.announcements.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
                 ),
             ),
             default => []
