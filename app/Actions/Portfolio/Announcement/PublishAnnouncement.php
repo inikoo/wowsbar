@@ -122,6 +122,8 @@ class PublishAnnouncement
     {
         return [
             'code'                 => ['sometimes', 'string'],
+            'schedule_at'          => ['sometimes', 'string', 'nullable'],
+            'schedule_finish_at'   => ['sometimes', 'string', 'nullable'],
             'published_message'    => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array'],

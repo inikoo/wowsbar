@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Head, router, usePage } from '@inertiajs/vue3'
+import { Head, Link, router, usePage } from '@inertiajs/vue3'
 import { inject, nextTick, onMounted, provide, reactive, ref, toRaw, watch } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
@@ -36,6 +36,7 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import { useFormatTime } from '@/Composables/useFormatTime'
 import PureTextarea from '@/Components/Pure/PureTextarea.vue'
+import Icon from '@/Components/Icon.vue'
 
 library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faSquare, faThLarge, faCheckCircle)
 
@@ -81,6 +82,7 @@ const props = defineProps<{
         publish_route: routeType
         update_route: routeType
         reset_route: routeType
+        close_route: routeType
     }
     is_announcement_published: boolean
     is_announcement_active: boolean
@@ -171,9 +173,10 @@ const isLoadingReset = ref(false)
 const onReset = async () => {
     router[props.routes_list.reset_route.method || 'delete'](
         route(props.routes_list.reset_route.name, props.routes_list.reset_route.parameters),
-        announcementData.value,
         {
-            onStart: () => isLoadingReset.value = true,
+            onStart: () => {
+                isLoadingReset.value = true
+            },
             onFinish: () => {
                 isLoadingReset.value = false
                 saveCancelToken.value = null
@@ -224,15 +227,15 @@ const changeTab = async (idxCategory: number) => {
 
 
 
-const newDate = new Date()
-const publishStartDate = ref(newDate.setDate(newDate.getDate() + 2))
-const publishEndDate = ref(newDate.setDate(newDate.getDate() + 9))
+// const newDate = new Date()
+// const publishStartDate = ref(newDate.setDate(newDate.getDate() + 2))
+// const publishEndDate = ref(newDate.setDate(newDate.getDate() + 9))
 
-const isModalPublish = ref(false)
-const settingPublish = ref({
-    start_type: 'instant',  // 'scheduled'
-    end_type: newDate.setDate(newDate.getDate() + 2),  // 'unlimited'
-})
+// const isModalPublish = ref(false)
+// const settingPublish = ref({
+//     start_type: 'instant',  // 'scheduled'
+//     end_type: newDate.setDate(newDate.getDate() + 2),  // 'unlimited'
+// })
 
 
 const isActivated = ref(props.is_announcement_active)
@@ -300,15 +303,35 @@ const onSectionSetting = () => {
         }, 600)
     }, 100)
 }
+
+const onStopAnnouncement = () => {
+    router[props.routes_list.close_route.method || 'patch'](
+        route(props.routes_list.close_route.name, props.routes_list.close_route.parameters),
+        {
+
+        },
+        {
+
+        }
+    )
+}
 </script>
 
 <template layout="CustomerApp">
 
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-        <!-- <template #afterTitle v-if="isLoadingSave">
-            <LoadingIcon />
-        </template> -->
+        <template #afterTitle="{ iconRight, afterTitle }">
+            <Icon :data="iconRight" />
+            <div
+                @click="() => onStopAnnouncement()"
+                class="text-red-500 hover:underline cursor-pointer font-normal text-base"
+            >
+                {{ trans("Stop now") }}
+            </div>
+            <!-- {{ afterTitle }} -->
+            <!-- <LoadingIcon /> -->
+        </template>
 
         <template #other>
             <div class="flex gap-x-2">

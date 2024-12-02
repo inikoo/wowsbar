@@ -29,8 +29,11 @@ const emits = defineEmits<{
 }>()
 
 const announcementData = inject('announcementData', {})
+// const announcementData.schedule_at = toRef(() => announcementData.schedule_at)
+const announcementScheduleFinishAt = toRef(() => announcementData.schedule_finish_at)
 const announcementDataSettings = toRef(() => announcementData.settings)
-// console.log('kkkk', announcementData.settings)
+
+// console.log('kkkk', announcementData.schedule_at.value)
 
 // Section: target_pages
 const specificNew = ref({
@@ -40,7 +43,7 @@ const specificNew = ref({
 })
 
 // Get date: today + 2 days
-const nexterday = new Date().setDate(new Date().getDate() + 2)
+const nexterday = (new Date).setDate((new Date).getDate() + 2)
 
 const addSpecificPage = async () => {
     const newTargetPage = cloneDeep(specificNew.value)
@@ -84,21 +87,21 @@ onMounted(async () => {
         })
     }
 
-    // Set default value publish_start
-    if(!get(announcementDataSettings.value, 'publish_start.type', false)) {
-        set(announcementDataSettings.value, 'publish_start', {
-            type: 'instant',
-            scheduled: null
-        })
-    }
+    // // Set default value publish_start
+    // if(!get(announcementDataSettings.value, 'publish_start.type', false)) {
+    //     set(announcementDataSettings.value, 'publish_start', {
+    //         type: 'instant',
+    //         scheduled: null
+    //     })
+    // }
 
-    // Set default value publish_finish
-    if(!get(announcementDataSettings.value, 'publish_finish.type', false)) {
-        set(announcementDataSettings.value, 'publish_finish', {
-            type: 'infinite',
-            scheduled: null
-        })
-    }
+    // // Set default value publish_finish
+    // if(!get(announcementDataSettings.value, 'publish_finish.type', false)) {
+    //     set(announcementDataSettings.value, 'publish_finish', {
+    //         type: 'infinite',
+    //         scheduled: null
+    //     })
+    // }
 
     emits('onMounted')
 })
@@ -309,21 +312,22 @@ const settingsUser = ref({
         </div>
     </fieldset>
 
-    <!-- Section: target_users -->
+    <!-- Section: Published -->
     <fieldset class="mb-6 bg-white px-7 pt-4 pb-7 border border-gray-200 rounded-xl">
         <div class="text-xl font-semibold">Published</div>
         <p class="text-sm/6 text-gray-600">
             {{ trans("Select how announcement will published") }}
         </p>
         <div class="grid grid-cols-1 h-fit gap-y-4 ">
+            <!-- Section: Start date -->
             <fieldset class="">
                 <div class="text-sm/6 font-semibold ">Start date</div>
                 <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
                     <div class="flex items-center gap-x-3">
                         <input
                             value="instant"
-                            @input="(val: string) => set(announcementDataSettings, 'publish_start.type', val.target.value)"
-                            :checked="get(announcementDataSettings, 'publish_start.type', null) ==  'instant'"
+                            @input="(val: string) => announcementData.schedule_at = null"
+                            :checked="!announcementData.schedule_at"
                             id="inp-publish-now"
                             name="inp-publish-now"
                             type="radio"
@@ -335,8 +339,8 @@ const settingsUser = ref({
                     <div class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
-                            @input="(val: string) => set(announcementDataSettings, 'publish_start.type', val.target.value)"
-                            :checked="get(announcementDataSettings, 'publish_start.type', null) ==  'scheduled'"
+                            @input="(val: string) => announcementData.schedule_at = new Date(nexterday)"
+                            :checked="announcementData.schedule_at"
                             id="inp-publish-schedule"
                             name="inp-publish-schedule"
                             type="radio"
@@ -344,8 +348,8 @@ const settingsUser = ref({
                         />
                         <!-- <label for="inp-publish-schedule" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
                         <VueDatePicker
-                            :modelValue="get(announcementDataSettings, 'publish_start.scheduled', null)"
-                            @update:modelValue="(e) => set(announcementDataSettings, 'publish_start.scheduled', e)"
+                            :modelValue="announcementData.schedule_at"
+                            @update:modelValue="(e) => announcementData.schedule_at = e"
                             time-picker-inline
                             auto-apply
                             :min-date="new Date()"
@@ -353,8 +357,8 @@ const settingsUser = ref({
                             class="w-fit"
                         >
                             <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="get(announcementDataSettings, 'publish_start.type', null) !==  'scheduled'">
-                                    {{ useFormatTime(get(announcementDataSettings, 'publish_start.scheduled') || nexterday, {formatTime: 'hm'}) }}
+                                <Button :style="'tertiary'" size="xs" :disabled="!announcementData.schedule_at">
+                                    {{ useFormatTime(announcementData.schedule_at || nexterday, {formatTime: 'hm'}) }}
                                 </Button>
                             </template>
                         </VueDatePicker>
@@ -362,14 +366,15 @@ const settingsUser = ref({
                 </div>
             </fieldset>
 
+            <!-- Section: Finish date -->
             <fieldset class="">
                 <div class="text-sm/6 font-semibold ">Finish date</div>
                 <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
                     <div class="flex items-center gap-x-3">
                         <input
                             value="infinite"
-                            @input="(val: string) => set(announcementDataSettings, 'publish_finish.type', val.target.value)"
-                            :checked="get(announcementDataSettings, 'publish_finish.type', null) ==  'infinite'"
+                            @input="(val: string) => announcementData.schedule_finish_at = null"
+                            :checked="!announcementData.schedule_finish_at"
                             id="inp-finish-unlimited"
                             name="inp-finish-unlimited"
                             type="radio"
@@ -381,8 +386,8 @@ const settingsUser = ref({
                     <div class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
-                            @input="(val: string) => set(announcementDataSettings, 'publish_finish.type', val.target.value)"
-                            :checked="get(announcementDataSettings, 'publish_finish.type', null) ==  'scheduled'"
+                            @input="(val: string) => announcementData.schedule_finish_at = new Date(nexterday)"
+                            :checked="announcementData.schedule_finish_at"
                             id="inp-finish-scheduled"
                             name="inp-finish-scheduled"
                             type="radio"
@@ -390,8 +395,8 @@ const settingsUser = ref({
                         />
                         <!-- <label for="inp-finish-scheduled" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
                         <VueDatePicker
-                            :modelValue="get(announcementDataSettings, 'publish_finish.scheduled', null)"
-                            @update:modelValue="(e) => set(announcementDataSettings, 'publish_finish.scheduled', e)"
+                            :modelValue="announcementData.schedule_finish_at"
+                            @update:modelValue="(e) => announcementData.schedule_finish_at = e"
                             time-picker-inline
                             auto-apply
                             :min-date="new Date()"
@@ -399,8 +404,8 @@ const settingsUser = ref({
                             class="w-fit"
                         >
                             <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="get(announcementDataSettings, 'publish_finish.type', null) !==  'scheduled'">
-                                    {{ useFormatTime(get(announcementDataSettings, 'publish_finish.scheduled') || nexterday, {formatTime: 'hm'}) }}
+                                <Button :style="'tertiary'" size="xs" :disabled="!announcementData.schedule_finish_at">
+                                    {{ useFormatTime(announcementData.schedule_finish_at || nexterday, {formatTime: 'hm'}) }}
                                 </Button>
                             </template>
                         </VueDatePicker>
@@ -428,7 +433,7 @@ const settingsUser = ref({
                 :disabled="!get(announcementData, 'published_message', '') || isLoadingPublish"
             />
             
-            <!-- <pre>{{announcementDataSettings}}</pre> -->
+            <!-- <pre>{{announcementData.schedule_at}}</pre> -->
         </div>
     </fieldset>
 </template>

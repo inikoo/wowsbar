@@ -7,6 +7,7 @@ import 'vue-color-kit/dist/vue-color-kit.css'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { useSolidColor } from '@/Composables/useStockList'
 library.add(faTimes)
 
 interface RGBA {
@@ -66,16 +67,17 @@ const opacityToHexCode = (opacity: number) => {
         </div>
 
         <!-- OverlayPanel with ColorPicker -->
-        <OverlayPanel ref="overlayPanel" class="shadow-lg rounded-md">
-            <div class="relative">
+        <OverlayPanel ref="overlayPanel" class="relative shadow-lg rounded-md h-fit">
+            <div class="relative w-full h-full">
                 <slot name="before-main-picker">
                     
                 </slot>
 
-                <div class="relative">
+                <div class="relative w-[220px] h-full">
                     <ColorPicker
-                        style="width: 220px;"
+                        style="width: 100%;"
                         theme="dark"
+                        :colorsDefault="useSolidColor"
                         :color="color"
                         :sucker-hide="true"
                         @changeColor="(e) => {emits('changeColor', {...e, hex: e.hex + opacityToHexCode(e.rgba.a)})}"
@@ -90,3 +92,9 @@ const opacityToHexCode = (opacity: number) => {
         </OverlayPanel>
     </div>
 </template>
+
+<style scoped lang="scss">
+:deep(.colors) {
+    display: block
+}
+</style>

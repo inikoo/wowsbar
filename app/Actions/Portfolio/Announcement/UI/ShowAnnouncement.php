@@ -96,7 +96,9 @@ class ShowAnnouncement extends InertiaAction
                         'icon' => 'fal fa-sign'
                     ],
                     'iconRight' => [
-                        'icon' => 'fal fa-seedling'
+                        'icon'    => 'fal fa-seedling',
+                        'class'   => 'text-green-500 animate-pulse',
+                        'tooltip' => __('Live')
                     ],
                 ],
                 'routes_list' => [
@@ -128,14 +130,16 @@ class ShowAnnouncement extends InertiaAction
                         'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
-                        ]
+                        ],
+                        'method'    => 'patch'
                     ],
                     'start_route' => [
                         'name'       => 'customer.models.portfolio-website.announcement.start',
                         'parameters' => [
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
-                        ]
+                        ],
+                        'method'    => 'patch'
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,
