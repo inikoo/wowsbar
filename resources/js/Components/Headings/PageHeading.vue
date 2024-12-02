@@ -105,7 +105,7 @@ const originUrl = location.origin
                     </h2>
 
                     <!-- Section: After Title -->
-                    <slot name="afterTitle">
+                    <slot name="afterTitle" :afterTitle="data.afterTitle" :iconRight="data.iconRight">
                         <div v-if="data.iconRight || data.afterTitle" class="flex gap-x-2 items-center">
                             <FontAwesomeIcon v-if="data.iconRight" v-tooltip="data.iconRight.tooltip || ''"
                                 :icon="data.iconRight.icon" class="h-4" :class="data.iconRight.class"
