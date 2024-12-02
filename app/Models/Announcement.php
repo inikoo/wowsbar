@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int|null $unpublished_snapshot_id
  * @property int|null $live_snapshot_id
  * @property string|null $ready_at
- * @property string|null $live_at
- * @property string|null $closed_at
+ * @property string|null|\Carbon\Carbon $live_at
+ * @property string|null|\Carbon\Carbon $closed_at
  * @property string|null $published_checksum
  * @property AnnouncementStateEnum $state
  * @property bool $is_dirty
@@ -83,6 +83,10 @@ class Announcement extends Model
         "container_properties" => "array",
         "fields"               => "array",
         "settings"             => "array",
+        "live_at"              => "datetime",
+        "closed_at"            => "datetime",
+        "schedule_at"          => "datetime",
+        "schedule_finish_at"   => "datetime",
         'state'                => AnnouncementStateEnum::class,
         'status'               => AnnouncementStatusEnum::class
     ];

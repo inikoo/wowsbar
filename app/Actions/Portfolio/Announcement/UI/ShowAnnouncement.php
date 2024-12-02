@@ -129,10 +129,19 @@ class ShowAnnouncement extends InertiaAction
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
                         ]
+                    ],
+                    'start_route' => [
+                        'name'       => 'customer.models.portfolio-website.announcement.start',
+                        'parameters' => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
+                            'announcement'     => $announcement->id
+                        ]
                     ]
                 ],
-                'is_announcement_dirty'     => $announcement->is_dirty,
-                'portfolio_website'         => $announcement->portfolioWebsite,
+                'is_announcement_dirty'       => $announcement->is_dirty,
+                'is_announcement_started'     => $announcement->live_at->lessThan(now())  or now()->between($announcement->schedule_at, $announcement->schedule_finish_at),
+                'is_announcement_closed'      => !$announcement->live_at->lessThan(now()) or now()->isAfter($announcement->closed_at),
+                'portfolio_website'           => $announcement->portfolioWebsite,
                 // 'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'       => $announcement->toArray(),
                 // 'announcement_list'       => [],
