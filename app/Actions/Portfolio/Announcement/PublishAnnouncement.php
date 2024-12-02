@@ -90,13 +90,17 @@ class PublishAnnouncement
             $updateData['live_at']  = now();
         }
 
-        if ($scheduleAt = Arr::get($modelData, 'schedule_at')) {
-            $updateData['schedule_at'] = $scheduleAt;
-            $updateData['live_at']     = $scheduleAt;
+        $scheduleAt                = Arr::get($modelData, 'schedule_at');
+        $updateData['schedule_at'] = $scheduleAt;
+
+        if ($scheduleAt) {
+            $updateData['live_at'] = $scheduleAt;
         }
 
-        if ($scheduleFinishAt = Arr::get($modelData, 'schedule_finish_at')) {
-            $updateData['schedule_finish_at'] = $scheduleFinishAt;
+        $scheduleFinishAt                 = Arr::get($modelData, 'schedule_finish_at');
+        $updateData['schedule_finish_at'] = $scheduleFinishAt;
+
+        if ($scheduleFinishAt) {
             $updateData['closed_at']          = $scheduleFinishAt;
         }
 
