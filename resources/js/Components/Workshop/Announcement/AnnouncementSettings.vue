@@ -410,12 +410,12 @@ const settingsUser = ref({
 
             
             <fieldset class="">
-                <div class="text-sm/6 font-semibold ">{{ trans("Description") }}</div>
+                <div class="text-sm/6 font-semibold "><span class="text-red-500 text-base leading-none mr-0.5">*</span>{{ trans("Description") }}</div>
                 <PureTextarea
                     :modelValue="get(announcementData, 'published_message', '')"
                     @update:modelValue="(e) => set(announcementData, 'published_message', e)"
                     :placeholder="trans('My first publish')"
-                    inputClass="bg-gray-50"
+                    inputClass=""
                 />
             </fieldset>
 
@@ -425,7 +425,7 @@ const settingsUser = ref({
                 icon="fal fa-rocket-launch"
                 full
                 size="xl"
-                :disabled="isLoadingPublish"
+                :disabled="!get(announcementData, 'published_message', '') || isLoadingPublish"
             />
             
             <!-- <pre>{{announcementDataSettings}}</pre> -->

@@ -213,11 +213,11 @@ const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
 
 // Section: Tabs
-const isLoadingComponent = ref<string | null>(null)
-const selectedTab = ref('Setting')
-const changeTab = async (category: string) => {
-    isLoadingComponent.value = category
-    selectedTab.value = category
+// const isLoadingComponent = ref<string | null>(null)
+const selectedTab = ref(0)
+const changeTab = async (idxCategory: number) => {
+    // isLoadingComponent.value = idxCategory
+    selectedTab.value = idxCategory
 }
 
 // const announcementSetting = ref()
@@ -290,6 +290,16 @@ const getDeliveryUrl = () => {
 }
 
 const _component_template_Announcement = ref(null)
+
+const sectionClass = ref('')
+const onSectionSetting = () => {
+    setTimeout(() => {
+        sectionClass.value = 'bg-yellow-500/40'
+        setTimeout(() => {
+            sectionClass.value = 'bg-yellow-500/0'
+        }, 600)
+    }, 100)
+}
 </script>
 
 <template layout="CustomerApp">
@@ -328,9 +338,9 @@ const _component_template_Announcement = ref(null)
                 </div>
 
                 <div class="flex items-center">
-                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" :style="'secondary'">
+                    <Button @click="() => (selectedTab = 1, onSectionSetting())" :disabled="isLoadingSave" :style="'secondary'">
                         <div>
-                            Publish & Setting
+                            {{ trans("Publish & Setting") }}
                             <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
                         </div>
                     </Button>
@@ -343,14 +353,13 @@ const _component_template_Announcement = ref(null)
     <!-- Section: Tab selector -->
     <div class="mx-auto max-w-md px-2 sm:px-0 my-4">
         <!-- {{ selectedTab }} -->
-        <TabGroup>
+        <TabGroup :selectedIndex="selectedTab" @change="(e: number) => selectedTab === e ? '' : changeTab(e)">
             <TabList class="flex space-x-1 rounded-xl bg-slate-600 p-1">
                 <Tab
-                    v-for="category in ['Workshop', 'Setting']"
+                    v-for="(category, indexCat) in ['Workshop', 'Setting']"
                     as="template"
                     :key="category"
                     v-slot="{ selected }"
-                    @click="async () => selectedTab === category ? '' : changeTab(category)"
                 >
                     <button :class="[
                         'px-8 w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
@@ -360,16 +369,16 @@ const _component_template_Announcement = ref(null)
                         ]"
                     >
                         {{ category }}
-                        <LoadingIcon v-if="isLoadingComponent === category" />
+                        <!-- <LoadingIcon v-if="isLoadingComponent === category" /> -->
                     </button>
                 </Tab>
             </TabList>
 
         </TabGroup>
     </div>
-
+    
     <!-- Section: Workshop -->
-    <div v-if="selectedTab == 'Workshop'" class="flex border-t border-gray-300">
+    <div v-show="selectedTab === 0" class="flex border-t border-gray-300">
         <!-- Section: Side editor -->
         <div class="w-[600px] py-2 px-3 ">
             <div class="w-full text-lg font-semibold flex items-center justify-between gap-3 border-b border-gray-300">
@@ -386,7 +395,6 @@ const _component_template_Announcement = ref(null)
             <div class="h-[calc(100vh-280px)] overflow-y-auto rounded-md shadow-lg">
                 <AnnouncementSideEditor
                     v-if="announcementData.template_code"
-                    @onMounted="() => isLoadingComponent = null"
                     :blueprint="_component_template_Announcement?.fieldSideEditor"
                 />
             </div>
@@ -449,12 +457,11 @@ const _component_template_Announcement = ref(null)
     </div>
 
     <!-- Section: Setting -->
-    <div v-if="selectedTab == 'Setting'">
-        <div class="max-w-4xl mx-auto px-4 relative pt-4 pb-2">
+    <div v-show="selectedTab === 1">
+        <div class="max-w-4xl mx-auto px-4 relative pt-4 pb-2 transition-all duration-500" :class="sectionClass">
             <!-- Section: Target -->
             <AnnouncementSettings
                 :domain="portfolio_website.url"
-                @onMounted="() => isLoadingComponent = null"
                 :onPublish
                 :isLoadingPublish
             />
