@@ -10,6 +10,7 @@ use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Media\Media\ImageGenerator;
+use App\Actions\Portfolio\Announcement\CloseAnnouncement;
 use App\Actions\Portfolio\Announcement\PublishAnnouncement;
 use App\Actions\Portfolio\Announcement\ResetAnnouncement;
 use App\Actions\Portfolio\Announcement\StoreAnnouncement;
@@ -72,6 +73,7 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
             Route::patch('{announcement}/publish', PublishAnnouncement::class)->name('publish');
             Route::patch('{announcement}', UpdateAnnouncement::class)->name('update');
             Route::delete('{announcement}/reset', ResetAnnouncement::class)->name('reset');
+            Route::patch('{announcement}/close', CloseAnnouncement::class)->name('close');
         });
     });
 });

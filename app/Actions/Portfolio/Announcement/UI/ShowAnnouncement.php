@@ -122,6 +122,13 @@ class ShowAnnouncement extends InertiaAction
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
                         ]
+                    ],
+                    'close_route' => [
+                        'parameters' => [
+                            'name'       => 'customer.models.portfolio-website.announcement.close',
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
+                            'announcement'     => $announcement->id
+                        ]
                     ]
                 ],
                 'is_announcement_dirty'     => $announcement->is_dirty,
