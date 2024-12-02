@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { computed, ref } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
 import { AnnouncementData } from "@/types/Announcement"
+import { inject } from "vue";
 library.add(faTimes)
 
 const props = defineProps<{
@@ -46,7 +47,14 @@ const fieldSideEditor = [
         replaceForm: [
             {
                 key: ['fields', 'text_1'],
-                type: "editorhtml"
+                type: "editorhtml",
+                props_data: {
+                    toogle: [
+                        'heading', 'fontSize', 'bold', 'italic', 'underline', "fontFamily",
+                        'alignLeft', 'alignRight', "customLink",
+                        'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear'
+                    ]
+                }
             }
         ]
     },
@@ -328,6 +336,8 @@ const dataToPublish = computed(() => {
     </div>`
 })
 
+const openFieldWorkshop = inject('openFieldWorkshop')
+
 defineExpose({
     dataToPublish,
     fieldSideEditor
@@ -349,7 +359,8 @@ defineExpose({
             <div
                 v-if="announcementData?.fields?.text_1"
                 ref="_text_1"
-                class="text-sm leading-6 whitespace-nowrap "
+                @click="() => (openFieldWorkshop = 1)"
+                class="text-sm leading-6 whitespace-nowrap hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-pointer"
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
             >
@@ -358,7 +369,7 @@ defineExpose({
 
             <button
                 v-if="announcementData?.fields?.button_1?.text"
-                @click="() => onClickClose()"
+                @click="() => (onClickClose(), openFieldWorkshop = 2)"
                 v-html="announcementData?.fields.button_1.text"
                 class="inline-flex items-center"
                 :style="propertiesToHTMLStyle(announcementData?.fields.button_1?.container?.properties)"
@@ -384,7 +395,7 @@ defineExpose({
         /> -->
     
         <!-- Close Button -->
-        <button
+        <!-- <button
             ref="_buttonClose"
             @click="() => onClickClose()"
             type="button"
@@ -407,7 +418,7 @@ defineExpose({
             :startDragRotate="0"
             :throttleDragRotate="0"
             @drag="(e) => onDrag(e, announcementData?.fields.close_button.block_properties, _parentComponent)"
-        />
+        /> -->
     </template>
 
     <div

@@ -273,6 +273,9 @@ const onClickToggleActivate = async (newVal: boolean) => {
     )
 }
 
+const openFieldWorkshop = ref<number | null>(null)
+provide('openFieldWorkshop', openFieldWorkshop)
+
 const getDeliveryUrl = () => {
     console.log(usePage().props.environment)
     if (usePage().props.environment === 'local') {

@@ -52,6 +52,7 @@ const emits = defineEmits<{
 
 const selectedBlockOpenPanel = ref<string | null>('content')
 const isOnDrag = ref(false)
+const openFieldWorkshop = inject('openFieldWorkshop')
 
 const announcementData = inject('announcementData', {})
 
@@ -90,8 +91,7 @@ onMounted(() => {
         <Button icon="fas fa-plus" type="dashed" size="xs" @click="openModalBlockList" />
     </div> -->
 
-
-    <Accordion >
+    <Accordion :value="openFieldWorkshop" @update:value="(e) => openFieldWorkshop = e">
         <AccordionPanel v-for="(bprint, index) in blueprint" :key="index" :value="index">
             <AccordionHeader>
                 <div>

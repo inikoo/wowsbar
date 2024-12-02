@@ -5,6 +5,7 @@ import { useForm } from "@inertiajs/vue3";
 import Button from "@/Components/Elements/Buttons/Button.vue";
 import PureInput from "@/Components/Pure/PureInput.vue";
 import SelectQuery from "@/Components/SelectQuery.vue";
+import { trans } from "laravel-vue-i18n";
 
 const props = defineProps<{
     show: boolean;
@@ -73,9 +74,9 @@ const target = [
 
 <template>
     <Dialog title="Link Setting" :show="show" @close="closeDialog">
-        <div class="flex flex-col space-y-3">
+        <div class="flex flex-col gap-y-3">
             <div>
-                <div class="select-none text-sm text-gray-600 mb-2">Type</div>
+                <div class="select-none text-sm text-gray-600 mb-2">{{ trans("Type") }}</div>
                 <div class="flex space-x-4">
                     <label v-for="option in options" :key="option.value" class="flex items-center space-x-2">
                         <input type="radio" :value="option.value" v-model="form.type" class="form-radio" />
@@ -85,7 +86,7 @@ const target = [
             </div>
 
             <div>
-                <div class="select-none text-sm text-gray-600 mb-2">target</div>
+                <div class="select-none text-sm text-gray-600 mb-2">{{ trans("Target") }}</div>
                 <div class="flex space-x-4">
                     <label v-for="option in target" :key="option.value" class="flex items-center space-x-2">
                         <input type="radio" :value="option.value" v-model="form.target" class="form-radio" />
@@ -116,17 +117,17 @@ const target = [
                 />
             </div> -->
 
-            <div >
-                <div class="select-none text-sm text-gray-600 mb-2">Link</div>
-                <PureInput v-model="form.href" />
+            <div class="">
+                <div class="select-none text-sm text-gray-600 mb-2">{{ trans("Link") }}</div>
+                <PureInput v-model="form.href" :placeholder="trans('Enter a url')" />
             </div>
  
             <!-- Buttons -->
-            <div class="flex flex-row justify-end space-x-3">
-                <Button type="white" label="cancel" @click="closeDialog">
-                    Cancel
+            <div class="mt-1 flex flex-row justify-end space-x-3">
+                <Button :style="'tertiary'" label="cancel" @click="closeDialog">
+                    {{ trans("Cancel") }}
                 </Button>
-                <Button @click="update" type="black" label="Apply" />
+                <Button @click="update" :style="'primary'" full label="Apply" />
             </div>
         </div>
     </Dialog>
