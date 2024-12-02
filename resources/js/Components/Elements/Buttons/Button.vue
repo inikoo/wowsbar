@@ -46,7 +46,7 @@ if (props.style == 'primary' || props.style == 'create' || props.style == 'save'
     if(layout.systemName == 'org') {
         styleClass = 'bg-fuchsia-700 bg-gradient-to-r from-fuchsia-600 to-fuchsia-700 text-gray-100 hover:bg-none focus:outline-none focus:ring-2 focus:ring-fuchsia-700 focus:ring-offset-2'
     } else {
-        styleClass = 'bg-gray-700 bg-gradient-to-r from-gray-600 to-gray-800 text-gray-100 hover:bg-none'
+        styleClass = 'bg-gray-700 bg-gradient-to-r from-gray-600 to-gray-800 text-gray-100 hover:bg-none disabled:from-gray-400 disabled:to-gray-400 disabled:hover:bg-gray-400'
     }
 }
 else if (props.style == 'orgSolid') styleClass = 'bg-fuchsia-600 text-gray-100 hover:bg-fuchsia-700'

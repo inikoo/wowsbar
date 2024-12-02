@@ -52,6 +52,7 @@ const emits = defineEmits<{
 
 const selectedBlockOpenPanel = ref<string | null>('content')
 const isOnDrag = ref(false)
+const openFieldWorkshop = inject('openFieldWorkshop')
 
 const announcementData = inject('announcementData', {})
 
@@ -85,13 +86,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- <div class="flex justify-between">
-        <h2 class="text-sm font-semibold leading-6">Blocks List</h2>
-        <Button icon="fas fa-plus" type="dashed" size="xs" @click="openModalBlockList" />
-    </div> -->
 
-
-    <Accordion >
+    <Accordion :value="openFieldWorkshop" @update:value="(e) => openFieldWorkshop = e">
         <AccordionPanel v-for="(bprint, index) in blueprint" :key="index" :value="index">
             <AccordionHeader>
                 <div>
@@ -116,98 +112,5 @@ onMounted(() => {
             </AccordionContent>
         </AccordionPanel>
     </Accordion>
-
-
-    <div v-if="false" class="rounded bg-white">
-        <div @click="() => selectedBlockOpenPanel === 'container' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'container'"
-            class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
-            <div class="select-none font-semibold">{{ trans('Container Settings') }}</div>
-            <FontAwesomeIcon icon='fal fa-chevron-down' :class="selectedBlockOpenPanel === 'container' ? 'rotate-180' : ''" class="transition-all" fixed-width aria-hidden='true' />
-        </div>
-
-        <Collapse as="section" :when="selectedBlockOpenPanel === 'container'">
-            <PanelProperties
-                v-model="announcementData.container_properties"
-            />
-        </Collapse>
-    </div>
-
-    <div v-if="false" class="rounded bg-white">
-        <div @click="() => selectedBlockOpenPanel === 'content' ? selectedBlockOpenPanel = null : selectedBlockOpenPanel = 'content'"
-            class="w-full bg-gray-200 py-2 px-3 flex justify-between items-center cursor-pointer">
-            <div class="select-none font-semibold">{{ trans('Content') }}</div>
-            <FontAwesomeIcon icon='fal fa-chevron-down' :class="selectedBlockOpenPanel === 'content' ? 'rotate-180' : ''" class="transition-all" fixed-width aria-hidden='true' />
-        </div>
-
-        <!-- Collapsed: Content -->
-        <Collapse as="section" :when="selectedBlockOpenPanel === 'content'">
-            <div  class="border-t border-gray-300 pb-3">
-                <div class="flex justify-between items-center">
-                    <div class="w-full py-1 select-none text-sm">{{ trans('Text 1') }}</div>
-                </div>
-                <div class="mx-1 border border-gray-300">
-                    <Editor v-model="announcementData.fields.text_1.text" />
-                </div>
-            </div>
-
-            <div  class="border-t border-gray-300 pb-3">
-                <div class="w-full py-1 select-none text-sm">{{ trans('Text 2') }}</div>
-                <div class="mx-1 border border-gray-300">
-                    <Editor v-model="announcementData.fields.text_2.text" />
-                </div>
-            </div>
-
-            <!-- Section: Close button -->
-            <!-- <div  class="border-t border-gray-300 pb-3">
-                <div class="flex justify-between items-center">
-                    <div class="w-full py-1 select-none text-sm">{{ trans('Close button') }}</div>
-                    <div>
-                        <ColorPicker
-                            class="h-5 w-5 rounded shadow-lg border border-gray-300"
-                            closeButton
-                            :color="announcementData.fields.close_button.block_properties.text.color"
-                            @changeColor="(newColor) => announcementData.fields.close_button.block_properties.text.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a})`"
-                        />
-                    </div>
-                </div>
-                
-
-                <div>
-                    <div ref="_parentOfButtonClose" class="relative w-full h-24 bg-gray-100 border border-gray-300">
-                        <div ref="_buttonClose" class="absolute -translate-x-1/2 -translate-y-1/2 mx-auto h-6 w-6 flex justify-center items-center rounded-sm border border-gray-300"
-                            :style="propertiesToHTMLStyle(announcementData.fields.close_button.block_properties)"
-                            :class="isOnDrag ? 'cursor-grabbing' : 'cursor-grab'"
-                        >
-                            <FontAwesomeIcon icon='fal fa-times' class='text-gray-500' size="xs" fixed-width aria-hidden='true' />
-                        </div>
-                    
-                    </div>
-
-                    <div class="flex gap-x-2 items-center justify-between">
-                        <div @click="() => toVerticalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Vertical center') }}</div>
-                        <div @click="() => toHorizontalCenter(announcementData.fields.close_button.block_properties)" class="underline text-xs whitespace-nowrap text-gray-500 hover:text-blue-500 cursor-pointer">{{ trans('Horizontal center') }}</div>
-                    </div>
-                </div>
-
-                <Moveable
-                    :target="_buttonClose"
-                    :draggable="true"
-                    :snapGap="true"
-                    :throttleDrag="1"
-                    :edgeDraggable="false"
-                    :snappable="true"
-                    :snapDirections="{top: true, left: true, bottom: true, right: true }"
-                    :elementSnapDirections='{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}'
-                    :startDragRotate="0"
-                    :throttleDragRotate="0"
-                    @dragStart="() => isOnDrag = true"
-                    @dragEnd="() => debounceSetIsOnDrag()"
-                    @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties)"
-                />
-            </div> -->
-        </Collapse>
-    </div>
-
-    <!-- <pre>{{ announcementData.container_properties }}</pre> -->
 
 </template>

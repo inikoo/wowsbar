@@ -321,7 +321,7 @@ defineExpose({
 
 
 const setVariabel = (value) => {
-    console.log('dfsdfsfd',value)
+    // console.log('dfsdfsfd',value)
     const content = `<span class="mention" data-type="mention" data-id="username" contenteditable="false">{{ ${value} }}</span>`;
     editorInstance.value?.chain().focus().insertContent(content).run();
 };
@@ -354,7 +354,7 @@ const irisVariablesList = [
     },
 ]
 
-console.log(editorInstance)
+// console.log(editorInstance)
 </script>
 
 <template>
@@ -403,7 +403,7 @@ console.log(editorInstance)
                     <!-- Section: Font size -->
                     <div class="my-1.5 inline-flex flex-row flex-wrap items-center space-x-1 px-2">
                         <div :class="[
-                            'inline-flex h-8 shrink-0 flex-row items-center justify-center rounded-md disabled:bg-transparent disabled:text-gray-300',
+                            'inline-flex h-12 shrink-0 flex-row items-center justify-center rounded-md disabled:bg-transparent disabled:text-gray-300',
                             'text-gray-600 hover:bg-blue-50',
                         ]" type="button" v-tooltip="'font size'" :aria-label="'font size'">
                             <div class="group relative">
@@ -420,11 +420,11 @@ console.log(editorInstance)
                                         aria-hidden="true" />
                                 </div>
                                 <div
-                                    class="w-min h-32 overflow-y-auto text-black cursor-pointer overflow-hidden hidden group-hover:block absolute left-0 right-0 border border-gray-500 rounded bg-white z-[1]">
+                                    class="min-w-16 w-min h-48 overflow-y-auto text-gray-800 cursor-pointer overflow-hidden hidden group-hover:block absolute left-0 right-0 border border-gray-500 rounded bg-white z-[1]">
                                     <div v-for="fontsize in ['8', '9', '12', '14', '16', '20', '24', '28', '36', '44', '52', '64']"
                                         :key="fontsize"
-                                        class="px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-100"
-                                        :class="{ 'bg-indigo-600 text-white': parseInt(editorInstance?.getAttributes('textStyle').fontSize, 10) === parseInt(fontsize) }"
+                                        class="px-4 py-2 text-left text-sm cursor-pointer "
+                                        :class="[parseInt(editorInstance?.getAttributes('textStyle').fontSize, 10) === parseInt(fontsize) ? 'bg-indigo-600 text-white' : 'hover:bg-gray-100' ]"
                                         @click="editorInstance?.chain().focus().setFontSize(fontsize + 'px').run()">
                                         {{ fontsize }}
                                     </div>
@@ -475,7 +475,7 @@ console.log(editorInstance)
                         </ColorPicker> -->
                     </TiptapToolbarGroup>
                     
-                    <TiptapToolbarGroup>
+                    <TiptapToolbarGroup v-if="toogle.includes('bulletList') || toogle.includes('orderedList')">
                         <TiptapToolbarButton v-if="toogle.includes('bulletList')" label="Bullet List"
                             :is-active="editorInstance?.isActive('bulletList')"
                             @click="editorInstance?.chain().focus().toggleBulletList().run()">
@@ -560,10 +560,10 @@ console.log(editorInstance)
                                     class="text-sm py-1 px-2 cursor-pointer hover:border-gray-400 flex items-center justify-between transition h-8 bg-white border rounded">
                                     <div v-if="!editorInstance?.getAttributes('textStyle').fontFamily"
                                         id="tiptapfontsize" class="text-gray-600 text-sm font-semibold h-5">
-                                        Font Family
+                                        {{ trans("Font Family") }}
                                     </div>
                                     <div v-else id="tiptapfontsize" class="text-gray-600 text-sm font-semibold h-5">
-                                        {{ editorInstance?.getAttributes('textStyle').fontFamily }}
+                                        {{ useFontFamilyList.find(font => font.value === editorInstance?.getAttributes('textStyle').fontFamily)?.label }}
                                     </div>
                                     <FontAwesomeIcon v-if="editorInstance?.getAttributes('textStyle').fontFamily"
                                         @click="editorInstance?.chain().focus().unsetFontFamily().run()"
@@ -571,10 +571,11 @@ console.log(editorInstance)
                                         aria-hidden="true" />
                                 </div>
                                 <div
-                                    class="w-min h-32 overflow-y-auto text-black cursor-pointer overflow-hidden hidden group-hover:block absolute left-0 right-0 border border-gray-500 rounded bg-white z-[1]">
+                                    class="min-w-16 w-min h-48 overflow-y-auto text-gray-800 cursor-pointer overflow-hidden hidden group-hover:block absolute left-0 right-0 border border-gray-500 rounded bg-white z-[1]">
                                     <div v-for="font in useFontFamilyList"
                                         :key="font.value"
                                         class="px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-100"
+                                        :style="{ fontFamily: font.value }"
                                         @click="editorInstance?.chain().focus().setFontFamily(font.value).run()">
                                         {{ font.label }}
                                     </div>

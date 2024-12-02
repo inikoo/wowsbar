@@ -1,25 +1,32 @@
 <script setup lang="ts">
-import Editor from '@/Components/Forms/Fields/BubleTextEditor/EditorV2.vue'
+import Editor2 from '@/Components/Forms/Fields/BubleTextEditor/EditorV2.vue'
 import { EditorContent } from '@tiptap/vue-3'
 import { get, set } from 'lodash';
 
-const props = defineProps<{}>()
+const props = defineProps<{
+    containerClass?: string
+}>()
 const model = defineModel<{ text: string }>()
-console.log(model.value)
+
+defineOptions({
+    inheritAttrs: false
+})
+
 </script>
 
 <template>
-  <div class="">
-    <Editor
+  <div :class="containerClass">
+    <Editor2
       :modelValue="get(model, 'text', '')"
       @update:modelValue="(e) => set(model, 'text', e)"
+      v-bind="$attrs"
     >
       <template #editor-content="{ editor }">
         <div class="editor-wrapper border-2 border-gray-300 rounded-lg px-3 py-2 shadow-sm focus-within:border-blue-400">
           <EditorContent :editor="editor" class="editor-content focus:outline-none" />
         </div>
       </template>
-    </Editor>
+    </Editor2>
   </div>
 </template>
 

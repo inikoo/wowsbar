@@ -92,7 +92,7 @@ const props = defineProps<{
 }>()
 
 const announcementData = ref(props.announcement_data)
-// console.log('ann', announcementData.value)
+console.log('ann', announcementData.value)
 provide('announcementData', announcementData.value)
 
 const isModalOpen = ref(false)
@@ -127,11 +127,11 @@ const onSave = () => {
 
 
 // Method: Publish announcement
-const isLoadingFinish = ref(false)
+const isLoadingPublish = ref(false)
 const onPublish = () => {
     const toPublish = {
         ...announcementData.value,
-        compiled_layout: _component_template_Announcement.value?.dataToPublish || undefined,
+        compiled_layout: _component_template_Announcement.value?.compiled_layout || undefined,
         text: 'xxx'
     }
     // console.log('toto', _component_template_Announcement.value?.dataToPublish)
@@ -140,22 +140,22 @@ const onPublish = () => {
         route(props.routes_list.publish_route.name, props.routes_list.publish_route.parameters),
         toPublish,
         {
-            onStart: () => isLoadingFinish.value = true,
+            onStart: () => isLoadingPublish.value = true,
             onFinish: () => {
-                isLoadingFinish.value = false
+                isLoadingPublish.value = false
                 saveCancelToken.value = null
             },
             onSuccess: () => {
                 notify({
                     title: 'Success',
-                    text: 'Data Announcement saved',
+                    text: trans('Announcement is published'),
                     type: 'success',
                 })
             },
             onError: (error) => {
                 console.log('error', error)
                 notify({
-                    title: 'Something went wrong',
+                    title: trans('Something went wrong'),
                     text: error.message,
                     type: 'error',
                 })
@@ -213,11 +213,11 @@ const styleToRemove = isOnPublishState ? ['top'] : null
 const _parentComponent = ref(null)
 
 // Section: Tabs
-const isLoadingComponent = ref<string | null>(null)
-const selectedTab = ref('Setting')
-const changeTab = async (category: string) => {
-    isLoadingComponent.value = category
-    selectedTab.value = category
+// const isLoadingComponent = ref<string | null>(null)
+const selectedTab = ref(0)
+const changeTab = async (idxCategory: number) => {
+    // isLoadingComponent.value = idxCategory
+    selectedTab.value = idxCategory
 }
 
 // const announcementSetting = ref()
@@ -273,6 +273,9 @@ const onClickToggleActivate = async (newVal: boolean) => {
     )
 }
 
+const openFieldWorkshop = ref<number | null>(null)
+provide('openFieldWorkshop', openFieldWorkshop)
+
 const getDeliveryUrl = () => {
     console.log(usePage().props.environment)
     if (usePage().props.environment === 'local') {
@@ -287,6 +290,16 @@ const getDeliveryUrl = () => {
 }
 
 const _component_template_Announcement = ref(null)
+
+const sectionClass = ref('')
+const onSectionSetting = () => {
+    setTimeout(() => {
+        sectionClass.value = 'bg-yellow-500/40'
+        setTimeout(() => {
+            sectionClass.value = 'bg-yellow-500/0'
+        }, 600)
+    }, 100)
+}
 </script>
 
 <template layout="CustomerApp">
@@ -325,14 +338,13 @@ const _component_template_Announcement = ref(null)
                 </div>
 
                 <div class="flex items-center">
-                    <Button @click="() => isModalPublish = true" :disabled="isLoadingSave" class="rounded-r-none pl-2.5 pr-2.5">
-                        <template #icon>
-                            <div>
-                                <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
-                            </div>
-                        </template>
+                    <Button @click="() => (selectedTab = 1, onSectionSetting())" :disabled="isLoadingSave" :style="'secondary'">
+                        <div>
+                            {{ trans("Publish & Setting") }}
+                            <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />
+                        </div>
                     </Button>
-                    <Button @click="onPublish" label="Publish now" :loading="isLoadingFinish" iconRight="fal fa-rocket-launch" class="rounded-l-none" />
+                    <!-- <Button @click="onPublish" label="Publish now" :loading="isLoadingPublish" iconRight="fal fa-rocket-launch" class="rounded-l-none" /> -->
                 </div>
             </div>
         </template>
@@ -341,14 +353,13 @@ const _component_template_Announcement = ref(null)
     <!-- Section: Tab selector -->
     <div class="mx-auto max-w-md px-2 sm:px-0 my-4">
         <!-- {{ selectedTab }} -->
-        <TabGroup>
+        <TabGroup :selectedIndex="selectedTab" @change="(e: number) => selectedTab === e ? '' : changeTab(e)">
             <TabList class="flex space-x-1 rounded-xl bg-slate-600 p-1">
                 <Tab
-                    v-for="category in ['Workshop', 'Setting']"
+                    v-for="(category, indexCat) in ['Workshop', 'Setting']"
                     as="template"
                     :key="category"
                     v-slot="{ selected }"
-                    @click="async () => selectedTab === category ? '' : changeTab(category)"
                 >
                     <button :class="[
                         'px-8 w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
@@ -358,18 +369,18 @@ const _component_template_Announcement = ref(null)
                         ]"
                     >
                         {{ category }}
-                        <LoadingIcon v-if="isLoadingComponent === category" />
+                        <!-- <LoadingIcon v-if="isLoadingComponent === category" /> -->
                     </button>
                 </Tab>
             </TabList>
 
         </TabGroup>
     </div>
-
+    
     <!-- Section: Workshop -->
-    <div v-if="selectedTab == 'Workshop'" class="flex h-[86.7vh] border-t border-gray-300">
+    <div v-show="selectedTab === 0" class="flex border-t border-gray-300">
         <!-- Section: Side editor -->
-        <div class="w-[400px] py-2 px-3">
+        <div class="w-[600px] py-2 px-3 ">
             <div class="w-full text-lg font-semibold flex items-center justify-between gap-3 border-b border-gray-300">
                 <div class="flex items-center gap-3">
                     {{ trans('Announcement') }}
@@ -381,15 +392,16 @@ const _component_template_Announcement = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor 
-                v-if="announcementData.template_code"
-                @onMounted="() => isLoadingComponent = null"
-                :blueprint="_component_template_Announcement?.fieldSideEditor"
-            />
+            <div class="h-[calc(100vh-280px)] overflow-y-auto rounded-md shadow-lg">
+                <AnnouncementSideEditor
+                    v-if="announcementData.template_code"
+                    :blueprint="_component_template_Announcement?.fieldSideEditor"
+                />
+            </div>
         </div>
 
         <!-- Section: Preview -->
-        <div v-if="true" class="w-full h-full flex flex-col py-2 px-3">
+        <div class="w-full h-full flex flex-col py-2 px-3">
             <div class="flex justify-between">
                 <!-- <div class="py-1 px-2 cursor-pointer md:hidden block" title="Desktop view" v-tooltip="'Navigation'">
                     <FontAwesomeIcon :icon='faBars' aria-hidden='true' @click="()=>openDrawer = true" />
@@ -429,6 +441,7 @@ const _component_template_Announcement = ref(null)
 
                     <div v-else class="text-center">
                         <EmptyState :data="{ title: trans('No Announcement selected')}" />
+                        
                         <div class="mx-auto mt-4">
                             <Button @click="() => isModalOpen = true" :style="'tertiary'"
                                 label="Select from template" />
@@ -444,13 +457,18 @@ const _component_template_Announcement = ref(null)
     </div>
 
     <!-- Section: Setting -->
-    <div v-if="selectedTab == 'Setting'">
-        <div class="max-w-4xl mx-auto px-4">
+    <div v-show="selectedTab === 1">
+        <div class="max-w-4xl mx-auto px-4 relative pt-4 pb-2 transition-all duration-500" :class="sectionClass">
             <!-- Section: Target -->
             <AnnouncementSettings
                 :domain="portfolio_website.url"
-                @onMounted="() => isLoadingComponent = null"
+                :onPublish
+                :isLoadingPublish
             />
+
+            <div v-if="isLoadingPublish" class="rounded-md bg-black/20 text-white text-[60px] absolute inset-0 flex items-center justify-center">
+                <LoadingIcon />
+            </div>
 
         </div>
     </div>
@@ -462,118 +480,6 @@ const _component_template_Announcement = ref(null)
         </div>
     </Modal>
 
-    <Modal :isOpen="isModalPublish" @onClose="isModalPublish = false" width="w-[500px]" :overflowHidden="false">
-        <div class="grid grid-cols-1 h-fit gap-y-4 ">
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Start date</div>
-                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="instant"
-                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
-                            :checked="settingPublish.start_type ==  'instant'"
-                            id="inp-publish-now"
-                            name="inp-publish-now"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
-                    </div>
-                    
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="scheduled"
-                            @input="(val: string) => set(settingPublish, 'start_type', val.target.value)"
-                            :checked="settingPublish.start_type ==  'scheduled'"
-                            id="inp-publish-schedule"
-                            name="inp-publish-schedule"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <!-- <label for="inp-publish-schedule" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
-                        <VueDatePicker
-                            v-model="publishStartDate"
-                            time-picker-inline
-                            auto-apply
-                            :min-date="new Date()"
-                            :clearable="false"
-                            class="w-fit"
-                        >
-                            <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.start_type !==  'scheduled'">
-                                    {{ useFormatTime(publishStartDate, {formatTime: 'hm'}) }}
-                                </Button>
-                            </template>
-                        </VueDatePicker>
-
-                    </div>
-
-                </div>
-            </fieldset>
-
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Finish date</div>
-                <div class="bg-gray-50 rounded p-4 border border-gray-200 space-y-6">
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="instant"
-                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
-                            :checked="settingPublish.end_type ==  'instant'"
-                            id="inp-finish-unlimited"
-                            name="inp-finish-unlimited"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
-                    </div>
-                    
-                    <div class="flex items-center gap-x-3">
-                        <input
-                            value="scheduled"
-                            @input="(val: string) => set(settingPublish, 'end_type', val.target.value)"
-                            :checked="settingPublish.end_type ==  'scheduled'"
-                            id="inp-finish-scheduled"
-                            name="inp-finish-scheduled"
-                            type="radio"
-                            class="cursor-pointer h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <!-- <label for="inp-finish-scheduled" class="block text-sm/6 font-medium cursor-pointer ">Scheduled</label> -->
-                        <VueDatePicker
-                            v-model="publishEndDate"
-                            time-picker-inline
-                            auto-apply
-                            :min-date="new Date()"
-                            :clearable="false"
-                            class="w-fit"
-                        >
-                            <template #trigger>
-                                <Button :style="'tertiary'" size="xs" :disabled="settingPublish.end_type !==  'scheduled'">
-                                    {{ useFormatTime(publishEndDate, {formatTime: 'hm'}) }}
-                                </Button>
-                            </template>
-                        </VueDatePicker>
-                    </div>
-                </div>
-            </fieldset>
-
-            
-            <fieldset class="">
-                <div class="text-sm/6 font-semibold ">Description</div>
-                <PureTextarea
-                    :placeholder="trans('My first publish')"
-                    inputClass="bg-gray-50"
-                />
-            </fieldset>
-
-            <Button
-                label="Publish"
-                full
-            />
-        </div>
-
-        <div class="mt-4">
-        </div>
-    </Modal>
 
 </template>
 
