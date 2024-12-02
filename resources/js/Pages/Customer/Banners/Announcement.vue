@@ -369,9 +369,9 @@ const _component_template_Announcement = ref(null)
     </div>
 
     <!-- Section: Workshop -->
-    <div v-if="selectedTab == 'Workshop'" class="flex h-[86.7vh] border-t border-gray-300">
+    <div v-if="selectedTab == 'Workshop'" class="flex border-t border-gray-300">
         <!-- Section: Side editor -->
-        <div class="w-[400px] py-2 px-3">
+        <div class="w-[600px] py-2 px-3 ">
             <div class="w-full text-lg font-semibold flex items-center justify-between gap-3 border-b border-gray-300">
                 <div class="flex items-center gap-3">
                     {{ trans('Announcement') }}
@@ -383,15 +383,17 @@ const _component_template_Announcement = ref(null)
                 </div>
             </div>
 
-            <AnnouncementSideEditor 
-                v-if="announcementData.template_code"
-                @onMounted="() => isLoadingComponent = null"
-                :blueprint="_component_template_Announcement?.fieldSideEditor"
-            />
+            <div class="h-[calc(100vh-280px)] overflow-y-auto rounded-md shadow-lg">
+                <AnnouncementSideEditor
+                    v-if="announcementData.template_code"
+                    @onMounted="() => isLoadingComponent = null"
+                    :blueprint="_component_template_Announcement?.fieldSideEditor"
+                />
+            </div>
         </div>
 
         <!-- Section: Preview -->
-        <div v-if="true" class="w-full h-full flex flex-col py-2 px-3">
+        <div class="w-full h-full flex flex-col py-2 px-3">
             <div class="flex justify-between">
                 <!-- <div class="py-1 px-2 cursor-pointer md:hidden block" title="Desktop view" v-tooltip="'Navigation'">
                     <FontAwesomeIcon :icon='faBars' aria-hidden='true' @click="()=>openDrawer = true" />
@@ -431,6 +433,7 @@ const _component_template_Announcement = ref(null)
 
                     <div v-else class="text-center">
                         <EmptyState :data="{ title: trans('No Announcement selected')}" />
+                        
                         <div class="mx-auto mt-4">
                             <Button @click="() => isModalOpen = true" :style="'tertiary'"
                                 label="Select from template" />
