@@ -66,7 +66,7 @@ class PublishAnnouncement
         );
 
         $compiled_layout = [];
-        if(Arr::exists($modelData, 'compiled_layout')) {
+        if (Arr::exists($modelData, 'compiled_layout')) {
             $compiled_layout = [
                 'compiled_layout'          => Arr::get($modelData, 'compiled_layout'),
             ];
@@ -75,6 +75,7 @@ class PublishAnnouncement
         $updateData = [
             'live_snapshot_id'         => $snapshot->id,
             'fields'                   => Arr::get($snapshot->layout, 'fields'),
+            'published_message'        => Arr::get($modelData, 'published_message'),
             'container_properties'     => Arr::get($modelData, 'container_properties'),
             'text'                     => Arr::get($snapshot->layout, 'text'),
             'published_checksum'       => md5(json_encode($snapshot->layout)),
@@ -117,6 +118,7 @@ class PublishAnnouncement
     {
         return [
             'code'                 => ['sometimes', 'string'],
+            'published_message'    => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array'],
             'compiled_layout'      => ['sometimes', 'string'],
