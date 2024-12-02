@@ -124,8 +124,8 @@ class ShowAnnouncement extends InertiaAction
                         ]
                     ],
                     'close_route' => [
+                        'name'       => 'customer.models.portfolio-website.announcement.close',
                         'parameters' => [
-                            'name'       => 'customer.models.portfolio-website.announcement.close',
                             'portfolioWebsite' => $announcement->portfolio_website_id,
                             'announcement'     => $announcement->id
                         ]
