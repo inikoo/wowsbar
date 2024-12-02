@@ -311,7 +311,7 @@ const styleString = (styleObject: {}) => {
     .join(';')
 }
 
-const dataToPublish = computed(() => {
+const compiled_layout = computed(() => {
 
     const text_1_element = props.announcementData?.fields?.text_1?.text ? `<div
             class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
@@ -339,7 +339,7 @@ const dataToPublish = computed(() => {
 const openFieldWorkshop = inject('openFieldWorkshop')
 
 defineExpose({
-    dataToPublish,
+    compiled_layout,
     fieldSideEditor
 })
     // <button

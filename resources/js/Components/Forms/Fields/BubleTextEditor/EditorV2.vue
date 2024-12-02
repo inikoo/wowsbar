@@ -563,7 +563,7 @@ const irisVariablesList = [
                                         {{ trans("Font Family") }}
                                     </div>
                                     <div v-else id="tiptapfontsize" class="text-gray-600 text-sm font-semibold h-5">
-                                        {{ useFontFamilyList.filter(font => font.value === editorInstance?.getAttributes('textStyle').fontFamily)[0].label }}
+                                        {{ useFontFamilyList.find(font => font.value === editorInstance?.getAttributes('textStyle').fontFamily)?.label }}
                                     </div>
                                     <FontAwesomeIcon v-if="editorInstance?.getAttributes('textStyle').fontFamily"
                                         @click="editorInstance?.chain().focus().unsetFontFamily().run()"
