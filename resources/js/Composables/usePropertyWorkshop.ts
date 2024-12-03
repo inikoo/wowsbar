@@ -45,7 +45,8 @@ export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { t
         borderBottomRightRadius: `${properties?.border?.rounded?.bottomright?.value}${properties?.border?.rounded?.unit}`,
         borderBottomLeftRadius: `${properties?.border?.rounded?.bottomleft?.value}${properties?.border?.rounded?.unit}`,
         borderTopLeftRadius: `${properties?.border?.rounded?.topleft?.value}${properties?.border?.rounded?.unit}`,
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        ...properties?.additional_style
     }
 
     if (options?.onlySelect) {
@@ -79,6 +80,18 @@ export const onDrag = (e, block_properties, _parentComponent) => {
     block_properties.position.y = `${percentageTop}%`
 }
 
+
+export const camelToKebab = (str: string) => {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+export const styleToString = (styleObject: {}) => {
+    if (!styleObject) return ''
+
+    return Object.entries(styleObject)
+    .map(([key, value]) => `${camelToKebab(key)}:${value}`)
+    .join(';')
+}
 
 export interface BlockProperties {
     position: {
@@ -167,4 +180,5 @@ export interface BlockProperties {
         color: string
         image: Image
     }
+    additional_style: {} // "display: flex; align-items: center; justify-content: space-between"
 }
