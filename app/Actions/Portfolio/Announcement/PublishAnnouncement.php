@@ -17,6 +17,7 @@ use App\Models\CRM\Customer;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -91,17 +92,17 @@ class PublishAnnouncement
         }
 
         $scheduleAt                = Arr::get($modelData, 'schedule_at');
-        $updateData['schedule_at'] = $scheduleAt;
+        $updateData['schedule_at'] = Carbon::create($scheduleAt);
 
         if ($scheduleAt) {
-            $updateData['live_at'] = $scheduleAt;
+            $updateData['live_at'] = Carbon::create($scheduleAt);
         }
 
         $scheduleFinishAt                 = Arr::get($modelData, 'schedule_finish_at');
-        $updateData['schedule_finish_at'] = $scheduleFinishAt;
+        $updateData['schedule_finish_at'] = Carbon::create($scheduleFinishAt);
 
         if ($scheduleFinishAt) {
-            $updateData['closed_at']          = $scheduleFinishAt;
+            $updateData['closed_at']          = Carbon::create($scheduleFinishAt);
         }
 
         ActivateAnnouncement::dispatch($announcement)->delay($updateData['live_at']);
@@ -122,8 +123,8 @@ class PublishAnnouncement
     {
         return [
             'code'                 => ['sometimes', 'string'],
-            'schedule_at'          => ['sometimes', 'string', 'nullable'],
-            'schedule_finish_at'   => ['sometimes', 'string', 'nullable'],
+            'schedule_at'          => ['sometimes', 'date', 'nullable'],
+            'schedule_finish_at'   => ['sometimes', 'date', 'nullable'],
             'published_message'    => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array'],
