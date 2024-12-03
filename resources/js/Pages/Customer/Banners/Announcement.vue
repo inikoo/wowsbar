@@ -451,7 +451,8 @@ const onStopAnnouncement = () => {
                     <div v-if="announcementData.template_code" ref="_parentComponent" :style="{
                             ...propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove}),
                             position: announcementData.container_properties?.position?.type === 'fixed' ? 'absolute' : announcementData.container_properties?.position?.type
-                        }">
+                        }"
+                    >
                         <component
                             :is="getAnnouncementComponent(announcementData.template_code)"
                             :announcementData="announcementData"
