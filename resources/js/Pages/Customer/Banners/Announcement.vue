@@ -15,7 +15,7 @@ import AnnouncementSettings from '@/Components/Workshop/Announcement/Announcemen
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer } from '@fal'
+import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20 } from '@fal'
 import { faThLarge, faSquare } from '@fas'
 import { faCheckCircle } from '@far'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -36,7 +36,7 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 import Icon from '@/Components/Icon.vue'
 
-library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faSquare, faThLarge, faCheckCircle)
+library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20, faSquare, faThLarge, faCheckCircle)
 
 const props = defineProps<{
     pageHead: {}

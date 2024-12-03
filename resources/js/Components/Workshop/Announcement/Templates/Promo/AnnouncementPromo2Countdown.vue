@@ -24,9 +24,9 @@ const props = defineProps<{
                     properties: BlockProperties
                 }
             }
-            text_2: {
-                text: string
-                block_properties: BlockProperties
+            countdown: {
+                date: string
+                expired_text?: string
             }
         }
         container_properties: BlockProperties
@@ -74,6 +74,22 @@ const fieldSideEditor = [
                         'alignLeft', 'alignRight', "customLink",
                         'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear'
                     ]
+                }
+            }
+        ]
+    },
+    {
+        name: "Countdown",
+        icon: {
+            icon: "fal fa-stopwatch-20",
+            tooltip: "Time countdown"
+        },
+        replaceForm: [
+            {
+                key: ['fields', 'countdown'],
+                type: "countdown",
+                props_data: {
+                    noToday: true
                 }
             }
         ]
@@ -329,7 +345,7 @@ const componentDefaultData = {
 
 
 const compiled_layout = computed(() => {
-    const script = "<script> const initialTime = 1000 * 60 * 60 * 24 * 5; const endTime = new Date().getTime() + initialTime; let timer = null; const parseTime = (time) => ({ tens: Math.floor(time / 10), ones: time % 10, }); const updateCountdown = () => { const now = new Date().getTime(); const timeLeft = endTime - now; if (timeLeft <= 0) { clearInterval(timer); document.getElementById('countdown-days').textContent = '00'; document.getElementById('countdown-hours').textContent = '00'; document.getElementById('countdown-minutes').textContent = '00'; document.getElementById('countdown-seconds').textContent = '00'; return; } const days = parseTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24))); const hours = parseTime(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))); const minutes = parseTime(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))); const seconds = parseTime(Math.floor((timeLeft % (1000 * 60)) / 1000)); document.getElementById('countdown-days').textContent = `${days.tens}${days.ones}`; document.getElementById('countdown-hours').textContent = `${hours.tens}${hours.ones}`; document.getElementById('countdown-minutes').textContent = `${minutes.tens}${minutes.ones}`; document.getElementById('countdown-seconds').textContent = `${seconds.tens}${seconds.ones}`; }; timer = setInterval(updateCountdown, 1000); updateCountdown(); <\/script>"
+    const script = "<script> const initialTime = 1000 * 60 * 60 * 24 * 5; const endTime = new Date('" + props.announcementData?.fields?.countdown?.date + "').getTime() + initialTime; let timer = null; const parseTime = (time) => ({ tens: Math.floor(time / 10), ones: time % 10, }); const updateCountdown = () => { const now = new Date().getTime(); const timeLeft = endTime - now; if (timeLeft <= 0) { clearInterval(timer); document.getElementById('countdown-days').textContent = '00'; document.getElementById('countdown-hours').textContent = '00'; document.getElementById('countdown-minutes').textContent = '00'; document.getElementById('countdown-seconds').textContent = '00'; return; } const days = parseTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24))); const hours = parseTime(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))); const minutes = parseTime(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))); const seconds = parseTime(Math.floor((timeLeft % (1000 * 60)) / 1000)); document.getElementById('countdown-days').textContent = `${days.tens}${days.ones}`; document.getElementById('countdown-hours').textContent = `${hours.tens}${hours.ones}`; document.getElementById('countdown-minutes').textContent = `${minutes.tens}${minutes.ones}`; document.getElementById('countdown-seconds').textContent = `${seconds.tens}${seconds.ones}`; }; timer = setInterval(updateCountdown, 1000); updateCountdown(); <\/script>"
 
 
     const button_element = props.announcementData?.fields?.button_1?.text ? `
@@ -403,28 +419,28 @@ defineExpose({
         <div class=" flex gap-x-2 font-sans mx-auto mt-1">
             <div class="flex flex-col items-center">
                 <div id="countdown-days" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    02
+                    06
                 </div>
                 <div class="text-xs opacity-60">Days</div>
             </div>
 
             <div class="flex flex-col items-center">
                 <div id="countdown-hours" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    10
+                    23
                 </div>
                 <div class="text-xs opacity-60">Hours</div>
             </div>
 
             <div class="flex flex-col items-center">
                 <div id="countdown-minutes" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    23
+                    59
                 </div>
                 <div class="text-xs opacity-60">Minutes</div>
             </div>
 
             <div class="flex flex-col items-center">
                 <div id="countdown-seconds" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    59
+                    00
                 </div>
                 <div class="text-xs opacity-60">Seconds</div>
             </div>

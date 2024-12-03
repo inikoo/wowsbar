@@ -15,6 +15,7 @@ import Margin from '@/Components/CMS/Fields/Margin.vue'
 import Dimension from '@/Components/CMS/Fields/Dimension.vue'
 import Link from '@/Components/CMS/Fields/Link.vue'
 import Background from '@/Components/CMS/Fields/Background.vue'
+import Countdown from '@/Components/CMS/Fields/Countdown.vue'
 import ButtonProperties from '@/Components/CMS/Fields/ButtonProperties.vue'
 // import UploadImage from '@/Components/Pure/UploadImage.vue'
 import Payments from '@/Components/CMS/Fields/Payment.vue'
@@ -50,6 +51,7 @@ export const getComponentProperties = (componentName: string) => {
         "VisibleLoggedIn": ButtonVisibleLoggedIn,
         "properties": PanelProperties,
         "background": Background,
+        "countdown": Countdown,
         "border": Border,
         "padding": Padding,
         "margin": Margin,
