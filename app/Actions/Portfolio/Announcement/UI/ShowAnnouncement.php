@@ -143,8 +143,8 @@ class ShowAnnouncement extends InertiaAction
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,
-                'is_announcement_started'     => $announcement->live_at->lessThan(now())  or now()->between($announcement->schedule_at, $announcement->schedule_finish_at),
-                'is_announcement_closed'      => !$announcement->live_at->lessThan(now()) or now()->isAfter($announcement->closed_at),
+                'is_announcement_started'     => $announcement->live_at?->lessThan(now())  or now()->between($announcement->schedule_at, $announcement->schedule_finish_at),
+                'is_announcement_closed'      => !$announcement->live_at?->lessThan(now()) or now()->isAfter($announcement->closed_at),
                 'portfolio_website'           => $announcement->portfolioWebsite,
                 // 'firstBanner'             => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
                 'announcement_data'       => $announcement->toArray(),
