@@ -12,6 +12,7 @@ use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Helpers\Snapshot\SnapshotStateEnum;
 use App\Enums\Portfolio\Announcement\AnnouncementStateEnum;
+use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Snapshot;
@@ -105,7 +106,11 @@ class PublishAnnouncement
             $updateData['closed_at']          = Carbon::create($scheduleFinishAt);
         }
 
-        ActivateAnnouncement::dispatch($announcement)->delay($updateData['live_at']);
+        ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::ACTIVE->value)->delay($updateData['live_at']);
+
+        if(! blank($updateData['schedule_finish_at'])) {
+            ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::INACTIVE->value)->delay($updateData['schedule_finish_at']);
+        }
 
         $this->update($announcement, $updateData);
     }
