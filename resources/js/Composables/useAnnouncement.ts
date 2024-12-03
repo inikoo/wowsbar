@@ -6,6 +6,7 @@
 */
 
 import AnnouncementPromo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
+import AnnouncementPromo2Countdown from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo2Countdown.vue'
 import AnnouncementInformation1 from "@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue"
 import type { Component } from "vue"
 
@@ -14,7 +15,8 @@ import type { Component } from "vue"
 export const getAnnouncementComponent = (code: string) => {
     const componentsList: Component = {
         'announcement-information-1': AnnouncementInformation1,
-        'announcement-promo-1': AnnouncementPromo1
+        'announcement-promo-1': AnnouncementPromo1,
+        'announcement-promo-2-countdown': AnnouncementPromo2Countdown,
     }
 
     return componentsList[code]

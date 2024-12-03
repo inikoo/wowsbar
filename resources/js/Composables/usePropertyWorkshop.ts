@@ -8,7 +8,7 @@
 import { Image } from "@/types/Image"
 
 
-export const propertiesToHTMLStyle = (properties: BlockProperties, options?: { toRemove?: string[], onlySelect?: string[] }) => {
+export const propertiesToHTMLStyle = (properties?: BlockProperties, options?: { toRemove?: string[], onlySelect?: string[] }) => {
     if (!properties) {
         return {};
     }

@@ -10,8 +10,6 @@ import { inject, nextTick, onMounted, provide, reactive, ref, toRaw, watch } fro
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
-// import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
-// import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 import AnnouncementSettings from '@/Components/Workshop/Announcement/AnnouncementSettings.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
