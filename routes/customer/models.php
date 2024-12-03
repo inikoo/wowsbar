@@ -15,6 +15,7 @@ use App\Actions\Portfolio\Announcement\PublishAnnouncement;
 use App\Actions\Portfolio\Announcement\ResetAnnouncement;
 use App\Actions\Portfolio\Announcement\StartAnnouncement;
 use App\Actions\Portfolio\Announcement\StoreAnnouncement;
+use App\Actions\Portfolio\Announcement\ToggleAnnouncement;
 use App\Actions\Portfolio\Announcement\UpdateAnnouncement;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -76,6 +77,7 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
             Route::delete('{announcement}/reset', ResetAnnouncement::class)->name('reset');
             Route::patch('{announcement}/close', CloseAnnouncement::class)->name('close');
             Route::patch('{announcement}/start', StartAnnouncement::class)->name('start');
+            Route::patch('{announcement}/toggle', ToggleAnnouncement::class)->name('toggle');
         });
     });
 });

@@ -13,16 +13,21 @@ use App\Models\Announcement;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class ActivateAnnouncement
+class ToggleAnnouncement
 {
     use AsAction;
     use WithAttributes;
     use WithActionUpdate;
 
-    public function handle(Announcement $announcement): void
+    public function handle(Announcement $announcement, string $status = null): void
     {
         $this->update($announcement, [
-            'status' => AnnouncementStatusEnum::ACTIVE->value
+            'status' => $status
         ]);
+    }
+
+    public function asController(Announcement $announcement): void
+    {
+        $this->handle($announcement, !$announcement->status);
     }
 }
