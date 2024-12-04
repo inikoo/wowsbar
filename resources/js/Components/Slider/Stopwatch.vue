@@ -54,7 +54,7 @@ onMounted(() => {
 
 
 <template>
-    <component
+    <div
       class="absolute px-4 lg:px-6"
       :class="[{
         'left-0 text-left': data?.textAlign == 'left',
@@ -69,9 +69,9 @@ onMounted(() => {
         v-if="!isExpired"
         :style="{ ...data?.style }"
         :class="[data?.style?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]']"
-        class="text-gray-100 drop-shadow-md leading-none font-bold"
+        class="text-gray-100 drop-shadow-md leading-none font-bold tabular-nums"
       >
-        <span>{{ timer.days }}</span>:<span>{{ timer.hours }}</span>:<span>{{ timer.minutes }}</span>:<span>{{ timer.seconds }}</span>
+        <span>{{ timer?.days || '0' }}</span>:<span>{{ (timer?.hours || '0').toString().padStart(2, '0') }}</span>:<span>{{ (timer?.minutes || '0').toString().padStart(2, '0') }}</span>:<span>{{ (timer?.seconds || '0').toString().padStart(2, '0') }}</span>
       </div>
   
       <!-- Expired Section -->
@@ -79,6 +79,6 @@ onMounted(() => {
         <div v-if="data?.title" :style="{ ...data?.style }" :class="[data?.style?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data?.title }}</div>
         <div v-if="data?.subtitle" :style="{...data?.style}" :class="[data?.style?.fontSize?.fontSubtitle ?? 'text-[12px] lg:text-[20px]']" class="text-gray-300 drop-shadow leading-none tracking-widest">{{ data?.subtitle }}</div>
       </component>
-    </component>
+    </div>
   </template>
   

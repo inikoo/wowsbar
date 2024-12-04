@@ -81,7 +81,7 @@ onMounted(async () => {
     }
 
     // Set default value target_users
-    if(!get(announcementDataSettings.value, 'target_users.type', false)) {
+    if(!get(announcementDataSettings.value, 'target_users.auth_state', false)) {
         set(announcementDataSettings.value, 'target_users', {
             auth_state: 'all', // 'login' || 'logout'
         })
@@ -267,8 +267,8 @@ const settingsUser = ref({
             <div class="flex items-center gap-x-3">
                 <input
                     value="all"
-                    @input="(val: string) => set(announcementDataSettings, 'target_users.auth_state', val.target.value)"
-                    :checked="settingsUser.authState === 'all'"
+                    @input="(val: string) => (console.log('========'), set(announcementDataSettings, 'target_users.auth_state', val.target.value))"
+                    :checked="get(announcementDataSettings, 'target_users.auth_state', false) === 'all'"
                     id="auth-both"
                     name="input-auth-state"
                     type="radio"
@@ -283,7 +283,7 @@ const settingsUser = ref({
                 <input
                     value="login"
                     @input="(val: string) => set(announcementDataSettings, 'target_users.auth_state', val.target.value)"
-                    :checked="settingsUser.authState === 'login'"
+                    :checked="get(announcementDataSettings, 'target_users.auth_state', false) === 'login'"
                     id="auth-login"
                     name="input-auth-state"
                     type="radio"
@@ -298,7 +298,7 @@ const settingsUser = ref({
                 <input
                     value="logout"
                     @input="(val: string) => set(announcementDataSettings, 'target_users.auth_state', val.target.value)"
-                    :checked="settingsUser.authState === 'logout'"
+                    :checked="get(announcementDataSettings, 'target_users.auth_state', false) === 'logout'"
                     id="auth-logout"
                     name="input-auth-state"
                     type="radio"
