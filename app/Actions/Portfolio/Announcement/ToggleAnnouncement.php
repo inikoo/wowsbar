@@ -8,7 +8,9 @@
 namespace App\Actions\Portfolio\Announcement;
 
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
+use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -25,8 +27,10 @@ class ToggleAnnouncement
         ]);
     }
 
-    public function asController(Announcement $announcement): void
+    public function asController(PortfolioWebsite $portfolioWebsite, Announcement $announcement): void
     {
-        $this->handle($announcement, !$announcement->status);
+        $status = $announcement->status === AnnouncementStatusEnum::ACTIVE ? AnnouncementStatusEnum::INACTIVE : AnnouncementStatusEnum::ACTIVE;
+
+        $this->handle($announcement, $status->value);
     }
 }

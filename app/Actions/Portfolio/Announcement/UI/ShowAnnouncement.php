@@ -95,11 +95,7 @@ class ShowAnnouncement extends InertiaAction
                     'icon'      => [
                         'icon' => 'fal fa-sign'
                     ],
-                    'iconRight' => [
-                        'icon'    => 'fal fa-seedling',
-                        'class'   => 'text-green-500 animate-pulse',
-                        'tooltip' => __('Live')
-                    ],
+                    'iconRight' => $announcement->status->statusIcon()[$announcement->status->value],
                 ],
                 'routes_list' => [
                     'publish_route' => [
