@@ -146,14 +146,14 @@ class ShowAnnouncement extends InertiaAction
                 'is_announcement_started'     => $announcement->live_at?->lessThan(now())  or now()->between($announcement->schedule_at, $announcement->schedule_finish_at),
                 'is_announcement_closed'      => !$announcement->live_at?->lessThan(now()) or now()->isAfter($announcement->closed_at),
                 'portfolio_website'           => $announcement->portfolioWebsite,
-                'announcement_data'       => $announcement->toArray(),
-                'is_announcement_published' => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
-                'is_announcement_active'    => $announcement->status,
-                 'route_toggle_activated'    => [
-                     'name'  => 'customer.models.portfolio-website.announcement.toggle',
+                'announcement_data'           => $announcement->toArray(),
+                'is_announcement_published'   => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
+                'is_announcement_active'      => $announcement->status,
+                 'route_toggle_activated'     => [
+                     'name'          => 'customer.models.portfolio-website.announcement.toggle',
                      'parameters'    => [
                          'portfolioWebsite' => $announcement->portfolio_website_id,
-                         'announcement' => $announcement->id
+                         'announcement'     => $announcement->id
                      ],
                      'method'    => 'patch'
                  ]

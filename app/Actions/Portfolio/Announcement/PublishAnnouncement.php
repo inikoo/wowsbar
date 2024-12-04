@@ -108,7 +108,7 @@ class PublishAnnouncement
 
         ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::ACTIVE->value)->delay($updateData['live_at']);
 
-        if(! blank($updateData['schedule_finish_at'])) {
+        if (! blank($updateData['schedule_finish_at'])) {
             ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::INACTIVE->value)->delay($updateData['schedule_finish_at']);
         }
 
