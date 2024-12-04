@@ -41,8 +41,8 @@ watch(date, (newDate) => {
 </script>
 
 <template>
-    <div class="py-5">
-        <div class="mb-2">Date</div>
+    <div class="">
+        <!-- <div class="mb-2">Date</div> -->
         <DatePicker
             :modelValue="date"
             @update:model-value="(e) => (date = e)"

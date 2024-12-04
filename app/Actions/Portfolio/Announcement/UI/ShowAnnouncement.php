@@ -95,11 +95,7 @@ class ShowAnnouncement extends InertiaAction
                     'icon'      => [
                         'icon' => 'fal fa-sign'
                     ],
-                    'iconRight' => [
-                        'icon'    => 'fal fa-seedling',
-                        'class'   => 'text-green-500 animate-pulse',
-                        'tooltip' => __('Live')
-                    ],
+                    'iconRight' => $announcement->status->statusIcon()[$announcement->status->value],
                 ],
                 'routes_list' => [
                     'publish_route' => [
@@ -140,6 +136,14 @@ class ShowAnnouncement extends InertiaAction
                             'announcement'     => $announcement->id
                         ],
                         'method'    => 'patch'
+                    ],
+                    'activated_route'     => [
+                        'name'          => 'customer.models.portfolio-website.announcement.toggle',
+                        'parameters'    => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id,
+                            'announcement'     => $announcement->id
+                        ],
+                        'method'    => 'patch'
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,
@@ -149,14 +153,7 @@ class ShowAnnouncement extends InertiaAction
                 'announcement_data'           => $announcement->toArray(),
                 'is_announcement_published'   => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
                 'is_announcement_active'      => $announcement->status,
-                 'route_toggle_activated'     => [
-                     'name'          => 'customer.models.portfolio-website.announcement.toggle',
-                     'parameters'    => [
-                         'portfolioWebsite' => $announcement->portfolio_website_id,
-                         'announcement'     => $announcement->id
-                     ],
-                     'method'    => 'patch'
-                 ]
+                'last_published_date'         => $announcement->ready_at,
             ]
         );
     }

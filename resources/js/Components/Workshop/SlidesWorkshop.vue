@@ -544,20 +544,20 @@ const ComponentsBlueprint = ref([
             {
                 name: ["layout","stopwatch",'date'],
                 type: "stopwatch",
-                label: trans("stopwatch"),
+                label: trans("countdown"),
                 value: ["layout","stopwatch",'date'],
             },
             {
                 name: ["layout", "stopwatch", "title"],
                 type: "text",
-                label: trans("Title After watch Done !"),
+                label: trans("Title (when the countdown is over)"),
                 value: ["layout", "stopwatch", "title"],
                 placeholder: "Holiday Sales!"
             },
             {
                 name: ["layout", "stopwatch", "subtitle"],
                 type: "text",
-                label: trans("Subtitle After watch Done !"),
+                label: trans("Subtitle (when the countdown is over)"),
                 defaultValue : '',
                 value: ["layout", "stopwatch", "subtitle"],
                 placeholder: "Holiday sales up to 80% all items."
@@ -565,7 +565,7 @@ const ComponentsBlueprint = ref([
             {
                 name: ["layout", "stopwatch", "linkOfText"],
                 type: "text",
-                label: trans("Hyperlink Text After watch Done !"),
+                label: trans("Hyperlink (when the countdown is over)"),
                 defaultValue : '',
                 value: ["layout", "stopwatch", "linkOfText"],
                 placeholder: "https://www.example.com"
