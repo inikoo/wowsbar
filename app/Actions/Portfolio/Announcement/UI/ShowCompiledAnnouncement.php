@@ -73,7 +73,7 @@ class ShowCompiledAnnouncement
 
         /** @var Announcement $announcementAll */
         $announcementAll = $announcementsQuery->whereJsonContains('settings->target_pages->type', 'all')->first();
-        if($announcementAll) {
+        if ($announcementAll) {
             return $announcementAll;
         }
 
