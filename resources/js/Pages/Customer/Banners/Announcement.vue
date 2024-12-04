@@ -18,6 +18,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20 } from '@fal'
 import { faThLarge, faSquare } from '@fas'
 import { faCheckCircle } from '@far'
+import { faStop } from '@fad'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import AnnouncementSideEditor from '@/Components/Workshop/Announcement/AnnouncementSideEditor.vue'
 import { notify } from '@kyvg/vue3-notification'
@@ -36,7 +37,7 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 import Icon from '@/Components/Icon.vue'
 
-library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20, faSquare, faThLarge, faCheckCircle)
+library.add(faStop, faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20, faSquare, faThLarge, faCheckCircle)
 
 const props = defineProps<{
     pageHead: {}
@@ -81,10 +82,11 @@ const props = defineProps<{
         update_route: routeType
         reset_route: routeType
         close_route: routeType
+        activated_route: routeType
     }
     is_announcement_published: boolean
-    is_announcement_active: boolean
-    route_toggle_activated: routeType
+    is_announcement_active: string  // 'inactive' | 'active'
+    last_published_date: string | null
     is_announcement_dirty?: boolean
     portfolio_website: {
         url: string
@@ -236,24 +238,20 @@ const changeTab = async (idxCategory: number) => {
 // })
 
 
-const isActivated = ref(props.is_announcement_active)
 const cancelTokenActivate = ref<Function | null>(null)
-const onClickToggleActivate = async (newVal: boolean) => {
-    if (isActivated.value === newVal) return
+const onClickToggleActivate = async (newVal: string) => {
+    if (props.is_announcement_active === newVal) return
 
-    if(cancelTokenActivate.value) {
-        cancelTokenActivate.value()
-    }
-    isActivated.value = newVal
-    router[props.route_toggle_activated.method || 'patch'](
-        route(props.route_toggle_activated.name, props.route_toggle_activated.parameters),
+    if(cancelTokenActivate.value) return
+    
+    router[props.routes_list.activated_route.method || 'patch'](
+        route(props.routes_list.activated_route.name, props.routes_list.activated_route.parameters),
         { is_published: newVal },
         {
             onCancelToken: (cancelToken) => {
                 cancelTokenActivate.value = cancelToken.cancel
             },
             onFinish: () => {
-                isActivated.value = props.is_announcement_published
                 cancelTokenActivate.value = null
             },
             onSuccess: () => {
@@ -278,7 +276,7 @@ const openFieldWorkshop = ref<number | null>(null)
 provide('openFieldWorkshop', openFieldWorkshop)
 
 const getDeliveryUrl = () => {
-    console.log(usePage().props.environment)
+    console.log('envi', usePage().props.environment)
     if (usePage().props.environment === 'local') {
         return `http://delivery.wowsbar.test/announcement/${announcementData.value.ulid}?iframe=true`
     } else if (usePage().props.environment === 'staging') {
@@ -321,45 +319,49 @@ const onStopAnnouncement = () => {
     <PageHeading :data="pageHead">
         <template #afterTitle="{ iconRight, afterTitle }">
             <Icon :data="iconRight" />
-            <div
+            <!-- <div
                 @click="() => onStopAnnouncement()"
                 class="text-red-500 hover:underline cursor-pointer font-normal text-base"
             >
                 {{ trans("Stop now") }}
-            </div>
-            <!-- {{ afterTitle }} -->
-            <!-- <LoadingIcon /> -->
+            </div> -->
         </template>
 
         <template #other>
-            <div class="flex gap-x-2">
-                <Button @click="onReset" label="Reset" v-tooltip="'Reset data to last publish'" :loading="isLoadingReset" :style="'negative'" :disabled="!is_announcement_dirty" icon="fal fa-undo-alt" />
+            <div class="flex gap-x-2 flex-wrap gap-y-1.5 justify-end">
+                <Button @click="onReset" label="Reset" v-tooltip="trans('Reset data to last publish') + ` (${useFormatTime(last_published_date || '', {formatTime: 'hm'})})`" :loading="isLoadingReset" :style="'negative'" :disabled="!is_announcement_dirty" icon="fal fa-undo-alt" />
                 <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
                 <!-- <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" /> -->
 
-                <div v-if="route_toggle_activated" class="flex items-center">
-                    <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden select-none ring-1 ring-gray-300">
-                        <div @click="onClickToggleActivate(false)"
+                <!-- Button: Active & Inactive -->
+                <div v-if="routes_list.activated_route" class="flex items-center min-w-16">
+                    <div class="grid grid-cols-2 cursor-pointer rounded overflow-hidden select-none ring-1 ring-gray-400">
+                        <div @click="onClickToggleActivate('inactive')"
                             class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
-                            :class="[!isActivated ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
+                            :class="[is_announcement_active == 'inactive' ? 'bg-red-600 text-gray-100' : 'bg-gray-100/70 text-red-400 hover:bg-red-200/70']">
                             {{ trans('Inactive') }}
-                            <LoadingIcon v-if="!isActivated && cancelTokenActivate" size="sm" />
-                            <FontAwesomeIcon v-else-if="!isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                            <LoadingIcon v-if="is_announcement_active !== 'inactive' && cancelTokenActivate" size="sm" />
+                            <FontAwesomeIcon v-else-if="is_announcement_active == 'inactive'" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
                             <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
                         </div>
-                        <div @click="onClickToggleActivate(true)"
+
+                        <div @click="onClickToggleActivate('active')"
                             class="py-1.5 px-3 flex justify-center items-center gap-x-1 capitalize transition-all"
-                            :class="[isActivated ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
+                            :class="[is_announcement_active === 'active' ? 'bg-green-600 text-green-100' : 'bg-gray-100/70 text-gray-400 hover:bg-green-200/70']">
                             {{ trans('Active') }}
-                            <LoadingIcon v-if="isActivated && cancelTokenActivate" size="sm" />
-                            <FontAwesomeIcon v-else-if="isActivated" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
+                            <LoadingIcon v-if="is_announcement_active !== 'active' && cancelTokenActivate" size="sm" />
+                            <FontAwesomeIcon v-else-if="is_announcement_active === 'active'" icon='far fa-check-circle' size="sm" class='' fixed-width aria-hidden='true' />
                             <FontAwesomeIcon v-else="!cancelTokenActivate" icon='fal fa-circle' size="sm" class='' fixed-width aria-hidden='true' />
                         </div>
                     </div>
                 </div>
 
+                <!-- Button: Publish & Setting -->
                 <div class="flex items-center">
-                    <Button @click="() => (selectedTab = 1, onSectionSetting())" :disabled="isLoadingSave" :style="'secondary'">
+                    <Button
+                        @click="() => (selectedTab = 1, onSectionSetting())"
+                        :style="'secondary'"
+                    >
                         <div>
                             {{ trans("Publish & Setting") }}
                             <FontAwesomeIcon icon='fal fa-cog' class='' fixed-width aria-hidden='true' />

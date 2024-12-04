@@ -38,9 +38,9 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
     const components = {
+        websites: TablePortfolioWebsites,
         details: ModelDetails,
         changelog: TableCustomerHistories,
-        websites: TablePortfolioWebsites,
         uploaded_websites: TableUploadedWebsites
     };
 
