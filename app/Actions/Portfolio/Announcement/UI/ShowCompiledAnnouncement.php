@@ -16,15 +16,24 @@ class ShowCompiledAnnouncement
     public function handle(ActionRequest $request): ?Announcement
     {
         $referrer = $request->get('domain');
+        $loggedIn = $request->get('logged_in');
         $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
+        $loggedInState = !is_null($loggedIn) ? ($loggedIn === 'true' ? 'login' : 'logout') : null;
 
         $portfolioWebsite = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcements    = $portfolioWebsite->announcements;
+        $announcementsQuery = $portfolioWebsite->announcements();
+
+
+        if (!is_null($loggedInState)) {
+            $announcementsQuery->whereJsonContains('settings->target_users->auth_state', $loggedInState);
+        }
 
         $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
         $path = $path === '' ? null : $path;
 
-        $announcement = $announcements->map(function ($announcement) use ($referrer, $path) {
+        $announcements = $announcementsQuery->get();
+
+        $announcement = $announcements->map(function ($announcement) use ($referrer, $path, $loggedIn) {
             $targetType = Arr::get($announcement->settings, 'target_pages.type');
             $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
 
@@ -41,7 +50,7 @@ class ShowCompiledAnnouncement
                     return $announcement;
                 }
             } else {
-                if ($targetType === 'all') {
+                if ($targetType === 'all' && is_null($path)) {
                     return $announcement;
                 }
             }
