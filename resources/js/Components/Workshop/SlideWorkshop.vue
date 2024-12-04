@@ -20,6 +20,7 @@ import TextAlign from './Fields/TextAlign.vue'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 import Toogle from '@/Components/Forms/Fields/Primitive/PrimitiveToggle.vue'
+import Stopwatch from '@/Components/Workshop/Fields/Stopwatch.vue'
 
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
@@ -41,7 +42,8 @@ const getComponent = (componentName: string) => {
         'select': Select,
         'selectFont': SelectFont,
         'textAlign': TextAlign,
-        'toogle':Toogle
+        'toogle':Toogle,
+        'stopwatch' : Stopwatch
     };
     return components[componentName]
 };
@@ -92,8 +94,13 @@ defineExpose({
                     <!-- Fields -->
                     <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
                         <div class="relative flex-grow">
-                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                :fieldName="fieldData.name" :fieldData="fieldData" :key="fieldData.type+index+fieldData.label" :counter="false" :common="common"
+                            <component :is="getComponent(fieldData['type'])" 
+                                :data="currentComponentBeenEdited"
+                                :fieldName="fieldData.name" 
+                                :fieldData="fieldData" 
+                                :key="fieldData.type+index+fieldData.label" 
+                                :counter="false" 
+                                :common="common"
                                 :bannerType="bannerType"
                             >
                             </component>

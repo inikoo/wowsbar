@@ -134,6 +134,7 @@
         "vue3-moveable": "^0.28.0",
         "vue3-popper": "^1.5.0",
         "vuedraggable": "^4.1.0",
-        "vuefire": "^3.1.2"
+        "vuefire": "^3.1.2",
+        "vue-timer-hook" : "1.0.84"
     }
 }

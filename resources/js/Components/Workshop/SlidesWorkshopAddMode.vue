@@ -93,6 +93,16 @@ const onClickQuickStart = () => {
                 backgroundType: {
                     desktop: 'color',
                 },
+                stopwatch : {
+                date : "",
+                style: {
+                    color: "rgba(253, 224, 71, 255)",
+                    fontSize: {
+                        fontTitle: "text-[18px] lg:text-[32px]",
+                        fontSubtitle: "text-[10px] lg:text-[15px]"
+                    }
+                }
+            }
             },
             image: {
                 desktop: {},
@@ -123,6 +133,16 @@ const onClickQuickStart = () => {
                 backgroundType: {
                     desktop: 'color',
                 },
+                stopwatch : {
+                date : "",
+                style: {
+                    color: "rgba(253, 224, 71, 255)",
+                    fontSize: {
+                        fontTitle: "text-[18px] lg:text-[32px]",
+                        fontSubtitle: "text-[10px] lg:text-[15px]"
+                    }
+                }
+            }
             },
             image: {
                 desktop: {},
