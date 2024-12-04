@@ -31,7 +31,8 @@ class AnnouncementTemplateSeeder extends Seeder
             $announcementTemplate = AnnouncementTemplate::updateOrCreate([
                 'code' => $code,
             ], [
-                'code' => $code
+                'code'     => $code,
+                'category' => explode('-', $code)[1],
             ]);
 
             $this->saveUploadedImage(
