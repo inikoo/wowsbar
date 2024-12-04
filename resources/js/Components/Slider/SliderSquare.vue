@@ -20,6 +20,7 @@ import { faEyeSlash } from '@fas'
 import { faExternalLink, faExclamationTriangle } from '@far'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
+import Stopwatch from '@/Components/Slider/Stopwatch.vue'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
@@ -186,6 +187,7 @@ const compWidthBanner = computed(() => {
                 <CentralStage
                     v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0"
                     :data="data.common?.centralStage" />
+                <Stopwatch v-if="component?.layout?.stopwatch?.date" :data="component?.layout?.stopwatch"/>
             </SwiperSlide>
 
             <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
