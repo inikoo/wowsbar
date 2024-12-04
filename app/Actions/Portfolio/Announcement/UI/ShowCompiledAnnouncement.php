@@ -2,6 +2,7 @@
 
 namespace App\Actions\Portfolio\Announcement\UI;
 
+use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\JsonResponse;
@@ -26,7 +27,15 @@ class ShowCompiledAnnouncement
         };
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcementsQuery = $portfolioWebsite->announcements();
+        $announcementsQuery = $portfolioWebsite->announcements()
+            ->where('status', AnnouncementStatusEnum::ACTIVE->value)
+            ->where(function ($query) {
+                $query->where('schedule_at', '<=', now())
+                    ->where(function ($query) {
+                        $query->whereNull('schedule_finish_at')
+                            ->orWhere('schedule_finish_at', '>=', now());
+                    });
+            });
 
         $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
         $path = $path === '' ? null : $path;
@@ -61,6 +70,12 @@ class ShowCompiledAnnouncement
 
             return null;
         });
+
+        /** @var Announcement $announcementAll */
+        $announcementAll = $announcementsQuery->whereJsonContains('settings->target_pages->type', 'all')->first();
+        if ($announcementAll) {
+            return $announcementAll;
+        }
 
         return $announcement->whereNotNull()->first();
     }

@@ -23,4 +23,20 @@ enum AnnouncementStatusEnum: string
             'active'      => __('Active')
         ];
     }
+
+    public function statusIcon(): array
+    {
+        return [
+            'inactive'    => [
+                'icon'    => 'fal fa-seedling',
+                'class'   => 'text-green-500 animate-pulse',
+                'tooltip' => __('ddd')
+            ],
+            'active'      => [
+                'icon'    => 'fal fa-seedling',
+                'class'   => 'text-green-500 animate-pulse',
+                'tooltip' => __('xxx')
+            ]
+        ];
+    }
 }
