@@ -93,17 +93,17 @@ class PublishAnnouncement
         }
 
         $scheduleAt                = Arr::get($modelData, 'schedule_at');
-        $updateData['schedule_at'] = Carbon::createFromIsoFormat('Y-m-d h:i:s', $scheduleAt);
+        $updateData['schedule_at'] = Carbon::parse($scheduleAt);
 
         if ($scheduleAt) {
-            $updateData['live_at'] = Carbon::createFromIsoFormat('Y-m-d h:i:s', $scheduleAt);
+            $updateData['live_at'] = Carbon::parse($scheduleAt);
         }
 
         $scheduleFinishAt                 = Arr::get($modelData, 'schedule_finish_at');
-        $updateData['schedule_finish_at'] = Carbon::createFromIsoFormat('Y-m-d h:i:s', $scheduleFinishAt);
+        $updateData['schedule_finish_at'] = Carbon::parse($scheduleFinishAt);
 
         if ($scheduleFinishAt) {
-            $updateData['closed_at']          = Carbon::createFromIsoFormat('Y-m-d h:i:s', $scheduleFinishAt);
+            $updateData['closed_at']          = Carbon::parse($scheduleFinishAt);
         }
 
         ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::ACTIVE->value)->delay($updateData['live_at']);
