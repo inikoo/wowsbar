@@ -61,6 +61,22 @@ export interface SlideWorkshopData {
             tablet?: string
             mobile?: string
         }
+        stopwatch : {
+            date : Date,
+            style: {
+                color?: string
+                fontFamily?: string
+                fontSize?: {
+                    fontSubtitle: string
+                    fontTitle: string
+                }
+                textShadow?: boolean
+            }
+            subtitle?: string
+            textAlign?: string
+            title?: string
+            linkOfText?: string
+        }
     }
     image: {
         desktop: Images | {}

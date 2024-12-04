@@ -12,6 +12,7 @@ import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
 import { useRemoveHttps } from '@/Composables/useRemoveHttps'
+import Stopwatch from '@/Components/Slider/Stopwatch.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@fas'
@@ -143,6 +144,7 @@ const renderBackground = (component) => {
                     <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
                     <CentralStage v-if="component?.layout?.centralStage?.title?.length > 0 || component?.layout?.centralStage?.subtitle?.length > 0" :data="component?.layout?.centralStage" />
                     <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
+                    <Stopwatch v-if="component?.layout?.stopwatch?.date" :data="component?.layout?.stopwatch"/>
                 </SwiperSlide>
 
                 <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">

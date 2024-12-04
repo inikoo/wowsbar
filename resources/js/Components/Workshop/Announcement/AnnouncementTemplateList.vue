@@ -5,9 +5,6 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { trans } from "laravel-vue-i18n"
 
-// import { Root, Daum } from "@/types/webBlockTypes"
-// import AnnouncementInformation1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
-// import AnnouncementPromo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
 import axios from 'axios'
 import { notify } from '@kyvg/vue3-notification'
 import Image from '@/Components/Image.vue'
@@ -39,24 +36,6 @@ const currentTopbarCode = ref(null)
 const selectedTemplate = ref(announcementData || null)
 const isSelectFullTemplate = ref(false)
 
-// const fake_templates = [
-//     {
-//         "name": "Information 1",
-//         "code": "announcement-information-1",
-//         "source": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ0dFe77K2Mbmiz_7_nq5b9tL_HSnRfh4fbg&s',
-//         "description": "This is information 1",
-//         "category": "information",
-//                 component: AnnouncementInformation1
-//     },
-//     {
-//         "name": "Promo 1",
-//         "code": "announcement-promo-1",
-//         "description": "This is Promo 1",
-//         "source": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_jQLYDfXfErKtmy_JLVAyIYfo_Xg8WejCkA&s',
-//         "category": "promo",
-//         component: AnnouncementPromo1
-//     }
-// ]
 
 
 function mergeData(data1: {}, data2: {}) {
@@ -170,7 +149,7 @@ onMounted(() => {
         </nav>
 
 
-        <section class="h-full mx-auto w-full pr-8 overflow-y-auto py-4">
+        <section class="h-full mx-auto w-full pr-8 overflow-y-auto pt-4 pb-20">
             <div class="relative grid gap-y-8 gap-x-4 overflow-y-auto overflow-x-hidden">
                 <div v-for="announcement in announcements_list"
                     :key="announcement.code"

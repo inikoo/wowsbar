@@ -1,0 +1,58 @@
+<script setup lang="ts">
+import { onMounted, watch, computed, inject } from 'vue'
+import { trans } from 'laravel-vue-i18n'
+import PureDatePicker from '@/Components/Pure/PureDatePicker.vue'
+import PureInput from '@/Components/Pure/PureInput.vue'
+import { get, set } from 'lodash'
+
+const Countdown = {
+    date: new Date(),
+    expired_text: ''
+}
+
+const props = defineProps<{
+    noToday?: boolean
+}>()
+
+const model = defineModel()
+const announcementData = inject('announcementData', Countdown)
+
+onMounted(() => {
+    if (!get(announcementData, 'fields.countdown', false)) {
+        set(announcementData, 'fields.countdown', Countdown)
+    }
+})
+</script>
+
+<template>
+    <div class="pb-2">
+        <div class="px-3 flex flex-col mb-2">
+            <div class="text-xs">{{ trans('Select end date') }}</div>
+            
+            <!-- Date -->
+            <div class="flex items-center gap-x-2 py-1 w-full" >
+                <PureDatePicker
+                    :modelValue="get(model, 'date', new Date())"
+                    @update:modelValue="(e) => set(model, 'date', e)"
+                    required
+                    :noToday
+                />
+            </div>
+        </div>
+
+        <div class="px-3 flex flex-col mb-2">
+            <div class="text-xs">{{ trans('Enter text (when countdown expired)') }}</div>
+
+            <!-- Text -->
+            <div class="flex items-center gap-x-2 py-1" >
+                <PureInput
+                    :modelValue="get(model, 'expired_text', '')"
+                    @update:modelValue="(e) => set(model, 'expired_text', e)"
+                    :placeholder="trans('Enter text')"
+                />
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped></style>
