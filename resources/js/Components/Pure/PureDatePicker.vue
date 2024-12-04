@@ -9,6 +9,7 @@ const props = defineProps<{
     format?: string  // 'dd MMMM yyyy'
     timePicker?: boolean
     required?: boolean
+    noToday?: boolean
 }>()
 
 const emits = defineEmits<{
@@ -27,11 +28,11 @@ const _dp = ref()  // Element of DatePicker
             :enable-time-picker="true"
             :format="format ?? undefined"
             auto-apply
-            :clearable="!required ?? false"
+            :clearable="!!required || false"
             @update:modelValue="(newVal: Date) => emits('update:modelValue', newVal)"
         >
             <!-- Button: 'Today' -->
-            <template #action-extra="{ selectCurrentDate }">
+            <template v-if="!noToday" #action-extra="{ selectCurrentDate }">
                 <Button @click="selectCurrentDate()" size="xs" label="Today" :style="'tertiary'" />
             </template>
 

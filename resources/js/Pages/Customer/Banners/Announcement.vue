@@ -10,14 +10,12 @@ import { inject, nextTick, onMounted, provide, reactive, ref, toRaw, watch } fro
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
-// import Promo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
-// import Information1 from '@/Components/Workshop/Announcement/Templates/Information/AnnouncementInformation1.vue'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 import AnnouncementSettings from '@/Components/Workshop/Announcement/AnnouncementSettings.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer } from '@fal'
+import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20 } from '@fal'
 import { faThLarge, faSquare } from '@fas'
 import { faCheckCircle } from '@far'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,7 +36,7 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import PureTextarea from '@/Components/Pure/PureTextarea.vue'
 import Icon from '@/Components/Icon.vue'
 
-library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faSquare, faThLarge, faCheckCircle)
+library.add(faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20, faSquare, faThLarge, faCheckCircle)
 
 const props = defineProps<{
     pageHead: {}

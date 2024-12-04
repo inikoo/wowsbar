@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-import AnnouncementPromo1 from '@/Components/Workshop/Announcement/Templates/Promo/AnnouncementPromo1.vue'
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import BlankLayout from '@/Layouts/BlankLayout.vue'
@@ -64,8 +63,4 @@ console.log('withIframe', withIframe)
         :announcementData="announcement_data"
     />
     
-<!-- <br>
-    <div class="block">
-        <AnnouncementPromo1 />
-    </div> -->
 </template>

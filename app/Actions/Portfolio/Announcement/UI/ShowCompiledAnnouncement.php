@@ -26,29 +26,30 @@ class ShowCompiledAnnouncement
 
         $announcement = $announcements->map(function ($announcement) use ($referrer, $path) {
             $targetType = Arr::get($announcement->settings, 'target_pages.type');
-
-            if ($targetType === 'all') {
-                return $announcement;
-            }
-
             $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
 
-            $matchingPage = $specificPages->first(function ($page) use ($path) {
-                return match ($page['when']) {
-                    'contain' => str_contains($path, $page['url']),
-                    'exact'   => $path === $page['url'],
-                    default   => false,
-                };
-            });
+            if(! blank($specificPages)) {
+                $matchingPage = $specificPages->first(function ($page) use ($path) {
+                    return match ($page['when']) {
+                        'contain' => str_contains($path, $page['url']),
+                        'exact'   => $path === $page['url'],
+                        default   => false,
+                    };
+                });
 
-            if ($matchingPage) {
-                return $announcement;
+                if ($matchingPage) {
+                    return $announcement;
+                }
+            } else {
+                if ($targetType === 'all') {
+                    return $announcement;
+                }
             }
 
             return null;
         });
 
-        return $announcement->first();
+        return $announcement->whereNotNull()->first();
     }
 
     public function jsonResponse(?Announcement $announcement): ?JsonResponse
