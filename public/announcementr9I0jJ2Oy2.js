@@ -60,7 +60,7 @@ async function fetchAnnouncementData() {
         try {
             console.log('> On try');
             // Fetch: Announcement JSON
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}?domain=${hostname}${pathname}&logged_in=${loggedIn}`, {
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}?domain=${hostname}${pathname}\&logged_in=${loggedIn}`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
