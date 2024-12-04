@@ -60,7 +60,13 @@ async function fetchAnnouncementData() {
         try {
             console.log('> On try');
             // Fetch: Announcement JSON
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${jsonUrl}?domain=${hostname}${pathname}&logged_in=${loggedIn}`, {
+            const inner_url = `${jsonUrl}?domain=${hostname}${pathname}&logged_in=${loggedIn}`  // https://www.aw-indonesia.com/ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement?domain=aw-indonesia.com/hello&logged_in=false
+            console.log('inner_url:', inner_url)
+
+            const inner_url_encoded = encodeURIComponent(inner_url)
+            console.log('inner_url_encoded:', inner_url_encoded)
+
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${inner_url_encoded}`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",

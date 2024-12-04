@@ -399,7 +399,7 @@ const settingsUser = ref({
                             @update:modelValue="(e) => announcementData.schedule_finish_at = e"
                             time-picker-inline
                             auto-apply
-                            :min-date="new Date()"
+                            :min-date="new Date(announcementData.schedule_at) || new Date()"
                             :clearable="false"
                             class="w-fit"
                         >
