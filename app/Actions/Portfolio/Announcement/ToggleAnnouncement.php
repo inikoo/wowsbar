@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\Announcement;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Portfolio\Announcement\AnnouncementStatusEnum;
 use App\Models\Announcement;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
