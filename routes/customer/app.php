@@ -14,6 +14,29 @@ Route::middleware([
 
 
     Route::middleware(["auth:customer"])->group(function () {
+        if (!app()->isProduction()) {
+            Route::get('routes', function () {
+                $routeCollection = Route::getRoutes();
+
+                echo "<table style='width:100%'>";
+                echo "<tr>";
+                echo "<td><h4>HTTP Method</h4></td>";
+                echo "<td><h4>Route</h4></td>";
+                echo "<td><h4>Name</h4></td>";
+                echo "<td><h4>Corresponding Action</h4></td>";
+                echo "</tr>";
+                foreach ($routeCollection as $value) {
+                    echo "<tr>";
+                    echo "<td>".$value->methods()[0]."</td>";
+                    echo "<td>".$value->uri()."</td>";
+                    echo "<td>".$value->getName()."</td>";
+                    echo "<td>".preg_replace('/([^\\\\]+)$/', '<span style="background: #c790ff; padding: 0px 2px">$1</span>', $value->getActionName())."</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            });
+        }
+
         Route::get('/', function () {
             return redirect('/app/dashboard');
         });
