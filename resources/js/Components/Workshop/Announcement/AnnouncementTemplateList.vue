@@ -101,7 +101,9 @@ const onSubmitTemplate = (template) => {
 }
 
 // Method: fetch announcement list
+const isLoadingFetch = ref(false)
 const fetchAnnouncementList = async () => {
+    isLoadingFetch.value = true
     try {
         const response = await axios.get(
             route('customer.portfolio.websites.announcements.templates.index', {
@@ -130,6 +132,7 @@ const fetchAnnouncementList = async () => {
         });
         // loadingState.value = false
     }
+    isLoadingFetch.value = false
 }
 
 onMounted(() => {
@@ -152,7 +155,7 @@ onMounted(() => {
 
     <div class="h-full flex gap-x-8 border rounded-xl overflow-hidden">
         <nav class="w-1/5 bg-gray-100 py-4" aria-label="Sidebar">
-            <ul role="list" class="space-y-1">
+            <ul v-if="!isLoadingFetch" role="list" class="space-y-1">
                 <li
                     v-for="category in ['all', ...announcements_list_categories || []]"
                     @click="() => selectedCategory = category"
@@ -164,55 +167,69 @@ onMounted(() => {
                     {{ category }}
                 </li>
             </ul>
+
+            <div v-else class="grid gap-y-2">
+                <div v-for="_ in 3" class="h-10 skeleton">
+
+                </div>
+            </div>
         </nav>
 
 
         <section class="h-full mx-auto w-full pr-8 overflow-y-auto pt-4 pb-20">
             <div class="relative grid gap-y-8 gap-x-4 overflow-y-auto overflow-x-hidden">
-                <template v-if="compFilteredAnnouncementList?.length">
-                    <div v-for="announcement in compFilteredAnnouncementList"
-                        :key="announcement.code"
-                        class="cursor-pointer overflow-hidden h-fit group flex flex-col gap-x-2 relative isolate"
-                    >
-                        <div class="mb-1 w-fit"
-                            :class="announcement.code === currentTopbarCode ? 'text-indigo-500 font-semibold shadow-xl' : 'bg-white'"
+                <template v-if="!isLoadingFetch">
+                    <template v-if="compFilteredAnnouncementList?.length">
+                        <div v-for="announcement in compFilteredAnnouncementList"
+                            :key="announcement.code"
+                            class="cursor-pointer overflow-hidden h-fit group flex flex-col gap-x-2 relative isolate"
                         >
-                            <div v-if="announcement.icon" class="flex items-center justify-center">
-                                <FontAwesomeIcon :icon='announcement.icon' class='' fixed-width aria-hidden='true' />
-                            </div>
-                            <h3 class="text-sm">
-                                {{ announcement.code }} <span v-if="announcement.code === announcementData?.template_code">(active)</span>
-                            </h3>
-                        </div>
-                        <div
-                            class="group relative min-h-16 max-h-20 w-full aspect-[4/1] overflow-hidden flex items-center bg-gray-100 justify-center rounded cursor-pointer"
-                            :class="[
-                                announcement.code == selectedTemplate?.code ? 'border border-indigo-500' : 'border border-gray-300 hover:border-indigo-500'
-                            ]"
-                        >
-                            <div class="w-auto shadow-md">
-                                <Image :src="announcement.source" class="object-contain"/>
-                            </div>
-                            <!-- Checkbox: Full template -->
-                            <div v-if="!announcement.code" @click="() => isSelectFullTemplate = !isSelectFullTemplate"
-                                class="z-40 text-gray-400 hover:text-gray-700 items-center gap-x-3 absolute top-1.5 right-3"
-                                :class="isSelectFullTemplate ? 'flex' : 'hidden group-hover:flex'"
+                            <div class="mb-1 w-fit"
+                                :class="announcement.code === currentTopbarCode ? 'text-indigo-500 font-semibold shadow-xl' : 'bg-white'"
                             >
-                                <Checkbox :modelValue="isSelectFullTemplate" inputId="selectFullTempalte" name="selectFullTempalte" binary />
-                                <span class="cursor-pointer select-none">{{ trans('Full template') }} </span>
+                                <div v-if="announcement.icon" class="flex items-center justify-center">
+                                    <FontAwesomeIcon :icon='announcement.icon' class='' fixed-width aria-hidden='true' />
+                                </div>
+                                <h3 class="text-sm">
+                                    {{ announcement.code }} <span v-if="announcement.code === announcementData?.template_code">(active)</span>
+                                </h3>
                             </div>
+                            <div
+                                class="group relative min-h-16 max-h-20 w-full aspect-[4/1] overflow-hidden flex items-center bg-gray-100 justify-center rounded cursor-pointer"
+                                :class="[
+                                    announcement.code == selectedTemplate?.code ? 'border border-indigo-500' : 'border border-gray-300 hover:border-indigo-500'
+                                ]"
+                            >
+                                <div class="w-auto shadow-md">
+                                    <Image :src="announcement.source" class="object-contain"/>
+                                </div>
+                                <!-- Checkbox: Full template -->
+                                <div v-if="!announcement.code" @click="() => isSelectFullTemplate = !isSelectFullTemplate"
+                                    class="z-40 text-gray-400 hover:text-gray-700 items-center gap-x-3 absolute top-1.5 right-3"
+                                    :class="isSelectFullTemplate ? 'flex' : 'hidden group-hover:flex'"
+                                >
+                                    <Checkbox :modelValue="isSelectFullTemplate" inputId="selectFullTempalte" name="selectFullTempalte" binary />
+                                    <span class="cursor-pointer select-none">{{ trans('Full template') }} </span>
+                                </div>
+                            </div>
+                            <!-- Component: clickable -->
+                            <component
+                                :is="getAnnouncementComponent(announcement.code)"
+                                isToSelectOnly
+                                @templateClicked="(dataTemplate: {}) => (selectedTemplate = dataTemplate)"
+                                class="z-30"
+                            />
                         </div>
-                        <!-- Component: clickable -->
-                        <component
-                            :is="getAnnouncementComponent(announcement.code)"
-                            isToSelectOnly
-                            @templateClicked="(dataTemplate: {}) => (selectedTemplate = dataTemplate)"
-                            class="z-30"
-                        />
-                    </div>
+                    </template>
+                    <div v-else>No template available</div>
                 </template>
-
-                <div v-else>No template available</div>
+                <div v-else class="grid gap-y-8">
+                    <div v-for="_ in 3" class="grid gap-y-2">
+                        <div class="h-5 skeleton w-56"></div>
+                        <div class="skeleton h-20 w-full rounded-md">
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
