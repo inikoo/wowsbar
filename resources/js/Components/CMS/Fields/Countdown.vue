@@ -36,6 +36,7 @@ onMounted(() => {
                     @update:modelValue="(e) => set(model, 'date', e)"
                     required
                     :noToday
+                    :min-date="new Date()"
                 />
             </div>
         </div>

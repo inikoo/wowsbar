@@ -10,6 +10,7 @@ const props = defineProps<{
     timePicker?: boolean
     required?: boolean
     noToday?: boolean
+    className?: string
 }>()
 
 const emits = defineEmits<{
@@ -18,10 +19,13 @@ const emits = defineEmits<{
 
 const _dp = ref()  // Element of DatePicker
 
+defineOptions({
+    inheritAttrs: false
+})
 </script>
 
 <template>
-    <div class="relative">
+    <div class="relative" :class="className">
         <DatePicker
             ref="_dp"
             :modelValue="modelValue"
@@ -30,6 +34,7 @@ const _dp = ref()  // Element of DatePicker
             auto-apply
             :clearable="!!required || false"
             @update:modelValue="(newVal: Date) => emits('update:modelValue', newVal)"
+            v-bind="$attrs"
         >
             <!-- Button: 'Today' -->
             <template v-if="!noToday" #action-extra="{ selectCurrentDate }">

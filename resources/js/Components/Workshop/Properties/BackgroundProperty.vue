@@ -8,7 +8,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import GalleryManagement from '@/Components/Utils/GalleryManagement/GalleryManagement.vue'
 import Modal from '@/Components/Utils/Modal.vue'
 import PureRadio from '@/Components/Pure/PureRadio.vue'
-import ColorPicker from '@/Components/Utils/ColorPicker.vue'
+import ColorPickerWithGradient from '@/Components/Utils/ColorPickerWithGradient.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPencil } from '@fal'
@@ -92,11 +92,12 @@ const routeList = {
         
         <!-- Background Color -->
         <div class="flex items-center gap-x-4 h-min" >
-            <ColorPicker
+            <ColorPickerWithGradient
                 :color="model.color"
                 class="h-8 w-8 rounded-md border border-gray-300"
-                @changeColor="(newColor)=> model.color = `rgba(${newColor.rgba.r}, ${newColor.rgba.g}, ${newColor.rgba.b}, ${newColor.rgba.a})`"
+                @changeColor="(newColor)=> model.color = newColor"
                 closeButton
+                classPopup="absolute -left-44 top-0 z-10 mt-3"
             />
             <!-- <div v-else class="h-8 w-8 rounded-md border border-gray-300 shadow" :style="{background: model.color}" /> -->
 
