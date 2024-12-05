@@ -83,6 +83,7 @@ class Announcement extends Model
         "container_properties" => "array",
         "fields"               => "array",
         "settings"             => "array",
+        "published_settings"   => "array",
         "live_at"              => "datetime",
         "closed_at"            => "datetime",
         "schedule_at"          => "datetime",
@@ -94,7 +95,8 @@ class Announcement extends Model
     protected $attributes = [
         'container_properties'   => '{}',
         'fields'                 => '{}',
-        'settings'               => '{}'
+        'settings'               => '{}',
+        'published_settings'     => '{}'
     ];
 
     public function extractSettings(array $data): array

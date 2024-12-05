@@ -82,7 +82,7 @@ class PublishAnnouncement
             'text'                     => Arr::get($snapshot->layout, 'text'),
             'published_checksum'       => md5(json_encode($snapshot->layout)),
             'state'                    => AnnouncementStateEnum::READY,
-            'settings'                 => Arr::get($snapshot->layout, 'settings'),
+            'published_settings'       => Arr::get($snapshot->layout, 'settings'),
             'is_dirty'                 => false,
             ...$compiled_layout
         ];
