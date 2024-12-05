@@ -296,32 +296,6 @@ const toggle = (event: any) => {
                         @click="editorInstance?.chain().focus().toggleStrike().run()">
                         <FontAwesomeIcon :icon="faStrikethrough" class="h-5 w-5" />
                     </TiptapToolbarButton>
-
-                    <TiptapToolbarButton v-if="toogle.includes('color')" label="Text Color">
-                        <input type="color" class="w-8 h-8"
-                            @input="editorInstance.chain().focus().setColor($event.target.value).run()"
-                            :value="editorInstance.getAttributes('textStyle').color">
-                        <!--  <ColorPicker v-model="editorInstance.getAttributes('textStyle').color" style="z-index: 99;"
-                            @update:model-value="color => editorInstance?.chain().focus().setColor(`#${color}`).run()" /> -->
-                    </TiptapToolbarButton>
-
-
-                    <TiptapToolbarButton v-if="toogle.includes('highlight')" label="Text highlight">
-                        <div class="relative w-8 h-8">
-                            <!-- Color Input -->
-                            <input type="color" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                @input="editorInstance.chain().focus().setHighlight({ color: $event.target.value }).run()"
-                                :value="editorInstance.getAttributes('highlight').color" />
-                            <!-- Icon -->
-                            <div class="flex items-center justify-center w-full h-full bg-gray-200 rounded"
-                            :style="{ backgroundColor: editorInstance?.getAttributes('highlight').color}"
-                            > 
-                                <FontAwesomeIcon :icon="faPaintBrushAlt" />
-                            </div>
-                        </div>
-
-                    </TiptapToolbarButton>
-
                 </TiptapToolbarGroup>
 
                 <TiptapToolbarGroup>
