@@ -17,6 +17,7 @@ export const getAnnouncementComponent = (code: string) => {
     const componentsList: Component = {
         'announcement-information-1': AnnouncementInformation1,
         'announcement-promo-1': AnnouncementPromo1,
+        'announcement-promo-2-countdown': AnnouncementPromo2Countdown,
         'announcement-information-2-transition-text': AnnouncementInformation2TransitionText,
     }
 
