@@ -84,6 +84,13 @@ const transitionList = [
             :placeholder="trans('Select an transition')"
             optionLabel="label"  
         >
+            <template #value="{ value }">
+                <div class="flex items-center gap-x-0.5">
+                    {{ value.label }}
+                    <FontAwesomeIcon v-if="value.icon" :icon='value.icon' class='text-gray-400 text-sm' fixed-width aria-hidden='true' />
+                </div>
+            </template>
+
             <template #option="{ option }">
                 <div class="flex items-center gap-x-0.5">
                     {{ option.label }}

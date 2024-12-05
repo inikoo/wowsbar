@@ -220,7 +220,7 @@ const componentDefaultData = {
 
 
 const compiled_layout = computed(() => {
-    const script = `<script> const information_2_sentence = ${(props.announcementData?.fields?.text_transition_1?.multi_text || []).toString()}; let index = 0; const sentenceElem = document.getElementById("wowsbar_sentence_multi_text"); setInterval(() => { if(sentenceElem) { sentenceElem.className = 'fade-out'; sentenceElem.addEventListener('animationend', () => { index = (index + 1) % information_2_sentence.length; sentenceElem.textContent = information_2_sentence[index]; sentenceElem.className = 'fade-in'; }, { once: true }); }}, 5000) <\/script>`
+    const script = `<script> const information_2_sentence = ${JSON.stringify(props.announcementData?.fields?.text_transition_1?.multi_text || [])}; let index = 0; const sentenceElem = document.getElementById("wowsbar_sentence_multi_text"); setInterval(() => { if(sentenceElem) { sentenceElem.className = 'fade-out'; sentenceElem.addEventListener('animationend', () => { index = (index + 1) % information_2_sentence.length; sentenceElem.textContent = information_2_sentence[index]; sentenceElem.className = 'fade-in'; }, { once: true }); }}, 5000) <\/script>`
 
     return `
     ${script}
