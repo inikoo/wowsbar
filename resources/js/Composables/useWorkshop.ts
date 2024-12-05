@@ -9,6 +9,7 @@ import type { Component } from 'vue'
 import ButtonVisibleLoggedIn from '@/Components/CMS/Fields/ButtonVisibleLoggedIn.vue'
 import PanelProperties from '@/Components/CMS/Fields/PanelProperties.vue'
 import SideEditorInputHTML from '@/Components/CMS/Fields/SideEditorInputHTML.vue'
+import MultiEditorInputHTML from '@/Components/CMS/Fields/MultiEditorInputHTML.vue'
 import Border from '@/Components/CMS/Fields/Border.vue'
 import Padding from '@/Components/CMS/Fields/Padding.vue'
 import Margin from '@/Components/CMS/Fields/Margin.vue'
@@ -28,6 +29,7 @@ import OverviewForm from '@/Components/CMS/Fields/OverviewForm.vue'
 import ArrayPhone from '@/Components/CMS/Fields/ArrayPhone.vue'
 // import NotFoundComponents from '@/Components/CMS/Webpage/NotFoundComponent.vue'
 
+
 import { set } from 'lodash'
 
 
@@ -44,6 +46,7 @@ export const getComponentProperties = (componentName: string) => {
     const components: Component = {
         'text': InputText,
         'editorhtml': SideEditorInputHTML,
+        'multi_editorhtml': MultiEditorInputHTML,
         // 'upload_image': UploadImage,
         'payment_templates': Payments,
         // 'editor': Editor,

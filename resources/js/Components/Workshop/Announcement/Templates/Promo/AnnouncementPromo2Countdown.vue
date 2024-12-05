@@ -363,7 +363,7 @@ const compiled_layout = computed(() => {
             ${props.announcementData?.fields.text_1.text}
         </div>
 
-        <div class="tw-flex tw-gap-x-2 tw-font-sans tw-mx-auto tw-mt-1">
+        <div class="tw-grid tw-grid-cols-4  tw-gap-x-2 tw-font-sans tw-mx-auto tw-mt-1">
             <div class="tw-flex tw-flex-col tw-items-center">
                 <div id="countdown-days" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
                     00
@@ -416,7 +416,7 @@ defineExpose({
             
         </div>
 
-        <div class=" flex gap-x-2 font-sans mx-auto mt-1">
+        <div class="grid grid-cols-4 gap-x-2 font-sans mx-auto mt-1">
             <div class="flex flex-col items-center">
                 <div id="countdown-days" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
                     06
