@@ -60,7 +60,7 @@ async function fetchAnnouncementData() {
         try {
             console.log('> On try');
             // Fetch: Announcement JSON
-            const inner_url = `${jsonUrl}?domain=${hostname}${pathname}?logged_in=${loggedIn}`  // https://www.aw-indonesia.com/ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement?domain=aw-indonesia.com/hello&logged_in=false
+            const inner_url = `${jsonUrl}?logged_in=${loggedIn}&domain=${hostname}${pathname}`  // https://www.aw-indonesia.com/ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement?domain=aw-indonesia.com/hello&logged_in=false
             console.log('inner_url:', inner_url)
 
             const inner_url_encoded = encodeURIComponent(inner_url)
@@ -112,15 +112,17 @@ async function fetchAnnouncementData() {
                 })
     
                 wowsbar_announcement.replaceWith(...tempContainer.childNodes)
-
-                const dataToLocalStorage = {
-                    height: '50px',
-                    data: announcementData.compiled_layout
-                }
-                localStorage.setItem('__wowsbar_announcement', JSON.stringify(dataToLocalStorage))
             } else {
                 console.log('No compiled layout found')
             }
+
+            const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
+
+            const dataToLocalStorage = {
+                height: (wowsbar_announcement.offsetHeight || 0) + 'px',
+                data: announcementData.compiled_layout
+            }
+            localStorage.setItem('__wowsbar_announcement', JSON.stringify(dataToLocalStorage))
 
             
 
