@@ -8,6 +8,7 @@ const fallbackPath = '/fallback/fallback.svg'
 const props = withDefaults(defineProps<{
     src?: Image
     imageCover?: boolean
+    imageContain?: boolean
     alt?: string,
     class?: string
 }>(), {
@@ -65,6 +66,6 @@ onBeforeMount(setImage)
     <picture :class="[props.class ?? 'w-full h-full flex justify-center items-center']">
         <source v-if="get(src, 'avif')" type="image/avif" :srcset="avif">
         <source v-if="get(src, 'webp')" type="image/webp" :srcset="webp">
-        <img :class="[imageCover ? 'w-full h-full object-cover' : '']" @load="() => emits('onLoadImage')" :srcset="original" :src="get(src, 'original')" :alt="alt" style="height: inherit;">
+        <img :class="[props.imageCover ? 'w-full h-full object-cover' : props.imageContain ? 'h-full max-w-full max-h-full object-contain' : '']" @load="() => emits('onLoadImage')" :srcset="original" :src="get(src, 'original')" :alt="alt" style="height: inherit;">
     </picture>
 </template>

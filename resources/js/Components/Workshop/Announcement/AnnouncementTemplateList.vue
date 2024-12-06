@@ -203,11 +203,11 @@ onMounted(() => {
                                     announcement.code == selectedTemplate?.code ? 'border border-indigo-500' : 'border border-gray-300 hover:border-indigo-500'
                                 ]"
                             >
-                                <div class="shadow-md max-h-full w-full max-w-full">
-                                    <Image :src="announcement.source" :imageCover="true" />
+                                <div class="h-16 w-full object-cover">
+                                    <Image :src="announcement.source" :imageContain="true" />
                                     <!-- <Image
-                                        :src="{original: 'https://media.wowsbar.com/6NmF8xbIL5sze1mVbevTw2Rby5duUxLs38tbSFmsT80/rs::120:72::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ni8wNzZmYzk3NDAzZmU5N2M4MjFlZmI2ZGJiOWRiYmEwYS4.avif 1x, https://media.wowsbar.com/cKZm7N2A3AC_SF2mWOpvJiXFt3HNet2yp7PKXIHMPYE/rs::240:144::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ni8wNzZmYzk3NDAzZmU5N2M4MjFlZmI2ZGJiOWRiYmEwYS4.avif 2x'}"
-                                        :imageCover="true"
+                                        :src="{original: 'https://media.wowsbar.com/Aj7rP-7DMjMg8IvNA7DxpVn2gJM-TvzCx0AYvcuaIF8/rs::500:300::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ny9kOTc3YTJhNTRlY2FhODkwNDUzNGYzN2NlMzJkOTc4NC4.avif 1x, https://media.wowsbar.com/W0-Riem3wiE5ihvBgOwGAx-e3tMXWLa5BT0axpA7hEA/rs::1000:600::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ny9kOTc3YTJhNTRlY2FhODkwNDUzNGYzN2NlMzJkOTc4NC4.avif 2x'}"
+                                        :imageContain="true"
                                     /> -->
                                 </div>
 
