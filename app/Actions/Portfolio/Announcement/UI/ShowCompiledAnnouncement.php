@@ -63,6 +63,12 @@ class ShowCompiledAnnouncement
                     return $announcement;
                 }
             }
+
+
+            $targetType    = Arr::get($announcement->settings, 'target_pages.type');
+            if($targetType === 'specific') {   
+                $announcement = $announcement->whereJsonContains('settings->target_pages->specific', $loggedInState)->first();
+            }
             
             return $announcement;
         })->whereNotNull()->first();
