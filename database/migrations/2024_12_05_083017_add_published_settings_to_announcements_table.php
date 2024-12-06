@@ -11,7 +11,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('announcements', function (Blueprint $table) {
-            $table->jsonb('published_settings');
+            $table->jsonb('published_settings')->nullable();
         });
     }
 

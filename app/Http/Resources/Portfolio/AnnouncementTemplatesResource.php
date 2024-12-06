@@ -22,9 +22,9 @@ class AnnouncementTemplatesResource extends JsonResource
     public function toArray($request): array|Arrayable|JsonSerializable
     {
         return [
-            'code'         => $this->code,
+            'code'             => $this->code,
             'category'         => $this->category,
-            'source'       => GetPictureSources::run($this->screenshot->getImage()->resize(120, 72)),
+            'source'           => GetPictureSources::run($this->screenshot->getImage()->resize(120, 72)),
         ];
     }
 }
