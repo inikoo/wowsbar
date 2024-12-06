@@ -20,11 +20,6 @@ class ShowCompiledAnnouncement
         $loggedIn = $request->get('logged_in');
         $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
 
-        $loggedInState = match (true) {
-            is_null($loggedIn)                                                              => null,
-            filter_var($loggedIn, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === true => 'login',
-            default                                                                         => 'logout',
-        };
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
         $announcementsQuery = $portfolioWebsite->announcements()
@@ -34,6 +29,12 @@ class ShowCompiledAnnouncement
         $path = $path === '' ? null : $path;
 
         $announcements = $announcementsQuery->get();
+        
+        $loggedInState = match (true) {
+            is_null($loggedIn)                                                              => null,
+            filter_var($loggedIn, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === true => 'login',
+            default                                                                         => 'logout',
+        };
 
         return $announcements->map(function ($announcement) use ($referrer, $path, $loggedIn, $loggedInState) {
             $targetType    = Arr::get($announcement->settings, 'target_pages.type');
@@ -62,8 +63,8 @@ class ShowCompiledAnnouncement
                     return $announcement;
                 }
             }
-
-            return null;
+            
+            return $announcement;
         })->whereNotNull()->first();
     }
 
