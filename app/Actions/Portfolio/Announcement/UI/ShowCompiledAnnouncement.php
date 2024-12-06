@@ -28,14 +28,7 @@ class ShowCompiledAnnouncement
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
         $announcementsQuery = $portfolioWebsite->announcements()
-            ->where('status', AnnouncementStatusEnum::ACTIVE->value)
-            ->where(function ($query) {
-                $query->where('schedule_at', '<=', now())
-                    ->where(function ($query) {
-                        $query->whereNull('schedule_finish_at')
-                            ->orWhere('schedule_finish_at', '>=', now());
-                    });
-            });
+            ->where('status', AnnouncementStatusEnum::ACTIVE->value);
 
         $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
         $path = $path === '' ? null : $path;
