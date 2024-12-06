@@ -44,7 +44,6 @@ const props = defineProps<{
     title: string
     // data: {},
     announcement_data: {
-        code: string
         container_properties: {
             
         }
@@ -74,6 +73,7 @@ const props = defineProps<{
         state: string
         status: string
         ulid: string
+        template_code: string
         updated_at: string
     }
     // announcement_list: {}
@@ -103,7 +103,7 @@ const isModalOpen = ref(false)
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
-    if(announcementData.value.code) {
+    if(announcementData.value?.template_code) {
         router[props.routes_list.update_route.method || ''](
             route(props.routes_list.update_route.name, props.routes_list.update_route.parameters),
             announcementData.value,
