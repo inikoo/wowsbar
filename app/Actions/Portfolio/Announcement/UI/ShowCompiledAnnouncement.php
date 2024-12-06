@@ -33,15 +33,16 @@ class ShowCompiledAnnouncement
         $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
         $path = $path === '' ? null : $path;
 
-        if (!is_null($loggedInState) && $path) {
-            $announcementsQuery->whereJsonContains('settings->target_users->auth_state', $loggedInState);
-        }
-
         $announcements = $announcementsQuery->get();
 
-        $announcement = $announcements->map(function ($announcement) use ($referrer, $path, $loggedIn) {
+        return $announcements->map(function ($announcement) use ($referrer, $path, $loggedIn, $loggedInState) {
             $targetType    = Arr::get($announcement->settings, 'target_pages.type');
             $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
+            $targetUser    = Arr::get($announcement->settings, 'target_users.auth_state');
+
+            if ($targetUser !== "all") {
+                $announcement = $announcement->whereJsonContains('settings->target_users->auth_state', $loggedInState)->first();
+            }
 
             if (! blank($specificPages)) {
                 $matchingPage = $specificPages->first(function ($page) use ($path) {
@@ -56,21 +57,14 @@ class ShowCompiledAnnouncement
                     return $announcement;
                 }
             } else {
+                $path = $path == "/" ? null : $path;
                 if ($targetType === 'all' && is_null($path)) {
                     return $announcement;
                 }
             }
 
             return null;
-        });
-
-        /** @var Announcement $announcementAll */
-        $announcementAll = $announcementsQuery->whereJsonContains('settings->target_pages->type', 'all')->first();
-        if ($announcementAll) {
-            return $announcementAll;
-        }
-
-        return $announcement->whereNotNull()->first();
+        })->whereNotNull()->first();
     }
 
     public function jsonResponse(?Announcement $announcement): JsonResponse|\stdClass
