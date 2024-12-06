@@ -97,6 +97,8 @@ class PublishAnnouncement
 
         if ($scheduleAt) {
             $updateData['live_at'] = Carbon::parse($scheduleAt);
+        } else {
+            $updateData['schedule_at'] = null;
         }
 
         $scheduleFinishAt                 = Arr::get($modelData, 'schedule_finish_at');
@@ -104,6 +106,8 @@ class PublishAnnouncement
 
         if ($scheduleFinishAt) {
             $updateData['closed_at']          = Carbon::parse($scheduleFinishAt);
+        } else {
+            $updateData['schedule_finish_at'] = null;
         }
 
         ToggleAnnouncement::dispatch($announcement, AnnouncementStatusEnum::ACTIVE->value)->delay($updateData['live_at']);

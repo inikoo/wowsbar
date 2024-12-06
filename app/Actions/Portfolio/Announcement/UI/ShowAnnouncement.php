@@ -171,7 +171,11 @@ class ShowAnnouncement extends InertiaAction
             return true;
         }
 
-        return $announcement->live_at->lessThan(now()) || now()->between($announcement->schedule_finish_at, $announcement->schedule_start_at);
+        if ($announcement->live_at->lessThan(now()) && !$announcement->schedule_at) {
+            return true;
+        }
+
+        return $announcement->live_at->lessThan(now()) || now()->between($announcement->schedule_finish_at, $announcement->schedule_at);
     }
 
     /**
