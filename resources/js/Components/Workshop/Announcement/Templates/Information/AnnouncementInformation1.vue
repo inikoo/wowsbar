@@ -206,7 +206,7 @@ const defaultContainerData = {
 // Data: Fields (default on pick template)
 const defaultFieldsData = {
     "text_1": {
-        "text": "<span style=\"color: #fff700\"><strong>Christmas Sale</strong></span><svg viewBox=\"0 0 2 2\" class=\"mx-2 inline h-0.5 w-0.5 fill-current\" aria-hidden=\"true\"><circle cx=\"1\" cy=\"1\" r=\"1\" /></svg>Enjoy big sales between Dec 1-25 2024&nbsp;<span aria-hidden=\"true\">&rarr;</span>",
+        "text": "<span style=\"color: #fff700\"><strong>Christmas Sale</strong></span> • Enjoy big sales between Dec 1-25 2024&nbsp;<span aria-hidden=\"true\">&rarr;</span>",
         // "block_properties": {
         //     "position": {
         //         "x": "50%",
