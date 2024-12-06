@@ -80,10 +80,10 @@ class ShowCompiledAnnouncement
         return $announcement->whereNotNull()->first();
     }
 
-    public function jsonResponse(?Announcement $announcement): ?JsonResponse
+    public function jsonResponse(?Announcement $announcement): JsonResponse|\stdClass
     {
         if (!$announcement) {
-            return null;
+            return new \stdClass();
         }
 
         return response()->json([

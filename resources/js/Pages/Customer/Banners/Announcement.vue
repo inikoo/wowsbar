@@ -44,7 +44,6 @@ const props = defineProps<{
     title: string
     // data: {},
     announcement_data: {
-        code: string
         container_properties: {
             
         }
@@ -74,6 +73,7 @@ const props = defineProps<{
         state: string
         status: string
         ulid: string
+        template_code: string
         updated_at: string
     }
     // announcement_list: {}
@@ -103,28 +103,30 @@ const isModalOpen = ref(false)
 const isLoadingSave = ref(false)
 const saveCancelToken = ref<Function | null>(null)
 const onSave = () => {
-    router[props.routes_list.update_route.method || ''](
-        route(props.routes_list.update_route.name, props.routes_list.update_route.parameters),
-        announcementData.value,
-        {
-            onStart: () => isLoadingSave.value = true,
-            onFinish: () => {
-                isLoadingSave.value = false
-                saveCancelToken.value = null
-            },
-            onError: (error) => {
-                console.log('ewew', error)
-                notify({
-                    title: trans('Something went wrong'),
-                    text: trans('Failed to save Announcement data'),
-                    type: 'error',
-                })
-            },
-            onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel,
-            preserveState: true,
-            preserveScroll: true
-        }
-    )
+    if(announcementData.value?.template_code) {
+        router[props.routes_list.update_route.method || ''](
+            route(props.routes_list.update_route.name, props.routes_list.update_route.parameters),
+            announcementData.value,
+            {
+                onStart: () => isLoadingSave.value = true,
+                onFinish: () => {
+                    isLoadingSave.value = false
+                    saveCancelToken.value = null
+                },
+                onError: (error) => {
+                    console.log('ewew', error)
+                    notify({
+                        title: trans('Something went wrong'),
+                        text: trans('Failed to save Announcement data'),
+                        type: 'error',
+                    })
+                },
+                onCancelToken: (cclToken) => saveCancelToken.value = cclToken.cancel,
+                preserveState: true,
+                preserveScroll: true
+            }
+        )
+    }
 }
 
 
@@ -330,7 +332,6 @@ const onStopAnnouncement = () => {
         <template #other>
             <div class="flex gap-x-2 flex-wrap gap-y-1.5 justify-end">
                 <Button @click="onReset" label="Reset" v-tooltip="trans('Reset data to last publish') + ` (${useFormatTime(last_published_date || '', {formatTime: 'hm'})})`" :loading="isLoadingReset" :style="'negative'" :disabled="!is_announcement_dirty" icon="fal fa-undo-alt" />
-                <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" />
                 <!-- <Button @click="() => false" label="Stop now" :loading="isLoadingSave" :style="'red'" icon="fas fa-square" /> -->
 
                 <!-- Button: Active & Inactive -->
@@ -374,7 +375,7 @@ const onStopAnnouncement = () => {
     </PageHeading>
 
     <!-- Section: Tab selector -->
-    <div class="mx-auto max-w-md px-2 sm:px-0 my-4">
+    <div class="mx-auto max-w-md px-2 sm:px-0 my-4 flex gap-x-2">
         <!-- {{ selectedTab }} -->
         <TabGroup :selectedIndex="selectedTab" @change="(e: number) => selectedTab === e ? '' : changeTab(e)">
             <TabList class="flex space-x-1 rounded-xl bg-slate-600 p-1">
@@ -398,6 +399,12 @@ const onStopAnnouncement = () => {
             </TabList>
 
         </TabGroup>
+        <div @click="() => false ? onSave() : false" v-tooltip="trans('Save status')" class="flex items-center px-2 text-3xl">
+            <LoadingIcon v-if="isLoadingSave" />
+            <FontAwesomeIcon v-else icon='fal fa-save' class='text-gray-300' fixed-width aria-hidden='true' />
+        </div>
+        <!-- <Button @click="onSave" label="save" :loading="isLoadingSave" :style="'tertiary'" icon="fal fa-save" /> -->
+
     </div>
     
     <!-- Section: Workshop -->
@@ -463,7 +470,7 @@ const onStopAnnouncement = () => {
                         />
                     </div>
 
-                    <div v-else class="text-center">
+                    <div v-else class="text-center pb-14">
                         <EmptyState :data="{ title: trans('No Announcement selected')}" />
                         
                         <div class="mx-auto mt-4">

@@ -147,8 +147,8 @@ class ShowAnnouncement extends InertiaAction
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,
-                'is_announcement_started'     => $announcement->live_at?->lessThan(now())  or (!blank($announcement->schedule_finish_at) ? now()->between($announcement->schedule_finish_at, $announcement->schedule_finish_at) : true),
-                'is_announcement_closed'      => !$announcement->live_at?->lessThan(now()) or now()->isAfter($announcement->closed_at),
+                'is_announcement_started'     => $this->isAnnouncementStarted($announcement),
+                'is_announcement_closed'      => $this->isAnnouncementClosed($announcement),
                 'portfolio_website'           => $announcement->portfolioWebsite,
                 'announcement_data'           => $announcement->toArray(),
                 'is_announcement_published'   => $announcement->unpublishedSnapshot->state === SnapshotStateEnum::LIVE,  // TODO
@@ -156,6 +156,38 @@ class ShowAnnouncement extends InertiaAction
                 'last_published_date'         => $announcement->ready_at,
             ]
         );
+    }
+
+    /**
+     * Determine if the announcement has started.
+     */
+    public function isAnnouncementStarted($announcement): bool
+    {
+        if (! $announcement->live_at) {
+            return false;
+        }
+
+        if (!$announcement->schedule_finish_at) {
+            return true;
+        }
+
+        return $announcement->live_at->lessThan(now()) || now()->between($announcement->schedule_finish_at, $announcement->schedule_start_at);
+    }
+
+    /**
+     * Determine if the announcement is closed.
+     */
+    public function isAnnouncementClosed($announcement): bool
+    {
+        if (! $announcement->live_at) {
+            return true;
+        }
+
+        if (!$announcement->closed_at) {
+            return false;
+        }
+
+        return !$announcement->live_at->lessThan(now()) || now()->isAfter($announcement->closed_at);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

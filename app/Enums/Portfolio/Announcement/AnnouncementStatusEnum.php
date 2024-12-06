@@ -35,7 +35,7 @@ enum AnnouncementStatusEnum: string
             'active'      => [
                 'icon'    => 'fal fa-seedling',
                 'class'   => 'text-green-500 animate-pulse',
-                'tooltip' => __('Active (will show if possible')
+                'tooltip' => __('Active (will show if possible)')
             ]
         ];
     }

@@ -84,6 +84,12 @@ async function fetchAnnouncementData() {
                     return xxx;
                 });
 
+            const dataToLocalStorage = {
+                height: '50px',
+                data: announcementData
+            }
+            localStorage.setItem('__wowsbar_announcement', JSON.stringify(dataToLocalStorage))
+
             console.log('======== new Announctment data', announcementData);
             // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
 
@@ -165,7 +171,7 @@ async function fetchAnnouncementData() {
             // body.insertBefore(iframe, body.firstChild);
 
         } catch (error) {
-            console.error('Someting went wrong:', error);
+            console.error('Announcement went wrong:', error);
         }
     // } else {
     //     console.log("ulid is not exist");
