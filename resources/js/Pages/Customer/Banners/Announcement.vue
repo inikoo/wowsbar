@@ -436,13 +436,13 @@ const onStopAnnouncement = () => {
                 </div> -->
 
                 <!-- Section: Screenview -->
-                <div class="flex">
-                    <ScreenView @screenView="false" />
+                <div class="flex py-2 px-2">
+                  <!--   <ScreenView @screenView="false" />
 
                     <a :href="getDeliveryUrl()"
                         target="_blank" class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'">
                         <FontAwesomeIcon icon='fal fa-external-link' aria-hidden='true' />
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
