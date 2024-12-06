@@ -352,7 +352,7 @@ defineExpose({
                 v-if="announcementData?.fields?.text_1"
                 ref="_text_1"
                 @click="() => (openFieldWorkshop = 1)"
-                class="text-sm leading-6 whitespace-nowrap hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-pointer"
+                class="text-sm leading-6 whitespace-nowrap announcement-component-editable"
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
             >
@@ -363,7 +363,7 @@ defineExpose({
                 v-if="announcementData?.fields?.button_1?.text"
                 @click="() => (onClickClose(), openFieldWorkshop = 2)"
                 v-html="announcementData?.fields.button_1.text"
-                class="inline-flex items-center"
+                class="inline-flex items-center announcement-component-editable"
                 :style="propertiesToHTMLStyle(announcementData?.fields.button_1?.container?.properties)"
             >
             </button>

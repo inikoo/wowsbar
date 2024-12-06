@@ -319,6 +319,8 @@ const onClickClose = () => {
     window.parent.postMessage('close_button_click', '*');
 }
 
+const openFieldWorkshop = inject('openFieldWorkshop')
+
 
 defineExpose({
     compiled_layout,
@@ -329,11 +331,22 @@ defineExpose({
 <template>
     <!-- <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})"> -->
         <template v-if="!isToSelectOnly">
-            <div ref="_text_2" class="whitespace-nowrap" v-html="announcementData.fields.text_2.text" :style="propertiesToHTMLStyle(announcementData.fields.text_2.block_properties)">
-            
+            <div
+                ref="_text_2"
+                @click="() => openFieldWorkshop = 2"
+                class="announcement-component-editable whitespace-nowrap"
+                v-html="announcementData.fields.text_2.text"
+                :style="propertiesToHTMLStyle(announcementData.fields.text_2.block_properties)"
+            >
             </div>
             
-            <div ref="_text_1" class="whitespace-nowrap" v-html="announcementData.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)">
+            <div
+                ref="_text_1"
+                @click="() => openFieldWorkshop = 1"
+                class="announcement-component-editable whitespace-nowrap"
+                v-html="announcementData.fields.text_1.text"
+                :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)"
+            >
             
             </div>
             <!-- <Moveable

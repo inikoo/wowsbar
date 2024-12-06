@@ -515,6 +515,9 @@ const onStopAnnouncement = () => {
 </template>
 
 <style lang="scss" scoped>
+:deep(.announcement-component-editable) {
+    @apply hover:bg-white/30 border border-transparent hover:border-white/80 border-dashed cursor-pointer;
+}
 
 .moveable-control-box {
 
