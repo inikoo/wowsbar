@@ -70,7 +70,7 @@ async function fetchAnnouncementData() {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
-                    "X-Wowsbar-Announcement-Url": inner_url_encoded
+                    "X-Wowsbar-Announcement-Url": inner_url
                 }
             })
                 .then(async response => {
