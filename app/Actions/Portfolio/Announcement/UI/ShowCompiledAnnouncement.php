@@ -20,6 +20,9 @@ class ShowCompiledAnnouncement
         $loggedIn = $request->get('logged_in');
         $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
 
+        $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
+        $announcement=$portfolioWebsite->announcements()->where('status', AnnouncementStatusEnum::ACTIVE->value)->first();
+        return $announcement;
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
         $announcementsQuery = $portfolioWebsite->announcements()
@@ -42,7 +45,7 @@ class ShowCompiledAnnouncement
             $targetUser    = Arr::get($announcement->settings, 'target_users.auth_state');
 
             if ($targetUser !== "all") {
-                $announcement = $announcement->whereJsonContains('settings->target_users->auth_state', $loggedInState)->first();
+                $announcementAuth = $announcement->whereJsonContains('settings->target_users->auth_state', $loggedInState)->first();
             }
 
             if (! blank($specificPages)) {
@@ -55,21 +58,19 @@ class ShowCompiledAnnouncement
                 });
 
                 if ($matchingPage) {
-                    return $announcement;
+                    return $announcementAuth;
                 }
             } else {
                 $path = $path == "/" ? null : $path;
                 if ($targetType === 'all' && is_null($path)) {
-                    return $announcement;
+                    return $announcementAuth;
                 }
             }
-
-
             $targetType    = Arr::get($announcement->settings, 'target_pages.type');
             if($targetType === 'specific') {   
-                $announcement = $announcement->whereJsonContains('settings->target_pages->specific', $loggedInState)->first();
+                $announcement = $announcementAuth->whereJsonContains('settings->target_pages->specific', $loggedInState)->first();
             }
-            
+
             return $announcement;
         })->whereNotNull()->first();
     }
