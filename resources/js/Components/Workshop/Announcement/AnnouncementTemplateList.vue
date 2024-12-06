@@ -12,6 +12,7 @@ import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { AnnouncementData } from '@/types/Announcement'
 import Checkbox from 'primevue/checkbox'
+import { set } from 'lodash'
 
 
 
@@ -69,7 +70,9 @@ function mergeData(data1: {}, data2: {}) {
             // Only replace properties other than .text
             for (const prop in data2[key]) {
                 if (prop !== 'text') {
-                    data1[key][prop] = data2[key][prop];
+                    // data1[key][prop] = data2[key][prop];
+
+                    set(data1, [key, prop], data2[key][prop])
                 }
             }
         } else {
@@ -200,11 +203,16 @@ onMounted(() => {
                                     announcement.code == selectedTemplate?.code ? 'border border-indigo-500' : 'border border-gray-300 hover:border-indigo-500'
                                 ]"
                             >
-                                <div class="w-auto shadow-md">
-                                    <Image :src="announcement.source" class="object-contain"/>
+                                <div class="shadow-md max-h-full w-full max-w-full">
+                                    <Image :src="announcement.source" :imageCover="true" />
+                                    <!-- <Image
+                                        :src="{original: 'https://media.wowsbar.com/6NmF8xbIL5sze1mVbevTw2Rby5duUxLs38tbSFmsT80/rs::120:72::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ni8wNzZmYzk3NDAzZmU5N2M4MjFlZmI2ZGJiOWRiYmEwYS4.avif 1x, https://media.wowsbar.com/cKZm7N2A3AC_SF2mWOpvJiXFt3HNet2yp7PKXIHMPYE/rs::240:144::/czM6Ly93b3dzYmFyLW1lZGlhLXN0YWdpbmcvNzA5Ni8wNzZmYzk3NDAzZmU5N2M4MjFlZmI2ZGJiOWRiYmEwYS4.avif 2x'}"
+                                        :imageCover="true"
+                                    /> -->
                                 </div>
+
                                 <!-- Checkbox: Full template -->
-                                <div v-if="!announcement.code" @click="() => isSelectFullTemplate = !isSelectFullTemplate"
+                                <div v-if="selectedTemplate?.code === announcement.code" @click="() => isSelectFullTemplate = !isSelectFullTemplate"
                                     class="z-40 text-gray-400 hover:text-gray-700 items-center gap-x-3 absolute top-1.5 right-3"
                                     :class="isSelectFullTemplate ? 'flex' : 'hidden group-hover:flex'"
                                 >

@@ -179,7 +179,14 @@ const settingsUser = ref({
                 <div class="flex gap-x-4 items-center">
                     <div>The announcement should</div>
                     <div class="w-24">
-                        <Select v-model="specificNew.will" :options="['show', 'hide']" placeholder="Select a City" class="w-full" />
+                        <Select
+                            v-model="specificNew.will"
+                            :options="
+                                // ['show', 'hide']
+                                ['show']
+                            "
+                            class="w-full"
+                        />
                     </div>
                     <div>if URL:</div>
                 </div>

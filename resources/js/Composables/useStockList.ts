@@ -14,6 +14,7 @@ export const useColorGradient = [
     'linear-gradient(to left bottom, rgb(49, 46, 129), rgb(129, 140, 248), rgb(49, 46, 129))',
     'radial-gradient(at right center, rgb(186, 230, 253), rgb(129, 140, 248))',
     'linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241))',
+    'linear-gradient(90deg, rgba(221,245,254,1) 0%, rgba(252,247,255,1) 16%, rgba(255,252,246,1) 35%, rgba(248,240,255,1) 57%, rgba(255,250,246,1) 83%)'
 ]
 
 export const useSolidColor = [

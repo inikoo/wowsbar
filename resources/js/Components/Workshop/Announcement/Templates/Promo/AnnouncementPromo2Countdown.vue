@@ -163,7 +163,7 @@ const defaultContainerData = {
     },
     "padding": {
         "top": {
-            "value": 20
+            "value": 8
         },
         "left": {
             "value": 20
@@ -173,7 +173,7 @@ const defaultContainerData = {
             "value": 20
         },
         "bottom": {
-            "value": 20
+            "value": 8
         }
     },
     "position": {
@@ -200,7 +200,7 @@ const defaultContainerData = {
     },
     "text": {
         "color": "rgba(10,10,10,1)",
-        "fontFamily": "Raleway"
+        "fontFamily": "'Raleway', sans-serif"
     },
     "isCenterHorizontal": false,
     "additional_style": {
