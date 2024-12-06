@@ -206,7 +206,7 @@ const defaultContainerData = {
 // Data: Fields (default on pick template)
 const defaultFieldsData = {
     "text_1": {
-        "text": "<span style=\"color: #fff700\"><strong>Christmas Sale</strong></span><svg viewBox=\"0 0 2 2\" class=\"mx-2 inline h-0.5 w-0.5 fill-current\" aria-hidden=\"true\"><circle cx=\"1\" cy=\"1\" r=\"1\" /></svg>Enjoy big sales between Dec 1-25 2024&nbsp;<span aria-hidden=\"true\">&rarr;</span>",
+        "text": "<span style=\"color: #fff700\"><strong>Christmas Sale</strong></span> • Enjoy big sales between Dec 1-25 2024&nbsp;<span aria-hidden=\"true\">&rarr;</span>",
         // "block_properties": {
         //     "position": {
         //         "x": "50%",
@@ -301,7 +301,7 @@ const componentDefaultData = {
 
 // Data: to publish in website
 const compiled_layout = computed(() => {
-    return `<div class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+    return `<div id="#wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.text_2.block_properties))}">
             ${props.announcementData.fields.text_2.text}
         </div>
