@@ -29,6 +29,8 @@ class AnnouncementsResource extends JsonResource
             'ulid'                     => $announcement->ulid,
             'code'                     => $announcement->code,
             'name'                     => $announcement->name,
+            'created_at'                     => $announcement->created_at,
+            'status'                   => $announcement->status->statusIcon()[$announcement->status->value],
             'show_pages'               => $extractedSettings['show_pages'],
             'hide_pages'               => $extractedSettings['hide_pages'],
         ];

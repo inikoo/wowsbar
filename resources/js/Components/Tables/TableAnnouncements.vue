@@ -10,6 +10,11 @@ import {useLocaleStore} from '@/Stores/locale'
 import {Banner} from "@/types/banner"
 import {Link} from "@inertiajs/vue3"
 import Tag from '@/Components/Tag.vue'
+import Icon from '../Icon.vue';
+import { useFormatTime } from '@/Composables/useFormatTime';
+import { faStop } from '@fad'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faStop)
 
 const locale = useLocaleStore()
 
@@ -27,6 +32,14 @@ function announcementRoute(announcement) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
+        <template #cell(status)="{ item: announcement }">
+            <Icon :data="announcement.status" />
+        </template>
+
+        <template #cell(created_at)="{ item: announcement }">
+            {{ useFormatTime(announcement.created_at, {formatTime: 'hh:mm EEE, do MMM yy'})}}
+        </template>
+
         <template #cell(name)="{ item: announcement }">
             <Link :href="announcementRoute(announcement)" :id="announcement['ulid']" class="specialUnderlineCustomer py-1 px-2 whitespace-nowrap">
                 {{announcement['name']}}

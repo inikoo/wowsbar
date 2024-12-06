@@ -18,7 +18,7 @@ export const useFormatTime = (dateIso: string | Date, OptionsTime?: OptionsTime)
     if (OptionsTime?.formatTime === 'hms') return format(tempDateIso, 'PPpp', { locale: localesCode[tempLocaleCode] })  // Nov 2, 2023, 3:03:26 PM
     if (OptionsTime?.formatTime === 'hm') return format(tempDateIso, 'PPp', { locale: localesCode[tempLocaleCode] })  // Nov 2, 2023, 3:03 PM
 
-    return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] }) // October 13th, 2023
+    return format(tempDateIso, OptionsTime?.formatTime || 'PPP', { locale: localesCode[tempLocaleCode] }) // October 13th, 2023
 }
 
 // Relative time range (10 days ago)
