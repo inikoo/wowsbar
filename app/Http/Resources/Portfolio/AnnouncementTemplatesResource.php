@@ -24,7 +24,7 @@ class AnnouncementTemplatesResource extends JsonResource
         return [
             'code'             => $this->code,
             'category'         => $this->category,
-            'source'           => GetPictureSources::run($this->screenshot->getImage()->resize(500, 300)),
+            'source'           => GetPictureSources::run($this->screenshot->getImage()->resize(900, 600)),
         ];
     }
 }
