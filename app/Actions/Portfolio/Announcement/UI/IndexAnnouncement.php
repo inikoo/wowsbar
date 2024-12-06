@@ -91,7 +91,8 @@ class IndexAnnouncement extends InertiaAction
                 ->column(key: 'created_at', label: 'created', sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'show_pages', label: __('Show Pages'))
-                ->column(key: 'hide_pages', label: __('Hide Pages'));
+                ->column(key: 'hide_pages', label: __('Hide Pages'))
+                ->defaultSort('created_at');
         };
     }
 
