@@ -66,10 +66,11 @@ async function fetchAnnouncementData() {
             const inner_url_encoded = encodeURIComponent(inner_url)
             console.log('inner_url_encoded:', inner_url_encoded)
 
-            const announcementData = await fetch(`ar_web_wowsbar_announcement.php?url_KHj321Tu=${inner_url_encoded}`, {
+            const announcementData = await fetch(`ar_web_wowsbar_announcement.php`, {
                 headers: {
                     'Accept':'application/json',
                     "Content-Type": "application/json",
+                    "X-Wowsbar-Announcement-Url": inner_url_encoded
                 }
             })
                 .then(async response => {
