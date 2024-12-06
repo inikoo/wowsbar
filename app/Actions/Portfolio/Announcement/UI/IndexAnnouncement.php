@@ -87,9 +87,12 @@ class IndexAnnouncement extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks)
+                ->column(key: 'status', label: '', sortable: false, type: 'icon')
+                ->column(key: 'created_at', label: 'created', sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'show_pages', label: __('Show Pages'))
-                ->column(key: 'hide_pages', label: __('Hide Pages'));
+                ->column(key: 'hide_pages', label: __('Hide Pages'))
+                ->defaultSort('created_at');
         };
     }
 

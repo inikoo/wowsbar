@@ -412,11 +412,11 @@ defineExpose({
 
 <template>
     <template v-if="!isToSelectOnly">
-        <div @click="() => (openFieldWorkshop = 1)" class="" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
+        <div @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
             
         </div>
 
-        <div class="grid grid-cols-4 gap-x-2 font-sans mx-auto mt-1">
+        <div @click="() => (openFieldWorkshop = 2)" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto mt-1">
             <div class="flex flex-col items-center">
                 <div id="countdown-days" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
                     06
@@ -446,7 +446,7 @@ defineExpose({
             </div>
         </div>
 
-        <div @click="() => (openFieldWorkshop = 2)" class="justify-self-end">
+        <div @click="() => (openFieldWorkshop = 3)" class="announcement-component-editable justify-self-end">
             <div v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
             </div>
         </div>

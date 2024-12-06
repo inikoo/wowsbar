@@ -437,7 +437,8 @@ const settingsUser = ref({
                 icon="fal fa-rocket-launch"
                 full
                 size="xl"
-                :disabled="!get(announcementData, 'published_message', '') || isLoadingPublish"
+                :disabled="!get(announcementData, 'published_message', '') || isLoadingPublish || !get(announcementData, 'template_code', false)"
+                v-tooltip="!get(announcementData, 'template_code', false) ? trans('Select template to publish') : !get(announcementData, 'published_message', '') ? trans('Fill the description') : ''"
             />
             
             <!-- <pre>{{announcementData.schedule_at}}</pre> -->
