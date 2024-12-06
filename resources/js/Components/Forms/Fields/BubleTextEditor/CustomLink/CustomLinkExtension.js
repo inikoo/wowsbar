@@ -18,7 +18,7 @@ const CustomLink = Link.extend({
 				default: null,
 			},
 			class: {
-				default: "customLink",
+				default: "link",
 			},
 			href: {
 				default: null,

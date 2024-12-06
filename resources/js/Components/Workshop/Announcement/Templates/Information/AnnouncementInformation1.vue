@@ -60,7 +60,7 @@ const fieldSideEditor = [
                 props_data: {
                     toogle: [
                         'heading', 'fontSize', 'bold', 'italic', 'underline', "fontFamily",
-                        'alignLeft', 'alignRight', "customLink",
+                        'alignLeft', 'alignRight', "link",
                         'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear'
                     ]
                 }
@@ -80,7 +80,7 @@ const fieldSideEditor = [
                 props_data: {
                     toogle: [
                         'heading', 'fontSize', 'bold', 'italic', 'underline', "fontFamily",
-                        'alignLeft', 'alignRight', "customLink",
+                        'alignLeft', 'alignRight', "link",
                         'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear'
                     ]
                 }

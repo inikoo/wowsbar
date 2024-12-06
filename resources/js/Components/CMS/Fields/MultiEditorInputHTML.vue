@@ -3,6 +3,9 @@ import Editor2 from '@/Components/Forms/Fields/BubleTextEditor/EditorV2.vue'
 import { EditorContent } from '@tiptap/vue-3'
 import { trans } from 'laravel-vue-i18n'
 import { get, set } from 'lodash'
+import Popover from 'primevue/popover';
+import { ref } from 'vue'
+import Button from '@/Components/Elements/Buttons/Button.vue';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPlus, faArrowUp, faArrowDown, faArrowLeft, faArrowRight } from '@fal'
@@ -23,6 +26,8 @@ const props = defineProps<{
     containerClass?: string
 }>()
 const model = defineModel<MultiEditor>()
+const _popover = ref(null);
+const idxText = ref(null)
 
 defineOptions({
     inheritAttrs: false
@@ -33,9 +38,15 @@ const onClickNewText = () => {
     model.value?.multi_text.push(`<p>${useHeadlineText()[randIndex]}</p>`)
 }
 
-const onDeleteText = (idx: number) => {
-    model.value?.multi_text.splice(idx, 1)
+const onDeleteText = () => {
+    model.value?.multi_text.splice(idxText.value, 1)
+    _popover.value?.hide()
 }
+
+const togglePopover = (event: Event, idText : any) => {
+    _popover.value?.toggle(event);
+    idxText.value = idText
+};
 
 const transitionList = [
     {
@@ -135,11 +146,22 @@ const transitionList = [
                         </div>
                     </template>
                 </Editor2>
-                
-                <div @dblclick="() => onDeleteText(idxText)" v-tooltip="'Double click to remove'" class="px-1 py-1 text-red-400 hover:text-white cursor-pointer border border-transparent hover:bg-red-500 rounded">
+
+           <div @click="(event)=>togglePopover(event,idxText)" class="px-1 py-1 text-red-400 hover:text-white cursor-pointer border border-transparent hover:bg-red-500 rounded">
                     <FontAwesomeIcon icon='fal fa-trash-alt' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
+
+            <Popover ref="_popover">
+                    <div>
+                        <div class="text-sm font-medium mb-3">Are you sure to delete this ?</div>
+                        <div class="flex justify-end gap-2">
+                            <Button :style="'white'" label="No" size="xs" @click="()=>_popover.hide()" />
+                            <Button label="Yes" size="xs" @click="onDeleteText" />
+                        </div>
+                    </div>
+            </Popover>
+                
 
             <div @click="() => onClickNewText()" class="hover:bg-gray-100 cursor-pointer border-2 border-gray-300 border-dashed text-center rounded px-3 py-2 shadow-sm focus-within:border-blue-400">
                 <FontAwesomeIcon icon='fal fa-plus' class='' fixed-width aria-hidden='true' /> {{ trans("Add new text") }}

@@ -34,7 +34,7 @@ import { TableCell } from "@tiptap/extension-table-cell"
 import Gapcursor from "@tiptap/extension-gapcursor"
 import Image from "@tiptap/extension-image"
 import TextStyle from '@tiptap/extension-text-style'
-import customLink from '@/Components/Forms/Fields/BubleTextEditor/CustomLink/CustomLinkExtension.js'
+import link from '@/Components/Forms/Fields/BubleTextEditor/CustomLink/CustomLinkExtension.js'
 import { Color } from '@tiptap/extension-color'
 import FontSize from 'tiptap-extension-font-size'
 import FontFamily from '@tiptap/extension-font-family'
@@ -100,7 +100,7 @@ const props = withDefaults(defineProps<{
     placeholder: '',
     toogle: () => [
         'heading', 'fontSize', 'bold', 'italic', 'underline', 'bulletList', 'query', "fontFamily",
-        'orderedList', 'blockquote', 'divider', 'alignLeft', 'alignRight', "customLink",
+        'orderedList', 'blockquote', 'divider', 'alignLeft', 'alignRight', "link",
         'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear', "image", "video"
     ]
 })
@@ -138,7 +138,7 @@ const editorInstance = useEditor({
         FontFamily.configure({
             types: ['textStyle'],
         }),
-        customLink.extend({
+        link.extend({
             addProseMirrorPlugins() {
                 return [
                     new Plugin({
@@ -544,10 +544,10 @@ const irisVariablesList = [
                             <FontAwesomeIcon :icon="faLink" class="h-5 w-5" />
                         </TiptapToolbarButton>
 
-                        <TiptapToolbarButton v-if="toogle.includes('customLink')" label="Link Internal & External"
+                     <!--    <TiptapToolbarButton v-if="toogle.includes('link')" label="Link Internal & External"
                             @click="openLinkDialogCustom" :is-active="editorInstance?.isActive('link')">
                             <FontAwesomeIcon :icon="faLink" class="h-5 w-5" />
-                        </TiptapToolbarButton>
+                        </TiptapToolbarButton> -->
 
                         <TiptapToolbarButton v-if="toogle.includes('image')" label="Image"
                             @click="()=>{showAddImageDialog = true, showDialog = true }">
