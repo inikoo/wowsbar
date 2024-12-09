@@ -7,6 +7,7 @@ use App\Models\Announcement;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
+use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
@@ -88,6 +89,16 @@ class ShowCompiledAnnouncement
             'container_properties' => $announcement->container_properties,
             'restrictions'         => $this->hasRestrictions($announcement->settings)
         ]);
+    }
+
+    public function htmlResponse(?Announcement $announcement)
+    {
+        return Inertia::render(
+            'DeliverAnnouncement',
+            [
+                'announcement_data' => $announcement
+            ]
+        );
     }
 
     public function hasRestrictions(array $data): bool
