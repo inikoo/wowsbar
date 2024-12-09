@@ -21,7 +21,7 @@ class ShowCompiledAnnouncement
         $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcement=$portfolioWebsite->announcements()->where('status', AnnouncementStatusEnum::ACTIVE->value)->first();
+        $announcement       =$portfolioWebsite->announcements()->where('status', AnnouncementStatusEnum::ACTIVE->value)->first();
         return $announcement;
 
         $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
@@ -32,7 +32,7 @@ class ShowCompiledAnnouncement
         $path = $path === '' ? null : $path;
 
         $announcements = $announcementsQuery->get();
-        
+
         $loggedInState = match (true) {
             is_null($loggedIn)                                                              => null,
             filter_var($loggedIn, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === true => 'login',
@@ -67,7 +67,7 @@ class ShowCompiledAnnouncement
                 }
             }
             $targetType    = Arr::get($announcement->settings, 'target_pages.type');
-            if($targetType === 'specific') {   
+            if ($targetType === 'specific') {
                 $announcement = $announcementAuth->whereJsonContains('settings->target_pages->specific', $loggedInState)->first();
             }
 
