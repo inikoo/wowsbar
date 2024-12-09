@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\Gallery\UI\StockImages;
 use App\Actions\InertiaAction;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Announcement;
 use App\Models\Media\Media;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -43,12 +44,21 @@ class IndexStockImages extends InertiaAction
                 $query->whereAnyWordStartWith('media.name', $value);
             });
         });
+
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
         $queryBuilder = QueryBuilder::for(Media::class);
 
+        $model = match (request()->get('scope')) {
+            'announcement' => class_basename(Announcement::class),
+            default        => null
+        };
+
+        if ($model) {
+            $queryBuilder->where('model_type', $model);
+        }
 
         return $queryBuilder
             ->defaultSort('media.name')

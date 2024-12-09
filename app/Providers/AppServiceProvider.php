@@ -71,7 +71,7 @@ class AppServiceProvider extends ServiceProvider
                 'Mailshot'               => 'App\Models\Mail\Mailshot',
                 'Outbox'                 => 'App\Models\Mail\Outbox',
                 'Email'                  => 'App\Models\Mail\Email',
-
+                'AnnouncementTemplate'   => 'App\Models\AnnouncementTemplate'
             ]
         );
     }
