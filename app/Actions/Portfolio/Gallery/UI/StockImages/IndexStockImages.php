@@ -45,7 +45,8 @@ class IndexStockImages extends InertiaAction
         });
 
         $globalScope = AllowedFilter::callback('scope', function ($query, $value) {
-            $query->whereIn('scope', explode(',', $value));
+            $value = is_string($value) ? [$value] : $value;
+            $query->whereIn('scope', $value);
         });
 
         if ($prefix) {
