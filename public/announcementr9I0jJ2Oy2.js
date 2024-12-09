@@ -61,7 +61,7 @@ async function fetchAnnouncementData() {
             console.log('> On try');
             // Fetch: Announcement JSON
             const inner_url = `${jsonUrl}?logged_in=${loggedIn}&domain=${hostname}${pathname}`  // https://www.aw-indonesia.com/ar_web_wowsbar_announcement.php?url_KHj321Tu=https://delivery-staging.wowsbar.com/announcement?domain=aw-indonesia.com/hello&logged_in=false
-            console.log('inner_url:', inner_url)
+            // console.log('inner_url:', inner_url)
 
             const inner_url_encoded = encodeURIComponent(inner_url)
             console.log('inner_url_encoded:', inner_url_encoded)
@@ -87,7 +87,7 @@ async function fetchAnnouncementData() {
 
             
 
-            console.log('======== new Announctment data', announcementData);
+            console.log('======== ann ulid', announcementData?.ulid);
             // document.querySelector('#wowsbar_announcement').innerHTML = announcementData;
 
 
@@ -96,7 +96,7 @@ async function fetchAnnouncementData() {
 
 
             if(announcementData?.compiled_layout) {
-                console.log('Compiled layout found', announcementData.ulid)
+                console.log('Compiled layout found')
                 const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
 
                 // Create a temporary container to parse the HTML string
@@ -110,8 +110,11 @@ async function fetchAnnouncementData() {
                     newScript.textContent = script.textContent; // Get the content of the script
                     document.head.appendChild(newScript); // Execute it by appending to <head> (or use <body> if preferred)
                 })
-    
-                wowsbar_announcement.replaceWith(...tempContainer.childNodes)
+                
+                console.log('wowsbar ann 1: ', wowsbar_announcement)
+                if (wowsbar_announcement) {
+                    wowsbar_announcement.replaceWith(...tempContainer.childNodes)
+                }
             } else {
                 console.log('No compiled layout found')
             }
@@ -119,7 +122,7 @@ async function fetchAnnouncementData() {
             const wowsbar_announcement = document.querySelector('#wowsbar_announcement')
 
             const dataToLocalStorage = {
-                height: (wowsbar_announcement.offsetHeight || 0) + 'px',
+                height: (wowsbar_announcement?.offsetHeight || 0) + 'px',
                 data: announcementData.compiled_layout
             }
             localStorage.setItem('__wowsbar_announcement', JSON.stringify(dataToLocalStorage))
