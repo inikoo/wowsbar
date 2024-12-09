@@ -83,6 +83,9 @@ Route::middleware([
             Route::prefix("export")
                 ->name("export.")
                 ->group(__DIR__."/export.php");
+            Route::prefix("gallery")
+                ->name("gallery.")
+                ->group(__DIR__."/gallery.php");
         });
     });
 
