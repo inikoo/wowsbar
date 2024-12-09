@@ -223,7 +223,6 @@ const compiled_layout = computed(() => {
     const script = `<script> const information_2_sentence = ${JSON.stringify(props.announcementData?.fields?.text_transition_1?.multi_text || [])}; let index = 0; const sentenceElem = document.getElementById("wowsbar_sentence_multi_text"); setInterval(() => { if(sentenceElem) { sentenceElem.className = 'fade-out'; sentenceElem.addEventListener('animationend', () => { index = (index + 1) % information_2_sentence.length; sentenceElem.textContent = information_2_sentence[index]; sentenceElem.className = 'fade-in'; }, { once: true }); }}, 5000) <\/script>`
 
     return `
-    ${script}
     <div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="-tw-my-4">
             <div class="tw-flex tw-w-full tw-text-center tw-px-10">
@@ -232,7 +231,9 @@ const compiled_layout = computed(() => {
                 </p>
             </div>
         </div>
-    </div>`
+    </div>
+    ${script}
+    `
 })
 
 const openFieldWorkshop = inject('openFieldWorkshop')

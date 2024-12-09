@@ -358,7 +358,6 @@ const compiled_layout = computed(() => {
 
 
     return `
-    ${script}
     <div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
             ${props.announcementData?.fields.text_1.text}
@@ -392,7 +391,9 @@ const compiled_layout = computed(() => {
         </div>
 
         ${button_element}
-    </div>`
+    </div>
+    ${script}
+    `
 })
 
 const openFieldWorkshop = inject('openFieldWorkshop')
