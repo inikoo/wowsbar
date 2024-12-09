@@ -1,7 +1,8 @@
 <script setup lang='ts'>
 import Moveable from "vue3-moveable"
 import { propertiesToHTMLStyle, onDrag, styleToString } from '@/Composables/usePropertyWorkshop'
-import type { BlockProperties } from '@/Composables/usePropertyWorkshop'
+// import type { BlockProperties } from '@/Composables/usePropertyWorkshop'
+import type { BlockProperties, LinkProperties } from "@/types/Announcement"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'

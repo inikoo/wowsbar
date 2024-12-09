@@ -6,19 +6,39 @@ import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { computed, ref } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
-import { AnnouncementData } from "@/types/Announcement"
+import type { BlockProperties, LinkProperties } from "@/types/Announcement"
+
 import { inject } from "vue";
 library.add(faTimes)
 
 const props = defineProps<{
-    announcementData?: AnnouncementData
+    announcementData?: {
+        fields: {
+            text_1: {
+                text: string
+                block_properties: BlockProperties
+            }
+            button_1: {
+                link: LinkProperties
+                text: string
+                container: {
+                    properties: BlockProperties
+                }
+            }
+            countdown: {
+                date: string
+                expired_text?: string
+            }
+        }
+        container_properties: BlockProperties
+    }
     _parentComponent?: Element
     isEditable?: boolean
     isToSelectOnly?: boolean
 }>()
 
 const emits = defineEmits<{
-    (e: 'templateClicked',  template: AnnouncementData): void
+    (e: 'templateClicked',  template: typeof componentDefaultData): void
 }>()
 
 const _text_1 = ref(null)
@@ -312,12 +332,13 @@ const compiled_layout = computed(() => {
             ${props.announcementData?.fields?.text_1?.text}
         </div>` : ''
 
-    const button_element = props.announcementData?.fields?.button_1?.text ? `<button
+    const button_element = props.announcementData?.fields?.button_1?.text ? `<a
+        href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}"
         class="tw-inline-flex tw-items-center"
         style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.button_1?.container?.properties))}"
     >
         ${props.announcementData?.fields.button_1.text}
-    </button>` : ''
+    </a>` : ''
 
 
     return `<div id="#wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
@@ -362,6 +383,8 @@ defineExpose({
             <button
                 v-if="announcementData?.fields?.button_1?.text"
                 @click="() => (onClickClose(), openFieldWorkshop = 2)"
+                :href="announcementData?.fields.button_1.link.href || '#'"
+                :target="announcementData?.fields.button_1.link.target" 
                 v-html="announcementData?.fields.button_1.text"
                 class="inline-flex items-center announcement-component-editable"
                 :style="propertiesToHTMLStyle(announcementData?.fields.button_1?.container?.properties)"

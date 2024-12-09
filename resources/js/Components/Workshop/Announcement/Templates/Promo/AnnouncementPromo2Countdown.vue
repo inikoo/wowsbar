@@ -1,13 +1,13 @@
 <script setup lang='ts'>
 import Moveable from "vue3-moveable"
 import { propertiesToHTMLStyle, onDrag, styleToString } from '@/Composables/usePropertyWorkshop'
-import type { BlockProperties } from '@/Composables/usePropertyWorkshop'
+// import type { BlockProperties, LinkProperties } from '@/Composables/usePropertyWorkshop'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { computed, ref, onMounted, onBeforeUnmount } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
-import { AnnouncementData } from "@/types/Announcement"
+import type { BlockProperties, LinkProperties } from "@/types/Announcement"
 import { inject } from "vue"
 library.add(faTimes)
 
@@ -19,6 +19,7 @@ const props = defineProps<{
                 block_properties: BlockProperties
             }
             button_1: {
+                link: LinkProperties
                 text: string
                 container: {
                     properties: BlockProperties
@@ -350,9 +351,9 @@ const compiled_layout = computed(() => {
 
     const button_element = props.announcementData?.fields?.button_1?.text ? `
         <div class="tw-justify-self-end">
-            <div style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.button_1.container.properties))}">
+            <a href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.button_1.container.properties))}">
                 ${props.announcementData.fields.button_1.text}
-            </div>
+            </a>
         </div>` : ''
 
 
@@ -447,7 +448,7 @@ defineExpose({
         </div>
 
         <div @click="() => (openFieldWorkshop = 3)" class="announcement-component-editable justify-self-end">
-            <div v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
+            <div :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
             </div>
         </div>
         
