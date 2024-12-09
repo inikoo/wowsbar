@@ -3,6 +3,7 @@ import { trans } from 'laravel-vue-i18n'
 import PureMultiselect from '@/Components/Pure/PureMultiselect.vue'
 import { faBorderTop, faBorderLeft, faBorderBottom, faBorderRight, faBorderOuter } from "@fad"
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { useFontFamilyList } from '@/Composables/useFont'
 import { faLink, faUnlink } from "@fal"
 import { faExclamation } from "@fas"
 import ColorPicker from '@/Components/Utils/ColorPicker.vue'
@@ -15,58 +16,6 @@ interface Borderproperty {
 }
 
 const model = defineModel<Borderproperty>()
-
-const useFontFamilyList = [
-    {
-        label: "Inter",
-        value: "Inter, sans-serif",
-    },
-    {
-        label: "Arial",
-        value: "Arial, sans-serif",
-    },
-    {
-        label: "Comfortaa",
-        value: "'Comfortaa', sans-serif",
-    },
-    {
-        label: "Lobster",
-        value: "'Lobster', cursive",
-    },
-    {
-        label: "Laila",
-        value: "'Laila', sans-serif",
-    },
-    {
-        label: "Port Lligat Slab",
-        value: "'Port Lligat Slab', serif",
-    },
-    {
-        label: "Playfair",
-        value: "'Playfair Display', serif",
-    },
-    {
-        label: "Raleway",
-        value: "'Raleway', sans-serif",
-    },
-    {
-        label: "Roman Melikhov",
-        value: "'Roman Melikhov', serif",
-    },
-    {
-        label: "Source Sans Pro",
-        value: "'Source Sans Pro', sans-serif",
-    },
-    {
-        label: "Quicksand",
-        value: "'Quicksand', sans-serif",
-    },
-    {
-        label: "Times New Roman",
-        value: "'Times New Roman', serif",
-    },
-
-]
 
 </script>
 

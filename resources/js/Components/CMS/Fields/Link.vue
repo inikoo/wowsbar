@@ -32,8 +32,8 @@ const modelValue = defineModel()
 // ])
 
 const targets = ref([
-	{ label: "In this Page", value: "_self" },
-	{ label: "New Page", value: "_blank" },
+	{ label: trans("Replace page"), value: "_self" },
+	{ label: trans("New page"), value: "_blank" },
 ])
 
 // watch(localModel, (newValue) => {
@@ -104,7 +104,7 @@ const targets = ref([
 			<PureInput
 				:modelValue="get(modelValue, 'href', '')"
 				@update:modelValue="(e) => set(modelValue, 'href', e)"
-				placeholder="www.anotherwebsite.com/page"
+				placeholder="https://www.anotherwebsite.com/page"
 			/>
 			
 			<!-- <SelectQuery

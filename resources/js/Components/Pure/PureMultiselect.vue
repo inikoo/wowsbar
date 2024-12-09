@@ -36,7 +36,21 @@ const emits = defineEmits<{
             :searchable="!!searchable"
             :caret="caret ?? true"
         >
-            <!-- <template #singlelabel :option="{ option }">{{option}}</template> -->
+            <template #singlelabel="{ value }">
+                <slot name="label" :value />
+            </template>
+
+            <template #option="{option, isSelected, isPointed, search}">
+                <slot name="option" :option :isSelected="isSelected(option)" :isPointed="isPointed(option)" :search />
+            </template>
+
+            <template #afterlist>
+                <slot name="afterlist"></slot>
+            </template>
+
+            <template #spinner>
+                <slot name="spinner"></slot>
+            </template>
         </Multiselect>
     </div>
 </template>
