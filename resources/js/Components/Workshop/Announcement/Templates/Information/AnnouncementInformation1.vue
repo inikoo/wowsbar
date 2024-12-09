@@ -302,7 +302,7 @@ const componentDefaultData = {
 
 // Data: to publish in website
 const compiled_layout = computed(() => {
-    return `<div id="#wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+    return `<div id="wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.text_2.block_properties))}">
             ${props.announcementData.fields.text_2.text}
         </div>

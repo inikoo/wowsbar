@@ -224,7 +224,7 @@ const compiled_layout = computed(() => {
 
     return `
     ${script}
-    <div id="#wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+    <div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
         <div class="-tw-my-4">
             <div class="tw-flex tw-w-full tw-text-center tw-px-10">
                 <p id="wowsbar_sentence_multi_text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
