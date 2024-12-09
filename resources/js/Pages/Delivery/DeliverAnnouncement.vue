@@ -14,14 +14,15 @@ defineOptions({ layout: BlankLayout })
 
 
 onMounted(async () => {
-    const height = document.getElementById('announcement_delivery_component')?.clientHeight || 0; // or other method to get the height
+    const height = (document.body.clientHeight || 0) + 'px'; // or other method to get the height
     const dataSendToIframe = {
         height: height,
-        y: props.announcement_data?.container_properties?.position?.y 
+        // y: props.announcement_data?.container_properties?.position?.y 
     }
     console.log('send to Iframe', dataSendToIframe)
     window.parent.postMessage(dataSendToIframe, '*'); // Send height announcement to change height of iframe
     checkVisitTimes()
+    
 })
 
 provide('isOnPublishState', true)
@@ -45,13 +46,13 @@ console.log('withIframe', withIframe)
 
 <template>
     <div v-if="withIframe"
-        :style="propertiesToHTMLStyle(announcement_data.container_properties)"
+        :style="propertiesToHTMLStyle(announcement_data?.container_properties)"
     >
         <!-- <Promo1 :announcementData="announcement_data" /> -->
-        <!-- <pre>{{announcement_data.container_properties.position.y}}</pre> -->
+        <!-- <pre>{{announcement_data?.container_properties.position.y}}</pre> -->
         <component
             id="announcement_delivery_component"
-            :is="getAnnouncementComponent(announcement_data.template_code)"
+            :is="getAnnouncementComponent(announcement_data?.template_code)"
             :announcementData="announcement_data"
         />
     </div>
@@ -59,7 +60,7 @@ console.log('withIframe', withIframe)
     <component
         v-else
         id="announcement_delivery_component"
-        :is="getAnnouncementComponent(announcement_data.template_code)"
+        :is="getAnnouncementComponent(announcement_data?.template_code)"
         :announcementData="announcement_data"
     />
     
