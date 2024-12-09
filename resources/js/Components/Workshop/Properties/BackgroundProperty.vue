@@ -31,7 +31,7 @@ const isOpenGallery = ref(false)
 
 const routeList = {
     'imagesUploadedRoutes': {
-        'name': 'grp.org.shops.show.catalogue.products.images',
+        'name': 'customer.gallery.uploaded-images.index',
         'parameters': {
             'organisation': 'xxx',
             'shop': 'xxx',
@@ -93,7 +93,7 @@ const routeList = {
         <!-- Background Color -->
         <div class="flex items-center gap-x-4 h-min" >
             <ColorPickerWithGradient
-                :color="model.color"
+                :color="model?.color"
                 class="h-8 w-8 rounded-md border border-gray-300"
                 @changeColor="(newColor)=> model.color = newColor"
                 closeButton
@@ -102,7 +102,7 @@ const routeList = {
             <!-- <div v-else class="h-8 w-8 rounded-md border border-gray-300 shadow" :style="{background: model.color}" /> -->
 
             <PureRadio
-                :modelValue="get(model, 'type', 'color')"
+                :modelValue="get(model, 'type', '')"
                 @update:modelValue="e => set(model, 'type', e)"
                 :options="[{ name: 'color'}]"
                 by="name"
