@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<{
     loading?:boolean
     disabled?: boolean
     type?: string
+    buttonType?: 'button' | 'submit' | 'reset'
 }>(), {
     style: 'primary',
     size: 'm',
@@ -150,7 +151,8 @@ const getActionIcon = (icon: any) => {
 </script>
 
 <template>
-    <button type="button"
+    <button
+        :type="buttonType || 'button'"
         class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none tabular-nums"
         :class="[
             // icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',

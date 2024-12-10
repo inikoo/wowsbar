@@ -53,7 +53,7 @@ const submitResetPassword = () => {
     })
 }
 
-const submit = () => {
+const submit = async () => {
     form.post(route('public.login'), {
         onStart: () => {
             isLoading.value = true
@@ -114,7 +114,7 @@ const condition: Ref<string | boolean> = ref(false)
                 </div>
 
                 <Button
-                    type="submit"
+                    buttonType="submit"
                     id="submit"
                     :loading="isLoading"
                     full
