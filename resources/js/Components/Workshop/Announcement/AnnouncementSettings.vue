@@ -229,11 +229,11 @@ const settingsUser = ref({
                 </div>
 
                 <!-- Section: Show URL list -->
-                <div v-if="announcementDataSettings?.target_pages?.specific?.filter(item => item.will === 'show').length">
-                    <div>Show ({{ announcementDataSettings.target_pages.specific.filter(item => item.will === 'show').length }}):</div>
-                    <TransitionGroup name="list" tag="ul" class="bg-slate-200 px-2 py-2 rounded">
+                <div>
+                    <div>Show ({{ announcementDataSettings.target_pages.specific.filter(item => item.will === 'show').length || 0 }}):</div>
+                    <TransitionGroup v-if="announcementDataSettings.target_pages.specific.length" name="list" tag="ul" class="bg-slate-200 px-2 py-2 rounded">
                         <template v-for="(spec, specIndex) in announcementDataSettings.target_pages.specific" :key="`${spec.will}${spec.when}${spec.url}`">
-                            <li v-if="spec.will === 'show'" class="list-disc list-inside">
+                            <li v-if="true || spec.will === 'show'" class="list-disc list-inside">
                                 <template v-if="spec.when === 'contain'">If <span class="italic">contain</span> <span class="font-bold">{{ spec.url }}</span> in the <Tag label="URL" /></template>
                                 <template v-if="spec.when === 'matches'">If <Tag label="URL" /><span class="italic">matches</span> in <span class="font-bold">{{ spec.url }}</span> </template>
                                 <div @click="() => onDeleteSpecific(specIndex)" class="px-1 py-px inline cursor-pointer text-red-300 hover:text-red-500">
@@ -242,6 +242,18 @@ const settingsUser = ref({
                             </li>
                         </template>
                     </TransitionGroup>
+
+                    <div v-else class="bg-slate-200 px-4 py-2 rounded text-gray-500 italic">
+                        <li class="list-none list-inside">
+                            <!-- <template v-if="spec.when === 'contain'">If <span class="italic">contain</span> <span class="font-bold">{{ spec.url }}</span> in the <Tag label="URL" /></template>
+                            <template v-if="spec.when === 'matches'">If <Tag label="URL" /><span class="italic">matches</span> in <span class="font-bold">{{ spec.url }}</span> </template>
+                            <div @click="() => onDeleteSpecific(specIndex)" class="px-1 py-px inline cursor-pointer text-red-300 hover:text-red-500">
+                                <FontAwesomeIcon icon='fal fa-times' class='' fixed-width aria-hidden='true' />
+                            </div> -->
+                            {{ trans("No selected page yet") }}
+                        </li>
+                    </div>
+
                 </div>
 
                 <!-- Section: Hide URL list -->
@@ -343,7 +355,7 @@ const settingsUser = ref({
                         <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
                     </div>
                     
-                    <div v-if="true" class="flex items-center gap-x-3">
+                    <div v-if="false" class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
                             @input="(val: string) => announcementData.schedule_at = new Date(nexterday)"
@@ -390,7 +402,7 @@ const settingsUser = ref({
                         <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
                     </div>
                     
-                    <div v-if="true" class="flex items-center gap-x-3">
+                    <div v-if="false" class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
                             @input="(val: string) => announcementData.schedule_finish_at = new Date(nexterday)"
