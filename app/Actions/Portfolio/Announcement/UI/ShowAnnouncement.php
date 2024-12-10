@@ -144,6 +144,13 @@ class ShowAnnouncement extends InertiaAction
                             'announcement'     => $announcement->id
                         ],
                         'method'    => 'patch'
+                    ],
+                    'upload_image_route'     => [
+                        'name'          => 'customer.models.portfolio-website.announcement.upload-images.store',
+                        'parameters'    => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id
+                        ],
+                        'method'    => 'post'
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,

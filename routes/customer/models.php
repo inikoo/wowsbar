@@ -17,6 +17,7 @@ use App\Actions\Portfolio\Announcement\StartAnnouncement;
 use App\Actions\Portfolio\Announcement\StoreAnnouncement;
 use App\Actions\Portfolio\Announcement\ToggleAnnouncement;
 use App\Actions\Portfolio\Announcement\UpdateAnnouncement;
+use App\Actions\Portfolio\Announcement\UploadImagesToAnnouncement;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
 use App\Actions\Portfolio\Banner\PublishBanner;
@@ -71,6 +72,7 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
         });
 
         Route::prefix('announcements')->name('announcement.')->group(function () {
+            Route::post('upload-images', UploadImagesToAnnouncement::class)->name('upload-images.store');
             Route::post('/', StoreAnnouncement::class)->name('store');
             Route::patch('{announcement}/publish', PublishAnnouncement::class)->name('publish');
             Route::patch('{announcement}', UpdateAnnouncement::class)->name('update');
