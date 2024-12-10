@@ -17,12 +17,14 @@ use Spatie\MediaLibrary\HasMedia;
  * @property int|null $screenshot_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $category
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read Media|null $screenshot
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate whereCategory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AnnouncementTemplate whereId($value)
