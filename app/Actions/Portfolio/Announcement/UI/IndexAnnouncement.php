@@ -64,6 +64,7 @@ class IndexAnnouncement extends InertiaAction
         $queryBuilder = QueryBuilder::for($parent->announcements());
 
         return $queryBuilder
+            ->allowedSorts(['created_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
