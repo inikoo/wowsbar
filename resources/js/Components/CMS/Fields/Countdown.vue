@@ -6,7 +6,7 @@ import PureInput from '@/Components/Pure/PureInput.vue'
 import { get, set } from 'lodash'
 
 const Countdown = {
-    date: new Date(),
+    date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
     expired_text: ''
 }
 

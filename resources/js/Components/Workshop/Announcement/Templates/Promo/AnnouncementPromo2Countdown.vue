@@ -404,8 +404,15 @@ const compiled_layout = computed(() => {
 
 const openFieldWorkshop = inject('openFieldWorkshop')
 
-const initialTime = 1000 * 60 * 60 * 24 * 5 // 5 days
-const endTime = ref(new Date(props.announcementData?.fields?.countdown?.date).getTime() + initialTime)
+const initialTime = 1000 * 60 * 60 * 24 * 3 // 3 days
+// const endTime = ref(new Date(props.announcementData?.fields?.countdown?.date).getTime() + initialTime)
+const compTimeLeft = computed(() => {
+    if (props.announcementData?.fields?.countdown?.date) {
+        return new Date(props.announcementData?.fields?.countdown?.date).getTime()
+    } else {
+        return new Date().getTime() + initialTime
+    }
+})
 
 const days = ref('00')
 const hours = ref('00')
@@ -421,7 +428,7 @@ const parseTime = (time) => ({
 
 const updateCountdown = () => {
     const now = new Date().getTime()
-    const timeLeft = endTime.value - now
+    const timeLeft = compTimeLeft.value - now
 
     if (timeLeft <= 0) {
         clearInterval(timer)
