@@ -5,7 +5,7 @@ import { propertiesToHTMLStyle, onDrag, styleToString } from '@/Composables/useP
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { computed, ref, onMounted, onBeforeUnmount } from "vue"
+import { computed, ref, onMounted, onBeforeUnmount, onUnmounted } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
 import type { BlockProperties, LinkProperties } from "@/types/Announcement"
 import { inject } from "vue"
@@ -86,6 +86,10 @@ const fieldSideEditor = [
             tooltip: "Time countdown"
         },
         replaceForm: [
+            // {
+            //     key: ['fields', 'countdown', 'block_properties'],
+            //     type: "background",
+            // },
             {
                 key: ['fields', 'countdown'],
                 type: "countdown",
@@ -204,11 +208,12 @@ const defaultContainerData = {
         "fontFamily": "'Raleway', sans-serif"
     },
     "isCenterHorizontal": false,
-    "additional_style": {
-        display: "grid",
-        "grid-template-columns": "repeat(3, 1fr)",
-        "align-items": "center"
-    }
+    // "additional_style": {
+    //     display: "grid",
+    //     "grid-template-columns": "repeat(3, 1fr)",
+    //     "align-items": "center",
+    //     "column-gap": "0.5rem"
+    // }
 }
 
 // Data: Text, Button, Close Button
@@ -398,6 +403,58 @@ const compiled_layout = computed(() => {
 
 const openFieldWorkshop = inject('openFieldWorkshop')
 
+const initialTime = 1000 * 60 * 60 * 24 * 5 // 5 days
+const endTime = ref(new Date(props.announcementData?.fields?.countdown?.date).getTime() + initialTime)
+
+const days = ref('00')
+const hours = ref('00')
+const minutes = ref('00')
+const seconds = ref('00')
+
+let timer = null
+
+const parseTime = (time) => ({
+    tens: Math.floor(time / 10),
+    ones: time % 10,
+})
+
+const updateCountdown = () => {
+    const now = new Date().getTime()
+    const timeLeft = endTime.value - now
+
+    if (timeLeft <= 0) {
+        clearInterval(timer)
+        days.value = '00'
+        hours.value = '00'
+        minutes.value = '00'
+        seconds.value = '00'
+        return
+    }
+
+    const parsedDays = parseTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24)))
+    const parsedHours = parseTime(
+        Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    )
+    const parsedMinutes = parseTime(
+        Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
+    )
+    const parsedSeconds = parseTime(Math.floor((timeLeft % (1000 * 60)) / 1000))
+
+    days.value = `${parsedDays.tens}${parsedDays.ones}`
+    hours.value = `${parsedHours.tens}${parsedHours.ones}`
+    minutes.value = `${parsedMinutes.tens}${parsedMinutes.ones}`
+    seconds.value = `${parsedSeconds.tens}${parsedSeconds.ones}`
+}
+
+onMounted(() => {
+    updateCountdown() // Update immediately
+    timer = setInterval(updateCountdown, 1000)
+})
+
+onUnmounted(() => {
+    clearInterval(timer) // Clean up on component unmount
+});
+
 defineExpose({
     compiled_layout,
     fieldSideEditor
@@ -413,47 +470,49 @@ defineExpose({
 </script>
 
 <template>
-    <template v-if="!isToSelectOnly">
-        <div @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
+    <div
+        v-if="!isToSelectOnly"
+        :style="propertiesToHTMLStyle(announcementData?.container_properties)"
+    >
+        <div class="col-span-3 grid grid-cols-1 md:grid-cols-3 justify-center gap-y-2 items-center">
+            <div @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable text-center" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
             
-        </div>
-
-        <div @click="() => (openFieldWorkshop = 2)" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto mt-1">
-            <div class="flex flex-col items-center">
-                <div id="countdown-days" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    06
-                </div>
-                <div class="text-xs opacity-60">Days</div>
             </div>
 
-            <div class="flex flex-col items-center">
-                <div id="countdown-hours" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    23
+            <div @click="() => (openFieldWorkshop = 2)" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
+                <div class="flex flex-col items-center">
+                    <div id="countdown-days" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
+                        {{days}}
+                    </div>
+                    <div class="text-xs opacity-60">Days</div>
                 </div>
-                <div class="text-xs opacity-60">Hours</div>
-            </div>
-
-            <div class="flex flex-col items-center">
-                <div id="countdown-minutes" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    59
+                <div class="flex flex-col items-center">
+                    <div id="countdown-hours" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
+                        {{hours}}
+                    </div>
+                    <div class="text-xs opacity-60">Hours</div>
                 </div>
-                <div class="text-xs opacity-60">Minutes</div>
-            </div>
-
-            <div class="flex flex-col items-center">
-                <div id="countdown-seconds" class="text-base bg-white w-fit border border-gray-200 flex justify-center overflow-hidden relative rounded-md py-1 px-2 tabular-nums">
-                    00
+                <div class="flex flex-col items-center">
+                    <div id="countdown-minutes" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
+                        {{minutes}}
+                    </div>
+                    <div class="text-xs opacity-60">Minutes</div>
                 </div>
-                <div class="text-xs opacity-60">Seconds</div>
+                <div class="flex flex-col items-center">
+                    <div id="countdown-seconds" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
+                        {{seconds}}
+                    </div>
+                    <div class="text-xs opacity-60">Seconds</div>
+                </div>
             </div>
-        </div>
-
-        <div @click="() => (openFieldWorkshop = 3)" class="announcement-component-editable justify-self-end">
-            <div :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
+            
+            <div @click="() => (openFieldWorkshop = 3)" class="announcement-component-editable justify-self-center md:justify-self-end">
+                <div :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
+                </div>
             </div>
         </div>
         
-    </template>
+    </div>
 
     <div v-else @click="() => emits('templateClicked', componentDefaultData)" class="inset-0 absolute">
     </div>

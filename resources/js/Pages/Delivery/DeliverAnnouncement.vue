@@ -46,20 +46,17 @@ console.log('withIframe', withIframe)
 </script>
 
 <template>
-    <div v-if="withIframe"
-        :style="propertiesToHTMLStyle(announcement_data?.container_properties)"
+    <!-- <div v-if="withIframe"
+        :xxxstyle="propertiesToHTMLStyle(announcement_data?.container_properties)"
     >
-        <!-- <Promo1 :announcementData="announcement_data" /> -->
-        <!-- <pre>{{announcement_data?.container_properties.position.y}}</pre> -->
         <component
             id="announcement_delivery_component"
             :is="getAnnouncementComponent(announcement_data?.template_code)"
             :announcementData="announcement_data"
         />
-    </div>
+    </div> -->
 
     <component
-        v-else
         id="announcement_delivery_component"
         :is="getAnnouncementComponent(announcement_data?.template_code)"
         :announcementData="announcement_data"

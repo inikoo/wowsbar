@@ -197,11 +197,11 @@ const defaultContainerData = {
         "fontFamily": "sans-serif"
     },
     "isCenterHorizontal": true,
-    "additional_style": {
-        "display": "flex",
-        "align-items": "center",
-        "justify-content": "space-between"
-    }
+    // "additional_style": {
+    //     "display": "flex",
+    //     "align-items": "center",
+    //     "justify-content": "space-between"
+    // }
 }
 
 // Data: Fields (default on pick template)
@@ -327,11 +327,16 @@ defineExpose({
     compiled_layout,
     fieldSideEditor
 })
+
 </script>
 
 <template>
-    <!-- <div ref="_parentComponent" class="relative isolate flex items-center gap-x-6 bg-gray-50 px-6 py-2.5 sm:px-3.5 transition-all" :style="propertiesToHTMLStyle(announcementData.container_properties, { toRemove: styleToRemove})"> -->
-        <template v-if="!isToSelectOnly">
+    <div
+        v-if="!isToSelectOnly"
+        class="relative isolate flex flex-wrap justify-center md:justify-between items-center gap-x-6 px-6 sm:px-3.5 transition-all"
+        :style="propertiesToHTMLStyle(announcementData.container_properties)"
+    >
+        <!-- <template> -->
             <div
                 ref="_text_2"
                 @click="() => openFieldWorkshop = 2"
@@ -392,8 +397,9 @@ defineExpose({
                 :throttleDragRotate="0"
                 @drag="(e) => onDrag(e, announcementData.fields.close_button.block_properties, _parentComponent)"
             /> -->
-        </template>
-    <!-- </div> -->
+        <!-- </template> -->
+    </div>
+
     <div
         v-else @click="() => emits('templateClicked', componentDefaultData)"
         class="inset-0 absolute"
