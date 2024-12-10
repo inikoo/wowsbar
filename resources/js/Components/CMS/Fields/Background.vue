@@ -8,9 +8,9 @@ const props = defineProps<{
     uploadImageRoute?: routeType
 }>()
 
-const compModel = computed(() => {
-    return JSON.stringify(model.value)
-})
+// const compModel = computed(() => {
+//     return JSON.stringify(model.value)
+// })
 const model = defineModel()
 
 // const emit = defineEmits();

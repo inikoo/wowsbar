@@ -73,13 +73,13 @@ const onSubmitSelectedImages = (images: ImageData[]) => {
     <div class="flex items-center justify-between gap-x-3 flex-wrap px-6 w-full relative">
         <!-- Background image -->
         <div class="flex items-center gap-x-2 py-1" >
-            <div class="group/background rounded-md overflow-hidden relative h-12 w-12 aspect-square ">
+            <div class="group/background rounded-md overflow-hidden relative h-12 w-12 aspect-square shadow ">
                 <Image
                     :src="get(model, 'image', undefined)"
                     :alt="trans('Background image')"
                     :imageCover="true"
                     @click="true"
-                    class="cursor-pointer "
+                    class="cursor-pointer"
                 />
 
                 <div @click="() => isOpenGallery = true" class="hidden group-hover/background:flex absolute inset-0 bg-black/20 items-center justify-center cursor-pointer">
