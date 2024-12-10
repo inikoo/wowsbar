@@ -313,13 +313,16 @@ defineExpose({
 </script>
 
 <template>
-    <template v-if="!isToSelectOnly">
+    <div
+        v-if="!isToSelectOnly"
+        :style="propertiesToHTMLStyle(announcementData?.container_properties)"
+    >
         <div ref="__multitext_container" @click="() => openFieldWorkshop = 1" class="announcement-component-editable -my-4">
             <div class="flex w-full text-center px-10">
                 <p id="wowsbar_sentence_multi_text" v-html="announcementData?.fields?.text_transition_1?.multi_text?.[0] || ''" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></p>
             </div>
         </div>
-    </template>
+    </div>
 
     <div v-else @click="() => emits('templateClicked', componentDefaultData)" class="inset-0 absolute">
     </div>

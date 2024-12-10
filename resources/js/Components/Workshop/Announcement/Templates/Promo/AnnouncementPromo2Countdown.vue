@@ -33,7 +33,7 @@ const props = defineProps<{
         container_properties: BlockProperties
     }
     _parentComponent?: Element
-    isEditable?: boolean
+    isEditable?: boolean  // true if in workshop
     isToSelectOnly?: boolean
 }>()
 
@@ -506,9 +506,10 @@ defineExpose({
                 </div>
             </div>
             
-            <div @click="() => (openFieldWorkshop = 3)" class="announcement-component-editable justify-self-center md:justify-self-end">
-                <div :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
-                </div>
+            <div class="relative justify-self-center md:justify-self-end">
+                <div v-if="isEditable"  @click="() => (openFieldWorkshop = 3)" class="absolute inset-0 announcement-component-editable " />
+                <a :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
+                </a>
             </div>
         </div>
         
