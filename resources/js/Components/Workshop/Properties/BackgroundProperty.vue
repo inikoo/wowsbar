@@ -20,9 +20,7 @@ library.add(faPencil)
 interface BackgroundProperty {
     type: string
     color: string
-    image: {
-        original: string
-    }
+    image: string
 }
 
 const model = defineModel<BackgroundProperty>()
@@ -63,7 +61,7 @@ const routeList = {
     }
 }
 const onSubmitSelectedImages = (images: ImageData[]) => {
-    set(model.value, ['image'], images[0]?.source)
+    set(model.value, ['image'], images[0]?.source?.original)
     isOpenGallery.value = false
 }
 
@@ -75,11 +73,10 @@ const onSubmitSelectedImages = (images: ImageData[]) => {
         <div class="flex items-center gap-x-2 py-1" >
             <div class="group/background rounded-md overflow-hidden relative h-12 w-12 aspect-square shadow ">
                 <Image
-                    :src="get(model, 'image', undefined)"
+                    :src="{ 'original': get(model, 'image', '') }"
                     :alt="trans('Background image')"
                     :imageCover="true"
                     @click="true"
-                    class="cursor-pointer"
                 />
 
                 <div @click="() => isOpenGallery = true" class="hidden group-hover/background:flex absolute inset-0 bg-black/20 items-center justify-center cursor-pointer">

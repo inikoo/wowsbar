@@ -181,12 +181,12 @@ const defaultContainerData = {
         "fontFamily": "Raleway"
     },
     "isCenterHorizontal": false,
-    "additional_style": {
-        display: "flex",
-        "justify-content": "center",
-        "align-items": "center",
-        "overflow": "hidden"
-    }
+    // "additional_style": {
+    //     display: "flex",
+    //     "justify-content": "center",
+    //     "align-items": "center",
+    //     "overflow": "hidden"
+    // }
 }
 
 // Data: Text, Button, Close Button
@@ -315,6 +315,7 @@ defineExpose({
 <template>
     <div
         v-if="!isToSelectOnly"
+        class="flex justify-center items-center overflow-hidden"
         :style="propertiesToHTMLStyle(announcementData?.container_properties)"
     >
         <div ref="__multitext_container" @click="() => openFieldWorkshop = 1" class="announcement-component-editable -my-4">

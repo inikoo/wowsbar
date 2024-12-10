@@ -34,7 +34,7 @@ export const propertiesToHTMLStyle = (properties?: BlockProperties, options?: { 
         marginRight: properties?.isCenterHorizontal ? 'auto' : (properties?.margin?.right?.value || 0) + properties?.margin?.unit,
         marginLeft: properties?.isCenterHorizontal ? 'auto' : (properties?.margin?.left?.value || 0) + properties?.margin?.unit,
 
-        background: properties?.background?.type === 'color' ? properties?.background?.color : properties?.background?.image,
+        background: properties?.background?.type === 'color' ? properties?.background?.color : `url('${properties?.background?.image}')`,
 
         borderTop: `${properties?.border?.top?.value || 0}${properties?.border?.unit || 'px'} solid ${properties?.border?.color}`,
         borderBottom: `${properties?.border?.bottom?.value || 0}${properties?.border?.unit || 'px'} solid ${properties?.border?.color}`,
