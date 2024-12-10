@@ -14,6 +14,7 @@ defineOptions({ layout: BlankLayout })
 
 
 onMounted(async () => {
+    console.log('document.body.clientHeight', document.body.clientHeight)
     const height = (document.body.clientHeight || 0) + 'px'; // or other method to get the height
     const dataSendToIframe = {
         height: height,
