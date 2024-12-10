@@ -33,8 +33,11 @@ class ShowCompiledAnnouncement
                   ", [$targetPage])
                             ->orWhere('published_settings->target_pages->type', 'all');
                     });
-                })->whereJsonContains('published_settings->target_users->auth_state', $targetUser)
-                ->first();
+                })->first();
+
+            if (Arr::get($selectedAnnouncement->published_settings, 'target_users')['auth_state'] != 'all') {
+                $selectedAnnouncement = $selectedAnnouncement->whereJsonContains('published_settings->target_users->auth_state', $targetUser)->first();
+            }
 
             return $selectedAnnouncement;
         }
