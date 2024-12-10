@@ -15,65 +15,43 @@ class ShowCompiledAnnouncement
 {
     use AsController;
 
-    public function handle(ActionRequest $request): ?Announcement
+    public function handle(PortfolioWebsite $portfolioWebsite, ?string $targetPage, string $targetUser): ?Announcement
     {
-        $referrer = $request->get('domain');
+        $announcements = GetActiveAnnouncement::run($portfolioWebsite);
+
+        foreach ($announcements as $announcement) {
+            $selectedAnnouncement = $announcement
+                ->where(function ($query) use ($targetPage) {
+                    $query->where('status', AnnouncementStatusEnum::ACTIVE->value)
+                    ->where(function ($subQuery) use ($targetPage) {
+                        $subQuery->whereRaw("
+                      EXISTS (
+                          SELECT 1
+                          FROM jsonb_array_elements(published_settings->'target_pages'->'specific') AS specific
+                          WHERE specific->>'url' = ?
+                      )
+                  ", [$targetPage])
+                            ->orWhere('published_settings->target_pages->type', 'all');
+                    });
+                })->whereJsonContains('published_settings->target_users->auth_state', $targetUser)
+                ->first();
+
+            dd($selectedAnnouncement);
+        }
+
+        return $announcements->where()->first();
+    }
+
+    public function asController(ActionRequest $request): Announcement
+    {
+        $domain   = $request->get('domain');
         $loggedIn = $request->get('logged_in');
-        $origin   = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?([^\/]+).*/', '$3', $referrer) : null;
+        $loggedIn = (string) $loggedIn == 'true' ? 'login' : 'logout';
 
-        $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcement       =$portfolioWebsite->announcements()->where('status', AnnouncementStatusEnum::ACTIVE->value)->first();
-        return $announcement;
+        $portfolioWebsite = GetPortfolioWebsiteFromDomain::run($domain);
+        $targetPath       = GetSelectedPathFromDomain::run($domain);
 
-        $portfolioWebsite   = PortfolioWebsite::where('url', 'LIKE', '%' . $origin . '%')->firstOrFail();
-        $announcementsQuery = $portfolioWebsite->announcements()
-            ->where('status', AnnouncementStatusEnum::ACTIVE->value);
-
-        $path = $referrer ? preg_replace('/^(https?:\/\/)?(www\.)?[^\/]+(\/.*)?$/', '$3', $referrer) : null;
-        $path = $path === '' ? null : $path;
-
-        $announcements = $announcementsQuery->get();
-
-        $loggedInState = match (true) {
-            is_null($loggedIn)                                                              => null,
-            filter_var($loggedIn, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === true => 'login',
-            default                                                                         => 'logout',
-        };
-
-        return $announcements->map(function ($announcement) use ($referrer, $path, $loggedIn, $loggedInState) {
-            $targetType    = Arr::get($announcement->settings, 'target_pages.type');
-            $specificPages = collect(Arr::get($announcement->settings, 'target_pages.specific', []));
-            $targetUser    = Arr::get($announcement->settings, 'target_users.auth_state');
-
-            if ($targetUser !== "all") {
-                $announcementAuth = $announcement->whereJsonContains('settings->target_users->auth_state', $loggedInState)->first();
-            }
-
-            if (! blank($specificPages)) {
-                $matchingPage = $specificPages->first(function ($page) use ($path) {
-                    return match ($page['when']) {
-                        'contain' => str_contains($path, $page['url']),
-                        'exact'   => $path === $page['url'],
-                        default   => false,
-                    };
-                });
-
-                if ($matchingPage) {
-                    return $announcementAuth;
-                }
-            } else {
-                $path = $path == "/" ? null : $path;
-                if ($targetType === 'all' && is_null($path)) {
-                    return $announcementAuth;
-                }
-            }
-            $targetType    = Arr::get($announcement->settings, 'target_pages.type');
-            if ($targetType === 'specific') {
-                $announcement = $announcementAuth->whereJsonContains('settings->target_pages->specific', $loggedInState)->first();
-            }
-
-            return $announcement;
-        })->whereNotNull()->first();
+        return $this->handle($portfolioWebsite, $targetPath, $loggedIn);
     }
 
     public function jsonResponse(?Announcement $announcement): JsonResponse|\stdClass
@@ -87,7 +65,7 @@ class ShowCompiledAnnouncement
             'fields'               => $announcement->fields,
             'compiled_layout'      => $announcement->compiled_layout,
             'container_properties' => $announcement->container_properties,
-            'restrictions'         => $this->hasRestrictions($announcement->settings)
+            'restrictions'         => $this->hasRestrictions($announcement->published_settings)
         ]);
     }
 
