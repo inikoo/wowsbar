@@ -36,13 +36,13 @@ class ShowCompiledAnnouncement
                 })->whereJsonContains('published_settings->target_users->auth_state', $targetUser)
                 ->first();
 
-            dd($selectedAnnouncement);
+            return $selectedAnnouncement;
         }
 
-        return $announcements->where()->first();
+        return $announcements->first();
     }
 
-    public function asController(ActionRequest $request): Announcement
+    public function asController(ActionRequest $request): ?Announcement
     {
         $domain   = $request->get('domain');
         $loggedIn = $request->get('logged_in');
