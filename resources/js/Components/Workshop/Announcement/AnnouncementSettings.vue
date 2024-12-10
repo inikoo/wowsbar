@@ -158,7 +158,7 @@ const settingsUser = ref({
                 <label for="pages-all"
                     class="cursor-pointer block font-medium ">{{ trans("All pages") }}</label>
             </div>
-            <div v-if="false" class="flex items-center gap-x-3">
+            <div v-if="true" class="flex items-center gap-x-3">
                 <input
                     value="specific"
                     @input="(val: string) => set(announcementDataSettings, 'target_pages.type', val.target.value)"
@@ -175,7 +175,7 @@ const settingsUser = ref({
             </div>
 
             <!-- Section: Target specific -->
-            <div v-if="false && announcementDataSettings?.target_pages?.type == 'specific'" class="mt-2 space-y-4">
+            <div v-if="true && announcementDataSettings?.target_pages?.type == 'specific'" class="mt-2 space-y-4">
                 <div class="flex gap-x-4 items-center">
                     <div>The announcement should</div>
                     <div class="w-24">
@@ -286,7 +286,7 @@ const settingsUser = ref({
                 </label>
             </div>
             
-            <!-- <div class="flex items-center gap-x-3">
+            <div class="flex items-center gap-x-3">
                 <input
                     value="login"
                     @input="(val: string) => set(announcementDataSettings, 'target_users.auth_state', val.target.value)"
@@ -315,7 +315,7 @@ const settingsUser = ref({
                     {{ trans("Visitor logged out") }}
                 </label>
 
-            </div> -->
+            </div>
         </div>
     </fieldset>
 
@@ -343,7 +343,7 @@ const settingsUser = ref({
                         <label for="inp-publish-now" class="block text-sm/6 cursor-pointer ">Publish now</label>
                     </div>
                     
-                    <div v-if="false" class="flex items-center gap-x-3">
+                    <div v-if="true" class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
                             @input="(val: string) => announcementData.schedule_at = new Date(nexterday)"
@@ -390,7 +390,7 @@ const settingsUser = ref({
                         <label for="inp-finish-unlimited" class="block text-sm/6 font-medium cursor-pointer ">Until I deactivated</label>
                     </div>
                     
-                    <div v-if="false" class="flex items-center gap-x-3">
+                    <div v-if="true" class="flex items-center gap-x-3">
                         <input
                             value="scheduled"
                             @input="(val: string) => announcementData.schedule_finish_at = new Date(nexterday)"

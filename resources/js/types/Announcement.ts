@@ -18,6 +18,7 @@ export interface AnnouncementData {
     fields: AnnouncementFields
     container_properties: BlockProperties
     compiled_layout?: string
+    template_code: string
 }
 
 

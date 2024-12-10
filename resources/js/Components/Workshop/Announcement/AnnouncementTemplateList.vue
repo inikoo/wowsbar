@@ -156,7 +156,7 @@ onMounted(() => {
         </div>
     </div>
 
-    <div class="h-full flex gap-x-8 border rounded-xl overflow-hidden">
+    <div class="h-[90%] flex gap-x-8 border rounded-xl overflow-hidden">
         <nav class="w-1/5 bg-gray-100 py-4" aria-label="Sidebar">
             <ul v-if="!isLoadingFetch" role="list" class="space-y-1">
                 <li
@@ -166,8 +166,8 @@ onMounted(() => {
                     :class="[category === selectedCategory ? 'bg-white text-indigo-600' : 'hover:bg-white/50 hover:text-indigo-600']"
                     class="capitalize group flex items-center gap-x-2 p-3 text-sm font-semibold cursor-pointer"
                 >
-                    <FontAwesomeIcon v-if="category.icon" :icon='category.icon' class='text-sm text-gray-400' fixed-width aria-hidden='true' />
                     {{ category }}
+                    <FontAwesomeIcon v-if="category.icon" :icon='category.icon' class='text-sm text-gray-400' fixed-width aria-hidden='true' />
                 </li>
             </ul>
 
@@ -179,8 +179,8 @@ onMounted(() => {
         </nav>
 
 
-        <section class="h-full mx-auto w-full pr-8 overflow-y-auto pt-4 pb-20">
-            <div class="relative grid gap-y-8 gap-x-4 overflow-y-auto overflow-x-hidden">
+        <section class="h-full mx-auto w-full py-4">
+            <div class="relative grid gap-y-8 gap-x-4 pr-8 h-full overflow-y-auto overflow-x-hidden">
                 <template v-if="!isLoadingFetch">
                     <template v-if="compFilteredAnnouncementList?.length">
                         <div v-for="announcement in compFilteredAnnouncementList"
@@ -193,7 +193,7 @@ onMounted(() => {
                                 <div v-if="announcement.icon" class="flex items-center justify-center">
                                     <FontAwesomeIcon :icon='announcement.icon' class='' fixed-width aria-hidden='true' />
                                 </div>
-                                <h3 class="text-sm">
+                                <h3 class="text-sm" :class="announcement.code === announcementData?.template_code ? 'text-indigo-600' : ''">
                                     {{ announcement.code }} <span v-if="announcement.code === announcementData?.template_code">(active)</span>
                                 </h3>
                             </div>

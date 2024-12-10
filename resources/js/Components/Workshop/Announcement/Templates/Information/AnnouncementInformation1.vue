@@ -11,7 +11,7 @@ import { closeIcon } from '@/Composables/useAnnouncement'
 library.add(faTimes)
 
 const props = defineProps<{
-    announcementData: {
+    announcementData?: {
         fields: {
             text_1: {
                 text: string
@@ -303,12 +303,12 @@ const componentDefaultData = {
 // Data: to publish in website
 const compiled_layout = computed(() => {
     return `<div id="wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
-        <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.text_2.block_properties))}">
-            ${props.announcementData.fields.text_2.text}
+        <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_2.block_properties))}">
+            ${props.announcementData?.fields.text_2.text}
         </div>
         
-        <div class="tw-whitespace-nowrap" v-html="" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.text_1.block_properties))}">
-            ${props.announcementData.fields.text_1.text}
+        <div class="tw-whitespace-nowrap" v-html="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
+            ${props.announcementData?.fields.text_1.text}
         </div>
     </div>`
 })
@@ -334,15 +334,15 @@ defineExpose({
     <div
         v-if="!isToSelectOnly"
         class="relative isolate flex flex-wrap justify-center md:justify-between items-center gap-x-6 px-6 sm:px-3.5 transition-all"
-        :style="propertiesToHTMLStyle(announcementData.container_properties)"
+        :style="propertiesToHTMLStyle(announcementData?.container_properties)"
     >
         <!-- <template> -->
             <div
                 ref="_text_2"
                 @click="() => openFieldWorkshop = 2"
                 class="announcement-component-editable"
-                v-html="announcementData.fields.text_2.text"
-                :style="propertiesToHTMLStyle(announcementData.fields.text_2.block_properties)"
+                v-html="announcementData?.fields.text_2.text"
+                :style="propertiesToHTMLStyle(announcementData?.fields.text_2.block_properties)"
             >
             </div>
             
@@ -350,8 +350,8 @@ defineExpose({
                 ref="_text_1"
                 @click="() => openFieldWorkshop = 1"
                 class="announcement-component-editable"
-                v-html="announcementData.fields.text_1.text"
-                :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)"
+                v-html="announcementData?.fields.text_1.text"
+                :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties)"
             >
             
             </div>
