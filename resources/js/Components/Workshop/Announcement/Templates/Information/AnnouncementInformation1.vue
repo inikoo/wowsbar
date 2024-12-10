@@ -340,7 +340,7 @@ defineExpose({
             <div
                 ref="_text_2"
                 @click="() => openFieldWorkshop = 2"
-                class="announcement-component-editable whitespace-nowrap"
+                class="announcement-component-editable"
                 v-html="announcementData.fields.text_2.text"
                 :style="propertiesToHTMLStyle(announcementData.fields.text_2.block_properties)"
             >
@@ -349,7 +349,7 @@ defineExpose({
             <div
                 ref="_text_1"
                 @click="() => openFieldWorkshop = 1"
-                class="announcement-component-editable whitespace-nowrap"
+                class="announcement-component-editable"
                 v-html="announcementData.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData.fields.text_1.block_properties)"
             >

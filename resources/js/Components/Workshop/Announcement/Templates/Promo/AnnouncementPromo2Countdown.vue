@@ -475,7 +475,7 @@ defineExpose({
         :style="propertiesToHTMLStyle(announcementData?.container_properties)"
     >
         <div class="col-span-3 grid grid-cols-1 md:grid-cols-3 justify-center gap-y-2 items-center">
-            <div @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable text-center" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
+            <div v-if="announcementData?.fields.text_1.text" @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable text-center" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
             
             </div>
 
@@ -506,7 +506,7 @@ defineExpose({
                 </div>
             </div>
             
-            <div class="relative justify-self-center md:justify-self-end">
+            <div v-if="announcementData?.fields.button_1.text" class="relative justify-self-center md:justify-self-end">
                 <div v-if="isEditable"  @click="() => (openFieldWorkshop = 3)" class="absolute inset-0 announcement-component-editable " />
                 <a :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
                 </a>
