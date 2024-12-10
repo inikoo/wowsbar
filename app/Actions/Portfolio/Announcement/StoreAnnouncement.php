@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\Announcement;
 
 use App\Actions\Helpers\Snapshot\StoreAnnouncementSnapshot;
+use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateAnnouncements;
 use App\Models\Announcement;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
@@ -54,6 +55,8 @@ class StoreAnnouncement
                 'unpublished_snapshot_id' => $snapshot->id
             ]
         );
+
+        PortfolioWebsiteHydrateAnnouncements::dispatch($parent);
 
         return $announcement;
     }
