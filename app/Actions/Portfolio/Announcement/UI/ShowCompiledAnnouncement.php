@@ -35,7 +35,7 @@ class ShowCompiledAnnouncement
                     });
                 })->first();
 
-            if (Arr::get($selectedAnnouncement->published_settings, 'target_users')['auth_state'] != 'all') {
+            if ($selectedAnnouncement && Arr::get($selectedAnnouncement->published_settings, 'target_users')['auth_state'] != 'all') {
                 $selectedAnnouncement = $selectedAnnouncement->whereJsonContains('published_settings->target_users->auth_state', $targetUser)->first();
             }
 
