@@ -76,7 +76,7 @@ const adjustColor = (color: Color) => {
                 <div
                     v-bind="$attrs"
                     class="h-12 w-12 cursor-pointer"
-                    :style="{ backgroundColor: color }"
+                    :style="{ background: color }"
                 />
             </slot>
         </PopoverButton>
@@ -101,10 +101,11 @@ const adjustColor = (color: Color) => {
                 
                 <div class="flex gap-x-2 gap-y-2 w-full flex-wrap px-2 bg-gray-800 py-2 border-t border-dashed border-gray-300">
                     <div
-                        v-for="color in useColorGradient"
-                        @click="() => emits('changeColor', color)"
+                        v-for="gradient in useColorGradient"
+                        @click="() => emits('changeColor', gradient)"
                         class="rounded-sm h-5 w-5 cursor-pointer hover:scale-125 transition-all"
-                        :style="{background: color}"
+                        :class="color == gradient && 'border-2 border-blue-500'"
+                        :style="{background: gradient}"
                     >
 
                     </div>

@@ -165,8 +165,8 @@ const defaultContainerData = {
             "value": 100
         },
         "height": {
-            "unit": "%",
-            "value": 100
+            "unit": "px",
+            "value": 0
         }
     },
     "background": {
@@ -181,12 +181,12 @@ const defaultContainerData = {
         "fontFamily": "Raleway"
     },
     "isCenterHorizontal": false,
-    "additional_style": {
-        display: "flex",
-        "justify-content": "center",
-        "align-items": "center",
-        "overflow": "hidden"
-    }
+    // "additional_style": {
+    //     display: "flex",
+    //     "justify-content": "center",
+    //     "align-items": "center",
+    //     "overflow": "hidden"
+    // }
 }
 
 // Data: Text, Button, Close Button
@@ -313,13 +313,17 @@ defineExpose({
 </script>
 
 <template>
-    <template v-if="!isToSelectOnly">
+    <div
+        v-if="!isToSelectOnly"
+        class="flex justify-center items-center overflow-hidden"
+        :style="propertiesToHTMLStyle(announcementData?.container_properties)"
+    >
         <div ref="__multitext_container" @click="() => openFieldWorkshop = 1" class="announcement-component-editable -my-4">
-            <div class="flex w-full text-center px-10">
+            <div class="flex w-full text-center px-10 scale-75 md:scale-100">
                 <p id="wowsbar_sentence_multi_text" v-html="announcementData?.fields?.text_transition_1?.multi_text?.[0] || ''" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></p>
             </div>
         </div>
-    </template>
+    </div>
 
     <div v-else @click="() => emits('templateClicked', componentDefaultData)" class="inset-0 absolute">
     </div>

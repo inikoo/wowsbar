@@ -27,7 +27,7 @@ library.add(faCube, faStar, faImage)
 const layout = inject('layout', layoutStructure)
 const props = withDefaults(defineProps<{
     width?: string
-    uploadRoute: routeType
+    uploadRoute?: routeType
     stockImagesRoute?: routeType
     imagesUploadedRoutes?: routeType
     attachImageRoute?: routeType

@@ -107,14 +107,14 @@ const changePaddingToSameValue = (newVal: number) => {
                             <div class="grid grid-cols-5 items-center">
                                 <FontAwesomeIcon icon='fad fa-border-top' v-tooltip="scope + ' ' + trans('top')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber :modelValue="get(model, 'top.value', 0)" class="" :suffix="model?.unit" />
+                                    <PureInputNumber :modelValue="get(model, 'top.value', 0)" @update:modelValue="(e) => set(model, 'top.value', e)" class="" :suffix="model?.unit" />
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-5 items-center">
                                 <FontAwesomeIcon icon='fad fa-border-bottom' v-tooltip="scope + ' ' + trans('bottom')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
-                                    <PureInputNumber :modelValue="get(model, 'bottom.value', 0)" class="" :suffix="model?.unit" />
+                                    <PureInputNumber :modelValue="get(model, 'bottom.value', 0)" @update:modelValue="(e) => set(model, 'bottom.value', e)" class="" :suffix="model?.unit" />
                                 </div>
                             </div>
                             
@@ -122,7 +122,7 @@ const changePaddingToSameValue = (newVal: number) => {
                                 <FontAwesomeIcon icon='fad fa-border-left' v-tooltip="scope + ' ' + trans('left')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
                                     <PureInputNumber
-                                        :modelValue="get(model, 'left.value', 0)"
+                                        :modelValue="get(model, 'left.value', 0)" @update:modelValue="(e) => set(model, 'left.value', e)"
                                         class=""
                                         :suffix="model?.unit"
                                         :disabled="additionalData?.left?.disabled"
@@ -135,7 +135,7 @@ const changePaddingToSameValue = (newVal: number) => {
                                 <FontAwesomeIcon icon='fad fa-border-right' v-tooltip="scope + ' ' + trans('right')" class='' fixed-width aria-hidden='true' />
                                 <div class="col-span-4">
                                     <PureInputNumber
-                                        :modelValue="get(model, 'right.value', 0)"
+                                        :modelValue="get(model, 'right.value', 0)" @update:modelValue="(e) => set(model, 'right.value', e)"
                                         class=""
                                         :suffix="model?.unit"
                                         :disabled="additionalData?.right?.disabled"

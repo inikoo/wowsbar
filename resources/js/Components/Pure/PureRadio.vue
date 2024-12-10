@@ -83,7 +83,7 @@ const emits = defineEmits<{
                     :key="`${option.label}${index}`" class="inline-flex gap-x-2.5 items-center">
                     <input
                         v-model="model"
-                        :value="option[by] || option"
+                        :value="by ? option[by] : option"
                         :id="option.label + index"
                         name="radioDefault"
                         type="radio"

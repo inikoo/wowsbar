@@ -172,7 +172,7 @@ const defaultContainerData = {
         },
         "height": {
             "unit": "px",
-            "value": "50"
+            "value": "0"
         }
     },
     "background": {
@@ -366,14 +366,17 @@ defineExpose({
 </script>
 
 <template>
-    <template v-if="!isToSelectOnly">
-        <div class="flex gap-x-4 items-center justify-center w-full absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+    <div
+        v-if="!isToSelectOnly"
+        :style="propertiesToHTMLStyle(announcementData?.container_properties)"
+    >
+        <div class="flex flex-wrap gap-x-4 items-center justify-center w-full"
         >
             <div
                 v-if="announcementData?.fields?.text_1"
                 ref="_text_1"
                 @click="() => (openFieldWorkshop = 1)"
-                class="text-sm leading-6 whitespace-nowrap announcement-component-editable"
+                class="text-sm announcement-component-editable text-center md:text-left"
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
             >
@@ -434,7 +437,7 @@ defineExpose({
             :throttleDragRotate="0"
             @drag="(e) => onDrag(e, announcementData?.fields.close_button.block_properties, _parentComponent)"
         /> -->
-    </template>
+    </div>
 
     <div
         v-else @click="() => emits('templateClicked', componentDefaultData)"
