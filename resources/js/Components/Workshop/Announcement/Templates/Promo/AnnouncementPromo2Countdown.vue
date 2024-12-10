@@ -9,6 +9,7 @@ import { computed, ref, onMounted, onBeforeUnmount, onUnmounted } from "vue"
 import { closeIcon } from '@/Composables/useAnnouncement'
 import type { BlockProperties, LinkProperties } from "@/types/Announcement"
 import { inject } from "vue"
+import { trans } from "laravel-vue-i18n"
 library.add(faTimes)
 
 const props = defineProps<{
@@ -192,8 +193,8 @@ const defaultContainerData = {
             "value": 100
         },
         "height": {
-            "unit": "%",
-            "value": 100
+            "unit": "px",
+            "value": 0
         }
     },
     "background": {
@@ -484,25 +485,25 @@ defineExpose({
                     <div id="countdown-days" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{days}}
                     </div>
-                    <div class="text-xs opacity-60">Days</div>
+                    <div class="text-xs opacity-60">{{ trans("Days") }}</div>
                 </div>
                 <div class="flex flex-col items-center">
                     <div id="countdown-hours" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{hours}}
                     </div>
-                    <div class="text-xs opacity-60">Hours</div>
+                    <div class="text-xs opacity-60">{{ trans("Hours") }}</div>
                 </div>
                 <div class="flex flex-col items-center">
                     <div id="countdown-minutes" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{minutes}}
                     </div>
-                    <div class="text-xs opacity-60">Minutes</div>
+                    <div class="text-xs opacity-60">{{ trans("Minutes") }}</div>
                 </div>
                 <div class="flex flex-col items-center">
                     <div id="countdown-seconds" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{seconds}}
                     </div>
-                    <div class="text-xs opacity-60">Seconds</div>
+                    <div class="text-xs opacity-60">{{ trans("Seconds") }}</div>
                 </div>
             </div>
             

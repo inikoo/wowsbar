@@ -422,7 +422,7 @@ const onStopAnnouncement = () => {
                 </div>
             </div>
 
-            <div class="h-[calc(100vh-280px)] overflow-y-auto rounded-md shadow-lg">
+            <div class="h-[calc(100vh-280px)] w-[450px] overflow-y-auto rounded-md shadow-lg">
                 <AnnouncementSideEditor
                     v-if="announcementData.template_code"
                     :blueprint="_component_template_Announcement?.fieldSideEditor"

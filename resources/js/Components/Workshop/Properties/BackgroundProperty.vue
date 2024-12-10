@@ -120,7 +120,6 @@ const onSubmitSelectedImages = (images: ImageData[]) => {
 
     <Modal :isOpen="isOpenGallery" @onClose="() => isOpenGallery = false" width="w-3/4" >
         <GalleryManagement
-            :uploadRoute="routeList.uploadImageRoute"
             :imagesUploadedRoutes="routeList.imagesUploadedRoutes"
             :stockImagesRoute="routeList.stockImagesRoute"
             :maxSelected="1"

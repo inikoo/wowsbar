@@ -172,7 +172,7 @@ const defaultContainerData = {
         },
         "height": {
             "unit": "px",
-            "value": "50"
+            "value": "0"
         }
     },
     "background": {

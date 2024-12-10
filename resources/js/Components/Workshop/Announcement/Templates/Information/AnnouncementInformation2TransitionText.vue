@@ -165,8 +165,8 @@ const defaultContainerData = {
             "value": 100
         },
         "height": {
-            "unit": "%",
-            "value": 100
+            "unit": "px",
+            "value": 0
         }
     },
     "background": {
