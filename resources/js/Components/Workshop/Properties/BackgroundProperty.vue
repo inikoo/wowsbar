@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPencil } from '@fal'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { get, set } from 'lodash';
+import { ImageData } from '@/types/Image'
 library.add(faPencil)
 
 interface BackgroundProperty {
@@ -32,26 +33,27 @@ const isOpenGallery = ref(false)
 const routeList = {
     'imagesUploadedRoutes': {
         'name': 'customer.gallery.uploaded-images.index',
+    },
+    'stockImagesRoute': {
+        'name': 'customer.gallery.stock-images.index',
         'parameters': {
-            'organisation': 'xxx',
-            'shop': 'xxx',
-            'product': 'xxx'
+            'filter[scope]': 'landscape,announcement'
         }
     },
-    'uploadImageRoute': {
-        'name': 'grp.models.org.product.images.store',
-        'parameters': {
-            'organisation': '$product->organisation_id',
-            'product': '$product->id'
-        }
-    },
-    'attachImageRoute': {
-        'name': 'grp.models.org.product.images.attach',
-        'parameters': {
-            'organisation': '$product->organisation_id',
-            'product': '$product->id'
-        }
-    },
+    // 'uploadImageRoute': {
+    //     'name': 'grp.models.org.product.images.store',
+    //     'parameters': {
+    //         'organisation': '$product->organisation_id',
+    //         'product': '$product->id'
+    //     }
+    // },
+    // 'attachImageRoute': {
+    //     'name': 'grp.models.org.product.images.attach',
+    //     'parameters': {
+    //         'organisation': '$product->organisation_id',
+    //         'product': '$product->id'
+    //     }
+    // },
     'deleteImageRoute': {
         'name': 'grp.models.org.product.images.delete',
         'parameters': {
@@ -60,6 +62,10 @@ const routeList = {
         }
     }
 }
+const onSubmitSelectedImages = (images: ImageData[]) => {
+    set(model.value, ['image'], images[0]?.source)
+    isOpenGallery.value = false
+}
 
 </script>
 
@@ -67,13 +73,13 @@ const routeList = {
     <div class="flex items-center justify-between gap-x-3 flex-wrap px-6 w-full relative">
         <!-- Background image -->
         <div class="flex items-center gap-x-2 py-1" >
-            <div class="group/background rounded-md overflow-hidden relative">
+            <div class="group/background rounded-md overflow-hidden relative h-12 w-12 aspect-square ">
                 <Image
-                    :src="undefined"
-                    :alt="'data.image?.name'"
+                    :src="get(model, 'image', undefined)"
+                    :alt="trans('Background image')"
                     :imageCover="true"
                     @click="true"
-                    class="h-12 aspect-square cursor-pointer "
+                    class="cursor-pointer "
                 />
 
                 <div @click="() => isOpenGallery = true" class="hidden group-hover/background:flex absolute inset-0 bg-black/20 items-center justify-center cursor-pointer">
@@ -116,9 +122,12 @@ const routeList = {
         <GalleryManagement
             :uploadRoute="routeList.uploadImageRoute"
             :imagesUploadedRoutes="routeList.imagesUploadedRoutes"
-            :attachImageRoute="routeList.attachImageRoute"
+            :stockImagesRoute="routeList.stockImagesRoute"
+            :maxSelected="1"
             :closePopup="() => isOpenGallery = false"
             @selectImage="(image: {}) => console.log('image', image)"
+            @submitSelectedImages="(images: ImageData[]) => onSubmitSelectedImages(images)"
+            
         />
     </Modal>
 </template>
