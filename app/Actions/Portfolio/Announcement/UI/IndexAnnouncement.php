@@ -54,7 +54,7 @@ class IndexAnnouncement extends InertiaAction
     public function handle(Customer|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where('banners.name', "%$value%");
+            $query->where('name', 'ILIKE', "%$value%");
         });
 
         if ($prefix) {
