@@ -214,7 +214,7 @@ function openLinkDialog() {
 }
 
 
-function updateLink(value?: string, target_data = '_self') {
+function updateLink(value?: string, target_data = '_parent') {
     if (!value) {
         editorInstance.value
             ?.chain()

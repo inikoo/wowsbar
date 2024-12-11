@@ -20,7 +20,7 @@ const target = ref<Object>(props.currentUrl?.target);
 
 const emit = defineEmits(["close", "update"]);
 const options = ref([
-  { label: "Open in the same tab", value: "_self" },
+  { label: "Open in the same tab", value: "_parent" },
   { label: "Open in a new tab", value: "_blank" }
 ]);
 
@@ -35,9 +35,9 @@ function update() {
 
 onMounted(() => {
   inputLinkRef.value = props.currentUrl?.href ?? "";
-  if(props.currentUrl?.target == "_self") target.value =  { label: "Open in the same tab", value: "_self" };
+  if(props.currentUrl?.target == "_parent") target.value =  { label: "Open in the same tab", value: "_parent" };
   else if(props.currentUrl?.target == "_blank") target.value = { label: "Open in a new tab", value: "_blank" }
-  else target.value =  { label: "Open in the same tab", value: "_self" };
+  else target.value =  { label: "Open in the same tab", value: "_parent" };
 });
 </script>
 
