@@ -114,7 +114,7 @@ const condition: Ref<string | boolean> = ref(false)
                 </div>
 
                 <Button
-                    buttonType="submit"
+                    type="submit"
                     id="submit"
                     :loading="isLoading"
                     full
