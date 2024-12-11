@@ -34,7 +34,6 @@ import { TableCell } from "@tiptap/extension-table-cell"
 import Gapcursor from "@tiptap/extension-gapcursor"
 import Image from "@tiptap/extension-image"
 import TextStyle from '@tiptap/extension-text-style'
-import link from '@/Components/Forms/Fields/BubleTextEditor/CustomLink/CustomLinkExtension.js'
 import { Color } from '@tiptap/extension-color'
 import FontSize from 'tiptap-extension-font-size'
 import FontFamily from '@tiptap/extension-font-family'
@@ -76,7 +75,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import TiptapLinkCustomDialog from "@/Components/Forms/Fields/BubleTextEditor/TiptapCustomLinkDialog.vue"
-import TiptapLinkDialog from "@/Components/Forms/Fields/BubleTextEditor/TiptapLinkDialog.vue"
+import TiptapLinkDialog from "@/Components/Editor/TiptapLinkDialog.vue"
 import TiptapVideoDialog from "@/Components/Forms/Fields/BubleTextEditor/TiptapVideoDialog.vue"
 /* import TiptapTableDialog from "@/Components/Forms/Fields/BubleTextEditor/TiptapTableDialog.vue" */
 import TiptapImageDialog from "@/Components/Forms/Fields/BubleTextEditor/TiptapImageDialog.vue"
@@ -138,41 +137,6 @@ const editorInstance = useEditor({
         FontFamily.configure({
             types: ['textStyle'],
         }),
-        link.extend({
-            addProseMirrorPlugins() {
-                return [
-                    new Plugin({
-                        props: {
-                            handleClick(view, pos, event) {
-                                const linkMark = view.state.schema.marks.link
-                                const { tr } = view.state
-                                const attrs = tr.doc
-                                    .nodeAt(pos)
-                                    ?.marks.find((mark) => mark.type === linkMark)?.attrs
-
-                                if (attrs) {
-
-                                    // Prevent default link click behavior
-                                    event.preventDefault()
-
-                                    // Check if workshop URL exists
-                                    if (attrs.workshop) {
-                                        // Show a custom popup/modal with options
-                                        CustomLinkConfirm.value = true
-                                        attrsCustomLink.value = attrs
-                                    } else {
-                                        // No workshop, just open the regular URL
-                                        window.open(attrs.href, "_blank")
-                                    }
-                                    return true
-                                }
-                                return false
-                            },
-                        },
-                    }),
-                ]
-            },
-        }),
         Heading.configure({
             levels: [1, 2, 3],
         }),
@@ -188,6 +152,9 @@ const editorInstance = useEditor({
         OrderedList,
         Link.configure({
             openOnClick: false,
+            HTMLAttributes: {
+                rel: null,
+            },
         }),
         HardBreak.extend({
             addKeyboardShortcuts() {
@@ -237,34 +204,17 @@ const editorInstance = useEditor({
     },
 })
 
-function openLinkDialogCustom() {
-    const attrs = editorInstance.value?.getAttributes("link")
-    currentLinkInDialog.value = attrs
-    showLinkDialogCustom.value = true;
-    showDialog.value = true;
-}
 
-function updateLinkCustom(value) {
-    if (value.href) {
-        const attrs = {
-            type: value.type,
-            workshop: value.workshop,
-            id: value.type === 'internal' ? value.id?.id : null,
-            href: value.href,
-            target : value.target ? value.target : '_self'
-        };
-        editorInstance.value?.chain().focus().extendMarkRange("link").setCustomLink(attrs).run();
-    }
-}
 
 
 function openLinkDialog() {
-    currentLinkInDialog.value = editorInstance.value?.getAttributes("link").href
+    currentLinkInDialog.value = editorInstance.value?.getAttributes("link")
     showLinkDialog.value = true
     showDialog.value = true;
 }
 
-function updateLink(value?: string) {
+
+function updateLink(value?: string, target_data = '_self') {
     if (!value) {
         editorInstance.value
             ?.chain()
@@ -279,9 +229,10 @@ function updateLink(value?: string) {
         ?.chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: value })
+        .setLink({ href: value , target: target_data })
         .run()
 }
+
 
 
 
@@ -297,17 +248,7 @@ function insertYoutubeVideo(url: string) {
     })
 }
 
-function insertTable(table: DataTable) {
-    editorInstance.value
-        ?.chain()
-        .focus()
-        .insertTable({
-            rows: table.rows,
-            cols: table.columns,
-            withHeaderRow: table.withHeader,
-        })
-        .run()
-}
+
 
 onMounted(() => {
     setTimeout(() => (contentResult.value = editorInstance.value?.getHTML()), 250)
@@ -623,8 +564,6 @@ const irisVariablesList = [
             </slot>
         </div>
 
-        <TiptapLinkCustomDialog v-if="showLinkDialogCustom" :show="showLinkDialogCustom" :attribut="currentLinkInDialog"
-            @close="() => { showLinkDialogCustom = false; showDialog = false; }" @update="updateLinkCustom" />
         <TiptapImageDialog 
             v-if="showAddImageDialog" 
             :show="showAddImageDialog" 
