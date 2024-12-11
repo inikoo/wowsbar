@@ -251,7 +251,7 @@ const defaultFieldsData = {
             "properties": {
                 "text": {
                     "color": "rgba(255,255,255,1)",
-                    "fontFamily": null
+                    "fontFamily": "Arial, sans-serif"
                 },
                 "background": {
                     "type": "color",
@@ -351,58 +351,61 @@ const componentDefaultData = {
 // }
 
 
-const compiled_layout = computed(() => {
-    const script = "<script> const initialTime = 1000 * 60 * 60 * 24 * 5; const endTime = new Date('" + props.announcementData?.fields?.countdown?.date + "').getTime() + initialTime; let timer = null; const parseTime = (time) => ({ tens: Math.floor(time / 10), ones: time % 10, }); const updateCountdown = () => { const now = new Date().getTime(); const timeLeft = endTime - now; if (timeLeft <= 0) { clearInterval(timer); document.getElementById('countdown-days').textContent = '00'; document.getElementById('countdown-hours').textContent = '00'; document.getElementById('countdown-minutes').textContent = '00'; document.getElementById('countdown-seconds').textContent = '00'; return; } const days = parseTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24))); const hours = parseTime(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))); const minutes = parseTime(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))); const seconds = parseTime(Math.floor((timeLeft % (1000 * 60)) / 1000)); document.getElementById('countdown-days').textContent = `${days.tens}${days.ones}`; document.getElementById('countdown-hours').textContent = `${hours.tens}${hours.ones}`; document.getElementById('countdown-minutes').textContent = `${minutes.tens}${minutes.ones}`; document.getElementById('countdown-seconds').textContent = `${seconds.tens}${seconds.ones}`; }; timer = setInterval(updateCountdown, 1000); updateCountdown(); <\/script>"
+// const compiled_layout = computed(() => {
+//     const script = "<script> const initialTime = 1000 * 60 * 60 * 24 * 5; const endTime = new Date('" + props.announcementData?.fields?.countdown?.date + "').getTime() + initialTime; let timer = null; const parseTime = (time) => ({ tens: Math.floor(time / 10), ones: time % 10, }); const updateCountdown = () => { const now = new Date().getTime(); const timeLeft = endTime - now; if (timeLeft <= 0) { clearInterval(timer); document.getElementById('countdown-days').textContent = '00'; document.getElementById('countdown-hours').textContent = '00'; document.getElementById('countdown-minutes').textContent = '00'; document.getElementById('countdown-seconds').textContent = '00'; return; } const days = parseTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24))); const hours = parseTime(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))); const minutes = parseTime(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))); const seconds = parseTime(Math.floor((timeLeft % (1000 * 60)) / 1000)); document.getElementById('countdown-days').textContent = `${days.tens}${days.ones}`; document.getElementById('countdown-hours').textContent = `${hours.tens}${hours.ones}`; document.getElementById('countdown-minutes').textContent = `${minutes.tens}${minutes.ones}`; document.getElementById('countdown-seconds').textContent = `${seconds.tens}${seconds.ones}`; }; timer = setInterval(updateCountdown, 1000); updateCountdown(); <\/script>"
 
 
-    const button_element = props.announcementData?.fields?.button_1?.text ? `
-        <div class="tw-justify-self-end">
-            <a href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.button_1.container.properties))}">
-                ${props.announcementData.fields.button_1.text}
-            </a>
-        </div>` : ''
+//     const button_element = props.announcementData?.fields?.button_1?.text ? `
+//         <div class="tw-justify-self-end">
+//             <a href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}" style="${styleToString(propertiesToHTMLStyle(props.announcementData.fields.button_1.container.properties))}">
+//                 ${props.announcementData.fields.button_1.text}
+//             </a>
+//         </div>` : ''
 
 
-    return `
-    <div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
-        <div class="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
-            ${props.announcementData?.fields.text_1.text}
-        </div>
+//     return `
+//     <div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+//         <div class="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
+//             ${props.announcementData?.fields.text_1.text}
+//         </div>
 
-        <div class="tw-grid tw-grid-cols-4  tw-gap-x-2 tw-font-sans tw-mx-auto tw-mt-1">
-            <div class="tw-flex tw-flex-col tw-items-center">
-                <div id="countdown-days" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
-                    00
-                </div>
-                <div class="tw-text-xs tw-opacity-60">Days</div>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-center">
-                <div id="countdown-hours" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
-                    00
-                </div>
-                <div class="tw-text-xs tw-opacity-60">Hours</div>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-center">
-                <div id="countdown-minutes" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
-                    00
-                </div>
-                <div class="tw-text-xs tw-opacity-60">Minutes</div>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-center">
-                <div id="countdown-seconds" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
-                    00
-                </div>
-                <div class="tw-text-xs tw-opacity-60">Seconds</div>
-            </div>
-        </div>
+//         <div class="tw-grid tw-grid-cols-4  tw-gap-x-2 tw-font-sans tw-mx-auto tw-mt-1">
+//             <div class="tw-flex tw-flex-col tw-items-center">
+//                 <div id="countdown-days" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
+//                     00
+//                 </div>
+//                 <div class="tw-text-xs tw-opacity-60">Days</div>
+//             </div>
+//             <div class="tw-flex tw-flex-col tw-items-center">
+//                 <div id="countdown-hours" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
+//                     00
+//                 </div>
+//                 <div class="tw-text-xs tw-opacity-60">Hours</div>
+//             </div>
+//             <div class="tw-flex tw-flex-col tw-items-center">
+//                 <div id="countdown-minutes" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
+//                     00
+//                 </div>
+//                 <div class="tw-text-xs tw-opacity-60">Minutes</div>
+//             </div>
+//             <div class="tw-flex tw-flex-col tw-items-center">
+//                 <div id="countdown-seconds" class="tw-text-base tw-bg-white tw-w-fit tw-border tw-border-gray-200 tw-flex tw-justify-center tw-overflow-hidden tw-relative tw-rounded-md tw-py-1 tw-px-2 tw-tabular-nums">
+//                     00
+//                 </div>
+//                 <div class="tw-text-xs tw-opacity-60">Seconds</div>
+//             </div>
+//         </div>
 
-        ${button_element}
-    </div>
-    ${script}
-    `
-})
+//         ${button_element}
+//     </div>
+//     ${script}
+//     `
+// })
 
 const openFieldWorkshop = inject('openFieldWorkshop')
+const onClickOpenFieldWorkshop = (index: number) => {
+    openFieldWorkshop.value = index
+}
 
 const initialTime = 1000 * 60 * 60 * 24 * 3 // 3 days
 // const endTime = ref(new Date(props.announcementData?.fields?.countdown?.date).getTime() + initialTime)
@@ -464,7 +467,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-    compiled_layout,
+    // compiled_layout,
     fieldSideEditor
 })
 // <button
@@ -483,11 +486,11 @@ defineExpose({
         :style="propertiesToHTMLStyle(announcementData?.container_properties)"
     >
         <div class="col-span-3 grid grid-cols-1 md:grid-cols-3 justify-center gap-y-2 items-center">
-            <div v-if="announcementData?.fields.text_1.text" @click="() => (openFieldWorkshop = 1)" class="announcement-component-editable text-center md:text-left" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
+            <div v-if="announcementData?.fields.text_1.text" @click="() => (onClickOpenFieldWorkshop(1))" class="announcement-component-editable text-center md:text-left" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
             
             </div>
 
-            <div @click="() => (openFieldWorkshop = 2)" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
+            <div @click="() => (onClickOpenFieldWorkshop(2))" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
                 <div class="flex flex-col items-center">
                     <div id="countdown-days" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{days}}
@@ -515,7 +518,7 @@ defineExpose({
             </div>
             
             <div v-if="announcementData?.fields.button_1.text" class="relative justify-self-center md:justify-self-end">
-                <div v-if="isEditable"  @click="() => (openFieldWorkshop = 3)" class="absolute inset-0 announcement-component-editable " />
+                <div v-if="isEditable"  @click="() => (onClickOpenFieldWorkshop(3))" class="absolute inset-0 announcement-component-editable " />
                 <a :href="announcementData?.fields.button_1.link.href || '#'" :target="announcementData?.fields.button_1.link.target" v-html="announcementData?.fields.button_1.text" :style="propertiesToHTMLStyle(announcementData?.fields.button_1.container.properties)">
                 </a>
             </div>

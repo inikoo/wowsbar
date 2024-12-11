@@ -12,7 +12,7 @@ library.add(faUpload, faImages)
 const modelFiles = defineModel('files')
 
 const props = defineProps<{
-    uploadRoute: routeType
+    uploadRoute?: routeType
     useCrop?: boolean
     isLoading?: boolean
     fileLimit?: number

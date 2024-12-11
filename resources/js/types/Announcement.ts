@@ -13,6 +13,7 @@ export interface AnnouncementFields {
 }
 
 export interface AnnouncementData {
+    ulid: string
     code: string
     source: Image
     fields: AnnouncementFields
