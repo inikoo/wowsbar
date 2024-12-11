@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property string|null $text
  * @property string|null $published_message
  * @property array|null $published_settings
+ * @property mixed|null $published_fields
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
  * @property-read Snapshot|null $liveSnapshot
@@ -66,6 +67,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePortfolioWebsiteId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePublishedChecksum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePublishedFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePublishedMessage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement wherePublishedSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereReadyAt($value)
