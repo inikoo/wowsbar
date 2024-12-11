@@ -414,14 +414,15 @@ const irisVariablesList = [
                         </TiptapToolbarButton> -->
 
                         <TiptapToolbarButton v-if="toogle.includes('color')" label="Text Color">
-                            <div class="relative w-7 h-7">
+                            <div class="relative w-8 h-8 ">
                                 <!-- Color Input -->
                                 <input type="color" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     @input="editorInstance?.chain().focus().setColor($event.target.value).run()"
-                                    :value="editorInstance.getAttributes('textStyle').color" />
+                                    :value="editorInstance.getAttributes('textStyle').color"
+                                />
                                 <!-- Icon -->
-                                <div class="flex items-center justify-center w-full h-full rounded"
-                                :style="{ color: editorInstance.getAttributes('textStyle').color || 'gray'}"
+                                <div class="flex items-center justify-center w-full h-full border border-gray-200 shadow rounded"
+                                    :style="{ color: editorInstance.getAttributes('textStyle').color || 'gray'}"
                                 > 
                                     <FontAwesomeIcon :icon="faTint" />
                                 </div>
@@ -435,7 +436,7 @@ const irisVariablesList = [
                                     @input="editorInstance.chain().focus().setHighlight({ color: $event.target.value }).run()"
                                     :value="editorInstance.getAttributes('highlight').color" />
                                 <!-- Icon -->
-                                <div class="flex items-center justify-center w-full h-full shadow rounded"
+                                <div class="flex items-center justify-center w-full h-full border border-gray-200 shadow rounded"
                                     :style="{ backgroundColor: editorInstance?.getAttributes('highlight').color}"
                                 > 
                                     <FontAwesomeIcon :icon="faPaintBrushAlt" />

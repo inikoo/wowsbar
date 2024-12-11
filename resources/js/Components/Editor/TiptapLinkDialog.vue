@@ -47,7 +47,7 @@ onMounted(() => {
       <div class="flex flex-col space-y-5">
         <div>
           <div class="select-none text-sm text-gray-600 mb-2">Link</div>
-          <PureInput type="url" id="input-link-url" v-model="inputLinkRef" />
+          <PureInput type="url" id="input-link-url" v-model="inputLinkRef" placeholder="https://wowsbar.com" />
         </div>
         <div>
           <div class="select-none text-sm text-gray-600 mb-2">Target</div>
