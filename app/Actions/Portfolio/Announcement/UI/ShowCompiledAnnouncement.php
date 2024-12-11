@@ -17,12 +17,13 @@ class ShowCompiledAnnouncement
 
     public function handle(PortfolioWebsite $portfolioWebsite, ?string $targetPage, string $targetUser): ?Announcement
     {
-        $announcements = GetActiveAnnouncement::run($portfolioWebsite);
+        $announcements = GetActiveAnnouncement::run();
 
         foreach ($announcements as $announcement) {
             $selectedAnnouncement = $announcement
-                ->where(function ($query) use ($targetPage) {
+                ->where(function ($query) use ($targetPage, $portfolioWebsite) {
                     $query->where('status', AnnouncementStatusEnum::ACTIVE->value)
+                    ->where('portfolio_website_id', $portfolioWebsite->id)
                     ->where(function ($subQuery) use ($targetPage) {
                         $subQuery->whereRaw("
                       EXISTS (
