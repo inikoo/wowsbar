@@ -12,7 +12,6 @@ import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import AnnouncementTemplateList from '@/Components/Workshop/Announcement/AnnouncementTemplateList.vue'
 import AnnouncementSettings from '@/Components/Workshop/Announcement/AnnouncementSettings.vue'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe, faImage, faExternalLink, faRocketLaunch, faSave, faUndoAlt, faInfoCircle, faChevronDown, faCircle, faHandPointer, faStopwatch20 } from '@fal'
@@ -89,6 +88,7 @@ const props = defineProps<{
     last_published_date: string | null
     is_announcement_dirty?: boolean
     portfolio_website: {
+        name: string
         url: string
     }
 }>()
@@ -135,7 +135,7 @@ const isLoadingPublish = ref(false)
 const onPublish = () => {
     const toPublish = {
         ...announcementData.value,
-        compiled_layout: _component_template_Announcement.value?.compiled_layout || undefined,
+        // compiled_layout: _component_template_Announcement.value?.compiled_layout || undefined,
         text: 'xxx'
     }
     // console.log('toto', _component_template_Announcement.value?.dataToPublish)
@@ -225,19 +225,6 @@ const changeTab = async (idxCategory: number) => {
     selectedTab.value = idxCategory
 }
 
-// const announcementSetting = ref()
-
-
-
-// const newDate = new Date()
-// const publishStartDate = ref(newDate.setDate(newDate.getDate() + 2))
-// const publishEndDate = ref(newDate.setDate(newDate.getDate() + 9))
-
-// const isModalPublish = ref(false)
-// const settingPublish = ref({
-//     start_type: 'instant',  // 'scheduled'
-//     end_type: newDate.setDate(newDate.getDate() + 2),  // 'unlimited'
-// })
 
 
 const cancelTokenActivate = ref<Function | null>(null)
@@ -277,18 +264,20 @@ const onClickToggleActivate = async (newVal: string) => {
 const openFieldWorkshop = ref<number | null>(null)
 provide('openFieldWorkshop', openFieldWorkshop)
 
-const getDeliveryUrl = () => {
+// Delivery url
+const getDeliveryUrlXx = () => {
     console.log('envi', usePage().props.environment)
     if (usePage().props.environment === 'local') {
-        return `http://delivery.wowsbar.test/announcement/${announcementData.value.ulid}?iframe=true`
+        return `http://delivery.wowsbar.test/announcement?logged_in=true&domain=${new URL(props.portfolio_website.url).hostname}`
     } else if (usePage().props.environment === 'staging') {
-        return `https://delivery-staging.wowsbar.com/announcement/${announcementData.value.ulid}?iframe=true`
+        return `https://delivery-staging.wowsbar.com/announcement?logged_in=true&domain=${new URL(props.portfolio_website.url).hostname}`
     } else if (usePage().props.environment === 'production') {
-        return `https://delivery.wowsbar.com/announcement/${announcementData.value.ulid}?iframe=true`
+        return `https://delivery.wowsbar.com/announcement?logged_in=true&domain=${new URL(props.portfolio_website.url).hostname}`
     }
 
     return '#'
 }
+const deliveryUrl = getDeliveryUrlXx()
 
 const _component_template_Announcement = ref(null)
 
@@ -302,17 +291,6 @@ const onSectionSetting = () => {
     }, 100)
 }
 
-const onStopAnnouncement = () => {
-    router[props.routes_list.close_route.method || 'patch'](
-        route(props.routes_list.close_route.name, props.routes_list.close_route.parameters),
-        {
-
-        },
-        {
-
-        }
-    )
-}
 </script>
 
 <template layout="CustomerApp">
@@ -443,13 +421,16 @@ const onStopAnnouncement = () => {
                 </div> -->
 
                 <!-- Section: Screenview -->
-                <div class="flex py-2 px-2">
-                  <!--   <ScreenView @screenView="false" />
+                <div class="flex justify-between w-full py-2 px-2">
+                    <div>
+                        <!-- <ScreenView @screenView="false" /> -->
+                    </div>
 
-                    <a :href="getDeliveryUrl()"
+                    <a :href="deliveryUrl"
                         target="_blank" class="py-1 px-2 cursor-pointer" title="Desktop view" v-tooltip="'Preview'">
+                        What will showed in <span class="font-semibold">{{ portfolio_website.name }}</span>?
                         <FontAwesomeIcon icon='fal fa-external-link' aria-hidden='true' />
-                    </a> -->
+                    </a>
                 </div>
             </div>
 

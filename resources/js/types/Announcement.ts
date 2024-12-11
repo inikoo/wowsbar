@@ -13,11 +13,13 @@ export interface AnnouncementFields {
 }
 
 export interface AnnouncementData {
+    ulid: string
     code: string
     source: Image
     fields: AnnouncementFields
     container_properties: BlockProperties
     compiled_layout?: string
+    template_code: string
 }
 
 

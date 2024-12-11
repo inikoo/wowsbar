@@ -223,7 +223,7 @@ onUnmounted(() => {
                     </div>
             
                     <div v-if="optionsLinks?.next" class="mt-8 flex justify-center">
-                        <Button @click="onFetchNext" :label="trans('Load more')" :loading="!!isLoading" type="tertiary" />
+                        <Button @click="onFetchNext" :label="trans('Load more')" :loading="!!isLoading" :style="'tertiary'" />
                     </div>
                 </template>
 

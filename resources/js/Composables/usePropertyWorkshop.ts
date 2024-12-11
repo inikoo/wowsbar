@@ -19,8 +19,8 @@ export const propertiesToHTMLStyle = (properties?: BlockProperties, options?: { 
         top: properties?.position?.y || '0px',
         transform: properties?.isCenterHorizontal && properties?.position.type === 'fixed' ? 'translateX(-50%)' : undefined,
 
-        height: properties?.dimension?.height?.value === 0 ? 'fit-content' : (properties?.dimension?.height?.value || 0) + properties?.dimension?.height?.unit || 'px',
-        width: properties?.dimension?.width?.value === 0 ? 'fit-content' : (properties?.dimension?.width?.value || 0) + properties?.dimension?.width?.unit || 'px',
+        height: !properties?.dimension?.height?.value ? 'fit-content' : (properties?.dimension?.height?.value) + properties?.dimension?.height?.unit || 'px',
+        width: !properties?.dimension?.width?.value ? 'fit-content' : (properties?.dimension?.width?.value) + properties?.dimension?.width?.unit || 'px',
         color: properties?.text?.color,
         fontFamily: properties?.text?.fontFamily,
 
@@ -35,6 +35,9 @@ export const propertiesToHTMLStyle = (properties?: BlockProperties, options?: { 
         marginLeft: properties?.isCenterHorizontal ? 'auto' : (properties?.margin?.left?.value || 0) + properties?.margin?.unit,
 
         background: properties?.background?.type === 'color' ? properties?.background?.color : `url('${properties?.background?.image}')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center top',
 
         borderTop: `${properties?.border?.top?.value || 0}${properties?.border?.unit || 'px'} solid ${properties?.border?.color}`,
         borderBottom: `${properties?.border?.bottom?.value || 0}${properties?.border?.unit || 'px'} solid ${properties?.border?.color}`,

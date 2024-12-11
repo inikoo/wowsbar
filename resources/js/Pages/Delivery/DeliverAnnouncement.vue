@@ -1,13 +1,12 @@
 <script setup lang='ts'>
 import { getAnnouncementComponent } from '@/Composables/useAnnouncement'
-import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
+// import { propertiesToHTMLStyle } from '@/Composables/usePropertyWorkshop'
 import BlankLayout from '@/Layouts/BlankLayout.vue'
+import { AnnouncementData } from '@/types/Announcement';
 import { nextTick, onMounted, provide, ref } from 'vue'
 
 const props = defineProps<{
-    announcement_data: {
-
-    }
+    announcement_data: AnnouncementData
 }>()
 
 defineOptions({ layout: BlankLayout })
@@ -60,6 +59,8 @@ console.log('withIframe', withIframe)
         id="announcement_delivery_component"
         :is="getAnnouncementComponent(announcement_data?.template_code)"
         :announcementData="announcement_data"
+        :x-ulid="announcement_data?.ulid"
     />
+
     
 </template>

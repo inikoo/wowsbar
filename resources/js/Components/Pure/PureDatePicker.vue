@@ -5,7 +5,7 @@ import DatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const props = defineProps<{
-    modelValue: Date
+    modelValue: Date | string
     format?: string  // 'dd MMMM yyyy'
     timePicker?: boolean
     required?: boolean

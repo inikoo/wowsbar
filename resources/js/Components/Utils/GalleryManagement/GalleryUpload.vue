@@ -12,7 +12,7 @@ library.add(faUpload, faImages)
 const modelFiles = defineModel('files')
 
 const props = defineProps<{
-    uploadRoute: routeType
+    uploadRoute?: routeType
     useCrop?: boolean
     isLoading?: boolean
     fileLimit?: number
@@ -59,7 +59,7 @@ const formatSize = (bytes: number) => {
         >
             <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                 <div class="flex flex-wrap justify-center items-center flex-1 gap-4">
-                    <Button @click="chooseCallback()" label="Choose" icon="fal fa-images" type="tertiary" />
+                    <Button @click="chooseCallback()" label="Choose" icon="fal fa-images" :style="'tertiary'" />
                     <Button @click="emits('onSubmitUpload', files, clearCallback)" label="Upload" icon="fal fa-upload" :loading="isLoading" :disabled="!files || files.length === 0" />
                     <Button @click="clearCallback()" label="Clear" type="negative" :disabled="!files || files.length === 0" />
                 </div>
