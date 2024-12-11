@@ -184,7 +184,7 @@ const defaultContainerData = {
     },
     "text": {
         "color": "rgba(10,10,10,1)",
-        "fontFamily": "Raleway"
+        "fontFamily": "'Raleway', sans-serif"
     },
     "isCenterHorizontal": false
 }
@@ -223,7 +223,7 @@ const defaultFieldsData = {
             "properties": {
                 "text": {
                     "color": "rgba(255, 255, 255, 1)",
-                    "fontFamily": null
+                    "fontFamily": "Arial, sans-serif"
                 },
                 "background": {
                     "type": "color",
@@ -323,36 +323,39 @@ const onClickClose = () => {
 }
 
 
-const compiled_layout = computed(() => {
+// const compiled_layout = computed(() => {
 
-    const text_1_element = props.announcementData?.fields?.text_1?.text ? `<div
-            class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
-            style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
-        >
-            ${props.announcementData?.fields?.text_1?.text}
-        </div>` : ''
+//     const text_1_element = props.announcementData?.fields?.text_1?.text ? `<div
+//             class="tw-text-sm tw-leading-6 tw-whitespace-nowrap "
+//             style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields?.text_1?.block_properties, { toRemove: ['position', 'top', 'left'] }))}"
+//         >
+//             ${props.announcementData?.fields?.text_1?.text}
+//         </div>` : ''
 
-    const button_element = props.announcementData?.fields?.button_1?.text ? `<a
-        href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}"
-        class="tw-inline-flex tw-items-center"
-        style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.button_1?.container?.properties))}"
-    >
-        ${props.announcementData?.fields.button_1.text}
-    </a>` : ''
+//     const button_element = props.announcementData?.fields?.button_1?.text ? `<a
+//         href="${props.announcementData?.fields.button_1.link.href || '#'}" target="${props.announcementData?.fields.button_1.link.target}"
+//         class="tw-inline-flex tw-items-center"
+//         style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.button_1?.container?.properties))}"
+//     >
+//         ${props.announcementData?.fields.button_1.text}
+//     </a>` : ''
 
 
-    return `<div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
-        <div class="tw-flex tw-gap-x-4 tw-items-center tw-justify-center tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-y-1/2 -tw-translate-x-1/2">
-            ${text_1_element}
-            ${button_element}
-        </div>
-    </div>`
-})
+//     return `<div id="wowsbar_announcement" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+//         <div class="tw-flex tw-gap-x-4 tw-items-center tw-justify-center tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-y-1/2 -tw-translate-x-1/2">
+//             ${text_1_element}
+//             ${button_element}
+//         </div>
+//     </div>`
+// })
 
 const openFieldWorkshop = inject('openFieldWorkshop')
+const onClickOpenFieldWorkshop = (index: number) => {
+    openFieldWorkshop.value = index
+}
 
 defineExpose({
-    compiled_layout,
+    // compiled_layout,
     fieldSideEditor
 })
     // <button
@@ -375,7 +378,7 @@ defineExpose({
             <div
                 v-if="announcementData?.fields?.text_1"
                 ref="_text_1"
-                @click="() => (openFieldWorkshop = 1)"
+                @click="() => (onClickOpenFieldWorkshop(1))"
                 class="text-sm announcement-component-editable text-center md:text-left"
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties, { toRemove: ['position', 'top', 'left'] })"
@@ -385,7 +388,7 @@ defineExpose({
 
             <button
                 v-if="announcementData?.fields?.button_1?.text"
-                @click="() => (onClickClose(), openFieldWorkshop = 2)"
+                @click="() => (onClickClose(), onClickOpenFieldWorkshop(2))"
                 :href="announcementData?.fields.button_1.link.href || '#'"
                 :target="announcementData?.fields.button_1.link.target" 
                 v-html="announcementData?.fields.button_1.text"

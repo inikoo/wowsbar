@@ -194,7 +194,7 @@ const defaultContainerData = {
     },
     "text": {
         "color": "rgb(255,255,255)",
-        "fontFamily": "sans-serif"
+        "fontFamily": "Arial, sans-serif"
     },
     "isCenterHorizontal": true,
     // "additional_style": {
@@ -301,17 +301,17 @@ const componentDefaultData = {
 }
 
 // Data: to publish in website
-const compiled_layout = computed(() => {
-    return `<div id="wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
-        <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_2.block_properties))}">
-            ${props.announcementData?.fields.text_2.text}
-        </div>
+// const compiled_layout = computed(() => {
+//     return `<div id="wowsbar_announcement" class="tw-flex tw-items-center tw-justify-between" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.container_properties))}">
+//         <div class="tw-whitespace-nowrap" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_2.block_properties))}">
+//             ${props.announcementData?.fields.text_2.text}
+//         </div>
         
-        <div class="tw-whitespace-nowrap" v-html="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
-            ${props.announcementData?.fields.text_1.text}
-        </div>
-    </div>`
-})
+//         <div class="tw-whitespace-nowrap" v-html="" style="${styleToString(propertiesToHTMLStyle(props.announcementData?.fields.text_1.block_properties))}">
+//             ${props.announcementData?.fields.text_1.text}
+//         </div>
+//     </div>`
+// })
 
 // const _text_1 = ref(null)
 // const _buttonClose = ref(null)
@@ -321,10 +321,13 @@ const onClickClose = () => {
 }
 
 const openFieldWorkshop = inject('openFieldWorkshop')
+const onClickOpenFieldWorkshop = (index: number) => {
+    openFieldWorkshop.value = index
+}
 
 
 defineExpose({
-    compiled_layout,
+    // compiled_layout,
     fieldSideEditor
 })
 
@@ -339,7 +342,7 @@ defineExpose({
         <!-- <template> -->
             <div
                 ref="_text_2"
-                @click="() => openFieldWorkshop = 2"
+                @click="() => onClickOpenFieldWorkshop(2)"
                 class="announcement-component-editable"
                 v-html="announcementData?.fields.text_2.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_2.block_properties)"
@@ -348,7 +351,7 @@ defineExpose({
             
             <div
                 ref="_text_1"
-                @click="() => openFieldWorkshop = 1"
+                @click="() => onClickOpenFieldWorkshop(1)"
                 class="announcement-component-editable"
                 v-html="announcementData?.fields.text_1.text"
                 :style="propertiesToHTMLStyle(announcementData?.fields.text_1.block_properties)"
