@@ -139,7 +139,7 @@ class PublishAnnouncement
             'published_message'    => ['sometimes', 'string'],
             'fields'               => ['sometimes', 'array'],
             'container_properties' => ['sometimes', 'array'],
-            'compiled_layout'      => ['sometimes', 'string'],
+            'compiled_layout'      => ['sometimes', 'string', 'nullable'],
             'text'                 => ['sometimes', 'string']
         ];
     }

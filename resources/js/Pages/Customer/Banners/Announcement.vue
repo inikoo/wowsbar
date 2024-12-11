@@ -135,7 +135,7 @@ const isLoadingPublish = ref(false)
 const onPublish = () => {
     const toPublish = {
         ...announcementData.value,
-        // compiled_layout: _component_template_Announcement.value?.compiled_layout || undefined,
+        compiled_layout: 'ffff' || _component_template_Announcement.value?.compiled_layout || undefined,
         text: 'xxx'
     }
     // console.log('toto', _component_template_Announcement.value?.dataToPublish)
