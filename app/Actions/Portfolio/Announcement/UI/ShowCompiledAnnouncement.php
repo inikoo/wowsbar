@@ -17,7 +17,7 @@ class ShowCompiledAnnouncement
 
     public function handle(PortfolioWebsite $portfolioWebsite, ?string $targetPage, string $targetUser): ?Announcement
     {
-        $announcements = GetActiveAnnouncement::run();
+        $announcements = GetActiveAnnouncement::run($portfolioWebsite);
 
         foreach ($announcements as $announcement) {
             $selectedAnnouncement = $announcement
