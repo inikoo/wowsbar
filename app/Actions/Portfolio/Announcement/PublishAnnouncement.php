@@ -75,15 +75,17 @@ class PublishAnnouncement
         }
 
         $updateData = [
-            'live_snapshot_id'         => $snapshot->id,
-            'fields'                   => Arr::get($snapshot->layout, 'fields'),
-            'published_message'        => Arr::get($modelData, 'published_message'),
-            'container_properties'     => Arr::get($modelData, 'container_properties'),
-            'text'                     => Arr::get($snapshot->layout, 'text'),
-            'published_checksum'       => md5(json_encode($snapshot->layout)),
-            'state'                    => AnnouncementStateEnum::READY,
-            'published_settings'       => Arr::get($snapshot->layout, 'settings'),
-            'is_dirty'                 => false,
+            'live_snapshot_id'          => $snapshot->id,
+            'fields'                    => Arr::get($snapshot->layout, 'fields'),
+            'published_fields'          => Arr::get($snapshot->layout, 'fields'),
+            'published_message'         => Arr::get($modelData, 'published_message'),
+            'container_properties'      => Arr::get($modelData, 'container_properties'),
+            'text'                      => Arr::get($snapshot->layout, 'text'),
+            'published_checksum'        => md5(json_encode($snapshot->layout)),
+            'state'                     => AnnouncementStateEnum::READY,
+            'status'                    => AnnouncementStatusEnum::ACTIVE,
+            'published_settings'        => Arr::get($snapshot->layout, 'settings'),
+            'is_dirty'                  => false,
             ...$compiled_layout
         ];
 
