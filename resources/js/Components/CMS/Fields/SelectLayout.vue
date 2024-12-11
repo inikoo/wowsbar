@@ -91,7 +91,7 @@ const onSubmitNote = async (layoutType: string) => {
 			</div>
 
 			<div class="flex justify-end gap-x-2 mt-3">
-				<Button label="Cancel" @click="() => (isModalOpen = false)" type="tertiary" />
+				<Button label="Cancel" @click="() => (isModalOpen = false)" :style="'tertiary'" />
 				<!-- <Button
           label="Submit"
           :disabled="!modelValue"
