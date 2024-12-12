@@ -237,8 +237,9 @@ const componentDefaultData = {
 
 const openFieldWorkshop = inject('openFieldWorkshop')
 const onClickOpenFieldWorkshop = (index?: number) => {
-    if (!index) return
-    openFieldWorkshop.value = index
+    if(openFieldWorkshop?.value && index) {
+        openFieldWorkshop.value = index
+    }
 }
 
 

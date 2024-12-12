@@ -404,8 +404,10 @@ const componentDefaultData = {
 // })
 
 const openFieldWorkshop = inject('openFieldWorkshop')
-const onClickOpenFieldWorkshop = (index: number) => {
-    openFieldWorkshop.value = index
+const onClickOpenFieldWorkshop = (index?: number) => {
+    if(openFieldWorkshop?.value && index) {
+        openFieldWorkshop.value = index
+    }
 }
 
 const initialTime = 1000 * 60 * 60 * 24 * 3 // 3 days
