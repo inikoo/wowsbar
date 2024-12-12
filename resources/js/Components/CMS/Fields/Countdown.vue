@@ -4,6 +4,7 @@ import { trans } from 'laravel-vue-i18n'
 import PureDatePicker from '@/Components/Pure/PureDatePicker.vue'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import { get, set } from 'lodash'
+import SideEditorInputHTML from './SideEditorInputHTML.vue'
 
 const Countdown = {
     date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
@@ -46,10 +47,9 @@ onMounted(() => {
 
             <!-- Text -->
             <div class="flex items-center gap-x-2 py-1" >
-                <PureInput
+                <SideEditorInputHTML
                     :modelValue="get(model, 'expired_text', '')"
                     @update:modelValue="(e) => set(model, 'expired_text', e)"
-                    :placeholder="trans('Enter text')"
                 />
             </div>
         </div>

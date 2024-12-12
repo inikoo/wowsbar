@@ -138,11 +138,11 @@ const transitionList = [
         <div class="mt-6 text-sm text-gray-500 mb-2">{{ trans('Text list') }}</div>
         <div class="flex flex-col gap-y-4 ">
             <div v-for="(text, idxText) in model?.multi_text" :key="'texteditor_' + idxText + model?.multi_text?.length" class="flex items-center gap-x-1 w-full">
-                <Editor2 :modelValue="text" @update:modelValue="(e) => set(model, ['multi_text', idxText], e)" v-bind="$attrs">
+                <Editor2 :modelValue="text" @update:modelValue="(e) => set(model, ['multi_text', idxText], e)" v-bind="$attrs" class="w-full">
                     <template #editor-content="{ editor }">
                         <div
-                            class="bg-gray-200 editor-wrapper border-2 border-gray-300 rounded px-3 py-2 shadow-sm focus-within:border-blue-400">
-                            <EditorContent :editor="editor" class="editor-content focus:outline-none" />
+                            class="w-full bg-gray-200 editor-wrapper border-2 border-gray-300 rounded px-1.5 py-2 shadow-sm focus-within:border-blue-400">
+                            <EditorContent :editor="editor" class="max-h-32 overflow-y-auto focus:outline-none" />
                         </div>
                     </template>
                 </Editor2>

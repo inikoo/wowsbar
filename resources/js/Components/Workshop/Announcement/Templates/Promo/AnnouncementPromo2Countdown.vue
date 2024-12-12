@@ -490,7 +490,7 @@ defineExpose({
             
             </div>
 
-            <div @click="() => (onClickOpenFieldWorkshop(2))" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
+            <div v-if="compTimeLeft > new Date().getTime()" @click="() => (onClickOpenFieldWorkshop(2))" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
                 <div class="flex flex-col items-center">
                     <div id="countdown-days" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
                         {{days}}
@@ -515,6 +515,10 @@ defineExpose({
                     </div>
                     <div class="text-xs opacity-60">{{ trans("Seconds") }}</div>
                 </div>
+            </div>
+
+            <div v-else class="flex justify-center">
+                {{ announcementData?.fields?.countdown?.expired_text }}
             </div>
             
             <div v-if="announcementData?.fields.button_1.text" class="relative justify-self-center md:justify-self-end">
