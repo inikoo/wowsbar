@@ -87,15 +87,16 @@ const fieldSideEditor = [
             tooltip: "Time countdown"
         },
         replaceForm: [
-            // {
-            //     key: ['fields', 'countdown', 'block_properties'],
-            //     type: "background",
-            // },
             {
                 key: ['fields', 'countdown'],
                 type: "countdown",
                 props_data: {
-                    noToday: true
+                    noToday: true,
+                    toogle: [
+                        'heading', 'fontSize', 'bold', 'italic', 'underline', "fontFamily",
+                        'alignLeft', 'alignRight', "link",
+                        'alignCenter', 'undo', 'redo', 'highlight', 'color', 'clear'
+                    ]
                 }
             }
         ]
@@ -413,7 +414,7 @@ const compTimeLeft = computed(() => {
     if (props.announcementData?.fields?.countdown?.date) {
         return new Date(props.announcementData?.fields?.countdown?.date).getTime()
     } else {
-        return new Date().getTime() + initialTime
+        return 0
     }
 })
 
@@ -489,7 +490,7 @@ defineExpose({
             <div v-if="announcementData?.fields.text_1.text" @click="() => (onClickOpenFieldWorkshop(1))" class="announcement-component-editable text-center md:text-left" v-html="announcementData?.fields.text_1.text" :style="propertiesToHTMLStyle(announcementData?.fields?.text_1.block_properties)">
             
             </div>
-
+            
             <div v-if="compTimeLeft > new Date().getTime()" @click="() => (onClickOpenFieldWorkshop(2))" class="announcement-component-editable grid grid-cols-4 gap-x-2 font-sans mx-auto">
                 <div class="flex flex-col items-center">
                     <div id="countdown-days" class="text-base w-fit flex justify-center overflow-hidden relative rounded-md tabular-nums">
@@ -517,8 +518,7 @@ defineExpose({
                 </div>
             </div>
 
-            <div v-else class="flex justify-center">
-                {{ announcementData?.fields?.countdown?.expired_text }}
+            <div v-else class="flex justify-center" v-html="announcementData?.fields?.countdown?.expired_text">
             </div>
             
             <div v-if="announcementData?.fields.button_1.text" class="relative justify-self-center md:justify-self-end">

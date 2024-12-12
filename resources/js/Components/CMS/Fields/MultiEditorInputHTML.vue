@@ -154,7 +154,7 @@ const transitionList = [
 
             <Popover ref="_popover">
                     <div>
-                        <div class="text-sm font-medium mb-3">Are you sure to delete this ?</div>
+                        <div class="text-sm font-medium mb-3">{{ trans("Are you sure to delete this?") }}</div>
                         <div class="flex justify-end gap-2">
                             <Button :style="'white'" label="No" size="xs" @click="()=>_popover.hide()" />
                             <Button label="Yes" size="xs" @click="onDeleteText" />
