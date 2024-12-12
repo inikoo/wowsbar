@@ -518,7 +518,7 @@ defineExpose({
                 </div>
             </div>
 
-            <div v-else class="flex justify-center" v-html="announcementData?.fields?.countdown?.expired_text">
+            <div v-else @click="() => (onClickOpenFieldWorkshop(2))" class="announcement-component-editable flex justify-center" v-html="announcementData?.fields?.countdown?.expired_text">
             </div>
             
             <div v-if="announcementData?.fields.button_1.text" class="relative justify-self-center md:justify-self-end">
