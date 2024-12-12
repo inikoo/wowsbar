@@ -403,9 +403,9 @@ const componentDefaultData = {
 //     `
 // })
 
-const openFieldWorkshop = inject('openFieldWorkshop')
+const openFieldWorkshop = inject('openFieldWorkshop', null)
 const onClickOpenFieldWorkshop = (index?: number) => {
-    if(openFieldWorkshop?.value && index) {
+    if(openFieldWorkshop && index) {
         openFieldWorkshop.value = index
     }
 }
