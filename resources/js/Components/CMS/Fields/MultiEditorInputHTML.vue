@@ -136,25 +136,25 @@ const transitionList = [
         </div>
 
         <div class="mt-6 text-sm text-gray-500 mb-2">{{ trans('Text list') }}</div>
-        <div class="grid gap-y-4">
-            <div v-for="(text, idxText) in model?.multi_text" :key="'texteditor_' + idxText + model?.multi_text?.length" class="flex items-center gap-x-1">
-                <Editor2 :modelValue="text" @update:modelValue="(e) => set(model, ['multi_text', idxText], e)" v-bind="$attrs">
+        <div class="flex flex-col gap-y-4 ">
+            <div v-for="(text, idxText) in model?.multi_text" :key="'texteditor_' + idxText + model?.multi_text?.length" class="flex items-center gap-x-1 w-full">
+                <Editor2 :modelValue="text" @update:modelValue="(e) => set(model, ['multi_text', idxText], e)" v-bind="$attrs" class="w-full">
                     <template #editor-content="{ editor }">
                         <div
-                            class="editor-wrapper border-2 border-gray-300 rounded px-3 py-2 shadow-sm focus-within:border-blue-400">
-                            <EditorContent :editor="editor" class="editor-content focus:outline-none" />
+                            class="w-full bg-gray-200 editor-wrapper border-2 border-gray-300 rounded px-1.5 py-2 shadow-sm focus-within:border-blue-400">
+                            <EditorContent :editor="editor" class="max-h-32 overflow-y-auto focus:outline-none" />
                         </div>
                     </template>
                 </Editor2>
 
-           <div @click="(event)=>togglePopover(event,idxText)" class="px-1 py-1 text-red-400 hover:text-white cursor-pointer border border-transparent hover:bg-red-500 rounded">
+                <div @click="(event)=>togglePopover(event,idxText)" class="px-1 py-1 text-red-400 hover:text-white cursor-pointer border border-transparent hover:bg-red-500 rounded">
                     <FontAwesomeIcon icon='fal fa-trash-alt' class='' fixed-width aria-hidden='true' />
                 </div>
             </div>
 
             <Popover ref="_popover">
                     <div>
-                        <div class="text-sm font-medium mb-3">Are you sure to delete this ?</div>
+                        <div class="text-sm font-medium mb-3">{{ trans("Are you sure to delete this?") }}</div>
                         <div class="flex justify-end gap-2">
                             <Button :style="'white'" label="No" size="xs" @click="()=>_popover.hide()" />
                             <Button label="Yes" size="xs" @click="onDeleteText" />

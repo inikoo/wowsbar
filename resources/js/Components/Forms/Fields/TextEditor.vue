@@ -145,11 +145,11 @@ onBeforeUnmount(() => {
 
 <style>
 .ProseMirror {
-    padding: 7px 15px;
+    padding: 4px 15px;
 }
 
 .ProseMirror p {
-    width: 400px;
+    width: 100%;
     /* background: #e1e1e1; */
     /* max-width: 100%; */
     word-wrap: break-word;

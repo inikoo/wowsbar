@@ -214,11 +214,12 @@ const defaultFieldsData = {
     "button_1": {
         "link": {
             "type" : "internal",
-            "url": "https://ancientwisdom.biz/showroom",
+            "href": "https://wowsbar.com",
             "id": 9,
-            "workshop_route" : ""
+            "workshop_route" : "",
+            "target": "_blank"
         },
-        "text": '<span style="font-size: 10px"><strong>Claim Now!</strong></span>',
+        "text": 'Claim Now!',
         "container": {
             "properties": {
                 "text": {
@@ -350,8 +351,10 @@ const onClickClose = () => {
 // })
 
 const openFieldWorkshop = inject('openFieldWorkshop')
-const onClickOpenFieldWorkshop = (index: number) => {
-    openFieldWorkshop.value = index
+const onClickOpenFieldWorkshop = (index?: number) => {
+    if(openFieldWorkshop && index) {
+        openFieldWorkshop.value = index
+    }
 }
 
 defineExpose({
@@ -386,7 +389,7 @@ defineExpose({
     
             </div>
 
-            <button
+            <a
                 v-if="announcementData?.fields?.button_1?.text"
                 @click="() => (onClickClose(), onClickOpenFieldWorkshop(2))"
                 :href="announcementData?.fields.button_1.link.href || '#'"
@@ -395,8 +398,9 @@ defineExpose({
                 class="inline-flex items-center announcement-component-editable"
                 :style="propertiesToHTMLStyle(announcementData?.fields.button_1?.container?.properties)"
             >
-            </button>
+            </a>
         </div>
+        <!-- <pre>{{ announcementData?.fields?.button_1 }}</pre> -->
 
         <!-- <pre>{{defaultFieldsData?.button_1?.container?.properties}}</pre> -->
         

@@ -24,12 +24,12 @@ const props = defineProps<{
                 duration: number
                 multi_text: string[]
             }
-            button_1: {
-                text: string
-                container: {
-                    properties: BlockProperties
-                }
-            }
+            // button_1: {
+            //     text: string
+            //     container: {
+            //         properties: BlockProperties
+            //     }
+            // }
             countdown: {
                 date: string
                 expired_text?: string
@@ -237,8 +237,9 @@ const componentDefaultData = {
 
 const openFieldWorkshop = inject('openFieldWorkshop')
 const onClickOpenFieldWorkshop = (index?: number) => {
-    if (!index) return
-    openFieldWorkshop.value = index
+    if(openFieldWorkshop && index) {
+        openFieldWorkshop.value = index
+    }
 }
 
 

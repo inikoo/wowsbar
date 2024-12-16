@@ -32,7 +32,7 @@ const modelValue = defineModel()
 // ])
 
 const targets = ref([
-	{ label: trans("Replace page"), value: "_self" },
+	{ label: trans("Replace page"), value: "_parent" },
 	{ label: trans("New page"), value: "_blank" },
 ])
 

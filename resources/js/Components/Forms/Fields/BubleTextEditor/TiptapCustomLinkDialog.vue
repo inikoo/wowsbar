@@ -28,7 +28,7 @@ const form = useForm({
     type: props.attribut?.type || "internal",
     workshop: null,
     id: null,
-    target : props.attribut?.href || "_self",
+    target : props.attribut?.href || "_parent",
 });
 
 // Watch for changes in the attribut prop
@@ -38,7 +38,7 @@ watch(() => props.attribut, (newValue) => {
         form.type = newValue.type || "internal";
         form.workshop = newValue.workshop || null;
         form.id = newValue || null;
-        form.target = newValue.target || "_self"
+        form.target = newValue.target || "_parent"
     }
 }, { immediate: true }); 
 
@@ -67,7 +67,7 @@ const options = [
 ];
 
 const target = [
-    { label: 'In this page', value: '_self' },
+    { label: 'In this page', value: '_parent' },
     { label: 'New Page', value: '_blank' }
 ]
 </script>
