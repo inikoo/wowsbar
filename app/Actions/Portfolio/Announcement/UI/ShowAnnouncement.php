@@ -151,6 +151,13 @@ class ShowAnnouncement extends InertiaAction
                             'portfolioWebsite' => $announcement->portfolio_website_id
                         ],
                         'method'    => 'post'
+                    ],
+                    'delete_announcement_route'     => [
+                        'name'          => 'customer.models.portfolio-website.announcement.delete',
+                        'parameters'    => [
+                            'portfolioWebsite' => $announcement->portfolio_website_id
+                        ],
+                        'method'    => 'delete'
                     ]
                 ],
                 'is_announcement_dirty'       => $announcement->is_dirty,

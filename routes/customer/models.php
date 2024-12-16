@@ -11,6 +11,7 @@ use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Media\Media\ImageGenerator;
 use App\Actions\Portfolio\Announcement\CloseAnnouncement;
+use App\Actions\Portfolio\Announcement\DeleteAnnouncement;
 use App\Actions\Portfolio\Announcement\PublishAnnouncement;
 use App\Actions\Portfolio\Announcement\ResetAnnouncement;
 use App\Actions\Portfolio\Announcement\StartAnnouncement;
@@ -80,6 +81,7 @@ Route::prefix('portfolio-website')->name('portfolio-website.')->group(function (
             Route::patch('{announcement}/close', CloseAnnouncement::class)->name('close');
             Route::patch('{announcement}/start', StartAnnouncement::class)->name('start');
             Route::patch('{announcement}/toggle', ToggleAnnouncement::class)->name('toggle');
+            Route::delete('{announcement}', DeleteAnnouncement::class)->name('delete');
         });
     });
 });
