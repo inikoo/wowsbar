@@ -58,7 +58,8 @@ class IndexBanners extends InertiaAction
     public function handle(Customer|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where('banners.name', "%$value%");
+            $query->whereStartWith('banners.name', "%$value%")
+            ->orWhereStartWith('banners.ulid', "%$value%");
         });
 
         if ($prefix) {
@@ -71,7 +72,8 @@ class IndexBanners extends InertiaAction
             'banners.state',
             'banners.name',
             'banners.image_id',
-            'banners.date'
+            'banners.date',
+            'banners.ulid',
         );
 
         $queryBuilder->join('banner_stats', 'banner_stats.banner_id', 'banners.id')

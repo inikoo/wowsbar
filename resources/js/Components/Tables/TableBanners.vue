@@ -45,9 +45,11 @@ function websiteRoute(banner: Banner, slug) {
 
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: banner }">
-            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="specialUnderlineCustomer py-4 px-2 whitespace-nowrap">
+            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="specialUnderlineCustomer py-1 px-2 whitespace-nowrap">
                 {{ banner['name'] }}
             </Link>
+            <br>
+            <span class="text-gray-400 italic text-xxs">({{ banner.ulid }})</span>
         </template>
 
         <template #cell(state)="{ item: banner }">
