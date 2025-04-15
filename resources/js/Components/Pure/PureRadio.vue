@@ -9,13 +9,14 @@ const props = defineProps<{
     mode?: string
     options: any
     by?: string
+    indexChecked?: number  // for initial checked if the value is an object
 }>()
 
 const model = defineModel()
 
-const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void
-}>()
+// const emits = defineEmits<{
+//     (e: 'update:modelValue', value: string): void
+// }>()
 
 </script>
 
@@ -84,13 +85,14 @@ const emits = defineEmits<{
                     <input
                         v-model="model"
                         :value="by ? option[by] : option"
-                        :id="option.label + index"
-                        name="radioDefault"
+                        :id="`${option.label}_${index}`"
+                        :name="`${option.label}_${index}`"
                         type="radio"
-                        :checked="(option[by] || option) == model"
+                        :checked="indexChecked > -1 ? indexChecked === index : (option[by] || option) == model"
                         class="h-4 w-4 border-gray-300 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer"
                     />
-                    <label v-if="option.value || option.label" :for="option.label + index" class="flex items-center gap-x-1.5 cursor-pointer">
+
+                    <label v-if="option.value || option.label" :for="`${option.label}_${index}`" class="flex items-center gap-x-1.5 cursor-pointer">
                         <p class="text-sm font-medium leading-6 text-gray-700 capitalize">
                             {{ option.value }}
                         </p>

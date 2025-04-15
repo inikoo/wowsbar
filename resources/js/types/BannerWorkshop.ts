@@ -104,7 +104,9 @@ export interface BannerNavigation {
     }
     bottomNav?: {
         value: boolean
-        type: string
+        type: string | {
+            value: string
+        }
     }
 }
 

@@ -51,7 +51,7 @@ class StoreBanner
             "navigation" => [
                 "bottomNav" => [
                     "value"     => true,
-                    "type"      => "bullet"
+                    "type"      => "bullets"
                 ],
                 "sideNav" => [
                     "value"     => true,

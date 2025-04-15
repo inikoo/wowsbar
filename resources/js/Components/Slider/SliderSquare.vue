@@ -138,7 +138,7 @@ const compWidthBanner = computed(() => {
                 delay: data.delay,
                 disableOnInteraction: false,
             }"
-            :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type'], false) == 'bullets' ? {  // Render Navigation (bullet)
+            :pagination="get(data, ['navigation', 'bottomNav', 'value'], false) && get(data, ['navigation', 'bottomNav', 'type', 'value'], false) == 'bullets' ? {  // Render Navigation (bullet)
                 clickable: true,
                 renderBullet: (index, className) => {
                     return `<span class='${className}'></span>`
@@ -190,7 +190,7 @@ const compWidthBanner = computed(() => {
                 <Stopwatch v-if="component?.layout?.stopwatch?.date" :data="component?.layout?.stopwatch"/>
             </SwiperSlide>
 
-            <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
+            <div v-if="data.navigation?.bottomNav?.value && data.navigation?.bottomNav?.type?.value == 'buttons'" class="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
                 <SlideControls :dataBanner="data" :swiperRef="swiperRef" />
             </div>
         </Swiper>
